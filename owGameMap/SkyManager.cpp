@@ -38,9 +38,9 @@ void SkyManager::UpdateCamera(const Camera* camera)
 
 bool SkyManager::Load()
 {
-    for (auto& it : DBC_Light)
+    for (auto it : DBC_Light)
     {
-        if (GetMapController()->GetMapDBCRecord()->Get_ID() == it.Get_MapID()->Get_ID())
+        if (GetMapController()->GetMapDBCRecord()->Get_ID() == it->Get_MapID()->Get_ID())
         {
             std::shared_ptr<Sky> sky = std::make_shared<Sky>(it);
             skies.push_back(sky);
@@ -87,7 +87,7 @@ void SkyManager::Calculate(const Camera* camera, uint32 _time)
 	{
 		if (it->m_Wight > 0.0f)
 		{
-			SkyParams params = it->Interpolate(_time);
+			CSkyParams params = it->Interpolate(_time);
 			params *= it->m_Wight;
 
 			m_Interpolated += params;
@@ -100,12 +100,12 @@ void SkyManager::Calculate(const Camera* camera, uint32 _time)
 	{
 		for (uint32 v = 0; v < C_SkycolorsCount - 1; v++)
 		{
-			colors.push_back(vec4(m_Interpolated.m_Colors[C_Skycolors[v]], 0.0f));
-			colors.push_back(vec4(m_Interpolated.m_Colors[C_Skycolors[v + 1]], 0.0f));
-			colors.push_back(vec4(m_Interpolated.m_Colors[C_Skycolors[v + 1]], 0.0f));
-			colors.push_back(vec4(m_Interpolated.m_Colors[C_Skycolors[v + 1]], 0.0f));
-			colors.push_back(vec4(m_Interpolated.m_Colors[C_Skycolors[v]], 0.0f));
-			colors.push_back(vec4(m_Interpolated.m_Colors[C_Skycolors[v]], 0.0f));
+			colors.push_back(vec4(m_Interpolated.GetColor(C_Skycolors[v]), 0.0f));
+			colors.push_back(vec4(m_Interpolated.GetColor(C_Skycolors[v + 1]), 0.0f));
+			colors.push_back(vec4(m_Interpolated.GetColor(C_Skycolors[v + 1]), 0.0f));
+			colors.push_back(vec4(m_Interpolated.GetColor(C_Skycolors[v + 1]), 0.0f));
+			colors.push_back(vec4(m_Interpolated.GetColor(C_Skycolors[v]), 0.0f));
+			colors.push_back(vec4(m_Interpolated.GetColor(C_Skycolors[v]), 0.0f));
 		}
 	}
 

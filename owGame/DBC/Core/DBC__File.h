@@ -57,17 +57,17 @@ const std::shared_ptr<_dbc##Record> CONCAT_GET(_name)(uint8 _index) const       
 
 #define FOREIGN_KEY(_type, _dbc, _refFieldName, _dispName)                        \
 _type __##_dispName;                                                              \
-const CONCAT_RECORD(_dbc)* _dispName()                                            \
+std::shared_ptr<CONCAT_RECORD(_dbc)> _dispName()                                            \
 {                                                                                 \
-	for (auto& it : _dbc)                                                         \
+	for (auto it : _dbc)                                                         \
 	{                                                                             \
-		if (static_cast<_type>(it.CONCAT_GET(_refFieldName)()) == __##_dispName)  \
+		if (static_cast<_type>(it->CONCAT_GET(_refFieldName)()) == __##_dispName)  \
 		{                                                                         \
-			return &it;                                                           \
+			return it;                                                           \
 		}                                                                         \
 	}                                                                             \
                                                                                   \
-	return nullptr;                                                               \
+	return std::shared_ptr<CONCAT_RECORD(_dbc)>();                                                               \
 }
 
 #define FOREIGN_KEY_ID(_type, _dbc, _dispName)        \
@@ -252,25 +252,29 @@ public:
 	{
 		friend RECORD_T;
 	public:
-		Iterator(DBCFile* file, const uint8* offset) : m_Record(file, offset) {}
-		Iterator(Iterator& _iterator) : m_Record(_iterator.m_Record) {}
+		Iterator(DBCFile* file, const uint8* offset)  
+        {
+            m_Record = std::make_shared<RECORD_T>(file, offset);
+        }
+		Iterator(Iterator& _iterator)
+        {
+            m_Record = std::make_shared<RECORD_T>(_iterator.m_Record);
+        }
 
 		Iterator& operator++()
 		{
-			m_Record.incOffset(m_Record.getDBCStats()->getRecordSize());
+			m_Record->incOffset(m_Record->getDBCStats()->getRecordSize());
 			return *this;
 		}
 
-		const RECORD_T& operator*() const { return m_Record; }
-		const RECORD_T* operator->() const { return &m_Record; }
+        std::shared_ptr<RECORD_T> operator*() const { return m_Record; }
+		std::shared_ptr<RECORD_T> operator->() const { return m_Record; }
 
-		bool operator==(const Iterator &b) const { return m_Record.getOffset() == b.m_Record.getOffset(); }
-		bool operator!=(const Iterator &b) const { return m_Record.getOffset() != b.m_Record.getOffset(); }
-
-		RECORD_T get() const { return m_Record; }
+		bool operator==(const Iterator &b) const { return m_Record->getOffset() == b.m_Record->getOffset(); }
+		bool operator!=(const Iterator &b) const { return m_Record->getOffset() != b.m_Record->getOffset(); }
 
 	private:
-		RECORD_T m_Record;
+		std::shared_ptr<RECORD_T> m_Record;
 	};
 
 	Iterator begin()

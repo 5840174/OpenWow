@@ -12,19 +12,19 @@ Sky::Sky() :
 	m_LightRecord(nullptr)
 {}
 
-Sky::Sky(const DBC_LightRecord& _record) :
-	m_LightRecord(&_record)
+Sky::Sky(std::shared_ptr<DBC_LightRecord> LightData) 
+    : m_LightRecord(LightData)
 {
-	m_Position.x = _record.Get_PositionX() / skymul;
-	m_Position.y = _record.Get_PositionY() / skymul;
-	m_Position.z = _record.Get_PositionZ() / skymul;
-	m_Range.min = _record.Get_RadiusInner() / skymul;
-	m_Range.max = _record.Get_RadiusOuter() / skymul;
+	m_Position.x = m_LightRecord->Get_PositionX() / skymul;
+	m_Position.y = m_LightRecord->Get_PositionY() / skymul;
+	m_Position.z = m_LightRecord->Get_PositionZ() / skymul;
+	m_Range.min = m_LightRecord->Get_RadiusInner() / skymul;
+	m_Range.max = m_LightRecord->Get_RadiusOuter() / skymul;
 
 	m_IsGlobalSky = (m_Position.x == 0.0f && m_Position.y == 0.0f && m_Position.z == 0.0f);
 	if (m_IsGlobalSky)
 	{
-		Log::Error("Sky [%d] is GLOBAL!!!!", _record.Get_ID());
+		Log::Green("Sky [%d] is GLOBAL!!!!", m_LightRecord->Get_ID());
 	}
 
 	LoadParams(LightParamsNames::ParamsClear);
@@ -61,17 +61,17 @@ void Sky::LoadParams(LightParamsNames _param)
 	uint32 paramSet = paramRecord->Get_ID();
 
 	//-- LightParams
-	m_Params.m_highlightSky = paramRecord->Get_HighlightSky();
-	m_Params.m_SkyBox = paramRecord->Get_LightSkyboxID();
-	m_Params.m_glow = paramRecord->Get_Glow();
-	m_Params.m_waterShallowAlpha = paramRecord->Get_WaterShallowAlpha();
-	m_Params.m_waterDeepAlpha = paramRecord->Get_WaterDeepAlpha();
-	m_Params.m_oceanShallowAlpha = paramRecord->Get_OceanShallowAlpha();
-	m_Params.m_oceanDeepAlpha = paramRecord->Get_OceanDeepAlpha();
+	m_Params.SetHighlightSky(paramRecord->Get_HighlightSky());
+	m_Params.SetSkybox(paramRecord->Get_LightSkyboxID());
+	m_Params.SetGlow(paramRecord->Get_Glow());
+	m_Params.SetWaterAplha(LightWaterAlpha::WATER_SHALLOW, paramRecord->Get_WaterShallowAlpha());
+	m_Params.SetWaterAplha(LightWaterAlpha::WATER_DEEP, paramRecord->Get_WaterDeepAlpha());
+	m_Params.SetWaterAplha(LightWaterAlpha::OCEAN_SHALLOW, paramRecord->Get_OceanShallowAlpha());
+	m_Params.SetWaterAplha(LightWaterAlpha::OCEAN_DEEP, paramRecord->Get_OceanDeepAlpha());
 
-	if (m_Params.m_SkyBox != nullptr)
+	if (m_Params.GetSkybox() != nullptr)
 	{
-		Log::Green("!!!Skybox name = [%s]", m_Params.m_SkyBox->Get_Filename());
+		Log::Green("!!!Skybox name = [%s]", m_Params.GetSkybox()->Get_Filename());
 	}
 
 	//-- Color params
@@ -103,16 +103,13 @@ void Sky::LoadParams(LightParamsNames _param)
 
 
 
-SkyParams& Sky::Interpolate(uint32 _time)
+CSkyParams& Sky::Interpolate(uint32 _time)
 {
 	for (uint8 i = 0; i < LightColors::COUNT; i++)
-	{
-		m_Params.m_Colors[i] = GetByTimeTemplate(m_IntBand_Colors, i, _time);
-	}
+		m_Params.SetColor(i, GetByTimeTemplate(m_IntBand_Colors, i, _time));
+
 	for (uint8 i = 0; i < LightFogs::COUNT; i++)
-	{
-		m_Params.m_Fogs[i] = GetByTimeTemplate(m_FloatBand_Fogs, i, _time);
-	}
+		m_Params.SetFog(i, GetByTimeTemplate(m_FloatBand_Fogs, i, _time));
 
 	return m_Params;
 }

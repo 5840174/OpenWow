@@ -31,26 +31,26 @@ public: // TYPES
 	};
 
 public:
-    Sky();
-    Sky(const DBC_LightRecord& data);
-	virtual ~Sky();
+                                                    Sky();
+                                                    Sky(std::shared_ptr<DBC_LightRecord> LightData);
+	virtual                                         ~Sky();
 
-    void LoadParams(LightParamsNames _param);
+    void                                            LoadParams(LightParamsNames _param);
 
-    SkyParams& Interpolate(uint32 _time);
+    CSkyParams&                                      Interpolate(uint32 _time);
 
 private:
-	const DBC_LightRecord*	m_LightRecord;
+	std::shared_ptr<DBC_LightRecord>                m_LightRecord;
 
-    vec3					m_Position;
-    CRange					m_Range;
+    vec3					                        m_Position;
+    CRange					                        m_Range;
 
-    float					m_Wight;
-    bool					m_IsGlobalSky;
+    float					                        m_Wight;
+    bool					                        m_IsGlobalSky;
 
-	SkyParams				m_Params;
-	std::vector<SkyParam<vec3>>  m_IntBand_Colors[LightColors::COUNT];
-	std::vector<SkyParam<float>> m_FloatBand_Fogs[LightFogs::COUNT];
+	CSkyParams				                        m_Params;
+	std::vector<SkyParam<vec3>>                     m_IntBand_Colors[LightColors::COUNT];
+	std::vector<SkyParam<float>>                    m_FloatBand_Fogs[LightFogs::COUNT];
 };
 
 #include "Sky.inl"

@@ -23,14 +23,14 @@ Character_SkinTextureBaker::Character_SkinTextureBaker()
 
 	for (auto& it : DBC_CharComponentTextureSections)
 	{
-		if (it.Get_Layout()->Get_ID() == SkinDefaultLayout)
+		if (it->Get_Layout()->Get_ID() == SkinDefaultLayout)
 		{
 			CharacterSkinRegion region;
-			region.X = it.Get_X();
-			region.Y = it.Get_Y();
-			region.Width = it.Get_Width();
-			region.Height = it.Get_Height();
-			m_Regions.insert(std::make_pair((DBC_CharComponent_Sections::List)it.Get_Section(), region));
+			region.X = it->Get_X();
+			region.Y = it->Get_Y();
+			region.Width = it->Get_Width();
+			region.Height = it->Get_Height();
+			m_Regions.insert(std::make_pair((DBC_CharComponent_Sections::List)it->Get_Section(), region));
 		}
 	}
 }

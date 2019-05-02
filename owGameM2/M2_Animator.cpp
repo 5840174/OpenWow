@@ -19,7 +19,7 @@ CM2_Animator::CM2_Animator(const std::weak_ptr<const M2> _m2) :
 
 	for (auto& i : DBC_AnimationData)
 	{
-		const DBC_AnimationDataRecord* record = (&i);
+		std::shared_ptr<DBC_AnimationDataRecord> record = i;
 
 		// Get animation with index (record->Get_ID() and variation index == 0)
 		int16 findedSeqIndex = -1;

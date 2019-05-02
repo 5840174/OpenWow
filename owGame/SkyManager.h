@@ -46,6 +46,18 @@ struct LightFogs
 	};
 };
 
+struct LightWaterAlpha
+{
+    enum List : uint8
+    {
+        WATER_SHALLOW = 0,
+        WATER_DEEP, 
+        OCEAN_SHALLOW,  
+        OCEAN_DEEP, 
+        COUNT
+    };
+};
+
 struct 
 	__declspec(uuid("8D86DF19-0FB3-47F3-B0BC-215788EA5500"))
 	ISkyManager : public IManager
