@@ -6,9 +6,9 @@ class CM2_Base_Instance;
 
 class 
     __declspec(UUID_ColliderComponent)
-    CM2_ColliderComponent : public CColliderComponent
+    CM2_ColliderComponent : public CColliderComponent3D
 {
-    typedef CColliderComponent base;
+    typedef CColliderComponent3D base;
 public:
     CM2_ColliderComponent(std::shared_ptr<SceneNode3D> OwnerNode);
     virtual ~CM2_ColliderComponent();

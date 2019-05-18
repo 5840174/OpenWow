@@ -80,7 +80,7 @@ void CWMO_PortalsController::Update(std::shared_ptr<CWMO_Base_Instance> _localCo
 		}
 	}
 
-	vec3 _InvWorldCamera = _localContr->GetComponent<CTransformComponent>()-> GetInverseWorldTransform() * vec4(_camera.GetTranslation(), 1.0f);
+	vec3 _InvWorldCamera = _localContr->GetComponent<CTransformComponent3D>()-> GetInverseWorldTransform() * vec4(_camera.GetTranslation(), 1.0f);
 
 	bool insideIndoor = false;
 
@@ -88,7 +88,7 @@ void CWMO_PortalsController::Update(std::shared_ptr<CWMO_Base_Instance> _localCo
 	{
 		for (auto& group : _localContr->getGroupInstances())
 		{
-			if (!(group->GetComponent<CColliderComponent>()->GetBounds().isPointInside(_camera.GetTranslation())))
+			if (!(group->GetComponent<CColliderComponent3D>()->GetBounds().isPointInside(_camera.GetTranslation())))
 			{
 				continue;
 			}
@@ -135,7 +135,7 @@ bool CWMO_PortalsController::Recur(std::shared_ptr<CWMO_Base_Instance> _localCon
 		return false;
 	}
 
-	if (_camera.GetFrustum().cullBox(_group->GetComponent<CColliderComponent>()->GetBounds()))
+	if (_camera.GetFrustum().cullBox(_group->GetComponent<CColliderComponent3D>()->GetBounds()))
 	{
 		return false;
 	}
@@ -145,7 +145,7 @@ bool CWMO_PortalsController::Recur(std::shared_ptr<CWMO_Base_Instance> _localCon
 	_group->SetPortalCalculated(true);
 	for (auto& doodad : _group->getDoodadsInstances())
 	{
-		if (doodad && (_isFirstIteration || !_frustum.cullBox(doodad->GetComponent<CColliderComponent>()->GetBounds())))
+		if (doodad && (_isFirstIteration || !_frustum.cullBox(doodad->GetComponent<CColliderComponent3D>()->GetBounds())))
 		{
 			doodad->setPortalVisibility(true);
 		}

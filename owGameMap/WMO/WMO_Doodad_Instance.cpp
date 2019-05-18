@@ -33,7 +33,7 @@ CWMO_Doodad_Instance::~CWMO_Doodad_Instance()
 void CWMO_Doodad_Instance::Initialize(const SWMO_Doodad_PlacementInfo & _placement)
 {
     // CTransformComponent
-    std::shared_ptr<CTransformComponent> transformComponent = GetComponent<CTransformComponent>();
+    std::shared_ptr<CTransformComponent3D> transformComponent = GetComponent<CTransformComponent3D>();
     {
         transformComponent->SetTranslate(Fix_XZmY(_placement.position));
         transformComponent->SetRotationQuaternion(quat(_placement.orientation.w, -_placement.orientation.z, _placement.orientation.x, _placement.orientation.y));

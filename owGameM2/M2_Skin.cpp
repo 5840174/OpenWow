@@ -20,6 +20,6 @@ void CM2_Skin::CreateInsances(std::weak_ptr<SceneNode3D> _parent)
 {
 	for (const auto& batch : m_Batches)
 	{
-		_parent.lock()->GetComponent<CMeshComponent>()->AddMesh(batch);
+		_parent.lock()->GetComponent<CMeshComponent3D>()->AddMesh(batch);
 	}
 }

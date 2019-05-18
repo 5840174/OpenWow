@@ -15,7 +15,7 @@ void CWMO_Base_Instance::CreateInstances()
 {
 	m_WMO->CreateInsances(std::static_pointer_cast<CWMO_Base_Instance, SceneNode3D>(shared_from_this()));
 
-    std::shared_ptr<CTransformComponent> transformComponent = GetComponent<CTransformComponent>();
+    std::shared_ptr<CTransformComponent3D> transformComponent = GetComponent<CTransformComponent3D>();
 
 	if (m_WMO->m_PortalController != nullptr)
 	{
@@ -67,7 +67,7 @@ void CWMO_Base_Instance::UpdateCamera(const Camera* camera)
 #ifndef WMO_DISABLE_PORTALS
 	if (m_WMO && m_WMO->m_PortalController)
 	{
-		m_WMO->m_PortalController->Update(std::dynamic_pointer_cast<CWMO_Base_Instance, SceneNode3D>(shared_from_this()), *camera);
+		m_WMO->m_PortalController->Update(std::dynamic_pointer_cast<CWMO_Base_Instance, SceneNode>(shared_from_this()), *camera);
 	}
 #endif
 }
@@ -75,14 +75,14 @@ void CWMO_Base_Instance::UpdateCamera(const Camera* camera)
 bool CWMO_Base_Instance::Accept(IVisitor& visitor)
 {
 	const AbstractPass& visitorAsBasePass = reinterpret_cast<AbstractPass&>(visitor);
- 	const Camera* camera = visitorAsBasePass.GetRenderEventArgs().Camera;
+ 	const Camera* camera = visitorAsBasePass.GetRenderEventArgs()->Camera;
 
 	//if (!checkDistance2D(m_QualitySettings.ADT_WMO_Distance))
 	//{
 	//	return;
 	//}
 
-	if (!GetComponent<CColliderComponent>()->checkFrustum(camera))
+	if (!GetComponent<CColliderComponent3D>()->checkFrustum(camera))
 	{
 		return false;
 	}

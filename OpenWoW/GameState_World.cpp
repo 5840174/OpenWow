@@ -27,7 +27,6 @@ bool CGameState_World::Init()
 	std::shared_ptr<IM2Manager> m2Manager = std::make_shared<CM2_Manager>();
 	AddManager<IM2Manager>(m2Manager);
 
-
 	IApplication& app = Application::Get();
 	std::shared_ptr<IRenderDevice> renderDevice = app.GetRenderDevice();
 
@@ -94,7 +93,7 @@ void CGameState_World::OnResize(ResizeEventArgs & e)
     m_UITechnique.UpdateViewport(m_Viewport);
 }
 
-void CGameState_World::OnPreRender(Render3DEventArgs& e)
+void CGameState_World::OnPreRender(RenderEventArgs& e)
 {
 	m_FrameQuery->Begin(e.FrameCounter);
 
@@ -114,7 +113,7 @@ void CGameState_World::OnPreRender(Render3DEventArgs& e)
 	CMapM2Instance::reset();
 }
 
-void CGameState_World::OnRender(Render3DEventArgs& e)
+void CGameState_World::OnRender(RenderEventArgs& e)
 {
 	e.Camera = m_CameraController->GetCamera().operator->(); // TODO: Shit code. Refactor me.
 	Application::Get().GetLoader()->SetCamera(m_CameraController->GetCamera());
@@ -122,7 +121,7 @@ void CGameState_World::OnRender(Render3DEventArgs& e)
     m_3DTechnique.Render(e);
 }
 
-void CGameState_World::OnPostRender(Render3DEventArgs& e)
+void CGameState_World::OnPostRender(RenderEventArgs& e)
 {
 	m_FrameQuery->End(e.FrameCounter);
 
@@ -150,11 +149,11 @@ void CGameState_World::OnPostRender(Render3DEventArgs& e)
 	}
 }
 
-void CGameState_World::OnRenderUI(RenderUIEventArgs& e)
+void CGameState_World::OnRenderUI(RenderEventArgs& e)
 {
 	e.Viewport = &m_Viewport;
 
-	m_UITechnique.RenderUI(e);
+	m_UITechnique.Render(e);
 }
 
 //
@@ -302,11 +301,6 @@ void CGameState_World::Load3D()
 
 	m_DirLight = std::make_shared<CLight3D>(dir);
 	//m_MapController->AddLight(m_DirLight);
-
-	//UpdateLights();
-
-	//m_3DDeferredTechnique.AddPass(std::make_shared<ClearRenderTargetPass>(renderWindow->GetRenderTarget(), ClearFlags::All, g_ClearColor, 1.0f, 0));
-	//m_3DDeferredTechnique.AddPass(m_GB->GetPass());
 }
 
 void CGameState_World::LoadUI()
@@ -316,15 +310,13 @@ void CGameState_World::LoadUI()
 
 
 	// Font
-	m_CameraPosText = std::make_shared<CUITextNode>();
-	m_CameraPosText->SetParent(m_UIScene->GetRootNode());
+	m_CameraPosText = m_UIScene->GetRootNode()->CreateSceneNode<CUITextNode>();
 	m_CameraPosText->SetText("Camera position");
-	m_CameraPosText->SetTranslate(vec2(0.0f, 0.0f));
+	m_CameraPosText->GetComponent<CTransformComponentUI>()->SetTranslate(vec2(0.0f, 0.0f));
 
-	m_CameraRotText = std::make_shared<CUITextNode>();
-	m_CameraRotText->SetParent(m_UIScene->GetRootNode());
+	m_CameraRotText = m_UIScene->GetRootNode()->CreateSceneNode<CUITextNode>();
 	m_CameraRotText->SetText("Camera rotation");
-	m_CameraRotText->SetTranslate(vec2(0.0f, 20.0f));
+	m_CameraRotText->GetComponent<CTransformComponentUI>()->SetTranslate(vec2(0.0f, 20.0f));
 
 
 	// Texture
@@ -351,6 +343,9 @@ void CGameState_World::LoadUI()
 	//node2->SetMesh(__geom);
 	//node2->SetTranslate(vec2(180.0f, 180.0f));
 	//node2->SetScale(vec2(10.0f, 10.0f));
+
+
+    //m_UITechnique.AddPass(std::make_shared<ClearRenderTargetPass>(app.GetRenderWindow()->GetRenderTarget(), ClearFlags::DepthStencil, g_ClearColor, 1.0f, 0));
 
 	//
 	// UI Passes

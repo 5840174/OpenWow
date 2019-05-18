@@ -43,7 +43,7 @@ uint32 CMapChunk::GetAreaID() const
 bool CMapChunk::Accept(IVisitor& visitor)
 {
 	const AbstractPass& visitorAsBasePass = reinterpret_cast<const AbstractPass&>(visitor);
-	const Camera* camera = visitorAsBasePass.GetRenderEventArgs().Camera;
+	const Camera* camera = visitorAsBasePass.GetRenderEventArgs()->Camera;
 
 	//float distToCamera2D = (camera->GetTranslation() - GetComponent<CColliderComponent>()->GetBounds().getCenter()).length() - GetComponent<CColliderComponent>()->GetBounds().getRadius();
 	//if (distToCamera2D > m_QualitySettings.ADT_MCNK_Distance)
@@ -79,7 +79,7 @@ bool CMapChunk::PreLoad()
 	// Read header
 	m_File->readBytes(&header, sizeof(ADT_MCNK_Header));
 
-    std::shared_ptr<CTransformComponent> transformComponent = GetComponent<CTransformComponent>();
+    std::shared_ptr<CTransformComponent3D> transformComponent = GetComponent<CTransformComponent3D>();
 
 	// Scene node params
     {
@@ -97,7 +97,7 @@ bool CMapChunk::PreLoad()
             vec3(translate.x + C_ChunkSize, Math::MinFloat, translate.z + C_ChunkSize)
         );
 
-		GetComponent<CColliderComponent>()->SetBounds(bbox);
+		GetComponent<CColliderComponent3D>()->SetBounds(bbox);
 	}
 
 	return true;
@@ -168,7 +168,7 @@ bool CMapChunk::Load()
 		vec3 tempVertexes[C_MapBufferSize];
 		vec3* ttv = tempVertexes;
 
-		BoundingBox bbox = GetComponent<CColliderComponent>()->GetBounds();
+		BoundingBox bbox = GetComponent<CColliderComponent3D>()->GetBounds();
 
 		for (uint32 j = 0; j < 17; j++)
 		{
@@ -193,7 +193,7 @@ bool CMapChunk::Load()
 		}
 
 		bbox.calculateCenter();
-        GetComponent<CColliderComponent>()->SetBounds(bbox);
+        GetComponent<CColliderComponent3D>()->SetBounds(bbox);
 
 		verticesBuffer = _RenderDevice->CreateVertexBuffer(tempVertexes, C_MapBufferSize);
 	}
@@ -328,7 +328,7 @@ bool CMapChunk::Load()
 			std::shared_ptr<CADT_Liquid> m_Liquid = std::make_shared<CADT_Liquid>(8, 8);
 			m_Liquid->CreateFromMCLQ(m_File, header);
 
-            vec3 position = vec3(GetComponent<CTransformComponent>()->GetTranslation().x, 0.0f, GetComponent<CTransformComponent>()->GetTranslation().z);
+            vec3 position = vec3(GetComponent<CTransformComponent3D>()->GetTranslation().x, 0.0f, GetComponent<CTransformComponent3D>()->GetTranslation().z);
 
 			m_LiquidInstance = CreateSceneNode<Liquid_Instance>();
             m_LiquidInstance->Initialize(m_Liquid, position);
@@ -365,7 +365,7 @@ bool CMapChunk::Load()
 		__geomDefault->SetIndexBuffer(__ibHigh);
 		__geomDefault->SetMaterial(mat);
 
-		GetComponent<CMeshComponent>()->AddMesh(__geomDefault);
+		GetComponent<CMeshComponent3D>()->AddMesh(__geomDefault);
 	}
 
 

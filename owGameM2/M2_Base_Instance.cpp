@@ -115,7 +115,7 @@ bool CM2_Base_Instance::Delete()
 bool CM2_Base_Instance::Accept(IVisitor& visitor)
 {
 	const AbstractPass& visitorAsBasePass = reinterpret_cast<AbstractPass&>(visitor);
-	const Camera* camera = visitorAsBasePass.GetRenderEventArgs().Camera;
+	const Camera* camera = visitorAsBasePass.GetRenderEventArgs()->Camera;
 
 	//float distToCamera2D = (camera->GetTranslation() - GetComponent<CColliderComponent>()->GetBounds().getCenter()).length() - GetComponent<CColliderComponent>()->GetBounds().getRadius();
 	//if (distToCamera2D > m_QualitySettings.ADT_MDX_Distance)
@@ -131,12 +131,12 @@ bool CM2_Base_Instance::Accept(IVisitor& visitor)
 
 	if (m_Attached != nullptr)
 	{
-        GetComponent<CTransformComponent>()->ForceRecalculateLocalTransform();
+        GetComponent<CTransformComponent3D>()->ForceRecalculateLocalTransform();
 	}
 
 	if (m_M2->isAnimated())
 	{
-		m_Animator->Update(visitorAsBasePass.GetRenderEventArgs().TotalTime, visitorAsBasePass.GetRenderEventArgs().ElapsedTime);
+		m_Animator->Update(visitorAsBasePass.GetRenderEventArgs()->TotalTime, visitorAsBasePass.GetRenderEventArgs()->ElapsedTime);
 
 		//if (m_Object->isBillboard())
 		//{
@@ -146,7 +146,7 @@ bool CM2_Base_Instance::Accept(IVisitor& visitor)
 		//{
 		//if (!m_NeedRecalcAnimation)
 		//{
-		m_M2->calc(m_Animator->getSequenceIndex(), m_Animator->getCurrentTime(), static_cast<uint32>(visitorAsBasePass.GetRenderEventArgs().TotalTime), camera->GetViewMatrix(), GetComponent<CTransformComponent>()->GetWorldTransfom());
+		m_M2->calc(m_Animator->getSequenceIndex(), m_Animator->getCurrentTime(), static_cast<uint32>(visitorAsBasePass.GetRenderEventArgs()->TotalTime), camera->GetViewMatrix(), GetComponent<CTransformComponent3D>()->GetWorldTransfom());
 		//	m_NeedRecalcAnimation = true;
 		//}
 		//}
@@ -168,9 +168,9 @@ void CM2_Base_Instance::InitAnimator()
 void CM2_Base_Instance::RegisterComponents()
 {
     SetTransformComponent(AddComponent(std::make_shared<CM2_TransformComponent>(shared_from_this())));
-    AddComponent(std::make_shared<CMeshComponent>(shared_from_this()));
+    AddComponent(std::make_shared<CMeshComponent3D>(shared_from_this()));
     SetColliderComponent(AddComponent(std::make_shared<CM2_ColliderComponent>(shared_from_this())));
-    AddComponent(std::make_shared<CLightComponent>(shared_from_this()));
+    AddComponent(std::make_shared<CLightComponent3D>(shared_from_this()));
 }
 
 

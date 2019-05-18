@@ -49,7 +49,7 @@ const CSkyParams& CSkyParams::operator*=(float _weight)
 void CSkyParams::Clear()
 {
 	for (uint8 i = 0; i < LightColors::COUNT; i++)
-		m_Colors[i] = vec3(1.0f, 1.0f, 1.0f);
+		m_Colors[i] = vec3(0.0f, 0.0f, 0.0f);
 	for (uint8 i = 0; i < LightFogs::COUNT; i++)
 		m_Fogs[i] = 0.0f;
 

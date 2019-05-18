@@ -13,10 +13,10 @@ public:
 
     virtual void OnResize(ResizeEventArgs& e) override;
 
-	virtual void OnPreRender(Render3DEventArgs& e) override;
-	virtual void OnRender(Render3DEventArgs& e) override;
-	virtual void OnPostRender(Render3DEventArgs& e) override;
-	virtual void OnRenderUI(RenderUIEventArgs& e) override;
+	virtual void OnPreRender(RenderEventArgs& e) override;
+	virtual void OnRender(RenderEventArgs& e) override;
+	virtual void OnPostRender(RenderEventArgs& e) override;
+	virtual void OnRenderUI(RenderEventArgs& e) override;
 
 
 private:
@@ -27,12 +27,7 @@ private:
 	void UpdateLights();
 
 private:
-	Viewport                             m_Viewport;
-
 	std::shared_ptr<CFreeCameraController>   m_CameraController;
-
-	std::shared_ptr<Query>               m_FrameQuery;
-	double                               m_FrameTime;
 
 	std::shared_ptr<CLight3D>            m_DirLight;
 	std::shared_ptr<CMap>       m_MapController;

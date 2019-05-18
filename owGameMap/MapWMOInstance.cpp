@@ -25,7 +25,7 @@ void CMapWMOInstance::Initialize(const ADT_MODF & _placementInfo)
 
     // CTransformComponent
     {
-        std::shared_ptr<CTransformComponent> transformComponent = GetComponent<CTransformComponent>();
+        std::shared_ptr<CTransformComponent3D> transformComponent = GetComponent<CTransformComponent3D>();
 
         // Translate
         transformComponent->SetTranslate(_placementInfo.position);
@@ -39,7 +39,7 @@ void CMapWMOInstance::Initialize(const ADT_MODF & _placementInfo)
 
     // CColliderComponent
     {
-        std::shared_ptr<CColliderComponent> colliderComponent = GetComponent<CColliderComponent>();
+        std::shared_ptr<CColliderComponent3D> colliderComponent = GetComponent<CColliderComponent3D>();
 
         // Bounds
         BoundingBox bbox(_placementInfo.boundingBox.min, _placementInfo.boundingBox.max);

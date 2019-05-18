@@ -17,7 +17,7 @@ CLiquidLayer::~CLiquidLayer()
 {
 }
 
-bool CLiquidLayer::Render(RenderEventArgs & renderEventArgs, std::shared_ptr<ConstantBuffer> perObject, UINT indexStartLocation, UINT indexCnt, UINT vertexStartLocation, UINT vertexCnt)
+bool CLiquidLayer::Render(const RenderEventArgs* renderEventArgs, std::shared_ptr<ConstantBuffer> perObject, UINT indexStartLocation, UINT indexCnt, UINT vertexStartLocation, UINT vertexCnt)
 {
 	uint32_t texidx = (uint32_t)(EngineTime::GetTotalTime() * 1000.0f / 60.0f) % m_Textures.size();
 	m_Material->SetTexture(0, m_Textures[texidx]);

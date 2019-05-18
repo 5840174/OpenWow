@@ -33,7 +33,7 @@ void SkyManager::UpdateCamera(const Camera* camera)
 
 	Calculate(camera, GetMapController()->getTime()->GetTime());
 
-	GetComponent<CTransformComponent>()->SetTranslate(camera->GetTranslation());
+	GetComponent<CTransformComponent3D>()->SetTranslate(camera->GetTranslation());
 }
 
 bool SkyManager::Load()
@@ -148,7 +148,7 @@ void SkyManager::Calculate(const Camera* camera, uint32 _time)
 
 std::shared_ptr<CMap> SkyManager::GetMapController() const
 {
-    return std::dynamic_pointer_cast<CMap, SceneNode3D>(GetParent());
+    return std::dynamic_pointer_cast<CMap, SceneNode>(GetParent());
 }
 
 void SkyManager::InitBuffer()
@@ -195,7 +195,7 @@ void SkyManager::InitBuffer()
 	material->SetWrapper(material);
 	__geom->SetMaterial(material);
 
-	GetComponent<CMeshComponent>()->AddMesh(__geom);
+	GetComponent<CMeshComponent3D>()->AddMesh(__geom);
 }
 
 void SkyManager::CalculateSkiesWeights(cvec3 pos)

@@ -18,7 +18,7 @@ void CMapM2Instance::Initialize(const ADT_MDXDef & _placementInfo)
 
     // CTransformComponent
     {
-        std::shared_ptr<CTransformComponent> transformComponent = GetComponent<CTransformComponent>();
+        std::shared_ptr<CTransformComponent3D> transformComponent = GetComponent<CTransformComponent3D>();
 
         transformComponent->SetTranslate(_placementInfo.position);
         vec3 rotate = glm::radians(_placementInfo.rotation);
@@ -36,7 +36,7 @@ void CMapM2Instance::Initialize(const ADT_MDXDef & _placementInfo)
 bool CMapM2Instance::Accept(IVisitor& visitor)
 {
 	const AbstractPass& visitorAsBasePass = reinterpret_cast<AbstractPass&>(visitor);
-	const Camera* camera = visitorAsBasePass.GetRenderEventArgs().Camera;
+	const Camera* camera = visitorAsBasePass.GetRenderEventArgs()->Camera;
 	
 	const CRenderPass_M2* passAsM2Pass = dynamic_cast<const CRenderPass_M2*>(&visitor);
 	if (passAsM2Pass)

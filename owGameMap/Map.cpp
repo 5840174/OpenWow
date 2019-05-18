@@ -50,11 +50,11 @@ void CMap::MapPreLoad(std::shared_ptr<DBC_MapRecord> _map)
 	Log::Print("Map[%s]: Id [%d]. Preloading...", m_MapDBCRecord->Get_Directory(), m_MapDBCRecord->Get_ID());
 
 	m_WDL.reset();
-	m_WDL = std::make_shared<CMapWDL>(std::static_pointer_cast<CMap, SceneNode3D>(shared_from_this()));
+	m_WDL = std::make_shared<CMapWDL>(std::static_pointer_cast<CMap, SceneNode>(shared_from_this()));
 	m_WDL->Load();
 
 	m_WDT.reset();
-	m_WDT = std::make_shared<CMapWDT>(std::static_pointer_cast<CMap, SceneNode3D>(shared_from_this()));
+	m_WDT = std::make_shared<CMapWDT>(std::static_pointer_cast<CMap, SceneNode>(shared_from_this()));
 }
 
 void CMap::MapLoad()
@@ -115,7 +115,7 @@ void CMap::UpdateCamera(const Camera* camera)
 	int midTile = static_cast<uint32>(C_RenderedTiles / 2);
 	if (m_Current[midTile][midTile] != nullptr || m_IsOnInvalidTile)
 	{
-        std::shared_ptr<CTransformComponent> transformComponent = m_Current[midTile][midTile]->GetComponent<CTransformComponent>();
+        std::shared_ptr<CTransformComponent3D> transformComponent = m_Current[midTile][midTile]->GetComponent<CTransformComponent3D>();
 
 		if (m_IsOnInvalidTile ||
 			(camera->GetTranslation().x < transformComponent->GetTranslation().x) ||

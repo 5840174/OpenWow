@@ -20,14 +20,14 @@ void CMapTile::Initialize(uint32 _intexX, uint32 _intexZ)
     m_IndexZ = _intexZ;
 
     // CTransformComponent
-    std::shared_ptr<CTransformComponent> transformComponent = GetComponent<CTransformComponent>();
+    std::shared_ptr<CTransformComponent3D> transformComponent = GetComponent<CTransformComponent3D>();
     {
         //transformComponent->SetTranslate(vec3(_intexX * C_TileSize, 0.0f, _intexZ * C_TileSize));
     }
 
     // CColliderComponent
     {
-        std::shared_ptr<CColliderComponent> colliderComponent = GetComponent<CColliderComponent>();
+        std::shared_ptr<CColliderComponent3D> colliderComponent = GetComponent<CColliderComponent3D>();
         vec3 translate = transformComponent->GetTranslation();
 
         BoundingBox bbox
@@ -54,7 +54,7 @@ std::shared_ptr<CMapChunk> CMapTile::getChunk(int32 x, int32 z)
 bool CMapTile::Accept(IVisitor& visitor)
 {
 	const AbstractPass& visitorAsBasePass = reinterpret_cast<AbstractPass&>(visitor);
-	const Camera* camera = visitorAsBasePass.GetRenderEventArgs().Camera;
+	const Camera* camera = visitorAsBasePass.GetRenderEventArgs()->Camera;
 
 	//if (!GetMapController()->getTileIsCurrent(m_IndexX, m_IndexZ))
 	//{
@@ -234,7 +234,7 @@ bool CMapTile::Load()
 
 	for (uint32_t i = 0; i < C_ChunksInTileGlobal; i++)
 	{
-		std::shared_ptr<CMapChunk> chunk = GetMapController()->CreateSceneNode<CMapChunk>(GetMapController(), std::static_pointer_cast<CMapTile, SceneNode3D>(shared_from_this()));
+		std::shared_ptr<CMapChunk> chunk = GetMapController()->CreateSceneNode<CMapChunk>(GetMapController(), std::static_pointer_cast<CMapTile, SceneNode>(shared_from_this()));
         chunk->Initialize(f->Path_Name(), chunks[i]);
 		Application::Get().GetLoader()->AddToLoadQueue(chunk);
 		m_Chunks.push_back(chunk);
@@ -292,5 +292,5 @@ bool CMapTile::Delete()
 //
 std::shared_ptr<CMap> CMapTile::GetMapController() const
 {
-    return std::dynamic_pointer_cast<CMap, SceneNode3D>(GetParent());
+    return std::dynamic_pointer_cast<CMap, SceneNode>(GetParent());
 }

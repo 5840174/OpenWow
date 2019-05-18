@@ -2,6 +2,7 @@
 
 // Additional (OW)
 #include "GameState_Client.h"
+#include "GameState_Menu.h"
 #include "GameState_World.h"
 
 int main(int argumentCount, char* arguments[])
@@ -28,7 +29,7 @@ int main(int argumentCount, char* arguments[])
 		std::shared_ptr<IFilesManager> filesManager = std::make_shared<CFilesManager>();
 		AddManager<IFilesManager>(filesManager);
 
-		std::shared_ptr<IFilesStorage> localFilesGamedata = std::make_shared<CLocalFilesStorage>("D:\\_programming\\OpenWow\\_gamedata\\");
+		std::shared_ptr<IFilesStorage> localFilesGamedata = std::make_shared<CLocalFilesStorage>("C:\\_programming\\OpenWow\\_gamedata\\");
 		filesManager->RegisterFilesStorage(localFilesGamedata);
 
 		std::shared_ptr<IFilesStorage> mpqFileStorage = std::make_shared<CMPQFilesStorage>("D:\\_games\\World of Warcraft 1.12.1\\Data\\", IFilesStorageEx::PRIOR_HIGH);
@@ -58,6 +59,7 @@ int main(int argumentCount, char* arguments[])
         std::shared_ptr<IFontsManager> fontsManager = std::make_shared<FontsManager>();
         AddManager<IFontsManager>(fontsManager);
 
+        app.AddGameState(GameStatesNames::GAME_STATE_MENU, std::make_shared<CGameState_Menu>(&app));
 		app.AddGameState(GameStatesNames::GAME_STATE_WORLD, std::make_shared<CGameState_World>(&app));
 		app.AddGameState(GameStatesNames::GAME_STATE_CLIENT, std::make_shared<CGameState_Client>(&app));
 		app.SetGameState(GameStatesNames::GAME_STATE_WORLD);

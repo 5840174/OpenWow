@@ -9,9 +9,6 @@ CGameState_Client::CGameState_Client(const IApplication * Application)
     : base(Application)
 {
 	m_Viewport = Viewport(0, 0, 1280.0f, 1024.0f);
-
-	m_3DScene = std::make_shared<Scene3D>();
-	m_UIScene = std::make_shared<CUIScene>();
 }
 
 CGameState_Client::~CGameState_Client()
@@ -48,7 +45,7 @@ void CGameState_Client::S_CharEnum(CByteBuffer& _buff)
 	character->InitFromTemplate(charTemplate);
 	character->CreateInstances();
 	character->SetParent(m_3DScene->GetRootNode());
-	character->GetComponent<CTransformComponent>()->SetTranslate(charPosition);
+	character->GetComponent<CTransformComponent3D>()->SetTranslate(charPosition);
 
 	m_MapController->MapPreLoad(DBC_Map[charTemplate.MapId]);
 	m_MapController->MapLoad();
@@ -136,7 +133,7 @@ void CGameState_Client::Destroy()
 //
 //
 //
-void CGameState_Client::OnPreRender(Render3DEventArgs& e)
+void CGameState_Client::OnPreRender(RenderEventArgs& e)
 {
 	m_FrameQuery->Begin(e.FrameCounter);
 
@@ -144,14 +141,14 @@ void CGameState_Client::OnPreRender(Render3DEventArgs& e)
 	CMapM2Instance::reset();
 }
 
-void CGameState_Client::OnRender(Render3DEventArgs& e)
+void CGameState_Client::OnRender(RenderEventArgs& e)
 {
 	e.Camera = m_CameraController->GetCamera().operator->(); // TODO: Shit code. Refactor me.
 
 	m_3DTechnique.Render(e);
 }
 
-void CGameState_Client::OnPostRender(Render3DEventArgs& e)
+void CGameState_Client::OnPostRender(RenderEventArgs& e)
 {
 	m_FrameQuery->End(e.FrameCounter);
 
@@ -179,11 +176,11 @@ void CGameState_Client::OnPostRender(Render3DEventArgs& e)
 	}
 }
 
-void CGameState_Client::OnRenderUI(RenderUIEventArgs& e)
+void CGameState_Client::OnRenderUI(RenderEventArgs& e)
 {
 	e.Viewport = &m_Viewport;
 
-	m_UITechnique.RenderUI(e);
+	m_UITechnique.Render(e);
 }
 
 //
@@ -246,26 +243,13 @@ void CGameState_Client::LoadUI()
 
 
 	// Font
-	m_CameraPosText = std::make_shared<CUITextNode>();
-	m_CameraPosText->SetParent(m_UIScene->GetRootNode());
+	m_CameraPosText = m_UIScene->GetRootNode()->CreateSceneNode<CUITextNode>();
 	m_CameraPosText->SetText("Camera position");
-	m_CameraPosText->SetTranslate(vec2(0.0f, 0.0f));
+	m_CameraPosText->GetComponent<CTransformComponentUI>()->SetTranslate(vec2(0.0f, 0.0f));
 
-	m_CameraRotText = std::make_shared<CUITextNode>();
-	m_CameraRotText->SetParent(m_UIScene->GetRootNode());
+	m_CameraRotText = m_UIScene->GetRootNode()->CreateSceneNode<CUITextNode>();
 	m_CameraRotText->SetText("Camera rotation");
-	m_CameraRotText->SetTranslate(vec2(0.0f, 20.0f));
-
-
-	// Texture
-	/*if (m_MapController != nullptr)
-	{
-		std::shared_ptr<UITexture> node3 = std::make_shared<UITexture>();
-		node3->SetParent(m_UIScene->GetRootNode());
-		node3->SetTexture(m_MapController->getMinimap());
-		node3->SetTranslate(vec2(100.0f, 100.0f));
-		node3->SetScale(vec2(512.0f, 512.0f));
-	}*/
+	m_CameraRotText->GetComponent<CTransformComponentUI>()->SetTranslate(vec2(0.0f, 20.0f));
 
 	//
 	// UI Passes

@@ -24,9 +24,9 @@ void CM2_Skin_Batch::PostInit()
 	SetMaterial(m_TestMaterial);
 }
 
-bool CM2_Skin_Batch::Render(RenderEventArgs& renderEventArgs, std::shared_ptr<ConstantBuffer> perObject, UINT indexStartLocation, UINT indexCnt, UINT vertexStartLocation, UINT vertexCnt)
+bool CM2_Skin_Batch::Render(const RenderEventArgs* renderEventArgs, std::shared_ptr<ConstantBuffer> perObject, UINT indexStartLocation, UINT indexCnt, UINT vertexStartLocation, UINT vertexCnt)
 {
-	const Render3DEventArgs& render3DEventArgs = reinterpret_cast<const Render3DEventArgs&>(renderEventArgs);
+	const RenderEventArgs& render3DEventArgs = reinterpret_cast<const RenderEventArgs&>(renderEventArgs);
 
 	// TODO: Shit code. Delete me later
 	const SceneNode3D* sceneNode = dynamic_cast<const SceneNode3D*>(render3DEventArgs.Node);

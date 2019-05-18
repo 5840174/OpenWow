@@ -6,9 +6,9 @@ class CM2_Base_Instance;
 
 class
     __declspec(UUID_TransformComponent)
-    CM2_TransformComponent : public CTransformComponent
+    CM2_TransformComponent : public CTransformComponent3D
 {
-    typedef CTransformComponent base;
+    typedef CTransformComponent3D base;
 public:
     CM2_TransformComponent(std::shared_ptr<SceneNode3D> OwnerNode);
     virtual ~CM2_TransformComponent();
