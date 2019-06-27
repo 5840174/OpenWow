@@ -22,16 +22,11 @@ CRenderPass_WMO::~CRenderPass_WMO()
 //
 bool CRenderPass_WMO::Visit(std::shared_ptr<SceneNode3D> node)
 {
-    std::shared_ptr<CWMO_Group_Instance> wmoInstance = std::dynamic_pointer_cast<CWMO_Group_Instance, SceneNode3D>(node);
-    if (wmoInstance)
-    {
-        return base::Visit(node);
-    }
+    std::shared_ptr<CWMO_Base_Instance> wmoInstance = std::dynamic_pointer_cast<CWMO_Base_Instance>(node);
+    std::shared_ptr<CWMO_Group_Instance> wmoGroupInstance = std::dynamic_pointer_cast<CWMO_Group_Instance>(node);
 
-    return false;
-}
+    if (!wmoInstance && !wmoGroupInstance)
+        return false;
 
-bool CRenderPass_WMO::Visit(std::shared_ptr<IMesh> Mesh, UINT IndexStartLocation, UINT IndexCnt, UINT VertexStartLocation, UINT VertexCnt)
-{
-    return Mesh->Render(GetRenderEventArgs(), GetPerObjectConstantBuffer(), IndexStartLocation, IndexCnt, VertexStartLocation, VertexCnt);
+    return base::Visit(node);
 }

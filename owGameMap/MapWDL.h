@@ -27,7 +27,6 @@ private:
 	std::shared_ptr<Texture>					    m_Minimap;
 	uint32											m_MAREOffsets[C_TilesInMap][C_TilesInMap];
 	std::shared_ptr<WDL_Node_Material>              m_LowResilutionTileMaterial;
-	std::vector<std::shared_ptr<CWDL_LowResTile>>	m_LowResilutionTiles;
 	std::vector<std::string>						m_LowResolutionWMOsNames;
 	std::vector<ADT_MODF>					        m_LowResolutionWMOsPlacementInfo;
 	std::vector<std::shared_ptr<CMapWMOInstance>>	m_LowResolutionWMOs;

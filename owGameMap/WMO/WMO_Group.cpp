@@ -40,7 +40,7 @@ void WMO_Group::CreateInsances(std::weak_ptr<CWMO_Group_Instance> _parent) const
 		_parent.lock()->addLiquidInstance(liquid);
 	}
 
-	for (const auto& index : m_DoodadsPlacementIndexes)
+	/*for (const auto& index : m_DoodadsPlacementIndexes)
 	{
 		const SWMO_Doodad_PlacementInfo& placement = m_ParentWMO.lock()->m_DoodadsPlacementInfos[index];
 
@@ -48,7 +48,7 @@ void WMO_Group::CreateInsances(std::weak_ptr<CWMO_Group_Instance> _parent) const
         inst->Initialize(placement);
 		Application::Get().GetLoader()->AddToLoadQueue(inst);
 		_parent.lock()->addDoodadInstance(inst);
-	}
+	}*/
 }
 
 uint32 WMO_Group::to_wmo_liquid(int x)

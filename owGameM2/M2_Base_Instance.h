@@ -42,10 +42,12 @@ public:
 	uint32                              getPriority() const override { return 3; };
 
 	// SceneNode3D
-	virtual bool                        Accept(IVisitor& visitor) override;
+	virtual bool                        Accept(std::shared_ptr<IVisitor> visitor) override;
 
 protected:
 	void InitAnimator();
+
+    const CGroupQuality&                GetGroupQuality() const;
 
 private:
 	// Color & Alpha

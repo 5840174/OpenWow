@@ -34,7 +34,7 @@ public:
     const LuqidInstances& getLiquidInstances() { return m_Liquids; }
 
 	// SceneNode3D
-	bool Accept(IVisitor& visitor) override;
+	bool Accept(std::shared_ptr<IVisitor> visitor) override;
 
 private:
 	const std::shared_ptr<WMO_Group> m_Object;

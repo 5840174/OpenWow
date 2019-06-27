@@ -18,7 +18,7 @@ public:
 	uint32 getPriority() const override { return CM2_Base_Instance::getPriority() + 1; };
 
 	// SceneNode3D
-	bool Accept(IVisitor& visitor) override;
+	bool Accept(std::shared_ptr<IVisitor> visitor) override;
 
 private:
 	const std::weak_ptr<const WMO_Group>	m_ParentGroup;

@@ -33,33 +33,29 @@ void CMapM2Instance::Initialize(const ADT_MDXDef & _placementInfo)
 //
 // SceneNode3D
 //
-bool CMapM2Instance::Accept(IVisitor& visitor)
+bool CMapM2Instance::Accept(std::shared_ptr<IVisitor> visitor)
 {
-	const AbstractPass& visitorAsBasePass = reinterpret_cast<AbstractPass&>(visitor);
-	const Camera* camera = visitorAsBasePass.GetRenderEventArgs()->Camera;
-	
-	const CRenderPass_M2* passAsM2Pass = dynamic_cast<const CRenderPass_M2*>(&visitor);
-	if (passAsM2Pass)
+	std::shared_ptr<CRenderPass_M2> passAsM2Pass = std::dynamic_pointer_cast<CRenderPass_M2>(visitor);
+    if (passAsM2Pass == nullptr)
+        return false;
+
+    const Camera* camera = passAsM2Pass->GetRenderEventArgs()->Camera;
+
+	if (m_AlreadyDraw.find(m_UniqueId) != m_AlreadyDraw.end())
 	{
-		if (m_AlreadyDraw.find(m_UniqueId) != m_AlreadyDraw.end())
-		{
-			//return false;
-		}
+		return false;
 	}
 
-	/*float distToCamera2D = (camera.GetTranslation() - GetBounds().getCenter()).length() - GetBounds().getRadius();
-	if (distToCamera2D > m_QualitySettings.ADT_MCNK_Distance)
+	float distToCamera2D = (camera->GetTranslation() - GetComponent<CColliderComponent3D>()->GetBounds().getCenter()).length() - GetComponent<CColliderComponent3D>()->GetBounds().getRadius();
+	if (distToCamera2D > GetGroupQuality().ADT_MCNK_Distance)
 	{
-		return;
-	}*/
+		return false;
+	}
 
 	// SceneNode3D
 	if (CM2_Base_Instance::Accept(visitor))
 	{
-		if (passAsM2Pass)
-		{
-			m_AlreadyDraw.insert(m_UniqueId);
-		}
+		m_AlreadyDraw.insert(m_UniqueId);
 		return true;
 	}
 

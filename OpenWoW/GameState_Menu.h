@@ -23,8 +23,6 @@ private:
 	void LoadUI();
 
 private:
-	std::shared_ptr<CFreeCameraController>  m_CameraController;
-
 	std::shared_ptr<CUITextNode>            m_CameraPosText;
 	std::shared_ptr<CUITextNode>            m_CameraRotText;
 

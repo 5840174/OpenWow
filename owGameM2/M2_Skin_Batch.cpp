@@ -26,16 +26,13 @@ void CM2_Skin_Batch::PostInit()
 
 bool CM2_Skin_Batch::Render(const RenderEventArgs* renderEventArgs, std::shared_ptr<ConstantBuffer> perObject, UINT indexStartLocation, UINT indexCnt, UINT vertexStartLocation, UINT vertexCnt)
 {
-	const RenderEventArgs& render3DEventArgs = reinterpret_cast<const RenderEventArgs&>(renderEventArgs);
-
-	// TODO: Shit code. Delete me later
-	const SceneNode3D* sceneNode = dynamic_cast<const SceneNode3D*>(render3DEventArgs.Node);
+	const SceneNode3D* sceneNode = dynamic_cast<const SceneNode3D*>(renderEventArgs->Node);
 	assert1(sceneNode != nullptr);
 
 	const CM2_Base_Instance* sceneNodeAsM2Instance = dynamic_cast<const CM2_Base_Instance*>(sceneNode);
 	assert1(sceneNodeAsM2Instance != nullptr);
 
-	const Camera* camera = render3DEventArgs.Camera;
+	const Camera* camera = renderEventArgs->Camera;
 	assert1(camera != nullptr);
 
 	const SM2_SkinSection& proto = m_SkinSection->getProto();

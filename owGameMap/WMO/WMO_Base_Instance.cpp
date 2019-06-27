@@ -3,8 +3,9 @@
 // General
 #include "WMO_Base_Instance.h"
 
-CWMO_Base_Instance::CWMO_Base_Instance(std::string _wmoName) :
-	m_WMOName(_wmoName)
+CWMO_Base_Instance::CWMO_Base_Instance(std::string _wmoName) 
+    : m_WMOName(_wmoName)
+    , m_QualitySettings(GetSettingsGroup<CGroupQuality>())
 {}
 
 CWMO_Base_Instance::~CWMO_Base_Instance()
@@ -72,20 +73,25 @@ void CWMO_Base_Instance::UpdateCamera(const Camera* camera)
 #endif
 }
 
-bool CWMO_Base_Instance::Accept(IVisitor& visitor)
+bool CWMO_Base_Instance::Accept(std::shared_ptr<IVisitor> visitor)
 {
-	const AbstractPass& visitorAsBasePass = reinterpret_cast<AbstractPass&>(visitor);
- 	const Camera* camera = visitorAsBasePass.GetRenderEventArgs()->Camera;
+	std::shared_ptr<AbstractPass> visitorAsBasePass = std::dynamic_pointer_cast<AbstractPass>(visitor);
+ 	const Camera* camera = visitorAsBasePass->GetRenderEventArgs()->Camera;
 
-	//if (!checkDistance2D(m_QualitySettings.ADT_WMO_Distance))
+	//if (!GetComponent<CColliderComponent3D>()->CheckDistance2D(camera, GetGroupQuality().ADT_WMO_Distance))
 	//{
-	//	return;
+	//	return false;
 	//}
 
-	if (!GetComponent<CColliderComponent3D>()->checkFrustum(camera))
-	{
-		return false;
-	}
+	//if (!GetComponent<CColliderComponent3D>()->CheckFrustum(camera))
+	//{
+	//	return false;
+	//}
 
 	return SceneNode3D::Accept(visitor);
+}
+
+const CGroupQuality & CWMO_Base_Instance::GetGroupQuality() const
+{
+    return m_QualitySettings;
 }

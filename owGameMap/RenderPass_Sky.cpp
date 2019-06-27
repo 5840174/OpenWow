@@ -22,15 +22,8 @@ CRenderPass_Sky::~CRenderPass_Sky()
 bool CRenderPass_Sky::Visit(std::shared_ptr<SceneNode3D> node)
 {
     std::shared_ptr<SkyManager> skyManagerInstance = std::dynamic_pointer_cast<SkyManager, SceneNode3D>(node);
-    if (skyManagerInstance)
-    {
-        return base::Visit(node);
-    }
+    if (skyManagerInstance == nullptr)
+        return false;
 
-    return false;
-}
-
-bool CRenderPass_Sky::Visit(std::shared_ptr<IMesh> Mesh, UINT IndexStartLocation, UINT IndexCnt, UINT VertexStartLocation, UINT VertexCnt)
-{
-    return Mesh->Render(GetRenderEventArgs(), GetPerObjectConstantBuffer(), IndexStartLocation, IndexCnt, VertexStartLocation, VertexCnt);
+    return base::Visit(node);
 }

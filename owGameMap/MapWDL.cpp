@@ -100,8 +100,7 @@ void CMapWDL::CreateInsances(std::weak_ptr<SceneNode3D> _parent)
 				__geom->SetMaterial(m_LowResilutionTileMaterial);
 				
 				std::shared_ptr<CWDL_LowResTile> lowResTile = std::make_shared<CWDL_LowResTile>(m_MapController, __geom, i, j);
-				_parent.lock()->AddMesh(lowResTile);
-				m_LowResilutionTiles.push_back(lowResTile);
+				_parent.lock()->GetComponent<CMeshComponent3D>()->AddMesh(lowResTile);
 			}
 		}
 	}*/

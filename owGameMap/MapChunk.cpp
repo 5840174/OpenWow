@@ -40,18 +40,17 @@ uint32 CMapChunk::GetAreaID() const
 // SceneNode3D
 //
 
-bool CMapChunk::Accept(IVisitor& visitor)
+bool CMapChunk::Accept(std::shared_ptr<IVisitor> visitor)
 {
-	const AbstractPass& visitorAsBasePass = reinterpret_cast<const AbstractPass&>(visitor);
-	const Camera* camera = visitorAsBasePass.GetRenderEventArgs()->Camera;
+	std::shared_ptr<AbstractPass> visitorAsBasePass = std::dynamic_pointer_cast<AbstractPass>(visitor);
+	const Camera* camera = visitorAsBasePass->GetRenderEventArgs()->Camera;
 
-	//float distToCamera2D = (camera->GetTranslation() - GetComponent<CColliderComponent>()->GetBounds().getCenter()).length() - GetComponent<CColliderComponent>()->GetBounds().getRadius();
-	//if (distToCamera2D > m_QualitySettings.ADT_MCNK_Distance)
-	//{
-	//	return false;
-	//}
+    if (!GetComponent<CColliderComponent3D>()->CheckDistance(camera, m_QualitySettings.ADT_MCNK_Distance))
+    {
+        return false;
+    }
 
-	//if (!GetComponent<CColliderComponent>()->checkFrustum(camera))
+	//if (!GetComponent<CColliderComponent3D>()->CheckFrustum(camera))
 	//{
 	//	return false;
 	//}

@@ -29,8 +29,3 @@ bool CRenderPass_Liquid::Visit(std::shared_ptr<SceneNode3D> node)
 
     return false;
 }
-
-bool CRenderPass_Liquid::Visit(std::shared_ptr<IMesh> mesh, UINT IndexStartLocation, UINT IndexCnt, UINT VertexStartLocation, UINT VertexCnt)
-{
-    return mesh->Render(GetRenderEventArgs(), GetPerObjectConstantBuffer(), IndexStartLocation, IndexCnt, VertexStartLocation, VertexCnt);
-}

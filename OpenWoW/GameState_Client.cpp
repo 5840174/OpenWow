@@ -36,7 +36,7 @@ void CGameState_Client::S_CharEnum(CByteBuffer& _buff)
 	//bb << (uint64)charTemplate.GUID;
 	//m_authWorldController->getWorldSocket()->SendData(CMSG_PLAYER_LOGIN, bb);
 
-	m_CameraController->GetCamera()->SetTranslate(charPosition);
+	GetCameraController()->GetCamera()->SetTranslate(charPosition);
 
 	_RenderDevice->Lock();
 
@@ -101,9 +101,9 @@ bool CGameState_Client::Init()
 	//
 	// Camera controller
 	//
-	m_CameraController = std::make_shared<CFreeCameraController>();
-	m_CameraController->GetCamera()->SetViewport(m_Viewport);
-	m_CameraController->GetCamera()->SetProjectionRH(45.0f, 1280.0f / 1024.0f, 1.0f, 4000.0f);
+	SetCameraController(std::make_shared<CFreeCameraController>());
+    GetCameraController()->GetCamera()->SetViewport(m_Viewport);
+    GetCameraController()->GetCamera()->SetProjectionRH(45.0f, 1280.0f / 1024.0f, 1.0f, 4000.0f);
 	
 	m_FrameQuery = renderDevice->CreateQuery(Query::QueryType::Timer, 1);
 
@@ -143,7 +143,7 @@ void CGameState_Client::OnPreRender(RenderEventArgs& e)
 
 void CGameState_Client::OnRender(RenderEventArgs& e)
 {
-	e.Camera = m_CameraController->GetCamera().operator->(); // TODO: Shit code. Refactor me.
+	e.Camera = GetCameraController()->GetCamera().operator->(); // TODO: Shit code. Refactor me.
 
 	m_3DTechnique.Render(e);
 }
@@ -152,10 +152,10 @@ void CGameState_Client::OnPostRender(RenderEventArgs& e)
 {
 	m_FrameQuery->End(e.FrameCounter);
 
-	vec3 cameraTrans = m_CameraController->GetCamera()->GetTranslation();
+	vec3 cameraTrans = GetCameraController()->GetCamera()->GetTranslation();
 	m_CameraPosText->SetText("Pos: " + std::to_string(cameraTrans.x) + ", " + std::to_string(cameraTrans.y) + ", " + std::to_string(cameraTrans.z));
 
-	vec3 cameraRot = m_CameraController->GetCamera()->GetDirection();
+	vec3 cameraRot = GetCameraController()->GetCamera()->GetDirection();
 	m_CameraRotText->SetText("Rot: " + std::to_string(cameraRot.x) + ", " + std::to_string(cameraRot.y) + ", " + std::to_string(cameraRot.z));
 
 	Query::QueryResult frameResult = m_FrameQuery->GetQueryResult(e.FrameCounter - (m_FrameQuery->GetBufferCount() - 1));
@@ -229,7 +229,6 @@ void CGameState_Client::Load3D()
 	//
 	AddSkyPasses(renderDevice, app.GetRenderWindow()->GetRenderTarget(), &m_3DTechnique, &m_Viewport, m_3DScene);
 	AddWDLPasses(renderDevice, app.GetRenderWindow()->GetRenderTarget(), &m_3DTechnique, &m_Viewport, m_3DScene);
-	AddDebugPasses(renderDevice, app.GetRenderWindow()->GetRenderTarget(), &m_3DTechnique, m_Viewport, m_3DScene);
 	AddMCNKPasses(renderDevice, app.GetRenderWindow()->GetRenderTarget(), &m_3DTechnique, &m_Viewport, m_3DScene);
 	AddWMOPasses(renderDevice, app.GetRenderWindow()->GetRenderTarget(), &m_3DTechnique, &m_Viewport, m_3DScene);
 	AddLiquidPasses(renderDevice, app.GetRenderWindow()->GetRenderTarget(), &m_3DTechnique, &m_Viewport, m_3DScene);

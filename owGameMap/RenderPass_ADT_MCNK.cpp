@@ -23,15 +23,8 @@ CRenderPass_ADT_MCNK::~CRenderPass_ADT_MCNK()
 bool CRenderPass_ADT_MCNK::Visit(std::shared_ptr<SceneNode3D> node)
 {
     std::shared_ptr<CMapChunk> adtMCNKInstance = std::dynamic_pointer_cast<CMapChunk, SceneNode3D>(node);
-    if (adtMCNKInstance)
-    {
-        return base::Visit(node);
-    }
+    if (adtMCNKInstance == nullptr)
+        return false;
 
-    return false;
-}
-
-bool CRenderPass_ADT_MCNK::Visit(std::shared_ptr<IMesh> Mesh, UINT IndexStartLocation, UINT IndexCnt, UINT VertexStartLocation, UINT VertexCnt)
-{
-	return Mesh->Render(GetRenderEventArgs(), GetPerObjectConstantBuffer(), IndexStartLocation, IndexCnt, VertexStartLocation, VertexCnt);
+    return base::Visit(node);
 }

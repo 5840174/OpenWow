@@ -27,14 +27,16 @@ private:
 	void UpdateLights();
 
 private:
-	std::shared_ptr<CFreeCameraController>   m_CameraController;
-
-	std::shared_ptr<CLight3D>            m_DirLight;
-	std::shared_ptr<CMap>       m_MapController;
+	std::shared_ptr<CLight3D>               m_DirLight;
+	std::shared_ptr<CMap>                   m_MapController;
 
 	std::shared_ptr<CUITextNode>              m_CameraPosText;
 	std::shared_ptr<CUITextNode>              m_CameraRotText;
 
+    RenderTechnique                                 m_3D2Technique;
+    Viewport m_Viewport2;
+    std::shared_ptr<IRenderTarget>  m_RenderTarget;
+    std::shared_ptr<Texture>            m_Texture;
 
 private:
 	const uint16 c_WindowsWidth = 1280;

@@ -16,7 +16,6 @@ void AddSkyPasses(std::shared_ptr<IRenderDevice> device, std::shared_ptr<IRender
 	DepthStencilState::DepthMode enableDepthWrites(true, DepthStencilState::DepthWrite::Enable);
 	DepthStencilState::DepthMode disableDepthWrites(false, DepthStencilState::DepthWrite::Disable);
 
-
 	// PIPELINES
 	std::shared_ptr<PipelineState> WDLPipeline = device->CreatePipelineState();
 	WDLPipeline->GetBlendState().SetBlendMode(disableBlending);
@@ -34,7 +33,6 @@ void AddWDLPasses(std::shared_ptr<IRenderDevice> device, std::shared_ptr<IRender
 	BlendState::BlendMode disableBlending;
 	DepthStencilState::DepthMode enableDepthWrites(true, DepthStencilState::DepthWrite::Enable);
 	DepthStencilState::DepthMode disableDepthWrites(false, DepthStencilState::DepthWrite::Disable);
-
 
 	// PIPELINES
 	std::shared_ptr<PipelineState> WDLPipeline = device->CreatePipelineState();

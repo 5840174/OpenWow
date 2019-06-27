@@ -51,10 +51,10 @@ std::shared_ptr<CMapChunk> CMapTile::getChunk(int32 x, int32 z)
 // SceneNode3D
 //
 
-bool CMapTile::Accept(IVisitor& visitor)
+bool CMapTile::Accept(std::shared_ptr<IVisitor> visitor)
 {
-	const AbstractPass& visitorAsBasePass = reinterpret_cast<AbstractPass&>(visitor);
-	const Camera* camera = visitorAsBasePass.GetRenderEventArgs()->Camera;
+	std::shared_ptr<AbstractPass> visitorAsBasePass = std::dynamic_pointer_cast<AbstractPass>(visitor);
+	const Camera* camera = visitorAsBasePass->GetRenderEventArgs()->Camera;
 
 	//if (!GetMapController()->getTileIsCurrent(m_IndexX, m_IndexZ))
 	//{
@@ -62,7 +62,7 @@ bool CMapTile::Accept(IVisitor& visitor)
 	//}
 
 	// Check frustrum
-	//if (!checkFrustum(camera))
+	//if (!CheckFrustum(camera))
 	//{
 	//	return false;
 	//}
@@ -249,10 +249,10 @@ bool CMapTile::Load()
 
 	for (auto& it : m_WMOsPlacementInfo)
 	{
-		//std::shared_ptr<CMapWMOInstance> inst = CreateSceneNode<CMapWMOInstance>(m_WMOsNames[it.nameIndex]);
-        //inst->Initialize(it);
-		//Application::Get().GetLoader()->AddToLoadQueue(inst);
-		//m_WMOsInstances.push_back(inst);
+		std::shared_ptr<CMapWMOInstance> inst = CreateSceneNode<CMapWMOInstance>(m_WMOsNames[it.nameIndex]);
+        inst->Initialize(it);
+		Application::Get().GetLoader()->AddToLoadQueue(inst);
+		m_WMOsInstances.push_back(inst);
 
 		// Update THIS bounds
 		//BoundingBox bbox = GetBounds();

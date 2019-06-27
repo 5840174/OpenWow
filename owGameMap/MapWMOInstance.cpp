@@ -47,24 +47,21 @@ void CMapWMOInstance::Initialize(const ADT_MODF & _placementInfo)
     }
 }
 
-bool CMapWMOInstance::Accept(IVisitor& visitor)
+bool CMapWMOInstance::Accept(std::shared_ptr<IVisitor> visitor)
 {
-	const CRenderPass_WMO* passAsWMOPass = dynamic_cast<const CRenderPass_WMO*>(&visitor);
-	if (passAsWMOPass)
+	std::shared_ptr<CRenderPass_WMO> passAsWMOPass = std::dynamic_pointer_cast<CRenderPass_WMO>(visitor);
+    if (passAsWMOPass == nullptr)
+        return false;
+
+	if (m_AlreadyDraw.find(m_UniqueId) != m_AlreadyDraw.end())
 	{
-		if (m_AlreadyDraw.find(m_UniqueId) != m_AlreadyDraw.end())
-		{
-			return false;
-		}
+		return false;
 	}
 
 	// SceneNode3D
 	if (CWMO_Base_Instance::Accept(visitor))
 	{
-		if (passAsWMOPass)
-		{
-			m_AlreadyDraw.insert(m_UniqueId);
-		}
+		m_AlreadyDraw.insert(m_UniqueId);
 		return true;
 	}
 

@@ -24,7 +24,7 @@ public:
     void Initialize(const ADT_MDXDef& _placementInfo);
 
 	// SceneNode3D
-	bool Accept(IVisitor& visitor) override;
+	bool Accept(std::shared_ptr<IVisitor> visitor) override;
 
 public: 
 	uint32				m_UniqueId;

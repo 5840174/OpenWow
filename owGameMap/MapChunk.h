@@ -19,7 +19,7 @@ public:
     uint32                                          GetAreaID() const;
 
 	// SceneNode3D
-	bool                                            Accept(IVisitor& visitor) override;
+	bool                                            Accept(std::shared_ptr<IVisitor> visitor) override;
 
 	// ILoadable
 	bool                                            PreLoad() override;

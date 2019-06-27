@@ -112,22 +112,22 @@ bool CM2_Base_Instance::Delete()
 //	m_M2->update(_time, _dTime);
 //
 
-bool CM2_Base_Instance::Accept(IVisitor& visitor)
+bool CM2_Base_Instance::Accept(std::shared_ptr<IVisitor> visitor)
 {
-	const AbstractPass& visitorAsBasePass = reinterpret_cast<AbstractPass&>(visitor);
-	const Camera* camera = visitorAsBasePass.GetRenderEventArgs()->Camera;
+	std::shared_ptr<AbstractPass> visitorAsBasePass = std::dynamic_pointer_cast<AbstractPass>(visitor);
+	const Camera* camera = visitorAsBasePass->GetRenderEventArgs()->Camera;
 
-	//float distToCamera2D = (camera->GetTranslation() - GetComponent<CColliderComponent>()->GetBounds().getCenter()).length() - GetComponent<CColliderComponent>()->GetBounds().getRadius();
-	//if (distToCamera2D > m_QualitySettings.ADT_MDX_Distance)
-	//{
-	//	return false;
-	//}
+	float distToCamera2D = (camera->GetTranslation() - GetComponent<CColliderComponent3D>()->GetBounds().getCenter()).length() - GetComponent<CColliderComponent3D>()->GetBounds().getRadius();
+	if (distToCamera2D > m_QualitySettings.ADT_MDX_Distance)
+	{
+		return false;
+	}
 
 	// Check frustrum
-	//if (!GetComponent<CColliderComponent>()->checkFrustum(camera))
-	//{
-	//	return false;
-	//}
+	if (!GetComponent<CColliderComponent3D>()->CheckFrustum(camera))
+	{
+		return false;
+	}
 
 	if (m_Attached != nullptr)
 	{
@@ -136,7 +136,7 @@ bool CM2_Base_Instance::Accept(IVisitor& visitor)
 
 	if (m_M2->isAnimated())
 	{
-		m_Animator->Update(visitorAsBasePass.GetRenderEventArgs()->TotalTime, visitorAsBasePass.GetRenderEventArgs()->ElapsedTime);
+		m_Animator->Update(visitorAsBasePass->GetRenderEventArgs()->TotalTime, visitorAsBasePass->GetRenderEventArgs()->ElapsedTime);
 
 		//if (m_Object->isBillboard())
 		//{
@@ -146,7 +146,7 @@ bool CM2_Base_Instance::Accept(IVisitor& visitor)
 		//{
 		//if (!m_NeedRecalcAnimation)
 		//{
-		m_M2->calc(m_Animator->getSequenceIndex(), m_Animator->getCurrentTime(), static_cast<uint32>(visitorAsBasePass.GetRenderEventArgs()->TotalTime), camera->GetViewMatrix(), GetComponent<CTransformComponent3D>()->GetWorldTransfom());
+		m_M2->calc(m_Animator->getSequenceIndex(), m_Animator->getCurrentTime(), static_cast<uint32>(visitorAsBasePass->GetRenderEventArgs()->TotalTime), camera->GetViewMatrix(), GetComponent<CTransformComponent3D>()->GetWorldTransfom());
 		//	m_NeedRecalcAnimation = true;
 		//}
 		//}
@@ -163,6 +163,11 @@ void CM2_Base_Instance::InitAnimator()
 	{
 		m_Animator = std::make_shared<CM2_Animator>(m_M2);
 	}
+}
+
+const CGroupQuality& CM2_Base_Instance::GetGroupQuality() const
+{
+    return m_QualitySettings;
 }
 
 void CM2_Base_Instance::RegisterComponents()

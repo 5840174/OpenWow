@@ -11,7 +11,7 @@ public:
     void Initialize(std::shared_ptr<CLiquid> _liquidObject, vec3 _position);
 
 	// SceneNode3D
-	bool Accept(IVisitor& visitor) override;
+	bool Accept(std::shared_ptr<IVisitor> visitor) override;
 
 private:
 	const CGroupQuality& m_QualitySettings;

@@ -8,14 +8,14 @@
 class CWMO_Base_Instance : public SceneNode3D
 {
 public:
-	CWMO_Base_Instance(std::string _wmoName);
-	virtual ~CWMO_Base_Instance();
+	                                                CWMO_Base_Instance(std::string _wmoName);
+	virtual                                         ~CWMO_Base_Instance();
 
-	void CreateInstances();
+	void                                            CreateInstances();
 
 	// CWMO_Base_Instance
-	void setWMO(std::shared_ptr<CWMO> _model);
-	std::shared_ptr<CWMO> getWMO() const;
+	void                                            setWMO(std::shared_ptr<CWMO> _model);
+	std::shared_ptr<CWMO>                           getWMO() const;
 
 	void AddGroupInstance(std::shared_ptr<CWMO_Group_Instance> _group) { m_GroupInstances.push_back(_group); }
 	std::vector<std::shared_ptr<CWMO_Group_Instance>>& getGroupInstances() { return m_GroupInstances; }
@@ -26,21 +26,24 @@ public:
 	const vec3* getVerts() const { return m_ConvertedVerts.data(); }
 
 	// ILoadable
-	bool Load() override;
-	bool Delete() override;
-	uint32 getPriority() const override { return 2; };
+	bool                                            Load() override;
+	bool                                            Delete() override;
+	uint32                                          getPriority() const override { return 2; };
 
 	// SceneNode3D
-	void UpdateCamera(const Camera* camera) override;
-	bool Accept(IVisitor& visitor) override;
+	void                                            UpdateCamera(const Camera* camera) override;
+	bool                                            Accept(std::shared_ptr<IVisitor> visitor) override;
+
+    const CGroupQuality&                            GetGroupQuality() const;
 
 protected:
-	std::string                                        m_WMOName;
-	std::shared_ptr<CWMO>                               m_WMO;
-	//SWMO_Doodad_SetInfo                                m_DoodadSetInfo;
+	std::string                                     m_WMOName;
+	std::shared_ptr<CWMO>                           m_WMO;
+	//SWMO_Doodad_SetInfo                           m_DoodadSetInfo;
 
-	std::vector<vec3>                                  m_ConvertedVerts;
+	std::vector<vec3>                               m_ConvertedVerts;
 	
 	std::vector<std::shared_ptr<CWMO_Group_Instance>>  m_GroupInstances;
 	std::vector<std::shared_ptr<CWMO_Group_Instance>>  m_OutdoorGroupInstances;
+    const CGroupQuality&                            m_QualitySettings;
 };
