@@ -18,8 +18,8 @@ Character_SkinTextureBaker::Character_SkinTextureBaker()
 {
 	uint32 textureWidth = DBC_CharComponentTextureLayouts[SkinDefaultLayout]->Get_Width();
 	uint32 textureHeight = DBC_CharComponentTextureLayouts[SkinDefaultLayout]->Get_Height();
-	assert1(textureWidth == SkinTextureWidth);
-	assert1(textureHeight == SkinTextureHeight);
+	_ASSERT(textureWidth == SkinTextureWidth);
+	_ASSERT(textureHeight == SkinTextureHeight);
 
 	for (auto& it : DBC_CharComponentTextureSections)
 	{
@@ -56,7 +56,7 @@ std::shared_ptr<Texture> Character_SkinTextureBaker::createTexture(const Charact
 
 		// Male + Female
 		std::string nakedLowerTexture = Character_SectionWrapper::getNakedPelvisTexture(_character);
-		assert1(nakedLowerTexture.length() > 0);
+		_ASSERT(nakedLowerTexture.length() > 0);
 		FillPixels(DBC_CharComponent_Sections::LEGS_UPPER, nakedLowerTexture);
 	}
 
@@ -84,12 +84,12 @@ std::shared_ptr<Texture> Character_SkinTextureBaker::createTexture(const Charact
 
 void Character_SkinTextureBaker::FillWithSkin(std::shared_ptr<Texture> _skinTexture)
 {
-	assert1(_skinTexture != nullptr);
-	assert1(_skinTexture->GetWidth() == (SkinTextureWidth / 2) || _skinTexture->GetWidth() == SkinTextureWidth);
+	_ASSERT(_skinTexture != nullptr);
+	_ASSERT(_skinTexture->GetWidth() == (SkinTextureWidth / 2) || _skinTexture->GetWidth() == SkinTextureWidth);
 
 	const PixelData* skinTexturePixels = (const PixelData*)(_skinTexture->GetBuffer().data());
 
-	assert1(SkinTextureWidth >= _skinTexture->GetWidth());
+	_ASSERT(SkinTextureWidth >= _skinTexture->GetWidth());
 	uint32 divSmall = SkinTextureWidth / _skinTexture->GetWidth();
 
 	for (uint32 x = 0; x < SkinTextureWidth; x++)
@@ -117,11 +117,11 @@ void Character_SkinTextureBaker::FillPixels(DBC_CharComponent_Sections::List _ty
 	if (_compTexture == nullptr)
 		return;
 
-	assert1(_compTexture->GetWidth() == 128 || _compTexture->GetWidth() == 256);
+	_ASSERT(_compTexture->GetWidth() == 128 || _compTexture->GetWidth() == 256);
 
 	const PixelData* texturePixels = (const PixelData*)_compTexture->GetBuffer().data();
 
-	assert1(SkinComponentWidth >= _compTexture->GetWidth());
+	_ASSERT(SkinComponentWidth >= _compTexture->GetWidth());
 	uint32 divSmall = SkinComponentWidth / _compTexture->GetWidth();
 
 	CharacterSkinRegion& region = m_Regions[_type];

@@ -6,7 +6,7 @@
 WoWChunkReader::WoWChunkReader(std::string _fileName)
 {
 	m_File = GetManager<IFilesManager>()->Open(_fileName);
-	assert1(m_File != nullptr);
+	_ASSERT(m_File != nullptr);
 
 	InitMaps();
 }
@@ -23,14 +23,14 @@ WoWChunkReader::~WoWChunkReader()
 
 std::shared_ptr<IByteBuffer> WoWChunkReader::OpenChunk(const char * _name)
 {
-	assert1(m_File != nullptr);
+	_ASSERT(m_File != nullptr);
 
 	auto chunkIterator = m_ChunksMap.find(_name);
 	if (chunkIterator == m_ChunksMap.end())
 		return std::shared_ptr<IByteBuffer>();
 
 	const auto& chunkInfos = chunkIterator->second;
-	assert1(chunkInfos.size() == 1);
+	_ASSERT(chunkInfos.size() == 1);
 	return GetChunk(chunkInfos[0]);
 }
 
@@ -45,7 +45,7 @@ std::vector<std::shared_ptr<IByteBuffer>> WoWChunkReader::OpenChunks(const char 
 	}
 
 	auto& chunkOffsets = chunkIterator->second;
-	assert1(!chunkOffsets.empty());
+	_ASSERT(!chunkOffsets.empty());
 	for (auto& subChunk : chunkOffsets)
 	{
 		result.push_back(GetChunk(subChunk));
@@ -72,8 +72,8 @@ void WoWChunkReader::InitMaps()
 
 		uint32_t nextpos = m_File->getPos() + size;
 
-		assert1(nextpos <= m_File->getSize());
-		assert1(size <= m_File->getSize());
+		_ASSERT(nextpos <= m_File->getSize());
+		_ASSERT(size <= m_File->getSize());
 		m_ChunksMap[fourcc].push_back(std::make_pair(m_File->getPos(), size));
 
 		m_File->seek(nextpos);

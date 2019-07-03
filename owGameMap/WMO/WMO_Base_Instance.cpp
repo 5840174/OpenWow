@@ -29,8 +29,8 @@ void CWMO_Base_Instance::CreateInstances()
 
 void CWMO_Base_Instance::setWMO(std::shared_ptr<CWMO> _model)
 {
-	assert1(m_WMO == nullptr);
-	assert1(_model != nullptr);
+	_ASSERT(m_WMO == nullptr);
+	_ASSERT(_model != nullptr);
 
 	m_WMO = _model;
 }

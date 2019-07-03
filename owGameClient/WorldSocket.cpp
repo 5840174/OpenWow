@@ -125,7 +125,7 @@ void CWorldSocket::OnRawData(const char * buf, size_t len)
         }
 
         // DEBUG
-        assert1(cmd < Opcodes::COUNT);
+        _ASSERT(cmd < Opcodes::COUNT);
         Log::Green("CWorldSocket: Command '%s' (0x%X) size=%d", OpcodesNames[cmd].c_str(), cmd, size);
 
         // Seek to data
@@ -175,7 +175,7 @@ void CWorldSocket::Packet2(CByteBuffer& _buf)
         }
 
         // Fill data
-        assert1(_buf.getPos() + needToRead <= _buf.getSize());
+        _ASSERT(_buf.getPos() + needToRead <= _buf.getSize());
         m_CurrentPacket->Append(_buf.getDataFromCurrent(), needToRead);
 
         _buf.seekRelative(needToRead);
@@ -226,7 +226,7 @@ void CWorldSocket::InitHandlers()
 
 void CWorldSocket::AddHandler(Opcodes Opcode, HandlerFuncitonType Handler)
 {
-	assert1(Handler != nullptr);
+	_ASSERT(Handler != nullptr);
 	m_Handlers.insert(std::make_pair(Opcode, Handler));
 }
 

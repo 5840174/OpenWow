@@ -30,7 +30,7 @@ void CMapWDT::CreateInsances(std::weak_ptr<SceneNode3D> _parent)
 void CMapWDT::Load()
 {
     std::shared_ptr<const CMap> mapController = m_MapController.lock();
-    assert1(mapController != NULL);
+    _ASSERT(mapController != NULL);
 
     std::string fileName = mapController->GetMapFolder() + ".wdt";
 
@@ -41,7 +41,7 @@ void CMapWDT::Load()
         buffer = reader.OpenChunk("MVER");
         uint32 version;
         buffer->readBytes(&version, 4);
-        assert1(version == 18);
+        _ASSERT(version == 18);
     }
 
 
@@ -85,12 +85,12 @@ void CMapWDT::Load()
 
         if (buffer != nullptr)
         {
-            assert1(m_MPHD.flags.Flag_GlobalWMO);
-            assert1((buffer->getSize() / sizeof(ADT_MODF)) == 1);
+            _ASSERT(m_MPHD.flags.Flag_GlobalWMO);
+            _ASSERT((buffer->getSize() / sizeof(ADT_MODF)) == 1);
             buffer->readBytes(&m_GlobalWMOPlacementInfo, sizeof(ADT_MODF));
         }
     }
 
 
-	assert1(m_IsTileBased || m_GlobalWMOName.size() > 0);
+	_ASSERT(m_IsTileBased || m_GlobalWMOName.size() > 0);
 }

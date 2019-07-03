@@ -59,6 +59,6 @@ std::shared_ptr<Texture> CM2_Part_Texture::GetResultTexture(const CM2_Base_Insta
 		return;
 	}
 
-	assert1(getTexture());
+	_ASSERT(getTexture());
 	_state->setTexture(_slot, getTexture(), sampler, 0);
 }*/

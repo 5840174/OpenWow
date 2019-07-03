@@ -65,7 +65,7 @@ void HmacHash::Finalize()
 {
     uint32 length = 0;
     HMAC_Final(m_ctx, m_digest, &length);
-    assert1(length == SHA_DIGEST_LENGTH);
+    _ASSERT(length == SHA_DIGEST_LENGTH);
 }
 
 uint8* HmacHash::ComputeHash(BigNumber* bn)

@@ -283,7 +283,7 @@ uint32 M2GetPixelShaderID(uint32 op_count, uint16 shader_id)
 	if (shader_id & 0x8000)
 	{
 		uint16 const shaderID(shader_id & (~0x8000));
-		assert1(shaderID < NUM_M2SHADERS);
+		_ASSERT(shaderID < NUM_M2SHADERS);
 		return s_modelShaderEffect[shaderID].pixel;
 	}
 	else
@@ -321,7 +321,7 @@ uint32 M2GetVertexShaderID(uint32 op_count, uint16 shader_id)
 	if (shader_id & 0x8000)
 	{
 		uint16 const shaderID(shader_id & (~0x8000));
-		assert1(shaderID < NUM_M2SHADERS);
+		_ASSERT(shaderID < NUM_M2SHADERS);
 		return s_modelShaderEffect[shaderID].vertex;
 	}
 	else
@@ -353,7 +353,7 @@ uint32 M2GetHullShaderID(uint32 op_count, uint16 shader_id)
 	if (shader_id & 0x8000)
 	{
 		uint16 const shaderID(shader_id & (~0x8000));
-		assert1(shaderID < NUM_M2SHADERS);
+		_ASSERT(shaderID < NUM_M2SHADERS);
 		return s_modelShaderEffect[shaderID].hull;
 	}
 	else
@@ -366,7 +366,7 @@ uint32 M2GetDomainShaderID(uint32 op_count, uint16 shader_id)
 	if (shader_id & 0x8000)
 	{
 		uint16 const shaderID(shader_id & (~0x8000));
-		assert1(shaderID < NUM_M2SHADERS);
+		_ASSERT(shaderID < NUM_M2SHADERS);
 		return s_modelShaderEffect[shaderID].domain;
 	}
 	else
@@ -379,7 +379,7 @@ void M2GetFixedFunctionFallback(uint16 shader_id, EGxTexOp* colorOp, EGxTexOp* a
 	if (shader_id & 0x8000)
 	{
 		uint16 const shaderID(shader_id & (~0x8000));
-		assert1(shaderID < NUM_M2SHADERS);
+		_ASSERT(shaderID < NUM_M2SHADERS);
 		*colorOp = EGxTexOp(s_modelShaderEffect[shaderID].ff_colorOp);
 		*alphaOp = EGxTexOp(s_modelShaderEffect[shaderID].ff_alphaOp);
 	}
@@ -493,13 +493,13 @@ void* GetEffect(SM2_SkinBatch* batch)
 		//effect->InitFixedFuncPass(colorOps, alphaOps, batch->textureCount);
 	}
 
-	//assert1(effect);
+	//_ASSERT(effect);
 	return nullptr;
 }
 
 int32 GetPixel(const SM2_SkinBatch& batch)
 {
 	uint32 index = M2GetPixelShaderID(batch.textureCount, batch.shader_id);
-	assert1(index < 15);
+	_ASSERT(index < 15);
 	return arr[index];
 }

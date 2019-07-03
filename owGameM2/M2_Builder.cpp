@@ -71,10 +71,10 @@ void CM2_Builder::Step1Header()
 	memcpy(&m_Header, m_F->getData(), sizeof(SM2_Header));
 
 	// 1 Magic is 'MD20'
-	//assert1(m_Header.magic == "MD20");
+	//_ASSERT(m_Header.magic == "MD20");
 
 	// 2 Version is ???
-	assert1(m_Header.version == 256 || m_Header.version == 257);
+	_ASSERT(m_Header.version == 256 || m_Header.version == 257);
 
 	// 3 Unique name
 	if (m_Header.name.size > 0)
@@ -166,7 +166,7 @@ void CM2_Builder::Step3Bones()
 			skeleton->m_GameBonesLookup.push_back(GameBonesLookup[i]);
 		}
 
-		assert1(m_Header.gameBonesLookup.size <= M2_GameBoneType::Count);
+		_ASSERT(m_Header.gameBonesLookup.size <= M2_GameBoneType::Count);
 	}
 
 	m_M2->m_Skeleton = skeleton;
@@ -232,7 +232,7 @@ void CM2_Builder::Step5ColorAndTextures()
 	// 3.1 Textures
 	if (m_Header.textures.size > 0)
 	{
-		assert1(m_Header.textures.size <= m_M2->C_TexturesMaxCount);
+		_ASSERT(m_Header.textures.size <= m_M2->C_TexturesMaxCount);
 
 		m_Textures = (SM2_Texture*)(m_F->getData() + m_Header.textures.offset);
 		for (uint32 i = 0; i < m_Header.textures.size; i++)
@@ -299,7 +299,7 @@ void CM2_Builder::Step5ColorAndTextures()
 		}
 	}
 
-	//assert1(m_Header.textureWeights.size == m_Header.textureWeightsLookup.size);
+	//_ASSERT(m_Header.textureWeights.size == m_Header.textureWeightsLookup.size);
 
 	// 5.1 Textures transform
 	if (m_Header.textureTransforms.size > 0)
@@ -330,7 +330,7 @@ void CM2_Builder::Step5ColorAndTextures()
 		}
 	}
 
-	//assert1(m_Header.textureTransforms.size == m_Header.textureTransformsLookup.size);
+	//_ASSERT(m_Header.textureTransforms.size == m_Header.textureTransformsLookup.size);
 
 	m_M2->m_Materials = materials;
 }
@@ -454,7 +454,7 @@ void CM2_Builder::Step8Skins()
         return;
     }
 
-	assert1(m_Header.skin_profiles.size > 0);
+	_ASSERT(m_Header.skin_profiles.size > 0);
 	if (m_Header.skin_profiles.size > 0)
 	{
 		m_Skins = (SM2_SkinProfile*)(m_F->getData() + m_Header.skin_profiles.offset);

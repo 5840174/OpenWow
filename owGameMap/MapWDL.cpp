@@ -24,7 +24,7 @@ CMapWDL::~CMapWDL()
 void CMapWDL::CreateInsances(std::weak_ptr<SceneNode3D> _parent)
 {
 	std::shared_ptr<const CMap> mapController = m_MapController.lock();
-	assert1(mapController != NULL);
+	_ASSERT(mapController != NULL);
 
 	std::string fileName = mapController->GetMapFolder() + ".wdl";
 
@@ -125,7 +125,7 @@ void CMapWDL::UpdateCamera(const Camera * camera)
 void CMapWDL::Load()
 {
 	std::shared_ptr<const CMap> mapController = m_MapController.lock();
-	assert1(mapController != NULL);
+	_ASSERT(mapController != NULL);
 
 	std::string fileName = mapController->GetMapFolder() + ".wdl";
 

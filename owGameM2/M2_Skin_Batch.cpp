@@ -27,13 +27,13 @@ void CM2_Skin_Batch::PostInit()
 bool CM2_Skin_Batch::Render(const RenderEventArgs* renderEventArgs, std::shared_ptr<ConstantBuffer> perObject, UINT indexStartLocation, UINT indexCnt, UINT vertexStartLocation, UINT vertexCnt)
 {
 	const SceneNode3D* sceneNode = dynamic_cast<const SceneNode3D*>(renderEventArgs->Node);
-	assert1(sceneNode != nullptr);
+	_ASSERT(sceneNode != nullptr);
 
 	const CM2_Base_Instance* sceneNodeAsM2Instance = dynamic_cast<const CM2_Base_Instance*>(sceneNode);
-	assert1(sceneNodeAsM2Instance != nullptr);
+	_ASSERT(sceneNodeAsM2Instance != nullptr);
 
 	const Camera* camera = renderEventArgs->Camera;
-	assert1(camera != nullptr);
+	_ASSERT(camera != nullptr);
 
 	const SM2_SkinSection& proto = m_SkinSection->getProto();
 
@@ -65,7 +65,7 @@ bool CM2_Skin_Batch::Render(const RenderEventArgs* renderEventArgs, std::shared_
 		std::vector<mat4> bones;
 		for (uint16 i = proto.bonesStartIndex; i < proto.bonesStartIndex + proto.boneCount; i++)
 		{
-			assert1(skeleton->isLookupBoneCorrect(i));
+			_ASSERT(skeleton->isLookupBoneCorrect(i));
 			bones.push_back(skeleton->getBoneLookup(i)->getTransformMatrix());
 		}
 

@@ -9,10 +9,10 @@
 Particle SphereParticleEmitter::newParticle(int anim, int time, float w, float l, float spd, float var, float spr, float spr2, uint32 _globalTime)
 {
 	std::shared_ptr<const CM2_ParticleSystem> ParticleSystem = m_ParticleSystem.lock();
-	assert1(ParticleSystem != nullptr);
+	_ASSERT(ParticleSystem != nullptr);
 
 	std::shared_ptr<const CM2_Part_Bone> ParticleSystem_ParentBone = ParticleSystem->m_ParentBone.lock();
-	assert1(ParticleSystem_ParentBone != nullptr);
+	_ASSERT(ParticleSystem_ParentBone != nullptr);
 
     Random random;
 

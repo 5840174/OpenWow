@@ -29,7 +29,7 @@ int main(int argumentCount, char* arguments[])
 		std::shared_ptr<IFilesManager> filesManager = std::make_shared<CFilesManager>();
 		AddManager<IFilesManager>(filesManager);
 
-		std::shared_ptr<IFilesStorage> localFilesGamedata = std::make_shared<CLocalFilesStorage>("C:\\_programming\\OpenWow\\_gamedata\\");
+		std::shared_ptr<IFilesStorage> localFilesGamedata = std::make_shared<CLocalFilesStorage>("D:\\_programming\\OpenWow\\_gamedata\\");
 		filesManager->RegisterFilesStorage(localFilesGamedata);
 
 		std::shared_ptr<IFilesStorage> mpqFileStorage = std::make_shared<CMPQFilesStorage>("D:\\_games\\World of Warcraft 1.12.1\\Data\\", IFilesStorageEx::PRIOR_HIGH);
@@ -50,9 +50,9 @@ int main(int argumentCount, char* arguments[])
         windowObject->RegisterWindowClass(m_HINSTANCE);
         windowObject->CreateWindowInstance(1280, 1024);
 
-		Application app;
+		Application app(_BaseManager);
 
-        std::shared_ptr<IRenderDevice> renderDevice = app.CreateRenderDevice();
+        std::shared_ptr<IRenderDevice> renderDevice = app.CreateRenderDevice(IRenderDevice::DeviceType::OpenGL);
         std::shared_ptr<RenderWindow> renderWindow = app.CreateRenderWindow(windowObject, true);
 
 

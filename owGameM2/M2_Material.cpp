@@ -23,7 +23,7 @@ M2_Material::M2_Material(std::vector<std::weak_ptr<const CM2_Part_Texture>> m2Te
 	);
 
 	// Create samplers
-	assert1(m2Textures.size() <= 2);
+	_ASSERT(m2Textures.size() <= 2);
 	for (uint8 i = 0; i < m2Textures.size(); i++)
 	{
 		std::shared_ptr<SamplerState> g_Sampler = _RenderDevice->CreateSamplerState();

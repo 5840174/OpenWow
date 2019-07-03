@@ -42,9 +42,9 @@ public:
 public:
 	const SM2_Sequence& getSequence(uint32 _index) const
 	{
-		assert1(_index < m_SequencesLookup.size());
+		_ASSERT(_index < m_SequencesLookup.size());
 		int16 newIndex = m_SequencesLookup[_index];
-		assert1(newIndex < static_cast<int16>(m_Sequences.size()));
+		_ASSERT(newIndex < static_cast<int16>(m_Sequences.size()));
 		return m_Sequences[newIndex];
 	}
 	const bool isAnimated() const { return m_IsAnimated; }

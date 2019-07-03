@@ -20,7 +20,7 @@ CM2_ParticleSystem::CM2_ParticleSystem(const std::weak_ptr<M2> _parentM2, std::s
 	m_GlobalTime(0.0)
 {
 	std::shared_ptr<const M2> ParentM2 = m_ParentM2.lock();
-	assert1(ParentM2 != nullptr);
+	_ASSERT(ParentM2 != nullptr);
 
 	m_Position = Fix_XZmY(_proto.Position);
 	m_ParentBone = ParentM2->getSkeleton()->getBoneDirect(_proto.bone);
@@ -55,7 +55,7 @@ CM2_ParticleSystem::CM2_ParticleSystem(const std::weak_ptr<M2> _parentM2, std::s
 	/*m_State.setBlendMode(true, R_BlendFunc::BS_BLEND_SRC_ALPHA, R_BlendFunc::BS_BLEND_ONE);
 	m_State.setCullMode(R_CullMode::RS_CULL_BACK);
 	m_State.setDepthMask(false);
-	assert1(texture != nullptr);
+	_ASSERT(texture != nullptr);
 	m_State.setTexture(Material::C_DiffuseTextureIndex, texture, 0, 0);*/
 
 
@@ -373,11 +373,11 @@ void CM2_ParticleSystem::Render3D(cmat4 _worldMatrix)
 	}
 
 	// Vertex buffer
-	/*assert1(vertices.data() != nullptr);
+	/*_ASSERT(vertices.data() != nullptr);
 	std::shared_ptr<IBuffer> __vb = _Render->r.createVertexBuffer(vertices.size() * sizeof(ParticleVertex), vertices.data(), false);
 
 	// Index buffer
-	assert1(m_Indices.data() != nullptr);
+	_ASSERT(m_Indices.data() != nullptr);
 	std::shared_ptr<IBuffer> __ib = _Render->r.createIndexBuffer(m_Indices.size() * sizeof(uint16), m_Indices.data(), false);
 
 	// Geometry

@@ -25,7 +25,7 @@ inline bool DBCFile<RECORD_T>::Open()
 	char header[5];
 	m_File->readBytes(header, 4);
 	header[4] = '\0';
-	assert1(header[0] == 'W' && header[1] == 'D' && header[2] == 'B' && header[3] == 'C');
+	_ASSERT(header[0] == 'W' && header[1] == 'D' && header[2] == 'B' && header[3] == 'C');
 
 
 	m_File->readBytes(&recordCount, 4);// Number of records
@@ -35,7 +35,7 @@ inline bool DBCFile<RECORD_T>::Open()
 
 	Log::Info("DBCFile[%s]: HEAD [%s], Size [%d]", m_File->Path_Name().c_str(), header, recordCount);
 
-	assert1(fieldCount * 4 == recordSize);
+	_ASSERT(fieldCount * 4 == recordSize);
 
 	uint64_t stringTableOffset = m_File->getPos() + recordSize * recordCount;
 	stringTable = m_File->getData() + stringTableOffset;
@@ -47,7 +47,7 @@ inline bool DBCFile<RECORD_T>::Open()
 		m_Records.insert(std::make_pair(record->Get_ID(), record));
 	}
 
-	assert1(recordCount == m_Records.size());
+	_ASSERT(recordCount == m_Records.size());
 	return true;
 }
 

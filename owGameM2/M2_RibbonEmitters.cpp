@@ -22,7 +22,7 @@ CM2_RibbonEmitters::CM2_RibbonEmitters(const std::weak_ptr<M2> _model, std::shar
 	tcolor(vec4(1.0f))
 {
 	const std::shared_ptr<M2> ParentM2 = m_ParentM2.lock();
-	assert1(ParentM2 != nullptr);
+	_ASSERT(ParentM2 != nullptr);
 
 	m_Bone = (ParentM2->getSkeleton()->getBoneDirect(_proto.boneIndex));
 	posValue = pos = Fix_XZmY(_proto.position);
@@ -35,11 +35,11 @@ CM2_RibbonEmitters::CM2_RibbonEmitters(const std::weak_ptr<M2> _model, std::shar
 	{
 		uint16_t* TexturesList = (uint16_t*)(f->getData() + _proto.textureIndices.offset);
 		// just use the first texture for now; most models I've checked only had one
-		assert1(_proto.textureIndices.size > 0);
+		_ASSERT(_proto.textureIndices.size > 0);
 		m_Texture = ParentM2->getMaterials()->m_Textures[TexturesList[0]]->getTexture();
 
 		uint16_t* MaterialsList = (uint16_t*)(f->getData() + _proto.materialIndices.offset);
-		assert1(_proto.materialIndices.size > 0);
+		_ASSERT(_proto.materialIndices.size > 0);
 		m_Material = (ParentM2->getMaterials()->GetMaterial(MaterialsList[0]));
 	}
 
@@ -63,7 +63,7 @@ CM2_RibbonEmitters::CM2_RibbonEmitters(const std::weak_ptr<M2> _model, std::shar
 void CM2_RibbonEmitters::setup(uint16 anim, uint32 time, uint32 _globalTime, cmat4 _worldMatrix)
 {
 	std::shared_ptr<const CM2_Part_Bone> Bone = m_Bone.lock();
-	assert1(Bone != nullptr);
+	_ASSERT(Bone != nullptr);
 
 	vec3 ntpos = _worldMatrix * (Bone->getTransformMatrix() * vec4(pos, 0));
 	vec3 ntup = _worldMatrix * (Bone->getTransformMatrix() * vec4((pos + vec3(0, 0, 1.0f)), 0));

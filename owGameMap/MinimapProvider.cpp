@@ -46,7 +46,7 @@ void CMinimapProvider::Init()
 		{
 			MinimapData_Map* minimapData = new MinimapData_Map;
 			int tabIndex = curStr.find('\t');
-			assert1(tabIndex != -1);
+			_ASSERT(tabIndex != -1);
 
 			std::string beforeTab = curStr.substr(0, tabIndex);
 			sscanf_s

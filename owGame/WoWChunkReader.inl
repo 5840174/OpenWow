@@ -13,7 +13,7 @@ inline std::vector<T> WoWChunkReader::OpenChunkT(const char * _name)
 
 	uint32 count = buffer->getSize() / sizeof(T);
 	T* listT = (T*)buffer->getDataFromCurrent();
-	assert1(listT != nullptr);
+	_ASSERT(listT != nullptr);
 	for (uint32 i = 0; i < count; i++)
 	{
 		list.push_back(listT[i]);

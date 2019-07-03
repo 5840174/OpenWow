@@ -18,7 +18,7 @@ type CONCAT_GET(_name)() const                               \
 #define __DBC_TARRAY(_type, _name, _field, _size)                      \
 _type CONCAT_GET(_name)(uint8 _index) const                            \
 {                                                                      \
-    assert1(_index < _size);                                           \
+    _ASSERT(_index < _size);                                           \
 	return getValue<_type>(static_cast<uint32>(_field - 1 + _index));  \
 }
 
@@ -31,7 +31,7 @@ const char* CONCAT_GET(_name)() const                   \
 #define __DBC_STRARR(_name, _field, _size)                       \
 const char* CONCAT_GET(_name)(uint8 _index) const                \
 {                                                                \
-	assert1(_index < _size);                                     \
+	_ASSERT(_index < _size);                                     \
 	return getString(static_cast<uint32>(_field - 1 + _index));  \
 }
 
@@ -279,13 +279,13 @@ public:
 
 	Iterator begin()
 	{
-		assert1(m_File->getData() != nullptr);
+		_ASSERT(m_File->getData() != nullptr);
 		return Iterator(this, m_File->getData() + m_File->getPos());
 	}
 
 	Iterator end()
 	{
-		assert1(m_File->getData() != nullptr);
+		_ASSERT(m_File->getData() != nullptr);
 		return Iterator(this, stringTable);
 	}
 

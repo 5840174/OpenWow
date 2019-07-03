@@ -43,6 +43,9 @@
     <ProjectReference Include="..\..\ZenonEngine\znRenderDX11\znRenderDX11.vcxproj">
       <Project>{590c7c79-ae16-4db2-b61c-bb7b25b76b42}</Project>
     </ProjectReference>
+    <ProjectReference Include="..\..\ZenonEngine\znRenderOpenGL\znRenderOpenGL.vcxproj">
+      <Project>{102dc6f1-cb83-4203-ba24-1c9e812fde4b}</Project>
+    </ProjectReference>
     <ProjectReference Include="..\..\ZenonEngine\znRender\znRender.vcxproj">
       <Project>{4bfb75a1-ee52-478a-bdac-30ffb977ebb7}</Project>
     </ProjectReference>
@@ -116,20 +119,20 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
-    <OutDir>$(SolutionDir)\bin_x64\$(Configuration)\</OutDir>
+    <OutDir>$(SolutionDir)\bin_$(PlatformShortName)\$(Configuration)\</OutDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
-    <OutDir>$(SolutionDir)\bin_x86\$(Configuration)\</OutDir>
+    <OutDir>$(SolutionDir)\bin_$(PlatformShortName)\$(Configuration)\</OutDir>
     <IntDir>$(Platform)\$(Configuration)\</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
-    <OutDir>$(SolutionDir)\bin_x64\$(Configuration)\</OutDir>
+    <OutDir>$(SolutionDir)\bin_$(PlatformShortName)\$(Configuration)\</OutDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
-    <OutDir>$(SolutionDir)\bin_x86\$(Configuration)\</OutDir>
+    <OutDir>$(SolutionDir)\bin_$(PlatformShortName)\$(Configuration)\</OutDir>
     <IntDir>$(Platform)\$(Configuration)\</IntDir>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -143,7 +146,7 @@
       <MultiProcessorCompilation>false</MultiProcessorCompilation>
       <TreatSpecificWarningsAsErrors>
       </TreatSpecificWarningsAsErrors>
-      <DisableSpecificWarnings>4244;4267</DisableSpecificWarnings>
+      <DisableSpecificWarnings>4244;4267;4251</DisableSpecificWarnings>
       <FloatingPointModel>Precise</FloatingPointModel>
     </ClCompile>
     <Link>
@@ -164,7 +167,7 @@
       <MultiProcessorCompilation>false</MultiProcessorCompilation>
       <TreatSpecificWarningsAsErrors>
       </TreatSpecificWarningsAsErrors>
-      <DisableSpecificWarnings>4244;4267</DisableSpecificWarnings>
+      <DisableSpecificWarnings>4244;4267;4251</DisableSpecificWarnings>
       <FloatingPointModel>Precise</FloatingPointModel>
     </ClCompile>
     <Link>
@@ -188,7 +191,7 @@
       <MultiProcessorCompilation>false</MultiProcessorCompilation>
       <TreatSpecificWarningsAsErrors>
       </TreatSpecificWarningsAsErrors>
-      <DisableSpecificWarnings>4244;4267</DisableSpecificWarnings>
+      <DisableSpecificWarnings>4244;4267;4251</DisableSpecificWarnings>
       <FloatingPointModel>Precise</FloatingPointModel>
     </ClCompile>
     <Link>
@@ -214,7 +217,7 @@
       <MultiProcessorCompilation>false</MultiProcessorCompilation>
       <TreatSpecificWarningsAsErrors>
       </TreatSpecificWarningsAsErrors>
-      <DisableSpecificWarnings>4244;4267</DisableSpecificWarnings>
+      <DisableSpecificWarnings>4244;4267;4251</DisableSpecificWarnings>
       <FloatingPointModel>Precise</FloatingPointModel>
     </ClCompile>
     <Link>

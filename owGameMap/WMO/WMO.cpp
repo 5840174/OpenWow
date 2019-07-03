@@ -35,7 +35,7 @@ CWMO::~CWMO()
 void CWMO::CreateInsances(std::weak_ptr<SceneNode3D> _parent)
 {
 	std::shared_ptr<CWMO_Base_Instance> parentAsWMOInstance = std::dynamic_pointer_cast<CWMO_Base_Instance, SceneNode3D>(_parent.lock());
-	assert1(parentAsWMOInstance != nullptr);
+	_ASSERT(parentAsWMOInstance != nullptr);
 
 	for (auto& it : m_Groups)
 	{
@@ -67,7 +67,7 @@ bool CWMO::Load()
 		buffer = reader.OpenChunk("MVER");
 		uint32 version;
 		buffer->readBytes(&version, 4);
-		assert1(version == 17);
+		_ASSERT(version == 17);
 	}
 
 	// Header
@@ -91,7 +91,7 @@ bool CWMO::Load()
 		{
 			m_Materials.push_back(std::make_shared<WMO_Part_Material>(shared_from_this(), mat));
 		}
-		assert1(m_Materials.size() == m_Header.nTextures);
+		_ASSERT(m_Materials.size() == m_Header.nTextures);
 	}
 
 	// Group names
@@ -243,8 +243,8 @@ bool CWMO::Load()
 
 		for (auto& it : m_PortalReferences)
 		{
-			assert1(it.portalIndex < m_Portals.size());
-			assert1(it.groupIndex < m_Groups.size());
+			_ASSERT(it.portalIndex < m_Portals.size());
+			_ASSERT(it.groupIndex < m_Groups.size());
 		}
 	}
 
@@ -253,7 +253,7 @@ bool CWMO::Load()
 	{
 		it->Load();
 
-		//assert1(it->m_Header.flags.IS_OUTDOOR != it->m_Header.flags.IS_INDOOR);
+		//_ASSERT(it->m_Header.flags.IS_OUTDOOR != it->m_Header.flags.IS_INDOOR);
 
 		// Add outdoor group
 		if (it->m_Header.flags.IS_OUTDOOR)

@@ -22,12 +22,12 @@ public:
 public:
 	std::shared_ptr<const CM2_Part_Color> GetColor(uint32 _index) const
 	{
-		assert1(_index < m_Colors.size());
+		_ASSERT(_index < m_Colors.size());
 		return (m_Colors[_index]);
 	}
 	std::shared_ptr<const CM2_Part_Material> GetMaterial(uint32 _index) const
 	{
-		assert1(_index < m_Materials.size());
+		_ASSERT(_index < m_Materials.size());
 		return (m_Materials[_index]);
 	}
 private:
@@ -39,15 +39,15 @@ private:
 public:
 	std::shared_ptr<CM2_Part_Texture> GetTexture(uint32 _index) const
 	{
-		assert1(_index < m_TexturesLookup.size());
+		_ASSERT(_index < m_TexturesLookup.size());
 		if (_index >= m_TexturesLookup.size())
 		{
 			//Log::Warn("M2[%s]: GetTexture [%d] not found in Lookup[%d]", m_FileName.c_str(), _index, m_TexturesLookup.size());
 			return nullptr;
 		}
 		int16 newIndex = m_TexturesLookup[_index];
-		assert1(newIndex != -1);
-		assert1(newIndex < static_cast<int16>(m_Textures.size()));
+		_ASSERT(newIndex != -1);
+		_ASSERT(newIndex < static_cast<int16>(m_Textures.size()));
 		return (m_Textures[newIndex]);
 	}
 	std::shared_ptr<CM2_Part_TextureWeight> GetTextureWeight(uint32 _index) const
@@ -58,8 +58,8 @@ public:
 			return nullptr;
 		}
 		int16 newIndex = m_TextureWeightsLookup[_index];
-		assert1(newIndex != -1);
-		assert1(newIndex < static_cast<int16>(m_TextureWeights.size()));
+		_ASSERT(newIndex != -1);
+		_ASSERT(newIndex < static_cast<int16>(m_TextureWeights.size()));
 		return (m_TextureWeights[newIndex]);
 	}
 	std::shared_ptr<CM2_Part_TextureTransform> GetTextureTransform(uint32 _index) const
@@ -70,8 +70,8 @@ public:
 			return nullptr;
 		}
 		int16 newIndex = m_TexturesTransformLookup[_index];
-		assert1(newIndex != -1);
-		assert1(newIndex < static_cast<int16>(m_TexturesTransform.size()));
+		_ASSERT(newIndex != -1);
+		_ASSERT(newIndex < static_cast<int16>(m_TexturesTransform.size()));
 		return (m_TexturesTransform[newIndex]);
 	}
 public:

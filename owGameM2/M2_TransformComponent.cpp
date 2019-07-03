@@ -32,7 +32,7 @@ void CM2_TransformComponent::UpdateLocalTransform()
     if (attachPoint)
     {
         std::shared_ptr<const CM2_Part_Bone> bone = attachPoint->getBone().lock();
-        assert1(bone != nullptr);
+        _ASSERT(bone != nullptr);
 
         mat4 relMatrix;
         relMatrix = glm::translate(relMatrix, bone->getPivot());

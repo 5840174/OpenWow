@@ -23,10 +23,10 @@ public:
 		// If hasn't index, then use global sec
 		if (m_GlobalSecIndex != -1)
 		{
-			assert1(m_GlobalSec != nullptr);
+			_ASSERT(m_GlobalSec != nullptr);
 		}
 
-		assert1((b.interpolation_ranges.size > 0) || (m_GlobalSecIndex != -1) || (m_Type == INTERPOLATION_NONE));
+		_ASSERT((b.interpolation_ranges.size > 0) || (m_GlobalSecIndex != -1) || (m_Type == INTERPOLATION_NONE));
 
 		// ranges
 		if (b.interpolation_ranges.size > 0)
@@ -45,7 +45,7 @@ public:
 			m_Times.push_back(times[i]);
 		}
 
-		assert1(b.timestamps.size == b.values.size);
+		_ASSERT(b.timestamps.size == b.values.size);
 
 		// keyframes
 		D* values = (D*)(f->getData() + b.values.offset);
@@ -84,7 +84,7 @@ public:
 
 	T getValue(uint16 anim, uint32 time, uint32 globalTime) const
 	{
-		assert1(m_Type != INTERPOLATION_NONE);
+		_ASSERT(m_Type != INTERPOLATION_NONE);
 
         std::pair<uint32, uint32> range = std::make_pair(0, m_Values.size() - 1);
 
@@ -102,7 +102,7 @@ public:
 		}
 		else
 		{
-			assert1(time >= m_Times[0] && time < m_Times[m_Times.size() - 1]);
+			_ASSERT(time >= m_Times[0] && time < m_Times[m_Times.size() - 1]);
 			range = m_Ranges[anim];
 		}
 
@@ -124,12 +124,12 @@ public:
 				break;
 			}
 		}
-		assert1(pos != UINT32_MAX);
+		_ASSERT(pos != UINT32_MAX);
 
 		uint32 t1 = m_Times[pos];
 		uint32 t2 = m_Times[pos + 1];
-		assert1(t2 > t1);
-		assert1(time >= t1 && time < t2);
+		_ASSERT(t2 > t1);
+		_ASSERT(time >= t1 && time < t2);
 		float r = (float)(time - t1) / (float)(t2 - t1);
 
 		switch (m_Type)

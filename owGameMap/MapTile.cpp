@@ -83,7 +83,7 @@ bool CMapTile::Load()
 	{
 		uint32 version;
 		f->readBytes(&version, 4);
-		assert1(version == 18);
+		_ASSERT(version == 18);
 	}
 
 	// MHDR + size (8)
@@ -101,7 +101,7 @@ bool CMapTile::Load()
 		f->readBytes(&size, sizeof(uint32_t));
 
 		uint32 count = size / sizeof(ADT_MCIN);
-		assert1(count == C_ChunksInTileGlobal);
+		_ASSERT(count == C_ChunksInTileGlobal);
 		memcpy(chunks, f->getDataFromCurrent(), sizeof(ADT_MCIN) * count);
 	}
 
@@ -145,7 +145,7 @@ bool CMapTile::Load()
 		f->readBytes(&size, sizeof(uint32_t));
 
 		uint32 count = size / sizeof(uint32);
-		assert1(count == m_MDXsNames.size());
+		_ASSERT(count == m_MDXsNames.size());
 		for (uint32_t i = 0; i < count; i++)
 		{
 			uint32 offset;
@@ -176,7 +176,7 @@ bool CMapTile::Load()
 		f->readBytes(&size, sizeof(uint32_t));
 
 		uint32 count = size / sizeof(uint32);
-		assert1(count == m_WMOsNames.size());
+		_ASSERT(count == m_WMOsNames.size());
 		for (uint32_t i = 0; i < count; i++)
 		{
 			uint32 offset;
@@ -249,10 +249,10 @@ bool CMapTile::Load()
 
 	for (auto& it : m_WMOsPlacementInfo)
 	{
-		std::shared_ptr<CMapWMOInstance> inst = CreateSceneNode<CMapWMOInstance>(m_WMOsNames[it.nameIndex]);
-        inst->Initialize(it);
-		Application::Get().GetLoader()->AddToLoadQueue(inst);
-		m_WMOsInstances.push_back(inst);
+		//std::shared_ptr<CMapWMOInstance> inst = CreateSceneNode<CMapWMOInstance>(m_WMOsNames[it.nameIndex]);
+        //inst->Initialize(it);
+        //Application::Get().GetLoader()->AddToLoadQueue(inst);
+        //m_WMOsInstances.push_back(inst);
 
 		// Update THIS bounds
 		//BoundingBox bbox = GetBounds();

@@ -71,7 +71,7 @@ bool CMapChunk::PreLoad()
 	m_File->seekRelative(4); // MCNK
 	uint32_t size;
 	m_File->readBytes(&size, sizeof(uint32_t));
-	assert1(size + 8 == mcin.size);
+	_ASSERT(size + 8 == mcin.size);
 
 	uint32_t startPos = m_File->getPos();
 
@@ -201,7 +201,7 @@ bool CMapChunk::Load()
 	m_File->seek(startPos + header.ofsLayer);
 	{
 		std::shared_ptr<CMapTile> parentADT = m_ParentADT.lock();
-		assert1(parentADT != NULL);
+		_ASSERT(parentADT != NULL);
 
 		for (uint32 i = 0; i < header.nLayers; i++)
 		{
@@ -241,7 +241,7 @@ bool CMapChunk::Load()
 	m_File->seek(startPos + header.ofsAlpha);
 	{
 		std::shared_ptr<CMap> mapController = m_MapController.lock();
-		assert1(mapController != NULL);
+		_ASSERT(mapController != NULL);
 
 		for (uint32 i = 1; i < header.nLayers; i++)
 		{
@@ -324,13 +324,13 @@ bool CMapChunk::Load()
 			CRange height;
 			m_File->readBytes(&height, 8);
 
-			std::shared_ptr<CADT_Liquid> m_Liquid = std::make_shared<CADT_Liquid>(8, 8);
-			m_Liquid->CreateFromMCLQ(m_File, header);
+			//std::shared_ptr<CADT_Liquid> m_Liquid = std::make_shared<CADT_Liquid>(8, 8);
+			//m_Liquid->CreateFromMCLQ(m_File, header);
 
-            vec3 position = vec3(GetComponent<CTransformComponent3D>()->GetTranslation().x, 0.0f, GetComponent<CTransformComponent3D>()->GetTranslation().z);
+            //vec3 position = vec3(GetComponent<CTransformComponent3D>()->GetTranslation().x, 0.0f, GetComponent<CTransformComponent3D>()->GetTranslation().z);
 
-			m_LiquidInstance = CreateSceneNode<Liquid_Instance>();
-            m_LiquidInstance->Initialize(m_Liquid, position);
+			//m_LiquidInstance = CreateSceneNode<Liquid_Instance>();
+            //m_LiquidInstance->Initialize(m_Liquid, position);
 		}
 	}
 

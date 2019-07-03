@@ -44,18 +44,18 @@ inline void FixColorVertexAlpha(std::shared_ptr<WMO_Group> _group)
 			float v38 = (float)_group->mocv[mocv_index].w / 255.0f;
 
 			float v11 = (float)_group->mocv[mocv_index].x - v38 * (float)_group->mocv[mocv_index].x;
-			assert1(v11 > -0.5f);
-			assert1(v11 < 255.5f);
+			_ASSERT(v11 > -0.5f);
+			_ASSERT(v11 < 255.5f);
 			_group->mocv[mocv_index].x = v11 / 2;
 
 			float v13 = (float)_group->mocv[mocv_index].y - v38 * (float)_group->mocv[mocv_index].y;
-			assert1(v13 > -0.5f);
-			assert1(v13 < 255.5f);
+			_ASSERT(v13 > -0.5f);
+			_ASSERT(v13 < 255.5f);
 			_group->mocv[mocv_index].y = v13 / 2;
 
 			float v14 = (float)_group->mocv[mocv_index].z - v38 * (float)_group->mocv[mocv_index].z;
-			assert1(v14 > -0.5f);
-			assert1(v14 < 255.5f);
+			_ASSERT(v14 > -0.5f);
+			_ASSERT(v14 < 255.5f);
 			_group->mocv[mocv_index++].z = v14 / 2;
 		}
 

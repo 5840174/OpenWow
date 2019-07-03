@@ -40,7 +40,7 @@ void CM2_Base_Instance::CreateInstances()
 
 void CM2_Base_Instance::Attach(std::shared_ptr<CM2_Part_Attachment> _attachment)
 {
-	assert1(_attachment != nullptr);
+	_ASSERT(_attachment != nullptr);
 	m_Attached = _attachment;
 }
 void CM2_Base_Instance::Detach()
@@ -55,8 +55,8 @@ std::shared_ptr<CM2_Part_Attachment> CM2_Base_Instance::GetAttachPoint() const
 
 void CM2_Base_Instance::setM2(std::shared_ptr<M2> _model)
 {
-	assert1(m_M2 == nullptr);
-	assert1(_model != nullptr);
+	_ASSERT(m_M2 == nullptr);
+	_ASSERT(_model != nullptr);
 	m_M2 = _model;
 
 	InitAnimator();
@@ -82,7 +82,7 @@ void CM2_Base_Instance::setSpecialTexture(SM2_Texture::Type _type, std::shared_p
 }
 std::shared_ptr<Texture> CM2_Base_Instance::getSpecialTexture(SM2_Texture::Type _type) const
 {
-	assert1(_type < SM2_Texture::Type::COUNT);
+	_ASSERT(_type < SM2_Texture::Type::COUNT);
 	return m_SpecialTextures[_type];
 }
 

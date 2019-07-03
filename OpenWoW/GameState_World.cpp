@@ -280,7 +280,7 @@ void CGameState_World::Load3D()
 	AddLiquidPasses(renderDevice, renderWindow->GetRenderTarget(), &m_3DTechnique, &m_Viewport, m_3DScene);
 	AddM2Passes(renderDevice, renderWindow->GetRenderTarget(), &m_3DTechnique, &m_Viewport, m_3DScene);
 
-
+    /*
     // Color buffer (Color0)
     Texture::TextureFormat colorTextureFormat
     (
@@ -310,7 +310,7 @@ void CGameState_World::Load3D()
     AddWMOPasses(renderDevice, m_RenderTarget, &m_3D2Technique, &m_Viewport2, m_3DScene);
     AddLiquidPasses(renderDevice, m_RenderTarget, &m_3D2Technique, &m_Viewport2, m_3DScene);
     AddM2Passes(renderDevice, m_RenderTarget, &m_3D2Technique, &m_Viewport2, m_3DScene);
-
+    */
 
 	Light dir;
 	dir.m_Enabled = true;
@@ -339,10 +339,10 @@ void CGameState_World::LoadUI()
 	m_CameraRotText->GetComponent<CTransformComponentUI>()->SetTranslate(vec2(0.0f, 20.0f));
 
 
-    std::shared_ptr<CUITextureNode> node4 = m_UIScene->GetRootNode()->CreateSceneNode<CUITextureNode>();
-    node4->SetTexture(m_RenderTarget->GetTexture(IRenderTarget::AttachmentPoint::Color0));
-    node4->GetComponent<CTransformComponentUI>()->SetTranslate(vec2(200.0f, 200.0f));
-    node4->GetComponent<CTransformComponentUI>()->SetScale(vec2(320.0f, 240.0f));
+    //std::shared_ptr<CUITextureNode> node4 = m_UIScene->GetRootNode()->CreateSceneNode<CUITextureNode>();
+    //node4->SetTexture(m_RenderTarget->GetTexture(IRenderTarget::AttachmentPoint::Color0));
+    //node4->GetComponent<CTransformComponentUI>()->SetTranslate(vec2(200.0f, 200.0f));
+    //node4->GetComponent<CTransformComponentUI>()->SetScale(vec2(320.0f, 240.0f));
 
 	// Texture
 	if (m_MapController != nullptr)

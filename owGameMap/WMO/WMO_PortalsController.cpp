@@ -14,7 +14,7 @@ CWMO_PortalsController::CWMO_PortalsController(const std::weak_ptr<const CWMO> _
 	m_ParentWMO(_parentWMO)
 {
 	std::shared_ptr<const CWMO> ParentWMO = m_ParentWMO.lock();
-	assert1(ParentWMO != nullptr);
+	_ASSERT(ParentWMO != nullptr);
 
 	for (auto& it : ParentWMO->m_PortalReferences)
 	{
@@ -40,10 +40,10 @@ CWMO_PortalsController::~CWMO_PortalsController()
 
 void CWMO_PortalsController::GetPolyFrustum(const vec3* poly, uint32 num_verts, Frustum* _frustum, vec3 eye, bool _isPositive)
 {
-	assert1(_frustum != nullptr);
+	_ASSERT(_frustum != nullptr);
 
 	Plane _portalPlanes[15];
-	assert1(num_verts < 15);
+	_ASSERT(num_verts < 15);
 
 	for (uint32 i = 0; i < num_verts; i++)
 	{
@@ -116,7 +116,7 @@ void CWMO_PortalsController::Update(std::shared_ptr<CWMO_Base_Instance> _localCo
 		}
 	}
 
-	//assert1(insideOneAtLeast || !(m_ParentWMO->m_OutdoorGroups.empty()));
+	//_ASSERT(insideOneAtLeast || !(m_ParentWMO->m_OutdoorGroups.empty()));
 
 	// If we outside WMO, then get outdorr group
 	//if (!insideIndoor)

@@ -17,13 +17,13 @@ DayNightCycle::DayNightCycle()
 	// Header
     f->readBytes(&nFields, 4);
 	f->readBytes(&nFields1, 4);
-	assert1(nFields == nFields1);
-	assert1(nFields == 25);
+	_ASSERT(nFields == nFields1);
+	_ASSERT(nFields == 25);
 
 	// Field Descriptions
 	uint32 magic0x53;
 	f->readBytes(&magic0x53, 4);
-	assert1(magic0x53 == 0x53);
+	_ASSERT(magic0x53 == 0x53);
 
 	// Final offset
 	f->readBytes(&d, 4); // d is now the final offset

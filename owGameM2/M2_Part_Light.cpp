@@ -59,7 +59,7 @@ void CM2_Part_Light::setup(uint16 anim, uint32 time, uint32 globalTime)
 	vec4 diffcol(diffColorValue * diffIntensityValue, 1.0f);
 
 	std::shared_ptr<const CM2_Part_Bone> Bone = m_Bone.lock();
-	assert1(Bone != nullptr);
+	_ASSERT(Bone != nullptr);
 
 	if (Bone != nullptr)
 	{

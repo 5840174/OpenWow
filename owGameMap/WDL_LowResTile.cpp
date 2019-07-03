@@ -21,7 +21,7 @@ CWDL_LowResTile::CWDL_LowResTile(std::weak_ptr<const CMap> _parent, std::shared_
 bool CWDL_LowResTile::Render(const RenderEventArgs* renderEventArgs, std::shared_ptr<ConstantBuffer> perObject, UINT indexStartLocation, UINT indexCnt, UINT vertexStartLocation, UINT vertexCnt)
 {
 	std::shared_ptr<const CMap> MapController = m_MapController.lock();
-	assert1(MapController != NULL);
+	_ASSERT(MapController != NULL);
 
 	int32 currentX = MapController->GetCurrentX();
 	int32 currentZ = MapController->GetCurrentZ();

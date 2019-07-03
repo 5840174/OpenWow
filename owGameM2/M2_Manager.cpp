@@ -9,7 +9,7 @@
 
 CM2_Manager::CM2_Manager()
 {
-	m_DefaultModel = Add("World\\Scale\\50x50.m2");
+	//m_DefaultModel = Add("World\\Scale\\50x50.m2");
 }
 
 CM2_Manager::~CM2_Manager()
