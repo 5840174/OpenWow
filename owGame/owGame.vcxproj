@@ -19,6 +19,20 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Client\ARC4.cpp" />
+    <ClCompile Include="Client\AuthCrypt.cpp" />
+    <ClCompile Include="Client\AuthSocket.cpp" />
+    <ClCompile Include="Client\BigNumber.cpp" />
+    <ClCompile Include="Client\Client.cpp" />
+    <ClCompile Include="Client\ClientPacket.cpp" />
+    <ClCompile Include="Client\HMACSHA1.cpp" />
+    <ClCompile Include="Client\OpenSSLCrypto.cpp" />
+    <ClCompile Include="Client\RealmInfo.cpp" />
+    <ClCompile Include="Client\ServerPacket.cpp" />
+    <ClCompile Include="Client\SHA1.cpp" />
+    <ClCompile Include="Client\Templates\CharacterTemplate.cpp" />
+    <ClCompile Include="Client\Templates\ItemTemplate.cpp" />
+    <ClCompile Include="Client\WorldSocket.cpp" />
     <ClCompile Include="CreatePasses.cpp" />
     <ClCompile Include="DBC\Core\DBC__Storage.cpp" />
     <ClCompile Include="LiquidLayer.cpp" />
@@ -37,6 +51,27 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\shared\owGame.h" />
+    <ClInclude Include="Client\ARC4.h" />
+    <ClInclude Include="Client\AuthChallenge_C.h" />
+    <ClInclude Include="Client\AuthCodes.h" />
+    <ClInclude Include="Client\AuthCrypt.h" />
+    <ClInclude Include="Client\AuthProof_C.h" />
+    <ClInclude Include="Client\AuthSocket.h" />
+    <ClInclude Include="Client\BigNumber.h" />
+    <ClInclude Include="Client\Client.h" />
+    <ClInclude Include="Client\ClientPacket.h" />
+    <ClInclude Include="Client\HMACSHA1.h" />
+    <ClInclude Include="Client\Opcodes.h" />
+    <ClInclude Include="Client\OpcodesNames.h" />
+    <ClInclude Include="Client\OpenSSLCrypto.h" />
+    <ClInclude Include="Client\RealmInfo.h" />
+    <ClInclude Include="Client\ServerPacket.h" />
+    <ClInclude Include="Client\SHA1.h" />
+    <ClInclude Include="Client\Templates\CharacterEnums.h" />
+    <ClInclude Include="Client\Templates\CharacterTemplate.h" />
+    <ClInclude Include="Client\Templates\ItemTemplate.h" />
+    <ClInclude Include="Client\Templates\Player_Enums.h" />
+    <ClInclude Include="Client\WorldSocket.h" />
     <ClInclude Include="common.h" />
     <ClInclude Include="CreatePasses.h" />
     <ClInclude Include="DBC\Core\DBC__File.h" />
@@ -93,14 +128,6 @@
   <ItemGroup>
     <None Include="DBC\Core\DBC__File.inl" />
     <None Include="WoWChunkReader.inl" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\..\ZenonEngine\znEngine\znEngine.vcxproj">
-      <Project>{51252f60-b8dc-4090-bba3-dd05942110f0}</Project>
-    </ProjectReference>
-    <ProjectReference Include="..\Externals\libmpq\libmpq.vcxproj">
-      <Project>{0cc7fa61-23de-4d9f-a6f4-fda327ab5984}</Project>
-    </ProjectReference>
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{B55BA550-E3B6-4756-AE79-6A5C7D28AEFF}</ProjectGuid>
@@ -178,7 +205,7 @@
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>_DEBUG;_WINDOWS;_USRDLL;OW_GAME_DLL_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>false</SDLCheck>
-      <AdditionalIncludeDirectories>..\..\ZenonEngine\shared;..\..\ZenonEngine\Externals;..\shared;..\Externals;..\owGame\;..\owGame\DBC\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\..\ZenonEngine\shared;..\..\ZenonEngine\Externals;..\shared;..\Externals;..\Externals\OpenSSL\include;..\owGame\;..\owGame\DBC\;..\owGame\Client\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <TreatSpecificWarningsAsErrors>
       </TreatSpecificWarningsAsErrors>
       <DisableSpecificWarnings>4244;4267;4251</DisableSpecificWarnings>
@@ -196,7 +223,7 @@
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>_DEBUG;_WINDOWS;_USRDLL;OW_GAME_DLL_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>false</SDLCheck>
-      <AdditionalIncludeDirectories>..\..\ZenonEngine\shared;..\..\ZenonEngine\Externals;..\shared;..\Externals;..\owGame\;..\owGame\DBC\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\..\ZenonEngine\shared;..\..\ZenonEngine\Externals;..\shared;..\Externals;..\Externals\OpenSSL\include;..\owGame\;..\owGame\DBC\;..\owGame\Client\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <TreatSpecificWarningsAsErrors>
       </TreatSpecificWarningsAsErrors>
       <DisableSpecificWarnings>4244;4267;4251</DisableSpecificWarnings>
@@ -216,7 +243,7 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <PreprocessorDefinitions>NDEBUG;_WINDOWS;_USRDLL;OW_GAME_DLL_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>false</SDLCheck>
-      <AdditionalIncludeDirectories>..\..\ZenonEngine\shared;..\..\ZenonEngine\Externals;..\shared;..\Externals;..\owGame\;..\owGame\DBC\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\..\ZenonEngine\shared;..\..\ZenonEngine\Externals;..\shared;..\Externals;..\Externals\OpenSSL\include;..\owGame\;..\owGame\DBC\;..\owGame\Client\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <TreatSpecificWarningsAsErrors>
@@ -240,7 +267,7 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <PreprocessorDefinitions>NDEBUG;_WINDOWS;_USRDLL;OW_GAME_DLL_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>false</SDLCheck>
-      <AdditionalIncludeDirectories>..\..\ZenonEngine\shared;..\..\ZenonEngine\Externals;..\shared;..\Externals;..\owGame\;..\owGame\DBC\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\..\ZenonEngine\shared;..\..\ZenonEngine\Externals;..\shared;..\Externals;..\Externals\OpenSSL\include;..\owGame\;..\owGame\DBC\;..\owGame\Client\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <TreatSpecificWarningsAsErrors>

@@ -346,10 +346,10 @@ void CWorldSocket::S_CharsEnum(CByteBuffer & _buff)
     uint8 charCnt;
     _buff >> charCnt;
 
-    std::vector<CharacterTemplate> characters;
+    std::vector<CInet_CharacterTemplate> characters;
     for (uint8 i = 0; i < charCnt; i++)
     {
-        CharacterTemplate character;
+        CInet_CharacterTemplate character;
         character.TemplateFill(_buff);
         characters.push_back(character);
     }

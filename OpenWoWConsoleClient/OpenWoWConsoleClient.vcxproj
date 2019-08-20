@@ -30,17 +30,6 @@
     </ClCompile>
     <ClCompile Include="main.cpp" />
   </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\..\ZenonEngine\znCore\znCore.vcxproj">
-      <Project>{a4e6f769-0036-4128-a409-495d9207f587}</Project>
-    </ProjectReference>
-    <ProjectReference Include="..\..\ZenonEngine\znIntfs\znIntfs.vcxproj">
-      <Project>{69aec773-3240-4644-a049-ababd643dbec}</Project>
-    </ProjectReference>
-    <ProjectReference Include="..\owGameClient\owGameClient.vcxproj">
-      <Project>{8810fe3d-3a00-4a79-9370-69612befe04e}</Project>
-    </ProjectReference>
-  </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{4A5F84E3-DBFF-42C5-983B-DEFA79CCA6E5}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>

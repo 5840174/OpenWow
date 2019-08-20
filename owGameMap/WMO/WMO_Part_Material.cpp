@@ -19,14 +19,30 @@ WMO_Part_Material::WMO_Part_Material(const std::weak_ptr<const CWMO> _parentWMO,
 	CreateConstantBuffer(m_pProperties, sizeof(MaterialProperties));
 
 	// CreateShaders
-	std::shared_ptr<Shader> g_pVertexShader = _RenderDevice->CreateShader(
-		Shader::VertexShader, "shaders_D3D/WMO.hlsl", Shader::ShaderMacros(), "VS_main", "latest"
-	);
-    g_pVertexShader->LoadInputLayoutFromReflector();
+    std::shared_ptr<Shader> g_pVertexShader;
+    std::shared_ptr<Shader> g_pPixelShader;
 
-	std::shared_ptr<Shader> g_pPixelShader = _RenderDevice->CreateShader(
-		Shader::PixelShader, "shaders_D3D/WMO.hlsl", Shader::ShaderMacros(), "PS_main", "latest"
-	);
+    if (_RenderDevice->GetDeviceType() == IRenderDevice::DeviceType::DirectX)
+    {
+        g_pVertexShader = _RenderDevice->CreateShader(
+            Shader::VertexShader, "shaders_D3D/WMO.hlsl", Shader::ShaderMacros(), "VS_main", "latest"
+        );
+
+        g_pPixelShader = _RenderDevice->CreateShader(
+            Shader::PixelShader, "shaders_D3D/WMO.hlsl", Shader::ShaderMacros(), "PS_main", "latest"
+        );
+    }
+    else if (_RenderDevice->GetDeviceType() == IRenderDevice::DeviceType::OpenGL)
+    {
+        g_pVertexShader = _RenderDevice->CreateShader(
+            Shader::VertexShader, "shaders_OGL/WMO.vs", Shader::ShaderMacros(), "", ""
+        );
+
+        g_pPixelShader = _RenderDevice->CreateShader(
+            Shader::PixelShader, "shaders_OGL/WMO.ps", Shader::ShaderMacros(), "", ""
+        );
+    }
+    g_pVertexShader->LoadInputLayoutFromReflector();
 
 	SetShader(Shader::VertexShader, g_pVertexShader);
 	SetShader(Shader::PixelShader, g_pPixelShader);
@@ -62,6 +78,11 @@ WMO_Part_Material::~WMO_Part_Material()
 		_aligned_free(m_pProperties);
 		m_pProperties = nullptr;
 	}
+}
+
+void WMO_Part_Material::UpdateConstantBuffer() const
+{
+    MaterialWrapper::UpdateConstantBuffer(m_pProperties, sizeof(MaterialProperties));
 }
 
 /*void WMO_Part_Material::fillRenderState(RenderState* _state) const

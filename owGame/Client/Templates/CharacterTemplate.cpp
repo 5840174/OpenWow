@@ -3,7 +3,7 @@
 // General
 #include "CharacterTemplate.h"
 
-CharacterTemplate::CharacterTemplate() :
+CInet_CharacterTemplate::CInet_CharacterTemplate() :
 	// System
 	GUID(0),
 	Name("Default name"),
@@ -36,7 +36,7 @@ CharacterTemplate::CharacterTemplate() :
 	PetFamilyId(0)
 {}
 
-void CharacterTemplate::TemplateSet(const CharacterTemplate & _o)
+void CInet_CharacterTemplate::TemplateSet(const CInet_CharacterTemplate & _o)
 {
 	// System
 	GUID = _o.GUID;
@@ -76,7 +76,7 @@ void CharacterTemplate::TemplateSet(const CharacterTemplate & _o)
 	}
 }
 
-void CharacterTemplate::TemplateFill(CByteBuffer& b)
+void CInet_CharacterTemplate::TemplateFill(CByteBuffer& b)
 {
 	uint32 beginSize = b.getPos();
 
@@ -115,7 +115,7 @@ void CharacterTemplate::TemplateFill(CByteBuffer& b)
 	}
 }
 
-void CharacterTemplate::TemplatePrint()
+void CInet_CharacterTemplate::TemplatePrint()
 {
 	Log::Info("Char %s, -------------------------------------------------------------", Name.c_str());
 	Log::Info("Lvl %d, Race %d, Class %d, Gender %d", Level, Race, Class, Gender);

@@ -43,6 +43,27 @@
     <Filter Include="DBC\Tables\Area">
       <UniqueIdentifier>{538a66a7-9a5e-4884-81d1-5cb55031ad1c}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Client">
+      <UniqueIdentifier>{2071b069-f709-4af8-b58e-d1b39a444f6c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Client\Cryptography">
+      <UniqueIdentifier>{a153d6d5-0078-40e6-b38d-b39125d16a17}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Client\Auth">
+      <UniqueIdentifier>{8968b529-dd6f-408d-930f-f2ac9fbceb4b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Client\World">
+      <UniqueIdentifier>{c6813846-4e1a-4355-9365-b1eedf62dc0e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Client\Auth\Handlers">
+      <UniqueIdentifier>{b3d4eb05-ef9b-437f-ab22-dbe80d43f375}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Client\World\Packets">
+      <UniqueIdentifier>{facb61e4-aa5c-42b6-9019-234bcfdb5726}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Client\World\Templates">
+      <UniqueIdentifier>{0a1158d6-10b2-481d-8954-3d112309f968}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Liquid.cpp">
@@ -74,6 +95,48 @@
     </ClCompile>
     <ClCompile Include="RenderPass_Liquid.cpp">
       <Filter>RenderStuff</Filter>
+    </ClCompile>
+    <ClCompile Include="Client\ARC4.cpp">
+      <Filter>Client\Cryptography</Filter>
+    </ClCompile>
+    <ClCompile Include="Client\AuthCrypt.cpp">
+      <Filter>Client\Cryptography</Filter>
+    </ClCompile>
+    <ClCompile Include="Client\BigNumber.cpp">
+      <Filter>Client\Cryptography</Filter>
+    </ClCompile>
+    <ClCompile Include="Client\HMACSHA1.cpp">
+      <Filter>Client\Cryptography</Filter>
+    </ClCompile>
+    <ClCompile Include="Client\OpenSSLCrypto.cpp">
+      <Filter>Client\Cryptography</Filter>
+    </ClCompile>
+    <ClCompile Include="Client\SHA1.cpp">
+      <Filter>Client\Cryptography</Filter>
+    </ClCompile>
+    <ClCompile Include="Client\AuthSocket.cpp">
+      <Filter>Client\Auth</Filter>
+    </ClCompile>
+    <ClCompile Include="Client\Templates\CharacterTemplate.cpp">
+      <Filter>Client\World\Templates</Filter>
+    </ClCompile>
+    <ClCompile Include="Client\Templates\ItemTemplate.cpp">
+      <Filter>Client\World\Templates</Filter>
+    </ClCompile>
+    <ClCompile Include="Client\ClientPacket.cpp">
+      <Filter>Client\World\Packets</Filter>
+    </ClCompile>
+    <ClCompile Include="Client\ServerPacket.cpp">
+      <Filter>Client\World\Packets</Filter>
+    </ClCompile>
+    <ClCompile Include="Client\WorldSocket.cpp">
+      <Filter>Client\World</Filter>
+    </ClCompile>
+    <ClCompile Include="Client\Client.cpp">
+      <Filter>Client</Filter>
+    </ClCompile>
+    <ClCompile Include="Client\RealmInfo.cpp">
+      <Filter>Client</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -227,6 +290,69 @@
     </ClInclude>
     <ClInclude Include="RenderPass_Liquid.h">
       <Filter>RenderStuff</Filter>
+    </ClInclude>
+    <ClInclude Include="Client\ARC4.h">
+      <Filter>Client\Cryptography</Filter>
+    </ClInclude>
+    <ClInclude Include="Client\AuthCrypt.h">
+      <Filter>Client\Cryptography</Filter>
+    </ClInclude>
+    <ClInclude Include="Client\BigNumber.h">
+      <Filter>Client\Cryptography</Filter>
+    </ClInclude>
+    <ClInclude Include="Client\HMACSHA1.h">
+      <Filter>Client\Cryptography</Filter>
+    </ClInclude>
+    <ClInclude Include="Client\OpenSSLCrypto.h">
+      <Filter>Client\Cryptography</Filter>
+    </ClInclude>
+    <ClInclude Include="Client\SHA1.h">
+      <Filter>Client\Cryptography</Filter>
+    </ClInclude>
+    <ClInclude Include="Client\AuthChallenge_C.h">
+      <Filter>Client\Auth\Handlers</Filter>
+    </ClInclude>
+    <ClInclude Include="Client\AuthProof_C.h">
+      <Filter>Client\Auth\Handlers</Filter>
+    </ClInclude>
+    <ClInclude Include="Client\AuthCodes.h">
+      <Filter>Client\Auth</Filter>
+    </ClInclude>
+    <ClInclude Include="Client\AuthSocket.h">
+      <Filter>Client\Auth</Filter>
+    </ClInclude>
+    <ClInclude Include="Client\Templates\CharacterEnums.h">
+      <Filter>Client\World\Templates</Filter>
+    </ClInclude>
+    <ClInclude Include="Client\Templates\CharacterTemplate.h">
+      <Filter>Client\World\Templates</Filter>
+    </ClInclude>
+    <ClInclude Include="Client\Templates\ItemTemplate.h">
+      <Filter>Client\World\Templates</Filter>
+    </ClInclude>
+    <ClInclude Include="Client\Templates\Player_Enums.h">
+      <Filter>Client\World\Templates</Filter>
+    </ClInclude>
+    <ClInclude Include="Client\ClientPacket.h">
+      <Filter>Client\World\Packets</Filter>
+    </ClInclude>
+    <ClInclude Include="Client\Opcodes.h">
+      <Filter>Client\World\Packets</Filter>
+    </ClInclude>
+    <ClInclude Include="Client\OpcodesNames.h">
+      <Filter>Client\World\Packets</Filter>
+    </ClInclude>
+    <ClInclude Include="Client\ServerPacket.h">
+      <Filter>Client\World\Packets</Filter>
+    </ClInclude>
+    <ClInclude Include="Client\WorldSocket.h">
+      <Filter>Client\World</Filter>
+    </ClInclude>
+    <ClInclude Include="Client\Client.h">
+      <Filter>Client</Filter>
+    </ClInclude>
+    <ClInclude Include="Client\RealmInfo.h">
+      <Filter>Client</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

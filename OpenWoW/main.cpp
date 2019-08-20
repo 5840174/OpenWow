@@ -35,8 +35,7 @@ int main(int argumentCount, char* arguments[])
 		std::shared_ptr<IFilesStorage> mpqFileStorage = std::make_shared<CMPQFilesStorage>("D:\\_games\\World of Warcraft 1.12.1\\Data\\", IFilesStorageEx::PRIOR_HIGH);
 		filesManager->RegisterFilesStorage(mpqFileStorage);
 
-
-        HMODULE hModule = GetModuleHandle(NULL);
+        HMODULE hModule = ::GetModuleHandle(NULL);
         std::shared_ptr<IFilesStorage> libraryFileStorage = std::make_shared<CLibraryResourceFileStotage>(hModule);
         filesManager->RegisterFilesStorage(libraryFileStorage);
 
@@ -52,7 +51,7 @@ int main(int argumentCount, char* arguments[])
 
 		Application app(_BaseManager);
 
-        std::shared_ptr<IRenderDevice> renderDevice = app.CreateRenderDevice(IRenderDevice::DeviceType::OpenGL);
+        std::shared_ptr<IRenderDevice> renderDevice = app.CreateRenderDevice(IRenderDevice::DeviceType::DirectX);
         std::shared_ptr<RenderWindow> renderWindow = app.CreateRenderWindow(windowObject, true);
 
 

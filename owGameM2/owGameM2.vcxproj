@@ -106,11 +106,6 @@
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="RenderPass_M2.h" />
   </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\owGame\owGame.vcxproj">
-      <Project>{b55ba550-e3b6-4756-ae79-6a5c7d28aeff}</Project>
-    </ProjectReference>
-  </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{AD0FB1D4-E81D-482D-A74F-EEAFFD9B2DFC}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>

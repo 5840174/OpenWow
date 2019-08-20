@@ -54,14 +54,6 @@
     <ClInclude Include="Player_Enums.h" />
     <ClInclude Include="stdafx.h" />
   </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\owGameM2\owGameM2.vcxproj">
-      <Project>{ad0fb1d4-e81d-482d-a74f-eeaffd9b2dfc}</Project>
-    </ProjectReference>
-    <ProjectReference Include="..\owGame\owGame.vcxproj">
-      <Project>{b55ba550-e3b6-4756-ae79-6a5c7d28aeff}</Project>
-    </ProjectReference>
-  </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{4723F94F-2ECA-40FB-A4FA-C491DFE3B3A5}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>

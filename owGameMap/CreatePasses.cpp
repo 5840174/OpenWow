@@ -9,7 +9,7 @@
 #include "RenderPass_WDL.h"
 #include "WMO\\RenderPass_WMO.h"
 
-void AddSkyPasses(std::shared_ptr<IRenderDevice> device, std::shared_ptr<IRenderTarget> _renderTarget, RenderTechnique * technique, Viewport * viewport, std::shared_ptr<Scene3D> scene)
+void AddSkyPasses(std::shared_ptr<IRenderDevice> device, std::shared_ptr<IRenderTarget> _renderTarget, RenderTechnique * technique, const Viewport * viewport, std::shared_ptr<Scene3D> scene)
 {
 	BlendState::BlendMode alphaBlending(true, false, BlendState::BlendFactor::SrcAlpha, BlendState::BlendFactor::OneMinusSrcAlpha, BlendState::BlendOperation::Add, BlendState::BlendFactor::SrcAlpha, BlendState::BlendFactor::OneMinusSrcAlpha);
 	BlendState::BlendMode disableBlending;
@@ -23,11 +23,11 @@ void AddSkyPasses(std::shared_ptr<IRenderDevice> device, std::shared_ptr<IRender
 	WDLPipeline->GetRasterizerState().SetCullMode(RasterizerState::CullMode::None);
 	WDLPipeline->GetRasterizerState().SetFillMode(RasterizerState::FillMode::Solid);
 	WDLPipeline->SetRenderTarget(_renderTarget);
-	WDLPipeline->GetRasterizerState().SetViewport(*viewport);
+	WDLPipeline->GetRasterizerState().SetViewport(viewport);
 	technique->AddPass(std::make_shared<CRenderPass_Sky>(scene, WDLPipeline));
 }
 
-void AddWDLPasses(std::shared_ptr<IRenderDevice> device, std::shared_ptr<IRenderTarget> _renderTarget, RenderTechnique * technique, Viewport * viewport, std::shared_ptr<Scene3D> scene)
+void AddWDLPasses(std::shared_ptr<IRenderDevice> device, std::shared_ptr<IRenderTarget> _renderTarget, RenderTechnique * technique, const Viewport * viewport, std::shared_ptr<Scene3D> scene)
 {
 	BlendState::BlendMode alphaBlending(true, false, BlendState::BlendFactor::SrcAlpha, BlendState::BlendFactor::OneMinusSrcAlpha, BlendState::BlendOperation::Add, BlendState::BlendFactor::SrcAlpha, BlendState::BlendFactor::OneMinusSrcAlpha);
 	BlendState::BlendMode disableBlending;
@@ -41,12 +41,12 @@ void AddWDLPasses(std::shared_ptr<IRenderDevice> device, std::shared_ptr<IRender
 	WDLPipeline->GetRasterizerState().SetCullMode(RasterizerState::CullMode::Back);
 	WDLPipeline->GetRasterizerState().SetFillMode(RasterizerState::FillMode::Solid);
 	WDLPipeline->SetRenderTarget(_renderTarget);
-	WDLPipeline->GetRasterizerState().SetViewport(*viewport);
+	WDLPipeline->GetRasterizerState().SetViewport(viewport);
 	technique->AddPass(std::make_shared<CRenderPass_WDL>(scene, WDLPipeline));
 
 }
 
-void AddMCNKPasses(std::shared_ptr<IRenderDevice> device, std::shared_ptr<IRenderTarget> _renderTarget, RenderTechnique * technique, Viewport * viewport, std::shared_ptr<Scene3D> scene)
+void AddMCNKPasses(std::shared_ptr<IRenderDevice> device, std::shared_ptr<IRenderTarget> _renderTarget, RenderTechnique * technique, const Viewport * viewport, std::shared_ptr<Scene3D> scene)
 {
 	BlendState::BlendMode alphaBlending(true, false, BlendState::BlendFactor::SrcAlpha, BlendState::BlendFactor::OneMinusSrcAlpha, BlendState::BlendOperation::Add, BlendState::BlendFactor::SrcAlpha, BlendState::BlendFactor::OneMinusSrcAlpha);
 	BlendState::BlendMode disableBlending;
@@ -61,11 +61,11 @@ void AddMCNKPasses(std::shared_ptr<IRenderDevice> device, std::shared_ptr<IRende
 	ADTPipeline->GetRasterizerState().SetCullMode(RasterizerState::CullMode::Back);
 	ADTPipeline->GetRasterizerState().SetFillMode(RasterizerState::FillMode::Solid);
 	ADTPipeline->SetRenderTarget(_renderTarget);
-	ADTPipeline->GetRasterizerState().SetViewport(*viewport);
+	ADTPipeline->GetRasterizerState().SetViewport(viewport);
 	technique->AddPass(std::make_shared<CRenderPass_ADT_MCNK>(scene, ADTPipeline));
 }
 
-void AddWMOPasses(std::shared_ptr<IRenderDevice> device, std::shared_ptr<IRenderTarget> _renderTarget, RenderTechnique * technique, Viewport * viewport, std::shared_ptr<Scene3D> scene)
+void AddWMOPasses(std::shared_ptr<IRenderDevice> device, std::shared_ptr<IRenderTarget> _renderTarget, RenderTechnique * technique, const Viewport * viewport, std::shared_ptr<Scene3D> scene)
 {
     BlendState::BlendMode alphaBlending(true, false, BlendState::BlendFactor::SrcAlpha, BlendState::BlendFactor::OneMinusSrcAlpha, BlendState::BlendOperation::Add, BlendState::BlendFactor::SrcAlpha, BlendState::BlendFactor::OneMinusSrcAlpha);
     BlendState::BlendMode disableBlending;
@@ -79,7 +79,7 @@ void AddWMOPasses(std::shared_ptr<IRenderDevice> device, std::shared_ptr<IRender
     WMOPipeline->GetRasterizerState().SetCullMode(RasterizerState::CullMode::Back);
     WMOPipeline->GetRasterizerState().SetFillMode(RasterizerState::FillMode::Solid);
     WMOPipeline->SetRenderTarget(_renderTarget);
-    WMOPipeline->GetRasterizerState().SetViewport(*viewport);
+    WMOPipeline->GetRasterizerState().SetViewport(viewport);
 
     technique->AddPass(std::make_shared<CRenderPass_WMO>(scene, WMOPipeline));
 }

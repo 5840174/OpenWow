@@ -15,6 +15,9 @@
 // DBC
 #include "../owGame/DBC/Core/DBC__Storage.h"
 
+// Client
+#include "../owGame/Client/Client.h"
+
 // Liquid
 #include "../owGame/LiquidInstance.h"
 #include "../owGame/CreatePasses.h"

@@ -14,6 +14,8 @@ public:
 	
 	uint32 getBlendMode() const { return m_Proto.blendMode; }
 
+    void UpdateConstantBuffer() const override;
+
 private:
 	const SWMO_MaterialDef         m_Proto;
 

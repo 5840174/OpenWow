@@ -249,10 +249,10 @@ bool CMapTile::Load()
 
 	for (auto& it : m_WMOsPlacementInfo)
 	{
-		//std::shared_ptr<CMapWMOInstance> inst = CreateSceneNode<CMapWMOInstance>(m_WMOsNames[it.nameIndex]);
-        //inst->Initialize(it);
-        //Application::Get().GetLoader()->AddToLoadQueue(inst);
-        //m_WMOsInstances.push_back(inst);
+		std::shared_ptr<CMapWMOInstance> inst = CreateSceneNode<CMapWMOInstance>(m_WMOsNames[it.nameIndex]);
+        inst->Initialize(it);
+        Application::Get().GetLoader()->AddToLoadQueue(inst);
+        m_WMOsInstances.push_back(inst);
 
 		// Update THIS bounds
 		//BoundingBox bbox = GetBounds();

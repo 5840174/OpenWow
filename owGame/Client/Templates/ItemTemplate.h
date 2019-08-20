@@ -56,12 +56,12 @@ struct InventoryType
     }
 };
 
-struct ItemTemplate
+struct CInet_ItemTemplate
 {
-	ItemTemplate();
-	ItemTemplate(uint32	_displayId, InventoryType::List _inventoryType, uint32 _enchantAuraID);
+	CInet_ItemTemplate();
+	CInet_ItemTemplate(uint32	_displayId, InventoryType::List _inventoryType, uint32 _enchantAuraID);
 	
-	void TemplateSet(const ItemTemplate& _o);
+	void TemplateSet(const CInet_ItemTemplate& _o);
 	void TemplateFill(CByteBuffer& b);
 
 	void TemplatePrint();

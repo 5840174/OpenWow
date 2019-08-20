@@ -1,7 +1,6 @@
 #pragma once
 
 #pragma comment(lib, "freetype.lib")
-#pragma comment(lib, "libmpq.lib")
 
 
 
@@ -13,7 +12,7 @@
 #include <znRender.h>
 #include <znEngine.h>
 
-
+#pragma comment(lib, "znEngine.lib")
 
 //
 // OpenWoW
@@ -26,7 +25,3 @@
 #pragma comment(lib, "owGameMap.lib")
 #include <owGameCharacters.h>
 #pragma comment(lib, "owGameCharacters.lib")
-
-// Socket
-#include <owGameClient.h>
-#pragma comment(lib, "owGameClient.lib")

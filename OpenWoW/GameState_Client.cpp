@@ -8,7 +8,6 @@
 CGameState_Client::CGameState_Client(const IApplication * Application)
     : base(Application)
 {
-	m_Viewport = Viewport(0, 0, 1280.0f, 1024.0f);
 }
 
 CGameState_Client::~CGameState_Client()
@@ -85,7 +84,7 @@ bool CGameState_Client::Init()
 
 	IApplication& app = Application::Get();
 	std::shared_ptr<IRenderDevice> renderDevice = app.GetRenderDevice();
-
+	std::shared_ptr<RenderWindow> renderWindow = app.GetRenderWindow();
 
 	//
 	// Socket controller
@@ -102,7 +101,7 @@ bool CGameState_Client::Init()
 	// Camera controller
 	//
 	SetCameraController(std::make_shared<CFreeCameraController>());
-    GetCameraController()->GetCamera()->SetViewport(m_Viewport);
+    GetCameraController()->GetCamera()->SetViewport(renderWindow->GetViewport());
     GetCameraController()->GetCamera()->SetProjectionRH(45.0f, 1280.0f / 1024.0f, 1.0f, 4000.0f);
 	
 	m_FrameQuery = renderDevice->CreateQuery(Query::QueryType::Timer, 1);
@@ -172,13 +171,13 @@ void CGameState_Client::OnPostRender(RenderEventArgs& e)
 		if (m_MapController != nullptr)
 			title += "_" + std::to_string(m_MapController->GetCurrentX()) + "_" + std::to_string(m_MapController->GetCurrentZ());
 
-		Application::Get().GetRenderWindow()->SetWindowName(title);
+		//Application::Get().GetRenderWindow()->SetWindowName(title);
 	}
 }
 
 void CGameState_Client::OnRenderUI(RenderEventArgs& e)
 {
-	e.Viewport = &m_Viewport;
+	e.Camera = GetCameraController()->GetCamera().get();
 
 	m_UITechnique.Render(e);
 }
@@ -191,6 +190,7 @@ void CGameState_Client::Load3D()
 {
 	IApplication& app = Application::Get();
 	std::shared_ptr<IRenderDevice> renderDevice = app.GetRenderDevice();
+	std::shared_ptr<RenderWindow> renderWindow = app.GetRenderWindow();
 
 	const float x = 40;
 	const float y = 29;
@@ -227,19 +227,19 @@ void CGameState_Client::Load3D()
 	//
 	// 3D Passes
 	//
-	AddSkyPasses(renderDevice, app.GetRenderWindow()->GetRenderTarget(), &m_3DTechnique, &m_Viewport, m_3DScene);
-	AddWDLPasses(renderDevice, app.GetRenderWindow()->GetRenderTarget(), &m_3DTechnique, &m_Viewport, m_3DScene);
-	AddMCNKPasses(renderDevice, app.GetRenderWindow()->GetRenderTarget(), &m_3DTechnique, &m_Viewport, m_3DScene);
-	AddWMOPasses(renderDevice, app.GetRenderWindow()->GetRenderTarget(), &m_3DTechnique, &m_Viewport, m_3DScene);
-	AddLiquidPasses(renderDevice, app.GetRenderWindow()->GetRenderTarget(), &m_3DTechnique, &m_Viewport, m_3DScene);
-	AddM2Passes(renderDevice, app.GetRenderWindow()->GetRenderTarget(), &m_3DTechnique, &m_Viewport, m_3DScene);
+	AddSkyPasses(renderDevice, app.GetRenderWindow()->GetRenderTarget(), &m_3DTechnique, renderWindow->GetViewport(), m_3DScene);
+	AddWDLPasses(renderDevice, app.GetRenderWindow()->GetRenderTarget(), &m_3DTechnique, renderWindow->GetViewport(), m_3DScene);
+	AddMCNKPasses(renderDevice, app.GetRenderWindow()->GetRenderTarget(), &m_3DTechnique, renderWindow->GetViewport(), m_3DScene);
+	AddWMOPasses(renderDevice, app.GetRenderWindow()->GetRenderTarget(), &m_3DTechnique, renderWindow->GetViewport(), m_3DScene);
+	AddLiquidPasses(renderDevice, app.GetRenderWindow()->GetRenderTarget(), &m_3DTechnique, renderWindow->GetViewport(), m_3DScene);
+	AddM2Passes(renderDevice, app.GetRenderWindow()->GetRenderTarget(), &m_3DTechnique, renderWindow->GetViewport(), m_3DScene);
 }
 
 void CGameState_Client::LoadUI()
 {
 	IApplication& app = Application::Get();
 	std::shared_ptr<IRenderDevice> renderDevice = app.GetRenderDevice();
-
+	std::shared_ptr<RenderWindow> renderWindow = app.GetRenderWindow();
 
 	// Font
 	m_CameraPosText = m_UIScene->GetRootNode()->CreateSceneNode<CUITextNode>();
@@ -253,5 +253,5 @@ void CGameState_Client::LoadUI()
 	//
 	// UI Passes
 	//
-	AddUIPasses(renderDevice, app.GetRenderWindow()->GetRenderTarget(), &m_UITechnique, m_Viewport, m_UIScene);
+	AddUIPasses(renderDevice, app.GetRenderWindow()->GetRenderTarget(), &m_UITechnique, renderWindow->GetViewport(), m_UIScene);
 }

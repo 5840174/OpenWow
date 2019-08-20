@@ -26,7 +26,7 @@ LiquidMaterial::LiquidMaterial() :
 	g_Sampler->SetWrapMode(SamplerState::WrapMode::Clamp, SamplerState::WrapMode::Clamp, SamplerState::WrapMode::Clamp);
 
 	// Assign samplers
-	g_pPixelShader->GetShaderParameterByName("DiffuseTextureSampler").Set(g_Sampler);
+	SetSampler(0, g_Sampler);
 
 	// This
 	SetShader(Shader::VertexShader, g_pVertexShader);

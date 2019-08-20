@@ -8,7 +8,6 @@
 CGameState_Menu::CGameState_Menu(const IApplication * _application)
     : base(_application)
 {
-	m_Viewport = Viewport(0, 0, 1280.0f, 1024.0f);
 }
 
 CGameState_Menu::~CGameState_Menu()
@@ -23,12 +22,13 @@ bool CGameState_Menu::Init()
 {
 	IApplication& app = Application::Get();
 	std::shared_ptr<IRenderDevice> renderDevice = app.GetRenderDevice();
+	std::shared_ptr<RenderWindow> renderWindow = app.GetRenderWindow();
 
 	//
 	// Camera controller
 	//
 	SetCameraController(std::make_shared<CFreeCameraController>());
-	GetCameraController()->GetCamera()->SetViewport(m_Viewport);
+	GetCameraController()->GetCamera()->SetViewport(renderWindow->GetViewport());
     GetCameraController()->GetCamera()->SetProjectionRH(45.0f, 1280.0f / 1024.0f, 0.5f, 4000.0f);
 
 	m_FrameQuery = renderDevice->CreateQuery(Query::QueryType::Timer, 1);
@@ -60,19 +60,7 @@ void CGameState_Menu::Destroy()
 
 void CGameState_Menu::OnResize(ResizeEventArgs & e)
 {
-    if (e.Width == 0 || e.Height == 0)
-    {
-        return;
-    }
-
-    GetCameraController()->GetCamera()->SetProjectionRH(45.0f, static_cast<float>(e.Width) / static_cast<float>(e.Height), 0.5f, 4000.0f);
-
     base::OnResize(e);
-
-    GetCameraController()->GetCamera()->SetViewport(m_Viewport);
-
-    m_3DTechnique.UpdateViewport(m_Viewport);
-    m_UITechnique.UpdateViewport(m_Viewport);
 }
 
 void CGameState_Menu::OnPreRender(RenderEventArgs& e)
@@ -94,7 +82,7 @@ void CGameState_Menu::OnPreRender(RenderEventArgs& e)
 
 void CGameState_Menu::OnRender(RenderEventArgs& e)
 {
-	e.Camera = GetCameraController()->GetCamera().operator->(); // TODO: Shit code. Refactor me.
+	e.Camera = GetCameraController()->GetCamera().get();
 	Application::Get().GetLoader()->SetCamera(GetCameraController()->GetCamera());
 
     m_3DTechnique.Render(e);
@@ -121,13 +109,13 @@ void CGameState_Menu::OnPostRender(RenderEventArgs& e)
 #endif
 
 		std::string title = std::to_string(m_FrameTime);
-		Application::Get().GetRenderWindow()->SetWindowName(title);
+		//Application::Get().GetRenderWindow()->SetWindowName(title);
 	}
 }
 
 void CGameState_Menu::OnRenderUI(RenderEventArgs& e)
 {
-	e.Viewport = &m_Viewport;
+	e.Camera = GetCameraController()->GetCamera().get();
 
 	m_UITechnique.Render(e);
 }
@@ -152,12 +140,12 @@ void CGameState_Menu::Load3D()
 	//
 	// 3D Passes
 	//
-	AddSkyPasses(renderDevice, renderWindow->GetRenderTarget(), &m_3DTechnique, &m_Viewport, m_3DScene);
-	AddWDLPasses(renderDevice, renderWindow->GetRenderTarget(), &m_3DTechnique, &m_Viewport, m_3DScene);
-	AddMCNKPasses(renderDevice, renderWindow->GetRenderTarget(), &m_3DTechnique, &m_Viewport, m_3DScene);
-	AddWMOPasses(renderDevice, renderWindow->GetRenderTarget(), &m_3DTechnique, &m_Viewport, m_3DScene);
-	AddLiquidPasses(renderDevice, renderWindow->GetRenderTarget(), &m_3DTechnique, &m_Viewport, m_3DScene);
-	AddM2Passes(renderDevice, renderWindow->GetRenderTarget(), &m_3DTechnique, &m_Viewport, m_3DScene);
+	AddSkyPasses(renderDevice, renderWindow->GetRenderTarget(), &m_3DTechnique, renderWindow->GetViewport(), m_3DScene);
+	AddWDLPasses(renderDevice, renderWindow->GetRenderTarget(), &m_3DTechnique, renderWindow->GetViewport(), m_3DScene);
+	AddMCNKPasses(renderDevice, renderWindow->GetRenderTarget(), &m_3DTechnique, renderWindow->GetViewport(), m_3DScene);
+	AddWMOPasses(renderDevice, renderWindow->GetRenderTarget(), &m_3DTechnique, renderWindow->GetViewport(), m_3DScene);
+	AddLiquidPasses(renderDevice, renderWindow->GetRenderTarget(), &m_3DTechnique, renderWindow->GetViewport(), m_3DScene);
+	AddM2Passes(renderDevice, renderWindow->GetRenderTarget(), &m_3DTechnique, renderWindow->GetViewport(), m_3DScene);
 }
 
 void CGameState_Menu::LoadUI()
@@ -190,5 +178,5 @@ void CGameState_Menu::LoadUI()
 	//
 	// UI Passes
 	//
-	AddUIPasses(renderDevice, renderWindow->GetRenderTarget(), &m_UITechnique, m_Viewport, m_UIScene);
+	AddUIPasses(renderDevice, renderWindow->GetRenderTarget(), &m_UITechnique, renderWindow->GetViewport(), m_UIScene);
 }
