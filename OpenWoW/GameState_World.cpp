@@ -86,13 +86,17 @@ void CGameState_World::OnPreRender(RenderEventArgs& e)
 	//	m_MapController->getTime()->Tick();
 	//UpdateLights();
 
-	/*std::shared_ptr<ISkyManager> skyManager = GetManager<ISkyManager>();
+	/*
+	
+	std::shared_ptr<ISkyManager> skyManager = GetManager<ISkyManager>();
 
 	m_GB->GetPass()->UpdateFog(
 		0.5f, //skyManager->GetFog(LightFogs::LIGHT_FOG_MULTIPLIER), 
 		skyManager->GetColor(LightColors::LIGHT_COLOR_FOG), 
 		skyManager->GetFog(LightFogs::LIGHT_FOG_DISTANCE)
-	);*/
+	);
+
+	*/
 
 	CMapWMOInstance::reset();
 	CMapM2Instance::reset();
@@ -156,13 +160,20 @@ void CGameState_World::Load3D()
 
     Random r(programstart);
 
-	const float x = 40;
-	const float y = 29;
+	const float x = 30;
+	const float y = 26;
 
-	// Mapı
+	// Map
     
+	for (const auto& m : DBC_Map)
+	{
+		Log::Warn("id = %d name = %s", m->Get_ID(), m->Get_Directory());
+	}
+
+	std::shared_ptr<DBC_MapRecord> rec = DBC_Map[169];
+
 	m_MapController = m_3DScene->GetRootNode()->CreateSceneNode<CMap>();
-	m_MapController->MapPreLoad(DBC_Map[1]);
+	m_MapController->MapPreLoad(DBC_Map[269]);
 	m_MapController->MapLoad();
 	m_MapController->MapPostLoad();
 	m_MapController->EnterMap(x, y);

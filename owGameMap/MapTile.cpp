@@ -263,10 +263,10 @@ bool CMapTile::Load()
 	//-- MDXs -------------------------------------------------------------------------
 	for (auto& it : m_MDXsPlacementInfo)
 	{
-		//std::shared_ptr<CMapM2Instance> inst = CreateSceneNode<CMapM2Instance>(m_MDXsNames[it.nameIndex]);
-        //inst->Initialize(it);
-		//Application::Get().GetLoader()->AddToLoadQueue(inst);
-		//m_MDXsInstances.push_back(inst);
+		std::shared_ptr<CMapM2Instance> inst = CreateSceneNode<CMapM2Instance>(m_MDXsNames[it.nameIndex]);
+        inst->Initialize(it);
+		Application::Get().GetLoader()->AddToLoadQueue(inst);
+		m_MDXsInstances.push_back(inst);
 
 		// Update THIS bounds
 		//BoundingBox bbox = GetBounds();
