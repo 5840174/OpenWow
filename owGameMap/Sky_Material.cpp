@@ -4,7 +4,7 @@
 #include "Sky_Material.h"
 
 Sky_Material::Sky_Material() :
-	MaterialWrapper(_RenderDevice->CreateMaterial())
+	MaterialWrapper(_RenderDevice->CreateMaterial(0))
 {
     std::shared_ptr<Shader> g_pVertexShader;
     std::shared_ptr<Shader> g_pPixelShader;

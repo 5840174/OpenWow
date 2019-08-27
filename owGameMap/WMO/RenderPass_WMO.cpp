@@ -20,10 +20,10 @@ CRenderPass_WMO::~CRenderPass_WMO()
 //
 // IVisitor
 //
-bool CRenderPass_WMO::Visit(std::shared_ptr<SceneNode3D> node)
+bool CRenderPass_WMO::Visit(SceneNode3D* node)
 {
-    std::shared_ptr<CWMO_Base_Instance> wmoInstance = std::dynamic_pointer_cast<CWMO_Base_Instance>(node);
-    std::shared_ptr<CWMO_Group_Instance> wmoGroupInstance = std::dynamic_pointer_cast<CWMO_Group_Instance>(node);
+    CWMO_Base_Instance* wmoInstance = dynamic_cast<CWMO_Base_Instance*>(node);
+    CWMO_Group_Instance* wmoGroupInstance = dynamic_cast<CWMO_Group_Instance*>(node);
 
     if (!wmoInstance && !wmoGroupInstance)
         return false;

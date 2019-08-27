@@ -4,11 +4,10 @@
 #include "M2_Material.h"
 
 M2_Material::M2_Material(std::vector<std::weak_ptr<const CM2_Part_Texture>> m2Textures) :
-	MaterialWrapper(_RenderDevice->CreateMaterial())
+	MaterialWrapper(_RenderDevice->CreateMaterial(sizeof(MaterialProperties)))
 {
 	m_pProperties = (MaterialProperties*)_aligned_malloc(sizeof(MaterialProperties), 16);
 	*m_pProperties = MaterialProperties();
-	CreateConstantBuffer(m_pProperties, sizeof(MaterialProperties));
 	memset(m_pProperties, 0x00, sizeof(MaterialProperties));
 
 

@@ -8,7 +8,7 @@ public:
 	virtual ~CRenderPass_ADT_MCNK();
 
     // IVisitor
-    bool Visit(std::shared_ptr<SceneNode3D> node) override final;
+    bool Visit(SceneNode3D* node) override final;
 
 private:
 	CGroupQuality&						m_QualitySettings;

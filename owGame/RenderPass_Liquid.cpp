@@ -19,9 +19,9 @@ CRenderPass_Liquid::~CRenderPass_Liquid()
 //
 // IVisitor
 //
-bool CRenderPass_Liquid::Visit(std::shared_ptr<SceneNode3D> node)
+bool CRenderPass_Liquid::Visit(SceneNode3D* node)
 {
-    std::shared_ptr<Liquid_Instance> liquidInstance = std::dynamic_pointer_cast<Liquid_Instance, SceneNode3D>(node);
+    Liquid_Instance* liquidInstance = dynamic_cast<Liquid_Instance*>(node);
     if (liquidInstance)
     {
         return base::Visit(node);

@@ -20,9 +20,9 @@ CRenderPass_ADT_MCNK::~CRenderPass_ADT_MCNK()
 //
 // IVisitor
 //
-bool CRenderPass_ADT_MCNK::Visit(std::shared_ptr<SceneNode3D> node)
+bool CRenderPass_ADT_MCNK::Visit(SceneNode3D* node)
 {
-    std::shared_ptr<CMapChunk> adtMCNKInstance = std::dynamic_pointer_cast<CMapChunk, SceneNode3D>(node);
+    CMapChunk* adtMCNKInstance = dynamic_cast<CMapChunk*>(node);
     if (adtMCNKInstance == nullptr)
         return false;
 

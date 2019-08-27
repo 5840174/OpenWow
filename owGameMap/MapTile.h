@@ -22,7 +22,7 @@ public:
     std::shared_ptr<CMapChunk>                      getChunk(int32 x, int32 z);
 
 	// SceneNode3D
-	bool                                            Accept(std::shared_ptr<IVisitor> visitor) override;
+	bool                                            Accept(IVisitor* visitor) override;
 
 	// ILoadableObject
 	bool                                            Load() override;

@@ -10,5 +10,5 @@ public:
 	virtual ~CRenderPass_Liquid();
 
     // IVisitor
-    bool Visit(std::shared_ptr<SceneNode3D> node) override final;
+    bool Visit(SceneNode3D* node) override final;
 };

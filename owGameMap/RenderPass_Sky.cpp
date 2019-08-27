@@ -19,9 +19,9 @@ CRenderPass_Sky::~CRenderPass_Sky()
 //
 // IVisitor
 //
-bool CRenderPass_Sky::Visit(std::shared_ptr<SceneNode3D> node)
+bool CRenderPass_Sky::Visit(SceneNode3D* node)
 {
-    std::shared_ptr<SkyManager> skyManagerInstance = std::dynamic_pointer_cast<SkyManager, SceneNode3D>(node);
+    SkyManager* skyManagerInstance = dynamic_cast<SkyManager*>(node);
     if (skyManagerInstance == nullptr)
         return false;
 

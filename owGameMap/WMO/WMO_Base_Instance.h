@@ -32,7 +32,7 @@ public:
 
 	// SceneNode3D
 	void                                            UpdateCamera(const Camera* camera) override;
-	bool                                            Accept(std::shared_ptr<IVisitor> visitor) override;
+	bool                                            Accept(IVisitor* visitor) override;
 
     const CGroupQuality&                            GetGroupQuality() const;
 

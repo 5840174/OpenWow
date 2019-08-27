@@ -47,9 +47,9 @@ void CMapWMOInstance::Initialize(const ADT_MODF & _placementInfo)
     }
 }
 
-bool CMapWMOInstance::Accept(std::shared_ptr<IVisitor> visitor)
+bool CMapWMOInstance::Accept(IVisitor* visitor)
 {
-	std::shared_ptr<CRenderPass_WMO> passAsWMOPass = std::dynamic_pointer_cast<CRenderPass_WMO>(visitor);
+	CRenderPass_WMO* passAsWMOPass = dynamic_cast<CRenderPass_WMO*>(visitor);
     if (passAsWMOPass == nullptr)
         return false;
 

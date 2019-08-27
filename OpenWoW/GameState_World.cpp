@@ -170,10 +170,8 @@ void CGameState_World::Load3D()
 		Log::Warn("id = %d name = %s", m->Get_ID(), m->Get_Directory());
 	}
 
-	std::shared_ptr<DBC_MapRecord> rec = DBC_Map[169];
-
 	m_MapController = m_3DScene->GetRootNode()->CreateSceneNode<CMap>();
-	m_MapController->MapPreLoad(DBC_Map[269]);
+	m_MapController->MapPreLoad(DBC_Map[1]);
 	m_MapController->MapLoad();
 	m_MapController->MapPostLoad();
 	m_MapController->EnterMap(x, y);

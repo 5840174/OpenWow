@@ -8,6 +8,6 @@ public:
 	virtual ~CRenderPass_M2();
 
     // IVisitor
-    bool Visit(std::shared_ptr<SceneNode3D> node) override final;
-	bool Visit(std::shared_ptr<IMesh> Mesh, UINT IndexStartLocation = 0, UINT IndexCnt = 0, UINT VertexStartLocation = 0, UINT VertexCnt = 0) override final;
+    bool Visit(SceneNode3D* node) override final;
+	bool Visit(IMesh* Mesh, UINT IndexStartLocation = 0, UINT IndexCnt = 0, UINT VertexStartLocation = 0, UINT VertexCnt = 0) override final;
 };

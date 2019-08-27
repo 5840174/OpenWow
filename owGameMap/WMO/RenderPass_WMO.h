@@ -8,5 +8,5 @@ public:
 	virtual ~CRenderPass_WMO();
 
     // IVisitor
-    bool Visit(std::shared_ptr<SceneNode3D> node) override final;
+    bool Visit(SceneNode3D* node) override final;
 };

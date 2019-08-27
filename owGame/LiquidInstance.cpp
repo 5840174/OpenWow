@@ -35,7 +35,7 @@ void Liquid_Instance::Initialize(std::shared_ptr<CLiquid> _liquidObject, vec3 _p
     }
 }
 
-bool Liquid_Instance::Accept(std::shared_ptr<IVisitor> visitor)
+bool Liquid_Instance::Accept(IVisitor* visitor)
 {
 
 	return SceneNode3D::Accept(visitor);

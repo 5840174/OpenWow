@@ -33,9 +33,9 @@ void CMapM2Instance::Initialize(const ADT_MDXDef & _placementInfo)
 //
 // SceneNode3D
 //
-bool CMapM2Instance::Accept(std::shared_ptr<IVisitor> visitor)
+bool CMapM2Instance::Accept(IVisitor* visitor)
 {
-	std::shared_ptr<CRenderPass_M2> passAsM2Pass = std::dynamic_pointer_cast<CRenderPass_M2>(visitor);
+	CRenderPass_M2* passAsM2Pass = dynamic_cast<CRenderPass_M2*>(visitor);
     if (passAsM2Pass == nullptr)
         return false;
 

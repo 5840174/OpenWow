@@ -112,9 +112,9 @@ bool CM2_Base_Instance::Delete()
 //	m_M2->update(_time, _dTime);
 //
 
-bool CM2_Base_Instance::Accept(std::shared_ptr<IVisitor> visitor)
+bool CM2_Base_Instance::Accept(IVisitor* visitor)
 {
-	std::shared_ptr<AbstractPass> visitorAsBasePass = std::dynamic_pointer_cast<AbstractPass>(visitor);
+	AbstractPass* visitorAsBasePass = dynamic_cast<AbstractPass*>(visitor);
 	const Camera* camera = visitorAsBasePass->GetRenderEventArgs()->Camera;
 
 	float distToCamera2D = (camera->GetTranslation() - GetComponent<CColliderComponent3D>()->GetBounds().getCenter()).length() - GetComponent<CColliderComponent3D>()->GetBounds().getRadius();
@@ -123,7 +123,6 @@ bool CM2_Base_Instance::Accept(std::shared_ptr<IVisitor> visitor)
 		return false;
 	}
 
-	// Check frustrum
 	if (!GetComponent<CColliderComponent3D>()->CheckFrustum(camera))
 	{
 		return false;
@@ -173,8 +172,9 @@ const CGroupQuality& CM2_Base_Instance::GetGroupQuality() const
 void CM2_Base_Instance::RegisterComponents()
 {
     SetTransformComponent(AddComponent(std::make_shared<CM2_TransformComponent>(shared_from_this())));
-    AddComponent(std::make_shared<CMeshComponent3D>(shared_from_this()));
+    SetMeshComponent(AddComponent(std::make_shared<CMeshComponent3D>(shared_from_this())));
     SetColliderComponent(AddComponent(std::make_shared<CM2_ColliderComponent>(shared_from_this())));
+
     AddComponent(std::make_shared<CLightComponent3D>(shared_from_this()));
 }
 

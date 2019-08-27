@@ -73,20 +73,20 @@ void CWMO_Base_Instance::UpdateCamera(const Camera* camera)
 #endif
 }
 
-bool CWMO_Base_Instance::Accept(std::shared_ptr<IVisitor> visitor)
+bool CWMO_Base_Instance::Accept(IVisitor* visitor)
 {
-	std::shared_ptr<AbstractPass> visitorAsBasePass = std::dynamic_pointer_cast<AbstractPass>(visitor);
+	AbstractPass* visitorAsBasePass = dynamic_cast<AbstractPass*>(visitor);
  	const Camera* camera = visitorAsBasePass->GetRenderEventArgs()->Camera;
 
-	//if (!GetComponent<CColliderComponent3D>()->CheckDistance2D(camera, GetGroupQuality().ADT_WMO_Distance))
-	//{
-	//	return false;
-	//}
+	if (!GetComponent<CColliderComponent3D>()->CheckDistance2D(camera, GetGroupQuality().ADT_WMO_Distance))
+	{
+		return false;
+	}
 
-	//if (!GetComponent<CColliderComponent3D>()->CheckFrustum(camera))
-	//{
-	//	return false;
-	//}
+	if (!GetComponent<CColliderComponent3D>()->CheckFrustum(camera))
+	{
+		return false;
+	}
 
 	return SceneNode3D::Accept(visitor);
 }

@@ -20,20 +20,20 @@ CRenderPass_WDL::~CRenderPass_WDL()
 //
 // IVisitor
 //
-bool CRenderPass_WDL::Visit(std::shared_ptr<SceneNode3D> node)
+bool CRenderPass_WDL::Visit(SceneNode3D* node)
 {
-    std::shared_ptr<CMap> map = std::dynamic_pointer_cast<CMap>(node);
+    CMap* map = dynamic_cast<CMap*>(node);
     if (map == nullptr)
         return false;
 
     return base::Visit(node);
 }
 
-bool CRenderPass_WDL::Visit(std::shared_ptr<IMesh> Mesh, UINT IndexStartLocation, UINT IndexCnt, UINT VertexStartLocation, UINT VertexCnt)
+bool CRenderPass_WDL::Visit(IMesh* Mesh, UINT IndexStartLocation, UINT IndexCnt, UINT VertexStartLocation, UINT VertexCnt)
 {
-    std::shared_ptr<CWDL_LowResTile> wdlMesh = std::dynamic_pointer_cast<CWDL_LowResTile, IMesh>(Mesh);
+    CWDL_LowResTile* wdlMesh = dynamic_cast<CWDL_LowResTile*>(Mesh);
 	if (wdlMesh == nullptr)
         return false;
 
-	return Mesh->Render(GetRenderEventArgs(), GetPerObjectConstantBuffer(), IndexStartLocation, IndexCnt, VertexStartLocation, VertexCnt);
+	return Mesh->Render(GetRenderEventArgs(), GetPerObjectConstantBuffer().get(), IndexStartLocation, IndexCnt, VertexStartLocation, VertexCnt);
 }

@@ -12,7 +12,7 @@ CWMO_Liquid_Instance::~CWMO_Liquid_Instance()
 {
 }
 
-bool CWMO_Liquid_Instance::Accept(std::shared_ptr<IVisitor> visitor)
+bool CWMO_Liquid_Instance::Accept(IVisitor* visitor)
 {
 	//if (!m_Group.lock()->m_PortalsVis)
 	//{

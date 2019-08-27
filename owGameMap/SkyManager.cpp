@@ -191,7 +191,7 @@ void SkyManager::InitBuffer()
 	__geom->AddVertexBuffer(BufferBinding("COLOR", 0), colorsBuffer);
 
 	// Material
-	std::shared_ptr<Material> material = std::make_shared<Sky_Material>();
+	std::shared_ptr<IMaterial> material = std::make_shared<Sky_Material>();
 	material->SetWrapper(material);
 	__geom->SetMaterial(material);
 

@@ -4,11 +4,10 @@
 #include "WDL_Node_Material.h"
 
 WDL_Node_Material::WDL_Node_Material() :
-	MaterialWrapper(_RenderDevice->CreateMaterial())
+	MaterialWrapper(_RenderDevice->CreateMaterial(sizeof(MaterialProperties)))
 {
 	m_pProperties = (MaterialProperties*)_aligned_malloc(sizeof(MaterialProperties), 16);
 	*m_pProperties = MaterialProperties();
-	CreateConstantBuffer(m_pProperties, sizeof(MaterialProperties));
 
 #ifdef IS_DX11
 	// CreateShaders

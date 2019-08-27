@@ -40,9 +40,9 @@ uint32 CMapChunk::GetAreaID() const
 // SceneNode3D
 //
 
-bool CMapChunk::Accept(std::shared_ptr<IVisitor> visitor)
+bool CMapChunk::Accept(IVisitor* visitor)
 {
-	std::shared_ptr<AbstractPass> visitorAsBasePass = std::dynamic_pointer_cast<AbstractPass>(visitor);
+	AbstractPass* visitorAsBasePass = dynamic_cast<AbstractPass*>(visitor);
 	const Camera* camera = visitorAsBasePass->GetRenderEventArgs()->Camera;
 
     if (!GetComponent<CColliderComponent3D>()->CheckDistance(camera, m_QualitySettings.ADT_MCNK_Distance))

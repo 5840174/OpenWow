@@ -28,9 +28,9 @@ CRenderPass_M2::~CRenderPass_M2()
 //
 // IVisitor
 //
-bool CRenderPass_M2::Visit(std::shared_ptr<SceneNode3D> node)
+bool CRenderPass_M2::Visit(SceneNode3D* node)
 {
-    std::shared_ptr<CM2_Base_Instance> m2Instance = std::dynamic_pointer_cast<CM2_Base_Instance>(node);
+    CM2_Base_Instance* m2Instance = dynamic_cast<CM2_Base_Instance*>(node);
     if (m2Instance)
     {
         return base::Visit(node);
@@ -39,12 +39,12 @@ bool CRenderPass_M2::Visit(std::shared_ptr<SceneNode3D> node)
     return false;
 }
 
-bool CRenderPass_M2::Visit(std::shared_ptr<IMesh> Mesh, UINT IndexStartLocation, UINT IndexCnt, UINT VertexStartLocation, UINT VertexCnt)
+bool CRenderPass_M2::Visit(IMesh* Mesh, UINT IndexStartLocation, UINT IndexCnt, UINT VertexStartLocation, UINT VertexCnt)
 {
-	std::shared_ptr<CM2_Skin_Batch> pMesh = std::dynamic_pointer_cast<CM2_Skin_Batch, IMesh>(Mesh);
+	CM2_Skin_Batch* pMesh = dynamic_cast<CM2_Skin_Batch*>(Mesh);
 	if (pMesh)
 	{
-		GetPipelineState()->GetBlendState().SetBlendMode(pMesh->GetM2Material()->GetBlendMode());
+		/*GetPipelineState()->GetBlendState().SetBlendMode(pMesh->GetM2Material()->GetBlendMode());
 		GetPipelineState()->GetBlendState().Bind();
 
 		GetPipelineState()->GetDepthStencilState().SetDepthMode(pMesh->GetM2Material()->GetDepthMode());
@@ -53,9 +53,9 @@ bool CRenderPass_M2::Visit(std::shared_ptr<IMesh> Mesh, UINT IndexStartLocation,
 		GetPipelineState()->GetRasterizerState().SetCullMode(pMesh->GetM2Material()->GetCullMode());
 		GetPipelineState()->GetRasterizerState().Bind();
 
-		GetPipelineState()->Bind();
+		GetPipelineState()->Bind();*/
 
-        return Mesh->Render(GetRenderEventArgs(), GetPerObjectConstantBuffer(), IndexStartLocation, IndexCnt, VertexStartLocation, VertexCnt);
+        return Mesh->Render(GetRenderEventArgs(), GetPerObjectConstantBuffer().get(), IndexStartLocation, IndexCnt, VertexStartLocation, VertexCnt);
 	}
 
     return false;

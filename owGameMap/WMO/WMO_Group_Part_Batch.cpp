@@ -21,7 +21,7 @@ WMO_Group_Part_Batch::WMO_Group_Part_Batch(const std::weak_ptr<const CWMO> _pare
 	m_Bounds.calculateCenter();
 }
 
-bool WMO_Group_Part_Batch::Render(const RenderEventArgs* renderEventArgs, std::shared_ptr<ConstantBuffer> perObject, UINT indexStartLocation, UINT indexCnt, UINT vertexStartLocation, UINT vertexCnt)
+bool WMO_Group_Part_Batch::Render(const RenderEventArgs* renderEventArgs, const ConstantBuffer* perObject, UINT indexStartLocation, UINT indexCnt, UINT vertexStartLocation, UINT vertexCnt)
 {
 	SetMaterial(m_WMOMaterial);
 	return MeshWrapper::Render(renderEventArgs, perObject, m_Proto.indexStart, m_Proto.indexCount/*, m_Proto.vertexStart, m_Proto.vertexEnd - m_Proto.vertexStart*/);

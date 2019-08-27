@@ -47,7 +47,7 @@ bool CWMO_Group_Instance::GetPortalCalculated() const
     return m_Calculated;
 }
 
-bool CWMO_Group_Instance::Accept(std::shared_ptr<IVisitor> visitor)
+bool CWMO_Group_Instance::Accept(IVisitor* visitor)
 {
 	if (!m_PortalsVis)
 	{

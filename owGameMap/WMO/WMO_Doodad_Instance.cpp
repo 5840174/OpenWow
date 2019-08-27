@@ -41,7 +41,7 @@ void CWMO_Doodad_Instance::Initialize(const SWMO_Doodad_PlacementInfo & _placeme
     }
 }
 
-bool CWMO_Doodad_Instance::Accept(std::shared_ptr<IVisitor> visitor)
+bool CWMO_Doodad_Instance::Accept(IVisitor* visitor)
 {
 	if (!m_PortalVis)
 	{

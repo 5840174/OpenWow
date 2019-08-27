@@ -7,7 +7,7 @@
 #include "Wmo_Part_Material.h"
 
 WMO_Part_Material::WMO_Part_Material(const std::weak_ptr<const CWMO> _parentWMO, const SWMO_MaterialDef& _proto) :
-	MaterialWrapper(_RenderDevice->CreateMaterial()),
+	MaterialWrapper(_RenderDevice->CreateMaterial(sizeof(MaterialProperties))),
 	m_ParentWMO(_parentWMO),
 	m_Proto(_proto),
 	m_QualitySettings(GetSettingsGroup<CGroupQuality>())
@@ -16,7 +16,6 @@ WMO_Part_Material::WMO_Part_Material(const std::weak_ptr<const CWMO> _parentWMO,
 	m_pProperties = (MaterialProperties*)_aligned_malloc(sizeof(MaterialProperties), 16);
 	(*m_pProperties) = MaterialProperties();
 	(*m_pProperties).m_BlendMode = m_Proto.blendMode;
-	CreateConstantBuffer(m_pProperties, sizeof(MaterialProperties));
 
 	// CreateShaders
     std::shared_ptr<Shader> g_pVertexShader;

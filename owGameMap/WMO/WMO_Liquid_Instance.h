@@ -11,7 +11,7 @@ public:
 	virtual ~CWMO_Liquid_Instance();
 
 	// SceneNode3D
-	bool Accept(std::shared_ptr<IVisitor> visitor) override;
+	bool Accept(IVisitor* visitor) override;
 
 private:
 	const std::weak_ptr<const WMO_Group> m_Group; // used for visibility

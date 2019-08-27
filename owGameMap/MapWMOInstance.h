@@ -28,7 +28,7 @@ public:
     void Initialize(const ADT_MODF& _placementInfo);
 
 	// Scene node
-	bool Accept(std::shared_ptr<IVisitor> visitor) override;
+	bool Accept(IVisitor* visitor) override;
 
 private:
 	uint32									m_UniqueId;
