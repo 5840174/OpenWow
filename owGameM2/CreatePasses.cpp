@@ -13,14 +13,27 @@ void AddM2Passes(std::shared_ptr<IRenderDevice> device, std::shared_ptr<IRenderT
 	DepthStencilState::DepthMode enableDepthWrites(true, DepthStencilState::DepthWrite::Enable);
 	DepthStencilState::DepthMode disableDepthWrites(false, DepthStencilState::DepthWrite::Disable);
 
-	// PIPELINES
-	std::shared_ptr<PipelineState> WMOPipeline = device->CreatePipelineState();
-	WMOPipeline->GetBlendState().SetBlendMode(alphaBlending);
-	WMOPipeline->GetDepthStencilState().SetDepthMode(enableDepthWrites);
-	WMOPipeline->GetRasterizerState().SetCullMode(RasterizerState::CullMode::None);
-	WMOPipeline->GetRasterizerState().SetFillMode(RasterizerState::FillMode::Solid);
-	WMOPipeline->SetRenderTarget(_renderTarget);
-	WMOPipeline->GetRasterizerState().SetViewport(viewport);
 
-	technique->AddPass(std::make_shared<CRenderPass_M2>(scene, WMOPipeline));
+	// CreateShaders
+	std::shared_ptr<Shader> g_pVertexShader = _RenderDevice->CreateShader(
+		Shader::VertexShader, "shaders_D3D/M2.hlsl", Shader::ShaderMacros(), "VS_main", "latest"
+	);
+	g_pVertexShader->LoadInputLayoutFromReflector();
+
+	std::shared_ptr<Shader> g_pPixelShader = _RenderDevice->CreateShader(
+		Shader::PixelShader, "shaders_D3D/M2.hlsl", Shader::ShaderMacros(), "PS_main", "latest"
+	);
+
+	// PIPELINES
+	std::shared_ptr<PipelineState> M2Pipeline = device->CreatePipelineState();
+	M2Pipeline->GetBlendState().SetBlendMode(alphaBlending);
+	M2Pipeline->GetDepthStencilState().SetDepthMode(enableDepthWrites);
+	M2Pipeline->GetRasterizerState().SetCullMode(RasterizerState::CullMode::None);
+	M2Pipeline->GetRasterizerState().SetFillMode(RasterizerState::FillMode::Solid);
+	M2Pipeline->SetRenderTarget(_renderTarget);
+	M2Pipeline->GetRasterizerState().SetViewport(viewport);
+	M2Pipeline->SetShader(Shader::VertexShader, g_pVertexShader);
+	M2Pipeline->SetShader(Shader::PixelShader, g_pPixelShader);
+
+	technique->AddPass(std::make_shared<CRenderPass_M2>(scene, M2Pipeline));
 }

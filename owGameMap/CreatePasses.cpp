@@ -53,6 +53,29 @@ void AddMCNKPasses(std::shared_ptr<IRenderDevice> device, std::shared_ptr<IRende
 	DepthStencilState::DepthMode enableDepthWrites(true, DepthStencilState::DepthWrite::Enable);
 	DepthStencilState::DepthMode disableDepthWrites(false, DepthStencilState::DepthWrite::Disable);
 
+	std::shared_ptr<Shader> g_pVertexShader;
+	std::shared_ptr<Shader> g_pPixelShader;
+
+	if (_RenderDevice->GetDeviceType() == IRenderDevice::DeviceType::DirectX)
+	{
+		g_pVertexShader = _RenderDevice->CreateShader(
+			Shader::VertexShader, "shaders_D3D/MapChunk.hlsl", Shader::ShaderMacros(), "VS_main", "latest"
+		);
+		g_pPixelShader = _RenderDevice->CreateShader(
+			Shader::PixelShader, "shaders_D3D/MapChunk.hlsl", Shader::ShaderMacros(), "PS_main", "latest"
+		);
+
+	}
+	else if (_RenderDevice->GetDeviceType() == IRenderDevice::DeviceType::OpenGL)
+	{
+		g_pVertexShader = _RenderDevice->CreateShader(
+			Shader::VertexShader, "shaders_OGL/MapChunk.vs", Shader::ShaderMacros(), "", ""
+		);
+		g_pPixelShader = _RenderDevice->CreateShader(
+			Shader::PixelShader, "shaders_OGL/MapChunk.ps", Shader::ShaderMacros(), "", ""
+		);
+	}
+	g_pVertexShader->LoadInputLayoutFromReflector();
 
 	// PIPELINES
 	std::shared_ptr<PipelineState> ADTPipeline = device->CreatePipelineState();
@@ -62,6 +85,9 @@ void AddMCNKPasses(std::shared_ptr<IRenderDevice> device, std::shared_ptr<IRende
 	ADTPipeline->GetRasterizerState().SetFillMode(RasterizerState::FillMode::Solid);
 	ADTPipeline->SetRenderTarget(_renderTarget);
 	ADTPipeline->GetRasterizerState().SetViewport(viewport);
+	ADTPipeline->SetShader(Shader::ShaderType::VertexShader, g_pVertexShader);
+	ADTPipeline->SetShader(Shader::ShaderType::PixelShader, g_pPixelShader);
+
 	technique->AddPass(std::make_shared<CRenderPass_ADT_MCNK>(scene, ADTPipeline));
 }
 
@@ -72,6 +98,32 @@ void AddWMOPasses(std::shared_ptr<IRenderDevice> device, std::shared_ptr<IRender
     DepthStencilState::DepthMode enableDepthWrites(true, DepthStencilState::DepthWrite::Enable);
     DepthStencilState::DepthMode disableDepthWrites(false, DepthStencilState::DepthWrite::Disable);
 
+	// CreateShaders
+	std::shared_ptr<Shader> g_pVertexShader;
+	std::shared_ptr<Shader> g_pPixelShader;
+
+	if (_RenderDevice->GetDeviceType() == IRenderDevice::DeviceType::DirectX)
+	{
+		g_pVertexShader = _RenderDevice->CreateShader(
+			Shader::VertexShader, "shaders_D3D/WMO.hlsl", Shader::ShaderMacros(), "VS_main", "latest"
+		);
+
+		g_pPixelShader = _RenderDevice->CreateShader(
+			Shader::PixelShader, "shaders_D3D/WMO.hlsl", Shader::ShaderMacros(), "PS_main", "latest"
+		);
+	}
+	else if (_RenderDevice->GetDeviceType() == IRenderDevice::DeviceType::OpenGL)
+	{
+		g_pVertexShader = _RenderDevice->CreateShader(
+			Shader::VertexShader, "shaders_OGL/WMO.vs", Shader::ShaderMacros(), "", ""
+		);
+
+		g_pPixelShader = _RenderDevice->CreateShader(
+			Shader::PixelShader, "shaders_OGL/WMO.ps", Shader::ShaderMacros(), "", ""
+		);
+	}
+	g_pVertexShader->LoadInputLayoutFromReflector();
+
     // PIPELINES
     std::shared_ptr<PipelineState> WMOPipeline = device->CreatePipelineState();
     WMOPipeline->GetBlendState().SetBlendMode(disableBlending);
@@ -80,6 +132,7 @@ void AddWMOPasses(std::shared_ptr<IRenderDevice> device, std::shared_ptr<IRender
     WMOPipeline->GetRasterizerState().SetFillMode(RasterizerState::FillMode::Solid);
     WMOPipeline->SetRenderTarget(_renderTarget);
     WMOPipeline->GetRasterizerState().SetViewport(viewport);
-
+	WMOPipeline->SetShader(Shader::VertexShader, g_pVertexShader);
+	WMOPipeline->SetShader(Shader::PixelShader, g_pPixelShader);
     technique->AddPass(std::make_shared<CRenderPass_WMO>(scene, WMOPipeline));
 }

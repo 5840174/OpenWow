@@ -13,31 +13,6 @@ ADT_MCNK_Material::ADT_MCNK_Material(const std::weak_ptr<CMapTile> _parentADT) :
 	m_pProperties = (MaterialProperties*)_aligned_malloc(sizeof(MaterialProperties), 16);
 	*m_pProperties = MaterialProperties();
 
-    std::shared_ptr<Shader> g_pVertexShader;
-    std::shared_ptr<Shader> g_pPixelShader;
-
-    if (_RenderDevice->GetDeviceType() == IRenderDevice::DeviceType::DirectX)
-    {
-        g_pVertexShader = _RenderDevice->CreateShader(
-            Shader::VertexShader, "shaders_D3D/MapChunk.hlsl", Shader::ShaderMacros(), "VS_main", "latest"
-        );
-        g_pPixelShader = _RenderDevice->CreateShader(
-            Shader::PixelShader, "shaders_D3D/MapChunk.hlsl", Shader::ShaderMacros(), "PS_main", "latest"
-        );
-
-    }
-    else if (_RenderDevice->GetDeviceType() == IRenderDevice::DeviceType::OpenGL)
-    {
-        g_pVertexShader = _RenderDevice->CreateShader(
-            Shader::VertexShader, "shaders_OGL/MapChunk.vs", Shader::ShaderMacros(), "", ""
-        );
-        g_pPixelShader = _RenderDevice->CreateShader(
-            Shader::PixelShader, "shaders_OGL/MapChunk.ps", Shader::ShaderMacros(), "", ""
-        );
-    }
-    g_pVertexShader->LoadInputLayoutFromReflector();
-
-
 	// Create samplers
 	std::shared_ptr<SamplerState> g_LinearClampSampler = _RenderDevice->CreateSamplerState();
 	g_LinearClampSampler->SetFilter(SamplerState::MinFilter::MinLinear, SamplerState::MagFilter::MagLinear, SamplerState::MipFilter::MipLinear);
@@ -52,9 +27,6 @@ ADT_MCNK_Material::ADT_MCNK_Material(const std::weak_ptr<CMapTile> _parentADT) :
     SetSampler(2, g_LinearRepeatSampler);
     SetSampler(3, g_LinearRepeatSampler);
     SetSampler(4, g_LinearClampSampler);
-
-	SetShader(Shader::VertexShader, g_pVertexShader);
-	SetShader(Shader::PixelShader, g_pPixelShader);
 }
 
 ADT_MCNK_Material::~ADT_MCNK_Material()

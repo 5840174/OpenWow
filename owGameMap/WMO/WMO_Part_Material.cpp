@@ -17,35 +17,6 @@ WMO_Part_Material::WMO_Part_Material(const std::weak_ptr<const CWMO> _parentWMO,
 	(*m_pProperties) = MaterialProperties();
 	(*m_pProperties).m_BlendMode = m_Proto.blendMode;
 
-	// CreateShaders
-    std::shared_ptr<Shader> g_pVertexShader;
-    std::shared_ptr<Shader> g_pPixelShader;
-
-    if (_RenderDevice->GetDeviceType() == IRenderDevice::DeviceType::DirectX)
-    {
-        g_pVertexShader = _RenderDevice->CreateShader(
-            Shader::VertexShader, "shaders_D3D/WMO.hlsl", Shader::ShaderMacros(), "VS_main", "latest"
-        );
-
-        g_pPixelShader = _RenderDevice->CreateShader(
-            Shader::PixelShader, "shaders_D3D/WMO.hlsl", Shader::ShaderMacros(), "PS_main", "latest"
-        );
-    }
-    else if (_RenderDevice->GetDeviceType() == IRenderDevice::DeviceType::OpenGL)
-    {
-        g_pVertexShader = _RenderDevice->CreateShader(
-            Shader::VertexShader, "shaders_OGL/WMO.vs", Shader::ShaderMacros(), "", ""
-        );
-
-        g_pPixelShader = _RenderDevice->CreateShader(
-            Shader::PixelShader, "shaders_OGL/WMO.ps", Shader::ShaderMacros(), "", ""
-        );
-    }
-    g_pVertexShader->LoadInputLayoutFromReflector();
-
-	SetShader(Shader::VertexShader, g_pVertexShader);
-	SetShader(Shader::PixelShader, g_pPixelShader);
-
 	// Create samplers
 	std::shared_ptr<SamplerState> g_Sampler = _RenderDevice->CreateSamplerState();
 	g_Sampler->SetFilter(SamplerState::MinFilter::MinLinear, SamplerState::MagFilter::MagLinear, SamplerState::MipFilter::MipLinear);

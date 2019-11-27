@@ -10,18 +10,6 @@ M2_Material::M2_Material(std::vector<std::weak_ptr<const CM2_Part_Texture>> m2Te
 	*m_pProperties = MaterialProperties();
 	memset(m_pProperties, 0x00, sizeof(MaterialProperties));
 
-
-	// CreateShaders
-	std::shared_ptr<Shader> g_pVertexShader = _RenderDevice->CreateShader(
-		Shader::VertexShader, "shaders_D3D/M2.hlsl", Shader::ShaderMacros(), "VS_main", "latest"
-	);
-    g_pVertexShader->LoadInputLayoutFromReflector();
-
-	std::shared_ptr<Shader> g_pPixelShader = _RenderDevice->CreateShader(
-		Shader::PixelShader, "shaders_D3D/M2.hlsl", Shader::ShaderMacros(), "PS_main", "latest"
-	);
-
-	// Create samplers
 	_ASSERT(m2Textures.size() <= 2);
 	for (uint8 i = 0; i < m2Textures.size(); i++)
 	{
@@ -29,10 +17,6 @@ M2_Material::M2_Material(std::vector<std::weak_ptr<const CM2_Part_Texture>> m2Te
 		g_Sampler->SetFilter(SamplerState::MinFilter::MinLinear, SamplerState::MagFilter::MagLinear, SamplerState::MipFilter::MipLinear);
         SetSampler(i, g_Sampler);
 	}
-
-	// Material
-	SetShader(Shader::VertexShader, g_pVertexShader);
-	SetShader(Shader::PixelShader, g_pPixelShader);
 }
 
 M2_Material::~M2_Material()
