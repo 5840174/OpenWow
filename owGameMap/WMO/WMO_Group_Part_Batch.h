@@ -27,7 +27,7 @@ private:
 	// Parent
 	const std::weak_ptr<const CWMO>              m_ParentWMO;
 	const std::weak_ptr<const WMO_Group>        m_ParentGroup;
-	const CGroupQuality&                        m_Quality;
+	const CGroupQuality*                        m_Quality;
 };
 
 struct WMO_Group_Part_BatchCompare

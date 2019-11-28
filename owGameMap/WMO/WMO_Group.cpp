@@ -18,7 +18,7 @@ WMO_Group::WMO_Group(const std::weak_ptr<const CWMO> _parentWMO, const uint32 _g
 	m_GroupIndex(_groupIndex),
 	m_F(_groupFile),
 	m_IsMOCVExists(false),
-	m_Quality(GetSettingsGroup<CGroupQuality>())
+	m_Quality(GetSettingsGroup<CGroupQuality>(_ApplicationInstance->GetBaseManager()))
 {
 	m_WMOLiqiud = nullptr;
 }

@@ -14,9 +14,9 @@ inline DBCFile<RECORD_T>::~DBCFile()
 }
 
 template<class RECORD_T>
-inline bool DBCFile<RECORD_T>::Open()
+inline bool DBCFile<RECORD_T>::Open(std::shared_ptr<IFilesManager> FilesManager)
 {
-	m_File = GetManager<IFilesManager>()->Open(m_FileName);
+	m_File = FilesManager->Open(m_FileName);
 	if (m_File == nullptr)
 	{
 		return false;

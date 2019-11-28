@@ -12,14 +12,18 @@
 #include "Map_Shared.h"
 #include "MapChunkMaterial.h"
 
-CMapChunk::CMapChunk(std::shared_ptr<CMap> _mapController, std::weak_ptr<CMapTile> _parentTile) :
-	m_MapController(_mapController),
-	m_ParentADT(_parentTile),
-	m_QualitySettings(GetSettingsGroup<CGroupQuality>())
+CMapChunk::CMapChunk(std::shared_ptr<CMap> _mapController, std::weak_ptr<CMapTile> _parentTile) 
+	: m_MapController(_mapController)
+	, m_ParentADT(_parentTile)
 {}
 
 CMapChunk::~CMapChunk()
 {
+}
+
+void CMapChunk::Initialize()
+{
+	m_QualitySettings = GetSettingsGroup<CGroupQuality>(_ApplicationInstance->GetBaseManager());
 }
 
 void CMapChunk::Initialize(const std::string & _fileName, const ADT_MCIN & _mcin)
@@ -45,15 +49,15 @@ bool CMapChunk::Accept(IVisitor* visitor)
 	AbstractPass* visitorAsBasePass = dynamic_cast<AbstractPass*>(visitor);
 	const Camera* camera = visitorAsBasePass->GetRenderEventArgs()->Camera;
 
-    if (!GetComponent<CColliderComponent3D>()->CheckDistance(camera, m_QualitySettings.ADT_MCNK_Distance))
+    if (!GetComponent<CColliderComponent3D>()->CheckDistance(camera, m_QualitySettings->ADT_MCNK_Distance))
     {
         return false;
     }
 
-	//if (!GetComponent<CColliderComponent3D>()->CheckFrustum(camera))
-	//{
-	//	return false;
-	//}
+	if (!GetComponent<CColliderComponent3D>()->CheckFrustum(camera))
+	{
+		return false;
+	}
 
 	return base::Accept(visitor);
 }
@@ -61,7 +65,7 @@ bool CMapChunk::Accept(IVisitor* visitor)
 
 bool CMapChunk::PreLoad()
 {
-	m_File = GetManager<IFilesManager>()->Open(m_FileName);
+	m_File = GetManager<IFilesManager>(_ApplicationInstance->GetBaseManager())->Open(m_FileName);
 	if (m_File == nullptr)
 		return false;
 

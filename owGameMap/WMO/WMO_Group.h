@@ -72,5 +72,5 @@ public:
 
 	// Parent
 	const std::weak_ptr<const CWMO>          m_ParentWMO;
-	const CGroupQuality&					m_Quality;
+	const CGroupQuality*					m_Quality;
 };

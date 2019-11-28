@@ -5,7 +5,7 @@
 
 CWMO_Base_Instance::CWMO_Base_Instance(std::string _wmoName) 
     : m_WMOName(_wmoName)
-    , m_QualitySettings(GetSettingsGroup<CGroupQuality>())
+    , m_QualitySettings(GetSettingsGroup<CGroupQuality>(_ApplicationInstance->GetBaseManager()))
 {}
 
 CWMO_Base_Instance::~CWMO_Base_Instance()
@@ -45,7 +45,7 @@ std::shared_ptr<CWMO> CWMO_Base_Instance::getWMO() const
 
 bool CWMO_Base_Instance::Load()
 {
-	std::shared_ptr<CWMO> wmo = GetManager<IWMOManager>()->Add(m_WMOName);
+	std::shared_ptr<CWMO> wmo = GetManager<IWMOManager>(_ApplicationInstance->GetBaseManager())->Add(m_WMOName);
 	if (wmo)
 	{
 		setWMO(wmo);
@@ -78,7 +78,7 @@ bool CWMO_Base_Instance::Accept(IVisitor* visitor)
 	AbstractPass* visitorAsBasePass = dynamic_cast<AbstractPass*>(visitor);
  	const Camera* camera = visitorAsBasePass->GetRenderEventArgs()->Camera;
 
-	if (!GetComponent<CColliderComponent3D>()->CheckDistance2D(camera, GetGroupQuality().ADT_WMO_Distance))
+	if (!GetComponent<CColliderComponent3D>()->CheckDistance2D(camera, GetGroupQuality()->ADT_WMO_Distance))
 	{
 		return false;
 	}
@@ -91,7 +91,7 @@ bool CWMO_Base_Instance::Accept(IVisitor* visitor)
 	return SceneNode3D::Accept(visitor);
 }
 
-const CGroupQuality & CWMO_Base_Instance::GetGroupQuality() const
+const CGroupQuality* CWMO_Base_Instance::GetGroupQuality() const
 {
     return m_QualitySettings;
 }

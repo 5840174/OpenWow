@@ -34,7 +34,7 @@ public:
 	void                                            UpdateCamera(const Camera* camera) override;
 	bool                                            Accept(IVisitor* visitor) override;
 
-    const CGroupQuality&                            GetGroupQuality() const;
+    const CGroupQuality*                            GetGroupQuality() const;
 
 protected:
 	std::string                                     m_WMOName;
@@ -45,5 +45,5 @@ protected:
 	
 	std::vector<std::shared_ptr<CWMO_Group_Instance>>  m_GroupInstances;
 	std::vector<std::shared_ptr<CWMO_Group_Instance>>  m_OutdoorGroupInstances;
-    const CGroupQuality&                            m_QualitySettings;
+    const CGroupQuality*                            m_QualitySettings;
 };

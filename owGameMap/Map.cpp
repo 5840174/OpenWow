@@ -5,7 +5,7 @@
 
 CMap::CMap() :
 	m_SkyManager(nullptr),
-	m_QualitySettings(GetSettingsGroup<CGroupQuality>())
+	m_QualitySettings(GetSettingsGroup<CGroupQuality>(_ApplicationInstance->GetBaseManager()))
 {
 	memset(m_ADTCache, 0, sizeof(m_ADTCache));
 	m_CurrentTileX = m_CurrentTileZ = -1;
@@ -61,12 +61,12 @@ void CMap::MapLoad()
 {
 	Log::Print("Map[%s]: Id [%d]. Loading...", m_MapDBCRecord->Get_Directory(), m_MapDBCRecord->Get_ID());
 
-	DelManager<ISkyManager>();
+	DelManager<ISkyManager>(_ApplicationInstance->GetBaseManager());
 	m_SkyManager.reset();
 
 	m_SkyManager = CreateSceneNode<SkyManager>();
     m_SkyManager->Load();
-	AddManager<ISkyManager>(m_SkyManager);
+	AddManager<ISkyManager>(_ApplicationInstance->GetBaseManager(), m_SkyManager);
 
 	m_EnvironmentManager.reset();
 	m_EnvironmentManager = std::make_shared<EnvironmentManager>();

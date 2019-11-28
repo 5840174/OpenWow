@@ -31,5 +31,5 @@ private:
 	SM2_Texture::Type		m_SpecialType;
 
 	//--
-	CGroupQuality&						m_QualitySettings;
+	const CGroupQuality*						m_QualitySettings;
 };

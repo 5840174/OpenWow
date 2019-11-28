@@ -25,7 +25,7 @@ CM2_Builder::CM2_Builder(std::shared_ptr<M2> _model) :
 	}
 
 	// Openfile
-	m_F = GetManager<IFilesManager>()->Open(m_M2->getFilename());
+	m_F = GetManager<IFilesManager>(_ApplicationInstance->GetBaseManager())->Open(m_M2->getFilename());
 	if (m_F == nullptr)
 	{
 		Log::Error("CM2_Builder[%s]: Unable to open file.", m_M2->getFilename().c_str());

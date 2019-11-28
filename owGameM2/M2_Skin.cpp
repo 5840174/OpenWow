@@ -13,7 +13,7 @@
 
 CM2_Skin::CM2_Skin(const std::weak_ptr<const M2> _model) :
 	m_ParentM2(_model),
-	m_QualitySettings(GetSettingsGroup<CGroupQuality>())
+	m_QualitySettings(GetSettingsGroup<CGroupQuality>(_ApplicationInstance->GetBaseManager()))
 {}
 
 void CM2_Skin::CreateInsances(std::weak_ptr<SceneNode3D> _parent)

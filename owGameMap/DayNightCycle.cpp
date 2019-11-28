@@ -5,7 +5,7 @@
 
 DayNightCycle::DayNightCycle()
 {
-	std::shared_ptr<IFile> f = GetManager<IFilesManager>()->Open("World\\dnc.db");
+	std::shared_ptr<IFile> f = GetManager<IFilesManager>(_ApplicationInstance->GetBaseManager())->Open("World\\dnc.db");
 	if (f == nullptr)
 	{
 		Log::Error("DayNightCycle[]: Can't init day-night cycle.");

@@ -29,7 +29,7 @@ void CMapWDL::CreateInsances(std::weak_ptr<SceneNode3D> _parent)
 	std::string fileName = mapController->GetMapFolder() + ".wdl";
 
 	// Low-resolution tiles
-	std::shared_ptr<IFile> f = GetManager<IFilesManager>()->Open(fileName);
+	std::shared_ptr<IFile> f = GetManager<IFilesManager>(_ApplicationInstance->GetBaseManager())->Open(fileName);
 	if (f == nullptr)
 	{
 		Log::Info("World[%s]: WDL: Error opening.", fileName.c_str());
@@ -129,7 +129,7 @@ void CMapWDL::Load()
 
 	std::string fileName = mapController->GetMapFolder() + ".wdl";
 
-	std::shared_ptr<IFile> f = GetManager<IFilesManager>()->Open(fileName);
+	std::shared_ptr<IFile> f = GetManager<IFilesManager>(_ApplicationInstance->GetBaseManager())->Open(fileName);
 	if (f == nullptr)
 	{
 		Log::Info("World[%s]: WDL: Error opening.", fileName.c_str());

@@ -29,5 +29,5 @@ private:
 
 	// Parent
 	const std::weak_ptr<const CWMO> m_ParentWMO;
-	const CGroupQuality&           m_QualitySettings;
+	const CGroupQuality*           m_QualitySettings;
 };

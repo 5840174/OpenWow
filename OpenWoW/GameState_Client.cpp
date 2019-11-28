@@ -76,10 +76,10 @@ void CGameState_Client::S_CharEnum(CByteBuffer& _buff)
 bool CGameState_Client::Init()
 {
 	std::shared_ptr<IWMOManager> wmoManager = std::make_shared<WMOsManager>();
-	AddManager<IWMOManager>(wmoManager);
+	AddManager<IWMOManager>(GetBaseManager(), wmoManager);
 
 	std::shared_ptr<IM2Manager> m2Manager = std::make_shared<CM2_Manager>();
-	AddManager<IM2Manager>(m2Manager);
+	AddManager<IM2Manager>(GetBaseManager(), m2Manager);
 
 
 	IApplication& app = Application::Get();

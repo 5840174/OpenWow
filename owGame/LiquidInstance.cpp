@@ -3,12 +3,15 @@
 // General
 #include "LiquidInstance.h"
 
-Liquid_Instance::Liquid_Instance() :
-	m_QualitySettings(GetSettingsGroup<CGroupQuality>())
+Liquid_Instance::Liquid_Instance()
 {}
 
 Liquid_Instance::~Liquid_Instance()
+{}
+
+void Liquid_Instance::Initialize()
 {
+	m_QualitySettings = GetSettingsGroup<CGroupQuality>(_ApplicationInstance->GetBaseManager());
 }
 
 void Liquid_Instance::Initialize(std::shared_ptr<CLiquid> _liquidObject, vec3 _position)

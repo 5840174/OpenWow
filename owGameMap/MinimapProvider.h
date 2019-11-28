@@ -36,5 +36,5 @@ private:
 	std::shared_ptr<IFile> m_File;
 
 	std::vector<MinimapDir*> m_Minimaps;
-	const CGroupVideo& m_GroupVideo;
+	const CGroupVideo* m_GroupVideo;
 };

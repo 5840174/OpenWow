@@ -5,8 +5,8 @@
 
 CLiquidLayer::CLiquidLayer(std::shared_ptr<IMesh> _mesh)
 	: MeshWrapper(_mesh)
-	, m_SkyManager(GetManager<ISkyManager>())
-	, m_QualitySettings(GetSettingsGroup<CGroupQuality>())
+	, m_SkyManager(GetManager<ISkyManager>(_ApplicationInstance->GetBaseManager()))
+	, m_QualitySettings(GetSettingsGroup<CGroupQuality>(_ApplicationInstance->GetBaseManager()))
 {
 	m_Material = std::make_shared<LiquidMaterial>();
 

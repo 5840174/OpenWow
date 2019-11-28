@@ -26,5 +26,5 @@ private:
 
 private: // PARENT
 	const std::weak_ptr<const M2> m_ParentM2;
-	CGroupQuality& m_QualitySettings;
+	const CGroupQuality* m_QualitySettings;
 };

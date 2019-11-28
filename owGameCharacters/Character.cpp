@@ -189,7 +189,7 @@ void Character::CreateCharacterModel()
 	std::string modelGender = (m_Template.Gender == Gender::Male) ? "Male" : "Female";
 	std::string fullModelName = "Character\\" + modelClientFileString + "\\" + modelGender + "\\" + modelClientFileString + modelGender + ".M2";
 
-	std::shared_ptr<M2> model = GetManager<IM2Manager>()->Add(fullModelName);
+	std::shared_ptr<M2> model = GetManager<IM2Manager>(_ApplicationInstance->GetBaseManager())->Add(fullModelName);
 	_ASSERT(model != nullptr);
 
 	setM2(model);

@@ -5,6 +5,8 @@
 #include "GameState_Menu.h"
 #include "GameState_World.h"
 
+IApplication * _ApplicationInstance = nullptr;
+
 int main(int argumentCount, char* arguments[])
 {
 #ifdef _DEBUG 
@@ -12,22 +14,22 @@ int main(int argumentCount, char* arguments[])
 	//_CrtSetReportMode(_CRT_ERROR, _CRTDBG_MODE_DEBUG);
 #endif
 	{
-		_BaseManager = std::make_shared<CBaseManager>();
+		std::shared_ptr<IBaseManager> BaseManager = std::make_shared<CBaseManager>();
 
-		std::shared_ptr<CSettings> settings = std::make_shared<CSettings>();
-		AddManager<ISettings>(settings);
+		std::shared_ptr<CSettings> settings = std::make_shared<CSettings>(BaseManager);
+		AddManager<ISettings>(BaseManager, settings);
 		settings->AddDefaults();
 		
 
 		std::shared_ptr<CLog> log = std::make_shared<CLog>();
-		AddManager<ILog>(log);
+		AddManager<ILog>(BaseManager, log);
 
-		std::shared_ptr<CConsole> console = std::make_shared<CConsole>();
-		AddManager<IConsole>(console);
+		std::shared_ptr<CConsole> console = std::make_shared<CConsole>(BaseManager);
+		AddManager<IConsole>(BaseManager, console);
 		console->AddCommonCommands();
 		
-		std::shared_ptr<IFilesManager> filesManager = std::make_shared<CFilesManager>();
-		AddManager<IFilesManager>(filesManager);
+		std::shared_ptr<IFilesManager> filesManager = std::make_shared<CFilesManager>(BaseManager);
+		AddManager<IFilesManager>(BaseManager, filesManager);
 
 		std::shared_ptr<IFilesStorage> localFilesGamedata = std::make_shared<CLocalFilesStorage>("D:\\_programming\\OpenWow\\_gamedata\\");
 		filesManager->RegisterFilesStorage(localFilesGamedata);
@@ -39,7 +41,11 @@ int main(int argumentCount, char* arguments[])
         std::shared_ptr<IFilesStorage> libraryFileStorage = std::make_shared<CLibraryResourceFileStotage>(hModule);
         filesManager->RegisterFilesStorage(libraryFileStorage);
 
-		OpenDBs();
+
+		std::shared_ptr<IznPluginsManager> pluginsManager = std::make_shared<CznPluginsManager>(BaseManager);
+		pluginsManager->RegisterPlugin("znPlugin.dll");
+
+		OpenDBs(BaseManager);
 
 		//--
 
@@ -49,14 +55,15 @@ int main(int argumentCount, char* arguments[])
         windowObject->RegisterWindowClass(m_HINSTANCE);
         windowObject->CreateWindowInstance(1280, 1024);
 
-		Application app(_BaseManager);
+		Application app(BaseManager);
+		_ApplicationInstance = &app;
 
         std::shared_ptr<IRenderDevice> renderDevice = app.CreateRenderDevice(IRenderDevice::DeviceType::DirectX);
         std::shared_ptr<RenderWindow> renderWindow = app.CreateRenderWindow(windowObject, true);
 
 
-        std::shared_ptr<IFontsManager> fontsManager = std::make_shared<FontsManager>();
-        AddManager<IFontsManager>(fontsManager);
+        std::shared_ptr<IFontsManager> fontsManager = std::make_shared<FontsManager>(BaseManager);
+        AddManager<IFontsManager>(BaseManager, fontsManager);
 
         app.AddGameState(GameStatesNames::GAME_STATE_MENU, std::make_shared<CGameState_Menu>(&app));
 		app.AddGameState(GameStatesNames::GAME_STATE_WORLD, std::make_shared<CGameState_World>(&app));

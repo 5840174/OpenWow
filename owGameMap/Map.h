@@ -72,7 +72,7 @@ private:
 	CMinimapProvider*		                        mProvider;
 	MinimapDir*				                        dir;
 
-	CGroupQuality&                                  m_QualitySettings;
+	const CGroupQuality*                                  m_QualitySettings;
 };
 
 inline static bool IsBadTileIndex(int i, int j)

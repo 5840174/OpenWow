@@ -7,12 +7,15 @@
 #include "MapTile.h"
 
 CMapTile::CMapTile() 
-    : m_QualitySettings(GetSettingsGroup<CGroupQuality>())
-{
-}
+{}
 
 CMapTile::~CMapTile()
 {}
+
+void CMapTile::Initialize()
+{
+	m_QualitySettings = GetSettingsGroup<CGroupQuality>(_ApplicationInstance->GetBaseManager());
+}
 
 void CMapTile::Initialize(uint32 _intexX, uint32 _intexZ)
 {
@@ -75,7 +78,7 @@ bool CMapTile::Load()
 	char filename[256];
 	sprintf_s(filename, "%s_%d_%d.adt", GetMapController()->GetMapFolder().c_str(), m_IndexX, m_IndexZ);
 
-	std::shared_ptr<IFile> f = GetManager<IFilesManager>()->Open(filename);
+	std::shared_ptr<IFile> f = GetManager<IFilesManager>(_ApplicationInstance->GetBaseManager())->Open(filename);
 	uint32_t startPos = f->getPos() + 20;
 	
 	// MVER + size (8)

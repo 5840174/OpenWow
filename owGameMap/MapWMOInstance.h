@@ -25,6 +25,8 @@ public:
 	CMapWMOInstance(std::string _wmoName);
 	virtual ~CMapWMOInstance();
 
+	void Initialize() override;
+
     void Initialize(const ADT_MODF& _placementInfo);
 
 	// Scene node

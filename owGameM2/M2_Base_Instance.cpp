@@ -14,8 +14,7 @@ CM2_Base_Instance::CM2_Base_Instance(std::string _m2Name) :
 	m_Animator(nullptr),
 	m_NeedRecalcAnimation(true),
 	m_Color(vec4(1.0f, 1.0f, 1.0f, 1.0f)),
-	m_Alpha(1.0f),
-	m_QualitySettings(GetSettingsGroup<CGroupQuality>())
+	m_Alpha(1.0f)
 {
 	for (uint8 i = 0; i < SM2_Texture::Type::COUNT; i++)
 	{
@@ -88,7 +87,7 @@ std::shared_ptr<Texture> CM2_Base_Instance::getSpecialTexture(SM2_Texture::Type 
 
 bool CM2_Base_Instance::Load()
 {
-	std::shared_ptr<M2> m2 = GetManager<IM2Manager>()->Add(m_M2Name);
+	std::shared_ptr<M2> m2 = GetManager<IM2Manager>(_ApplicationInstance->GetBaseManager())->Add(m_M2Name);
 	if (m2)
 	{
 		setM2(m2);
@@ -112,13 +111,18 @@ bool CM2_Base_Instance::Delete()
 //	m_M2->update(_time, _dTime);
 //
 
+void CM2_Base_Instance::Initialize()
+{
+	m_QualitySettings = GetSettingsGroup<CGroupQuality>(_ApplicationInstance->GetBaseManager());
+}
+
 bool CM2_Base_Instance::Accept(IVisitor* visitor)
 {
 	AbstractPass* visitorAsBasePass = dynamic_cast<AbstractPass*>(visitor);
 	const Camera* camera = visitorAsBasePass->GetRenderEventArgs()->Camera;
 
 	float distToCamera2D = (camera->GetTranslation() - GetComponent<CColliderComponent3D>()->GetBounds().getCenter()).length() - GetComponent<CColliderComponent3D>()->GetBounds().getRadius();
-	if (distToCamera2D > m_QualitySettings.ADT_MDX_Distance)
+	if (distToCamera2D > m_QualitySettings->ADT_MDX_Distance)
 	{
 		return false;
 	}
@@ -164,7 +168,7 @@ void CM2_Base_Instance::InitAnimator()
 	}
 }
 
-const CGroupQuality& CM2_Base_Instance::GetGroupQuality() const
+const CGroupQuality* CM2_Base_Instance::GetGroupQuality() const
 {
     return m_QualitySettings;
 }

@@ -55,57 +55,59 @@ DBC_LOAD(DBC_LightSkybox, "LightSkybox.dbc")
 DBC_LOAD(DBC_LiquidType, "LiquidType.dbc")
 
 
-void OpenDBs()
+void OpenDBs(std::shared_ptr<IBaseManager> BaseManager)
 {
+	std::shared_ptr<IFilesManager> filesManager = GetManager<IFilesManager>(BaseManager);
+
 	// All
-	DBC_AnimationData.Open();
-    DBC_GroundEffectDoodad.Open();
-    DBC_GroundEffectTexture.Open();
-    DBC_LoadingScreen.Open();
-	DBC_Material.Open();
-    DBC_Map.Open();
-	DBC_TerrainType.Open();
-    DBC_WMOAreaTable.Open();
-	DBC_WorldSafeLocs.Open();
+	DBC_AnimationData.Open(filesManager);
+    DBC_GroundEffectDoodad.Open(filesManager);
+    DBC_GroundEffectTexture.Open(filesManager);
+    DBC_LoadingScreen.Open(filesManager);
+	DBC_Material.Open(filesManager);
+    DBC_Map.Open(filesManager);
+	DBC_TerrainType.Open(filesManager);
+    DBC_WMOAreaTable.Open(filesManager);
+	DBC_WorldSafeLocs.Open(filesManager);
 		
 	// Achivement
 
 
 	// Area
-	DBC_AreaTable.Open();
+	DBC_AreaTable.Open(filesManager);
 
 	// Character
-	DBC_CharacterFacialHairStyles.Open();
-	DBC_CharComponentTextureLayouts.Open();
-	DBC_CharComponentTextureSections.Open();
-	DBC_CharHairGeosets.Open();
-	DBC_CharSections.Open();
-	DBC_ChrRaces.Open();
+	DBC_CharacterFacialHairStyles.Open(filesManager);
+	DBC_CharComponentTextureLayouts.Open(filesManager);
+	DBC_CharComponentTextureSections.Open(filesManager);
+	DBC_CharHairGeosets.Open(filesManager);
+	DBC_CharSections.Open(filesManager);
+	DBC_ChrRaces.Open(filesManager);
 
 	// Cinematic
-	DBC_CinematicCamera.Open();
-	DBC_CinematicSequences.Open();
+	DBC_CinematicCamera.Open(filesManager);
+	DBC_CinematicSequences.Open(filesManager);
 
 	// Creature
-	DBC_CreatureDisplayInfo.Open();
-	DBC_CreatureDisplayInfoExtra.Open();
-	DBC_CreatureModelData.Open();
+	DBC_CreatureDisplayInfo.Open(filesManager);
+	DBC_CreatureDisplayInfoExtra.Open(filesManager);
+	DBC_CreatureModelData.Open(filesManager);
 
 	// Item
-	DBC_HelmetGeosetVisData.Open();
-	DBC_ItemBagFamily.Open();
-	DBC_ItemClass.Open();
-	DBC_ItemDisplayInfo.Open();
-	DBC_ItemVisualEffects.Open();
-	DBC_ItemVisuals.Open();
+	DBC_HelmetGeosetVisData.Open(filesManager);
+	DBC_ItemBagFamily.Open(filesManager);
+	DBC_ItemClass.Open(filesManager);
+	DBC_ItemDisplayInfo.Open(filesManager);
+	DBC_ItemVisualEffects.Open(filesManager);
+	DBC_ItemVisuals.Open(filesManager);
 
 	// Light
-	DBC_Light.Open();
-	DBC_LightFloatBand.Open();
-	DBC_LightIntBand.Open();
-	DBC_LightParams.Open();
-	DBC_LightSkybox.Open();
+	DBC_Light.Open(filesManager);
+	DBC_LightFloatBand.Open(filesManager);
+	DBC_LightIntBand.Open(filesManager);
+	DBC_LightParams.Open(filesManager);
+	DBC_LightSkybox.Open(filesManager);
 
 	// Liquid
-	DBC_LiquidType.Open();
+	DBC_LiquidType.Open(filesManager);
 }

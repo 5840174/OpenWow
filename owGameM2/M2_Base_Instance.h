@@ -42,12 +42,13 @@ public:
 	uint32                              getPriority() const override { return 3; };
 
 	// SceneNode3D
+	void								Initialize() override;
 	virtual bool                        Accept(IVisitor* visitor) override;
 
 protected:
 	void InitAnimator();
 
-    const CGroupQuality&                GetGroupQuality() const;
+    const CGroupQuality*                GetGroupQuality() const;
 
 private:
 	// Color & Alpha
@@ -65,5 +66,5 @@ private:
 	std::shared_ptr<M2>                 m_M2;
 	std::string                         m_M2Name;
 	std::shared_ptr<CM2_Part_Attachment>m_Attached;
-	const CGroupQuality&				m_QualitySettings;
+	const CGroupQuality*				m_QualitySettings;
 };

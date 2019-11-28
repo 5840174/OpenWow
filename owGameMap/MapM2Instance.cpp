@@ -47,7 +47,7 @@ bool CMapM2Instance::Accept(IVisitor* visitor)
 	}
 
 	float distToCamera2D = (camera->GetTranslation() - GetComponent<CColliderComponent3D>()->GetBounds().getCenter()).length() - GetComponent<CColliderComponent3D>()->GetBounds().getRadius();
-	if (distToCamera2D > GetGroupQuality().ADT_MCNK_Distance)
+	if (distToCamera2D > GetGroupQuality()->ADT_MCNK_Distance)
 	{
 		return false;
 	}

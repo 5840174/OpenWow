@@ -117,7 +117,7 @@ bool CWMO::Load()
 
 			char fname[256];
 			sprintf_s(fname, "%s_%03d.wmo", temp, cntr);
-			std::shared_ptr<IFile> groupFile = GetManager<IFilesManager>()->Open(fname); // It delete later
+			std::shared_ptr<IFile> groupFile = GetManager<IFilesManager>(_ApplicationInstance->GetBaseManager())->Open(fname); // It delete later
 
 			std::string groupName = groupFile->Name();
 			if (groupInfo.nameoffset > 0)

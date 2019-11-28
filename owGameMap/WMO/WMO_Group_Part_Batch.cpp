@@ -11,7 +11,7 @@ WMO_Group_Part_Batch::WMO_Group_Part_Batch(const std::weak_ptr<const CWMO> _pare
 	MeshWrapper(_mesh),
 	m_ParentWMO(_parentWMO),
 	m_Proto(_proto),
-	m_Quality(GetSettingsGroup<CGroupQuality>())
+	m_Quality(GetSettingsGroup<CGroupQuality>(_ApplicationInstance->GetBaseManager()))
 {
 	m_WMOMaterial = m_ParentWMO.lock()->m_Materials[m_Proto.material_id];
 	

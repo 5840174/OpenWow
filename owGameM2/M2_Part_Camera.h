@@ -31,5 +31,5 @@ private:
 
 	float fov;
 
-	CGroupVideo& m_VideoSettings;
+	const CGroupVideo* m_VideoSettings;
 };

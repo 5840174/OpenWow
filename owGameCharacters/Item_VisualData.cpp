@@ -251,7 +251,7 @@ std::shared_ptr<Texture> CItem_VisualData::LoadSkinTexture(DBC_CharComponent_Sec
 	std::string maleTexture = getTextureComponentName(_type, _textureName, Gender::Male);
 	std::string femaleTexture = getTextureComponentName(_type, _textureName, Gender::Female);
 
-	std::shared_ptr<IFilesManager> fManager = GetManager<IFilesManager>();
+	std::shared_ptr<IFilesManager> fManager = GetManager<IFilesManager>(_ApplicationInstance->GetBaseManager());
 
 	if (fManager->IsFileExists(universalTexture))
 	{

@@ -8,7 +8,7 @@
 
 CRenderPass_ADT_MCNK::CRenderPass_ADT_MCNK(std::shared_ptr<Scene3D> scene, std::shared_ptr<PipelineState> pipeline)
 	: BasePass(scene, pipeline)
-	, m_QualitySettings(GetSettingsGroup<CGroupQuality>())
+	, m_QualitySettings(GetSettingsGroup<CGroupQuality>(_ApplicationInstance->GetBaseManager()))
 {
 }
 

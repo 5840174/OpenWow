@@ -10,7 +10,7 @@ WMO_Part_Material::WMO_Part_Material(const std::weak_ptr<const CWMO> _parentWMO,
 	MaterialWrapper(_RenderDevice->CreateMaterial(sizeof(MaterialProperties))),
 	m_ParentWMO(_parentWMO),
 	m_Proto(_proto),
-	m_QualitySettings(GetSettingsGroup<CGroupQuality>())
+	m_QualitySettings(GetSettingsGroup<CGroupQuality>(_ApplicationInstance->GetBaseManager()))
 {
 	// Constant buffer
 	m_pProperties = (MaterialProperties*)_aligned_malloc(sizeof(MaterialProperties), 16);

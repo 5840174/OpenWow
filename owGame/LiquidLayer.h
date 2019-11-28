@@ -42,5 +42,5 @@ public:
 
 private:
 	std::weak_ptr<ISkyManager>                                          m_SkyManager;
-	const CGroupQuality&                                                m_QualitySettings;
+	const CGroupQuality*                                                m_QualitySettings;
 };

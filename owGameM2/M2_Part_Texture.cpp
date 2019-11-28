@@ -8,7 +8,7 @@
 
 CM2_Part_Texture::CM2_Part_Texture(std::shared_ptr<IFile> f, const SM2_Texture& _proto) :
 	m_Texture(nullptr),
-	m_QualitySettings(GetSettingsGroup<CGroupQuality>())
+	m_QualitySettings(GetSettingsGroup<CGroupQuality>(_ApplicationInstance->GetBaseManager()))
 {
 	m_WrapX = _proto.flags.WRAPX == 0;
 	m_WrapY = _proto.flags.WRAPY == 0;

@@ -242,7 +242,7 @@ public:
 	DBCFile(const char* _fileName);
 	virtual ~DBCFile();
 
-	bool Open();
+	bool Open(std::shared_ptr<IFilesManager> FilesManager);
 
 	// Get data by id
 	std::shared_ptr<RECORD_T> operator[](uint32 _id);

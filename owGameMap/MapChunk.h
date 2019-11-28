@@ -14,6 +14,8 @@ public:
 	                                                CMapChunk(std::shared_ptr<CMap> _mapController, std::weak_ptr<CMapTile> _parentTile);
 	virtual                                         ~CMapChunk();
 
+	void                                            Initialize() override;
+
     void                                            Initialize(const std::string& _fileName, const ADT_MCIN& _mcin);
 
     uint32                                          GetAreaID() const;
@@ -46,7 +48,7 @@ private:
 	std::shared_ptr<IMesh>                          __geomDefault;
 
 private:
-	const std::weak_ptr<CMap>	            m_MapController;
+	const std::weak_ptr<CMap>						m_MapController;
 	const std::weak_ptr<CMapTile>			        m_ParentADT;
-	CGroupQuality&						            m_QualitySettings;
+	const CGroupQuality*						    m_QualitySettings;
 };

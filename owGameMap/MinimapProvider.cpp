@@ -7,9 +7,9 @@
 vec2 C_MinimapSize = vec2(600.0f, 600.0f);
 
 CMinimapProvider::CMinimapProvider() :
-	m_GroupVideo(GetSettingsGroup<CGroupVideo>())
+	m_GroupVideo(GetSettingsGroup<CGroupVideo>(_ApplicationInstance->GetBaseManager()))
 {
-	m_File = GetManager<IFilesManager>()->Open("textures\\Minimap\\md5translate.trs");
+	m_File = GetManager<IFilesManager>(_ApplicationInstance->GetBaseManager())->Open("textures\\Minimap\\md5translate.trs");
 }
 
 CMinimapProvider::~CMinimapProvider()

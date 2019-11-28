@@ -17,6 +17,11 @@ CMapWMOInstance::~CMapWMOInstance()
 	//Log::Info("ADT_WMO Deleted");
 }
 
+void CMapWMOInstance::Initialize()
+{
+	// do nothing
+}
+
 void CMapWMOInstance::Initialize(const ADT_MODF & _placementInfo)
 {
     m_UniqueId = _placementInfo.uniqueId;

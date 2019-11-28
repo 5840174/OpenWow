@@ -4,7 +4,7 @@
 #include "M2_Part_Camera.h"
 
 CM2_Part_Camera::CM2_Part_Camera(std::shared_ptr<IFile> f, const SM2_Camera& _proto, cGlobalLoopSeq global) :
-	m_VideoSettings(GetSettingsGroup<CGroupVideo>())
+	m_VideoSettings(GetSettingsGroup<CGroupVideo>(_ApplicationInstance->GetBaseManager()))
 {
 	nearclip = _proto.near_clip;
 	farclip = _proto.far_clip;
@@ -16,7 +16,7 @@ CM2_Part_Camera::CM2_Part_Camera(std::shared_ptr<IFile> f, const SM2_Camera& _pr
 	tTarget.init(_proto.target_position, f, global, Fix_XZmY);
 
 	tRoll.init(_proto.roll, f, global);
-	fov = _proto.fov / sqrtf(1.0f + powf(m_VideoSettings.aspectRatio, 2.0f));;
+	fov = _proto.fov / sqrtf(1.0f + powf(m_VideoSettings->aspectRatio, 2.0f));;
 }
 
 void CM2_Part_Camera::calc(uint32 time, uint32 globalTime)

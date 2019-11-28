@@ -17,6 +17,9 @@ public:
 	                                                CMapTile();
 	virtual                                         ~CMapTile();
 
+	void											Initialize() override;
+
+
     void                                            Initialize(uint32 _intexX, uint32 _intexZ);
 
     std::shared_ptr<CMapChunk>                      getChunk(int32 x, int32 z);
@@ -42,8 +45,8 @@ public:
 	std::vector<std::shared_ptr<CMapChunk>>			m_Chunks;
 
 protected:
-    std::shared_ptr<CMap>                 GetMapController() const;
+    std::shared_ptr<CMap>							GetMapController() const;
 
 private:
-	CGroupQuality&									m_QualitySettings;
+	const CGroupQuality*							m_QualitySettings;
 };
