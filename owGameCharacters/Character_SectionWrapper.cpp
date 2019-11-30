@@ -14,7 +14,7 @@ Texture2	ExtraSkinTexture	FaceUpperTexture	FacialUpperTexture	ScalpLowerTexture	
 Texture3	-					-					-					ScalpUpperTexture	-
 */
 
-std::shared_ptr<Texture> Character_SectionWrapper::getSkinTexture(const Character* _character)
+std::shared_ptr<ITexture> Character_SectionWrapper::getSkinTexture(const Character* _character)
 {
 	for (auto i : DBC_CharSections)
 	{
@@ -36,7 +36,7 @@ std::shared_ptr<Texture> Character_SectionWrapper::getSkinTexture(const Characte
 	return nullptr;
 }
 
-std::shared_ptr<Texture> Character_SectionWrapper::getSkinExtraTexture(const Character* _character)
+std::shared_ptr<ITexture> Character_SectionWrapper::getSkinExtraTexture(const Character* _character)
 {
 	for (auto& i : DBC_CharSections)
 	{
@@ -62,7 +62,7 @@ std::shared_ptr<Texture> Character_SectionWrapper::getSkinExtraTexture(const Cha
 //-- Face
 //------------------------------------------------------------
 
-std::shared_ptr<Texture> Character_SectionWrapper::getFaceLowerTexture(const Character* _character)
+std::shared_ptr<ITexture> Character_SectionWrapper::getFaceLowerTexture(const Character* _character)
 {
 	for (auto& i : DBC_CharSections)
 	{
@@ -86,7 +86,7 @@ std::shared_ptr<Texture> Character_SectionWrapper::getFaceLowerTexture(const Cha
 	return nullptr;
 }
 
-std::shared_ptr<Texture> Character_SectionWrapper::getFaceUpperTexture(const Character* _character)
+std::shared_ptr<ITexture> Character_SectionWrapper::getFaceUpperTexture(const Character* _character)
 {
 	for (auto& i : DBC_CharSections)
 	{
@@ -128,7 +128,7 @@ std::string Character_SectionWrapper::getFacialHairLowerTexture(const Character*
 			return i->Get_Texture1();
 		}
 	}
-	fail1(); return "";
+	_ASSERT(false); return "";
 }
 
 std::string Character_SectionWrapper::getFacialHairUpperTexture(const Character* _character)
@@ -145,7 +145,7 @@ std::string Character_SectionWrapper::getFacialHairUpperTexture(const Character*
 			return i->Get_Texture2();
 		}
 	}
-	fail1();	return "";
+	_ASSERT(false);	return "";
 }
 
 uint32 Character_SectionWrapper::getFacial1Geoset(const Character * _character)
@@ -248,7 +248,7 @@ uint32 Character_SectionWrapper::getHairGeoset(const Character* _character)
 	return UINT32_MAX;
 }
 
-std::shared_ptr<Texture> Character_SectionWrapper::getHairTexture(const Character* _character)
+std::shared_ptr<ITexture> Character_SectionWrapper::getHairTexture(const Character* _character)
 {
 	for (auto& i : DBC_CharSections)
 	{
@@ -270,7 +270,7 @@ std::shared_ptr<Texture> Character_SectionWrapper::getHairTexture(const Characte
 	return nullptr;
 }
 
-std::shared_ptr<Texture> Character_SectionWrapper::getHairScalpLowerTexture(const Character* _character)
+std::shared_ptr<ITexture> Character_SectionWrapper::getHairScalpLowerTexture(const Character* _character)
 {
 	for (auto& i : DBC_CharSections)
 	{
@@ -293,7 +293,7 @@ std::shared_ptr<Texture> Character_SectionWrapper::getHairScalpLowerTexture(cons
 	return nullptr;
 }
 
-std::shared_ptr<Texture> Character_SectionWrapper::getHairScalpUpperTexture(const Character* _character)
+std::shared_ptr<ITexture> Character_SectionWrapper::getHairScalpUpperTexture(const Character* _character)
 {
 	for (auto& i : DBC_CharSections)
 	{
@@ -334,7 +334,7 @@ std::string Character_SectionWrapper::getNakedPelvisTexture(const Character * _c
 		}
 	}
 
-	fail1(); 
+	_ASSERT(false); 
 	return "";
 }
 
@@ -353,6 +353,6 @@ std::string Character_SectionWrapper::getNakedTorsoTexture(const Character * _ch
 		}
 	}
 
-	fail1();
+	_ASSERT(false);
 	return "";
 }

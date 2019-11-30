@@ -11,7 +11,7 @@ public:
 	virtual ~CLiquidLayer();
 
 	// IMesh
-	bool Render(const RenderEventArgs* renderEventArgs, const ConstantBuffer* perObject, UINT indexStartLocation = 0, UINT indexCnt = 0, UINT vertexStartLocation = 0, UINT vertexCnt = 0) override;
+	bool Render(const RenderEventArgs* renderEventArgs, const IConstantBuffer* perObject, UINT indexStartLocation = 0, UINT indexCnt = 0, UINT vertexStartLocation = 0, UINT vertexCnt = 0) override;
 
 public:
 	std::shared_ptr<const DBC_LiquidTypeRecord> LiquidType;
@@ -38,7 +38,7 @@ public:
 	void InitTextures(DBC_LIQUIDTYPE_Type::List _liquidType);
 
 	std::shared_ptr<LiquidMaterial> m_Material;
-	std::vector<std::shared_ptr<Texture>>    m_Textures;
+	std::vector<std::shared_ptr<ITexture>>    m_Textures;
 
 private:
 	std::weak_ptr<ISkyManager>                                          m_SkyManager;

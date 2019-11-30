@@ -11,17 +11,17 @@ public:
 
 	SM2_Material::BlendModes getBlendMode() const { return m_M2BlendMode; }
 
-	DepthStencilState::DepthMode GetDepthMode() const;
-	BlendState::BlendMode GetBlendMode() const;
-	RasterizerState::CullMode GetCullMode() const;
+	IDepthStencilState::DepthMode GetDepthMode() const;
+	IBlendState::BlendMode GetBlendMode() const;
+	IRasterizerState::CullMode GetCullMode() const;
 
 private:
 	bool m_IsLightingDisable;
 	bool m_IsFogDisable;
-	RasterizerState::CullMode m_CullMode;
+	IRasterizerState::CullMode m_CullMode;
 
 	bool m_DepthTest;
-	DepthStencilState::DepthWrite m_DepthWrite;
+	IDepthStencilState::DepthWrite m_DepthWrite;
 
 	SM2_Material::BlendModes m_M2BlendMode;
 };

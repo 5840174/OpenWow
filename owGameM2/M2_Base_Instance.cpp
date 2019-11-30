@@ -69,17 +69,17 @@ bool CM2_Base_Instance::isMeshEnabled(uint32 _index) const
 }
 void CM2_Base_Instance::setSpecialTexture(SM2_Texture::Type _type, const std::string& _textureName)
 {
-	std::shared_ptr<Texture> texture = _RenderDevice->CreateTexture2D(_textureName);
+	std::shared_ptr<ITexture> texture = _RenderDevice->CreateTexture2D(_textureName);
 	setSpecialTexture(_type, texture);
 }
-void CM2_Base_Instance::setSpecialTexture(SM2_Texture::Type _type, std::shared_ptr<Texture> _texture)
+void CM2_Base_Instance::setSpecialTexture(SM2_Texture::Type _type, std::shared_ptr<ITexture> _texture)
 {
 	if (_texture != nullptr)
 	{
 		m_SpecialTextures[_type] = _texture;
 	}
 }
-std::shared_ptr<Texture> CM2_Base_Instance::getSpecialTexture(SM2_Texture::Type _type) const
+std::shared_ptr<ITexture> CM2_Base_Instance::getSpecialTexture(SM2_Texture::Type _type) const
 {
 	_ASSERT(_type < SM2_Texture::Type::COUNT);
 	return m_SpecialTextures[_type];

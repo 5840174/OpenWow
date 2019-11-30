@@ -104,7 +104,7 @@ bool CGameState_Client::Init()
     GetCameraController()->GetCamera()->SetViewport(renderWindow->GetViewport());
     GetCameraController()->GetCamera()->SetProjectionRH(45.0f, 1280.0f / 1024.0f, 1.0f, 4000.0f);
 	
-	m_FrameQuery = renderDevice->CreateQuery(Query::QueryType::Timer, 1);
+	m_FrameQuery = renderDevice->CreateQuery(IQuery::QueryType::Timer, 1);
 
 	m_3DTechnique.AddPass(std::make_shared<ClearRenderTargetPass>(app.GetRenderWindow()->GetRenderTarget(), ClearFlags::All, g_ClearColor, 1.0f, 0));
 
@@ -157,7 +157,7 @@ void CGameState_Client::OnPostRender(RenderEventArgs& e)
 	vec3 cameraRot = GetCameraController()->GetCamera()->GetDirection();
 	m_CameraRotText->SetText("Rot: " + std::to_string(cameraRot.x) + ", " + std::to_string(cameraRot.y) + ", " + std::to_string(cameraRot.z));
 
-	Query::QueryResult frameResult = m_FrameQuery->GetQueryResult(e.FrameCounter - (m_FrameQuery->GetBufferCount() - 1));
+	IQuery::QueryResult frameResult = m_FrameQuery->GetQueryResult(e.FrameCounter - (m_FrameQuery->GetBufferCount() - 1));
 	if (frameResult.IsValid)
 	{
 		// Frame time in milliseconds

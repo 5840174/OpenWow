@@ -9,7 +9,7 @@ DayNightCycle::DayNightCycle()
 	if (f == nullptr)
 	{
 		Log::Error("DayNightCycle[]: Can't init day-night cycle.");
-        fail1();
+        _ASSERT(false);
 	}
 
 	uint32 nFields1, nFields, d;

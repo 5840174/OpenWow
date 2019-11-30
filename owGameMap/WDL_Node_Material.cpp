@@ -11,20 +11,20 @@ WDL_Node_Material::WDL_Node_Material() :
 
 #ifdef IS_DX11
 	// CreateShaders
-	std::shared_ptr<Shader> g_pVertexShader = _RenderDevice->CreateShader(
-		Shader::VertexShader, "shaders_D3D/MapWDL.hlsl", Shader::ShaderMacros(), "VS_main", "latest"
+	std::shared_ptr<IShader> g_pVertexShader = _RenderDevice->CreateShader(
+		IShader::ShaderType::VertexShader, "shaders_D3D/MapWDL.hlsl", IShader::ShaderMacros(), "VS_main", "latest"
 	);
     g_pVertexShader->LoadInputLayoutFromReflector();
 
-	std::shared_ptr<Shader> g_pPixelShader = _RenderDevice->CreateShader(
-		Shader::PixelShader, "shaders_D3D/MapWDL.hlsl", Shader::ShaderMacros(), "PS_main", "latest"
+	std::shared_ptr<IShader> g_pPixelShader = _RenderDevice->CreateShader(
+		IShader::PixelShader, "shaders_D3D/MapWDL.hlsl", IShader::ShaderMacros(), "PS_main", "latest"
 	);
 
 	// Material
 	SetDiffuseColor(vec4(0, 0.2, 0.8, 1.0));
 
-	SetShader(Shader::VertexShader, g_pVertexShader);
-	SetShader(Shader::PixelShader, g_pPixelShader);
+	SetShader(IShader::ShaderType::VertexShader, g_pVertexShader);
+	SetShader(IShader::PixelShader, g_pPixelShader);
 #endif
 }
 

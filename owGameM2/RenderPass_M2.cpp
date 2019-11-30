@@ -16,7 +16,7 @@
 // Additional (meshes)
 #include "M2_Skin_Batch.h"
 
-CRenderPass_M2::CRenderPass_M2(std::shared_ptr<Scene3D> scene, std::shared_ptr<PipelineState> pipeline)
+CRenderPass_M2::CRenderPass_M2(std::shared_ptr<Scene3D> scene, std::shared_ptr<IPipelineState> pipeline)
 	: BasePass(scene, pipeline)
 {}
 

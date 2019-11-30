@@ -4,7 +4,7 @@ class CRenderPass_M2 : public BasePass
 {
     typedef BasePass base;
 public:
-	CRenderPass_M2(std::shared_ptr<Scene3D> scene, std::shared_ptr<PipelineState> pipeline);
+	CRenderPass_M2(std::shared_ptr<Scene3D> scene, std::shared_ptr<IPipelineState> pipeline);
 	virtual ~CRenderPass_M2();
 
     // IVisitor

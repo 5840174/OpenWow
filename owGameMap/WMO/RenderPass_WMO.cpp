@@ -7,7 +7,7 @@
 #include "WMO_Base_Instance.h"
 #include "WMO_Group_Instance.h"
 
-CRenderPass_WMO::CRenderPass_WMO(std::shared_ptr<Scene3D> scene, std::shared_ptr<PipelineState> pipeline)
+CRenderPass_WMO::CRenderPass_WMO(std::shared_ptr<Scene3D> scene, std::shared_ptr<IPipelineState> pipeline)
 	: base(scene, pipeline)
 {
 }

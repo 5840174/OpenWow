@@ -13,8 +13,8 @@ M2_Material::M2_Material(std::vector<std::weak_ptr<const CM2_Part_Texture>> m2Te
 	_ASSERT(m2Textures.size() <= 2);
 	for (uint8 i = 0; i < m2Textures.size(); i++)
 	{
-		std::shared_ptr<SamplerState> g_Sampler = _RenderDevice->CreateSamplerState();
-		g_Sampler->SetFilter(SamplerState::MinFilter::MinLinear, SamplerState::MagFilter::MagLinear, SamplerState::MipFilter::MipLinear);
+		std::shared_ptr<ISamplerState> g_Sampler = _RenderDevice->CreateSamplerState();
+		g_Sampler->SetFilter(ISamplerState::MinFilter::MinLinear, ISamplerState::MagFilter::MagLinear, ISamplerState::MipFilter::MipLinear);
         SetSampler(i, g_Sampler);
 	}
 }

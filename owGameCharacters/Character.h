@@ -36,7 +36,7 @@ private:
 
 	// Refreshers
 	void RefreshItemVisualData();
-	void RefreshTextures(std::shared_ptr<Texture> _skin = nullptr);
+	void RefreshTextures(std::shared_ptr<ITexture> _skin = nullptr);
 	void RefreshMeshIDs();
 
 private:

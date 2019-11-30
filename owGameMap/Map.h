@@ -43,7 +43,7 @@ public: // Getters
 	void                                            SetOutOfBounds(bool _value) { m_IsOnInvalidTile = _value; }
 	bool                                            IsOutOfBounds() const { return m_IsOnInvalidTile; }
 	
-	std::shared_ptr<Texture>                        getMinimap() const { return m_WDL->getMinimap(); }
+	std::shared_ptr<ITexture>                        getMinimap() const { return m_WDL->getMinimap(); }
 	const std::shared_ptr<SkyManager>               getSkyManager() const { return m_SkyManager; }
 	const std::shared_ptr<EnvironmentManager>       getEnvManager() const { return m_EnvironmentManager; }
 	DayNightPhase                                   getDayNightPhase() const { return m_EnvironmentManager->dayNightCycle->getPhase(m_GameTime.GetTime()); }

@@ -36,12 +36,12 @@ private:
 	ADT_MCNK_Header                                 header;
 
 	ADT_MCNK_MCLY                                   mcly[4];
-	std::shared_ptr<Texture>                        m_DiffuseTextures[4];
-	std::shared_ptr<Texture>                        m_SpecularTextures[4];
+	std::shared_ptr<ITexture>                        m_DiffuseTextures[4];
+	std::shared_ptr<ITexture>                        m_SpecularTextures[4];
 
 	std::shared_ptr<Liquid_Instance>                m_LiquidInstance;
 
-	std::shared_ptr<Texture>                        m_BlendRBGShadowATexture;
+	std::shared_ptr<ITexture>                        m_BlendRBGShadowATexture;
 
 	// Qulity
 	std::shared_ptr<IMesh>                          __geomHigh;

@@ -17,7 +17,7 @@ CLiquidLayer::~CLiquidLayer()
 {
 }
 
-bool CLiquidLayer::Render(const RenderEventArgs* renderEventArgs, const ConstantBuffer* perObject, UINT indexStartLocation, UINT indexCnt, UINT vertexStartLocation, UINT vertexCnt)
+bool CLiquidLayer::Render(const RenderEventArgs* renderEventArgs, const IConstantBuffer* perObject, UINT indexStartLocation, UINT indexCnt, UINT vertexStartLocation, UINT vertexCnt)
 {
 	uint32_t texidx = (uint32_t)(EngineTime::GetTotalTime() * 1000.0f / 60.0f) % m_Textures.size();
 	m_Material->SetTexture(0, m_Textures[texidx]);
@@ -64,14 +64,14 @@ void CLiquidLayer::InitTextures(DBC_LIQUIDTYPE_Type::List _liquidType)
     }
     else
     {
-        fail1();
+        _ASSERT(false);
     }
 
 	char buf[256];
 	for (int i = 1; i <= 30; i++)
 	{
         sprintf(buf, "%s.%d.blp", baseName.c_str(), i);
-		std::shared_ptr<Texture> texture = _RenderDevice->CreateTexture2D(buf);
+		std::shared_ptr<ITexture> texture = _RenderDevice->CreateTexture2D(buf);
 		m_Textures.push_back(texture);
 	}
 }

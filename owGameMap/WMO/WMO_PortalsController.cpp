@@ -27,7 +27,7 @@ CWMO_PortalsController::CWMO_PortalsController(const std::weak_ptr<const CWMO> _
 		}
 		else
 		{
-			fail1();
+			_ASSERT(false);
 		}
 
 		portal->setGroup(it.groupIndex, it.side);

@@ -4,7 +4,7 @@ class CRenderPass_WDL : public BasePass
 {
     typedef BasePass base;
 public:
-	CRenderPass_WDL(std::shared_ptr<Scene3D> scene, std::shared_ptr<PipelineState> pipeline);
+	CRenderPass_WDL(std::shared_ptr<Scene3D> scene, std::shared_ptr<IPipelineState> pipeline);
 	virtual ~CRenderPass_WDL();
 
     // IVisitor

@@ -6,7 +6,7 @@
 // Additional
 #include "MapChunk.h"
 
-CRenderPass_ADT_MCNK::CRenderPass_ADT_MCNK(std::shared_ptr<Scene3D> scene, std::shared_ptr<PipelineState> pipeline)
+CRenderPass_ADT_MCNK::CRenderPass_ADT_MCNK(std::shared_ptr<Scene3D> scene, std::shared_ptr<IPipelineState> pipeline)
 	: BasePass(scene, pipeline)
 	, m_QualitySettings(GetSettingsGroup<CGroupQuality>(_ApplicationInstance->GetBaseManager()))
 {

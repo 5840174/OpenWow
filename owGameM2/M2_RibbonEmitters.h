@@ -27,7 +27,7 @@ private:
 	vec3										pos;
 	vec3										posValue;
 
-	std::shared_ptr<Texture>					m_Texture;
+	std::shared_ptr<ITexture>					m_Texture;
 	std::weak_ptr<const CM2_Part_Material>		m_Material;
 
 	//std::shared_ptr<IBuffer>								__vb;

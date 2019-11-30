@@ -23,7 +23,7 @@ CM2_Part_Texture::CM2_Part_Texture(std::shared_ptr<IFile> f, const SM2_Texture& 
 	}
 }
 
-std::shared_ptr<Texture> CM2_Part_Texture::GetResultTexture(const CM2_Base_Instance* _instance) const
+std::shared_ptr<ITexture> CM2_Part_Texture::GetResultTexture(const CM2_Base_Instance* _instance) const
 {
 	if (isTextureSpecial())
 	{
@@ -50,7 +50,7 @@ std::shared_ptr<Texture> CM2_Part_Texture::GetResultTexture(const CM2_Base_Insta
 
 	if (isTextureSpecial())
 	{
-		std::shared_ptr<Texture> texture = _instance->getSpecialTexture(m_SpecialType);
+		std::shared_ptr<ITexture> texture = _instance->getSpecialTexture(m_SpecialType);
 		if (texture != nullptr)
 		{
 			_state->setTexture(_slot, texture, sampler, 0);

@@ -24,9 +24,9 @@ CM2_Part_Material::CM2_Part_Material(const SM2_Material& _proto)
 	m_IsLightingDisable = _proto.flags.UNLIT;
 
 	m_IsFogDisable = _proto.flags.UNFOGGED;
-	m_CullMode = (_proto.flags.TWOSIDED != 0) ? RasterizerState::CullMode::None : RasterizerState::CullMode::Back;
+	m_CullMode = (_proto.flags.TWOSIDED != 0) ? IRasterizerState::CullMode::None : IRasterizerState::CullMode::Back;
 	m_DepthTest = (_proto.flags.DEPTHTEST == 0);
-	m_DepthWrite = (_proto.flags.DEPTHWRITE == 0) ? DepthStencilState::DepthWrite::Enable : DepthStencilState::DepthWrite::Disable;
+	m_DepthWrite = (_proto.flags.DEPTHWRITE == 0) ? IDepthStencilState::DepthWrite::Enable : IDepthStencilState::DepthWrite::Disable;
 
 	m_M2BlendMode = _proto.m_BlendMode;
 }
@@ -39,136 +39,136 @@ void CM2_Part_Material::Set() const
 	_Render->getRenderStorage()->SetEGxBlend(_Render->r.getState(), M2Blend_To_EGxBlend[m_M2BlendMode].EGxBLend);*/
 }
 
-DepthStencilState::DepthMode CM2_Part_Material::GetDepthMode() const
+IDepthStencilState::DepthMode CM2_Part_Material::GetDepthMode() const
 {
-	return DepthStencilState::DepthMode(m_DepthTest, m_DepthWrite);
+	return IDepthStencilState::DepthMode(m_DepthTest, m_DepthWrite);
 }
 
-/*BlendState::BlendMode CM2_Part_Material::GetBlendMode() const
+/*IBlendState::BlendMode CM2_Part_Material::GetBlendMode() const
 {
 	switch (m_M2BlendMode)
 	{
 	case 0: // Opaque
-		return BlendState::BlendMode(false, false,
-			BlendState::BlendFactor::One,
-			BlendState::BlendFactor::Zero);
+		return IBlendState::BlendMode(false, false,
+			IBlendState::BlendFactor::One,
+			IBlendState::BlendFactor::Zero);
 		break;
 
 	case 1: // Combiners_Mod
-		return BlendState::BlendMode(true, false,
-			BlendState::BlendFactor::One, BlendState::BlendFactor::Zero);
+		return IBlendState::BlendMode(true, false,
+			IBlendState::BlendFactor::One, IBlendState::BlendFactor::Zero);
 		break;
 
 	case 2: // Combiners_Decal 
-		return BlendState::BlendMode(true, false,
-			BlendState::BlendFactor::SrcAlpha, BlendState::BlendFactor::OneMinusSrcAlpha,
-			BlendState::BlendOperation::Add,
-			BlendState::BlendFactor::SrcAlpha, BlendState::BlendFactor::OneMinusSrcAlpha);
+		return IBlendState::BlendMode(true, false,
+			IBlendState::BlendFactor::SrcAlpha, IBlendState::BlendFactor::OneMinusSrcAlpha,
+			IBlendState::BlendOperation::Add,
+			IBlendState::BlendFactor::SrcAlpha, IBlendState::BlendFactor::OneMinusSrcAlpha);
 		break;
 
 	case 3: // Combiners_Add 
-		return BlendState::BlendMode(true, false,
-			BlendState::BlendFactor::SrcColor, BlendState::BlendFactor::DstColor,
-			BlendState::BlendOperation::Add,
-			BlendState::BlendFactor::SrcAlpha, BlendState::BlendFactor::DstAlpha);
+		return IBlendState::BlendMode(true, false,
+			IBlendState::BlendFactor::SrcColor, IBlendState::BlendFactor::DstColor,
+			IBlendState::BlendOperation::Add,
+			IBlendState::BlendFactor::SrcAlpha, IBlendState::BlendFactor::DstAlpha);
 		break;
 
 	case 4: // Combiners_Mod2x 
-		return BlendState::BlendMode(true, false,
-			BlendState::BlendFactor::SrcAlpha, BlendState::BlendFactor::One,
-			BlendState::BlendOperation::Add,
-			BlendState::BlendFactor::SrcAlpha, BlendState::BlendFactor::One);
+		return IBlendState::BlendMode(true, false,
+			IBlendState::BlendFactor::SrcAlpha, IBlendState::BlendFactor::One,
+			IBlendState::BlendOperation::Add,
+			IBlendState::BlendFactor::SrcAlpha, IBlendState::BlendFactor::One);
 		break;
 
 	case 5: // Combiners_Fade 
-		return BlendState::BlendMode(true, false,
-			BlendState::BlendFactor::SrcAlpha, BlendState::BlendFactor::OneMinusSrcAlpha,
-			BlendState::BlendOperation::Add,
-			BlendState::BlendFactor::SrcAlpha, BlendState::BlendFactor::OneMinusSrcAlpha);
+		return IBlendState::BlendMode(true, false,
+			IBlendState::BlendFactor::SrcAlpha, IBlendState::BlendFactor::OneMinusSrcAlpha,
+			IBlendState::BlendOperation::Add,
+			IBlendState::BlendFactor::SrcAlpha, IBlendState::BlendFactor::OneMinusSrcAlpha);
 		break;
 
 
 	default:
-		fail1();
+		_ASSERT(false);
 	}
 }*/
 
-BlendState::BlendMode CM2_Part_Material::GetBlendMode() const
+IBlendState::BlendMode CM2_Part_Material::GetBlendMode() const
 {
 	switch (M2Blend_To_EGxBlend[m_M2BlendMode].EGxBLend)
 	{
 	case 0: // Opaque
-		return BlendState::BlendMode(false, false,
-			BlendState::BlendFactor::One,
-			BlendState::BlendFactor::Zero);
+		return IBlendState::BlendMode(false, false,
+			IBlendState::BlendFactor::One,
+			IBlendState::BlendFactor::Zero);
 		break;
 
 	case 1: // AlphaKey
-		return BlendState::BlendMode(false, false,
-			BlendState::BlendFactor::One, BlendState::BlendFactor::Zero);
+		return IBlendState::BlendMode(false, false,
+			IBlendState::BlendFactor::One, IBlendState::BlendFactor::Zero);
 		break;
 
 	case 2: // Alpha
-		return BlendState::BlendMode(true, false,
-			BlendState::BlendFactor::SrcAlpha, BlendState::BlendFactor::OneMinusSrcAlpha,
-			BlendState::BlendOperation::Add,
-			BlendState::BlendFactor::One, BlendState::BlendFactor::OneMinusSrcAlpha);
+		return IBlendState::BlendMode(true, false,
+			IBlendState::BlendFactor::SrcAlpha, IBlendState::BlendFactor::OneMinusSrcAlpha,
+			IBlendState::BlendOperation::Add,
+			IBlendState::BlendFactor::One, IBlendState::BlendFactor::OneMinusSrcAlpha);
 		break;
 
 	case 3: // Add
-		return BlendState::BlendMode(true, false,
-			BlendState::BlendFactor::SrcAlpha, BlendState::BlendFactor::One,
-			BlendState::BlendOperation::Add,
-			BlendState::BlendFactor::Zero, BlendState::BlendFactor::One);
+		return IBlendState::BlendMode(true, false,
+			IBlendState::BlendFactor::SrcAlpha, IBlendState::BlendFactor::One,
+			IBlendState::BlendOperation::Add,
+			IBlendState::BlendFactor::Zero, IBlendState::BlendFactor::One);
 		break;
 
 	case 4: // Mod
-		return BlendState::BlendMode(true, false,
-			BlendState::BlendFactor::DstColor, BlendState::BlendFactor::Zero,
-			BlendState::BlendOperation::Add,
-			BlendState::BlendFactor::DstAlpha, BlendState::BlendFactor::Zero);
+		return IBlendState::BlendMode(true, false,
+			IBlendState::BlendFactor::DstColor, IBlendState::BlendFactor::Zero,
+			IBlendState::BlendOperation::Add,
+			IBlendState::BlendFactor::DstAlpha, IBlendState::BlendFactor::Zero);
 		break;
 
 	case 5: // Mod2x
-		return BlendState::BlendMode(true, false,
-			BlendState::BlendFactor::DstColor, BlendState::BlendFactor::SrcColor,
-			BlendState::BlendOperation::Add,
-			BlendState::BlendFactor::DstAlpha, BlendState::BlendFactor::SrcAlpha);
+		return IBlendState::BlendMode(true, false,
+			IBlendState::BlendFactor::DstColor, IBlendState::BlendFactor::SrcColor,
+			IBlendState::BlendOperation::Add,
+			IBlendState::BlendFactor::DstAlpha, IBlendState::BlendFactor::SrcAlpha);
 		break;
 
 	case 6: // ModAdd
-		return BlendState::BlendMode(true, false,
-			BlendState::BlendFactor::DstColor, BlendState::BlendFactor::One,
-			BlendState::BlendOperation::Add,
-			BlendState::BlendFactor::DstAlpha, BlendState::BlendFactor::One);
+		return IBlendState::BlendMode(true, false,
+			IBlendState::BlendFactor::DstColor, IBlendState::BlendFactor::One,
+			IBlendState::BlendOperation::Add,
+			IBlendState::BlendFactor::DstAlpha, IBlendState::BlendFactor::One);
 		break;
 
 	case 7: // InvSrcAlphaAdd
-		return BlendState::BlendMode(true, false,
-			BlendState::BlendFactor::OneMinusSrcAlpha, BlendState::BlendFactor::One,
-			BlendState::BlendOperation::Add,
-			BlendState::BlendFactor::OneMinusSrcAlpha, BlendState::BlendFactor::One);
+		return IBlendState::BlendMode(true, false,
+			IBlendState::BlendFactor::OneMinusSrcAlpha, IBlendState::BlendFactor::One,
+			IBlendState::BlendOperation::Add,
+			IBlendState::BlendFactor::OneMinusSrcAlpha, IBlendState::BlendFactor::One);
 		break;
 
 	case 8: // InvSrcAlphaOpaque
-		return BlendState::BlendMode(true, false,
-			BlendState::BlendFactor::OneMinusSrcAlpha, BlendState::BlendFactor::Zero,
-			BlendState::BlendOperation::Add,
-			BlendState::BlendFactor::OneMinusSrcAlpha, BlendState::BlendFactor::Zero);
+		return IBlendState::BlendMode(true, false,
+			IBlendState::BlendFactor::OneMinusSrcAlpha, IBlendState::BlendFactor::Zero,
+			IBlendState::BlendOperation::Add,
+			IBlendState::BlendFactor::OneMinusSrcAlpha, IBlendState::BlendFactor::Zero);
 		break;
 
 	case 9: // SrcAlphaOpaque
-		return BlendState::BlendMode(true, false,
-			BlendState::BlendFactor::SrcAlpha, BlendState::BlendFactor::Zero,
-			BlendState::BlendOperation::Add,
-			BlendState::BlendFactor::SrcAlpha, BlendState::BlendFactor::Zero);
+		return IBlendState::BlendMode(true, false,
+			IBlendState::BlendFactor::SrcAlpha, IBlendState::BlendFactor::Zero,
+			IBlendState::BlendOperation::Add,
+			IBlendState::BlendFactor::SrcAlpha, IBlendState::BlendFactor::Zero);
 		break;
 
 	case 10: // NoAlphaAdd
-		return BlendState::BlendMode(true, false,
-			BlendState::BlendFactor::One, BlendState::BlendFactor::One,
-			BlendState::BlendOperation::Add,
-			BlendState::BlendFactor::Zero, BlendState::BlendFactor::One);
+		return IBlendState::BlendMode(true, false,
+			IBlendState::BlendFactor::One, IBlendState::BlendFactor::One,
+			IBlendState::BlendOperation::Add,
+			IBlendState::BlendFactor::Zero, IBlendState::BlendFactor::One);
 
 	case 11: // ConstantAlpha
 		//(true, GL_CONSTANT_ALPHA, GL_ONE_MINUS_CONSTANT_ALPHA, GL_CONSTANT_ALPHA, GL_ONE_MINUS_CONSTANT_ALPHA);
@@ -176,25 +176,25 @@ BlendState::BlendMode CM2_Part_Material::GetBlendMode() const
 		break;
 
 	case 12: // Screen
-		return BlendState::BlendMode(true, false,
-			BlendState::BlendFactor::OneMinusDstColor, BlendState::BlendFactor::One,
-			BlendState::BlendOperation::Add,
-			BlendState::BlendFactor::One, BlendState::BlendFactor::Zero);
+		return IBlendState::BlendMode(true, false,
+			IBlendState::BlendFactor::OneMinusDstColor, IBlendState::BlendFactor::One,
+			IBlendState::BlendOperation::Add,
+			IBlendState::BlendFactor::One, IBlendState::BlendFactor::Zero);
 		break;
 
 	case 13: // BlendAdd
-		return BlendState::BlendMode(true, false,
-			BlendState::BlendFactor::One, BlendState::BlendFactor::OneMinusSrcAlpha,
-			BlendState::BlendOperation::Add,
-			BlendState::BlendFactor::One, BlendState::BlendFactor::OneMinusSrcAlpha);
+		return IBlendState::BlendMode(true, false,
+			IBlendState::BlendFactor::One, IBlendState::BlendFactor::OneMinusSrcAlpha,
+			IBlendState::BlendOperation::Add,
+			IBlendState::BlendFactor::One, IBlendState::BlendFactor::OneMinusSrcAlpha);
 		break;
 
 	default:
-		fail1();
+		_ASSERT(false);
 	}
 }
 
-RasterizerState::CullMode CM2_Part_Material::GetCullMode() const
+IRasterizerState::CullMode CM2_Part_Material::GetCullMode() const
 {
 	return m_CullMode;
 }

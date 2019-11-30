@@ -34,7 +34,7 @@ public:
 private:
 
 	std::shared_ptr<ParticleEmitter> m_Emitter;
-	std::shared_ptr<Texture> texture;
+	std::shared_ptr<ITexture> texture;
 
 private:
 	void initTile(vec2 *tc, int num);

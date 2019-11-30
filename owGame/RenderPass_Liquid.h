@@ -6,7 +6,7 @@ class CRenderPass_Liquid : public BasePass
 public:
 	typedef BasePass base;
 
-	CRenderPass_Liquid(std::shared_ptr<Scene3D> scene, std::shared_ptr<PipelineState> pipeline);
+	CRenderPass_Liquid(std::shared_ptr<Scene3D> scene, std::shared_ptr<IPipelineState> pipeline);
 	virtual ~CRenderPass_Liquid();
 
     // IVisitor

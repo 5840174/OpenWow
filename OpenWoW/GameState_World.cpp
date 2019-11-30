@@ -20,6 +20,8 @@ CGameState_World::~CGameState_World()
 //
 bool CGameState_World::Init()
 {
+	base::Init();
+
 	std::shared_ptr<IWMOManager> wmoManager = std::make_shared<WMOsManager>();
 	AddManager<IWMOManager>(GetBaseManager(), wmoManager);
 
@@ -46,12 +48,12 @@ bool CGameState_World::Init()
 	GetCameraController()->GetCamera()->SetViewport(renderWindow->GetViewport());
     GetCameraController()->GetCamera()->SetProjectionRH(45.0f, 1280.0f / 1024.0f, 0.5f, 4000.0f);
 
-	m_FrameQuery = renderDevice->CreateQuery(Query::QueryType::Timer, 1);
+	m_FrameQuery = renderDevice->CreateQuery(IQuery::QueryType::Timer, 1);
 
 	Load3D();
 	LoadUI();
 
-	return base::Init();
+	return true;
 }
 
 void CGameState_World::Destroy()
@@ -120,7 +122,7 @@ void CGameState_World::OnPostRender(RenderEventArgs& e)
 	std::shared_ptr<Camera> camera = GetCameraController()->GetCamera();
 	m_CameraRotText->SetText("Rot: " + std::to_string(camera->GetYaw()) + ", " + std::to_string(camera->GetPitch()));
 
-	Query::QueryResult frameResult = m_FrameQuery->GetQueryResult(e.FrameCounter - (m_FrameQuery->GetBufferCount() - 1));
+	IQuery::QueryResult frameResult = m_FrameQuery->GetQueryResult(e.FrameCounter - (m_FrameQuery->GetBufferCount() - 1));
 	if (frameResult.IsValid)
 	{
 		// Frame time in milliseconds
@@ -278,22 +280,22 @@ void CGameState_World::Load3D()
 
     /*
     // Color buffer (Color0)
-    Texture::TextureFormat colorTextureFormat
+    ITexture::TextureFormat colorTextureFormat
     (
-        Texture::Components::RGBA,
-        Texture::Type::UnsignedNormalized,
+        ITexture::Components::RGBA,
+        ITexture::Type::UnsignedNormalized,
         1,
         8, 8, 8, 8, 0, 0
     );
-    std::shared_ptr<Texture> colorTexture = _RenderDevice->CreateTexture2D(320, 240, 1, colorTextureFormat);
+    std::shared_ptr<ITexture> colorTexture = _RenderDevice->CreateTexture2D(320, 240, 1, colorTextureFormat);
 
     // Depth/stencil buffer
-    Texture::TextureFormat depthStencilTextureFormat(
-        Texture::Components::DepthStencil,
-        Texture::Type::UnsignedNormalized,
+    ITexture::TextureFormat depthStencilTextureFormat(
+        ITexture::Components::DepthStencil,
+        ITexture::Type::UnsignedNormalized,
         1,
         0, 0, 0, 0, 24, 8);
-    std::shared_ptr<Texture> depthStencilTexture = _RenderDevice->CreateTexture2D(320, 240, 1, depthStencilTextureFormat);
+    std::shared_ptr<ITexture> depthStencilTexture = _RenderDevice->CreateTexture2D(320, 240, 1, depthStencilTextureFormat);
 
     m_RenderTarget = _RenderDevice->CreateRenderTarget();
     m_RenderTarget->AttachTexture(IRenderTarget::AttachmentPoint::Color0, colorTexture);

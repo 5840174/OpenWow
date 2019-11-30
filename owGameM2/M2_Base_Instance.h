@@ -27,8 +27,8 @@ public:
 	// Mesh & textures provider
 	virtual bool                        isMeshEnabled(uint32 _index) const;
 	void                                setSpecialTexture(SM2_Texture::Type _type, const std::string& _textureName);
-	void                                setSpecialTexture(SM2_Texture::Type _type, std::shared_ptr<Texture> _texture);
-	std::shared_ptr<Texture>            getSpecialTexture(SM2_Texture::Type _type) const;
+	void                                setSpecialTexture(SM2_Texture::Type _type, std::shared_ptr<ITexture> _texture);
+	std::shared_ptr<ITexture>            getSpecialTexture(SM2_Texture::Type _type) const;
 
 	// Animations
 	std::shared_ptr<CM2_Animator>       getAnimator() const { return m_Animator; }
@@ -56,7 +56,7 @@ private:
 	float                               m_Alpha;
 
 	// Mesh & Replaces textures
-	std::shared_ptr<Texture>		    m_SpecialTextures[SM2_Texture::Type::COUNT];
+	std::shared_ptr<ITexture>		    m_SpecialTextures[SM2_Texture::Type::COUNT];
 
 	// Animtion
 	std::shared_ptr<CM2_Animator>       m_Animator;

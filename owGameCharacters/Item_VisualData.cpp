@@ -137,14 +137,14 @@ void CItem_VisualData::InitObjectComponents()
 		}
 		else if (InventoryType == InventoryType::CLOAK)
 		{
-			std::shared_ptr<Texture> texture = LoadObjectTexture(InventoryType, objectTextureName);
+			std::shared_ptr<ITexture> texture = LoadObjectTexture(InventoryType, objectTextureName);
 			m_ObjectComponents.push_back({ nullptr, texture, nullptr });
 			continue;
 		}
 
 		// Fill data
 		std::string modelName = GetObjectModelName(InventoryType, objectFileName);
-		std::shared_ptr<Texture> itemObjectTexture = LoadObjectTexture(InventoryType, objectTextureName);
+		std::shared_ptr<ITexture> itemObjectTexture = LoadObjectTexture(InventoryType, objectTextureName);
 		std::shared_ptr<CM2_Part_Attachment> itemObjectAttach = m_ParentCharacter.lock()->getM2()->getMiscellaneous()->getAttachment(ItemObjectComponents[InventoryType].attach[i]);
 
 		// Create instance
@@ -225,7 +225,7 @@ void CItem_VisualData::InitTextureComponents()
 			continue;
 		}
 
-		std::shared_ptr<Texture> textureComponent = LoadSkinTexture(ItemTextureComponents[i].list, textureComponentName);
+		std::shared_ptr<ITexture> textureComponent = LoadSkinTexture(ItemTextureComponents[i].list, textureComponentName);
 		m_TextureComponents[i] = textureComponent;
 	}
 }
@@ -240,12 +240,12 @@ std::string CItem_VisualData::GetObjectModelName(InventoryType::List _objectType
 	return GetManager<IM2Manager>()->Add("Item\\ObjectComponents\\" + ItemObjectComponents[_objectType].folder + "\\" + _modelName);
 }*/
 
-std::shared_ptr<Texture> CItem_VisualData::LoadObjectTexture(InventoryType::List _objectType, std::string _textureName)
+std::shared_ptr<ITexture> CItem_VisualData::LoadObjectTexture(InventoryType::List _objectType, std::string _textureName)
 {
 	return _RenderDevice->CreateTexture2D("Item\\ObjectComponents\\" + ItemObjectComponents[_objectType].folder + "\\" + _textureName + ".blp");
 }
 
-std::shared_ptr<Texture> CItem_VisualData::LoadSkinTexture(DBC_CharComponent_Sections::List _type, std::string _textureName)
+std::shared_ptr<ITexture> CItem_VisualData::LoadSkinTexture(DBC_CharComponent_Sections::List _type, std::string _textureName)
 {
 	std::string universalTexture = getTextureComponentName(_type, _textureName, Gender::None);
 	std::string maleTexture = getTextureComponentName(_type, _textureName, Gender::Male);

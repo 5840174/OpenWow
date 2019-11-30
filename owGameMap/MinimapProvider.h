@@ -18,7 +18,7 @@ struct MinimapDir
 
 	std::string						name;
 	std::vector<MinimapData_Map*>	data;
-	std::shared_ptr<Texture>        textures[C_TilesInMap][C_TilesInMap];
+	std::shared_ptr<ITexture>        textures[C_TilesInMap][C_TilesInMap];
 };
 
 class CMinimapProvider

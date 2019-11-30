@@ -21,10 +21,10 @@ public:
 
 	void Load();
 
-	std::shared_ptr<Texture> getMinimap() { return m_Minimap; }
+	std::shared_ptr<ITexture> getMinimap() { return m_Minimap; }
 
 private:
-	std::shared_ptr<Texture>					    m_Minimap;
+	std::shared_ptr<ITexture>					    m_Minimap;
 	uint32											m_MAREOffsets[C_TilesInMap][C_TilesInMap];
 	std::shared_ptr<WDL_Node_Material>              m_LowResilutionTileMaterial;
 	std::vector<std::string>						m_LowResolutionWMOsNames;

@@ -16,34 +16,15 @@ int main(int argumentCount, char* arguments[])
 	{
 		std::shared_ptr<IBaseManager> BaseManager = std::make_shared<CBaseManager>();
 
-		std::shared_ptr<CSettings> settings = std::make_shared<CSettings>(BaseManager);
-		AddManager<ISettings>(BaseManager, settings);
-		settings->AddDefaults();
-		
-
-		std::shared_ptr<CLog> log = std::make_shared<CLog>();
-		AddManager<ILog>(BaseManager, log);
-
-		std::shared_ptr<CConsole> console = std::make_shared<CConsole>(BaseManager);
-		AddManager<IConsole>(BaseManager, console);
-		console->AddCommonCommands();
-		
-		std::shared_ptr<IFilesManager> filesManager = std::make_shared<CFilesManager>(BaseManager);
-		AddManager<IFilesManager>(BaseManager, filesManager);
-
-		std::shared_ptr<IFilesStorage> localFilesGamedata = std::make_shared<CLocalFilesStorage>("D:\\_programming\\OpenWow\\_gamedata\\");
-		filesManager->RegisterFilesStorage(localFilesGamedata);
-
-		std::shared_ptr<IFilesStorage> mpqFileStorage = std::make_shared<CMPQFilesStorage>("D:\\_games\\World of Warcraft 1.12.1\\Data\\", IFilesStorageEx::PRIOR_HIGH);
-		filesManager->RegisterFilesStorage(mpqFileStorage);
-
-        HMODULE hModule = ::GetModuleHandle(NULL);
-        std::shared_ptr<IFilesStorage> libraryFileStorage = std::make_shared<CLibraryResourceFileStotage>(hModule);
-        filesManager->RegisterFilesStorage(libraryFileStorage);
-
-
 		std::shared_ptr<IznPluginsManager> pluginsManager = std::make_shared<CznPluginsManager>(BaseManager);
 		pluginsManager->RegisterPlugin("znPlugin.dll");
+		pluginsManager->RegisterPlugin("znEngine.dll");
+		pluginsManager->RegisterPlugin("znRenderDX11.dll");
+		pluginsManager->RegisterPlugin("znRenderOpenGL.dll");
+
+		GetManager<IFilesManager>(BaseManager)->RegisterFilesStorage(std::make_shared<CLocalFilesStorage>("D:\\_programming\\OpenWow\\_gamedata\\"));
+		GetManager<IFilesManager>(BaseManager)->RegisterFilesStorage(std::make_shared<CMPQFilesStorage>("D:\\_games\\World of Warcraft 1.12.1\\Data\\", IFilesStorageEx::PRIOR_HIGH));
+		GetManager<IFilesManager>(BaseManager)->RegisterFilesStorage(std::make_shared<CLibraryResourceFileStotage>(::GetModuleHandle(NULL)));
 
 		OpenDBs(BaseManager);
 
@@ -58,7 +39,7 @@ int main(int argumentCount, char* arguments[])
 		Application app(BaseManager);
 		_ApplicationInstance = &app;
 
-        std::shared_ptr<IRenderDevice> renderDevice = app.CreateRenderDevice(IRenderDevice::DeviceType::DirectX);
+        std::shared_ptr<IRenderDevice> renderDevice = app.CreateRenderDevice(RenderDeviceType::RenderDeviceType_OpenGL);
         std::shared_ptr<RenderWindow> renderWindow = app.CreateRenderWindow(windowObject, true);
 
 

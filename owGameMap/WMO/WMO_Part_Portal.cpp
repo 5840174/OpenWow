@@ -66,7 +66,7 @@ void CWMO_Part_Portal::setGroup(int32 _group, int16 side)
 	}
 	else
 	{
-		fail1();
+		_ASSERT(false);
 	}
 }
 

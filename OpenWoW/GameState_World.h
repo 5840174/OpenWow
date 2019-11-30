@@ -36,7 +36,7 @@ private:
     RenderTechnique                                 m_3D2Technique;
     Viewport m_Viewport2;
     std::shared_ptr<IRenderTarget>  m_RenderTarget;
-    std::shared_ptr<Texture>            m_Texture;
+    std::shared_ptr<ITexture>            m_Texture;
 
 private:
 	const uint16 c_WindowsWidth = 1280;
