@@ -15,15 +15,17 @@
 class CWMO_Base_Instance;
 // FORWARD END
 
-class CWMO : public ISceneNodeProvider, public std::enable_shared_from_this<CWMO>
+class CWMO 
+	: public ISceneNodeProvider
+	, public std::enable_shared_from_this<CWMO>
 {
 	friend CWMO_Part_Portal;
 public:
-	CWMO(const std::string& FileName);
+	CWMO(IBaseManager* BaseManager, const std::string& FileName);
 	virtual ~CWMO();
 
 	// ISceneNodeProvider
-	void CreateInsances(std::weak_ptr<SceneNode3D> _parent) override;
+	void CreateInsances(std::weak_ptr<ISceneNode> _parent) override;
 
 
 	bool Load();
@@ -87,4 +89,7 @@ public:
 
 	//-- Volumes plane --//
 	// MCVP chunk (optional)	
+
+private:
+	IBaseManager* m_BaseManager;
 };

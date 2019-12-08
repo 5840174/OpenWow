@@ -6,18 +6,15 @@
 // Additiobal
 #include <ctime>
 
-EnvironmentManager::EnvironmentManager()
+EnvironmentManager::EnvironmentManager(IBaseManager* BaseManager)
 {
-
-
-	dayNightCycle = std::make_shared<DayNightCycle>();
+	dayNightCycle = std::make_shared<DayNightCycle>(BaseManager);
 
 	// Colors
     m_OutdoorAmbientColor = vec4();
 	m_OutdoorDayDiffuseColor = vec4();
 	m_OutdoorNightDiffuseColor = vec4();
 	m_OutdoorSpecularColor = vec4();
-
 }
 
 EnvironmentManager::~EnvironmentManager()

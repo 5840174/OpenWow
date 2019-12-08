@@ -1,5 +1,7 @@
 ﻿#pragma once
 
+#ifdef USE_M2_MODELS
+
 struct ADT_MDXDef
 {
 	uint32 nameIndex;
@@ -15,15 +17,18 @@ struct ADT_MDXDef
     } flags;
 };
 
-class CMapM2Instance : public CM2_Base_Instance
+class CMapM2Instance 
+	: public CM2_Base_Instance
 {
 public:
 	CMapM2Instance(std::string _m2Name);
 	virtual ~CMapM2Instance();
 
+	void Initialize() override;
+
     void Initialize(const ADT_MDXDef& _placementInfo);
 
-	// SceneNode3D
+	// CSceneNodeProxie
 	bool Accept(IVisitor* visitor) override;
 
 public: 
@@ -34,3 +39,5 @@ public:	// Static
 private:
 	static std::set<uint32> m_AlreadyDraw;
 };
+
+#endif

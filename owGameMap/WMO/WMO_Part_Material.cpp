@@ -6,11 +6,10 @@
 // General
 #include "Wmo_Part_Material.h"
 
-WMO_Part_Material::WMO_Part_Material(const std::weak_ptr<const CWMO> _parentWMO, const SWMO_MaterialDef& _proto) :
-	MaterialWrapper(_RenderDevice->CreateMaterial(sizeof(MaterialProperties))),
-	m_ParentWMO(_parentWMO),
-	m_Proto(_proto),
-	m_QualitySettings(GetSettingsGroup<CGroupQuality>(_ApplicationInstance->GetBaseManager()))
+WMO_Part_Material::WMO_Part_Material(std::shared_ptr<IRenderDevice> RenderDevice, const std::weak_ptr<const CWMO> _parentWMO, const SWMO_MaterialDef& _proto)
+	: MaterialProxie(RenderDevice->CreateMaterial(sizeof(MaterialProperties)))
+	, m_ParentWMO(_parentWMO)
+	, m_Proto(_proto)
 {
 	// Constant buffer
 	m_pProperties = (MaterialProperties*)_aligned_malloc(sizeof(MaterialProperties), 16);
@@ -18,7 +17,7 @@ WMO_Part_Material::WMO_Part_Material(const std::weak_ptr<const CWMO> _parentWMO,
 	(*m_pProperties).m_BlendMode = m_Proto.blendMode;
 
 	// Create samplers
-	std::shared_ptr<ISamplerState> g_Sampler = _RenderDevice->CreateSamplerState();
+	std::shared_ptr<ISamplerState> g_Sampler = RenderDevice->CreateSamplerState();
 	g_Sampler->SetFilter(ISamplerState::MinFilter::MinLinear, ISamplerState::MagFilter::MagLinear, ISamplerState::MipFilter::MipLinear);
 	g_Sampler->SetWrapMode(
 		m_Proto.flags.TextureClampS ? ISamplerState::WrapMode::Clamp : ISamplerState::WrapMode::Repeat, 
@@ -28,12 +27,12 @@ WMO_Part_Material::WMO_Part_Material(const std::weak_ptr<const CWMO> _parentWMO,
 
 	// This
 	std::string textureName = _parentWMO.lock()->m_TexturesNames + m_Proto.diffuseNameIndex;
-	std::shared_ptr<ITexture> texture = _RenderDevice->CreateTexture2D(textureName);
+	std::shared_ptr<ITexture> texture = RenderDevice->CreateTexture2D(textureName);
 	SetTexture(0, texture);
 
 	//if (m_Proto.envNameIndex)
 	//{
-	//	SetTexture(1, _RenderDevice->CreateTexture2D(_parentWMO.lock()->m_TexturesNames + m_Proto.envNameIndex));
+	//	SetTexture(1, RenderDevice->CreateTexture2D(_parentWMO.lock()->m_TexturesNames + m_Proto.envNameIndex));
 	//}
 
 	//Log::Warn("Shader = [%d], Blend mode [%d]", m_Proto.shader, m_Proto.blendMode);
@@ -52,7 +51,7 @@ WMO_Part_Material::~WMO_Part_Material()
 
 void WMO_Part_Material::UpdateConstantBuffer() const
 {
-    MaterialWrapper::UpdateConstantBuffer(m_pProperties, sizeof(MaterialProperties));
+    MaterialProxie::UpdateConstantBuffer(m_pProperties, sizeof(MaterialProperties));
 }
 
 /*void WMO_Part_Material::fillRenderState(RenderState* _state) const

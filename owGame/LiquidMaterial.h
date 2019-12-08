@@ -1,9 +1,10 @@
 #pragma once
 
-class LiquidMaterial : public MaterialWrapper
+class OW_ENGINE_API LiquidMaterial
+	: public MaterialProxie
 {
 public:
-	LiquidMaterial();
+	LiquidMaterial(IBaseManager* BaseManager);
 	virtual ~LiquidMaterial();
 
 	void SetShallowAlpha(float value);

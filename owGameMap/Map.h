@@ -8,12 +8,12 @@
 #include "MapWDL.h"
 #include "MinimapProvider.h"
 
-class CMap : public SceneNode3D
+class CMap 
+	: public CSceneNodeProxie
 {
-    typedef SceneNode3D base;
 public:
-	                                                CMap();
-	virtual                                         ~CMap();
+	CMap(IBaseManager* BaseManager);
+	virtual ~CMap();
 
 	void                                            MapPreLoad(std::shared_ptr<DBC_MapRecord> _map);
 	void                                            MapLoad();
@@ -25,10 +25,10 @@ public:
 	void                                            EnterMap(int32 x, int32 z);
 	std::shared_ptr<CMapTile>                       LoadTile(int32 x, int32 z);
 	void                                            ClearCache();
-	uint32                                          GetAreaID(Camera* camera);
+	uint32                                          GetAreaID(ICamera* camera);
 
 	// Scene node
-	void                                            UpdateCamera(const Camera* camera) override;
+	void                                            UpdateCamera(const ICamera* camera) override;
 
 public: // Getters
 	std::string                                     GetMapFolder() const { return m_MapFolderName; }
@@ -72,7 +72,8 @@ private:
 	CMinimapProvider*		                        mProvider;
 	MinimapDir*				                        dir;
 
-	const CGroupQuality*                                  m_QualitySettings;
+private:
+	IBaseManager*									m_BaseManager;
 };
 
 inline static bool IsBadTileIndex(int i, int j)

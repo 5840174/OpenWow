@@ -1,14 +1,11 @@
 #pragma once
 
-// A pass that renders the opaque geometry in the scene.
-class CRenderPass_Liquid : public BasePass
+class CRenderPass_Liquid : public Base3DPass
 {
 public:
-	typedef BasePass base;
-
-	CRenderPass_Liquid(std::shared_ptr<Scene3D> scene, std::shared_ptr<IPipelineState> pipeline);
+	CRenderPass_Liquid(std::shared_ptr<IRenderDevice> RenderDevice, std::shared_ptr<IScene> scene, std::shared_ptr<IPipelineState> pipeline);
 	virtual ~CRenderPass_Liquid();
 
     // IVisitor
-    bool Visit(SceneNode3D* node) override final;
+    bool Visit(ISceneNode3D* node) override final;
 };

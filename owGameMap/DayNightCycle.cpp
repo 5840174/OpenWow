@@ -3,9 +3,9 @@
 // General
 #include "DayNightCycle.h"
 
-DayNightCycle::DayNightCycle()
+DayNightCycle::DayNightCycle(IBaseManager* BaseManager)
 {
-	std::shared_ptr<IFile> f = GetManager<IFilesManager>(_ApplicationInstance->GetBaseManager())->Open("World\\dnc.db");
+	std::shared_ptr<IFile> f = GetManager<IFilesManager>(BaseManager)->Open("World\\dnc.db");
 	if (f == nullptr)
 	{
 		Log::Error("DayNightCycle[]: Can't init day-night cycle.");
@@ -36,6 +36,10 @@ DayNightCycle::DayNightCycle()
 		DayNightPhase ols(f);
 		dayNightPhases.push_back(ols);
 	}
+}
+
+DayNightCycle::~DayNightCycle()
+{
 }
 
 DayNightPhase DayNightCycle::getPhase(uint32 _gameTime)

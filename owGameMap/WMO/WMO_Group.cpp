@@ -12,15 +12,19 @@
 #include "WMO_Liquid_Instance.h"
 #include "WMO_Fixes.h"
 
-WMO_Group::WMO_Group(const std::weak_ptr<const CWMO> _parentWMO, const uint32 _groupIndex, std::string _groupName, std::shared_ptr<IFile> _groupFile) :
-	m_ParentWMO(_parentWMO),
-	m_GroupName(_groupName),
-	m_GroupIndex(_groupIndex),
-	m_F(_groupFile),
-	m_IsMOCVExists(false),
-	m_Quality(GetSettingsGroup<CGroupQuality>(_ApplicationInstance->GetBaseManager()))
+WMO_Group::WMO_Group(IBaseManager* BaseManager, const std::weak_ptr<const CWMO> _parentWMO, const uint32 _groupIndex, std::string _groupName, std::shared_ptr<IFile> _groupFile) 
+	: m_ParentWMO(_parentWMO)
+	, m_GroupName(_groupName)
+	, m_GroupIndex(_groupIndex)
+	, m_F(_groupFile)
+	, m_IsMOCVExists(false)
+	, m_BaseManager(BaseManager)
 {
 	m_WMOLiqiud = nullptr;
+}
+
+WMO_Group::~WMO_Group()
+{
 }
 
 void WMO_Group::CreateInsances(std::weak_ptr<CWMO_Group_Instance> _parent) const
@@ -36,7 +40,7 @@ void WMO_Group::CreateInsances(std::weak_ptr<CWMO_Group_Instance> _parent) const
 		realPos.y = 0.0f; // why they do this???
 
 		std::shared_ptr<CWMO_Liquid_Instance> liquid = _parent.lock()->CreateSceneNode<CWMO_Liquid_Instance>(weak_from_this());
-        liquid->Initialize(m_WMOLiqiud, realPos);
+        std::dynamic_pointer_cast<ILiquidInstanceInitializaton>(liquid)->Initialize(m_WMOLiqiud, realPos);
 		_parent.lock()->addLiquidInstance(liquid);
 	}
 
@@ -134,7 +138,7 @@ void WMO_Group::Load()
 			uint32 indicesCount = size / sizeof(uint16);
 			uint16* indices = (uint16*)m_F->getDataFromCurrent();
 			// Buffer
-			IB_Default = _RenderDevice->CreateIndexBuffer(indices, indicesCount);
+			IB_Default = GetManager<IRenderDevice>(m_BaseManager)->CreateIndexBuffer(indices, indicesCount);
 
 			dataFromMOVI = indices;
 		}
@@ -149,8 +153,8 @@ void WMO_Group::Load()
 				vertexes[i] = Fix_XZmY(vertexes[i]);
 			}
 			// Buffer
-			VB_Vertexes = _RenderDevice->CreateVertexBuffer(vertexes, vertexesCount);
-			//VB_Colors = _RenderDevice->CreateVertexBuffer(nullptr, vertexesCount);
+			VB_Vertexes = GetManager<IRenderDevice>(m_BaseManager)->CreateVertexBuffer(vertexes, vertexesCount);
+			VB_Colors = GetManager<IRenderDevice>(m_BaseManager)->CreateVertexBuffer(vertexes, vertexesCount);
 			//m_Bounds.calculate(vertexes, vertexesCount);
 
 			dataFromMOVT = vertexes;
@@ -166,13 +170,14 @@ void WMO_Group::Load()
 				normals[i] = Fix_XZmY(normals[i]);
 			}
 			// Buffer
-			VB_Normals = _RenderDevice->CreateVertexBuffer(normals, normalsCount);
+			VB_Normals = GetManager<IRenderDevice>(m_BaseManager)->CreateVertexBuffer(normals, normalsCount);
 		}
 		else if (strcmp(fourcc, "MOTV") == 0) // Texture coordinates
 		{
 			uint32 textureCoordsCount = size / sizeof(vec2);
 			vec2* textureCoords = (vec2*)m_F->getDataFromCurrent();
-			VB_TextureCoords.push_back(_RenderDevice->CreateVertexBuffer(textureCoords, textureCoordsCount));
+			VB_TextureCoords.push_back(GetManager<IRenderDevice>(m_BaseManager)->CreateVertexBuffer(textureCoords, textureCoordsCount));
+			VB_TextureCoords.push_back(GetManager<IRenderDevice>(m_BaseManager)->CreateVertexBuffer(textureCoords, textureCoordsCount));
 		}
 		else if (strcmp(fourcc, "MOBA") == 0) // WMO_Group_Batch
 		{
@@ -255,7 +260,7 @@ void WMO_Group::Load()
 			}
 
 			// Buffer
-			VB_Colors = _RenderDevice->CreateVoidVertexBuffer(vertexColorsConverted.data(), vertexColorsConverted.size(), 0, sizeof(vec4));
+			VB_Colors = GetManager<IRenderDevice>(m_BaseManager)->CreateVoidVertexBuffer(vertexColorsConverted.data(), vertexColorsConverted.size(), 0, sizeof(vec4));
 			m_IsMOCVExists = vertexColorsCount > 0;
 
 			delete[] mocv;
@@ -311,13 +316,13 @@ void WMO_Group::Load()
 
 	// Create geom
 	{
-		std::shared_ptr<IMesh> mesh = _RenderDevice->CreateMesh();
+		std::shared_ptr<IMesh> mesh = GetManager<IRenderDevice>(m_BaseManager)->CreateMesh();
 		mesh->AddVertexBuffer(BufferBinding("POSITION", 0), VB_Vertexes);
 		mesh->AddVertexBuffer(BufferBinding("NORMAL", 0), VB_Normals);
-		if (VB_Colors != nullptr)
+		//if (VB_Colors != nullptr)
 			mesh->AddVertexBuffer(BufferBinding("COLOR", 0), VB_Colors);
 		mesh->AddVertexBuffer(BufferBinding("TEXCOORD", 0), VB_TextureCoords[0]);
-		if (VB_TextureCoords.size() > 1)
+		//if (VB_TextureCoords.size() > 1)
 			mesh->AddVertexBuffer(BufferBinding("TEXCOORD", 1), VB_TextureCoords[1]);
 		mesh->SetIndexBuffer(IB_Default);
 

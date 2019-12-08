@@ -9,8 +9,8 @@ class CM2_Builder
 {
 	friend CM2_Skin_Builder;
 public:
-	CM2_Builder(std::shared_ptr<M2> _model);
-	~CM2_Builder();
+	CM2_Builder(IBaseManager* BaseManager, std::shared_ptr<M2> _model);
+	virtual ~CM2_Builder();
 
 	bool Load();
 
@@ -50,4 +50,7 @@ private:
 	SM2_Texture*			m_Textures;
 	SM2_TextureWeight*		m_TexturesWeight;
 	SM2_TextureTransform*	m_TexturesTransform;
+	
+private:
+	IBaseManager*           m_BaseManager;
 };

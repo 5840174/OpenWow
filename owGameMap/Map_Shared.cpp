@@ -13,7 +13,7 @@ bool isHole(uint16 holes, uint16 i, uint16 j)
 	return (holes & holetab_h[i] & holetab_v[j]) != 0;
 }
 
-CMapShared::CMapShared()
+CMapShared::CMapShared(std::shared_ptr<IRenderDevice> RenderDevice)
 {
 	m_HighMapStrip = GenarateHighMapArray();
 	m_DefaultMapStrip = GenarateDefaultMapArray();
@@ -35,7 +35,7 @@ CMapShared::CMapShared()
 			*dtc++ = vec2(tx, ty);
 		}
 	}
-	BufferTextureCoordDetail = _RenderDevice->CreateVertexBuffer(detailTextureCoord, C_MapBufferSize);
+	BufferTextureCoordDetail = RenderDevice->CreateVertexBuffer(detailTextureCoord, C_MapBufferSize);
 
 	// init texture coordinates for alpha map:
 	vec2 alphaTextureCoord[C_MapBufferSize];
@@ -54,7 +54,11 @@ CMapShared::CMapShared()
 			*atc++ = vec2(tx, ty);
 		}
 	}
-	BufferTextureCoordAlpha = _RenderDevice->CreateVertexBuffer(alphaTextureCoord, C_MapBufferSize);
+	BufferTextureCoordAlpha = RenderDevice->CreateVertexBuffer(alphaTextureCoord, C_MapBufferSize);
+}
+
+CMapShared::~CMapShared()
+{
 }
 
 std::string CMapShared::getMapFolder(std::shared_ptr<DBC_MapRecord> _map)

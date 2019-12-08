@@ -14,7 +14,7 @@ int main(int argumentCount, char* arguments[])
 	//_CrtSetReportMode(_CRT_ERROR, _CRTDBG_MODE_DEBUG);
 #endif
 	{
-		std::shared_ptr<IBaseManager> BaseManager = std::make_shared<CBaseManager>();
+		IBaseManager* BaseManager = std::make_shared<CBaseManager>();
 
 		std::shared_ptr<IznPluginsManager> pluginsManager = std::make_shared<CznPluginsManager>(BaseManager);
 		pluginsManager->RegisterPlugin("znPlugin.dll");

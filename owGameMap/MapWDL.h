@@ -8,16 +8,17 @@ class CMap;
 class WDL_Node_Material;
 // FORWARD END
 
-class CMapWDL : public ISceneNodeProvider
+class CMapWDL 
+	: public ISceneNodeProvider
 {
 public:
-	CMapWDL(std::weak_ptr<const CMap> MapController);
+	CMapWDL(IBaseManager* BaseManager, std::weak_ptr<const CMap> MapController);
 	virtual ~CMapWDL();
 
 	// ISceneNodeProvider
-	void CreateInsances(std::weak_ptr<SceneNode3D> _parent) override;
+	void CreateInsances(std::weak_ptr<ISceneNode> _parent) override;
 
-	void UpdateCamera(const Camera* camera);
+	void UpdateCamera(const ICamera* camera);
 
 	void Load();
 
@@ -32,5 +33,8 @@ private:
 	std::vector<std::shared_ptr<CMapWMOInstance>>	m_LowResolutionWMOs;
 
 private: // PARENT
-	const std::weak_ptr<const CMap>          m_MapController;
+	const std::weak_ptr<const CMap>					m_MapController;
+
+private:
+	IBaseManager*                                   m_BaseManager;
 };

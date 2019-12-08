@@ -6,20 +6,23 @@
 class CMap;
 // FORWARD END
 
-class SkyManager : public SceneNode3D, public ISkyManager
+class SkyManager 
+	: public CSceneNodeProxie
+	, public CLoadableObject
+	, public ISkyManager
 {
 public:
 	                                                SkyManager();
 	virtual                                         ~SkyManager();
 
 	// SceneNode3D
-	void                                            UpdateCamera(const Camera* camera) override;
+	void                                            UpdateCamera(const ICamera* camera) override;
 
     // ILoadableObject
     bool                                            Load() override;
 
 	// ISkyManager
-	void                                            Calculate(const Camera* camera, uint32 _time) override;
+	void                                            Calculate(const ICamera* camera, uint32 _time) override;
 	bool                                            HasSkies() const override { return !skies.empty(); }
 	vec3                                            GetColor(LightColors::List _color) const override { return m_Interpolated.GetColor(_color); }
 	float                                           GetFog(LightFogs::List _fog) const override { return m_Interpolated.GetFog(_fog); }

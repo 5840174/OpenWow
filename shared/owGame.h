@@ -9,7 +9,6 @@
 //--               World of warcraft                     --//
 //---------------------------------------------------------//
 
-#include "../owGame/MPQFilesStorage.h"
 #include "../owGame/WoWChunkReader.h"
 
 // DBC
@@ -19,5 +18,9 @@
 #include "../owGame/Client/Client.h"
 
 // Liquid
-#include "../owGame/LiquidInstance.h"
+#include "../owGame/Liquid.h"
+
+
 #include "../owGame/CreatePasses.h"
+
+extern "C" __declspec(dllexport) IznPlugin* WINAPI GetPlugin(IBaseManager* BaseManager);

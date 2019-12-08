@@ -3,8 +3,8 @@
 // General
 #include "M2_Material.h"
 
-M2_Material::M2_Material(std::vector<std::weak_ptr<const CM2_Part_Texture>> m2Textures) :
-	MaterialWrapper(_RenderDevice->CreateMaterial(sizeof(MaterialProperties)))
+M2_Material::M2_Material(IBaseManager* BaseManager, std::vector<std::weak_ptr<const CM2_Part_Texture>> m2Textures)
+	: MaterialProxie(GetManager<IRenderDevice>(BaseManager)->CreateMaterial(sizeof(MaterialProperties)))
 {
 	m_pProperties = (MaterialProperties*)_aligned_malloc(sizeof(MaterialProperties), 16);
 	*m_pProperties = MaterialProperties();
@@ -13,7 +13,7 @@ M2_Material::M2_Material(std::vector<std::weak_ptr<const CM2_Part_Texture>> m2Te
 	_ASSERT(m2Textures.size() <= 2);
 	for (uint8 i = 0; i < m2Textures.size(); i++)
 	{
-		std::shared_ptr<ISamplerState> g_Sampler = _RenderDevice->CreateSamplerState();
+		std::shared_ptr<ISamplerState> g_Sampler = GetManager<IRenderDevice>(BaseManager)->CreateSamplerState();
 		g_Sampler->SetFilter(ISamplerState::MinFilter::MinLinear, ISamplerState::MagFilter::MagLinear, ISamplerState::MipFilter::MipLinear);
         SetSampler(i, g_Sampler);
 	}
@@ -101,5 +101,5 @@ void M2_Material::SetTextureAnimMatrix(cmat4 value)
 
 void M2_Material::UpdateConstantBuffer() const
 {
-	MaterialWrapper::UpdateConstantBuffer(m_pProperties, sizeof(MaterialProperties));
+	MaterialProxie::UpdateConstantBuffer(m_pProperties, sizeof(MaterialProperties));
 }

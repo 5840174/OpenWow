@@ -9,14 +9,15 @@ class CWMO;
 class WMO_Group;
 // FORWARD END
 
-class WMO_Group_Part_Batch : public MeshWrapper
+class WMO_Group_Part_Batch 
+	: public MeshProxie
 {
 public:
 	WMO_Group_Part_Batch(const std::weak_ptr<const CWMO> _parentWMO, std::shared_ptr<IMesh> _mesh, const SWMO_Group_BatchDef& _proto);
 
 	uint32 getBlendMode() const { return m_WMOMaterial->getBlendMode(); }
 
-	// MeshWrapper
+	// MeshProxie
 	bool Render(const RenderEventArgs* renderEventArgs, const IConstantBuffer* perObject, UINT indexStartLocation = 0, UINT indexCnt = 0, UINT vertexStartLocation = 0, UINT vertexCnt = 0) override;
 
 private:
@@ -27,7 +28,6 @@ private:
 	// Parent
 	const std::weak_ptr<const CWMO>              m_ParentWMO;
 	const std::weak_ptr<const WMO_Group>        m_ParentGroup;
-	const CGroupQuality*                        m_Quality;
 };
 
 struct WMO_Group_Part_BatchCompare

@@ -4,7 +4,9 @@
 // Vertex attrib
 layout(location = 0) in vec3 POSITION0;
 layout(location = 1) in vec3 NORMAL0;
-layout(location = 2) in vec2 TEXCOORD0;
+layout(location = 2) in vec4 COLOR0;
+layout(location = 3) in vec2 TEXCOORD0;
+layout(location = 4) in vec2 TEXCOORD1;
 
 // Output
 out gl_PerVertex
@@ -15,7 +17,9 @@ out struct
 {
 	vec3 POSITION0;
 	vec3 NORMAL0;
+	vec4 COLOR0;
 	vec2 TEXCOORD0;
+	vec2 TEXCOORD1;
 } VSInput;
 
 // Uniforms
@@ -30,5 +34,7 @@ void main(void)
 
 	VSInput.POSITION0 = POSITION0;
 	VSInput.NORMAL0   = NORMAL0;
+	VSInput.COLOR0    = COLOR0;
 	VSInput.TEXCOORD0 = vec2(TEXCOORD0.x, 1.0f - TEXCOORD0.y);
+	VSInput.TEXCOORD1 = vec2(TEXCOORD1.x, 1.0f - TEXCOORD1.y);
 };

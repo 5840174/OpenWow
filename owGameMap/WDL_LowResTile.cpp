@@ -7,7 +7,7 @@
 #include "WDL_LowResTile.h"
 
 CWDL_LowResTile::CWDL_LowResTile(std::weak_ptr<const CMap> _parent, std::shared_ptr<IMesh> _mesh, uint32 _indexX, uint32 _indexZ) :
-	MeshWrapper(_mesh),
+	MeshProxie(_mesh),
 	m_MapController(_parent),
 	m_IndexX(_indexX),
 	m_IndexZ(_indexZ)
@@ -36,5 +36,5 @@ bool CWDL_LowResTile::Render(const RenderEventArgs* renderEventArgs, const ICons
 		return false;
 	}
 
-	return base::Render(renderEventArgs, perObject);
+	return MeshProxie::Render(renderEventArgs, perObject);
 }

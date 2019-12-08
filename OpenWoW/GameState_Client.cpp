@@ -244,11 +244,11 @@ void CGameState_Client::LoadUI()
 	// Font
 	m_CameraPosText = m_UIScene->GetRootNode()->CreateSceneNode<CUITextNode>();
 	m_CameraPosText->SetText("Camera position");
-	m_CameraPosText->GetComponent<CTransformComponentUI>()->SetTranslate(vec2(0.0f, 0.0f));
+	m_CameraPosText->GetComponent<ITransformComponentUI>()->SetTranslate(vec2(0.0f, 0.0f));
 
 	m_CameraRotText = m_UIScene->GetRootNode()->CreateSceneNode<CUITextNode>();
 	m_CameraRotText->SetText("Camera rotation");
-	m_CameraRotText->GetComponent<CTransformComponentUI>()->SetTranslate(vec2(0.0f, 20.0f));
+	m_CameraRotText->GetComponent<ITransformComponentUI>()->SetTranslate(vec2(0.0f, 20.0f));
 
 	//
 	// UI Passes

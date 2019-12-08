@@ -10,7 +10,7 @@ class
 {
     typedef CColliderComponent3D base;
 public:
-    CM2_ColliderComponent(std::shared_ptr<SceneNode3D> OwnerNode);
+    CM2_ColliderComponent(std::shared_ptr<ISceneNode> OwnerNode);
     virtual ~CM2_ColliderComponent();
 
 protected:

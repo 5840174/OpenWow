@@ -24,7 +24,7 @@ struct MinimapDir
 class CMinimapProvider
 {
 public:
-	CMinimapProvider();
+	CMinimapProvider(std::shared_ptr<IRenderDevice> RenderDevice);
 	~CMinimapProvider();
 
 	//--
@@ -36,5 +36,4 @@ private:
 	std::shared_ptr<IFile> m_File;
 
 	std::vector<MinimapDir*> m_Minimaps;
-	const CGroupVideo* m_GroupVideo;
 };

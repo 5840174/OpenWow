@@ -3,7 +3,8 @@
 class CMapShared
 {
 public:
-	CMapShared();
+	CMapShared(std::shared_ptr<IRenderDevice> RenderDevice);
+	virtual ~CMapShared();
 
 	std::shared_ptr<IBuffer> BufferTextureCoordDetail;
 	std::shared_ptr<IBuffer> BufferTextureCoordAlpha;

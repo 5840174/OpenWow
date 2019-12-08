@@ -7,7 +7,8 @@
 #include "M2.h"
 #include "M2_Builder.h"
 
-CM2_Manager::CM2_Manager()
+CM2_Manager::CM2_Manager(IBaseManager* BaseManager)
+	: m_BaseManager(BaseManager)
 {
 	//m_DefaultModel = Add("World\\Scale\\50x50.m2");
 }
@@ -42,7 +43,7 @@ std::shared_ptr<M2> CM2_Manager::CreateAction(const std::string& name)
 
 	std::shared_ptr<M2> model = std::make_shared<M2>(name);
 
-	CM2_Builder builder(model);
+	CM2_Builder builder(m_BaseManager, model);
 	if (!builder.Load())
 	{
 		model.reset();

@@ -2,10 +2,10 @@
 
 #include "M2_Part_Texture.h"
 
-class M2_Material : public MaterialWrapper
+class M2_Material : public MaterialProxie
 {
 public:
-	M2_Material(std::vector<std::weak_ptr<const CM2_Part_Texture>> m2Textures);
+	M2_Material(IBaseManager* BaseManager, std::vector<std::weak_ptr<const CM2_Part_Texture>> m2Textures);
 	virtual ~M2_Material();
 
 	void SetAnimated(bool value);

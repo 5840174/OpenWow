@@ -1,12 +1,14 @@
 #pragma once
 
-class CRenderPass_WMO : public BasePass
+class CRenderPass_WMO : public Base3DPass
 {
-    typedef BasePass base;
 public:
-	CRenderPass_WMO(std::shared_ptr<Scene3D> scene, std::shared_ptr<IPipelineState> pipeline);
+	CRenderPass_WMO(std::shared_ptr<IRenderDevice> RenderDevice, std::shared_ptr<IScene> scene, std::shared_ptr<IPipelineState> pipeline);
 	virtual ~CRenderPass_WMO();
 
     // IVisitor
-    bool Visit(SceneNode3D* node) override final;
+    bool Visit(ISceneNode3D* node) override final;
+
+private:
+	std::shared_ptr<ISettingGroup> m_WoWSettings;
 };

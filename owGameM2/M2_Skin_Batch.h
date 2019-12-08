@@ -10,7 +10,7 @@ class CM2_Base_Instance;
 class CM2_Skin_Builder;
 // FORWARD END
 
-class CM2_Skin_Batch : public MeshWrapper
+class CM2_Skin_Batch : public MeshProxie
 {
 	friend CM2_Skin_Builder;
 public:
@@ -43,5 +43,4 @@ private:
 
 private: // Parent
 	const std::weak_ptr<const M2> m_ParentM2;
-	const CGroupQuality*          m_QualitySettings;
 };

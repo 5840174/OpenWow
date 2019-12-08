@@ -36,11 +36,11 @@ struct WDT_MAIN
 class CMapWDT : public ISceneNodeProvider
 {
 public:
-	CMapWDT(std::weak_ptr<const CMap> _mapController);
+	CMapWDT(IBaseManager* BaseManager, std::weak_ptr<const CMap> _mapController);
 	virtual ~CMapWDT();
 
 	// ISceneNodeProvider
-	void CreateInsances(std::weak_ptr<SceneNode3D> _parent) override;
+	void CreateInsances(std::weak_ptr<ISceneNode> _parent) override;
 
 	void Load();
 
@@ -63,4 +63,7 @@ private:
 
 private: // PARENT
 	const std::weak_ptr<const CMap>  m_MapController;
+
+private:
+	IBaseManager* m_BaseManager;
 };

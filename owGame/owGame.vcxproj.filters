@@ -64,6 +64,9 @@
     <Filter Include="Client\World\Templates">
       <UniqueIdentifier>{0a1158d6-10b2-481d-8954-3d112309f968}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Settings">
+      <UniqueIdentifier>{55856cb7-3009-4fc6-a8a8-cdb3db98f332}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Liquid.cpp">
@@ -89,9 +92,6 @@
     </ClCompile>
     <ClCompile Include="MPQFilesStorage.cpp">
       <Filter>Files</Filter>
-    </ClCompile>
-    <ClCompile Include="DBC\Core\DBC__Storage.cpp">
-      <Filter>DBC</Filter>
     </ClCompile>
     <ClCompile Include="RenderPass_Liquid.cpp">
       <Filter>RenderStuff</Filter>
@@ -137,6 +137,15 @@
     </ClCompile>
     <ClCompile Include="Client\RealmInfo.cpp">
       <Filter>Client</Filter>
+    </ClCompile>
+    <ClCompile Include="Settings\WoWSettingsGroup.cpp">
+      <Filter>Settings</Filter>
+    </ClCompile>
+    <ClCompile Include="owGame.cpp">
+      <Filter>Common</Filter>
+    </ClCompile>
+    <ClCompile Include="DBC\Core\DBC__Storage.cpp">
+      <Filter>DBC</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -246,12 +255,6 @@
     <ClInclude Include="MPQFilesStorage.h">
       <Filter>Files</Filter>
     </ClInclude>
-    <ClInclude Include="SkyManager.h">
-      <Filter>Interfaces</Filter>
-    </ClInclude>
-    <ClInclude Include="Managers.h">
-      <Filter>Interfaces</Filter>
-    </ClInclude>
     <ClInclude Include="DBC\DBC_WorldSafeLocs.h">
       <Filter>DBC\Tables</Filter>
     </ClInclude>
@@ -274,12 +277,6 @@
       <Filter>DBC\Tables</Filter>
     </ClInclude>
     <ClInclude Include="DBC\Core\DBC__File.h">
-      <Filter>DBC</Filter>
-    </ClInclude>
-    <ClInclude Include="DBC\Core\DBC__Forwards.h">
-      <Filter>DBC</Filter>
-    </ClInclude>
-    <ClInclude Include="DBC\Core\DBC__Storage.h">
       <Filter>DBC</Filter>
     </ClInclude>
     <ClInclude Include="DBC\DBC_Item_WotLK.h">
@@ -353,6 +350,24 @@
     </ClInclude>
     <ClInclude Include="Client\RealmInfo.h">
       <Filter>Client</Filter>
+    </ClInclude>
+    <ClInclude Include="Settings\WoWSettingsGroup.h">
+      <Filter>Settings</Filter>
+    </ClInclude>
+    <ClInclude Include="Interfaces\Managers.h">
+      <Filter>Interfaces</Filter>
+    </ClInclude>
+    <ClInclude Include="Interfaces\SkyManager.h">
+      <Filter>Interfaces</Filter>
+    </ClInclude>
+    <ClInclude Include="Interfaces\ILiquid.h">
+      <Filter>Interfaces</Filter>
+    </ClInclude>
+    <ClInclude Include="DBC\Core\DBC__Forwards.h">
+      <Filter>DBC</Filter>
+    </ClInclude>
+    <ClInclude Include="DBC\Core\DBC__Storage.h">
+      <Filter>DBC</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

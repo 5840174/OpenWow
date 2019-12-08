@@ -15,10 +15,12 @@ class CWMO_Group_Instance;
 class CWMO_Doodad_Instance;
 // FORWARD END
 
-class WMO_Group : public std::enable_shared_from_this<WMO_Group>
+class WMO_Group 
+	: public std::enable_shared_from_this<WMO_Group>
 {
 public:
-	WMO_Group(const std::weak_ptr<const CWMO> _parentWMO, const uint32 m_GroupIndex, std::string _groupName, std::shared_ptr<IFile> _groupFile);
+	WMO_Group(IBaseManager* BaseManager, const std::weak_ptr<const CWMO> _parentWMO, const uint32 m_GroupIndex, std::string _groupName, std::shared_ptr<IFile> _groupFile);
+	virtual ~WMO_Group();
 
 	void CreateInsances(std::weak_ptr<CWMO_Group_Instance> _parent) const;
 
@@ -72,5 +74,7 @@ public:
 
 	// Parent
 	const std::weak_ptr<const CWMO>          m_ParentWMO;
-	const CGroupQuality*					m_Quality;
+
+private:
+	IBaseManager* m_BaseManager;
 };

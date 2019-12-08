@@ -23,7 +23,6 @@ CMapChunk::~CMapChunk()
 
 void CMapChunk::Initialize()
 {
-	m_QualitySettings = GetSettingsGroup<CGroupQuality>(_ApplicationInstance->GetBaseManager());
 }
 
 void CMapChunk::Initialize(const std::string & _fileName, const ADT_MCIN & _mcin)
@@ -41,31 +40,31 @@ uint32 CMapChunk::GetAreaID() const
 
 
 //
-// SceneNode3D
+// CSceneNodeProxie
 //
 
 bool CMapChunk::Accept(IVisitor* visitor)
 {
 	AbstractPass* visitorAsBasePass = dynamic_cast<AbstractPass*>(visitor);
-	const Camera* camera = visitorAsBasePass->GetRenderEventArgs()->Camera;
+	const ICamera* camera = visitorAsBasePass->GetRenderEventArgs()->Camera;
 
-    if (!GetComponent<CColliderComponent3D>()->CheckDistance(camera, m_QualitySettings->ADT_MCNK_Distance))
+    /*if (!GetComponent<CColliderComponent3D>()->CheckDistance(camera, m_QualitySettings->ADT_MCNK_Distance))
     {
         return false;
-    }
+    }*/
 
 	if (!GetComponent<CColliderComponent3D>()->CheckFrustum(camera))
 	{
 		return false;
 	}
 
-	return base::Accept(visitor);
+	return CSceneNodeProxie::Accept(visitor);
 }
 
 
 bool CMapChunk::PreLoad()
 {
-	m_File = GetManager<IFilesManager>(_ApplicationInstance->GetBaseManager())->Open(m_FileName);
+	m_File = GetManager<IFilesManager>(GetBaseManager())->Open(m_FileName);
 	if (m_File == nullptr)
 		return false;
 
@@ -159,7 +158,7 @@ bool CMapChunk::Load()
 
 		//normalsBuffer = _Render->r.createVertexBuffer(C_MapBufferSize * sizeof(vec3), tempNormals, false);
 		//normalsBuffer = _Render->r.createVertexBuffer(C_MapBufferSize * sizeof(int24), normals_INT24, false);
-		normalsBuffer = _RenderDevice->CreateVertexBuffer(tempNormals, C_MapBufferSize);
+		normalsBuffer = GetManager<IRenderDevice>(GetBaseManager())->CreateVertexBuffer(tempNormals, C_MapBufferSize);
 	}
 
 	// Heights
@@ -198,7 +197,7 @@ bool CMapChunk::Load()
 		bbox.calculateCenter();
         GetComponent<CColliderComponent3D>()->SetBounds(bbox);
 
-		verticesBuffer = _RenderDevice->CreateVertexBuffer(tempVertexes, C_MapBufferSize);
+		verticesBuffer = GetManager<IRenderDevice>(GetBaseManager())->CreateVertexBuffer(tempVertexes, C_MapBufferSize);
 	}
 
 	// Textures
@@ -315,10 +314,10 @@ bool CMapChunk::Load()
 		}
 	}
 
-	_RenderDevice->Lock();
-	m_BlendRBGShadowATexture = _RenderDevice->CreateTexture();
+	GetManager<IRenderDevice>(GetBaseManager())->Lock();
+	m_BlendRBGShadowATexture = GetManager<IRenderDevice>(GetBaseManager())->CreateTexture();
 	m_BlendRBGShadowATexture->LoadTextureCustom(64, 64, blendbuf);
-	_RenderDevice->Unlock();
+	GetManager<IRenderDevice>(GetBaseManager())->Unlock();
 
 	// Liquids
 	m_File->seek(startPos + header.ofsLiquid);
@@ -345,7 +344,7 @@ bool CMapChunk::Load()
 		return true;
 
 	// Material
-	std::shared_ptr<ADT_MCNK_Material> mat = std::make_shared<ADT_MCNK_Material>(m_ParentADT);
+	std::shared_ptr<ADT_MCNK_Material> mat = std::make_shared<ADT_MCNK_Material>(GetManager<IRenderDevice>(GetBaseManager()), m_ParentADT);
 	mat->SetWrapper(mat);
 	for (uint32 i = 0; i < header.nLayers; i++)
 	{
@@ -358,9 +357,9 @@ bool CMapChunk::Load()
 
 	{ // Geom High
 		std::vector<uint16>& mapArrayHigh = _MapShared->GenarateHighMapArray(header.holes);
-		std::shared_ptr<IBuffer> __ibHigh = _RenderDevice->CreateIndexBuffer(mapArrayHigh);
+		std::shared_ptr<IBuffer> __ibHigh = GetManager<IRenderDevice>(GetBaseManager())->CreateIndexBuffer(mapArrayHigh);
 
-		__geomDefault = _RenderDevice->CreateMesh();
+		__geomDefault = GetManager<IRenderDevice>(GetBaseManager())->CreateMesh();
 		__geomDefault->AddVertexBuffer(BufferBinding("POSITION", 0), verticesBuffer);
 		__geomDefault->AddVertexBuffer(BufferBinding("NORMAL", 0), normalsBuffer);
 		__geomDefault->AddVertexBuffer(BufferBinding("TEXCOORD", 0), _MapShared->BufferTextureCoordDetail);
@@ -374,9 +373,9 @@ bool CMapChunk::Load()
 
 	/*{ // Geom Default
 		std::vector<uint16>& mapArrayDefault = _MapShared->GenarateDefaultMapArray(header.holes);
-		std::shared_ptr<IBuffer> __ibDefault = _RenderDevice->CreateIndexBuffer(mapArrayDefault);
+		std::shared_ptr<IBuffer> __ibDefault = GetManager<IRenderDevice>(GetBaseManager())->CreateIndexBuffer(mapArrayDefault);
 
-		__geomDefault = _RenderDevice->CreateMesh();
+		__geomDefault = GetManager<IRenderDevice>(GetBaseManager())->CreateMesh();
 		__geomDefault->AddVertexBuffer(BufferBinding("POSITION", 0), verticesBuffer);
 		__geomDefault->AddVertexBuffer(BufferBinding("NORMAL", 0), normalsBuffer);
 		__geomDefault->AddVertexBuffer(BufferBinding("TEXCOORD", 0), _MapShared->BufferTextureCoordDetail);

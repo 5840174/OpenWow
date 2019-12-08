@@ -18,7 +18,7 @@ struct SM2_Vertex_BoneIndex
 	uint32 indexes[4];
 };
 
-CM2_SkinSection::CM2_SkinSection(const std::weak_ptr<const M2> M2Model, const uint16 _index, const SM2_SkinSection& _proto, const std::vector<SM2_Vertex>& _vertexes, const std::vector<uint16>& _indexes) :
+CM2_SkinSection::CM2_SkinSection(IBaseManager* BaseManager, const std::weak_ptr<const M2> M2Model, const uint16 _index, const SM2_SkinSection& _proto, const std::vector<SM2_Vertex>& _vertexes, const std::vector<uint16>& _indexes) :
 	m_Index(_index),
 	m_Proto(_proto),
 	m_ParentM2(M2Model)
@@ -48,15 +48,15 @@ CM2_SkinSection::CM2_SkinSection(const std::weak_ptr<const M2> M2Model, const ui
 		tex1.push_back(it.tex_coords[1]);
 	}
 
-	std::shared_ptr<IBuffer> VB_Vertexes = _RenderDevice->CreateVoidVertexBuffer(verts.data(), verts.size(), 0, sizeof(vec3));
-	std::shared_ptr<IBuffer> VB_BoneWeights = _RenderDevice->CreateVoidVertexBuffer(weights.data(), weights.size(), 0, sizeof(SM2_Vertex_BoneWeight));
-	std::shared_ptr<IBuffer> VB_BoneIndices = _RenderDevice->CreateVoidVertexBuffer(indexes.data(), indexes.size(), 0, sizeof(SM2_Vertex_BoneIndex));
-	std::shared_ptr<IBuffer> VB_Normals = _RenderDevice->CreateVoidVertexBuffer(normals.data(), normals.size(), 0, sizeof(vec3));
-	std::shared_ptr<IBuffer> VB_TextureCoords0 = _RenderDevice->CreateVoidVertexBuffer(tex0.data(), tex0.size(), 0, sizeof(vec2));
-	std::shared_ptr<IBuffer> VB_TextureCoords1 = _RenderDevice->CreateVoidVertexBuffer(tex1.data(), tex1.size(), 0, sizeof(vec2));
-	std::shared_ptr<IBuffer> IB_Indexes = _RenderDevice->CreateIndexBuffer(_indexes);
+	std::shared_ptr<IBuffer> VB_Vertexes = GetManager<IRenderDevice>(BaseManager)->CreateVoidVertexBuffer(verts.data(), verts.size(), 0, sizeof(vec3));
+	std::shared_ptr<IBuffer> VB_BoneWeights = GetManager<IRenderDevice>(BaseManager)->CreateVoidVertexBuffer(weights.data(), weights.size(), 0, sizeof(SM2_Vertex_BoneWeight));
+	std::shared_ptr<IBuffer> VB_BoneIndices = GetManager<IRenderDevice>(BaseManager)->CreateVoidVertexBuffer(indexes.data(), indexes.size(), 0, sizeof(SM2_Vertex_BoneIndex));
+	std::shared_ptr<IBuffer> VB_Normals = GetManager<IRenderDevice>(BaseManager)->CreateVoidVertexBuffer(normals.data(), normals.size(), 0, sizeof(vec3));
+	std::shared_ptr<IBuffer> VB_TextureCoords0 = GetManager<IRenderDevice>(BaseManager)->CreateVoidVertexBuffer(tex0.data(), tex0.size(), 0, sizeof(vec2));
+	std::shared_ptr<IBuffer> VB_TextureCoords1 = GetManager<IRenderDevice>(BaseManager)->CreateVoidVertexBuffer(tex1.data(), tex1.size(), 0, sizeof(vec2));
+	std::shared_ptr<IBuffer> IB_Indexes = GetManager<IRenderDevice>(BaseManager)->CreateIndexBuffer(_indexes);
 
-	m_Mesh = _RenderDevice->CreateMesh();
+	m_Mesh = GetManager<IRenderDevice>(BaseManager)->CreateMesh();
 	m_Mesh->AddVertexBuffer(BufferBinding("POSITION", 0), VB_Vertexes);
 	m_Mesh->AddVertexBuffer(BufferBinding("BLENDWEIGHT", 0), VB_BoneWeights);
 	m_Mesh->AddVertexBuffer(BufferBinding("BLENDINDICES", 0), VB_BoneIndices);

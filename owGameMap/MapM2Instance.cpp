@@ -1,5 +1,7 @@
 #include "stdafx.h"
 
+#ifdef USE_M2_MODELS
+
 // General
 #include "MapM2Instance.h"
 
@@ -11,6 +13,10 @@ CMapM2Instance::CMapM2Instance(std::string _m2Name) :
 
 CMapM2Instance::~CMapM2Instance()
 {}
+
+void CMapM2Instance::Initialize()
+{
+}
 
 void CMapM2Instance::Initialize(const ADT_MDXDef & _placementInfo)
 {
@@ -31,7 +37,7 @@ void CMapM2Instance::Initialize(const ADT_MDXDef & _placementInfo)
 
 
 //
-// SceneNode3D
+// CSceneNodeProxie
 //
 bool CMapM2Instance::Accept(IVisitor* visitor)
 {
@@ -52,7 +58,7 @@ bool CMapM2Instance::Accept(IVisitor* visitor)
 		return false;
 	}
 
-	// SceneNode3D
+	// CSceneNodeProxie
 	if (CM2_Base_Instance::Accept(visitor))
 	{
 		m_AlreadyDraw.insert(m_UniqueId);
@@ -68,3 +74,5 @@ void CMapM2Instance::reset()
 {
 	m_AlreadyDraw.clear();
 }
+
+#endif

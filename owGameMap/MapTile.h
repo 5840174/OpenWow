@@ -10,9 +10,10 @@
 class CMap;
 // FORWARD END
 
-class CMapTile : public SceneNode3D
+class CMapTile 
+	: public CSceneNodeProxie
+	, public CLoadableObject
 {
-    typedef SceneNode3D base;
 public:
 	                                                CMapTile();
 	virtual                                         ~CMapTile();
@@ -41,12 +42,9 @@ public:
 
 	// Instances
 	std::vector<std::shared_ptr<CMapWMOInstance>>	m_WMOsInstances;
-	std::vector<std::shared_ptr<CMapM2Instance>>	m_MDXsInstances;
+	std::vector<std::shared_ptr<ISceneNode>>		m_MDXsInstances;
 	std::vector<std::shared_ptr<CMapChunk>>			m_Chunks;
 
 protected:
     std::shared_ptr<CMap>							GetMapController() const;
-
-private:
-	const CGroupQuality*							m_QualitySettings;
 };

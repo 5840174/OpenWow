@@ -25,7 +25,7 @@ void Character::InitFromTemplate(const CharacterTemplate& b)
 	// TODO: Move me outside construtor
 	for (uint32 slot = 0; slot < INVENTORY_SLOT_BAG_END; slot++)
 	{
-		m_VisualItems.push_back(std::make_shared<CItem_VisualData>(std::static_pointer_cast<Character, SceneNode3D>(shared_from_this())));
+		m_VisualItems.push_back(std::make_shared<CItem_VisualData>(std::static_pointer_cast<Character>(shared_from_this())));
 	}
 	// TODO: Move me outside construtor
 
@@ -50,7 +50,7 @@ void Character::InitFromDisplayInfo(uint32 _id)
 	// TODO: Move me outside construtor
 	for (uint32 slot = 0; slot < INVENTORY_SLOT_BAG_END; slot++)
 	{
-		m_VisualItems.push_back(std::make_shared<CItem_VisualData>(std::static_pointer_cast<Character, SceneNode3D>(shared_from_this())));
+		m_VisualItems.push_back(std::make_shared<CItem_VisualData>(std::static_pointer_cast<Character>(shared_from_this())));
 	}
 	// TODO: Move me outside construtor
 
@@ -122,7 +122,7 @@ void Character::InitFromDisplayInfoCreating(uint32 _id, Race::List _race, Gender
 	// TODO: Move me outside construtor
 	for (uint32 slot = 0; slot < INVENTORY_SLOT_BAG_END; slot++)
 	{
-		m_VisualItems.push_back(std::make_shared<CItem_VisualData>(std::static_pointer_cast<Character, SceneNode3D>(shared_from_this())));
+		m_VisualItems.push_back(std::make_shared<CItem_VisualData>(std::static_pointer_cast<Character>(shared_from_this())));
 	}
 	// TODO: Move me outside construtor
 

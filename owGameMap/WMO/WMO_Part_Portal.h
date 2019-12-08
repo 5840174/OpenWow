@@ -11,7 +11,8 @@ class CWMO_Base_Instance;
 class CWMO_Part_Portal
 {
 public:
-	CWMO_Part_Portal(const std::weak_ptr<const CWMO> _parentWMO, const SWMO_PortalDef& _proto);
+	CWMO_Part_Portal(std::shared_ptr<IRenderDevice> RenderDevice, const std::weak_ptr<const CWMO> _parentWMO, const SWMO_PortalDef& _proto);
+	virtual ~CWMO_Part_Portal();
 
 	uint16 getStartVertex() const { return m_StartVertex; }
 	uint16 getCount() const { return m_Count; }

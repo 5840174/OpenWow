@@ -2,10 +2,12 @@
 
 #include "WMO.h"
 
-class WMOsManager : public IWMOManager, public CRefManager1Dim<CWMO>
+class WMOsManager 
+	: public IWMOManager
+	, public CRefManager1Dim<CWMO>
 {
 public:
-	WMOsManager();
+	WMOsManager(IBaseManager* BaseManager);
     virtual ~WMOsManager();
 
 	// IWMOManager
@@ -19,4 +21,7 @@ public:
 	void LoadAction(std::string name, std::shared_ptr<CWMO>& item);
 	bool DeleteAction(const std::string& name) override;
 	void MakeContext();
+
+private:
+	IBaseManager* m_BaseManager;
 };

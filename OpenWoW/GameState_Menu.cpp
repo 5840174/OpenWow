@@ -157,23 +157,23 @@ void CGameState_Menu::LoadUI()
 	// Font
 	m_CameraPosText = m_UIScene->GetRootNode()->CreateSceneNode<CUITextNode>();
 	m_CameraPosText->SetText("Camera position");
-	m_CameraPosText->GetComponent<CTransformComponentUI>()->SetTranslate(vec2(0.0f, 0.0f));
+	m_CameraPosText->GetComponent<ITransformComponentUI>()->SetTranslate(vec2(0.0f, 0.0f));
 
 	m_CameraRotText = m_UIScene->GetRootNode()->CreateSceneNode<CUITextNode>();
 	m_CameraRotText->SetText("Camera rotation");
-	m_CameraRotText->GetComponent<CTransformComponentUI>()->SetTranslate(vec2(0.0f, 20.0f));
+	m_CameraRotText->GetComponent<ITransformComponentUI>()->SetTranslate(vec2(0.0f, 20.0f));
 
 	// Texture 2
 	std::shared_ptr<CUITextureNode> node4 = m_UIScene->GetRootNode()->CreateSceneNode<CUITextureNode>();
 	node4->SetTexture(renderDevice->CreateTexture2D("Textures\\Moon02Glare.blp"));
-	node4->GetComponent<CTransformComponentUI>()->SetTranslate(vec2(200.0f, 000.0f));
-	node4->GetComponent<CTransformComponentUI>()->SetScale(vec2(100.0f, 100.0f));
+	node4->GetComponent<ITransformComponentUI>()->SetTranslate(vec2(200.0f, 000.0f));
+	node4->GetComponent<ITransformComponentUI>()->SetScale(vec2(100.0f, 100.0f));
 
 
     std::shared_ptr<CUIColorNode> node5 = std::make_shared<CUIColorNode>();
     node5->SetParent(m_UIScene->GetRootNode());
-    node5->GetComponent<CTransformComponentUI>()->SetTranslate(vec2(400.0f, 400.0f));
-    node5->GetComponent<CTransformComponentUI>()->SetScale(vec2(100.0f, 100.0f));
+    node5->GetComponent<ITransformComponentUI>()->SetTranslate(vec2(400.0f, 400.0f));
+    node5->GetComponent<ITransformComponentUI>()->SetScale(vec2(100.0f, 100.0f));
 
 	//
 	// UI Passes

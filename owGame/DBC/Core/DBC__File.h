@@ -182,14 +182,14 @@ protected:
 	template<typename T>
 	T getValue(uint32 field) const
 	{
-		assert2(field < m_DBC_Stats->getFieldCount(), std::to_string(field).c_str());
+		_ASSERT_EXPR(field < m_DBC_Stats->getFieldCount(), std::to_string(field).c_str());
 		return *reinterpret_cast<T*>(const_cast<uint8*>(m_Offset) + field * 4);
 	}
 
 	// Strings
 	const char* getString(uint32 field) const
 	{
-		assert2(field < m_DBC_Stats->getFieldCount(), std::to_string(field).c_str());
+		_ASSERT_EXPR(field < m_DBC_Stats->getFieldCount(), std::to_string(field).c_str());
 
 		uint32_t stringOffset = getValue<uint32>(field);
 		if (stringOffset >= m_DBC_Stats->getStringSize())
@@ -197,7 +197,7 @@ protected:
 			stringOffset = 0;
 		}
 
-		assert2(stringOffset < m_DBC_Stats->getStringSize(), std::to_string(stringOffset).c_str());
+		_ASSERT_EXPR(stringOffset < m_DBC_Stats->getStringSize(), std::to_string(stringOffset).c_str());
 		return reinterpret_cast<char*>(const_cast<uint8*>(m_DBC_Stats->stringTable) + stringOffset);
 	}
 
@@ -206,7 +206,7 @@ protected:
 		int8 loc = locale;
 		if (locale == -1)
 		{
-			assert2(field < m_DBC_Stats->getFieldCount() - 16, std::to_string(field).c_str());
+			_ASSERT_EXPR(field < m_DBC_Stats->getFieldCount() - 16, std::to_string(field).c_str());
 			for (loc = 0; loc < 16; loc++)
 			{
 				uint32 stringOffset = getValue<uint32>(field + loc);
@@ -216,10 +216,10 @@ protected:
 				}
 			}
 		}
-		assert2(field + loc < m_DBC_Stats->getFieldCount(), std::to_string(field).c_str());
+		_ASSERT_EXPR(field + loc < m_DBC_Stats->getFieldCount(), std::to_string(field).c_str());
 		uint32 stringOffset = getValue<uint32>(field + static_cast<uint32>(loc));
 
-		assert2(stringOffset < m_DBC_Stats->getStringSize(), std::to_string(stringOffset).c_str());
+		_ASSERT_EXPR(stringOffset < m_DBC_Stats->getStringSize(), std::to_string(stringOffset).c_str());
 		return Resources::Utf8_to_cp1251(reinterpret_cast<char*>(const_cast<uint8*>(m_DBC_Stats->stringTable) + stringOffset));
 	}
 

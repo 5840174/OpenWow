@@ -1,10 +1,10 @@
 #pragma once
 
-class WoWChunkReader 
+class OW_ENGINE_API WoWChunkReader 
 {
 public:
-	WoWChunkReader(std::string _fileName);
-	WoWChunkReader(std::shared_ptr<IFile> file);
+	WoWChunkReader(IBaseManager* BaseManager, std::string _fileName);
+	WoWChunkReader(IBaseManager* BaseManager, std::shared_ptr<IFile> file);
 	virtual ~WoWChunkReader();
 
 	std::shared_ptr<IByteBuffer> OpenChunk(const char* _name);
@@ -23,7 +23,7 @@ protected:
 
 private:
 	std::shared_ptr<IFile> m_File;
-	std::map<std::string, Chunks> m_ChunksMap; // seek and size
+	std::unordered_map<std::string, Chunks> m_ChunksMap; // seek and size
 };
 
 #include "WoWChunkReader.inl"

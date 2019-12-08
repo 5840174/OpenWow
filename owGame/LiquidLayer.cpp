@@ -3,12 +3,12 @@
 // General
 #include "LiquidLayer.h"
 
-CLiquidLayer::CLiquidLayer(std::shared_ptr<IMesh> _mesh)
-	: MeshWrapper(_mesh)
-	, m_SkyManager(GetManager<ISkyManager>(_ApplicationInstance->GetBaseManager()))
-	, m_QualitySettings(GetSettingsGroup<CGroupQuality>(_ApplicationInstance->GetBaseManager()))
+CLiquidLayer::CLiquidLayer(IBaseManager* BaseManager, std::shared_ptr<IMesh> _mesh)
+	: MeshProxie(_mesh)
+	, m_BaseManager(BaseManager)
+	, m_SkyManager(GetManager<ISkyManager>(BaseManager))
 {
-	m_Material = std::make_shared<LiquidMaterial>();
+	m_Material = std::make_shared<LiquidMaterial>(BaseManager);
 
 	SetMaterial(m_Material);
 }
@@ -19,7 +19,7 @@ CLiquidLayer::~CLiquidLayer()
 
 bool CLiquidLayer::Render(const RenderEventArgs* renderEventArgs, const IConstantBuffer* perObject, UINT indexStartLocation, UINT indexCnt, UINT vertexStartLocation, UINT vertexCnt)
 {
-	uint32_t texidx = (uint32_t)(EngineTime::GetTotalTime() * 1000.0f / 60.0f) % m_Textures.size();
+	uint32_t texidx = (uint32_t)(renderEventArgs->TotalTime * 1000.0f / 60.0f) % m_Textures.size();
 	m_Material->SetTexture(0, m_Textures[texidx]);
 
 	std::shared_ptr<ISkyManager> SkyManager = m_SkyManager.lock();
@@ -39,7 +39,7 @@ bool CLiquidLayer::Render(const RenderEventArgs* renderEventArgs, const IConstan
 		m_Material->SetDeepAlpha(1.0f);
 	}
 
-	return MeshWrapper::Render(renderEventArgs, perObject, indexStartLocation, indexCnt, vertexStartLocation, vertexCnt);
+	return MeshProxie::Render(renderEventArgs, perObject, indexStartLocation, indexCnt, vertexStartLocation, vertexCnt);
 }
 
 void CLiquidLayer::InitTextures(DBC_LIQUIDTYPE_Type::List _liquidType)
@@ -71,7 +71,7 @@ void CLiquidLayer::InitTextures(DBC_LIQUIDTYPE_Type::List _liquidType)
 	for (int i = 1; i <= 30; i++)
 	{
         sprintf(buf, "%s.%d.blp", baseName.c_str(), i);
-		std::shared_ptr<ITexture> texture = _RenderDevice->CreateTexture2D(buf);
+		std::shared_ptr<ITexture> texture = GetManager<IRenderDevice>(m_BaseManager)->CreateTexture2D(buf);
 		m_Textures.push_back(texture);
 	}
 }

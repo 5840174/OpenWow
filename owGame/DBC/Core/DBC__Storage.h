@@ -57,4 +57,4 @@
 #include "..\\DBC_LiquidType.h"
 
 
- void OpenDBs(std::shared_ptr<IBaseManager> BaseManager);
+ void OpenDBs(IBaseManager* BaseManager);

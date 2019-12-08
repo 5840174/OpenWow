@@ -1,15 +1,14 @@
 #pragma once
 
-class CRenderPass_ADT_MCNK : public BasePass
+class CRenderPass_ADT_MCNK : public Base3DPass
 {
-    typedef BasePass base;
 public:
-	CRenderPass_ADT_MCNK(std::shared_ptr<Scene3D> scene, std::shared_ptr<IPipelineState> pipeline);
+	CRenderPass_ADT_MCNK(std::shared_ptr<IRenderDevice> RenderDevice, std::shared_ptr<IScene> scene, std::shared_ptr<IPipelineState> pipeline);
 	virtual ~CRenderPass_ADT_MCNK();
 
     // IVisitor
-    bool Visit(SceneNode3D* node) override final;
+    bool Visit(ISceneNode3D* node) override final;
 
 private:
-	const CGroupQuality*						m_QualitySettings;
+	std::shared_ptr<ISettingGroup> m_WoWSettings;
 };

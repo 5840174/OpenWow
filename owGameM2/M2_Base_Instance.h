@@ -2,11 +2,13 @@
 
 #include "M2.h"
 
-class CM2_Base_Instance : public SceneNode3D
+class CM2_Base_Instance 
+	: public CSceneNodeProxie
+	, public CLoadableObject
 {
 public:
-	                                    CM2_Base_Instance(std::string _m2Name);
-	virtual                             ~CM2_Base_Instance();
+	CM2_Base_Instance(std::string _m2Name);
+	virtual ~CM2_Base_Instance();
 
 	void                                CreateInstances();
 
@@ -36,10 +38,8 @@ public:
     // Components
     virtual void                        RegisterComponents() override;
 
-	// ILoadable
-	bool                                Load() override;
-	bool                                Delete() override;
-	uint32                              getPriority() const override { return 3; };
+	// ILoadableObject
+	virtual bool                        Load() override;
 
 	// SceneNode3D
 	void								Initialize() override;
@@ -47,8 +47,6 @@ public:
 
 protected:
 	void InitAnimator();
-
-    const CGroupQuality*                GetGroupQuality() const;
 
 private:
 	// Color & Alpha
@@ -66,5 +64,4 @@ private:
 	std::shared_ptr<M2>                 m_M2;
 	std::string                         m_M2Name;
 	std::shared_ptr<CM2_Part_Attachment>m_Attached;
-	const CGroupQuality*				m_QualitySettings;
 };

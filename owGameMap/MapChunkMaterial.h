@@ -4,10 +4,10 @@
 class CMapTile;
 // FORWARD END
 
-class ADT_MCNK_Material : public MaterialWrapper
+class ADT_MCNK_Material : public MaterialProxie
 {
 public:
-	ADT_MCNK_Material(const std::weak_ptr<CMapTile> _parentADT);
+	ADT_MCNK_Material(std::shared_ptr<IRenderDevice> RenderDevice, const std::weak_ptr<CMapTile> _parentADT);
 	virtual ~ADT_MCNK_Material();
 
 	void SetLayersCnt(uint32 value);

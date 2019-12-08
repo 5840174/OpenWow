@@ -7,9 +7,10 @@ class CMapTile;
 class CMap;
 // FORWARD END
 
-class CMapChunk : public SceneNode3D
+class CMapChunk 
+	: public CSceneNodeProxie
+	, public CLoadableObject
 {
-    typedef SceneNode3D base;
 public:
 	                                                CMapChunk(std::shared_ptr<CMap> _mapController, std::weak_ptr<CMapTile> _parentTile);
 	virtual                                         ~CMapChunk();
@@ -39,7 +40,7 @@ private:
 	std::shared_ptr<ITexture>                        m_DiffuseTextures[4];
 	std::shared_ptr<ITexture>                        m_SpecularTextures[4];
 
-	std::shared_ptr<Liquid_Instance>                m_LiquidInstance;
+	std::shared_ptr<ISceneNode>                m_LiquidInstance;
 
 	std::shared_ptr<ITexture>                        m_BlendRBGShadowATexture;
 
@@ -50,5 +51,5 @@ private:
 private:
 	const std::weak_ptr<CMap>						m_MapController;
 	const std::weak_ptr<CMapTile>			        m_ParentADT;
-	const CGroupQuality*						    m_QualitySettings;
+	//const CGroupQuality*						    m_QualitySettings;
 };

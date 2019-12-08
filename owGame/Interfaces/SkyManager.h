@@ -64,7 +64,7 @@ struct
 {
 	virtual ~ISkyManager() = 0 {};
 
-	virtual void Calculate(const Camera* camera, uint32 _time) = 0;
+	virtual void Calculate(const ICamera* camera, uint32 _time) = 0;
 	virtual bool HasSkies() const = 0;
 
 	virtual vec3 GetColor(LightColors::List _color) const = 0;

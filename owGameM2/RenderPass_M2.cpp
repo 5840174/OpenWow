@@ -16,8 +16,8 @@
 // Additional (meshes)
 #include "M2_Skin_Batch.h"
 
-CRenderPass_M2::CRenderPass_M2(std::shared_ptr<Scene3D> scene, std::shared_ptr<IPipelineState> pipeline)
-	: BasePass(scene, pipeline)
+CRenderPass_M2::CRenderPass_M2(std::shared_ptr<IRenderDevice> RenderDevice, std::shared_ptr<IScene> scene, std::shared_ptr<IPipelineState> pipeline)
+	: Base3DPass(RenderDevice, scene, pipeline)
 {}
 
 CRenderPass_M2::~CRenderPass_M2()
@@ -28,12 +28,12 @@ CRenderPass_M2::~CRenderPass_M2()
 //
 // IVisitor
 //
-bool CRenderPass_M2::Visit(SceneNode3D* node)
+bool CRenderPass_M2::Visit(ISceneNode3D* node)
 {
     CM2_Base_Instance* m2Instance = dynamic_cast<CM2_Base_Instance*>(node);
     if (m2Instance)
     {
-        return base::Visit(node);
+        return Base3DPass::Visit(node);
     }
 
     return false;

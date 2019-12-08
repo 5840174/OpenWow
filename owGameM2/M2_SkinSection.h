@@ -13,7 +13,7 @@ class CM2_SkinSection
 {
 	friend class CM2_Skin_Builder;
 public:
-	CM2_SkinSection(const std::weak_ptr<const M2> M2Model, const uint16 _index, const SM2_SkinSection& _proto, const std::vector<SM2_Vertex>& _vertexes, const std::vector<uint16>& _indexes);
+	CM2_SkinSection(IBaseManager* BaseManager, const std::weak_ptr<const M2> M2Model, const uint16 _index, const SM2_SkinSection& _proto, const std::vector<SM2_Vertex>& _vertexes, const std::vector<uint16>& _indexes);
 
 	uint16                        getIndex() const { return m_Index; }
 	const SM2_SkinSection&        getProto() const { return m_Proto; }

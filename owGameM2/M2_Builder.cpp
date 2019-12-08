@@ -6,7 +6,7 @@
 // Additional
 #include "M2_Skin_Builder.h"
 
-CM2_Builder::CM2_Builder(std::shared_ptr<M2> _model) :
+CM2_Builder::CM2_Builder(IBaseManager* BaseManager, std::shared_ptr<M2> _model) :
 	m_M2(_model),
 	m_F(nullptr),
 	m_GlobalLoops(nullptr),
@@ -14,7 +14,8 @@ CM2_Builder::CM2_Builder(std::shared_ptr<M2> _model) :
 	m_Skins(nullptr),
 	m_Textures(nullptr),
 	m_TexturesWeight(nullptr),
-	m_TexturesTransform(nullptr)
+	m_TexturesTransform(nullptr),
+	m_BaseManager(BaseManager)
 {
 	// Fix filename
 	if (m_M2->m_FileName.back() != '2')
@@ -25,7 +26,7 @@ CM2_Builder::CM2_Builder(std::shared_ptr<M2> _model) :
 	}
 
 	// Openfile
-	m_F = GetManager<IFilesManager>(_ApplicationInstance->GetBaseManager())->Open(m_M2->getFilename());
+	m_F = GetManager<IFilesManager>(BaseManager)->Open(m_M2->getFilename());
 	if (m_F == nullptr)
 	{
 		Log::Error("CM2_Builder[%s]: Unable to open file.", m_M2->getFilename().c_str());
@@ -237,7 +238,7 @@ void CM2_Builder::Step5ColorAndTextures()
 		m_Textures = (SM2_Texture*)(m_F->getData() + m_Header.textures.offset);
 		for (uint32 i = 0; i < m_Header.textures.size; i++)
 		{
-			std::shared_ptr<CM2_Part_Texture> texture = std::make_shared<CM2_Part_Texture>(m_F, m_Textures[i]);
+			std::shared_ptr<CM2_Part_Texture> texture = std::make_shared<CM2_Part_Texture>(m_BaseManager, m_F, m_Textures[i]);
 			materials->m_Textures.push_back(texture);
 		}
 	}
@@ -489,7 +490,7 @@ void CM2_Builder::Step9Collision()
 			collisionVertices[i] = Fix_XZmY(collisionVertices[i]);
 		}
 
-		collisonVB = _RenderDevice->CreateVertexBuffer(collisionVertices);
+		collisonVB = GetManager<IRenderDevice>(m_BaseManager)->CreateVertexBuffer(collisionVertices);
 	}
 
 	if (m_Header.collisionTriangles.size > 0)
@@ -501,7 +502,7 @@ void CM2_Builder::Step9Collision()
 			collisionTriangles.push_back(CollisionTriangles[i]);
 		}
 
-		collisonIB = _RenderDevice->CreateIndexBuffer(collisionTriangles);
+		collisonIB = GetManager<IRenderDevice>(m_BaseManager)->CreateIndexBuffer(collisionTriangles);
 	}
 
 	if (collisonVB != nullptr && collisonIB != nullptr)

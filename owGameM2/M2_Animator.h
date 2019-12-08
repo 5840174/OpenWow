@@ -24,7 +24,7 @@ public:
 
 private:
 	const std::weak_ptr<const M2>					m_M2;
-	std::map<uint16, std::shared_ptr<CM2_Animation>>	m_Animations;
+	std::unordered_map<uint16, std::shared_ptr<CM2_Animation>>	m_Animations;
 	const CM2_Animation*		m_CurrentAnimation;
 	bool						m_IsLoop;
 	bool						m_IsPlayed;

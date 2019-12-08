@@ -2,20 +2,18 @@
 
 #include "Liquid.h"
 
-class Liquid_Instance : public SceneNode3D
+class OW_ENGINE_API Liquid_Instance
+	: public CSceneNodeProxie
+	, public ILiquidInstanceInitializaton
 {
 public:
 	Liquid_Instance();
 	virtual ~Liquid_Instance();
 
+	// ILiquidInstanceInitializaton
+    void Initialize(std::shared_ptr<CLiquid> LiquidObject, vec3 Position) override;
 
+	// CSceneNodeProxie
 	void Initialize() override;
-
-    void Initialize(std::shared_ptr<CLiquid> _liquidObject, vec3 _position);
-
-	// SceneNode3D
-	bool Accept(IVisitor* visitor) override;
-
-private:
-	const CGroupQuality* m_QualitySettings;
+	void Finalize() override;
 };

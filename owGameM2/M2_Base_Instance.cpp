@@ -16,10 +16,7 @@ CM2_Base_Instance::CM2_Base_Instance(std::string _m2Name) :
 	m_Color(vec4(1.0f, 1.0f, 1.0f, 1.0f)),
 	m_Alpha(1.0f)
 {
-	for (uint8 i = 0; i < SM2_Texture::Type::COUNT; i++)
-	{
-		m_SpecialTextures[i] = _RenderDevice->GetDefaultTexture();
-	}
+
 }
 
 CM2_Base_Instance::~CM2_Base_Instance()
@@ -34,7 +31,7 @@ CM2_Base_Instance::~CM2_Base_Instance()
 
 void CM2_Base_Instance::CreateInstances()
 {
-	m_M2->CreateInsances(std::static_pointer_cast<CM2_Base_Instance, SceneNode3D>(shared_from_this()));
+	m_M2->CreateInsances(std::static_pointer_cast<CM2_Base_Instance>(shared_from_this()));
 }
 
 void CM2_Base_Instance::Attach(std::shared_ptr<CM2_Part_Attachment> _attachment)
@@ -69,7 +66,7 @@ bool CM2_Base_Instance::isMeshEnabled(uint32 _index) const
 }
 void CM2_Base_Instance::setSpecialTexture(SM2_Texture::Type _type, const std::string& _textureName)
 {
-	std::shared_ptr<ITexture> texture = _RenderDevice->CreateTexture2D(_textureName);
+	std::shared_ptr<ITexture> texture = GetManager<IRenderDevice>(GetBaseManager())->CreateTexture2D(_textureName);
 	setSpecialTexture(_type, texture);
 }
 void CM2_Base_Instance::setSpecialTexture(SM2_Texture::Type _type, std::shared_ptr<ITexture> _texture)
@@ -85,27 +82,6 @@ std::shared_ptr<ITexture> CM2_Base_Instance::getSpecialTexture(SM2_Texture::Type
 	return m_SpecialTextures[_type];
 }
 
-bool CM2_Base_Instance::Load()
-{
-	std::shared_ptr<M2> m2 = GetManager<IM2Manager>(_ApplicationInstance->GetBaseManager())->Add(m_M2Name);
-	if (m2)
-	{
-		setM2(m2);
-
-
-
-		CreateInstances();
-		return true;
-	}
-
-	return false;
-}
-
-bool CM2_Base_Instance::Delete()
-{
-	return false;
-}
-
 
 //
 //	m_M2->update(_time, _dTime);
@@ -113,28 +89,31 @@ bool CM2_Base_Instance::Delete()
 
 void CM2_Base_Instance::Initialize()
 {
-	m_QualitySettings = GetSettingsGroup<CGroupQuality>(_ApplicationInstance->GetBaseManager());
+	for (uint8 i = 0; i < SM2_Texture::Type::COUNT; i++)
+	{
+		m_SpecialTextures[i] = GetManager<IRenderDevice>(GetBaseManager())->GetDefaultTexture();
+	}
 }
 
 bool CM2_Base_Instance::Accept(IVisitor* visitor)
 {
 	AbstractPass* visitorAsBasePass = dynamic_cast<AbstractPass*>(visitor);
-	const Camera* camera = visitorAsBasePass->GetRenderEventArgs()->Camera;
+	const ICamera* camera = visitorAsBasePass->GetRenderEventArgs()->Camera;
 
-	float distToCamera2D = (camera->GetTranslation() - GetComponent<CColliderComponent3D>()->GetBounds().getCenter()).length() - GetComponent<CColliderComponent3D>()->GetBounds().getRadius();
+	float distToCamera2D = (camera->GetTranslation() - GetComponent<IColliderComponent3D>()->GetBounds().getCenter()).length() - GetComponent<IColliderComponent3D>()->GetBounds().getRadius();
 	if (distToCamera2D > m_QualitySettings->ADT_MDX_Distance)
 	{
 		return false;
 	}
 
-	if (!GetComponent<CColliderComponent3D>()->CheckFrustum(camera))
+	if (!GetComponent<IColliderComponent3D>()->CheckFrustum(camera))
 	{
 		return false;
 	}
 
 	if (m_Attached != nullptr)
 	{
-        GetComponent<CTransformComponent3D>()->ForceRecalculateLocalTransform();
+        GetComponent<ITransformComponent3D>()->ForceRecalculateLocalTransform();
 	}
 
 	if (m_M2->isAnimated())
@@ -149,14 +128,14 @@ bool CM2_Base_Instance::Accept(IVisitor* visitor)
 		//{
 		//if (!m_NeedRecalcAnimation)
 		//{
-		m_M2->calc(m_Animator->getSequenceIndex(), m_Animator->getCurrentTime(), static_cast<uint32>(visitorAsBasePass->GetRenderEventArgs()->TotalTime), camera->GetViewMatrix(), GetComponent<CTransformComponent3D>()->GetWorldTransfom());
+		m_M2->calc(m_Animator->getSequenceIndex(), m_Animator->getCurrentTime(), static_cast<uint32>(visitorAsBasePass->GetRenderEventArgs()->TotalTime), camera->GetViewMatrix(), GetComponent<ITransformComponent>()->GetWorldTransfom());
 		//	m_NeedRecalcAnimation = true;
 		//}
 		//}
 	}
 
 	// SceneNode3D
-	return SceneNode3D::Accept(visitor);
+	return CSceneNodeProxie::Accept(visitor);
 }
 
 void CM2_Base_Instance::InitAnimator()
@@ -168,18 +147,35 @@ void CM2_Base_Instance::InitAnimator()
 	}
 }
 
-const CGroupQuality* CM2_Base_Instance::GetGroupQuality() const
-{
-    return m_QualitySettings;
-}
-
 void CM2_Base_Instance::RegisterComponents()
 {
     SetTransformComponent(AddComponent(std::make_shared<CM2_TransformComponent>(shared_from_this())));
-    SetMeshComponent(AddComponent(std::make_shared<CMeshComponent3D>(shared_from_this())));
-    SetColliderComponent(AddComponent(std::make_shared<CM2_ColliderComponent>(shared_from_this())));
 
-    AddComponent(std::make_shared<CLightComponent3D>(shared_from_this()));
+    SetColliderComponent(AddComponent(std::make_shared<CM2_ColliderComponent>(shared_from_this())));
 }
 
 
+
+
+
+
+
+
+
+
+//
+// // ILoadableObject
+//
+bool CM2_Base_Instance::Load()
+{
+	std::shared_ptr<M2> m2 = GetManager<IM2Manager>(GetBaseManager())->Add(m_M2Name);
+	if (m2)
+	{
+		setM2(m2);
+
+		CreateInstances();
+		return true;
+	}
+
+	return false;
+}

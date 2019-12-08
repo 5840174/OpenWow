@@ -8,10 +8,10 @@
 // General
 #include "WMO_Part_Portal.h"
 
-CWMO_Part_Portal::CWMO_Part_Portal(const std::weak_ptr<const CWMO> _parentWMO, const SWMO_PortalDef& _proto) :
-	m_ParentWMO(_parentWMO),
-	m_GrInner(-1),
-	m_GrOuter(-1)
+CWMO_Part_Portal::CWMO_Part_Portal(std::shared_ptr<IRenderDevice> RenderDevice, const std::weak_ptr<const CWMO> _parentWMO, const SWMO_PortalDef& _proto)
+	: m_ParentWMO(_parentWMO)
+	, m_GrInner(-1)
+	, m_GrOuter(-1)
 {
 	m_StartVertex = _proto.startVertex;
 	m_Count = _proto.count;
@@ -20,7 +20,7 @@ CWMO_Part_Portal::CWMO_Part_Portal(const std::weak_ptr<const CWMO> _parentWMO, c
 	m_Plane.normal = Fix_XZmY(_proto.plane.normal);
 	m_Plane.dist = _proto.plane.distance;
 
-	m_Geom = _RenderDevice->CreateMesh();
+	m_Geom = RenderDevice->CreateMesh();
 	m_Geom->AddVertexBuffer(BufferBinding("POSITION", 0), m_ParentWMO.lock()->m_PortalVB);
 }
 
@@ -53,6 +53,10 @@ CWMO_Part_Portal::CWMO_Part_Portal(const std::weak_ptr<const CWMO> _parentWMO, c
 	_Render->r.setFillMode(R_FillMode::RS_FILL_SOLID);
 	_Render->r.setCullMode(R_CullMode::RS_CULL_NONE);*/
 
+
+CWMO_Part_Portal::~CWMO_Part_Portal()
+{
+}
 
 void CWMO_Part_Portal::setGroup(int32 _group, int16 side)
 {

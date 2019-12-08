@@ -24,7 +24,7 @@ void CM2_Part_TextureTransform::calc(uint16 anim, uint32 time, uint32 globalTime
 	quat rollValue;
 	if (roll.uses(anim))
 	{
-		matrix = glm::translate(matrix, vec3(0.5f, 0.5f, 0.5f));
+		matrix = glm::translate(matrix, glm::vec3(0.5f, 0.5f, 0.5f));
 
 		rollValue = roll.getValue(anim, time, globalTime);
 		matrix *= glm::toMat4(rollValue);

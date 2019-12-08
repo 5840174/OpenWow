@@ -3,27 +3,27 @@
 // General
 #include "Sky_Material.h"
 
-Sky_Material::Sky_Material() :
-	MaterialWrapper(_RenderDevice->CreateMaterial(0))
+Sky_Material::Sky_Material(std::shared_ptr<IRenderDevice> RenderDevice) 
+	: MaterialProxie(RenderDevice->CreateMaterial(0))
 {
     std::shared_ptr<IShader> g_pVertexShader;
     std::shared_ptr<IShader> g_pPixelShader;
 
-    if (_RenderDevice->GetDeviceType() == RenderDeviceType::RenderDeviceType_DirectX)
+    if (RenderDevice->GetDeviceType() == RenderDeviceType::RenderDeviceType_DirectX)
     {
-        g_pVertexShader = _RenderDevice->CreateShader(
+        g_pVertexShader = RenderDevice->CreateShader(
             IShader::ShaderType::VertexShader, "shaders_D3D/Sky.hlsl", IShader::ShaderMacros(), "VS_main", "latest"
         );
-        g_pPixelShader = _RenderDevice->CreateShader(
+        g_pPixelShader = RenderDevice->CreateShader(
             IShader::ShaderType::PixelShader, "shaders_D3D/Sky.hlsl", IShader::ShaderMacros(), "PS_main", "latest"
         );
     }
-    else if (_RenderDevice->GetDeviceType() == RenderDeviceType::RenderDeviceType_OpenGL)
+    else if (RenderDevice->GetDeviceType() == RenderDeviceType::RenderDeviceType_OpenGL)
     {
-        g_pVertexShader = _RenderDevice->CreateShader(
+        g_pVertexShader = RenderDevice->CreateShader(
             IShader::ShaderType::VertexShader, "shaders_OGL/Sky.vs", IShader::ShaderMacros(), "", ""
         );
-        g_pPixelShader = _RenderDevice->CreateShader(
+        g_pPixelShader = RenderDevice->CreateShader(
             IShader::ShaderType::PixelShader, "shaders_OGL/Sky.ps", IShader::ShaderMacros(), "", ""
         );
     }

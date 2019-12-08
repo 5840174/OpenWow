@@ -4,7 +4,8 @@
 
 #include "WMO_Group.h"
 
-class CWMO_Liquid_Instance : public Liquid_Instance
+class CWMO_Liquid_Instance 
+	: public CSceneNodeProxie
 {
 public:
 	CWMO_Liquid_Instance(const std::weak_ptr<const WMO_Group> _group);

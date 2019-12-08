@@ -8,10 +8,9 @@
 // General
 #include "M2_Skin_Batch.h"
 
-CM2_Skin_Batch::CM2_Skin_Batch(const std::weak_ptr<const M2> _parentM2, std::shared_ptr<IMesh> _mesh) :
-	MeshWrapper(_mesh),
-	m_ParentM2(_parentM2),
-	m_QualitySettings(GetSettingsGroup<CGroupQuality>(_ApplicationInstance->GetBaseManager()))
+CM2_Skin_Batch::CM2_Skin_Batch(const std::weak_ptr<const M2> _parentM2, std::shared_ptr<IMesh> _mesh) 
+	: MeshProxie(_mesh)
+	, m_ParentM2(_parentM2)
 {
 
 }
@@ -26,13 +25,13 @@ void CM2_Skin_Batch::PostInit()
 
 bool CM2_Skin_Batch::Render(const RenderEventArgs* renderEventArgs, const IConstantBuffer* perObject, UINT indexStartLocation, UINT indexCnt, UINT vertexStartLocation, UINT vertexCnt)
 {
-	const SceneNode3D* sceneNode = dynamic_cast<const SceneNode3D*>(renderEventArgs->Node);
+	const ISceneNode* sceneNode = dynamic_cast<const ISceneNode*>(renderEventArgs->Node);
 	_ASSERT(sceneNode != nullptr);
 
 	const CM2_Base_Instance* sceneNodeAsM2Instance = dynamic_cast<const CM2_Base_Instance*>(sceneNode);
 	_ASSERT(sceneNodeAsM2Instance != nullptr);
 
-	const Camera* camera = renderEventArgs->Camera;
+	const ICamera* camera = renderEventArgs->Camera;
 	_ASSERT(camera != nullptr);
 
 	const SM2_SkinSection& proto = m_SkinSection->getProto();
@@ -109,5 +108,5 @@ bool CM2_Skin_Batch::Render(const RenderEventArgs* renderEventArgs, const IConst
 	}
 
 	
-	return MeshWrapper::Render(renderEventArgs, perObject, 0, proto.indexCount, 0, proto.vertexCount);
+	return MeshProxie::Render(renderEventArgs, perObject, 0, proto.indexCount, 0, proto.vertexCount);
 }

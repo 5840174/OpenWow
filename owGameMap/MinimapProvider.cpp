@@ -6,10 +6,9 @@
 
 vec2 C_MinimapSize = vec2(600.0f, 600.0f);
 
-CMinimapProvider::CMinimapProvider() :
-	m_GroupVideo(GetSettingsGroup<CGroupVideo>(_ApplicationInstance->GetBaseManager()))
+CMinimapProvider::CMinimapProvider(std::shared_ptr<IRenderDevice> RenderDevice)
 {
-	m_File = GetManager<IFilesManager>(_ApplicationInstance->GetBaseManager())->Open("textures\\Minimap\\md5translate.trs");
+	m_File = GetManager<IFilesManager>(RenderDevice->GetBaseManager())->Open("textures\\Minimap\\md5translate.trs");
 }
 
 CMinimapProvider::~CMinimapProvider()

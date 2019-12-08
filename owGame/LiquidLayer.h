@@ -4,10 +4,11 @@
 
 #include "DBC\\Core\DBC__Storage.h"
 
-class CLiquidLayer : public MeshWrapper
+class OW_ENGINE_API CLiquidLayer 
+	: public MeshProxie
 {
 public:
-	CLiquidLayer(std::shared_ptr<IMesh> _mesh);
+	CLiquidLayer(IBaseManager* BaseManager, std::shared_ptr<IMesh> _mesh);
 	virtual ~CLiquidLayer();
 
 	// IMesh
@@ -41,6 +42,6 @@ public:
 	std::vector<std::shared_ptr<ITexture>>    m_Textures;
 
 private:
-	std::weak_ptr<ISkyManager>                                          m_SkyManager;
-	const CGroupQuality*                                                m_QualitySettings;
+	IBaseManager*												m_BaseManager;
+	std::weak_ptr<ISkyManager>                                  m_SkyManager;
 };

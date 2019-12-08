@@ -6,7 +6,7 @@
 // Additional
 #include "RenderPass_Liquid.h"
 
-void AddLiquidPasses(std::shared_ptr<IRenderDevice> device, std::shared_ptr<IRenderTarget> _renderTarget, RenderTechnique * technique, const Viewport * viewport, std::shared_ptr<Scene3D> scene)
+void AddLiquidPasses(std::shared_ptr<IRenderDevice> device, std::shared_ptr<IRenderTarget> _renderTarget, RenderTechnique * technique, const Viewport * viewport, std::shared_ptr<IScene> scene)
 {
 	// STATES
 	IBlendState::BlendMode alphaBlending(true, false, IBlendState::BlendFactor::SrcAlpha, IBlendState::BlendFactor::OneMinusSrcAlpha, IBlendState::BlendOperation::Add, IBlendState::BlendFactor::SrcAlpha, IBlendState::BlendFactor::OneMinusSrcAlpha);
@@ -22,5 +22,5 @@ void AddLiquidPasses(std::shared_ptr<IRenderDevice> device, std::shared_ptr<IRen
 	WMOPipeline->SetRenderTarget(_renderTarget);
 	WMOPipeline->GetRasterizerState()->SetViewport(viewport);
 
-	technique->AddPass(std::make_shared<CRenderPass_Liquid>(scene, WMOPipeline));
+	technique->AddPass(std::make_shared<CRenderPass_Liquid>(device, scene, WMOPipeline));
 }

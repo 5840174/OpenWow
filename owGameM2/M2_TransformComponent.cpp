@@ -6,7 +6,7 @@
 // General
 #include "M2_TransformComponent.h"
 
-CM2_TransformComponent::CM2_TransformComponent(std::shared_ptr<SceneNode3D> OwnerNode)
+CM2_TransformComponent::CM2_TransformComponent(std::shared_ptr<ISceneNode> OwnerNode)
     : CTransformComponent3D(OwnerNode)
 {
 }
@@ -17,7 +17,7 @@ CM2_TransformComponent::~CM2_TransformComponent()
 
 std::shared_ptr<CM2_Base_Instance> CM2_TransformComponent::GetOwnerNode()
 {
-    return std::dynamic_pointer_cast<CM2_Base_Instance, SceneNode>(base::GetOwnerNode());
+    return std::dynamic_pointer_cast<CM2_Base_Instance>(CTransformComponent3D::GetOwnerNode());
 }
 
 
@@ -43,6 +43,6 @@ void CM2_TransformComponent::UpdateLocalTransform()
     }
     else
     {
-        base::UpdateLocalTransform();
+		CTransformComponent3D::UpdateLocalTransform();
     }
 }

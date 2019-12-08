@@ -13,10 +13,11 @@ struct WMO_GroupInfoDef
 	int32			nameoffset;		// name in MOGN chunk (-1 for no name)
 };
 
-CWMO::CWMO(const std::string& Filename) :
-	m_FileName(Filename),
-	m_TexturesNames(nullptr),
-	m_DoodadsFilenames(nullptr)
+CWMO::CWMO(IBaseManager* BaseManager, const std::string& Filename) 
+	: m_FileName(Filename)
+	, m_TexturesNames(nullptr)
+	, m_DoodadsFilenames(nullptr)
+	, m_BaseManager(BaseManager)
 {}
 
 CWMO::~CWMO()
@@ -32,9 +33,9 @@ CWMO::~CWMO()
 //
 // ISceneNodeProvider
 //
-void CWMO::CreateInsances(std::weak_ptr<SceneNode3D> _parent)
+void CWMO::CreateInsances(std::weak_ptr<ISceneNode> _parent)
 {
-	std::shared_ptr<CWMO_Base_Instance> parentAsWMOInstance = std::dynamic_pointer_cast<CWMO_Base_Instance, SceneNode3D>(_parent.lock());
+	std::shared_ptr<CWMO_Base_Instance> parentAsWMOInstance = std::dynamic_pointer_cast<CWMO_Base_Instance>(_parent.lock());
 	_ASSERT(parentAsWMOInstance != nullptr);
 
 	for (auto& it : m_Groups)
@@ -58,7 +59,7 @@ void CWMO::CreateInsances(std::weak_ptr<SceneNode3D> _parent)
 
 bool CWMO::Load()
 {
-	WoWChunkReader reader(m_FileName);
+	WoWChunkReader reader(m_BaseManager, m_FileName);
 
 	std::shared_ptr<IByteBuffer> buffer = nullptr;
 
@@ -89,7 +90,7 @@ bool CWMO::Load()
 	{
 		for (auto mat : reader.OpenChunkT<SWMO_MaterialDef>("MOMT"))
 		{
-			m_Materials.push_back(std::make_shared<WMO_Part_Material>(shared_from_this(), mat));
+			m_Materials.push_back(std::make_shared<WMO_Part_Material>(GetManager<IRenderDevice>(m_BaseManager), shared_from_this(), mat));
 		}
 		_ASSERT(m_Materials.size() == m_Header.nTextures);
 	}
@@ -117,13 +118,13 @@ bool CWMO::Load()
 
 			char fname[256];
 			sprintf_s(fname, "%s_%03d.wmo", temp, cntr);
-			std::shared_ptr<IFile> groupFile = GetManager<IFilesManager>(_ApplicationInstance->GetBaseManager())->Open(fname); // It delete later
+			std::shared_ptr<IFile> groupFile = GetManager<IFilesManager>(m_BaseManager)->Open(fname); // It delete later
 
 			std::string groupName = groupFile->Name();
 			if (groupInfo.nameoffset > 0)
 				groupName = std::string(groupsNames + groupInfo.nameoffset);
 
-			std::shared_ptr<WMO_Group> group = std::make_shared<WMO_Group>(shared_from_this(), cntr, groupName, groupFile);
+			std::shared_ptr<WMO_Group> group = std::make_shared<WMO_Group>(m_BaseManager, shared_from_this(), cntr, groupName, groupFile);
 			m_Groups.push_back(group);
 
 			cntr++;
@@ -151,14 +152,14 @@ bool CWMO::Load()
 		}
 
 		if (! m_PortalVertices.empty())
-			m_PortalVB = _RenderDevice->CreateVertexBuffer(m_PortalVertices);
+			m_PortalVB = GetManager<IRenderDevice>(m_BaseManager)->CreateVertexBuffer(m_PortalVertices);
 	}
 
 	// Portal defs
 	{
 		for (auto pt : reader.OpenChunkT<SWMO_PortalDef>("MOPT"))
 		{
-			m_Portals.push_back(std::make_shared<CWMO_Part_Portal>(shared_from_this(), pt));
+			m_Portals.push_back(std::make_shared<CWMO_Part_Portal>(GetManager<IRenderDevice>(m_BaseManager), shared_from_this(), pt));
 		}
 	}
 

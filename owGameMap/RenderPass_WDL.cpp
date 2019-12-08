@@ -7,9 +7,10 @@
 #include "WDL_LowResTile.h"
 #include "Map.h"
 
-CRenderPass_WDL::CRenderPass_WDL(std::shared_ptr<Scene3D> scene, std::shared_ptr<IPipelineState> pipeline)
-	: base(scene, pipeline)
+CRenderPass_WDL::CRenderPass_WDL(std::shared_ptr<IRenderDevice> RenderDevice, std::shared_ptr<IScene> scene, std::shared_ptr<IPipelineState> pipeline)
+	: Base3DPass(RenderDevice, scene, pipeline)
 {
+	m_WoWSettings = GetManager<ISettings>(RenderDevice->GetBaseManager())->GetGroup("WoWSettings");
 }
 
 CRenderPass_WDL::~CRenderPass_WDL()
@@ -20,13 +21,13 @@ CRenderPass_WDL::~CRenderPass_WDL()
 //
 // IVisitor
 //
-bool CRenderPass_WDL::Visit(SceneNode3D* node)
+bool CRenderPass_WDL::Visit(ISceneNode3D* node)
 {
     CMap* map = dynamic_cast<CMap*>(node);
     if (map == nullptr)
         return false;
 
-    return base::Visit(node);
+    return Base3DPass::Visit(node);
 }
 
 bool CRenderPass_WDL::Visit(IMesh* Mesh, UINT IndexStartLocation, UINT IndexCnt, UINT VertexStartLocation, UINT VertexCnt)

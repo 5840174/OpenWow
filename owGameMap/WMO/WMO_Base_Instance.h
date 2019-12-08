@@ -5,11 +5,15 @@
 #include "WMO_Doodad_Instance.h"
 #include "WMO_Liquid_Instance.h"
 
-class CWMO_Base_Instance : public SceneNode3D
+class CWMO_Base_Instance 
+	: public CSceneNodeProxie
+	, public CLoadableObject
 {
 public:
 	                                                CWMO_Base_Instance(std::string _wmoName);
 	virtual                                         ~CWMO_Base_Instance();
+
+	void Initialize();
 
 	void                                            CreateInstances();
 
@@ -31,10 +35,9 @@ public:
 	uint32                                          getPriority() const override { return 2; };
 
 	// SceneNode3D
-	void                                            UpdateCamera(const Camera* camera) override;
-	bool                                            Accept(IVisitor* visitor) override;
+	void                                            UpdateCamera(const ICamera* camera) override;
 
-    const CGroupQuality*                            GetGroupQuality() const;
+	bool                                            Accept(IVisitor* visitor) override;
 
 protected:
 	std::string                                     m_WMOName;
@@ -45,5 +48,4 @@ protected:
 	
 	std::vector<std::shared_ptr<CWMO_Group_Instance>>  m_GroupInstances;
 	std::vector<std::shared_ptr<CWMO_Group_Instance>>  m_OutdoorGroupInstances;
-    const CGroupQuality*                            m_QualitySettings;
 };

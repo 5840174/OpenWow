@@ -3,9 +3,8 @@
 // General
 #include "Map.h"
 
-CMap::CMap() :
-	m_SkyManager(nullptr),
-	m_QualitySettings(GetSettingsGroup<CGroupQuality>(_ApplicationInstance->GetBaseManager()))
+CMap::CMap(IBaseManager* BaseManager)
+	: m_BaseManager(BaseManager)
 {
 	memset(m_ADTCache, 0, sizeof(m_ADTCache));
 	m_CurrentTileX = m_CurrentTileZ = -1;
@@ -14,7 +13,7 @@ CMap::CMap() :
 
 	if (_MapShared == nullptr)
 	{
-		_MapShared = new CMapShared();
+		_MapShared = new CMapShared(GetManager<IRenderDevice>(m_BaseManager));
 	}
 
 
@@ -31,8 +30,6 @@ CMap::CMap() :
 
 	dir = mProvider->getMinimap("Kalimdor");
 	dir->Load();*/
-
-	setLoaded();
 }
 
 CMap::~CMap()
@@ -50,26 +47,26 @@ void CMap::MapPreLoad(std::shared_ptr<DBC_MapRecord> _map)
 	Log::Print("Map[%s]: Id [%d]. Preloading...", m_MapDBCRecord->Get_Directory(), m_MapDBCRecord->Get_ID());
 
 	m_WDL.reset();
-	m_WDL = std::make_shared<CMapWDL>(std::static_pointer_cast<CMap, SceneNode>(shared_from_this()));
+	m_WDL = std::make_shared<CMapWDL>(m_BaseManager, std::static_pointer_cast<CMap>(shared_from_this()));
 	m_WDL->Load();
 
 	m_WDT.reset();
-	m_WDT = std::make_shared<CMapWDT>(std::static_pointer_cast<CMap, SceneNode>(shared_from_this()));
+	m_WDT = std::make_shared<CMapWDT>(m_BaseManager, std::static_pointer_cast<CMap>(shared_from_this()));
 }
 
 void CMap::MapLoad()
 {
 	Log::Print("Map[%s]: Id [%d]. Loading...", m_MapDBCRecord->Get_Directory(), m_MapDBCRecord->Get_ID());
 
-	DelManager<ISkyManager>(_ApplicationInstance->GetBaseManager());
+	DelManager<ISkyManager>(GetBaseManager());
 	m_SkyManager.reset();
 
 	m_SkyManager = CreateSceneNode<SkyManager>();
     m_SkyManager->Load();
-	AddManager<ISkyManager>(_ApplicationInstance->GetBaseManager(), m_SkyManager);
+	AddManager<ISkyManager>(GetBaseManager(), m_SkyManager);
 
 	m_EnvironmentManager.reset();
-	m_EnvironmentManager = std::make_shared<EnvironmentManager>();
+	m_EnvironmentManager = std::make_shared<EnvironmentManager>(m_BaseManager);
 
 	// Load data
 	m_WDT->Load();
@@ -108,7 +105,7 @@ void CMap::Unload()
 
 // --
 
-void CMap::UpdateCamera(const Camera* camera)
+void CMap::UpdateCamera(const ICamera* camera)
 {
 	bool loading = false;
 	int enteredTileX, enteredTileZ;
@@ -228,7 +225,7 @@ std::shared_ptr<CMapTile> CMap::LoadTile(int32 x, int32 z)
 	// Create new tile
 	m_ADTCache[firstnull] = CreateSceneNode<CMapTile>();
     m_ADTCache[firstnull]->Initialize(x, z);
-	Application::Get().GetLoader()->AddToLoadQueue(m_ADTCache[firstnull]);
+	GetManager<ILoader>(m_BaseManager)->AddToLoadQueue(m_ADTCache[firstnull]);
 	return m_ADTCache[firstnull];
 }
 
@@ -243,7 +240,7 @@ void CMap::ClearCache()
 	}
 }
 
-uint32 CMap::GetAreaID(Camera* camera)
+uint32 CMap::GetAreaID(ICamera* camera)
 {
 	if (!m_WDT->MapHasTiles())
 	{

@@ -3,15 +3,15 @@
 // General
 #include "WoWChunkReader.h"
 
-WoWChunkReader::WoWChunkReader(std::string _fileName)
+WoWChunkReader::WoWChunkReader(IBaseManager* BaseManager, std::string _fileName)
 {
-	m_File = GetManager<IFilesManager>(_ApplicationInstance->GetBaseManager())->Open(_fileName);
+	m_File = GetManager<IFilesManager>(BaseManager)->Open(_fileName);
 	_ASSERT(m_File != nullptr);
 
 	InitMaps();
 }
 
-WoWChunkReader::WoWChunkReader(std::shared_ptr<IFile> file)
+WoWChunkReader::WoWChunkReader(IBaseManager* BaseManager, std::shared_ptr<IFile> file)
 	: m_File(file)
 {
 	InitMaps();

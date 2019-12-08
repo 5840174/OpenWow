@@ -3,24 +3,24 @@
 // General
 #include "LiquidMaterial.h"
 
-LiquidMaterial::LiquidMaterial() :
-	MaterialWrapper(_RenderDevice->CreateMaterial(sizeof(MaterialProperties)))
+LiquidMaterial::LiquidMaterial(IBaseManager* BaseManager) 
+	: MaterialProxie(GetManager<IRenderDevice>(BaseManager)->CreateMaterial(sizeof(MaterialProperties)))
 {
 	m_pProperties = (MaterialProperties*)_aligned_malloc(sizeof(MaterialProperties), 16);
 	*m_pProperties = MaterialProperties();
 
 	// CreateShaders
-	std::shared_ptr<IShader> g_pVertexShader = _RenderDevice->CreateShader(
+	std::shared_ptr<IShader> g_pVertexShader = GetManager<IRenderDevice>(BaseManager)->CreateShader(
 		IShader::ShaderType::VertexShader, "shaders_D3D/Liquid.hlsl", IShader::ShaderMacros(), "VS_main", "latest"
 	);
     g_pVertexShader->LoadInputLayoutFromReflector();
 
-	std::shared_ptr<IShader> g_pPixelShader = _RenderDevice->CreateShader(
+	std::shared_ptr<IShader> g_pPixelShader = GetManager<IRenderDevice>(BaseManager)->CreateShader(
 		IShader::ShaderType::PixelShader, "shaders_D3D/Liquid.hlsl", IShader::ShaderMacros(), "PS_main", "latest"
 	);
 
 	// Create samplers
-	std::shared_ptr<ISamplerState> g_Sampler = _RenderDevice->CreateSamplerState();
+	std::shared_ptr<ISamplerState> g_Sampler = GetManager<IRenderDevice>(BaseManager)->CreateSamplerState();
 	g_Sampler->SetFilter(ISamplerState::MinFilter::MinLinear, ISamplerState::MagFilter::MagLinear, ISamplerState::MipFilter::MipLinear);
 	g_Sampler->SetWrapMode(ISamplerState::WrapMode::Clamp, ISamplerState::WrapMode::Clamp, ISamplerState::WrapMode::Clamp);
 
@@ -69,5 +69,5 @@ void LiquidMaterial::SetColorDark(vec3 value)
 
 void LiquidMaterial::UpdateConstantBuffer() const
 {
-	MaterialWrapper::UpdateConstantBuffer(m_pProperties, sizeof(MaterialProperties));
+	MaterialProxie::UpdateConstantBuffer(m_pProperties, sizeof(MaterialProperties));
 }

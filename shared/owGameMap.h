@@ -25,3 +25,5 @@
 
 // Render stuff
 #include "../owGameMap/CreatePasses.h"
+
+extern "C" __declspec(dllexport) IznPlugin* WINAPI GetPlugin(IBaseManager* BaseManager);

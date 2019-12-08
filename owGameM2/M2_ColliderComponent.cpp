@@ -6,7 +6,7 @@
 // General
 #include "M2_ColliderComponent.h"
 
-CM2_ColliderComponent::CM2_ColliderComponent(std::shared_ptr<SceneNode3D> OwnerNode)
+CM2_ColliderComponent::CM2_ColliderComponent(std::shared_ptr<ISceneNode> OwnerNode)
     : CColliderComponent3D(OwnerNode)
 {
 }
@@ -17,7 +17,7 @@ CM2_ColliderComponent::~CM2_ColliderComponent()
 
 std::shared_ptr<CM2_Base_Instance> CM2_ColliderComponent::GetOwnerNode()
 {
-    return std::dynamic_pointer_cast<CM2_Base_Instance, SceneNode>(base::GetOwnerNode());
+    return std::dynamic_pointer_cast<CM2_Base_Instance>(base::GetOwnerNode());
 }
 
 

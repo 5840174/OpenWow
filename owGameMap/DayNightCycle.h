@@ -5,7 +5,8 @@
 class DayNightCycle
 {
 public:
-	DayNightCycle();
+	DayNightCycle(IBaseManager* BaseManager);
+	virtual ~DayNightCycle();
 
 	DayNightPhase getPhase(uint32 _gameTime);
 

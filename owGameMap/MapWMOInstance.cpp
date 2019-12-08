@@ -19,7 +19,7 @@ CMapWMOInstance::~CMapWMOInstance()
 
 void CMapWMOInstance::Initialize()
 {
-	// do nothing
+	CWMO_Base_Instance::Initialize();
 }
 
 void CMapWMOInstance::Initialize(const ADT_MODF & _placementInfo)
@@ -63,7 +63,7 @@ bool CMapWMOInstance::Accept(IVisitor* visitor)
 		return false;
 	}
 
-	// SceneNode3D
+	// CSceneNodeProxie
 	if (CWMO_Base_Instance::Accept(visitor))
 	{
 		m_AlreadyDraw.insert(m_UniqueId);

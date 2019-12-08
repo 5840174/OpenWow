@@ -8,7 +8,7 @@
 class EnvironmentManager 
 {
 public:
-	EnvironmentManager();
+	EnvironmentManager(IBaseManager* BaseManager);
 	virtual ~EnvironmentManager();
 
 	void outdoorLighting();

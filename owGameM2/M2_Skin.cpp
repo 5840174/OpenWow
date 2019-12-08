@@ -11,15 +11,14 @@
 // Additional
 #include "M2_Part_Material.h"
 
-CM2_Skin::CM2_Skin(const std::weak_ptr<const M2> _model) :
-	m_ParentM2(_model),
-	m_QualitySettings(GetSettingsGroup<CGroupQuality>(_ApplicationInstance->GetBaseManager()))
+CM2_Skin::CM2_Skin(const std::weak_ptr<const M2> _model) 
+	: m_ParentM2(_model)
 {}
 
-void CM2_Skin::CreateInsances(std::weak_ptr<SceneNode3D> _parent)
+void CM2_Skin::CreateInsances(std::weak_ptr<ISceneNode> _parent)
 {
 	for (const auto& batch : m_Batches)
 	{
-		_parent.lock()->GetComponent<CMeshComponent3D>()->AddMesh(batch);
+		_parent.lock()->GetComponent<IMeshComponent3D>()->AddMesh(batch);
 	}
 }

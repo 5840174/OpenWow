@@ -30,6 +30,4 @@ private:
 	float rollResult;
 
 	float fov;
-
-	const CGroupVideo* m_VideoSettings;
 };

@@ -23,8 +23,8 @@ void CWMO_Group_Instance::Initialize()
 {
     BoundingBox bbox = m_Object->m_Bounds;
     bbox.calculateCenter();
-    bbox.transform(GetComponent<CTransformComponent3D>()->GetParentWorldTransform());
-    GetComponent<CColliderComponent3D>()->SetBounds(bbox);
+    bbox.transform(GetComponent<ITransformComponent>()->GetParentWorldTransform());
+    GetComponent<IColliderComponent3D>()->SetBounds(bbox);
 }
 
 void CWMO_Group_Instance::SetPortalVisible(bool Value)
@@ -54,5 +54,5 @@ bool CWMO_Group_Instance::Accept(IVisitor* visitor)
 		return false;
 	}
 
-	return SceneNode3D::Accept(visitor);
+	return CSceneNodeProxie::Accept(visitor);
 }

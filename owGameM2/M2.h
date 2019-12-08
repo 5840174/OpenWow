@@ -18,7 +18,8 @@ class CM2_Builder;
 class CM2_Skin_Builder;
 // FORWARD END
 
-class M2 : public ISceneNodeProvider
+class M2 
+	: public ISceneNodeProvider
 {
 	friend class CM2_Builder;
 	friend class CM2_Skin_Builder;
@@ -26,7 +27,7 @@ public:
 	M2(const std::string& name);
 
 	// ISceneNodeProvider
-	void CreateInsances(std::weak_ptr<SceneNode3D> _parent);
+	void CreateInsances(std::weak_ptr<ISceneNode> _parent);
 
 	void update(double _time, double _dTime);
 	void calc(uint16 _animationIndex, uint32 _time, uint32 globalTime, cmat4 _viewMatrix, cmat4 _worldMatrix);

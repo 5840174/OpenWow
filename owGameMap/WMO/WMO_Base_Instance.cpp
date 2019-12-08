@@ -5,18 +5,22 @@
 
 CWMO_Base_Instance::CWMO_Base_Instance(std::string _wmoName) 
     : m_WMOName(_wmoName)
-    , m_QualitySettings(GetSettingsGroup<CGroupQuality>(_ApplicationInstance->GetBaseManager()))
 {}
 
 CWMO_Base_Instance::~CWMO_Base_Instance()
 {}
 
+void CWMO_Base_Instance::Initialize()
+{
+
+}
+
 
 void CWMO_Base_Instance::CreateInstances()
 {
-	m_WMO->CreateInsances(std::static_pointer_cast<CWMO_Base_Instance, SceneNode3D>(shared_from_this()));
+	m_WMO->CreateInsances(std::static_pointer_cast<CWMO_Base_Instance>(shared_from_this()));
 
-    std::shared_ptr<CTransformComponent3D> transformComponent = GetComponent<CTransformComponent3D>();
+    std::shared_ptr<ITransformComponent> transformComponent = GetComponent<ITransformComponent>();
 
 	if (m_WMO->m_PortalController != nullptr)
 	{
@@ -45,7 +49,7 @@ std::shared_ptr<CWMO> CWMO_Base_Instance::getWMO() const
 
 bool CWMO_Base_Instance::Load()
 {
-	std::shared_ptr<CWMO> wmo = GetManager<IWMOManager>(_ApplicationInstance->GetBaseManager())->Add(m_WMOName);
+	std::shared_ptr<CWMO> wmo = GetManager<IWMOManager>(GetBaseManager())->Add(m_WMOName);
 	if (wmo)
 	{
 		setWMO(wmo);
@@ -63,12 +67,12 @@ bool CWMO_Base_Instance::Delete()
 
 
 
-void CWMO_Base_Instance::UpdateCamera(const Camera* camera)
+void CWMO_Base_Instance::UpdateCamera(const ICamera* camera)
 {
 #ifndef WMO_DISABLE_PORTALS
 	if (m_WMO && m_WMO->m_PortalController)
 	{
-		m_WMO->m_PortalController->Update(std::dynamic_pointer_cast<CWMO_Base_Instance, SceneNode>(shared_from_this()), *camera);
+		m_WMO->m_PortalController->Update(std::dynamic_pointer_cast<CWMO_Base_Instance>(shared_from_this()), camera);
 	}
 #endif
 }
@@ -76,22 +80,17 @@ void CWMO_Base_Instance::UpdateCamera(const Camera* camera)
 bool CWMO_Base_Instance::Accept(IVisitor* visitor)
 {
 	AbstractPass* visitorAsBasePass = dynamic_cast<AbstractPass*>(visitor);
- 	const Camera* camera = visitorAsBasePass->GetRenderEventArgs()->Camera;
+ 	const ICamera* camera = visitorAsBasePass->GetRenderEventArgs()->Camera;
 
-	if (!GetComponent<CColliderComponent3D>()->CheckDistance2D(camera, GetGroupQuality()->ADT_WMO_Distance))
+	/*if (!GetComponent<CColliderComponent3D>()->CheckDistance2D(camera, GetGroupQuality()->ADT_WMO_Distance))
 	{
 		return false;
-	}
+	}*/
 
 	if (!GetComponent<CColliderComponent3D>()->CheckFrustum(camera))
 	{
 		return false;
 	}
 
-	return SceneNode3D::Accept(visitor);
-}
-
-const CGroupQuality* CWMO_Base_Instance::GetGroupQuality() const
-{
-    return m_QualitySettings;
+	return CSceneNodeProxie::Accept(visitor);
 }

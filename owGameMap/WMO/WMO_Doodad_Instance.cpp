@@ -1,5 +1,7 @@
 #include "stdafx.h"
 
+#ifdef USE_M2_MODELS
+
 // General
 #include "WMO_Doodad_Instance.h"
 
@@ -33,7 +35,7 @@ CWMO_Doodad_Instance::~CWMO_Doodad_Instance()
 void CWMO_Doodad_Instance::Initialize(const SWMO_Doodad_PlacementInfo & _placement)
 {
     // CTransformComponent
-    std::shared_ptr<CTransformComponent3D> transformComponent = GetComponent<CTransformComponent3D>();
+    std::shared_ptr<ITransformComponent3D> transformComponent = GetComponent<ITransformComponent3D>();
     {
         transformComponent->SetTranslate(Fix_XZmY(_placement.position));
         transformComponent->SetRotationQuaternion(quat(_placement.orientation.w, -_placement.orientation.z, _placement.orientation.x, _placement.orientation.y));
@@ -50,3 +52,5 @@ bool CWMO_Doodad_Instance::Accept(IVisitor* visitor)
 
 	return CM2_Base_Instance::Accept(visitor);
 }
+
+#endif

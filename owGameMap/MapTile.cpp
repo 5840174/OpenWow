@@ -14,7 +14,6 @@ CMapTile::~CMapTile()
 
 void CMapTile::Initialize()
 {
-	m_QualitySettings = GetSettingsGroup<CGroupQuality>(_ApplicationInstance->GetBaseManager());
 }
 
 void CMapTile::Initialize(uint32 _intexX, uint32 _intexZ)
@@ -57,7 +56,7 @@ std::shared_ptr<CMapChunk> CMapTile::getChunk(int32 x, int32 z)
 bool CMapTile::Accept(IVisitor* visitor)
 {
 	AbstractPass* visitorAsBasePass = dynamic_cast<AbstractPass*>(visitor);
-	const Camera* camera = visitorAsBasePass->GetRenderEventArgs()->Camera;
+	const ICamera* camera = visitorAsBasePass->GetRenderEventArgs()->Camera;
 
 	//if (!GetMapController()->getTileIsCurrent(m_IndexX, m_IndexZ))
 	//{
@@ -70,7 +69,7 @@ bool CMapTile::Accept(IVisitor* visitor)
 	//	return false;
 	//}
 
-	return SceneNode3D::Accept(visitor);
+	return CSceneNodeProxie::Accept(visitor);
 }
 
 bool CMapTile::Load()
@@ -78,7 +77,7 @@ bool CMapTile::Load()
 	char filename[256];
 	sprintf_s(filename, "%s_%d_%d.adt", GetMapController()->GetMapFolder().c_str(), m_IndexX, m_IndexZ);
 
-	std::shared_ptr<IFile> f = GetManager<IFilesManager>(_ApplicationInstance->GetBaseManager())->Open(filename);
+	std::shared_ptr<IFile> f = GetManager<IFilesManager>(GetBaseManager())->Open(filename);
 	uint32_t startPos = f->getPos() + 20;
 	
 	// MVER + size (8)
@@ -189,6 +188,7 @@ bool CMapTile::Load()
 	}
 
 	// M2 PlacementInfo
+#ifdef USE_M2_MODELS
 	std::vector<ADT_MDXDef> m_MDXsPlacementInfo;
 	f->seek(startPos + header.MDDF);
 	{
@@ -203,6 +203,7 @@ bool CMapTile::Load()
 			m_MDXsPlacementInfo.push_back(placementInfo);
 		}
 	}
+#endif
 
 	// WMO PlacementInfo
 	std::vector<ADT_MODF> m_WMOsPlacementInfo;
@@ -225,21 +226,21 @@ bool CMapTile::Load()
 	for (auto& it : m_Textures)
 	{
 		// PreLoad diffuse texture
-		it->diffuseTexture = _RenderDevice->CreateTexture2D(it->textureName);
+		it->diffuseTexture = GetManager<IRenderDevice>(GetBaseManager())->CreateTexture2D(it->textureName);
 
 		// PreLoad specular texture
 		std::string specularTextureName = it->textureName;
 		specularTextureName = specularTextureName.insert(specularTextureName.length() - 4, "_s");
-		it->specularTexture = _RenderDevice->CreateTexture2D(specularTextureName);
+		it->specularTexture = GetManager<IRenderDevice>(GetBaseManager())->CreateTexture2D(specularTextureName);
 	}
 
 	//-- Load Chunks ---------------------------------------------------------------------
 
 	for (uint32_t i = 0; i < C_ChunksInTileGlobal; i++)
 	{
-		std::shared_ptr<CMapChunk> chunk = GetMapController()->CreateSceneNode<CMapChunk>(GetMapController(), std::static_pointer_cast<CMapTile, SceneNode>(shared_from_this()));
+		std::shared_ptr<CMapChunk> chunk = GetMapController()->CreateSceneNode<CMapChunk>(GetMapController(), std::static_pointer_cast<CMapTile>(shared_from_this()));
         chunk->Initialize(f->Path_Name(), chunks[i]);
-		Application::Get().GetLoader()->AddToLoadQueue(chunk);
+		GetManager<ILoader>(GetBaseManager())->AddToLoadQueue(chunk);
 		m_Chunks.push_back(chunk);
 
 		// Update THIS bounds
@@ -252,12 +253,12 @@ bool CMapTile::Load()
 
 	for (auto& it : m_WMOsPlacementInfo)
 	{
-#ifndef _DEBUG
+//#ifndef _DEBUG
 		std::shared_ptr<CMapWMOInstance> inst = CreateSceneNode<CMapWMOInstance>(m_WMOsNames[it.nameIndex]);
         inst->Initialize(it);
-        Application::Get().GetLoader()->AddToLoadQueue(inst);
+		GetManager<ILoader>(GetBaseManager())->AddToLoadQueue(inst);
         m_WMOsInstances.push_back(inst);
-#endif
+//#endif
 
 		// Update THIS bounds
 		//BoundingBox bbox = GetBounds();
@@ -266,14 +267,15 @@ bool CMapTile::Load()
 	}
 
 	//-- MDXs -------------------------------------------------------------------------
+#ifdef USE_M2_MODELS
 	for (auto& it : m_MDXsPlacementInfo)
 	{
-#ifndef _DEBUG
-		std::shared_ptr<CMapM2Instance> inst = CreateSceneNode<CMapM2Instance>(m_MDXsNames[it.nameIndex]);
-        inst->Initialize(it);
-		Application::Get().GetLoader()->AddToLoadQueue(inst);
-		m_MDXsInstances.push_back(inst);
-#endif
+//#ifndef _DEBUG
+//		std::shared_ptr<CMapM2Instance> inst = CreateSceneNode<CMapM2Instance>(m_MDXsNames[it.nameIndex]);
+//        inst->Initialize(it);
+//		Application::Get().GetLoader()->AddToLoadQueue(inst);
+//		m_MDXsInstances.push_back(inst);
+//#endif
 
 		// Update THIS bounds
 		//BoundingBox bbox = GetBounds();
@@ -281,6 +283,8 @@ bool CMapTile::Load()
 		//SetBounds(bbox);
 	}
 	//---------------------------------------------------------------------------------
+#endif
+
 
 	Log::Green("CMapTile[%d, %d, %s]: Loaded!", m_IndexX, m_IndexZ, filename);
 
@@ -299,5 +303,5 @@ bool CMapTile::Delete()
 //
 std::shared_ptr<CMap> CMapTile::GetMapController() const
 {
-    return std::dynamic_pointer_cast<CMap, SceneNode>(GetParent());
+    return std::dynamic_pointer_cast<CMap>(GetParent());
 }

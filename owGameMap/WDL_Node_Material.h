@@ -1,9 +1,9 @@
 #pragma once
 
-class WDL_Node_Material : public MaterialWrapper
+class WDL_Node_Material : public MaterialProxie
 {
 public:
-	WDL_Node_Material();
+	WDL_Node_Material(std::shared_ptr<IRenderDevice> RenderDevice);
 	virtual ~WDL_Node_Material();
 
 	cvec4 GetDiffuseColor() const;

@@ -330,17 +330,17 @@ void CGameState_World::LoadUI()
 	// Font
 	m_CameraPosText = m_UIScene->GetRootNode()->CreateSceneNode<CUITextNode>();
 	m_CameraPosText->SetText("Camera position");
-	m_CameraPosText->GetComponent<CTransformComponentUI>()->SetTranslate(vec2(0.0f, 0.0f));
+	m_CameraPosText->GetComponent<ITransformComponentUI>()->SetTranslate(vec2(0.0f, 0.0f));
 
 	m_CameraRotText = m_UIScene->GetRootNode()->CreateSceneNode<CUITextNode>();
 	m_CameraRotText->SetText("Camera rotation");
-	m_CameraRotText->GetComponent<CTransformComponentUI>()->SetTranslate(vec2(0.0f, 20.0f));
+	m_CameraRotText->GetComponent<ITransformComponentUI>()->SetTranslate(vec2(0.0f, 20.0f));
 
 
     //std::shared_ptr<CUITextureNode> node4 = m_UIScene->GetRootNode()->CreateSceneNode<CUITextureNode>();
     //node4->SetTexture(m_RenderTarget->GetTexture(IRenderTarget::AttachmentPoint::Color0));
-    //node4->GetComponent<CTransformComponentUI>()->SetTranslate(vec2(200.0f, 200.0f));
-    //node4->GetComponent<CTransformComponentUI>()->SetScale(vec2(320.0f, 240.0f));
+    //node4->GetComponent<ITransformComponentUI>()->SetTranslate(vec2(200.0f, 200.0f));
+    //node4->GetComponent<ITransformComponentUI>()->SetScale(vec2(320.0f, 240.0f));
 
 	// Texture
 	if (m_MapController != nullptr)

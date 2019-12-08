@@ -19,5 +19,5 @@ bool CWMO_Liquid_Instance::Accept(IVisitor* visitor)
 	//	return false;
 	//}
 
-	return Liquid_Instance::Accept(visitor);
+	return CSceneNodeProxie::Accept(visitor);
 }

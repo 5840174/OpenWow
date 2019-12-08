@@ -7,15 +7,10 @@
 #include <sockets\\SocketHandlerThread.h>
 #pragma comment(lib, "sockets.lib")
 
-// =================================================================================================
-// Build settings
-// =================================================================================================
-
-#define MDX_PARTICLES_ENABLE
-
 // Interfaces
-#include "SkyManager.h"
-#include "Managers.h"
+#include "Interfaces/ILiquid.h"
+#include "Interfaces/SkyManager.h"
+#include "Interfaces/Managers.h"
 
 // Wow types
 #include "WowTypes.h"

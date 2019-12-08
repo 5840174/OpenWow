@@ -2,10 +2,10 @@
 
 #include "LiquidLayer.h"
 
-class CLiquid
+class OW_ENGINE_API CLiquid
 {
 public:
-	CLiquid(uint32 x, uint32 y);
+	CLiquid(IBaseManager* BaseManager, uint32 x, uint32 y);
     virtual ~CLiquid();
 
 protected:
@@ -20,6 +20,9 @@ public:
 	std::vector<std::shared_ptr<CLiquidLayer>>							m_WaterLayers;
 
 	float                                                               ydir;
+
+private:
+	IBaseManager* m_BaseManager;
 
 private:
 	const vec3 defaultNormal = vec3(0.0f, 1.0f, 0.0f);
