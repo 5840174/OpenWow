@@ -15,7 +15,7 @@ class CMapTile
 	, public CLoadableObject
 {
 public:
-	                                                CMapTile();
+	                                                CMapTile(ISceneNode* RealParent);
 	virtual                                         ~CMapTile();
 
 	void											Initialize() override;
@@ -26,6 +26,11 @@ public:
     std::shared_ptr<CMapChunk>                      getChunk(int32 x, int32 z);
 
 	// SceneNode3D
+	std::string                              GetName() const override
+	{
+		return "MapTile " + std::to_string(m_IndexX) + " - " + std::to_string(m_IndexZ);
+	}
+
 	bool                                            Accept(IVisitor* visitor) override;
 
 	// ILoadableObject
@@ -46,5 +51,8 @@ public:
 	std::vector<std::shared_ptr<CMapChunk>>			m_Chunks;
 
 protected:
-    std::shared_ptr<CMap>							GetMapController() const;
+    CMap*							GetMapController() const;
+
+private:
+	ISceneNode* m_Parent;
 };

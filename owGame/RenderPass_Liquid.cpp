@@ -18,12 +18,12 @@ CRenderPass_Liquid::~CRenderPass_Liquid()
 //
 // IVisitor
 //
-bool CRenderPass_Liquid::Visit(ISceneNode3D* node)
+bool CRenderPass_Liquid::Visit3D(ISceneNode* node)
 {
     Liquid_Instance* liquidInstance = dynamic_cast<Liquid_Instance*>(node);
     if (liquidInstance)
     {
-        return Base3DPass::Visit(node);
+        return Base3DPass::Visit3D(node);
     }
 
     return false;

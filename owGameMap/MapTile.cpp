@@ -6,7 +6,8 @@
 // General
 #include "MapTile.h"
 
-CMapTile::CMapTile() 
+CMapTile::CMapTile(ISceneNode* RealParent)
+	: m_Parent(RealParent)
 {}
 
 CMapTile::~CMapTile()
@@ -64,10 +65,10 @@ bool CMapTile::Accept(IVisitor* visitor)
 	//}
 
 	// Check frustrum
-	//if (!CheckFrustum(camera))
-	//{
-	//	return false;
-	//}
+	if (!!GetComponent<CColliderComponent3D>()->CheckFrustum(camera))
+	{
+		return false;
+	}
 
 	return CSceneNodeProxie::Accept(visitor);
 }
@@ -238,7 +239,7 @@ bool CMapTile::Load()
 
 	for (uint32_t i = 0; i < C_ChunksInTileGlobal; i++)
 	{
-		std::shared_ptr<CMapChunk> chunk = GetMapController()->CreateSceneNode<CMapChunk>(GetMapController(), std::static_pointer_cast<CMapTile>(shared_from_this()));
+		std::shared_ptr<CMapChunk> chunk = CreateWrappedSceneNode<CMapChunk>("SceneNode3D", GetMapController(), std::static_pointer_cast<CMapTile>(shared_from_this()));
         chunk->Initialize(f->Path_Name(), chunks[i]);
 		GetManager<ILoader>(GetBaseManager())->AddToLoadQueue(chunk);
 		m_Chunks.push_back(chunk);
@@ -254,7 +255,7 @@ bool CMapTile::Load()
 	for (auto& it : m_WMOsPlacementInfo)
 	{
 //#ifndef _DEBUG
-		std::shared_ptr<CMapWMOInstance> inst = CreateSceneNode<CMapWMOInstance>(m_WMOsNames[it.nameIndex]);
+		std::shared_ptr<CMapWMOInstance> inst = CreateWrappedSceneNode<CMapWMOInstance>("SceneNode3D", m_WMOsNames[it.nameIndex]);
         inst->Initialize(it);
 		GetManager<ILoader>(GetBaseManager())->AddToLoadQueue(inst);
         m_WMOsInstances.push_back(inst);
@@ -301,7 +302,7 @@ bool CMapTile::Delete()
 //
 // Protected
 //
-std::shared_ptr<CMap> CMapTile::GetMapController() const
+CMap* CMapTile::GetMapController() const
 {
-    return std::dynamic_pointer_cast<CMap>(GetParent());
+    return dynamic_cast<CMap*>(m_Parent);
 }

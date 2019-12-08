@@ -22,7 +22,7 @@ void CMapWDT::CreateInsances(std::weak_ptr<ISceneNode> _parent)
 	Log::Green("Map_GlobalWMOs[]: Global WMO exists [%s].", !m_GlobalWMOName.empty() ? "true" : "false");
 	if (!m_GlobalWMOName.empty())
 	{
-		m_GlobalWMO = _parent.lock()->CreateSceneNode<CMapWMOInstance>(m_GlobalWMOName);
+		m_GlobalWMO = _parent.lock()->CreateWrappedSceneNode<CMapWMOInstance>("SceneNode3D", m_GlobalWMOName);
 		m_GlobalWMO->Initialize(m_GlobalWMOPlacementInfo);
 
 		GetManager<ILoader>(m_BaseManager)->AddToLoadQueue(m_GlobalWMO);

@@ -21,7 +21,7 @@ CRenderPass_WMO::~CRenderPass_WMO()
 //
 // IVisitor
 //
-bool CRenderPass_WMO::Visit(ISceneNode3D* node)
+bool CRenderPass_WMO::Visit3D(ISceneNode* node)
 {
     CWMO_Base_Instance* wmoInstance = dynamic_cast<CWMO_Base_Instance*>(node);
     CWMO_Group_Instance* wmoGroupInstance = dynamic_cast<CWMO_Group_Instance*>(node);
@@ -29,5 +29,5 @@ bool CRenderPass_WMO::Visit(ISceneNode3D* node)
     if (!wmoInstance && !wmoGroupInstance)
         return false;
 
-    return Base3DPass::Visit(node);
+    return Base3DPass::Visit3D(node);
 }

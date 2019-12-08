@@ -3,19 +3,22 @@
 // General
 #include "owGameMap.h"
 
+// Additional
+#include "WMO/WMOsManager.h"
+#include "Map.h"
+#include "GameState/GameState_Map.h"
 
 extern CLog* gLogInstance;
 
 class COpenWoWMapAndWMOPlguin
 	: public IznPlugin
 	, public ISceneNodeCreator
+	, public IGameStateCreator
 {
 public:
 	COpenWoWMapAndWMOPlguin(IBaseManager* BaseManager)
 		: m_BaseManager(BaseManager)
-	{
-		OpenDBs(m_BaseManager);
-	}
+	{}
 	virtual ~COpenWoWMapAndWMOPlguin()
 	{}
 
@@ -27,6 +30,13 @@ public:
 	bool Initialize() override
 	{
 		gLogInstance = std::dynamic_pointer_cast<CLog>(GetManager<ILog>(m_BaseManager)).get();
+
+		GetManager<IFilesManager>(m_BaseManager)->RegisterFilesStorage(std::make_shared<CMPQFilesStorage>("D:\\_games\\World of Warcraft 1.12.1\\Data\\", IFilesStorageEx::PRIOR_HIGH));
+
+		OpenDBs(m_BaseManager);
+
+		std::shared_ptr<IWMOManager> wmoManager = std::make_shared<WMOsManager>(m_BaseManager);
+		AddManager<IWMOManager>(m_BaseManager, wmoManager);
 
 		return true;
 	}
@@ -48,29 +58,50 @@ public:
 	//
 	// ISceneNodeCreator
 	//
-	size_t GetSceneNodesCount() const
+	size_t GetSceneNodesCount() const override
 	{
 		return 1;
 	}
-	std::string GetSceneNodeTypeName(size_t Index) const
+	std::string GetSceneNodeTypeName(size_t Index) const override
 	{
 		if (Index == 0)
 		{
-			return "WoWLiquid";
+			return "WoWMap";
 		}
 
-		throw std::exception(("COpenWoWGamePlguin::GetSceneNodeTypeName: Index '" + std::to_string(Index) + "' out of bounds.").c_str());
+		return nullptr;
 	}
-	std::shared_ptr<ISceneNode> CreateSceneNode(std::shared_ptr<ISceneNode> Parent, size_t Index) const
+	std::shared_ptr<ISceneNode> CreateSceneNode(std::weak_ptr<ISceneNode> Parent, size_t Index) const override
 	{
 		if (Index == 0)
 		{
-			return nullptr;//Parent->CreateSceneNode<Liquid_Instance>();
+			return Parent.lock()->CreateSceneNode<CMap>(m_BaseManager);
 		}
 
-		throw std::exception(("COpenWoWGamePlguin::CreateSceneNode: Index '" + std::to_string(Index) + "' out of bounds.").c_str());
+		return nullptr;
 	}
 
+
+
+	//
+	// IGameStateCreator
+	//
+	size_t GetGameStatesCount() const override
+	{
+		return 1;
+	}
+	std::string GetGameStateName(size_t Index) const override
+	{
+		return "GameState_Map";
+	}
+	GameStatePriority GetGameStatePriority(size_t Index) const override
+	{
+		return 5;
+	}
+	std::shared_ptr<IGameState> CreateGameState(size_t Index, std::shared_ptr<IRenderWindow> RenderWindow) const override
+	{
+		return std::make_shared<CGameState_Map>(m_BaseManager, RenderWindow);
+	}
 
 private:
 	IBaseManager* m_BaseManager;
@@ -80,7 +111,7 @@ private:
 
 
 IznPlugin* plugin = nullptr;
-IznPlugin* WINAPI GetPlugin(IBaseManager* BaseManager)
+extern "C" __declspec(dllexport) IznPlugin* WINAPI GetPlugin(IBaseManager* BaseManager)
 {
 	if (plugin == nullptr)
 	{

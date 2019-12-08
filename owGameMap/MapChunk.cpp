@@ -12,7 +12,7 @@
 #include "Map_Shared.h"
 #include "MapChunkMaterial.h"
 
-CMapChunk::CMapChunk(std::shared_ptr<CMap> _mapController, std::weak_ptr<CMapTile> _parentTile) 
+CMapChunk::CMapChunk(CMap* _mapController, std::weak_ptr<CMapTile> _parentTile) 
 	: m_MapController(_mapController)
 	, m_ParentADT(_parentTile)
 {}
@@ -243,7 +243,7 @@ bool CMapChunk::Load()
 	// Alpha
 	m_File->seek(startPos + header.ofsAlpha);
 	{
-		std::shared_ptr<CMap> mapController = m_MapController.lock();
+		CMap* mapController = m_MapController;
 		_ASSERT(mapController != NULL);
 
 		for (uint32 i = 1; i < header.nLayers; i++)

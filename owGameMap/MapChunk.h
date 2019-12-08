@@ -12,7 +12,7 @@ class CMapChunk
 	, public CLoadableObject
 {
 public:
-	                                                CMapChunk(std::shared_ptr<CMap> _mapController, std::weak_ptr<CMapTile> _parentTile);
+	                                                CMapChunk(CMap* _mapController, std::weak_ptr<CMapTile> _parentTile);
 	virtual                                         ~CMapChunk();
 
 	void                                            Initialize() override;
@@ -22,6 +22,11 @@ public:
     uint32                                          GetAreaID() const;
 
 	// SceneNode3D
+	std::string                              GetName() const override
+	{
+		return "MapChunk " + std::to_string(mcin.offset);
+	}
+
 	bool                                            Accept(IVisitor* visitor) override;
 
 	// ILoadable
@@ -49,7 +54,7 @@ private:
 	std::shared_ptr<IMesh>                          __geomDefault;
 
 private:
-	const std::weak_ptr<CMap>						m_MapController;
+	CMap*						m_MapController;
 	const std::weak_ptr<CMapTile>			        m_ParentADT;
 	//const CGroupQuality*						    m_QualitySettings;
 };

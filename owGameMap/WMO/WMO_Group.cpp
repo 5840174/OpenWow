@@ -39,7 +39,7 @@ void WMO_Group::CreateInsances(std::weak_ptr<CWMO_Group_Instance> _parent) const
 		vec3 realPos = Fix_XZmY(m_LiquidHeader.pos);
 		realPos.y = 0.0f; // why they do this???
 
-		std::shared_ptr<CWMO_Liquid_Instance> liquid = _parent.lock()->CreateSceneNode<CWMO_Liquid_Instance>(weak_from_this());
+		std::shared_ptr<CWMO_Liquid_Instance> liquid = _parent.lock()->CreateWrappedSceneNode<CWMO_Liquid_Instance>("SceneNode3D", weak_from_this());
         std::dynamic_pointer_cast<ILiquidInstanceInitializaton>(liquid)->Initialize(m_WMOLiqiud, realPos);
 		_parent.lock()->addLiquidInstance(liquid);
 	}

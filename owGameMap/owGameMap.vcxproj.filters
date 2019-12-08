@@ -37,6 +37,9 @@
     <Filter Include="WMO\Parts">
       <UniqueIdentifier>{e7a9007d-2a2e-4a1e-9c1a-92a5da501c20}</UniqueIdentifier>
     </Filter>
+    <Filter Include="GameStates">
+      <UniqueIdentifier>{a64d42a4-debf-4588-9af4-7d7a8c9709c0}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Map_Shared.cpp">
@@ -167,6 +170,9 @@
     </ClCompile>
     <ClCompile Include="..\owGame\DBC\Core\DBC__Storage.cpp">
       <Filter>Common</Filter>
+    </ClCompile>
+    <ClCompile Include="GameState\GameState_Map.cpp">
+      <Filter>GameStates</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -310,6 +316,9 @@
     </ClInclude>
     <ClInclude Include="Map.h">
       <Filter>Map</Filter>
+    </ClInclude>
+    <ClInclude Include="GameState\GameState_Map.h">
+      <Filter>GameStates</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

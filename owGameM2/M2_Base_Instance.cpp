@@ -101,10 +101,10 @@ bool CM2_Base_Instance::Accept(IVisitor* visitor)
 	const ICamera* camera = visitorAsBasePass->GetRenderEventArgs()->Camera;
 
 	float distToCamera2D = (camera->GetTranslation() - GetComponent<IColliderComponent3D>()->GetBounds().getCenter()).length() - GetComponent<IColliderComponent3D>()->GetBounds().getRadius();
-	if (distToCamera2D > m_QualitySettings->ADT_MDX_Distance)
-	{
-		return false;
-	}
+	//if (distToCamera2D > m_QualitySettings->ADT_MDX_Distance)
+	//{
+	//	return false;
+	//}
 
 	if (!GetComponent<IColliderComponent3D>()->CheckFrustum(camera))
 	{

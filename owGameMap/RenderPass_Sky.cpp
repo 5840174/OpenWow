@@ -20,11 +20,11 @@ CRenderPass_Sky::~CRenderPass_Sky()
 //
 // IVisitor
 //
-bool CRenderPass_Sky::Visit(ISceneNode3D* node)
+bool CRenderPass_Sky::Visit3D(ISceneNode* node)
 {
     SkyManager* skyManagerInstance = dynamic_cast<SkyManager*>(node);
     if (skyManagerInstance == nullptr)
         return false;
 
-    return Base3DPass::Visit(node);
+    return Base3DPass::Visit3D(node);
 }

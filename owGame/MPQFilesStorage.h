@@ -22,7 +22,7 @@ struct SMPQFileLocation
 	uint32 fileNumber;
 };
 
-class CMPQFilesStorage : public IFilesStorage, public IFilesStorageEx
+class OW_ENGINE_API CMPQFilesStorage : public IFilesStorage, public IFilesStorageEx
 {
 public:
 	CMPQFilesStorage(std::string _path, Priority _priority = PRIOR_NORMAL);

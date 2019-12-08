@@ -35,6 +35,11 @@ public:
 	uint32                                          getPriority() const override { return 2; };
 
 	// SceneNode3D
+	std::string                              GetName() const override
+	{
+		return "WMO '" + m_WMOName + "'";
+	}
+
 	void                                            UpdateCamera(const ICamera* camera) override;
 
 	bool                                            Accept(IVisitor* visitor) override;

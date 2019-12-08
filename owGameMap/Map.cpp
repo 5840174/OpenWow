@@ -61,7 +61,7 @@ void CMap::MapLoad()
 	DelManager<ISkyManager>(GetBaseManager());
 	m_SkyManager.reset();
 
-	m_SkyManager = CreateSceneNode<SkyManager>();
+	m_SkyManager = CreateWrappedSceneNode<SkyManager>("SceneNode3D", this);
     m_SkyManager->Load();
 	AddManager<ISkyManager>(GetBaseManager(), m_SkyManager);
 
@@ -223,7 +223,7 @@ std::shared_ptr<CMapTile> CMap::LoadTile(int32 x, int32 z)
 	}
 
 	// Create new tile
-	m_ADTCache[firstnull] = CreateSceneNode<CMapTile>();
+	m_ADTCache[firstnull] = CreateWrappedSceneNode<CMapTile>("SceneNode3D", this);
     m_ADTCache[firstnull]->Initialize(x, z);
 	GetManager<ILoader>(m_BaseManager)->AddToLoadQueue(m_ADTCache[firstnull]);
 	return m_ADTCache[firstnull];

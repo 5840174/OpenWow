@@ -9,6 +9,8 @@
 //--               World of warcraft                     --//
 //---------------------------------------------------------//
 
+#include "../owGame/MPQFilesStorage.h"
+
 // Map
 #include "../owGameMap/Map.h"
 
@@ -25,5 +27,3 @@
 
 // Render stuff
 #include "../owGameMap/CreatePasses.h"
-
-extern "C" __declspec(dllexport) IznPlugin* WINAPI GetPlugin(IBaseManager* BaseManager);

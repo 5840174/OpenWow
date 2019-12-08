@@ -40,7 +40,7 @@ void CWMO::CreateInsances(std::weak_ptr<ISceneNode> _parent)
 
 	for (auto& it : m_Groups)
 	{
-		std::shared_ptr<CWMO_Group_Instance> groupInstance = _parent.lock()->CreateSceneNode<CWMO_Group_Instance>(it);
+		std::shared_ptr<CWMO_Group_Instance> groupInstance = _parent.lock()->CreateWrappedSceneNode<CWMO_Group_Instance>("SceneNode3D", it);
         groupInstance->Initialize();
 		parentAsWMOInstance->AddGroupInstance(groupInstance);
 		if (it->m_Header.flags.IS_OUTDOOR)

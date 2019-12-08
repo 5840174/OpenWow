@@ -28,6 +28,11 @@ public:
 	uint32                                          GetAreaID(ICamera* camera);
 
 	// Scene node
+	std::string                              GetName() const override
+	{
+		return "Map";
+	}
+
 	void                                            UpdateCamera(const ICamera* camera) override;
 
 public: // Getters

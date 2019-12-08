@@ -18,9 +18,7 @@ class COpenWoWGamePlguin
 public:
 	COpenWoWGamePlguin(IBaseManager* BaseManager)
 		: m_BaseManager(BaseManager)
-	{
-		OpenDBs(m_BaseManager);
-	}
+	{}
 	virtual ~COpenWoWGamePlguin()
 	{}
 
@@ -35,6 +33,8 @@ public:
 
 		GetManager<ISettings>(m_BaseManager)->AddGroup("WoWSettings", std::make_shared<CWoWSettingsGroup>());
 		GetManager<IFilesManager>(m_BaseManager)->RegisterFilesStorage(std::make_shared<CMPQFilesStorage>("D:\\_games\\World of Warcraft 1.12.1\\Data\\", IFilesStorageEx::PRIOR_HIGH));
+
+		OpenDBs(m_BaseManager);
 
 		return true;
 	}
@@ -69,11 +69,11 @@ public:
 
 		throw std::exception(("COpenWoWGamePlguin::GetSceneNodeTypeName: Index '" + std::to_string(Index) + "' out of bounds.").c_str());
 	}
-	std::shared_ptr<ISceneNode> CreateSceneNode(std::shared_ptr<ISceneNode> Parent, size_t Index) const
+	std::shared_ptr<ISceneNode> CreateSceneNode(std::weak_ptr<ISceneNode> Parent, size_t Index) const
 	{
 		if (Index == 0)
 		{
-			return Parent->CreateSceneNode<Liquid_Instance>();
+			return Parent.lock()->CreateSceneNode<Liquid_Instance>();
 		}
 
 		throw std::exception(("COpenWoWGamePlguin::CreateSceneNode: Index '" + std::to_string(Index) + "' out of bounds.").c_str());
@@ -88,7 +88,7 @@ private:
 
 
 IznPlugin* plugin = nullptr;
-IznPlugin* WINAPI GetPlugin(IBaseManager* BaseManager)
+extern "C" __declspec(dllexport) IznPlugin* WINAPI GetPlugin(IBaseManager* BaseManager)
 {
 	if (plugin == nullptr)
 	{

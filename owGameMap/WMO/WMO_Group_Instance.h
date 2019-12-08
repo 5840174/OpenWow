@@ -41,6 +41,11 @@ public:
     const LuqidInstances& getLiquidInstances() { return m_Liquids; }
 
 	// SceneNode3D
+	std::string                              GetName() const override
+	{
+		return "WMOGroup '" + m_Object->m_GroupName + "'";
+	}
+
 	bool Accept(IVisitor* visitor) override;
 
 private:

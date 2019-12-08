@@ -22,5 +22,3 @@
 
 
 #include "../owGame/CreatePasses.h"
-
-extern "C" __declspec(dllexport) IznPlugin* WINAPI GetPlugin(IBaseManager* BaseManager);

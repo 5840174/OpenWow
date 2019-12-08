@@ -20,11 +20,11 @@ CRenderPass_ADT_MCNK::~CRenderPass_ADT_MCNK()
 //
 // IVisitor
 //
-bool CRenderPass_ADT_MCNK::Visit(ISceneNode3D* node)
+bool CRenderPass_ADT_MCNK::Visit3D(ISceneNode* node)
 {
     CMapChunk* adtMCNKInstance = dynamic_cast<CMapChunk*>(node);
     if (adtMCNKInstance == nullptr)
         return false;
 
-    return Base3DPass::Visit(node);
+    return Base3DPass::Visit3D(node);
 }

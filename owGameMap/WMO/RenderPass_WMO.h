@@ -7,7 +7,7 @@ public:
 	virtual ~CRenderPass_WMO();
 
     // IVisitor
-    bool Visit(ISceneNode3D* node) override final;
+    bool Visit3D(ISceneNode* node) override final;
 
 private:
 	std::shared_ptr<ISettingGroup> m_WoWSettings;

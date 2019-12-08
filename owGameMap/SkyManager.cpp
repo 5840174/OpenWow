@@ -17,7 +17,8 @@ const float  C_SkyAngles[] = { 90.0f,                          30.0f,           
 const uint32 C_Skycolors[] = { LightColors::LIGHT_COLOR_SKY_0, LightColors::LIGHT_COLOR_SKY_1, LightColors::LIGHT_COLOR_SKY_2, LightColors::LIGHT_COLOR_SKY_3, LightColors::LIGHT_COLOR_SKY_4, LightColors::LIGHT_COLOR_FOG, LightColors::LIGHT_COLOR_FOG };
 const uint32 C_SkycolorsCount = 7;
 
-SkyManager::SkyManager()
+SkyManager::SkyManager(ISceneNode* RealParent)
+	: m_Parent(RealParent)
 {}
 
 SkyManager::~SkyManager()
@@ -38,7 +39,7 @@ void SkyManager::UpdateCamera(const ICamera* camera)
 
 bool SkyManager::Load()
 {
-    for (auto it : DBC_Light)
+    for (const auto& it : DBC_Light)
     {
         if (GetMapController()->GetMapDBCRecord()->Get_ID() == it->Get_MapID()->Get_ID())
         {
@@ -146,9 +147,9 @@ void SkyManager::Calculate(const ICamera* camera, uint32 _time)
 }*/
 
 
-std::shared_ptr<CMap> SkyManager::GetMapController() const
+CMap* SkyManager::GetMapController() const
 {
-    return std::dynamic_pointer_cast<CMap>(GetParent());
+    return dynamic_cast<CMap*>(m_Parent);
 }
 
 void SkyManager::InitBuffer()

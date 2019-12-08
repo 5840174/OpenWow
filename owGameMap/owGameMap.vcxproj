@@ -20,6 +20,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\owGame\DBC\Core\DBC__Storage.cpp" />
+    <ClCompile Include="GameState\GameState_Map.cpp" />
     <ClCompile Include="MapChunkMaterial.cpp" />
     <ClCompile Include="owGameMap.cpp" />
     <ClCompile Include="RenderPass_ADT_MCNK.cpp" />
@@ -70,6 +71,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\shared\owGameMap.h" />
+    <ClInclude Include="GameState\GameState_Map.h" />
     <ClInclude Include="MapChunkMaterial.h" />
     <ClInclude Include="RenderPass_ADT_MCNK.h" />
     <ClInclude Include="MapLiquid.h" />

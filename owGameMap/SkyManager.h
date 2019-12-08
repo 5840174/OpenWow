@@ -12,7 +12,7 @@ class SkyManager
 	, public ISkyManager
 {
 public:
-	                                                SkyManager();
+	                                                SkyManager(ISceneNode* RealParent);
 	virtual                                         ~SkyManager();
 
 	// SceneNode3D
@@ -33,7 +33,7 @@ public:
 	float                                           GetOceanDarkAlpha() const override { return m_Interpolated.GetWaterAplha(LightWaterAlpha::OCEAN_DEEP); }
 
 protected:
-    std::shared_ptr<CMap>                           GetMapController() const;
+    CMap*											GetMapController() const;
 
 private:
 	void                                            InitBuffer();
@@ -45,5 +45,11 @@ private:
 	std::shared_ptr<IBuffer>                        colorsBuffer;
 
 	std::vector<std::shared_ptr<Sky>>               skies;
+
+
+
+
+
+	ISceneNode* m_Parent;
 };
 

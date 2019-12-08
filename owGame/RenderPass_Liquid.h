@@ -7,5 +7,5 @@ public:
 	virtual ~CRenderPass_Liquid();
 
     // IVisitor
-    bool Visit(ISceneNode3D* node) override final;
+    bool Visit3D(ISceneNode* node) override final;
 };

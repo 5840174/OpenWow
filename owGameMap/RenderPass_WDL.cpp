@@ -21,13 +21,13 @@ CRenderPass_WDL::~CRenderPass_WDL()
 //
 // IVisitor
 //
-bool CRenderPass_WDL::Visit(ISceneNode3D* node)
+bool CRenderPass_WDL::Visit3D(ISceneNode* node)
 {
     CMap* map = dynamic_cast<CMap*>(node);
     if (map == nullptr)
         return false;
 
-    return Base3DPass::Visit(node);
+    return Base3DPass::Visit3D(node);
 }
 
 bool CRenderPass_WDL::Visit(IMesh* Mesh, UINT IndexStartLocation, UINT IndexCnt, UINT VertexStartLocation, UINT VertexCnt)

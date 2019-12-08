@@ -1,7 +1,7 @@
 #pragma once
 
 class CWoWSettingsGroup
-	: public CSettingsGroup
+	: public CSettingsGroupBase
 {
 public:
 	CWoWSettingsGroup();
