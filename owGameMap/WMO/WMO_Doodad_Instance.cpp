@@ -43,6 +43,10 @@ void CWMO_Doodad_Instance::Initialize(const SWMO_Doodad_PlacementInfo & _placeme
     }
 }
 
+void CWMO_Doodad_Instance::Initialize()
+{
+}
+
 bool CWMO_Doodad_Instance::Accept(IVisitor* visitor)
 {
 	if (!m_PortalVis)

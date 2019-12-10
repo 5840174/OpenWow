@@ -87,7 +87,5 @@ std::shared_ptr<IByteBuffer> WoWChunkReader::GetChunk(ChunkInfo chunks)
 
 	m_File->seek(offset);
 
-	std::shared_ptr<CByteBuffer> byteBuffer = std::make_shared<CByteBuffer>();
-	byteBuffer->CopyData(m_File->getDataFromCurrent(), size);
-	return byteBuffer;
+	return std::make_shared<CByteBufferOnlyPointer>(m_File->getDataFromCurrent(), size);
 }

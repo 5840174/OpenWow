@@ -6,7 +6,7 @@
 #include "WMO_Liquid_Instance.h"
 
 class CWMO_Base_Instance 
-	: public CSceneNodeProxie
+	: public SceneNode3D
 	, public CLoadableObject
 {
 public:

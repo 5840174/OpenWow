@@ -19,6 +19,4 @@
 
 // Liquid
 #include "../owGame/Liquid.h"
-
-
-#include "../owGame/CreatePasses.h"
+#include "../owGame/LiquidInstance.h"

@@ -2,8 +2,8 @@
 
 #include "M2.h"
 
-class CM2_Base_Instance 
-	: public CSceneNodeProxie
+class OW_ENGINE_API CM2_Base_Instance 
+	: public SceneNode3D
 	, public CLoadableObject
 {
 public:

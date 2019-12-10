@@ -28,12 +28,12 @@ CRenderPass_M2::~CRenderPass_M2()
 //
 // IVisitor
 //
-bool CRenderPass_M2::Visit(ISceneNode3D* node)
+bool CRenderPass_M2::Visit3D(ISceneNode* node)
 {
     CM2_Base_Instance* m2Instance = dynamic_cast<CM2_Base_Instance*>(node);
     if (m2Instance)
     {
-        return Base3DPass::Visit(node);
+        return Base3DPass::Visit3D(node);
     }
 
     return false;

@@ -6,7 +6,8 @@
 #include <owGame.h>
 #pragma comment(lib, "owGame.lib")
 
-//#include <owGameM2.h>
+#include <owGameM2.h>
+#pragma comment(lib, "owGameM2.lib")
 
 #include "common.h"
 

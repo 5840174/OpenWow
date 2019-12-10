@@ -79,18 +79,5 @@ void CWMO_Base_Instance::UpdateCamera(const ICamera* camera)
 
 bool CWMO_Base_Instance::Accept(IVisitor* visitor)
 {
-	AbstractPass* visitorAsBasePass = dynamic_cast<AbstractPass*>(visitor);
- 	const ICamera* camera = visitorAsBasePass->GetRenderEventArgs()->Camera;
-
-	/*if (!GetComponent<CColliderComponent3D>()->CheckDistance2D(camera, GetGroupQuality()->ADT_WMO_Distance))
-	{
-		return false;
-	}*/
-
-	if (!GetComponent<CColliderComponent3D>()->CheckFrustum(camera))
-	{
-		return false;
-	}
-
-	return CSceneNodeProxie::Accept(visitor);
+	return SceneNode3D::Accept(visitor);
 }

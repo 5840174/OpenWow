@@ -3,7 +3,7 @@
 #include "Liquid.h"
 
 class OW_ENGINE_API Liquid_Instance
-	: public CSceneNodeProxie
+	: public SceneNode3D
 	, public ILiquidInstanceInitializaton
 {
 public:
@@ -13,7 +13,7 @@ public:
 	// ILiquidInstanceInitializaton
     void Initialize(std::shared_ptr<CLiquid> LiquidObject, vec3 Position) override;
 
-	// CSceneNodeProxie
+	// ISceneNode
 	void Initialize() override;
 	void Finalize() override;
 };

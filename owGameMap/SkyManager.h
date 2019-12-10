@@ -7,7 +7,7 @@ class CMap;
 // FORWARD END
 
 class SkyManager 
-	: public CSceneNodeProxie
+	: public SceneNode3D
 	, public CLoadableObject
 	, public ISkyManager
 {

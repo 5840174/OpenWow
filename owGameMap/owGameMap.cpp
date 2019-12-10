@@ -31,8 +31,6 @@ public:
 	{
 		gLogInstance = std::dynamic_pointer_cast<CLog>(GetManager<ILog>(m_BaseManager)).get();
 
-		GetManager<IFilesManager>(m_BaseManager)->RegisterFilesStorage(std::make_shared<CMPQFilesStorage>("D:\\_games\\World of Warcraft 1.12.1\\Data\\", IFilesStorageEx::PRIOR_HIGH));
-
 		OpenDBs(m_BaseManager);
 
 		std::shared_ptr<IWMOManager> wmoManager = std::make_shared<WMOsManager>(m_BaseManager);
@@ -105,7 +103,6 @@ public:
 
 private:
 	IBaseManager* m_BaseManager;
-	std::shared_ptr<IRenderDevice> m_CachedRenderDevice;
 };
 
 

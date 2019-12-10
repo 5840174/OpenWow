@@ -64,13 +64,7 @@ bool CMapTile::Accept(IVisitor* visitor)
 	//	return false;
 	//}
 
-	// Check frustrum
-	if (!!GetComponent<CColliderComponent3D>()->CheckFrustum(camera))
-	{
-		return false;
-	}
-
-	return CSceneNodeProxie::Accept(visitor);
+	return SceneNode3D::Accept(visitor);
 }
 
 bool CMapTile::Load()
@@ -245,9 +239,9 @@ bool CMapTile::Load()
 		m_Chunks.push_back(chunk);
 
 		// Update THIS bounds
-		//BoundingBox bbox = GetBounds();
-		//bbox.makeUnion(chunk->GetBounds());
-		//SetBounds(bbox);
+		BoundingBox bbox = GetComponent<IColliderComponent3D>()->GetBounds();
+		bbox.makeUnion(chunk->GetComponent<IColliderComponent3D>()->GetBounds());
+		GetComponent<IColliderComponent3D>()->SetBounds(bbox);
 	}
 
 	//-- WMOs --------------------------------------------------------------------------
@@ -262,9 +256,9 @@ bool CMapTile::Load()
 //#endif
 
 		// Update THIS bounds
-		//BoundingBox bbox = GetBounds();
-		//bbox.makeUnion(inst->GetBounds());
-		//SetBounds(bbox);
+		BoundingBox bbox = GetComponent<IColliderComponent3D>()->GetBounds();
+		bbox.makeUnion(inst->GetComponent<IColliderComponent3D>()->GetBounds());
+		GetComponent<IColliderComponent3D>()->SetBounds(bbox);
 	}
 
 	//-- MDXs -------------------------------------------------------------------------
@@ -272,16 +266,16 @@ bool CMapTile::Load()
 	for (auto& it : m_MDXsPlacementInfo)
 	{
 //#ifndef _DEBUG
-//		std::shared_ptr<CMapM2Instance> inst = CreateSceneNode<CMapM2Instance>(m_MDXsNames[it.nameIndex]);
-//        inst->Initialize(it);
-//		Application::Get().GetLoader()->AddToLoadQueue(inst);
-//		m_MDXsInstances.push_back(inst);
+		std::shared_ptr<CMapM2Instance> inst = CreateSceneNode<CMapM2Instance>(m_MDXsNames[it.nameIndex]);
+        inst->Initialize(it);
+		GetManager<ILoader>(GetBaseManager())->AddToLoadQueue(inst);
+		m_MDXsInstances.push_back(inst);
 //#endif
 
 		// Update THIS bounds
-		//BoundingBox bbox = GetBounds();
-		//bbox.makeUnion(inst->GetBounds());
-		//SetBounds(bbox);
+		BoundingBox bbox = GetComponent<IColliderComponent3D>()->GetBounds();
+		bbox.makeUnion(inst->GetComponent<IColliderComponent3D>()->GetBounds());
+		GetComponent<IColliderComponent3D>()->SetBounds(bbox);
 	}
 	//---------------------------------------------------------------------------------
 #endif

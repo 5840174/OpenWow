@@ -73,10 +73,10 @@ void CGameState_Map::OnRenderUI(RenderEventArgs& e)
 
 void CGameState_Map::Load3D()
 {
-	const float x = 39;
-	const float y = 29;
+	const float x = 40;
+	const float y = 31;
 
-	m_MapController = m_Scene->GetRootNode()->CreateWrappedSceneNode<CMap>("SceneNode3D", GetBaseManager());
+	m_MapController = m_Scene3D->GetRootNode()->CreateWrappedSceneNode<CMap>("SceneNodeBase", GetBaseManager());
 	m_MapController->MapPreLoad(DBC_Map[1]);
 	m_MapController->MapLoad();
 	m_MapController->MapPostLoad();
@@ -87,16 +87,16 @@ void CGameState_Map::Load3D()
 	GetCameraController()->GetCameraMovement()->SetYaw(48.8);
 	GetCameraController()->GetCameraMovement()->SetPitch(-27.8);
 
-	m_Technique.AddPass(GetManager<IRenderPassFactory>(GetBaseManager())->CreateRenderPass("ClearPass", GetRenderDevice(), GetRenderWindow()->GetRenderTarget(), GetRenderWindow()->GetViewport(), m_Scene));
-	AddSkyPasses(GetRenderDevice(), GetRenderWindow()->GetRenderTarget(), &m_Technique, GetRenderWindow()->GetViewport(), m_Scene);
-	AddWDLPasses(GetRenderDevice(), GetRenderWindow()->GetRenderTarget(), &m_Technique, GetRenderWindow()->GetViewport(), m_Scene);
-	AddMCNKPasses(GetRenderDevice(), GetRenderWindow()->GetRenderTarget(), &m_Technique, GetRenderWindow()->GetViewport(), m_Scene);
-	AddWMOPasses(GetRenderDevice(), GetRenderWindow()->GetRenderTarget(), &m_Technique, GetRenderWindow()->GetViewport(), m_Scene);
-	AddLiquidPasses(GetRenderDevice(), GetRenderWindow()->GetRenderTarget(), &m_Technique, GetRenderWindow()->GetViewport(), m_Scene);
-	//AddM2Passes(GetRenderDevice(), renderWindow->GetRenderTarget(), &m_Technique, renderWindow->GetViewport(), m_Scene);
+	m_Technique3D.AddPass(GetManager<IRenderPassFactory>(GetBaseManager())->CreateRenderPass("ClearPass", GetRenderDevice(), GetRenderWindow()->GetRenderTarget(), GetRenderWindow()->GetViewport(), m_Scene3D));
+	AddSkyPasses(GetRenderDevice(), GetRenderWindow()->GetRenderTarget(), &m_Technique3D, GetRenderWindow()->GetViewport(), m_Scene3D);
+	AddWDLPasses(GetRenderDevice(), GetRenderWindow()->GetRenderTarget(), &m_Technique3D, GetRenderWindow()->GetViewport(), m_Scene3D);
+	AddMCNKPasses(GetRenderDevice(), GetRenderWindow()->GetRenderTarget(), &m_Technique3D, GetRenderWindow()->GetViewport(), m_Scene3D);
+	AddWMOPasses(GetRenderDevice(), GetRenderWindow()->GetRenderTarget(), &m_Technique3D, GetRenderWindow()->GetViewport(), m_Scene3D);
+	m_Technique3D.AddPass(GetManager<IRenderPassFactory>(GetBaseManager())->CreateRenderPass("LiquidPass", GetRenderDevice(), GetRenderWindow()->GetRenderTarget(), GetRenderWindow()->GetViewport(), m_Scene3D));
+	AddM2Passes(GetRenderDevice(), GetRenderWindow()->GetRenderTarget(), &m_Technique3D, GetRenderWindow()->GetViewport(), m_Scene3D);
 }
 
 void CGameState_Map::LoadUI()
 {
-	m_Technique.AddPass(GetManager<IRenderPassFactory>(GetBaseManager())->CreateRenderPass("BaseUIPass", GetRenderDevice(), GetRenderWindow()->GetRenderTarget(), GetRenderWindow()->GetViewport(), m_Scene));
+	m_TechniqueUI.AddPass(GetManager<IRenderPassFactory>(GetBaseManager())->CreateRenderPass("BaseUIPass", GetRenderDevice(), GetRenderWindow()->GetRenderTarget(), GetRenderWindow()->GetViewport(), m_SceneUI));
 }

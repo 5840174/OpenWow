@@ -9,7 +9,7 @@
 #include "MinimapProvider.h"
 
 class CMap 
-	: public CSceneNodeProxie
+	: public SceneNodeBase
 {
 public:
 	CMap(IBaseManager* BaseManager);
@@ -28,7 +28,7 @@ public:
 	uint32                                          GetAreaID(ICamera* camera);
 
 	// Scene node
-	std::string                              GetName() const override
+	std::string										GetName() const override
 	{
 		return "Map";
 	}

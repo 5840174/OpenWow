@@ -8,16 +8,17 @@
 // General
 #include "M2_Skin_Batch.h"
 
-CM2_Skin_Batch::CM2_Skin_Batch(const std::weak_ptr<const M2> _parentM2, std::shared_ptr<IMesh> _mesh) 
+CM2_Skin_Batch::CM2_Skin_Batch(IBaseManager* BaseManager, const std::weak_ptr<const M2> _parentM2, std::shared_ptr<IMesh> _mesh)
 	: MeshProxie(_mesh)
 	, m_ParentM2(_parentM2)
+	, m_BaseManager(BaseManager)
 {
-
+	
 }
 
 void CM2_Skin_Batch::PostInit()
 {
-	m_TestMaterial = std::make_shared<M2_Material>(m_Textures);
+	m_TestMaterial = std::make_shared<M2_Material>(m_BaseManager, m_Textures);
 	m_TestMaterial->SetWrapper(m_TestMaterial);
 
 	SetMaterial(m_TestMaterial);

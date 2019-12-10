@@ -19,6 +19,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\owGame\DBC\Core\DBC__Storage.cpp" />
     <ClCompile Include="CreatePasses.cpp" />
     <ClCompile Include="M2_Animation.cpp" />
     <ClCompile Include="M2_Animator.cpp" />
@@ -45,6 +46,7 @@
     <ClCompile Include="M2_Skin_Batch.cpp" />
     <ClCompile Include="M2_Manager.cpp" />
     <ClCompile Include="M2_TransformComponent.cpp" />
+    <ClCompile Include="owGameM2.cpp" />
     <ClCompile Include="ParticleEmitters.cpp" />
     <ClCompile Include="ParticleEmitter_Plane.cpp" />
     <ClCompile Include="ParticleEmitter_Sphere.cpp" />

@@ -463,7 +463,7 @@ void CM2_Builder::Step8Skins()
 		{
 			std::shared_ptr<CM2_Skin> skin = std::make_shared<CM2_Skin>(m_M2);
 
-			CM2_Skin_Builder builder(*this, m_M2, m_Skins[i], skin, m_F);
+			CM2_Skin_Builder builder(m_BaseManager, *this, m_M2, m_Skins[i], skin, m_F);
 			builder.Load();
 
             m_M2->m_Skins.push_back(skin);

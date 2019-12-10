@@ -11,7 +11,7 @@ class CMap;
 // FORWARD END
 
 class CMapTile 
-	: public CSceneNodeProxie
+	: public SceneNode3D
 	, public CLoadableObject
 {
 public:

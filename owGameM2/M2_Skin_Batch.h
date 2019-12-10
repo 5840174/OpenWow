@@ -10,11 +10,12 @@ class CM2_Base_Instance;
 class CM2_Skin_Builder;
 // FORWARD END
 
-class CM2_Skin_Batch : public MeshProxie
+class CM2_Skin_Batch 
+	: public MeshProxie
 {
 	friend CM2_Skin_Builder;
 public:
-	CM2_Skin_Batch(const std::weak_ptr<const M2> _parentM2, std::shared_ptr<IMesh> _mesh);
+	CM2_Skin_Batch(IBaseManager* BaseManager, const std::weak_ptr<const M2> _parentM2, std::shared_ptr<IMesh> _mesh);
 
 	void PostInit();
 
@@ -43,4 +44,7 @@ private:
 
 private: // Parent
 	const std::weak_ptr<const M2> m_ParentM2;
+
+private:
+	IBaseManager* m_BaseManager;
 };

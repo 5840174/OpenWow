@@ -9,11 +9,14 @@
 #include "MPQFilesStorage.h"
 #include "LiquidInstance.h"
 
+#include "RenderPass_Liquid.h"
+
 extern CLog* gLogInstance;
 
 class COpenWoWGamePlguin
 	: public IznPlugin
 	, public ISceneNodeCreator
+	, public IRenderPassCreator
 {
 public:
 	COpenWoWGamePlguin(IBaseManager* BaseManager)
@@ -78,11 +81,65 @@ public:
 
 		throw std::exception(("COpenWoWGamePlguin::CreateSceneNode: Index '" + std::to_string(Index) + "' out of bounds.").c_str());
 	}
+	
 
+
+	//
+	// IRenderPassCreator
+	//
+	size_t GetRenderPassCount() const override
+	{
+		return 1;
+	}
+
+	std::string GetRenderPassName(size_t Index) const override
+	{
+		if (Index == 0)
+		{
+			return "LiquidPass";
+		}
+
+		return "<error>";
+	}
+
+	std::shared_ptr<IRenderPass> CreateRenderPass(size_t Index, std::shared_ptr<IRenderDevice> RenderDevice, std::shared_ptr<IRenderTarget> RenderTarget, const Viewport * Viewport, std::shared_ptr<IScene> Scene) const
+	{
+		if (Index == 0)
+		{
+			// STATES
+			IBlendState::BlendMode alphaBlending(true, false, IBlendState::BlendFactor::SrcAlpha, IBlendState::BlendFactor::OneMinusSrcAlpha, IBlendState::BlendOperation::Add, IBlendState::BlendFactor::SrcAlpha, IBlendState::BlendFactor::OneMinusSrcAlpha);
+			IDepthStencilState::DepthMode enableDepthWrites(true, IDepthStencilState::DepthWrite::Enable);
+			IDepthStencilState::DepthMode disableDepthWrites(false, IDepthStencilState::DepthWrite::Disable);
+
+			// CreateShaders
+			std::shared_ptr<IShader> g_pVertexShader = RenderDevice->CreateShader(
+				IShader::ShaderType::VertexShader, "shaders_D3D/Liquid.hlsl", IShader::ShaderMacros(), "VS_main", "latest"
+			);
+			g_pVertexShader->LoadInputLayoutFromReflector();
+
+			std::shared_ptr<IShader> g_pPixelShader = RenderDevice->CreateShader(
+				IShader::ShaderType::PixelShader, "shaders_D3D/Liquid.hlsl", IShader::ShaderMacros(), "PS_main", "latest"
+			);
+
+			// PIPELINES
+			std::shared_ptr<IPipelineState> WMOPipeline = RenderDevice->CreatePipelineState();
+			WMOPipeline->GetBlendState()->SetBlendMode(alphaBlending);
+			WMOPipeline->GetDepthStencilState()->SetDepthMode(enableDepthWrites);
+			WMOPipeline->GetRasterizerState()->SetCullMode(IRasterizerState::CullMode::None);
+			WMOPipeline->GetRasterizerState()->SetFillMode(IRasterizerState::FillMode::Solid);
+			WMOPipeline->SetRenderTarget(RenderTarget);
+			WMOPipeline->GetRasterizerState()->SetViewport(Viewport);
+			WMOPipeline->SetShader(IShader::ShaderType::VertexShader, g_pVertexShader);
+			WMOPipeline->SetShader(IShader::ShaderType::PixelShader, g_pPixelShader);
+
+			return std::make_shared<CRenderPass_Liquid>(RenderDevice, Scene, WMOPipeline);
+		}
+		
+		return nullptr;
+	}
 
 private:
 	IBaseManager* m_BaseManager;
-	std::shared_ptr<IRenderDevice> m_CachedRenderDevice;
 };
 
 

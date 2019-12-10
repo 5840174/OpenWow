@@ -28,8 +28,10 @@ public:
 
     void Initialize(const ADT_MDXDef& _placementInfo);
 
-	// CSceneNodeProxie
+	// ISceneNode
 	bool Accept(IVisitor* visitor) override;
+
+	void OnUpdate(UpdateEventArgs& e) override;
 
 public: 
 	uint32				m_UniqueId;

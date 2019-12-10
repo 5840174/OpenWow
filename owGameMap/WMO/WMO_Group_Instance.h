@@ -11,7 +11,7 @@ class CWMO_Liquid_Instance;
 // FORWARD END
 
 class CWMO_Group_Instance 
-	: public CSceneNodeProxie
+	: public SceneNode3D
 {
 public:
 #ifdef USE_M2_MODELS

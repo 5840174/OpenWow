@@ -1,3 +1,3 @@
 #pragma once
 
-//#define USE_M2_MODELS
+#define USE_M2_MODELS

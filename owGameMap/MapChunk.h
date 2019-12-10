@@ -8,7 +8,7 @@ class CMap;
 // FORWARD END
 
 class CMapChunk 
-	: public CSceneNodeProxie
+	: public SceneNode3D
 	, public CLoadableObject
 {
 public:
@@ -44,8 +44,6 @@ private:
 	ADT_MCNK_MCLY                                   mcly[4];
 	std::shared_ptr<ITexture>                        m_DiffuseTextures[4];
 	std::shared_ptr<ITexture>                        m_SpecularTextures[4];
-
-	std::shared_ptr<ISceneNode>                m_LiquidInstance;
 
 	std::shared_ptr<ITexture>                        m_BlendRBGShadowATexture;
 

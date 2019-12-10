@@ -7,9 +7,6 @@
     <Filter Include="Common">
       <UniqueIdentifier>{d0033b79-fd0f-4221-80fa-9a9bedd64d33}</UniqueIdentifier>
     </Filter>
-    <Filter Include="RenderStuff">
-      <UniqueIdentifier>{200c5de7-fe68-4b50-b0a5-0ff1e6f6dc8a}</UniqueIdentifier>
-    </Filter>
     <Filter Include="DBC">
       <UniqueIdentifier>{356cc0f8-d08c-4813-b315-e727a27352e3}</UniqueIdentifier>
     </Filter>
@@ -81,9 +78,6 @@
     <ClCompile Include="LiquidMaterial.cpp">
       <Filter>Liquid</Filter>
     </ClCompile>
-    <ClCompile Include="CreatePasses.cpp">
-      <Filter>RenderStuff</Filter>
-    </ClCompile>
     <ClCompile Include="LiquidLayer.cpp">
       <Filter>Liquid</Filter>
     </ClCompile>
@@ -92,9 +86,6 @@
     </ClCompile>
     <ClCompile Include="MPQFilesStorage.cpp">
       <Filter>Files</Filter>
-    </ClCompile>
-    <ClCompile Include="RenderPass_Liquid.cpp">
-      <Filter>RenderStuff</Filter>
     </ClCompile>
     <ClCompile Include="Client\ARC4.cpp">
       <Filter>Client\Cryptography</Filter>
@@ -147,6 +138,9 @@
     <ClCompile Include="DBC\Core\DBC__Storage.cpp">
       <Filter>DBC</Filter>
     </ClCompile>
+    <ClCompile Include="RenderPass_Liquid.cpp">
+      <Filter>Liquid</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Liquid.h">
@@ -170,9 +164,6 @@
     <ClInclude Include="WowTypes.h" />
     <ClInclude Include="LiquidMaterial.h">
       <Filter>Liquid</Filter>
-    </ClInclude>
-    <ClInclude Include="CreatePasses.h">
-      <Filter>RenderStuff</Filter>
     </ClInclude>
     <ClInclude Include="LiquidLayer.h">
       <Filter>Liquid</Filter>
@@ -285,9 +276,6 @@
     <ClInclude Include="DBC\DBC_Map_WotLK.h">
       <Filter>DBC\Tables</Filter>
     </ClInclude>
-    <ClInclude Include="RenderPass_Liquid.h">
-      <Filter>RenderStuff</Filter>
-    </ClInclude>
     <ClInclude Include="Client\ARC4.h">
       <Filter>Client\Cryptography</Filter>
     </ClInclude>
@@ -368,6 +356,9 @@
     </ClInclude>
     <ClInclude Include="DBC\Core\DBC__Storage.h">
       <Filter>DBC</Filter>
+    </ClInclude>
+    <ClInclude Include="RenderPass_Liquid.h">
+      <Filter>Liquid</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

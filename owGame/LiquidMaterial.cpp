@@ -9,15 +9,7 @@ LiquidMaterial::LiquidMaterial(IBaseManager* BaseManager)
 	m_pProperties = (MaterialProperties*)_aligned_malloc(sizeof(MaterialProperties), 16);
 	*m_pProperties = MaterialProperties();
 
-	// CreateShaders
-	std::shared_ptr<IShader> g_pVertexShader = GetManager<IRenderDevice>(BaseManager)->CreateShader(
-		IShader::ShaderType::VertexShader, "shaders_D3D/Liquid.hlsl", IShader::ShaderMacros(), "VS_main", "latest"
-	);
-    g_pVertexShader->LoadInputLayoutFromReflector();
 
-	std::shared_ptr<IShader> g_pPixelShader = GetManager<IRenderDevice>(BaseManager)->CreateShader(
-		IShader::ShaderType::PixelShader, "shaders_D3D/Liquid.hlsl", IShader::ShaderMacros(), "PS_main", "latest"
-	);
 
 	// Create samplers
 	std::shared_ptr<ISamplerState> g_Sampler = GetManager<IRenderDevice>(BaseManager)->CreateSamplerState();
@@ -27,9 +19,7 @@ LiquidMaterial::LiquidMaterial(IBaseManager* BaseManager)
 	// Assign samplers
 	SetSampler(0, g_Sampler);
 
-	// This
-	SetShader(IShader::ShaderType::VertexShader, g_pVertexShader);
-	SetShader(IShader::ShaderType::PixelShader, g_pPixelShader);
+
 }
 
 LiquidMaterial::~LiquidMaterial()

@@ -20,6 +20,8 @@ public:
 	uint32 getPriority() const override { return CM2_Base_Instance::getPriority() + 1; };
 
 	// SceneNode3D
+	void Initialize() override;
+
 	bool Accept(IVisitor* visitor) override;
 
 private:

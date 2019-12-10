@@ -146,6 +146,12 @@
     <ClCompile Include="M2_ColliderComponent.cpp">
       <Filter>SceneNode &amp; Components</Filter>
     </ClCompile>
+    <ClCompile Include="owGameM2.cpp">
+      <Filter>Common</Filter>
+    </ClCompile>
+    <ClCompile Include="..\owGame\DBC\Core\DBC__Storage.cpp">
+      <Filter>Common</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="M2_SkinTypes.h">

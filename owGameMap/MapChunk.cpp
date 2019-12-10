@@ -40,7 +40,7 @@ uint32 CMapChunk::GetAreaID() const
 
 
 //
-// CSceneNodeProxie
+// ISceneNode
 //
 
 bool CMapChunk::Accept(IVisitor* visitor)
@@ -53,12 +53,7 @@ bool CMapChunk::Accept(IVisitor* visitor)
         return false;
     }*/
 
-	if (!GetComponent<CColliderComponent3D>()->CheckFrustum(camera))
-	{
-		return false;
-	}
-
-	return CSceneNodeProxie::Accept(visitor);
+	return SceneNode3D::Accept(visitor);
 }
 
 
@@ -172,6 +167,10 @@ bool CMapChunk::Load()
 
 		BoundingBox bbox = GetComponent<CColliderComponent3D>()->GetBounds();
 
+
+		float minHeight = Math::MaxFloat;
+		float maxHeight = Math::MinFloat;
+
 		for (uint32 j = 0; j < 17; j++)
 		{
 			for (uint32 i = 0; i < ((j % 2) ? 8 : 9); i++)
@@ -189,11 +188,13 @@ bool CMapChunk::Load()
 				vec3 v = vec3(xpos, h, zpos);
 				*ttv++ = v;
 
-				bbox.setMinY(minf(v.y, bbox.getMin().y));
-				bbox.setMaxY(maxf(v.y, bbox.getMax().y));
+				minHeight = std::min(h, minHeight);
+				maxHeight = std::max(h, maxHeight);
 			}
 		}
 
+		bbox.setMinY(minHeight + header.ypos);
+		bbox.setMaxY(maxHeight + header.ypos);
 		bbox.calculateCenter();
         GetComponent<CColliderComponent3D>()->SetBounds(bbox);
 
@@ -209,7 +210,8 @@ bool CMapChunk::Load()
 		for (uint32 i = 0; i < header.nLayers; i++)
 		{
 			m_File->readBytes(&mcly[i], sizeof(ADT_MCNK_MCLY));
-
+			//m_DiffuseTextures[i] = parentADT->m_Textures.at(i)->diffuseTexture;
+			//m_SpecularTextures[i] = parentADT->m_Textures.at(i)->specularTexture;
 			m_DiffuseTextures[i] = parentADT->m_Textures.at(mcly[i].textureIndex)->diffuseTexture;
 			m_SpecularTextures[i] = parentADT->m_Textures.at(mcly[i].textureIndex)->specularTexture;
 		}
@@ -327,13 +329,13 @@ bool CMapChunk::Load()
 			CRange height;
 			m_File->readBytes(&height, 8);
 
-			//std::shared_ptr<CADT_Liquid> m_Liquid = std::make_shared<CADT_Liquid>(8, 8);
-			//m_Liquid->CreateFromMCLQ(m_File, header);
+			std::shared_ptr<CADT_Liquid> m_Liquid = std::make_shared<CADT_Liquid>(GetBaseManager(), 8, 8);
+			m_Liquid->CreateFromMCLQ(m_File, header);
 
-            //vec3 position = vec3(GetComponent<CTransformComponent3D>()->GetTranslation().x, 0.0f, GetComponent<CTransformComponent3D>()->GetTranslation().z);
+            vec3 position = vec3(0.0f, - GetComponent<CTransformComponent3D>()->GetTranslation().y, 0.0f);
 
-			//m_LiquidInstance = CreateSceneNode<Liquid_Instance>();
-            //m_LiquidInstance->Initialize(m_Liquid, position);
+			std::shared_ptr<Liquid_Instance> liq = CreateSceneNode<Liquid_Instance>();
+			liq->Initialize(m_Liquid, position);
 		}
 	}
 
@@ -349,7 +351,7 @@ bool CMapChunk::Load()
 	for (uint32 i = 0; i < header.nLayers; i++)
 	{
 		mat->SetTexture(i, m_DiffuseTextures[i]); // DXT1
-		mat->SetTexture(i + 5, m_SpecularTextures[i]); // DXT1
+		//mat->SetTexture(i + 5, m_SpecularTextures[i]); // DXT1
 	}
 	mat->SetTexture(4, m_BlendRBGShadowATexture);
 	mat->SetLayersCnt(header.nLayers);

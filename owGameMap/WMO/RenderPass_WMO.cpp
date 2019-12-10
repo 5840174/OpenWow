@@ -24,7 +24,7 @@ CRenderPass_WMO::~CRenderPass_WMO()
 bool CRenderPass_WMO::Visit3D(ISceneNode* node)
 {
     CWMO_Base_Instance* wmoInstance = dynamic_cast<CWMO_Base_Instance*>(node);
-    CWMO_Group_Instance* wmoGroupInstance = dynamic_cast<CWMO_Group_Instance*>(node);
+	CWMO_Group_Instance* wmoGroupInstance = dynamic_cast<CWMO_Group_Instance*>(node);
 
     if (!wmoInstance && !wmoGroupInstance)
         return false;

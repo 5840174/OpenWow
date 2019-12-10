@@ -55,15 +55,28 @@ void CMapWMOInstance::Initialize(const ADT_MODF & _placementInfo)
 bool CMapWMOInstance::Accept(IVisitor* visitor)
 {
 	CRenderPass_WMO* passAsWMOPass = dynamic_cast<CRenderPass_WMO*>(visitor);
-    if (passAsWMOPass == nullptr)
-        return false;
+	if (passAsWMOPass == nullptr)
+		return false;
 
 	if (m_AlreadyDraw.find(m_UniqueId) != m_AlreadyDraw.end())
 	{
 		return false;
 	}
 
-	// CSceneNodeProxie
+	AbstractPass* visitorAsBasePass = dynamic_cast<AbstractPass*>(visitor);
+	const ICamera* camera = visitorAsBasePass->GetRenderEventArgs()->Camera;
+
+	//if (!GetComponent<CColliderComponent3D>()->CheckDistance2D(camera, GetGroupQuality()->ADT_WMO_Distance))
+	//{
+	//	return false;
+	//}
+
+	if (!GetComponent<IColliderComponent3D>()->CheckFrustum(camera))
+	{
+		return false;
+	}
+
+	// ISceneNode
 	if (CWMO_Base_Instance::Accept(visitor))
 	{
 		m_AlreadyDraw.insert(m_UniqueId);
@@ -71,6 +84,17 @@ bool CMapWMOInstance::Accept(IVisitor* visitor)
 	}
 
 	return false;
+}
+
+float lastTotalTime = 0;
+
+void CMapWMOInstance::OnUpdate(UpdateEventArgs & e)
+{
+	if (lastTotalTime != e.TotalTime)
+	{
+		reset();
+		lastTotalTime = e.TotalTime;
+	}
 }
 
 //

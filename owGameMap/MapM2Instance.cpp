@@ -37,7 +37,7 @@ void CMapM2Instance::Initialize(const ADT_MDXDef & _placementInfo)
 
 
 //
-// CSceneNodeProxie
+// ISceneNode
 //
 bool CMapM2Instance::Accept(IVisitor* visitor)
 {
@@ -45,20 +45,20 @@ bool CMapM2Instance::Accept(IVisitor* visitor)
     if (passAsM2Pass == nullptr)
         return false;
 
-    const Camera* camera = passAsM2Pass->GetRenderEventArgs()->Camera;
-
 	if (m_AlreadyDraw.find(m_UniqueId) != m_AlreadyDraw.end())
 	{
 		return false;
 	}
 
-	float distToCamera2D = (camera->GetTranslation() - GetComponent<CColliderComponent3D>()->GetBounds().getCenter()).length() - GetComponent<CColliderComponent3D>()->GetBounds().getRadius();
-	if (distToCamera2D > GetGroupQuality()->ADT_MCNK_Distance)
-	{
-		return false;
-	}
+	const ICamera* camera = passAsM2Pass->GetRenderEventArgs()->Camera;
 
-	// CSceneNodeProxie
+	float distToCamera2D = (camera->GetTranslation() - GetComponent<CColliderComponent3D>()->GetBounds().getCenter()).length() - GetComponent<CColliderComponent3D>()->GetBounds().getRadius();
+	//if (distToCamera2D > GetGroupQuality()->ADT_MCNK_Distance)
+	//{
+	//	return false;
+	//}
+
+	// ISceneNode
 	if (CM2_Base_Instance::Accept(visitor))
 	{
 		m_AlreadyDraw.insert(m_UniqueId);
@@ -66,6 +66,17 @@ bool CMapM2Instance::Accept(IVisitor* visitor)
 	}
 
 	return false;
+}
+
+float lastTotalTime22 = 0;
+
+void CMapM2Instance::OnUpdate(UpdateEventArgs & e)
+{
+	if (lastTotalTime22 != e.TotalTime)
+	{
+		reset();
+		lastTotalTime22 = e.TotalTime;
+	}
 }
 
 //

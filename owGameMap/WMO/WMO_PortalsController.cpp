@@ -149,7 +149,7 @@ bool CWMO_PortalsController::Recur(std::shared_ptr<CWMO_Base_Instance> _localCon
 #ifdef USE_M2_MODELS
 	for (auto& doodad : _group->getDoodadsInstances())
 	{
-		if (doodad && (_isFirstIteration || !_frustum.cullBox(doodad->GetComponent<IColliderComponent3D>()->GetBounds())))
+		if (doodad && (_isFirstIteration || !_frustum->cullBox(doodad->GetComponent<IColliderComponent3D>()->GetBounds())))
 		{
 			doodad->setPortalVisibility(true);
 		}

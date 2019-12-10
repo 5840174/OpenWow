@@ -100,6 +100,9 @@ bool CM2_Base_Instance::Accept(IVisitor* visitor)
 	AbstractPass* visitorAsBasePass = dynamic_cast<AbstractPass*>(visitor);
 	const ICamera* camera = visitorAsBasePass->GetRenderEventArgs()->Camera;
 
+	if (m_M2 == nullptr)
+		return false;
+
 	float distToCamera2D = (camera->GetTranslation() - GetComponent<IColliderComponent3D>()->GetBounds().getCenter()).length() - GetComponent<IColliderComponent3D>()->GetBounds().getRadius();
 	//if (distToCamera2D > m_QualitySettings->ADT_MDX_Distance)
 	//{
@@ -113,7 +116,8 @@ bool CM2_Base_Instance::Accept(IVisitor* visitor)
 
 	if (m_Attached != nullptr)
 	{
-        GetComponent<ITransformComponent3D>()->ForceRecalculateLocalTransform();
+		// TODO:
+        //GetComponent<ITransformComponent3D>()->ForceRecalculateLocalTransform();
 	}
 
 	if (m_M2->isAnimated())
@@ -135,7 +139,7 @@ bool CM2_Base_Instance::Accept(IVisitor* visitor)
 	}
 
 	// SceneNode3D
-	return CSceneNodeProxie::Accept(visitor);
+	return SceneNode3D::Accept(visitor);
 }
 
 void CM2_Base_Instance::InitAnimator()
@@ -150,7 +154,7 @@ void CM2_Base_Instance::InitAnimator()
 void CM2_Base_Instance::RegisterComponents()
 {
     SetTransformComponent(AddComponent(std::make_shared<CM2_TransformComponent>(shared_from_this())));
-
+	SetMeshComponent(AddComponent(std::make_shared<CMeshComponent3D>(shared_from_this())));
     SetColliderComponent(AddComponent(std::make_shared<CM2_ColliderComponent>(shared_from_this())));
 }
 
