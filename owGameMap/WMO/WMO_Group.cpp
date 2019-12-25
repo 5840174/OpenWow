@@ -50,7 +50,7 @@ void WMO_Group::CreateInsances(std::weak_ptr<CWMO_Group_Instance> _parent) const
 
 		std::shared_ptr<CWMO_Doodad_Instance> inst = _parent.lock()->CreateWrappedSceneNode<CWMO_Doodad_Instance>("SceneNode3D", m_ParentWMO.lock()->m_DoodadsFilenames + placement.flags.nameIndex, weak_from_this(), index);
         inst->Initialize(placement);
-		GetManager<ILoader>(m_BaseManager)->AddToLoadQueue(inst);
+		m_BaseManager->GetManager<ILoader>()->AddToLoadQueue(inst);
 		_parent.lock()->addDoodadInstance(inst);
 	}
 }
@@ -138,7 +138,7 @@ void WMO_Group::Load()
 			uint32 indicesCount = size / sizeof(uint16);
 			uint16* indices = (uint16*)m_F->getDataFromCurrent();
 			// Buffer
-			IB_Default = GetManager<IRenderDevice>(m_BaseManager)->CreateIndexBuffer(indices, indicesCount);
+			IB_Default = m_BaseManager->GetManager<IRenderDevice>()->CreateIndexBuffer(indices, indicesCount);
 
 			dataFromMOVI = indices;
 		}
@@ -153,8 +153,8 @@ void WMO_Group::Load()
 				vertexes[i] = Fix_XZmY(vertexes[i]);
 			}
 			// Buffer
-			VB_Vertexes = GetManager<IRenderDevice>(m_BaseManager)->CreateVertexBuffer(vertexes, vertexesCount);
-			VB_Colors = GetManager<IRenderDevice>(m_BaseManager)->CreateVertexBuffer(vertexes, vertexesCount);
+			VB_Vertexes = m_BaseManager->GetManager<IRenderDevice>()->CreateVertexBuffer(vertexes, vertexesCount);
+			VB_Colors = m_BaseManager->GetManager<IRenderDevice>()->CreateVertexBuffer(vertexes, vertexesCount);
 			//m_Bounds.calculate(vertexes, vertexesCount);
 
 			dataFromMOVT = vertexes;
@@ -170,14 +170,14 @@ void WMO_Group::Load()
 				normals[i] = Fix_XZmY(normals[i]);
 			}
 			// Buffer
-			VB_Normals = GetManager<IRenderDevice>(m_BaseManager)->CreateVertexBuffer(normals, normalsCount);
+			VB_Normals = m_BaseManager->GetManager<IRenderDevice>()->CreateVertexBuffer(normals, normalsCount);
 		}
 		else if (strcmp(fourcc, "MOTV") == 0) // Texture coordinates
 		{
 			uint32 textureCoordsCount = size / sizeof(vec2);
 			vec2* textureCoords = (vec2*)m_F->getDataFromCurrent();
-			VB_TextureCoords.push_back(GetManager<IRenderDevice>(m_BaseManager)->CreateVertexBuffer(textureCoords, textureCoordsCount));
-			VB_TextureCoords.push_back(GetManager<IRenderDevice>(m_BaseManager)->CreateVertexBuffer(textureCoords, textureCoordsCount));
+			VB_TextureCoords.push_back(m_BaseManager->GetManager<IRenderDevice>()->CreateVertexBuffer(textureCoords, textureCoordsCount));
+			VB_TextureCoords.push_back(m_BaseManager->GetManager<IRenderDevice>()->CreateVertexBuffer(textureCoords, textureCoordsCount));
 		}
 		else if (strcmp(fourcc, "MOBA") == 0) // WMO_Group_Batch
 		{
@@ -260,7 +260,7 @@ void WMO_Group::Load()
 			}
 
 			// Buffer
-			VB_Colors = GetManager<IRenderDevice>(m_BaseManager)->CreateVoidVertexBuffer(vertexColorsConverted.data(), vertexColorsConverted.size(), 0, sizeof(vec4));
+			VB_Colors = m_BaseManager->GetManager<IRenderDevice>()->CreateVoidVertexBuffer(vertexColorsConverted.data(), vertexColorsConverted.size(), 0, sizeof(vec4));
 			m_IsMOCVExists = vertexColorsCount > 0;
 
 			delete[] mocv;
@@ -316,7 +316,7 @@ void WMO_Group::Load()
 
 	// Create geom
 	{
-		std::shared_ptr<IMesh> mesh = GetManager<IRenderDevice>(m_BaseManager)->CreateMesh();
+		std::shared_ptr<IMesh> mesh = m_BaseManager->GetManager<IRenderDevice>()->CreateMesh();
 		mesh->AddVertexBuffer(BufferBinding("POSITION", 0), VB_Vertexes);
 		mesh->AddVertexBuffer(BufferBinding("NORMAL", 0), VB_Normals);
 		//if (VB_Colors != nullptr)

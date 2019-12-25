@@ -35,7 +35,9 @@ struct VertexShaderOutput
 // Uniforms
 cbuffer PerObject : register(b0)
 {
-	float4x4 ModelViewProjection;
+	float4x4 Model;
+	float4x4 View;
+	float4x4 Projection;
 }
 cbuffer Material : register(b2)
 {
@@ -57,11 +59,12 @@ sampler   AlphaMapSampler : register(s1);
 
 VertexShaderOutput VS_main(VertexShaderInput IN)
 {
-	VertexShaderOutput OUT;
+	const float4x4 mvp = mul(Projection, mul(View, Model));
 
-	OUT.positionVS = mul(ModelViewProjection, float4(IN.position, 1.0f));
+	VertexShaderOutput OUT;
+	OUT.positionVS = mul(mvp, float4(IN.position, 1.0f));
 	OUT.positionWS = float4(IN.position, 1.0f);
-	OUT.normal = mul(ModelViewProjection, float4(IN.normal, 0.0f));
+	OUT.normal = mul(mvp, float4(IN.normal, 0.0f));
 	OUT.mccvColor = IN.mccvColor;
 	OUT.texCoordDetail = IN.texCoordDetail;
 	OUT.texCoordAlpha = IN.texCoordAlpha;

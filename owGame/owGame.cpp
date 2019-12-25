@@ -32,10 +32,10 @@ public:
 	//
 	bool Initialize() override
 	{
-		gLogInstance = std::dynamic_pointer_cast<CLog>(GetManager<ILog>(m_BaseManager)).get();
+		gLogInstance = std::dynamic_pointer_cast<CLog>(m_BaseManager->GetManager<ILog>()).get();
 
-		GetManager<ISettings>(m_BaseManager)->AddGroup("WoWSettings", std::make_shared<CWoWSettingsGroup>());
-		GetManager<IFilesManager>(m_BaseManager)->RegisterFilesStorage(std::make_shared<CMPQFilesStorage>("D:\\_games\\World of Warcraft 1.12.1\\Data\\", IFilesStorageEx::PRIOR_HIGH));
+		m_BaseManager->GetManager<ISettings>()->AddGroup("WoWSettings", std::make_shared<CWoWSettingsGroup>());
+		m_BaseManager->GetManager<IFilesManager>()->AddFilesStorage(std::make_shared<CMPQFilesStorage>("D:\\_games\\World of Warcraft 1.12.1\\Data\\", IFilesStorageEx::Priority::PRIOR_HIGH));
 
 		OpenDBs(m_BaseManager);
 

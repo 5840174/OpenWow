@@ -4,13 +4,13 @@
 #include "M2_Material.h"
 
 M2_Material::M2_Material(IBaseManager* BaseManager, std::vector<std::weak_ptr<const CM2_Part_Texture>> m2Textures)
-	: MaterialProxie(GetManager<IRenderDevice>(BaseManager)->CreateMaterial(sizeof(MaterialProperties)))
+	: MaterialProxie(BaseManager->GetManager<IRenderDevice>()->CreateMaterial(sizeof(MaterialProperties)))
 {
 	m_pProperties = (MaterialProperties*)_aligned_malloc(sizeof(MaterialProperties), 16);
 	*m_pProperties = MaterialProperties();
 	memset(m_pProperties, 0x00, sizeof(MaterialProperties));
 
-	std::shared_ptr<ISamplerState> g_Sampler = GetManager<IRenderDevice>(BaseManager)->CreateSamplerState();
+	std::shared_ptr<ISamplerState> g_Sampler = BaseManager->GetManager<IRenderDevice>()->CreateSamplerState();
 	g_Sampler->SetFilter(ISamplerState::MinFilter::MinLinear, ISamplerState::MagFilter::MagLinear, ISamplerState::MipFilter::MipLinear);
 
 	_ASSERT(m2Textures.size() <= 2);

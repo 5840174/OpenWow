@@ -18,7 +18,7 @@ CM2_Part_Texture::CM2_Part_Texture(IBaseManager* BaseManager, std::shared_ptr<IF
 	if (m_SpecialType == SM2_Texture::Type::NONE)
 	{
 		std::string textureFileName = (const char*)(f->getData() + _proto.filename.offset);
-		m_Texture = GetManager<IRenderDevice>(BaseManager)->CreateTexture2D(textureFileName);
+		m_Texture = BaseManager->GetManager<IRenderDevice>()->CreateTexture2D(textureFileName);
 	}
 }
 

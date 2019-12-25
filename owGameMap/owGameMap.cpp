@@ -29,12 +29,12 @@ public:
 	//
 	bool Initialize() override
 	{
-		gLogInstance = std::dynamic_pointer_cast<CLog>(GetManager<ILog>(m_BaseManager)).get();
+		gLogInstance = std::dynamic_pointer_cast<CLog>(m_BaseManager->GetManager<ILog>()).get();
 
 		OpenDBs(m_BaseManager);
 
 		std::shared_ptr<IWMOManager> wmoManager = std::make_shared<WMOsManager>(m_BaseManager);
-		AddManager<IWMOManager>(m_BaseManager, wmoManager);
+		m_BaseManager->AddManager<IWMOManager>(wmoManager);
 
 		return true;
 	}
@@ -96,9 +96,9 @@ public:
 	{
 		return 5;
 	}
-	std::shared_ptr<IGameState> CreateGameState(size_t Index, std::shared_ptr<IRenderWindow> RenderWindow) const override
+	std::shared_ptr<IGameState> CreateGameState(size_t Index, std::shared_ptr<IRenderWindow> RenderWindow, IWindowEvents* WindowEvents) const override
 	{
-		return std::make_shared<CGameState_Map>(m_BaseManager, RenderWindow);
+		return std::make_shared<CGameState_Map>(m_BaseManager, RenderWindow, WindowEvents);
 	}
 
 private:

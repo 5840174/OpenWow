@@ -30,22 +30,22 @@ void CMapWDL::CreateInsances(std::weak_ptr<ISceneNode> _parent)
 	std::string fileName = mapController->GetMapFolder() + ".wdl";
 
 	// Low-resolution tiles
-	std::shared_ptr<IFile> f = GetManager<IFilesManager>(std::dynamic_pointer_cast<IBaseManagerHolder>(_parent.lock()->GetScene())->GetBaseManager())->Open(fileName);
+	std::shared_ptr<IFile> f = m_BaseManager->GetManager<IFilesManager>()->Open(fileName);
 	if (f == nullptr)
 	{
-		Log::Info("World[%s]: WDL: Error opening.", fileName.c_str());
+		Log::Error("World[%s]: WDL: Error opening.", fileName.c_str());
 		return;
 	}
 
 	// Material
-	m_LowResilutionTileMaterial = std::make_shared<WDL_Node_Material>(GetManager<IRenderDevice>(std::dynamic_pointer_cast<IBaseManagerHolder>(_parent.lock()->GetScene())->GetBaseManager()));
+	m_LowResilutionTileMaterial = std::make_shared<WDL_Node_Material>(m_BaseManager->GetManager<IRenderDevice>());
 	m_LowResilutionTileMaterial->SetWrapper(m_LowResilutionTileMaterial);
 
 	// Heightmap
 	vec3 lowres[17][17];
 	vec3 lowsub[16][16];
 
-	/*for (uint8 j = 0; j < C_TilesInMap; j++)
+	for (uint8 j = 0; j < C_TilesInMap; j++)
 	{
 		for (uint8 i = 0; i < C_TilesInMap; i++)
 		{
@@ -92,19 +92,20 @@ void CMapWDL::CreateInsances(std::weak_ptr<ISceneNode> _parent)
 						vecrtices.push_back(lowres[y][x]);
 					}
 				}
-
+#if 0
 				// Vertex buffer
-				std::shared_ptr<IBuffer> __vb = _RenderDevice->CreateVertexBuffer(vecrtices);
+				std::shared_ptr<IBuffer> __vb = m_BaseManager->GetManager<IRenderDevice>()->CreateVertexBuffer(vecrtices);
 
-				std::shared_ptr<IMesh> __geom = _RenderDevice->CreateMesh();
+				std::shared_ptr<IMesh> __geom = m_BaseManager->GetManager<IRenderDevice>()->CreateMesh();
 				__geom->AddVertexBuffer(BufferBinding("POSITION", 0), __vb);
 				__geom->SetMaterial(m_LowResilutionTileMaterial);
 				
 				std::shared_ptr<CWDL_LowResTile> lowResTile = std::make_shared<CWDL_LowResTile>(m_MapController, __geom, i, j);
 				_parent.lock()->GetComponent<CMeshComponent3D>()->AddMesh(lowResTile);
+#endif
 			}
 		}
-	}*/
+	}
 
 	// Load low-resolution WMOs
 	Log::Green("Map_GlobalWMOs[]: Low WMOs count [%d].", m_LowResolutionWMOsPlacementInfo.size());
@@ -112,7 +113,7 @@ void CMapWDL::CreateInsances(std::weak_ptr<ISceneNode> _parent)
 	{
 		std::shared_ptr<CMapWMOInstance> wmoInstance = _parent.lock()->CreateWrappedSceneNode<CMapWMOInstance>("SceneNode3D", m_LowResolutionWMOsNames[it.nameIndex]);
 		wmoInstance->Initialize(it);
-		GetManager<ILoader>(m_BaseManager)->AddToLoadQueue(wmoInstance);
+		m_BaseManager->GetManager<ILoader>()->AddToLoadQueue(wmoInstance);
 		m_LowResolutionWMOs.push_back(wmoInstance);
 	}
 }
@@ -130,7 +131,7 @@ void CMapWDL::Load()
 
 	std::string fileName = mapController->GetMapFolder() + ".wdl";
 
-	std::shared_ptr<IFile> f = GetManager<IFilesManager>(m_BaseManager)->Open(fileName);
+	std::shared_ptr<IFile> f = m_BaseManager->GetManager<IFilesManager>()->Open(fileName);
 	if (f == nullptr)
 	{
 		Log::Info("World[%s]: WDL: Error opening.", fileName.c_str());
@@ -284,7 +285,7 @@ void CMapWDL::Load()
 	}
 
 	// Finish minimap
-	m_Minimap = GetManager<IRenderDevice>(m_BaseManager)->CreateTexture();
+	m_Minimap = m_BaseManager->GetManager<IRenderDevice>()->CreateTexture();
 	m_Minimap->LoadTextureCustom(512, 512, texbuf);
 	delete[] texbuf;
 }

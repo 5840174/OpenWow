@@ -1,6 +1,6 @@
 #pragma once
 
-class OW_ENGINE_API LiquidMaterial
+class ZN_API LiquidMaterial
 	: public MaterialProxie
 {
 public:

@@ -25,7 +25,7 @@ void CMapWDT::CreateInsances(std::weak_ptr<ISceneNode> _parent)
 		m_GlobalWMO = _parent.lock()->CreateWrappedSceneNode<CMapWMOInstance>("SceneNode3D", m_GlobalWMOName);
 		m_GlobalWMO->Initialize(m_GlobalWMOPlacementInfo);
 
-		GetManager<ILoader>(m_BaseManager)->AddToLoadQueue(m_GlobalWMO);
+		m_BaseManager->GetManager<ILoader>()->AddToLoadQueue(m_GlobalWMO);
 	}
 }
 

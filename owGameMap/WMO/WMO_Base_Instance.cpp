@@ -49,7 +49,7 @@ std::shared_ptr<CWMO> CWMO_Base_Instance::getWMO() const
 
 bool CWMO_Base_Instance::Load()
 {
-	std::shared_ptr<CWMO> wmo = GetManager<IWMOManager>(GetBaseManager())->Add(m_WMOName);
+	std::shared_ptr<CWMO> wmo = GetBaseManager()->GetManager<IWMOManager>()->Add(m_WMOName);
 	if (wmo)
 	{
 		setWMO(wmo);

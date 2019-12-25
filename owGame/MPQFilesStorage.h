@@ -22,16 +22,16 @@ struct SMPQFileLocation
 	uint32 fileNumber;
 };
 
-class OW_ENGINE_API CMPQFilesStorage : public IFilesStorage, public IFilesStorageEx
+class ZN_API CMPQFilesStorage : public IFilesStorage, public IFilesStorageEx
 {
 public:
-	CMPQFilesStorage(std::string _path, Priority _priority = PRIOR_NORMAL);
+	CMPQFilesStorage(std::string _path, Priority _priority = Priority::PRIOR_NORMAL);
 	virtual ~CMPQFilesStorage();
 
 	// IFilesStorage
-	std::shared_ptr<IFile>  CreateFile(const std::string& _name) override;
-	size_t                  GetFileSize(const std::string& _name) override;
-	bool                    IsFileExists(const std::string& _name) override;
+	std::shared_ptr<IFile>  OpenFile(std::string FileName, EFileAccessType FileAccessType = EFileAccessType::Read) override;
+	size_t                  GetFileSize(std::string FileName) override;
+	bool                    IsFileExists(std::string FileName) override;
 
 	// IFilesStorageEx
 	Priority GetPriority() const;

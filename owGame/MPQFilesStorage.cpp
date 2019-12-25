@@ -36,11 +36,11 @@ CMPQFilesStorage::~CMPQFilesStorage()
 //
 // // IFilesStorage
 //
-std::shared_ptr<IFile> CMPQFilesStorage::CreateFile(const std::string& _name)
+std::shared_ptr<IFile> CMPQFilesStorage::OpenFile(std::string FileName, EFileAccessType FileAccessType)
 {
 	std::lock_guard<std::mutex> lock(m_Lock);
 
-	std::shared_ptr<CFile> file = std::make_shared<CFile>("<null>", _name);
+	std::shared_ptr<CFile> file = std::make_shared<CFile>("<null>", FileName);
 	CByteBuffer& byteBuffer = file->GetByteBuffer();
 	
 	SMPQFileLocation location = GetFileLocation(file->Path_Name());
@@ -61,12 +61,11 @@ std::shared_ptr<IFile> CMPQFilesStorage::CreateFile(const std::string& _name)
 	return file;
 }
 
-size_t CMPQFilesStorage::GetFileSize(const std::string& _name)
+size_t CMPQFilesStorage::GetFileSize(std::string FileName)
 {
 	std::lock_guard<std::mutex> lock(m_Lock);
 
-	SMPQFileLocation location = GetFileLocation(_name);
-
+	SMPQFileLocation location = GetFileLocation(FileName);
 	if (location.exists)
 	{
 		libmpq__off_t size;
@@ -77,11 +76,11 @@ size_t CMPQFilesStorage::GetFileSize(const std::string& _name)
 	return 0;
 }
 
-bool CMPQFilesStorage::IsFileExists(const std::string& _name)
+bool CMPQFilesStorage::IsFileExists(std::string FileName)
 {
 	std::lock_guard<std::mutex> lock(m_Lock);
 
-	return GetFileLocation(_name).exists;
+	return GetFileLocation(FileName).exists;
 }
 
 

@@ -63,7 +63,7 @@ void CLiquid::createLayers(std::shared_ptr<const DBC_LiquidTypeRecord> _type, st
 	SLiquidVertex* map = (SLiquidVertex*)(f->getDataFromCurrent());
 	SLiquidFlag* flags = (SLiquidFlag*)(f->getDataFromCurrent() + m_TilesCount * sizeof(SLiquidVertex));
 
-	std::shared_ptr<CLiquidLayer> layer = std::make_shared<CLiquidLayer>(m_BaseManager, GetManager<IRenderDevice>(m_BaseManager)->CreateMesh());
+	std::shared_ptr<CLiquidLayer> layer = std::make_shared<CLiquidLayer>(m_BaseManager, m_BaseManager->GetManager<IRenderDevice>()->CreateMesh());
 	layer->LiquidType = _type;
 	layer->InitTextures(_type->Get_Type());
 
@@ -233,8 +233,8 @@ void CLiquid::createBuffer()
 			}
 		}
 
-		layer->AddVertexBuffer(BufferBinding("POSITION", 0), GetManager<IRenderDevice>(m_BaseManager)->CreateVertexBuffer(mh2oVerticesPos));
-		layer->AddVertexBuffer(BufferBinding("TEXCOORD", 0), GetManager<IRenderDevice>(m_BaseManager)->CreateVertexBuffer(mh2oVerticesTex));
-		layer->SetIndexBuffer(GetManager<IRenderDevice>(m_BaseManager)->CreateIndexBuffer(m_Indices));
+		layer->AddVertexBuffer(BufferBinding("POSITION", 0), m_BaseManager->GetManager<IRenderDevice>()->CreateVertexBuffer(mh2oVerticesPos));
+		layer->AddVertexBuffer(BufferBinding("TEXCOORD", 0), m_BaseManager->GetManager<IRenderDevice>()->CreateVertexBuffer(mh2oVerticesTex));
+		layer->SetIndexBuffer(m_BaseManager->GetManager<IRenderDevice>()->CreateIndexBuffer(m_Indices));
 	}
 }

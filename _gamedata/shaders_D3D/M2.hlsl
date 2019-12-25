@@ -22,7 +22,9 @@ struct VertexShaderOutput
 // Uniforms
 cbuffer PerObject : register(b0)
 {
-	float4x4 ModelViewProjection;
+	float4x4 Model;
+	float4x4 View;
+	float4x4 Projection;
 }
 cbuffer Material : register(b1)
 {
@@ -75,11 +77,12 @@ VertexShaderOutput VS_main(VertexShaderInput IN)
 		newVertex = float4(IN.position, 1.0f);
 	}
 
+	const float4x4 mvp = mul(Projection, mul(View, Model));
 
 	VertexShaderOutput OUT;
-	OUT.positionVS = mul(ModelViewProjection, newVertex);
+	OUT.positionVS = mul(mvp, newVertex);
 	OUT.positionWS = newVertex;
-	OUT.normal = mul(ModelViewProjection, IN.normal);
+	OUT.normal = mul(mvp, IN.normal);
 	//if (gTextureAnimEnable)
 	//{
 	//	OUT.texCoord0 = (mul(gTextureAnimMatrix, float4(IN.texCoord0, 1.0f, 1.0f))).xy;

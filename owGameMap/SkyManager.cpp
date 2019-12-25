@@ -110,9 +110,9 @@ void SkyManager::Calculate(const ICamera* camera, uint32 _time)
 		}
 	}
 
-	std::shared_ptr<IBuffer> colorsBufferNew = GetManager<IRenderDevice>(GetBaseManager())->CreateVertexBuffer(colors);
+	std::shared_ptr<IBuffer> colorsBufferNew = GetBaseManager()->GetManager<IRenderDevice>()->CreateVertexBuffer(colors);
 	colorsBuffer->Copy(colorsBufferNew);
-	GetManager<IRenderDevice>(GetBaseManager())->DestroyVertexBuffer(colorsBufferNew);
+	GetBaseManager()->GetManager<IRenderDevice>()->DestroyVertexBuffer(colorsBufferNew);
 }
 
 
@@ -181,18 +181,18 @@ void SkyManager::InitBuffer()
 	}
 
 	// Vertex buffer
-	std::shared_ptr<IBuffer> vertexBuffer = GetManager<IRenderDevice>(GetBaseManager())->CreateVertexBuffer(vertices);
+	std::shared_ptr<IBuffer> vertexBuffer = GetBaseManager()->GetManager<IRenderDevice>()->CreateVertexBuffer(vertices);
 
 	// Colors buffer
-	colorsBuffer = GetManager<IRenderDevice>(GetBaseManager())->CreateVoidVertexBuffer(vertices.data(), vertices.size(), 0, sizeof(vec4));
+	colorsBuffer = GetBaseManager()->GetManager<IRenderDevice>()->CreateVoidVertexBuffer(vertices.data(), vertices.size(), 0, sizeof(vec4));
 
 	// Geometry
-	std::shared_ptr<IMesh> __geom = GetManager<IRenderDevice>(GetBaseManager())->CreateMesh();
+	std::shared_ptr<IMesh> __geom = GetBaseManager()->GetManager<IRenderDevice>()->CreateMesh();
 	__geom->AddVertexBuffer(BufferBinding("POSITION", 0), vertexBuffer);
 	__geom->AddVertexBuffer(BufferBinding("COLOR", 0), colorsBuffer);
 
 	// Material
-	std::shared_ptr<IMaterial> material = std::make_shared<Sky_Material>(GetManager<IRenderDevice>(GetBaseManager()));
+	std::shared_ptr<IMaterial> material = std::make_shared<Sky_Material>(GetBaseManager()->GetManager<IRenderDevice>());
 	material->SetWrapper(material);
 	__geom->SetMaterial(material);
 

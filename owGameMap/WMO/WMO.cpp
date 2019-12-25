@@ -90,7 +90,7 @@ bool CWMO::Load()
 	{
 		for (auto mat : reader.OpenChunkT<SWMO_MaterialDef>("MOMT"))
 		{
-			m_Materials.push_back(std::make_shared<WMO_Part_Material>(GetManager<IRenderDevice>(m_BaseManager), shared_from_this(), mat));
+			m_Materials.push_back(std::make_shared<WMO_Part_Material>(m_BaseManager->GetManager<IRenderDevice>(), shared_from_this(), mat));
 		}
 		_ASSERT(m_Materials.size() == m_Header.nTextures);
 	}
@@ -118,7 +118,7 @@ bool CWMO::Load()
 
 			char fname[256];
 			sprintf_s(fname, "%s_%03d.wmo", temp, cntr);
-			std::shared_ptr<IFile> groupFile = GetManager<IFilesManager>(m_BaseManager)->Open(fname); // It delete later
+			std::shared_ptr<IFile> groupFile = m_BaseManager->GetManager<IFilesManager>()->Open(fname); // It delete later
 
 			std::string groupName = groupFile->Name();
 			if (groupInfo.nameoffset > 0)
@@ -152,14 +152,14 @@ bool CWMO::Load()
 		}
 
 		if (! m_PortalVertices.empty())
-			m_PortalVB = GetManager<IRenderDevice>(m_BaseManager)->CreateVertexBuffer(m_PortalVertices);
+			m_PortalVB = m_BaseManager->GetManager<IRenderDevice>()->CreateVertexBuffer(m_PortalVertices);
 	}
 
 	// Portal defs
 	{
 		for (auto pt : reader.OpenChunkT<SWMO_PortalDef>("MOPT"))
 		{
-			m_Portals.push_back(std::make_shared<CWMO_Part_Portal>(GetManager<IRenderDevice>(m_BaseManager), shared_from_this(), pt));
+			m_Portals.push_back(std::make_shared<CWMO_Part_Portal>(m_BaseManager->GetManager<IRenderDevice>(), shared_from_this(), pt));
 		}
 	}
 

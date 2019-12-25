@@ -1,6 +1,6 @@
 #pragma once
 
-class OW_ENGINE_API WoWChunkReader 
+class ZN_API WoWChunkReader 
 {
 public:
 	WoWChunkReader(IBaseManager* BaseManager, std::string _fileName);

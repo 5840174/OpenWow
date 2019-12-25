@@ -5,7 +5,7 @@
 
 WoWChunkReader::WoWChunkReader(IBaseManager* BaseManager, std::string _fileName)
 {
-	m_File = GetManager<IFilesManager>(BaseManager)->Open(_fileName);
+	m_File = BaseManager->GetManager<IFilesManager>()->Open(_fileName);
 	_ASSERT(m_File != nullptr);
 
 	InitMaps();

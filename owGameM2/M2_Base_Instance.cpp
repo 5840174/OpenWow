@@ -66,7 +66,7 @@ bool CM2_Base_Instance::isMeshEnabled(uint32 _index) const
 }
 void CM2_Base_Instance::setSpecialTexture(SM2_Texture::Type _type, const std::string& _textureName)
 {
-	std::shared_ptr<ITexture> texture = GetManager<IRenderDevice>(GetBaseManager())->CreateTexture2D(_textureName);
+	std::shared_ptr<ITexture> texture = GetBaseManager()->GetManager<IRenderDevice>()->CreateTexture2D(_textureName);
 	setSpecialTexture(_type, texture);
 }
 void CM2_Base_Instance::setSpecialTexture(SM2_Texture::Type _type, std::shared_ptr<ITexture> _texture)
@@ -91,7 +91,7 @@ void CM2_Base_Instance::Initialize()
 {
 	for (uint8 i = 0; i < SM2_Texture::Type::COUNT; i++)
 	{
-		m_SpecialTextures[i] = GetManager<IRenderDevice>(GetBaseManager())->GetDefaultTexture();
+		m_SpecialTextures[i] = GetBaseManager()->GetManager<IRenderDevice>()->GetDefaultTexture();
 	}
 }
 
@@ -172,7 +172,7 @@ void CM2_Base_Instance::RegisterComponents()
 //
 bool CM2_Base_Instance::Load()
 {
-	std::shared_ptr<M2> m2 = GetManager<IM2Manager>(GetBaseManager())->Add(m_M2Name);
+	std::shared_ptr<M2> m2 = GetBaseManager()->GetManager<IM2Manager>()->Add(m_M2Name);
 	if (m2)
 	{
 		setM2(m2);

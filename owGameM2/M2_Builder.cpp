@@ -26,7 +26,7 @@ CM2_Builder::CM2_Builder(IBaseManager* BaseManager, std::shared_ptr<M2> _model) 
 	}
 
 	// Openfile
-	m_F = GetManager<IFilesManager>(BaseManager)->Open(m_M2->getFilename());
+	m_F = BaseManager->GetManager<IFilesManager>()->Open(m_M2->getFilename());
 	if (m_F == nullptr)
 	{
 		Log::Error("CM2_Builder[%s]: Unable to open file.", m_M2->getFilename().c_str());
@@ -490,7 +490,7 @@ void CM2_Builder::Step9Collision()
 			collisionVertices[i] = Fix_XZmY(collisionVertices[i]);
 		}
 
-		collisonVB = GetManager<IRenderDevice>(m_BaseManager)->CreateVertexBuffer(collisionVertices);
+		collisonVB = m_BaseManager->GetManager<IRenderDevice>()->CreateVertexBuffer(collisionVertices);
 	}
 
 	if (m_Header.collisionTriangles.size > 0)
@@ -502,7 +502,7 @@ void CM2_Builder::Step9Collision()
 			collisionTriangles.push_back(CollisionTriangles[i]);
 		}
 
-		collisonIB = GetManager<IRenderDevice>(m_BaseManager)->CreateIndexBuffer(collisionTriangles);
+		collisonIB = m_BaseManager->GetManager<IRenderDevice>()->CreateIndexBuffer(collisionTriangles);
 	}
 
 	if (collisonVB != nullptr && collisonIB != nullptr)

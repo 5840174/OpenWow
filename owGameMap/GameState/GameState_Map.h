@@ -6,7 +6,7 @@ class CGameState_Map
 	: public CGameState
 {
 public:
-	CGameState_Map(IBaseManager * BaseManager, std::shared_ptr<IRenderWindow> RenderWindow);
+	CGameState_Map(IBaseManager * BaseManager, std::shared_ptr<IRenderWindow> RenderWindow, IWindowEvents* WindowEvents);
 	virtual ~CGameState_Map();
 
 	// IGameState

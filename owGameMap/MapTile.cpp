@@ -72,7 +72,7 @@ bool CMapTile::Load()
 	char filename[256];
 	sprintf_s(filename, "%s_%d_%d.adt", GetMapController()->GetMapFolder().c_str(), m_IndexX, m_IndexZ);
 
-	std::shared_ptr<IFile> f = GetManager<IFilesManager>(GetBaseManager())->Open(filename);
+	std::shared_ptr<IFile> f = GetBaseManager()->GetManager<IFilesManager>()->Open(filename);
 	uint32_t startPos = f->getPos() + 20;
 	
 	// MVER + size (8)
@@ -221,12 +221,12 @@ bool CMapTile::Load()
 	for (auto& it : m_Textures)
 	{
 		// PreLoad diffuse texture
-		it->diffuseTexture = GetManager<IRenderDevice>(GetBaseManager())->CreateTexture2D(it->textureName);
+		it->diffuseTexture = GetBaseManager()->GetManager<IRenderDevice>()->CreateTexture2D(it->textureName);
 
 		// PreLoad specular texture
 		std::string specularTextureName = it->textureName;
 		specularTextureName = specularTextureName.insert(specularTextureName.length() - 4, "_s");
-		it->specularTexture = GetManager<IRenderDevice>(GetBaseManager())->CreateTexture2D(specularTextureName);
+		it->specularTexture = GetBaseManager()->GetManager<IRenderDevice>()->CreateTexture2D(specularTextureName);
 	}
 
 	//-- Load Chunks ---------------------------------------------------------------------
@@ -235,7 +235,7 @@ bool CMapTile::Load()
 	{
 		std::shared_ptr<CMapChunk> chunk = CreateWrappedSceneNode<CMapChunk>("SceneNode3D", GetMapController(), std::static_pointer_cast<CMapTile>(shared_from_this()));
         chunk->Initialize(f->Path_Name(), chunks[i]);
-		GetManager<ILoader>(GetBaseManager())->AddToLoadQueue(chunk);
+		GetBaseManager()->GetManager<ILoader>()->AddToLoadQueue(chunk);
 		m_Chunks.push_back(chunk);
 
 		// Update THIS bounds
@@ -251,7 +251,7 @@ bool CMapTile::Load()
 //#ifndef _DEBUG
 		std::shared_ptr<CMapWMOInstance> inst = CreateWrappedSceneNode<CMapWMOInstance>("SceneNode3D", m_WMOsNames[it.nameIndex]);
         inst->Initialize(it);
-		GetManager<ILoader>(GetBaseManager())->AddToLoadQueue(inst);
+		GetBaseManager()->GetManager<ILoader>()->AddToLoadQueue(inst);
         m_WMOsInstances.push_back(inst);
 //#endif
 
@@ -268,7 +268,7 @@ bool CMapTile::Load()
 //#ifndef _DEBUG
 		std::shared_ptr<CMapM2Instance> inst = CreateSceneNode<CMapM2Instance>(m_MDXsNames[it.nameIndex]);
         inst->Initialize(it);
-		GetManager<ILoader>(GetBaseManager())->AddToLoadQueue(inst);
+		GetBaseManager()->GetManager<ILoader>()->AddToLoadQueue(inst);
 		m_MDXsInstances.push_back(inst);
 //#endif
 

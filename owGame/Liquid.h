@@ -2,7 +2,7 @@
 
 #include "LiquidLayer.h"
 
-class OW_ENGINE_API CLiquid
+class ZN_API CLiquid
 {
 public:
 	CLiquid(IBaseManager* BaseManager, uint32 x, uint32 y);

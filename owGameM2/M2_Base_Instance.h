@@ -2,7 +2,7 @@
 
 #include "M2.h"
 
-class OW_ENGINE_API CM2_Base_Instance 
+class ZN_API CM2_Base_Instance 
 	: public SceneNode3D
 	, public CLoadableObject
 {

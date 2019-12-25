@@ -6,7 +6,7 @@
 CLiquidLayer::CLiquidLayer(IBaseManager* BaseManager, std::shared_ptr<IMesh> _mesh)
 	: MeshProxie(_mesh)
 	, m_BaseManager(BaseManager)
-	, m_SkyManager(GetManager<ISkyManager>(BaseManager))
+	, m_SkyManager(BaseManager->GetManager<ISkyManager>())
 {
 	m_Material = std::make_shared<LiquidMaterial>(BaseManager);
 
@@ -71,7 +71,7 @@ void CLiquidLayer::InitTextures(DBC_LIQUIDTYPE_Type::List _liquidType)
 	for (int i = 1; i <= 30; i++)
 	{
         sprintf(buf, "%s.%d.blp", baseName.c_str(), i);
-		std::shared_ptr<ITexture> texture = GetManager<IRenderDevice>(m_BaseManager)->CreateTexture2D(buf);
+		std::shared_ptr<ITexture> texture = m_BaseManager->GetManager<IRenderDevice>()->CreateTexture2D(buf);
 		m_Textures.push_back(texture);
 	}
 }

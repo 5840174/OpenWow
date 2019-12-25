@@ -25,12 +25,12 @@ public:
 	//
 	bool Initialize() override
 	{
-		gLogInstance = std::dynamic_pointer_cast<CLog>(GetManager<ILog>(m_BaseManager)).get();
+		gLogInstance = std::dynamic_pointer_cast<CLog>(m_BaseManager->GetManager<ILog>()).get();
 
 		OpenDBs(m_BaseManager);
 
 		std::shared_ptr<IM2Manager> m2Manager = std::make_shared<CM2_Manager>(m_BaseManager);
-		AddManager<IM2Manager>(m_BaseManager, m2Manager);
+		m_BaseManager->AddManager<IM2Manager>(m2Manager);
 
 		return true;
 	}

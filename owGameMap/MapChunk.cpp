@@ -59,7 +59,7 @@ bool CMapChunk::Accept(IVisitor* visitor)
 
 bool CMapChunk::PreLoad()
 {
-	m_File = GetManager<IFilesManager>(GetBaseManager())->Open(m_FileName);
+	m_File = GetBaseManager()->GetManager<IFilesManager>()->Open(m_FileName);
 	if (m_File == nullptr)
 		return false;
 
@@ -153,7 +153,7 @@ bool CMapChunk::Load()
 
 		//normalsBuffer = _Render->r.createVertexBuffer(C_MapBufferSize * sizeof(vec3), tempNormals, false);
 		//normalsBuffer = _Render->r.createVertexBuffer(C_MapBufferSize * sizeof(int24), normals_INT24, false);
-		normalsBuffer = GetManager<IRenderDevice>(GetBaseManager())->CreateVertexBuffer(tempNormals, C_MapBufferSize);
+		normalsBuffer = GetBaseManager()->GetManager<IRenderDevice>()->CreateVertexBuffer(tempNormals, C_MapBufferSize);
 	}
 
 	// Heights
@@ -198,7 +198,7 @@ bool CMapChunk::Load()
 		bbox.calculateCenter();
         GetComponent<CColliderComponent3D>()->SetBounds(bbox);
 
-		verticesBuffer = GetManager<IRenderDevice>(GetBaseManager())->CreateVertexBuffer(tempVertexes, C_MapBufferSize);
+		verticesBuffer = GetBaseManager()->GetManager<IRenderDevice>()->CreateVertexBuffer(tempVertexes, C_MapBufferSize);
 	}
 
 	// Textures
@@ -316,10 +316,10 @@ bool CMapChunk::Load()
 		}
 	}
 
-	GetManager<IRenderDevice>(GetBaseManager())->Lock();
-	m_BlendRBGShadowATexture = GetManager<IRenderDevice>(GetBaseManager())->CreateTexture();
+	GetBaseManager()->GetManager<IRenderDevice>()->Lock();
+	m_BlendRBGShadowATexture = GetBaseManager()->GetManager<IRenderDevice>()->CreateTexture();
 	m_BlendRBGShadowATexture->LoadTextureCustom(64, 64, blendbuf);
-	GetManager<IRenderDevice>(GetBaseManager())->Unlock();
+	GetBaseManager()->GetManager<IRenderDevice>()->Unlock();
 
 	// Liquids
 	m_File->seek(startPos + header.ofsLiquid);
@@ -346,7 +346,7 @@ bool CMapChunk::Load()
 		return true;
 
 	// Material
-	std::shared_ptr<ADT_MCNK_Material> mat = std::make_shared<ADT_MCNK_Material>(GetManager<IRenderDevice>(GetBaseManager()), m_ParentADT);
+	std::shared_ptr<ADT_MCNK_Material> mat = std::make_shared<ADT_MCNK_Material>(GetBaseManager()->GetManager<IRenderDevice>(), m_ParentADT);
 	mat->SetWrapper(mat);
 	for (uint32 i = 0; i < header.nLayers; i++)
 	{
@@ -359,9 +359,9 @@ bool CMapChunk::Load()
 
 	{ // Geom High
 		std::vector<uint16>& mapArrayHigh = _MapShared->GenarateHighMapArray(header.holes);
-		std::shared_ptr<IBuffer> __ibHigh = GetManager<IRenderDevice>(GetBaseManager())->CreateIndexBuffer(mapArrayHigh);
+		std::shared_ptr<IBuffer> __ibHigh = GetBaseManager()->GetManager<IRenderDevice>()->CreateIndexBuffer(mapArrayHigh);
 
-		__geomDefault = GetManager<IRenderDevice>(GetBaseManager())->CreateMesh();
+		__geomDefault = GetBaseManager()->GetManager<IRenderDevice>()->CreateMesh();
 		__geomDefault->AddVertexBuffer(BufferBinding("POSITION", 0), verticesBuffer);
 		__geomDefault->AddVertexBuffer(BufferBinding("NORMAL", 0), normalsBuffer);
 		__geomDefault->AddVertexBuffer(BufferBinding("TEXCOORD", 0), _MapShared->BufferTextureCoordDetail);

@@ -2,7 +2,7 @@
 
 #include "Liquid.h"
 
-class OW_ENGINE_API Liquid_Instance
+class ZN_API Liquid_Instance
 	: public SceneNode3D
 	, public ILiquidInstanceInitializaton
 {

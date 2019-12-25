@@ -13,7 +13,7 @@ CMap::CMap(IBaseManager* BaseManager)
 
 	if (_MapShared == nullptr)
 	{
-		_MapShared = new CMapShared(GetManager<IRenderDevice>(m_BaseManager));
+		_MapShared = new CMapShared(m_BaseManager->GetManager<IRenderDevice>());
 	}
 
 
@@ -58,12 +58,12 @@ void CMap::MapLoad()
 {
 	Log::Print("Map[%s]: Id [%d]. Loading...", m_MapDBCRecord->Get_Directory(), m_MapDBCRecord->Get_ID());
 
-	DelManager<ISkyManager>(GetBaseManager());
+	GetBaseManager()->RemoveManager<ISkyManager>();
 	m_SkyManager.reset();
 
 	m_SkyManager = CreateWrappedSceneNode<SkyManager>("SceneNode3D", this);
     m_SkyManager->Load();
-	AddManager<ISkyManager>(GetBaseManager(), m_SkyManager);
+	GetBaseManager()->AddManager<ISkyManager>(m_SkyManager);
 
 	m_EnvironmentManager.reset();
 	m_EnvironmentManager = std::make_shared<EnvironmentManager>(m_BaseManager);
@@ -225,7 +225,7 @@ std::shared_ptr<CMapTile> CMap::LoadTile(int32 x, int32 z)
 	// Create new tile
 	m_ADTCache[firstnull] = CreateWrappedSceneNode<CMapTile>("SceneNode3D", this);
     m_ADTCache[firstnull]->Initialize(x, z);
-	GetManager<ILoader>(m_BaseManager)->AddToLoadQueue(m_ADTCache[firstnull]);
+	m_BaseManager->GetManager<ILoader>()->AddToLoadQueue(m_ADTCache[firstnull]);
 	return m_ADTCache[firstnull];
 }
 

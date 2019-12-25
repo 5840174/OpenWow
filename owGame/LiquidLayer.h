@@ -4,7 +4,7 @@
 
 #include "DBC\\Core\DBC__Storage.h"
 
-class OW_ENGINE_API CLiquidLayer 
+class ZN_API CLiquidLayer 
 	: public MeshProxie
 {
 public:

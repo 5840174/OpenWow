@@ -4,7 +4,7 @@
 class CLiquid;
 // FORWARD END
 
-ZN_INTERFACE OW_ENGINE_API ILiquidInstanceInitializaton
+ZN_INTERFACE ZN_API ILiquidInstanceInitializaton
 {
 	virtual ~ILiquidInstanceInitializaton() {}
 

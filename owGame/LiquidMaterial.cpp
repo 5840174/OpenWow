@@ -4,7 +4,7 @@
 #include "LiquidMaterial.h"
 
 LiquidMaterial::LiquidMaterial(IBaseManager* BaseManager) 
-	: MaterialProxie(GetManager<IRenderDevice>(BaseManager)->CreateMaterial(sizeof(MaterialProperties)))
+	: MaterialProxie(BaseManager->GetManager<IRenderDevice>()->CreateMaterial(sizeof(MaterialProperties)))
 {
 	m_pProperties = (MaterialProperties*)_aligned_malloc(sizeof(MaterialProperties), 16);
 	*m_pProperties = MaterialProperties();
@@ -12,7 +12,7 @@ LiquidMaterial::LiquidMaterial(IBaseManager* BaseManager)
 
 
 	// Create samplers
-	std::shared_ptr<ISamplerState> g_Sampler = GetManager<IRenderDevice>(BaseManager)->CreateSamplerState();
+	std::shared_ptr<ISamplerState> g_Sampler = BaseManager->GetManager<IRenderDevice>()->CreateSamplerState();
 	g_Sampler->SetFilter(ISamplerState::MinFilter::MinLinear, ISamplerState::MagFilter::MagLinear, ISamplerState::MipFilter::MipLinear);
 	g_Sampler->SetWrapMode(ISamplerState::WrapMode::Clamp, ISamplerState::WrapMode::Clamp, ISamplerState::WrapMode::Clamp);
 
