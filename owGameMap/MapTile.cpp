@@ -23,7 +23,6 @@ void CMapTile::Initialize(uint32 _intexX, uint32 _intexZ)
     m_IndexZ = _intexZ;
 
     // CTransformComponent
-    std::shared_ptr<CTransformComponent3D> transformComponent = GetComponent<CTransformComponent3D>();
     {
         //transformComponent->SetTranslate(vec3(_intexX * C_TileSize, 0.0f, _intexZ * C_TileSize));
     }
@@ -31,7 +30,7 @@ void CMapTile::Initialize(uint32 _intexX, uint32 _intexZ)
     // CColliderComponent
     {
         std::shared_ptr<CColliderComponent3D> colliderComponent = GetComponent<CColliderComponent3D>();
-        vec3 translate = transformComponent->GetTranslation();
+        vec3 translate = GetTranslation();
 
         BoundingBox bbox
         (
@@ -53,20 +52,6 @@ std::shared_ptr<CMapChunk> CMapTile::getChunk(int32 x, int32 z)
 //
 // SceneNode3D
 //
-
-bool CMapTile::Accept(IVisitor* visitor)
-{
-	AbstractPass* visitorAsBasePass = dynamic_cast<AbstractPass*>(visitor);
-	const ICamera* camera = visitorAsBasePass->GetRenderEventArgs()->Camera;
-
-	//if (!GetMapController()->getTileIsCurrent(m_IndexX, m_IndexZ))
-	//{
-	//	return false;
-	//}
-
-	return SceneNode3D::Accept(visitor);
-}
-
 bool CMapTile::Load()
 {
 	char filename[256];

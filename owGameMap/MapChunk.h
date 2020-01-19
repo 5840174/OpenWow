@@ -22,7 +22,7 @@ public:
     uint32                                          GetAreaID() const;
 
 	// SceneNode3D
-	std::string                              GetName() const override
+	std::string                                     GetName() const override
 	{
 		return "MapChunk " + std::to_string(mcin.offset);
 	}

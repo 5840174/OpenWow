@@ -30,16 +30,14 @@ void CMapWMOInstance::Initialize(const ADT_MODF & _placementInfo)
 
     // CTransformComponent
     {
-        std::shared_ptr<CTransformComponent3D> transformComponent = GetComponent<CTransformComponent3D>();
-
         // Translate
-        transformComponent->SetTranslate(_placementInfo.position);
+        SetTranslate(_placementInfo.position);
 
         // Rotate
         vec3 rotate = glm::radians(_placementInfo.rotation);
         rotate.x = -rotate.x;
         rotate.y = rotate.y - glm::half_pi<float>();
-        transformComponent->SetRotation(vec3(rotate.z, rotate.y, rotate.x));
+        SetRotation(vec3(rotate.z, rotate.y, rotate.x));
     }
 
     // CColliderComponent
@@ -63,18 +61,18 @@ bool CMapWMOInstance::Accept(IVisitor* visitor)
 		return false;
 	}
 
-	AbstractPass* visitorAsBasePass = dynamic_cast<AbstractPass*>(visitor);
-	const ICamera* camera = visitorAsBasePass->GetRenderEventArgs()->Camera;
+	//AbstractPass* visitorAsBasePass = dynamic_cast<AbstractPass*>(visitor);
+	//const ICamera* camera = visitorAsBasePass->GetRenderEventArgs()->Camera;
 
 	//if (!GetComponent<CColliderComponent3D>()->CheckDistance2D(camera, GetGroupQuality()->ADT_WMO_Distance))
 	//{
 	//	return false;
 	//}
 
-	if (!GetComponent<IColliderComponent3D>()->CheckFrustum(camera))
-	{
-		return false;
-	}
+	//if (!GetComponent<IColliderComponent3D>()->CheckFrustum(camera))
+	//{
+	//	return false;
+	//}
 
 	// ISceneNode
 	if (CWMO_Base_Instance::Accept(visitor))
@@ -88,7 +86,7 @@ bool CMapWMOInstance::Accept(IVisitor* visitor)
 
 float lastTotalTime = 0;
 
-void CMapWMOInstance::OnUpdate(UpdateEventArgs & e)
+void CMapWMOInstance::DoUpdate(UpdateEventArgs & e)
 {
 	if (lastTotalTime != e.TotalTime)
 	{

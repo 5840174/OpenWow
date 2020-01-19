@@ -19,8 +19,11 @@ WMO_Group_Part_Batch::WMO_Group_Part_Batch(const std::weak_ptr<const CWMO> _pare
 	m_Bounds.calculateCenter();
 }
 
-bool WMO_Group_Part_Batch::Render(const RenderEventArgs* renderEventArgs, const IConstantBuffer* perObject, UINT indexStartLocation, UINT indexCnt, UINT vertexStartLocation, UINT vertexCnt)
+bool WMO_Group_Part_Batch::Render(const RenderEventArgs* renderEventArgs, const IConstantBuffer* perObject, SGeometryPartParams GeometryPartParams)
 {
 	SetMaterial(m_WMOMaterial);
-	return MeshProxie::Render(renderEventArgs, perObject, m_Proto.indexStart, m_Proto.indexCount/*, m_Proto.vertexStart, m_Proto.vertexEnd - m_Proto.vertexStart*/);
+
+	GeometryPartParams.IndexStartLocation = m_Proto.indexStart;
+	GeometryPartParams.IndexCnt = m_Proto.indexCount;
+	return MeshProxie::Render(renderEventArgs, perObject, GeometryPartParams/*, m_Proto.vertexStart, m_Proto.vertexEnd - m_Proto.vertexStart*/);
 }

@@ -6,7 +6,6 @@
 #include "Wmo_Part_Light.h"
 
 WMO_Part_Light::WMO_Part_Light(const SWMO_LightDef& _proto)
-    : base(Light())
 {
 	lightDef = _proto;
 
@@ -16,6 +15,8 @@ WMO_Part_Light::WMO_Part_Light(const SWMO_LightDef& _proto)
 	//fcolor *= lightDef.intensity;
 	fcolor.w = 1.0f;
 
+	/*
+
 	Light light;
 	light.m_Type = Light::LightType::Point;
 	light.m_PositionWS = vec4(lightDef.pos.x, lightDef.pos.z, -lightDef.pos.y, 1.0f);
@@ -23,6 +24,7 @@ WMO_Part_Light::WMO_Part_Light(const SWMO_LightDef& _proto)
 	light.m_Range = _proto.intensity;
 
 	setLight(light);
+	*/
 
 	Log::Warn("WMOLight: Created: Type %d, UseAtten %d, %f", lightDef.type, lightDef.useAtten, lightDef.attenStart, lightDef.attenEnd);
 }

@@ -20,7 +20,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\owGame\DBC\Core\DBC__Storage.cpp" />
-    <ClCompile Include="CreatePasses.cpp" />
     <ClCompile Include="M2_Animation.cpp" />
     <ClCompile Include="M2_Animator.cpp" />
     <ClCompile Include="M2_ColliderComponent.cpp" />
@@ -45,7 +44,6 @@
     <ClCompile Include="M2_Skin.cpp" />
     <ClCompile Include="M2_Skin_Batch.cpp" />
     <ClCompile Include="M2_Manager.cpp" />
-    <ClCompile Include="M2_TransformComponent.cpp" />
     <ClCompile Include="owGameM2.cpp" />
     <ClCompile Include="ParticleEmitters.cpp" />
     <ClCompile Include="ParticleEmitter_Plane.cpp" />
@@ -64,7 +62,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\shared\owGameM2.h" />
-    <ClInclude Include="CreatePasses.h" />
     <ClInclude Include="M2_AnimatedConverters.h" />
     <ClInclude Include="M2_Animated.h" />
     <ClInclude Include="M2_Animation.h" />
@@ -83,7 +80,6 @@
     <ClInclude Include="M2_SkinSection.h" />
     <ClInclude Include="M2_SkinTypes.h" />
     <ClInclude Include="M2_Skin_Builder.h" />
-    <ClInclude Include="M2_TransformComponent.h" />
     <ClInclude Include="M2_Types.h" />
     <ClInclude Include="M2_Builder.h" />
     <ClInclude Include="ParticleEmitters.h" />
@@ -183,7 +179,7 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>_DEBUG;_WINDOWS;_USRDLL;OW_ENGINE_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <SDLCheck>false</SDLCheck>
+      <SDLCheck>true</SDLCheck>
       <AdditionalIncludeDirectories>..\..\ZenonEngine\shared;..\..\ZenonEngine\Externals;..\shared;..\Externals;..\Externals\OpenSSL\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <TreatSpecificWarningsAsErrors>
       </TreatSpecificWarningsAsErrors>
@@ -203,7 +199,7 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>_DEBUG;_WINDOWS;_USRDLL;OW_ENGINE_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <SDLCheck>false</SDLCheck>
+      <SDLCheck>true</SDLCheck>
       <AdditionalIncludeDirectories>..\..\ZenonEngine\shared;..\..\ZenonEngine\Externals;..\shared;..\Externals;..\Externals\OpenSSL\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <TreatSpecificWarningsAsErrors>
       </TreatSpecificWarningsAsErrors>
@@ -222,10 +218,9 @@
       <WarningLevel>Level3</WarningLevel>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <Optimization>MaxSpeed</Optimization>
-      <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <PreprocessorDefinitions>NDEBUG;_WINDOWS;_USRDLL;OW_ENGINE_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <SDLCheck>false</SDLCheck>
+      <SDLCheck>true</SDLCheck>
       <AdditionalIncludeDirectories>..\..\ZenonEngine\shared;..\..\ZenonEngine\Externals;..\shared;..\Externals;..\Externals\OpenSSL\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
@@ -244,10 +239,9 @@
       <WarningLevel>Level3</WarningLevel>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <Optimization>MaxSpeed</Optimization>
-      <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <PreprocessorDefinitions>NDEBUG;_WINDOWS;_USRDLL;OW_ENGINE_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <SDLCheck>false</SDLCheck>
+      <SDLCheck>true</SDLCheck>
       <AdditionalIncludeDirectories>..\..\ZenonEngine\shared;..\..\ZenonEngine\Externals;..\shared;..\Externals;..\Externals\OpenSSL\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>

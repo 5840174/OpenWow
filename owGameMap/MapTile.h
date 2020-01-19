@@ -31,8 +31,6 @@ public:
 		return "MapTile " + std::to_string(m_IndexX) + " - " + std::to_string(m_IndexZ);
 	}
 
-	bool                                            Accept(IVisitor* visitor) override;
-
 	// ILoadableObject
 	bool                                            Load() override;
 	bool                                            Delete() override;
@@ -50,8 +48,7 @@ public:
 	std::vector<std::shared_ptr<ISceneNode>>		m_MDXsInstances;
 	std::vector<std::shared_ptr<CMapChunk>>			m_Chunks;
 
-protected:
-    CMap*							GetMapController() const;
+    CMap*							                GetMapController() const;
 
 private:
 	ISceneNode* m_Parent;

@@ -33,7 +33,7 @@ public:
 	// ISceneNode
 	bool Accept(IVisitor* visitor) override;
 
-	void OnUpdate(UpdateEventArgs& e) override;
+	void DoUpdate(UpdateEventArgs& e) override;
 
 private:
 	uint32									m_UniqueId;

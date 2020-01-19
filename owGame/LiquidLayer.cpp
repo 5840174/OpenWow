@@ -17,7 +17,7 @@ CLiquidLayer::~CLiquidLayer()
 {
 }
 
-bool CLiquidLayer::Render(const RenderEventArgs* renderEventArgs, const IConstantBuffer* perObject, UINT indexStartLocation, UINT indexCnt, UINT vertexStartLocation, UINT vertexCnt)
+bool CLiquidLayer::Render(const RenderEventArgs* renderEventArgs, const IConstantBuffer* perObject, SGeometryPartParams GeometryPartParams)
 {
 	uint32_t texidx = (uint32_t)(renderEventArgs->TotalTime * 1000.0f / 60.0f) % m_Textures.size();
 	m_Material->SetTexture(0, m_Textures[texidx]);
@@ -39,7 +39,7 @@ bool CLiquidLayer::Render(const RenderEventArgs* renderEventArgs, const IConstan
 		m_Material->SetDeepAlpha(1.0f);
 	}
 
-	return MeshProxie::Render(renderEventArgs, perObject, indexStartLocation, indexCnt, vertexStartLocation, vertexCnt);
+	return MeshProxie::Render(renderEventArgs, perObject, GeometryPartParams);
 }
 
 void CLiquidLayer::InitTextures(DBC_LIQUIDTYPE_Type::List _liquidType)

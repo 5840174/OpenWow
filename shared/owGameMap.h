@@ -24,6 +24,3 @@
 #include "../owGameMap/WMO/WMO_Doodad_Instance.h"
 #include "../owGameMap/WMO/WMO_Liquid_Instance.h"
 #include "../owGameMap/WMO/WMOsManager.h"
-
-// Render stuff
-#include "../owGameMap/CreatePasses.h"

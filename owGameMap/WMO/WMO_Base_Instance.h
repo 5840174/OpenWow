@@ -40,7 +40,7 @@ public:
 		return "WMO '" + m_WMOName + "'";
 	}
 
-	void                                            UpdateCamera(const ICamera* camera) override;
+	void                                            UpdateCamera(const ICameraComponent3D* camera) override;
 
 	bool                                            Accept(IVisitor* visitor) override;
 

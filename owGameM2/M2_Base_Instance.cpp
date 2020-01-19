@@ -4,7 +4,6 @@
 #include "M2_Base_Instance.h"
 
 // Additional
-#include "M2_TransformComponent.h"
 #include "M2_ColliderComponent.h"
 
 CM2_Base_Instance::CM2_Base_Instance(std::string _m2Name) :
@@ -97,22 +96,22 @@ void CM2_Base_Instance::Initialize()
 
 bool CM2_Base_Instance::Accept(IVisitor* visitor)
 {
-	AbstractPass* visitorAsBasePass = dynamic_cast<AbstractPass*>(visitor);
-	const ICamera* camera = visitorAsBasePass->GetRenderEventArgs()->Camera;
+	//AbstractPass* visitorAsBasePass = dynamic_cast<AbstractPass*>(visitor);
+	//const ICamera* camera = visitorAsBasePass->GetRenderEventArgs()->Camera;
 
 	if (m_M2 == nullptr)
 		return false;
 
-	float distToCamera2D = (camera->GetTranslation() - GetComponent<IColliderComponent3D>()->GetBounds().getCenter()).length() - GetComponent<IColliderComponent3D>()->GetBounds().getRadius();
+	//float distToCamera2D = (camera->GetTranslation() - GetComponent<IColliderComponent3D>()->GetBounds().getCenter()).length() - GetComponent<IColliderComponent3D>()->GetBounds().getRadius();
 	//if (distToCamera2D > m_QualitySettings->ADT_MDX_Distance)
 	//{
 	//	return false;
 	//}
 
-	if (!GetComponent<IColliderComponent3D>()->CheckFrustum(camera))
-	{
-		return false;
-	}
+	//if (!GetComponent<IColliderComponent3D>()->CheckFrustum(camera))
+	//{
+	//	return false;
+	//}
 
 	if (m_Attached != nullptr)
 	{
@@ -120,7 +119,7 @@ bool CM2_Base_Instance::Accept(IVisitor* visitor)
         //GetComponent<ITransformComponent3D>()->ForceRecalculateLocalTransform();
 	}
 
-	if (m_M2->isAnimated())
+	/*if (m_M2->isAnimated())
 	{
 		m_Animator->Update(visitorAsBasePass->GetRenderEventArgs()->TotalTime, visitorAsBasePass->GetRenderEventArgs()->ElapsedTime);
 
@@ -132,14 +131,39 @@ bool CM2_Base_Instance::Accept(IVisitor* visitor)
 		//{
 		//if (!m_NeedRecalcAnimation)
 		//{
-		m_M2->calc(m_Animator->getSequenceIndex(), m_Animator->getCurrentTime(), static_cast<uint32>(visitorAsBasePass->GetRenderEventArgs()->TotalTime), camera->GetViewMatrix(), GetComponent<ITransformComponent>()->GetWorldTransfom());
+		m_M2->calc(m_Animator->getSequenceIndex(), m_Animator->getCurrentTime(), static_cast<uint32>(visitorAsBasePass->GetRenderEventArgs()->TotalTime), camera->GetViewMatrix(), GetWorldTransfom());
 		//	m_NeedRecalcAnimation = true;
 		//}
 		//}
-	}
+	}*/
 
 	// SceneNode3D
 	return SceneNode3D::Accept(visitor);
+}
+
+//
+// CTransformComponent
+//
+void CM2_Base_Instance::UpdateLocalTransform()
+{
+	std::shared_ptr<CM2_Part_Attachment> attachPoint = GetAttachPoint();
+
+	if (attachPoint)
+	{
+		std::shared_ptr<const CM2_Part_Bone> bone = attachPoint->getBone().lock();
+		_ASSERT(bone != nullptr);
+
+		mat4 relMatrix;
+		relMatrix = glm::translate(relMatrix, bone->getPivot());
+
+		mat4 absMatrix;
+		absMatrix = GetParentWorldTransform() * bone->getTransformMatrix() * relMatrix;
+		SetWorldTransform(absMatrix);
+	}
+	else
+	{
+		SceneNode3D::UpdateLocalTransform();
+	}
 }
 
 void CM2_Base_Instance::InitAnimator()
@@ -153,7 +177,6 @@ void CM2_Base_Instance::InitAnimator()
 
 void CM2_Base_Instance::RegisterComponents()
 {
-    SetTransformComponent(AddComponent(std::make_shared<CM2_TransformComponent>(shared_from_this())));
 	SetMeshComponent(AddComponent(std::make_shared<CMeshComponent3D>(shared_from_this())));
     SetColliderComponent(AddComponent(std::make_shared<CM2_ColliderComponent>(shared_from_this())));
 }

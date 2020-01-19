@@ -119,9 +119,6 @@
     <ClCompile Include="M2_Part_Light.cpp">
       <Filter>Components\Parts_Miscellaneous</Filter>
     </ClCompile>
-    <ClCompile Include="CreatePasses.cpp">
-      <Filter>RenderStuff</Filter>
-    </ClCompile>
     <ClCompile Include="ParticleEmitters.cpp">
       <Filter>Components\Parts_Miscellaneous\Particle\Emitters</Filter>
     </ClCompile>
@@ -138,9 +135,6 @@
       <Filter>Skins</Filter>
     </ClCompile>
     <ClCompile Include="M2_Base_Instance.cpp">
-      <Filter>SceneNode &amp; Components</Filter>
-    </ClCompile>
-    <ClCompile Include="M2_TransformComponent.cpp">
       <Filter>SceneNode &amp; Components</Filter>
     </ClCompile>
     <ClCompile Include="M2_ColliderComponent.cpp">
@@ -252,9 +246,6 @@
     <ClInclude Include="M2_Part_Light.h">
       <Filter>Components\Parts_Miscellaneous</Filter>
     </ClInclude>
-    <ClInclude Include="CreatePasses.h">
-      <Filter>RenderStuff</Filter>
-    </ClInclude>
     <ClInclude Include="ParticleEmitters.h">
       <Filter>Components\Parts_Miscellaneous\Particle\Emitters</Filter>
     </ClInclude>
@@ -274,9 +265,6 @@
       <Filter>Skins</Filter>
     </ClInclude>
     <ClInclude Include="M2_Base_Instance.h">
-      <Filter>SceneNode &amp; Components</Filter>
-    </ClInclude>
-    <ClInclude Include="M2_TransformComponent.h">
       <Filter>SceneNode &amp; Components</Filter>
     </ClInclude>
     <ClInclude Include="M2_ColliderComponent.h">

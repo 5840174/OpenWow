@@ -118,7 +118,7 @@ void CMapWDL::CreateInsances(std::weak_ptr<ISceneNode> _parent)
 	}
 }
 
-void CMapWDL::UpdateCamera(const ICamera * camera)
+void CMapWDL::UpdateCamera(const ICameraComponent3D * camera)
 {
 	//if (m_LowResilutionTileMaterial)
 	//	m_LowResilutionTileMaterial->SetDiffuseColor(vec4(GetManager<ISkyManager>()->GetColor(LightColors::LIGHT_COLOR_FOG), 1.0f));

@@ -30,7 +30,7 @@ public:
 	virtual bool                        isMeshEnabled(uint32 _index) const;
 	void                                setSpecialTexture(SM2_Texture::Type _type, const std::string& _textureName);
 	void                                setSpecialTexture(SM2_Texture::Type _type, std::shared_ptr<ITexture> _texture);
-	std::shared_ptr<ITexture>            getSpecialTexture(SM2_Texture::Type _type) const;
+	std::shared_ptr<ITexture>           getSpecialTexture(SM2_Texture::Type _type) const;
 
 	// Animations
 	std::shared_ptr<CM2_Animator>       getAnimator() const { return m_Animator; }
@@ -44,6 +44,9 @@ public:
 	// SceneNode3D
 	void								Initialize() override;
 	virtual bool                        Accept(IVisitor* visitor) override;
+
+protected:
+	virtual void						UpdateLocalTransform();
 
 protected:
 	void InitAnimator();

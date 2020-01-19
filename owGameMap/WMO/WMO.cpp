@@ -240,6 +240,7 @@ bool CWMO::Load()
 	// Create portal controller
 	if (m_Portals.size() > 0)
 	{
+#ifndef WMO_DISABLE_PORTALS
 		m_PortalController = std::make_shared<CWMO_PortalsController>(shared_from_this());
 
 		for (auto& it : m_PortalReferences)
@@ -247,6 +248,7 @@ bool CWMO::Load()
 			_ASSERT(it.portalIndex < m_Portals.size());
 			_ASSERT(it.groupIndex < m_Groups.size());
 		}
+#endif
 	}
 
 	// Init m_Groups

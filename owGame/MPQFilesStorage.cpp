@@ -40,7 +40,7 @@ std::shared_ptr<IFile> CMPQFilesStorage::OpenFile(std::string FileName, EFileAcc
 {
 	std::lock_guard<std::mutex> lock(m_Lock);
 
-	std::shared_ptr<CFile> file = std::make_shared<CFile>("<null>", FileName);
+	std::shared_ptr<CFile> file = std::make_shared<CFile>(FileName);
 	CByteBuffer& byteBuffer = file->GetByteBuffer();
 	
 	SMPQFileLocation location = GetFileLocation(file->Path_Name());
@@ -59,6 +59,12 @@ std::shared_ptr<IFile> CMPQFilesStorage::OpenFile(std::string FileName, EFileAcc
 	//Log::Info("File[%s] opened. [mpq]", Path_Name().c_str());
 
 	return file;
+}
+
+bool CMPQFilesStorage::SaveFile(std::shared_ptr<IFile> File)
+{
+	_ASSERT_EXPR(false, L"CMPQFilesStorage: Unable to save file to this file storage.");
+	return false;
 }
 
 size_t CMPQFilesStorage::GetFileSize(std::string FileName)

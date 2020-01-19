@@ -69,9 +69,6 @@
     <ClCompile Include="SkyParams.cpp">
       <Filter>Skies</Filter>
     </ClCompile>
-    <ClCompile Include="CreatePasses.cpp">
-      <Filter>RenderStuff</Filter>
-    </ClCompile>
     <ClCompile Include="WDL_LowResTile.cpp">
       <Filter>Map\WDL</Filter>
     </ClCompile>
@@ -174,6 +171,9 @@
     <ClCompile Include="GameState\GameState_Map.cpp">
       <Filter>GameStates</Filter>
     </ClCompile>
+    <ClCompile Include="RenderPass_MapTile.cpp">
+      <Filter>RenderStuff</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="EnvironmentManager.h">
@@ -211,9 +211,6 @@
     </ClInclude>
     <ClInclude Include="SkyParams.h">
       <Filter>Skies</Filter>
-    </ClInclude>
-    <ClInclude Include="CreatePasses.h">
-      <Filter>RenderStuff</Filter>
     </ClInclude>
     <ClInclude Include="WDL_LowResTile.h">
       <Filter>Map\WDL</Filter>
@@ -319,6 +316,9 @@
     </ClInclude>
     <ClInclude Include="GameState\GameState_Map.h">
       <Filter>GameStates</Filter>
+    </ClInclude>
+    <ClInclude Include="RenderPass_MapTile.h">
+      <Filter>RenderStuff</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

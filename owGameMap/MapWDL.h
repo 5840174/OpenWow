@@ -18,7 +18,7 @@ public:
 	// ISceneNodeProvider
 	void CreateInsances(std::weak_ptr<ISceneNode> _parent) override;
 
-	void UpdateCamera(const ICamera* camera);
+	void UpdateCamera(const ICameraComponent3D* camera);
 
 	void Load();
 

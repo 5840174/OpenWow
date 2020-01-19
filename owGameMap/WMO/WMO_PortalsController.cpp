@@ -1,5 +1,7 @@
 #include "stdafx.h"
 
+
+
 // Include
 #include "WMO.h"
 #include "WMO_Base_Instance.h"
@@ -9,6 +11,8 @@
 
 // Additional
 #include "WMO_Group_Instance.h"
+
+#ifndef WMO_DISABLE_PORTALS
 
 CWMO_PortalsController::CWMO_PortalsController(const std::weak_ptr<const CWMO> _parentWMO) :
 	m_ParentWMO(_parentWMO)
@@ -63,7 +67,7 @@ void CWMO_PortalsController::GetPolyFrustum(const vec3* poly, uint32 num_verts, 
 	_frustum->buildCustomFrustrum(_portalPlanes, num_verts);
 }
 
-void CWMO_PortalsController::Update(std::shared_ptr<CWMO_Base_Instance> _localContr, const ICamera* _camera)
+void CWMO_PortalsController::Update(std::shared_ptr<CWMO_Base_Instance> _localContr, const ICameraComponent3D* _camera)
 {
 	// Reset all flags
 	for (auto& group : _localContr->getGroupInstances())
@@ -82,7 +86,7 @@ void CWMO_PortalsController::Update(std::shared_ptr<CWMO_Base_Instance> _localCo
 #endif
 	}
 
-	vec3 _InvWorldCamera = _localContr->GetComponent<ITransformComponent>()-> GetInverseWorldTransform() * vec4(_camera->GetTranslation(), 1.0f);
+	vec3 _InvWorldCamera = _localContr->GetInverseWorldTransform() * vec4(_camera->GetTranslation(), 1.0f);
 
 	bool insideIndoor = false;
 
@@ -130,7 +134,7 @@ void CWMO_PortalsController::Update(std::shared_ptr<CWMO_Base_Instance> _localCo
 	}
 }
 
-bool CWMO_PortalsController::Recur(std::shared_ptr<CWMO_Base_Instance> _localContr, std::shared_ptr<CWMO_Group_Instance> _group, const ICamera* _camera, cvec3 _InvWorldCamera, const Frustum* _frustum, bool _isFirstIteration)
+bool CWMO_PortalsController::Recur(std::shared_ptr<CWMO_Base_Instance> _localContr, std::shared_ptr<CWMO_Group_Instance> _group, const ICameraComponent3D* _camera, cvec3 _InvWorldCamera, const Frustum* _frustum, bool _isFirstIteration)
 {
 	if (_group == nullptr || _group->GetPortalCalculated())
 	{
@@ -204,3 +208,5 @@ bool CWMO_PortalsController::Recur(std::shared_ptr<CWMO_Base_Instance> _localCon
 
 	return true;
 }
+
+#endif

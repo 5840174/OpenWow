@@ -105,20 +105,18 @@ void CMap::Unload()
 
 // --
 
-void CMap::UpdateCamera(const ICamera* camera)
+void CMap::UpdateCamera(const ICameraComponent3D* camera)
 {
 	bool loading = false;
 	int enteredTileX, enteredTileZ;
 	int midTile = static_cast<uint32>(C_RenderedTiles / 2);
 	if (m_Current[midTile][midTile] != nullptr || m_IsOnInvalidTile)
 	{
-        std::shared_ptr<CTransformComponent3D> transformComponent = m_Current[midTile][midTile]->GetComponent<CTransformComponent3D>();
-
 		if (m_IsOnInvalidTile ||
-			(camera->GetTranslation().x < transformComponent->GetTranslation().x) ||
-			(camera->GetTranslation().x > (transformComponent->GetTranslation().x + C_TileSize)) ||
-			(camera->GetTranslation().z < transformComponent->GetTranslation().z) ||
-			(camera->GetTranslation().z > (transformComponent->GetTranslation().z + C_TileSize)))
+			(camera->GetTranslation().x < m_Current[midTile][midTile]->GetTranslation().x) ||
+			(camera->GetTranslation().x > (m_Current[midTile][midTile]->GetTranslation().x + C_TileSize)) ||
+			(camera->GetTranslation().z < m_Current[midTile][midTile]->GetTranslation().z) ||
+			(camera->GetTranslation().z > (m_Current[midTile][midTile]->GetTranslation().z + C_TileSize)))
 		{
 
 			enteredTileX = static_cast<int>(camera->GetTranslation().x / C_TileSize);
@@ -240,7 +238,7 @@ void CMap::ClearCache()
 	}
 }
 
-uint32 CMap::GetAreaID(ICamera* camera)
+uint32 CMap::GetAreaID(ICameraComponent3D* camera)
 {
 	if (!m_WDT->MapHasTiles())
 	{

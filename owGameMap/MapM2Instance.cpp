@@ -24,14 +24,12 @@ void CMapM2Instance::Initialize(const ADT_MDXDef & _placementInfo)
 
     // CTransformComponent
     {
-        std::shared_ptr<CTransformComponent3D> transformComponent = GetComponent<CTransformComponent3D>();
-
-        transformComponent->SetTranslate(_placementInfo.position);
+        SetTranslate(_placementInfo.position);
         vec3 rotate = glm::radians(_placementInfo.rotation);
         rotate.x = -rotate.x;
         rotate.y = rotate.y - glm::half_pi<float>();
-        transformComponent->SetRotation(vec3(rotate.z, rotate.y, rotate.x));
-        transformComponent->SetScale(vec3(static_cast<float>(_placementInfo.scale) / 1024.0f));
+        SetRotation(vec3(rotate.z, rotate.y, rotate.x));
+        SetScale(vec3(static_cast<float>(_placementInfo.scale) / 1024.0f));
     }
 }
 
@@ -50,9 +48,9 @@ bool CMapM2Instance::Accept(IVisitor* visitor)
 		return false;
 	}
 
-	const ICamera* camera = passAsM2Pass->GetRenderEventArgs()->Camera;
+	//const ICameraComponent3D* camera = passAsM2Pass->GetRenderEventArgs()->Camera;
 
-	float distToCamera2D = (camera->GetTranslation() - GetComponent<CColliderComponent3D>()->GetBounds().getCenter()).length() - GetComponent<CColliderComponent3D>()->GetBounds().getRadius();
+	//float distToCamera2D = (camera->GetTranslation() - GetComponent<CColliderComponent3D>()->GetBounds().getCenter()).length() - GetComponent<CColliderComponent3D>()->GetBounds().getRadius();
 	//if (distToCamera2D > GetGroupQuality()->ADT_MCNK_Distance)
 	//{
 	//	return false;
@@ -70,7 +68,7 @@ bool CMapM2Instance::Accept(IVisitor* visitor)
 
 float lastTotalTime22 = 0;
 
-void CMapM2Instance::OnUpdate(UpdateEventArgs & e)
+void CMapM2Instance::DoUpdate(UpdateEventArgs & e)
 {
 	if (lastTotalTime22 != e.TotalTime)
 	{

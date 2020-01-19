@@ -27,14 +27,14 @@ SkyManager::~SkyManager()
 //
 // SceneNode3D
 //
-void SkyManager::UpdateCamera(const ICamera* camera)
+void SkyManager::UpdateCamera(const ICameraComponent3D* camera)
 {
 	if (skies.empty())
 		return;
 
 	Calculate(camera, GetMapController()->getTime()->GetTime());
 
-	GetComponent<ITransformComponent3D>()->SetTranslate(camera->GetTranslation());
+	SetTranslate(camera->GetTranslation());
 }
 
 bool SkyManager::Load()
@@ -75,7 +75,7 @@ bool SkyManager::Load()
 //
 // ISkyManager
 //
-void SkyManager::Calculate(const ICamera* camera, uint32 _time)
+void SkyManager::Calculate(const ICameraComponent3D* camera, uint32 _time)
 {
 	if (skies.empty())
 		return;

@@ -35,11 +35,10 @@ CWMO_Doodad_Instance::~CWMO_Doodad_Instance()
 void CWMO_Doodad_Instance::Initialize(const SWMO_Doodad_PlacementInfo & _placement)
 {
     // CTransformComponent
-    std::shared_ptr<ITransformComponent3D> transformComponent = GetComponent<ITransformComponent3D>();
     {
-        transformComponent->SetTranslate(Fix_XZmY(_placement.position));
-        transformComponent->SetRotationQuaternion(quat(_placement.orientation.w, -_placement.orientation.z, _placement.orientation.x, _placement.orientation.y));
-        transformComponent->SetScale(vec3(_placement.scale, -_placement.scale, -_placement.scale));
+        SetTranslate(Fix_XZmY(_placement.position));
+        SetRotationQuaternion(quat(_placement.orientation.w, -_placement.orientation.z, _placement.orientation.x, _placement.orientation.y));
+        SetScale(vec3(_placement.scale, -_placement.scale, -_placement.scale));
     }
 }
 

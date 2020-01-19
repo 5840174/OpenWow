@@ -23,7 +23,7 @@ void CWMO_Group_Instance::Initialize()
 {
     BoundingBox bbox = m_Object->m_Bounds;
     bbox.calculateCenter();
-    bbox.transform(GetComponent<ITransformComponent>()->GetParentWorldTransform());
+    bbox.transform(GetParentWorldTransform());
     GetComponent<IColliderComponent3D>()->SetBounds(bbox);
 }
 

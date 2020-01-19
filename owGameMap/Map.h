@@ -25,7 +25,7 @@ public:
 	void                                            EnterMap(int32 x, int32 z);
 	std::shared_ptr<CMapTile>                       LoadTile(int32 x, int32 z);
 	void                                            ClearCache();
-	uint32                                          GetAreaID(ICamera* camera);
+	uint32                                          GetAreaID(ICameraComponent3D* camera);
 
 	// Scene node
 	std::string										GetName() const override
@@ -33,7 +33,7 @@ public:
 		return "Map";
 	}
 
-	void                                            UpdateCamera(const ICamera* camera) override;
+	void                                            UpdateCamera(const ICameraComponent3D* camera) override;
 
 public: // Getters
 	std::string                                     GetMapFolder() const { return m_MapFolderName; }

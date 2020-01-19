@@ -16,13 +16,13 @@ public:
 	virtual                                         ~SkyManager();
 
 	// SceneNode3D
-	void                                            UpdateCamera(const ICamera* camera) override;
+	void                                            UpdateCamera(const ICameraComponent3D* camera) override;
 
     // ILoadableObject
     bool                                            Load() override;
 
 	// ISkyManager
-	void                                            Calculate(const ICamera* camera, uint32 _time) override;
+	void                                            Calculate(const ICameraComponent3D* camera, uint32 _time) override;
 	bool                                            HasSkies() const override { return !skies.empty(); }
 	vec3                                            GetColor(LightColors::List _color) const override { return m_Interpolated.GetColor(_color); }
 	float                                           GetFog(LightFogs::List _fog) const override { return m_Interpolated.GetFog(_fog); }

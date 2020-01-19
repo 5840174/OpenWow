@@ -20,15 +20,15 @@ void CWMO_Base_Instance::CreateInstances()
 {
 	m_WMO->CreateInsances(std::static_pointer_cast<CWMO_Base_Instance>(shared_from_this()));
 
-    std::shared_ptr<ITransformComponent> transformComponent = GetComponent<ITransformComponent>();
-
+#ifndef WMO_DISABLE_PORTALS
 	if (m_WMO->m_PortalController != nullptr)
 	{
 		for (auto& v : m_WMO->m_PortalVertices)
 		{
-			m_ConvertedVerts.push_back(transformComponent->GetWorldTransfom() * vec4(v, 1.0f));
+			m_ConvertedVerts.push_back(GetWorldTransfom() * vec4(v, 1.0f));
 		}
 	}
+#endif
 }
 
 void CWMO_Base_Instance::setWMO(std::shared_ptr<CWMO> _model)
@@ -43,9 +43,6 @@ std::shared_ptr<CWMO> CWMO_Base_Instance::getWMO() const
 {
 	return m_WMO;
 }
-
-
-//#define WMO_DISABLE_PORTALS
 
 bool CWMO_Base_Instance::Load()
 {
@@ -67,7 +64,7 @@ bool CWMO_Base_Instance::Delete()
 
 
 
-void CWMO_Base_Instance::UpdateCamera(const ICamera* camera)
+void CWMO_Base_Instance::UpdateCamera(const ICameraComponent3D* camera)
 {
 #ifndef WMO_DISABLE_PORTALS
 	if (m_WMO && m_WMO->m_PortalController)

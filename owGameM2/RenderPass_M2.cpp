@@ -16,12 +16,52 @@
 // Additional (meshes)
 #include "M2_Skin_Batch.h"
 
-CRenderPass_M2::CRenderPass_M2(std::shared_ptr<IRenderDevice> RenderDevice, std::shared_ptr<IScene> scene, std::shared_ptr<IPipelineState> pipeline)
-	: Base3DPass(RenderDevice, scene, pipeline)
+CRenderPass_M2::CRenderPass_M2(std::shared_ptr<IRenderDevice> RenderDevice, std::shared_ptr<IScene> scene)
+	: Base3DPass(RenderDevice, scene)
 {}
 
 CRenderPass_M2::~CRenderPass_M2()
 {}
+
+
+
+//
+// IRenderPassPipelined
+//
+std::shared_ptr<IRenderPassPipelined> CRenderPass_M2::CreatePipeline(std::shared_ptr<IRenderTarget> RenderTarget, const Viewport * Viewport)
+{
+	// CreateShaders
+	std::shared_ptr<IShader> g_pVertexShader;
+	std::shared_ptr<IShader> g_pPixelShader;
+	if (GetRenderDevice()->GetDeviceType() == RenderDeviceType::RenderDeviceType_DirectX)
+	{
+		g_pVertexShader = GetRenderDevice()->CreateShader(
+			EShaderType::VertexShader, "shaders_D3D/M2.hlsl", IShader::ShaderMacros(), "VS_main", "latest"
+		);
+		g_pVertexShader->LoadInputLayoutFromReflector();
+
+		g_pPixelShader = GetRenderDevice()->CreateShader(
+			EShaderType::PixelShader, "shaders_D3D/M2.hlsl", IShader::ShaderMacros(), "PS_main", "latest"
+		);
+	}
+	else if (GetRenderDevice()->GetDeviceType() == RenderDeviceType::RenderDeviceType_OpenGL)
+	{
+		_ASSERT(false);
+	}
+
+	// PIPELINES
+	std::shared_ptr<IPipelineState> M2Pipeline = GetRenderDevice()->CreatePipelineState();
+	M2Pipeline->GetBlendState()->SetBlendMode(alphaBlending);
+	M2Pipeline->GetDepthStencilState()->SetDepthMode(enableDepthWrites);
+	M2Pipeline->GetRasterizerState()->SetCullMode(IRasterizerState::CullMode::None);
+	M2Pipeline->GetRasterizerState()->SetFillMode(IRasterizerState::FillMode::Solid);
+	M2Pipeline->SetRenderTarget(RenderTarget);
+	M2Pipeline->GetRasterizerState()->SetViewport(Viewport);
+	M2Pipeline->SetShader(EShaderType::VertexShader, g_pVertexShader);
+	M2Pipeline->SetShader(EShaderType::PixelShader, g_pPixelShader);
+
+	return SetPipeline(M2Pipeline);
+}
 
 
 
@@ -39,10 +79,9 @@ bool CRenderPass_M2::Visit3D(ISceneNode* node)
     return false;
 }
 
-bool CRenderPass_M2::Visit(IMesh* Mesh, UINT IndexStartLocation, UINT IndexCnt, UINT VertexStartLocation, UINT VertexCnt)
+bool CRenderPass_M2::Visit(IMesh* Mesh, SGeometryPartParams GeometryPartParams)
 {
-	CM2_Skin_Batch* pMesh = dynamic_cast<CM2_Skin_Batch*>(Mesh);
-	if (pMesh)
+	if (CM2_Skin_Batch* pMesh = dynamic_cast<CM2_Skin_Batch*>(Mesh))
 	{
 		/*GetPipelineState()->GetBlendState().SetBlendMode(pMesh->GetM2Material()->GetBlendMode());
 		GetPipelineState()->GetBlendState().Bind();
@@ -55,7 +94,7 @@ bool CRenderPass_M2::Visit(IMesh* Mesh, UINT IndexStartLocation, UINT IndexCnt, 
 
 		GetPipelineState()->Bind();*/
 
-        return Mesh->Render(GetRenderEventArgs(), GetPerObjectConstantBuffer().get(), IndexStartLocation, IndexCnt, VertexStartLocation, VertexCnt);
+        return Mesh->Render(GetRenderEventArgs(), m_PerObjectConstantBuffer.get(), GeometryPartParams);
 	}
 
     return false;

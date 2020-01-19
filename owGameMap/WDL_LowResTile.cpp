@@ -18,7 +18,7 @@ CWDL_LowResTile::CWDL_LowResTile(std::weak_ptr<const CMap> _parent, std::shared_
 //
 // IMesh
 //
-bool CWDL_LowResTile::Render(const RenderEventArgs* renderEventArgs, const IConstantBuffer* perObject, UINT indexStartLocation, UINT indexCnt, UINT vertexStartLocation, UINT vertexCnt)
+bool CWDL_LowResTile::Render(const RenderEventArgs* renderEventArgs, const IConstantBuffer* perObject, SGeometryPartParams GeometryPartParams)
 {
 	std::shared_ptr<const CMap> MapController = m_MapController.lock();
 	_ASSERT(MapController != NULL);
@@ -36,5 +36,5 @@ bool CWDL_LowResTile::Render(const RenderEventArgs* renderEventArgs, const ICons
 		return false;
 	}
 
-	return MeshProxie::Render(renderEventArgs, perObject);
+	return MeshProxie::Render(renderEventArgs, perObject, GeometryPartParams);
 }

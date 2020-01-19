@@ -31,7 +31,7 @@ void CM2_ColliderComponent::UpdateBounds()
     if (m2Model)
     {
         BoundingBox bbox = m2Model->GetBounds();
-        bbox.transform(GetComponent<CTransformComponent3D>()->GetWorldTransfom());
+        bbox.transform(GetOwnerNode()->GetWorldTransfom());
         GetComponent<CColliderComponent3D>()->SetBounds(bbox);
     }
     else

@@ -45,8 +45,8 @@ uint32 CMapChunk::GetAreaID() const
 
 bool CMapChunk::Accept(IVisitor* visitor)
 {
-	AbstractPass* visitorAsBasePass = dynamic_cast<AbstractPass*>(visitor);
-	const ICamera* camera = visitorAsBasePass->GetRenderEventArgs()->Camera;
+	//AbstractPass* visitorAsBasePass = dynamic_cast<AbstractPass*>(visitor);
+	//const ICamera* camera = visitorAsBasePass->GetRenderEventArgs()->Camera;
 
     /*if (!GetComponent<CColliderComponent3D>()->CheckDistance(camera, m_QualitySettings->ADT_MCNK_Distance))
     {
@@ -76,16 +76,15 @@ bool CMapChunk::PreLoad()
 	// Read header
 	m_File->readBytes(&header, sizeof(ADT_MCNK_Header));
 
-    std::shared_ptr<CTransformComponent3D> transformComponent = GetComponent<CTransformComponent3D>();
 
 	// Scene node params
     {
         // Set translate
-        transformComponent->SetTranslate(vec3(header.xpos * (-1.0f) + C_ZeroPoint, header.ypos, header.zpos * (-1.0f) + C_ZeroPoint));
+        SetTranslate(vec3(header.xpos * (-1.0f) + C_ZeroPoint, header.ypos, header.zpos * (-1.0f) + C_ZeroPoint));
     }
 
     {
-        vec3 translate = transformComponent->GetTranslation();
+        vec3 translate = GetTranslation();
 
         // Bounds
         BoundingBox bbox
@@ -332,7 +331,7 @@ bool CMapChunk::Load()
 			std::shared_ptr<CADT_Liquid> m_Liquid = std::make_shared<CADT_Liquid>(GetBaseManager(), 8, 8);
 			m_Liquid->CreateFromMCLQ(m_File, header);
 
-            vec3 position = vec3(0.0f, - GetComponent<CTransformComponent3D>()->GetTranslation().y, 0.0f);
+            vec3 position = vec3(0.0f, - GetTranslation().y, 0.0f);
 
 			std::shared_ptr<Liquid_Instance> liq = CreateSceneNode<Liquid_Instance>();
 			liq->Initialize(m_Liquid, position);

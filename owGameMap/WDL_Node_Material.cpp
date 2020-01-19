@@ -9,21 +9,11 @@ WDL_Node_Material::WDL_Node_Material(std::shared_ptr<IRenderDevice> RenderDevice
 	m_pProperties = (MaterialProperties*)_aligned_malloc(sizeof(MaterialProperties), 16);
 	*m_pProperties = MaterialProperties();
 
-	// CreateShaders
-	std::shared_ptr<IShader> g_pVertexShader = RenderDevice->CreateShader(
-		IShader::ShaderType::VertexShader, "shaders_D3D/MapWDL.hlsl", IShader::ShaderMacros(), "VS_main", "latest"
-	);
-    g_pVertexShader->LoadInputLayoutFromReflector();
-
-	std::shared_ptr<IShader> g_pPixelShader = RenderDevice->CreateShader(
-		IShader::ShaderType::PixelShader, "shaders_D3D/MapWDL.hlsl", IShader::ShaderMacros(), "PS_main", "latest"
-	);
 
 	// Material
 	SetDiffuseColor(vec4(0, 0.2, 0.8, 1.0));
 
-	SetShader(IShader::ShaderType::VertexShader, g_pVertexShader);
-	SetShader(IShader::ShaderType::PixelShader, g_pPixelShader);
+
 }
 
 WDL_Node_Material::~WDL_Node_Material()

@@ -24,7 +24,7 @@ void CM2_Skin_Batch::PostInit()
 	SetMaterial(m_TestMaterial);
 }
 
-bool CM2_Skin_Batch::Render(const RenderEventArgs* renderEventArgs, const IConstantBuffer* perObject, UINT indexStartLocation, UINT indexCnt, UINT vertexStartLocation, UINT vertexCnt)
+bool CM2_Skin_Batch::Render(const RenderEventArgs* renderEventArgs, const IConstantBuffer* perObject, SGeometryPartParams GeometryPartParams)
 {
 	const ISceneNode* sceneNode = dynamic_cast<const ISceneNode*>(renderEventArgs->Node);
 	_ASSERT(sceneNode != nullptr);
@@ -32,7 +32,7 @@ bool CM2_Skin_Batch::Render(const RenderEventArgs* renderEventArgs, const IConst
 	const CM2_Base_Instance* sceneNodeAsM2Instance = dynamic_cast<const CM2_Base_Instance*>(sceneNode);
 	_ASSERT(sceneNodeAsM2Instance != nullptr);
 
-	const ICamera* camera = renderEventArgs->Camera;
+	const ICameraComponent3D* camera = renderEventArgs->Camera;
 	_ASSERT(camera != nullptr);
 
 	const SM2_SkinSection& proto = m_SkinSection->getProto();
@@ -108,6 +108,7 @@ bool CM2_Skin_Batch::Render(const RenderEventArgs* renderEventArgs, const IConst
 		m_TestMaterial->SetTextureAnimMatrix(m_TextureTransform->getValue());
 	}
 
-	
-	return MeshProxie::Render(renderEventArgs, perObject, 0, proto.indexCount, 0, proto.vertexCount);
+	GeometryPartParams.IndexCnt = proto.indexCount;
+	GeometryPartParams.VertexCnt = proto.vertexCount;
+	return MeshProxie::Render(renderEventArgs, perObject, GeometryPartParams);
 }

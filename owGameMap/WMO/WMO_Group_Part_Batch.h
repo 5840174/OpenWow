@@ -18,7 +18,7 @@ public:
 	uint32 getBlendMode() const { return m_WMOMaterial->getBlendMode(); }
 
 	// MeshProxie
-	bool Render(const RenderEventArgs* renderEventArgs, const IConstantBuffer* perObject, UINT indexStartLocation = 0, UINT indexCnt = 0, UINT vertexStartLocation = 0, UINT vertexCnt = 0) override;
+	bool Render(const RenderEventArgs* renderEventArgs, const IConstantBuffer* perObject, SGeometryPartParams GeometryPartParams = SGeometryPartParams()) override;
 
 private:
 	const SWMO_Group_BatchDef                   m_Proto;
