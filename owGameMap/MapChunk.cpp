@@ -315,10 +315,8 @@ bool CMapChunk::Load()
 		}
 	}
 
-	GetBaseManager()->GetManager<IRenderDevice>()->Lock();
 	m_BlendRBGShadowATexture = GetBaseManager()->GetManager<IRenderDevice>()->CreateTexture();
 	m_BlendRBGShadowATexture->LoadTextureCustom(64, 64, blendbuf);
-	GetBaseManager()->GetManager<IRenderDevice>()->Unlock();
 
 	// Liquids
 	m_File->seek(startPos + header.ofsLiquid);
