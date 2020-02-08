@@ -64,6 +64,57 @@
     <Filter Include="Settings">
       <UniqueIdentifier>{55856cb7-3009-4fc6-a8a8-cdb3db98f332}</UniqueIdentifier>
     </Filter>
+    <Filter Include="M2">
+      <UniqueIdentifier>{7bc7386a-273c-4b2d-ab6c-b6e6249d84b1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="M2\Animations">
+      <UniqueIdentifier>{24d1f815-62cb-4320-a2ff-bc9199660f64}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="M2\Builders">
+      <UniqueIdentifier>{8f778e25-97a4-4250-8fca-f24fadc1a135}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="M2\Components">
+      <UniqueIdentifier>{be8a504b-1117-41b6-b326-81b305908037}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="M2\Components\Parts_Materials">
+      <UniqueIdentifier>{347f13e4-55e1-4604-86d8-2d0b391916d2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="M2\Components\Parts_Miscellaneous">
+      <UniqueIdentifier>{0ab4b05e-5a14-468f-b9b1-475f39c6f2c6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="M2\Components\Parts_Skeleton">
+      <UniqueIdentifier>{0bfa29b5-d676-4e47-a3b2-0c3dbaaa6e25}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="RenderStuff">
+      <UniqueIdentifier>{1e13051f-c332-4b25-bbab-9946eb8efde1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="M2\SceneNode &amp; Components">
+      <UniqueIdentifier>{be155204-7f8e-47b8-bbe5-297cc583c228}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="M2\Skins">
+      <UniqueIdentifier>{eaa7b9b7-5402-4eff-81e6-638a3975d10d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="M2\Types">
+      <UniqueIdentifier>{2a17f9c0-30ce-4993-8f2c-3eb19951df3f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="M2\Components\Parts_Miscellaneous\Particles">
+      <UniqueIdentifier>{f2e5601a-12b9-4f08-bd03-b1e8430bb1d0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="M2\Components\Parts_Miscellaneous\Ribbons">
+      <UniqueIdentifier>{c3e88f44-ee8b-4d54-8c2c-ead2d8e3015b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="WMO">
+      <UniqueIdentifier>{36110eac-fc5e-4ed0-bd41-d4e8f785e38e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="WMO\Groups">
+      <UniqueIdentifier>{ad9f5633-aa5a-440c-aa61-9ff70c373b4c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="WMO\Instances">
+      <UniqueIdentifier>{02a929ef-a62b-4119-831e-a5cbc5f2e021}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="WMO\Parts">
+      <UniqueIdentifier>{7f7bb52b-8998-4243-a061-21f8d98111c3}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Liquid.cpp">
@@ -139,7 +190,148 @@
       <Filter>DBC</Filter>
     </ClCompile>
     <ClCompile Include="RenderPass_Liquid.cpp">
-      <Filter>Liquid</Filter>
+      <Filter>RenderStuff</Filter>
+    </ClCompile>
+    <ClCompile Include="M2\M2.cpp">
+      <Filter>M2</Filter>
+    </ClCompile>
+    <ClCompile Include="M2\M2_Manager.cpp">
+      <Filter>M2</Filter>
+    </ClCompile>
+    <ClCompile Include="M2\ShaderResolver.cpp">
+      <Filter>M2</Filter>
+    </ClCompile>
+    <ClCompile Include="M2\M2_Material.cpp">
+      <Filter>M2\Skins</Filter>
+    </ClCompile>
+    <ClCompile Include="M2\M2_Skin.cpp">
+      <Filter>M2\Skins</Filter>
+    </ClCompile>
+    <ClCompile Include="M2\M2_Skin_Batch.cpp">
+      <Filter>M2\Skins</Filter>
+    </ClCompile>
+    <ClCompile Include="M2\M2_SkinSection.cpp">
+      <Filter>M2\Skins</Filter>
+    </ClCompile>
+    <ClCompile Include="M2\M2_Base_Instance.cpp">
+      <Filter>M2\SceneNode &amp; Components</Filter>
+    </ClCompile>
+    <ClCompile Include="M2\M2_ColliderComponent.cpp">
+      <Filter>M2\SceneNode &amp; Components</Filter>
+    </ClCompile>
+    <ClCompile Include="M2\M2_Builder.cpp">
+      <Filter>M2\Builders</Filter>
+    </ClCompile>
+    <ClCompile Include="M2\M2_Skin_Builder.cpp">
+      <Filter>M2\Builders</Filter>
+    </ClCompile>
+    <ClCompile Include="M2\M2_Comp_Materials.cpp">
+      <Filter>M2\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="M2\M2_Comp_Miscellaneous.cpp">
+      <Filter>M2\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="M2\M2_Comp_Skeleton.cpp">
+      <Filter>M2\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="M2\M2_Part_Color.cpp">
+      <Filter>M2\Components\Parts_Materials</Filter>
+    </ClCompile>
+    <ClCompile Include="M2\M2_Part_Material.cpp">
+      <Filter>M2\Components\Parts_Materials</Filter>
+    </ClCompile>
+    <ClCompile Include="M2\M2_Part_Texture.cpp">
+      <Filter>M2\Components\Parts_Materials</Filter>
+    </ClCompile>
+    <ClCompile Include="M2\M2_Part_TextureTransform.cpp">
+      <Filter>M2\Components\Parts_Materials</Filter>
+    </ClCompile>
+    <ClCompile Include="M2\M2_Part_TextureWeight.cpp">
+      <Filter>M2\Components\Parts_Materials</Filter>
+    </ClCompile>
+    <ClCompile Include="M2\M2_Part_Attachment.cpp">
+      <Filter>M2\Components\Parts_Miscellaneous</Filter>
+    </ClCompile>
+    <ClCompile Include="M2\M2_Part_Camera.cpp">
+      <Filter>M2\Components\Parts_Miscellaneous</Filter>
+    </ClCompile>
+    <ClCompile Include="M2\M2_Part_Event.cpp">
+      <Filter>M2\Components\Parts_Miscellaneous</Filter>
+    </ClCompile>
+    <ClCompile Include="M2\M2_Part_Light.cpp">
+      <Filter>M2\Components\Parts_Miscellaneous</Filter>
+    </ClCompile>
+    <ClCompile Include="M2\M2_Part_Bone.cpp">
+      <Filter>M2\Components\Parts_Skeleton</Filter>
+    </ClCompile>
+    <ClCompile Include="M2\M2_Animation.cpp">
+      <Filter>M2\Animations</Filter>
+    </ClCompile>
+    <ClCompile Include="M2\M2_Animator.cpp">
+      <Filter>M2\Animations</Filter>
+    </ClCompile>
+    <ClCompile Include="M2\ParticleEmitter_Plane.cpp">
+      <Filter>M2\Components\Parts_Miscellaneous\Particles</Filter>
+    </ClCompile>
+    <ClCompile Include="M2\ParticleEmitter_Sphere.cpp">
+      <Filter>M2\Components\Parts_Miscellaneous\Particles</Filter>
+    </ClCompile>
+    <ClCompile Include="M2\ParticleEmitters.cpp">
+      <Filter>M2\Components\Parts_Miscellaneous\Particles</Filter>
+    </ClCompile>
+    <ClCompile Include="M2\ParticleSystem.cpp">
+      <Filter>M2\Components\Parts_Miscellaneous\Particles</Filter>
+    </ClCompile>
+    <ClCompile Include="M2\M2_RibbonEmitters.cpp">
+      <Filter>M2\Components\Parts_Miscellaneous\Ribbons</Filter>
+    </ClCompile>
+    <ClCompile Include="WMO\WMO.cpp">
+      <Filter>WMO</Filter>
+    </ClCompile>
+    <ClCompile Include="WMO\WMO_PortalsController.cpp">
+      <Filter>WMO</Filter>
+    </ClCompile>
+    <ClCompile Include="WMO\WMOsManager.cpp">
+      <Filter>WMO</Filter>
+    </ClCompile>
+    <ClCompile Include="WMO\WMO_Group.cpp">
+      <Filter>WMO\Groups</Filter>
+    </ClCompile>
+    <ClCompile Include="WMO\WMO_Group_Instance.cpp">
+      <Filter>WMO\Groups</Filter>
+    </ClCompile>
+    <ClCompile Include="WMO\WMO_Group_Part_Batch.cpp">
+      <Filter>WMO\Groups</Filter>
+    </ClCompile>
+    <ClCompile Include="WMO\WMO_Group_Part_BSP_Node.cpp">
+      <Filter>WMO\Groups</Filter>
+    </ClCompile>
+    <ClCompile Include="WMO\WMO_Base_Instance.cpp">
+      <Filter>WMO\Instances</Filter>
+    </ClCompile>
+    <ClCompile Include="WMO\WMO_Doodad_Instance.cpp">
+      <Filter>WMO\Instances</Filter>
+    </ClCompile>
+    <ClCompile Include="WMO\WMO_Liquid_Instance.cpp">
+      <Filter>WMO\Instances</Filter>
+    </ClCompile>
+    <ClCompile Include="WMO\WMO_Part_Fog.cpp">
+      <Filter>WMO\Parts</Filter>
+    </ClCompile>
+    <ClCompile Include="WMO\WMO_Part_Light.cpp">
+      <Filter>WMO\Parts</Filter>
+    </ClCompile>
+    <ClCompile Include="WMO\WMO_Part_Material.cpp">
+      <Filter>WMO\Parts</Filter>
+    </ClCompile>
+    <ClCompile Include="WMO\WMO_Part_Portal.cpp">
+      <Filter>WMO\Parts</Filter>
+    </ClCompile>
+    <ClCompile Include="M2\RenderPass_M2.cpp">
+      <Filter>RenderStuff</Filter>
+    </ClCompile>
+    <ClCompile Include="WMO\RenderPass_WMO.cpp">
+      <Filter>RenderStuff</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -358,7 +550,178 @@
       <Filter>DBC</Filter>
     </ClInclude>
     <ClInclude Include="RenderPass_Liquid.h">
-      <Filter>Liquid</Filter>
+      <Filter>RenderStuff</Filter>
+    </ClInclude>
+    <ClInclude Include="M2\M2.h">
+      <Filter>M2</Filter>
+    </ClInclude>
+    <ClInclude Include="M2\M2_Manager.h">
+      <Filter>M2</Filter>
+    </ClInclude>
+    <ClInclude Include="M2\ShaderResolver.h">
+      <Filter>M2</Filter>
+    </ClInclude>
+    <ClInclude Include="M2\M2_Animated.h">
+      <Filter>M2\Types</Filter>
+    </ClInclude>
+    <ClInclude Include="M2\M2_AnimatedConverters.h">
+      <Filter>M2\Types</Filter>
+    </ClInclude>
+    <ClInclude Include="M2\M2_CommonTypes.h">
+      <Filter>M2\Types</Filter>
+    </ClInclude>
+    <ClInclude Include="M2\M2_Headers.h">
+      <Filter>M2\Types</Filter>
+    </ClInclude>
+    <ClInclude Include="M2\M2_ParticlesTypes.h">
+      <Filter>M2\Types</Filter>
+    </ClInclude>
+    <ClInclude Include="M2\M2_SkinTypes.h">
+      <Filter>M2\Types</Filter>
+    </ClInclude>
+    <ClInclude Include="M2\M2_Types.h">
+      <Filter>M2\Types</Filter>
+    </ClInclude>
+    <ClInclude Include="M2\M2_Material.h">
+      <Filter>M2\Skins</Filter>
+    </ClInclude>
+    <ClInclude Include="M2\M2_Skin.h">
+      <Filter>M2\Skins</Filter>
+    </ClInclude>
+    <ClInclude Include="M2\M2_Skin_Batch.h">
+      <Filter>M2\Skins</Filter>
+    </ClInclude>
+    <ClInclude Include="M2\M2_SkinSection.h">
+      <Filter>M2\Skins</Filter>
+    </ClInclude>
+    <ClInclude Include="M2\M2_Base_Instance.h">
+      <Filter>M2\SceneNode &amp; Components</Filter>
+    </ClInclude>
+    <ClInclude Include="M2\M2_ColliderComponent.h">
+      <Filter>M2\SceneNode &amp; Components</Filter>
+    </ClInclude>
+    <ClInclude Include="M2\M2_Builder.h">
+      <Filter>M2\Builders</Filter>
+    </ClInclude>
+    <ClInclude Include="M2\M2_Skin_Builder.h">
+      <Filter>M2\Builders</Filter>
+    </ClInclude>
+    <ClInclude Include="M2\M2_Comp_Materials.h">
+      <Filter>M2\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="M2\M2_Comp_Miscellaneous.h">
+      <Filter>M2\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="M2\M2_Comp_Skeleton.h">
+      <Filter>M2\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="M2\M2_Part_Color.h">
+      <Filter>M2\Components\Parts_Materials</Filter>
+    </ClInclude>
+    <ClInclude Include="M2\M2_Part_Material.h">
+      <Filter>M2\Components\Parts_Materials</Filter>
+    </ClInclude>
+    <ClInclude Include="M2\M2_Part_Texture.h">
+      <Filter>M2\Components\Parts_Materials</Filter>
+    </ClInclude>
+    <ClInclude Include="M2\M2_Part_TextureTransform.h">
+      <Filter>M2\Components\Parts_Materials</Filter>
+    </ClInclude>
+    <ClInclude Include="M2\M2_Part_TextureWeight.h">
+      <Filter>M2\Components\Parts_Materials</Filter>
+    </ClInclude>
+    <ClInclude Include="M2\M2_Part_Attachment.h">
+      <Filter>M2\Components\Parts_Miscellaneous</Filter>
+    </ClInclude>
+    <ClInclude Include="M2\M2_Part_Camera.h">
+      <Filter>M2\Components\Parts_Miscellaneous</Filter>
+    </ClInclude>
+    <ClInclude Include="M2\M2_Part_Event.h">
+      <Filter>M2\Components\Parts_Miscellaneous</Filter>
+    </ClInclude>
+    <ClInclude Include="M2\M2_Part_Light.h">
+      <Filter>M2\Components\Parts_Miscellaneous</Filter>
+    </ClInclude>
+    <ClInclude Include="M2\M2_Part_Bone.h">
+      <Filter>M2\Components\Parts_Skeleton</Filter>
+    </ClInclude>
+    <ClInclude Include="M2\M2_Animation.h">
+      <Filter>M2\Animations</Filter>
+    </ClInclude>
+    <ClInclude Include="M2\M2_Animator.h">
+      <Filter>M2\Animations</Filter>
+    </ClInclude>
+    <ClInclude Include="M2\ParticleEmitter_Plane.h">
+      <Filter>M2\Components\Parts_Miscellaneous\Particles</Filter>
+    </ClInclude>
+    <ClInclude Include="M2\ParticleEmitter_Sphere.h">
+      <Filter>M2\Components\Parts_Miscellaneous\Particles</Filter>
+    </ClInclude>
+    <ClInclude Include="M2\ParticleEmitters.h">
+      <Filter>M2\Components\Parts_Miscellaneous\Particles</Filter>
+    </ClInclude>
+    <ClInclude Include="M2\ParticleSystem.h">
+      <Filter>M2\Components\Parts_Miscellaneous\Particles</Filter>
+    </ClInclude>
+    <ClInclude Include="M2\M2_RibbonEmitters.h">
+      <Filter>M2\Components\Parts_Miscellaneous\Ribbons</Filter>
+    </ClInclude>
+    <ClInclude Include="WMO\WMO.h">
+      <Filter>WMO</Filter>
+    </ClInclude>
+    <ClInclude Include="WMO\WMO_Headers.h">
+      <Filter>WMO</Filter>
+    </ClInclude>
+    <ClInclude Include="WMO\WMO_PortalsController.h">
+      <Filter>WMO</Filter>
+    </ClInclude>
+    <ClInclude Include="WMO\WMOsManager.h">
+      <Filter>WMO</Filter>
+    </ClInclude>
+    <ClInclude Include="WMO\WMO_Group.h">
+      <Filter>WMO\Groups</Filter>
+    </ClInclude>
+    <ClInclude Include="WMO\WMO_Group_Headers.h">
+      <Filter>WMO\Groups</Filter>
+    </ClInclude>
+    <ClInclude Include="WMO\WMO_Group_Instance.h">
+      <Filter>WMO\Groups</Filter>
+    </ClInclude>
+    <ClInclude Include="WMO\WMO_Group_Part_Batch.h">
+      <Filter>WMO\Groups</Filter>
+    </ClInclude>
+    <ClInclude Include="WMO\WMO_Group_Part_BSP_Node.h">
+      <Filter>WMO\Groups</Filter>
+    </ClInclude>
+    <ClInclude Include="WMO\WMO_Fixes.h">
+      <Filter>WMO\Groups</Filter>
+    </ClInclude>
+    <ClInclude Include="WMO\WMO_Base_Instance.h">
+      <Filter>WMO\Instances</Filter>
+    </ClInclude>
+    <ClInclude Include="WMO\WMO_Doodad_Instance.h">
+      <Filter>WMO\Instances</Filter>
+    </ClInclude>
+    <ClInclude Include="WMO\WMO_Liquid_Instance.h">
+      <Filter>WMO\Instances</Filter>
+    </ClInclude>
+    <ClInclude Include="WMO\WMO_Part_Fog.h">
+      <Filter>WMO\Parts</Filter>
+    </ClInclude>
+    <ClInclude Include="WMO\WMO_Part_Light.h">
+      <Filter>WMO\Parts</Filter>
+    </ClInclude>
+    <ClInclude Include="WMO\WMO_Part_Material.h">
+      <Filter>WMO\Parts</Filter>
+    </ClInclude>
+    <ClInclude Include="WMO\WMO_Part_Portal.h">
+      <Filter>WMO\Parts</Filter>
+    </ClInclude>
+    <ClInclude Include="M2\RenderPass_M2.h">
+      <Filter>RenderStuff</Filter>
+    </ClInclude>
+    <ClInclude Include="WMO\RenderPass_WMO.h">
+      <Filter>RenderStuff</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

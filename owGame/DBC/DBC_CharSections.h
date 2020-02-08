@@ -1,6 +1,6 @@
 #pragma once
 
-#include "DBC__File.h"
+#include "DBC/Core/DBC__File.h"
 
 enum DBC_CharSections_GeneralType : uint32
 {

@@ -32,7 +32,7 @@ CM2_Manager::~CM2_Manager()
 
 //
 
-std::shared_ptr<M2> CM2_Manager::CreateAction(const std::string& name)
+std::shared_ptr<M2> CM2_Manager::CreateAction(IRenderDevice& RenderDevice, const std::string& name)
 {
 	/*std::string newName = Utils::ToLower(name);
 	if (newName.find("orgrimmarsmokeemitter.mdx") != -1 ||
@@ -43,7 +43,7 @@ std::shared_ptr<M2> CM2_Manager::CreateAction(const std::string& name)
 
 	std::shared_ptr<M2> model = std::make_shared<M2>(name);
 
-	CM2_Builder builder(m_BaseManager, model);
+	CM2_Builder builder(m_BaseManager, RenderDevice, model);
 	if (!builder.Load())
 	{
 		model.reset();

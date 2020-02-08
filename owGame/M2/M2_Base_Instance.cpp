@@ -196,7 +196,7 @@ void CM2_Base_Instance::RegisterComponents()
 //
 bool CM2_Base_Instance::Load()
 {
-	std::shared_ptr<M2> m2 = GetBaseManager()->GetManager<IM2Manager>()->Add(m_M2Name);
+	std::shared_ptr<M2> m2 = GetBaseManager()->GetManager<IM2Manager>()->Add(GetBaseManager()->GetApplication().GetRenderDevice(), m_M2Name);
 	if (m2)
 	{
 		setM2(m2);

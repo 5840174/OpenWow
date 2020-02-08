@@ -1,5 +1,7 @@
 #pragma once
 
+#include "DBC/Core/DBC__Storage.h"
+
 #include "M2_CommonTypes.h"
 
 #include __PACK_BEGIN

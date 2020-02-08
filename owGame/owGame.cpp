@@ -7,8 +7,9 @@
 #include "DBC/Core/DBC__Storage.h"
 #include "Settings/WoWSettingsGroup.h"
 #include "MPQFilesStorage.h"
-#include "LiquidInstance.h"
+#include "M2/M2_Manager.h"
 
+#include "LiquidInstance.h"
 #include "RenderPass_Liquid.h"
 
 extern CLog* gLogInstance;
@@ -36,6 +37,9 @@ public:
 
 		m_BaseManager->GetManager<ISettings>()->AddGroup("WoWSettings", std::make_shared<CWoWSettingsGroup>());
 		m_BaseManager->GetManager<IFilesManager>()->AddFilesStorage("MPQStorage", std::make_shared<CMPQFilesStorage>("D:\\_games\\World of Warcraft 1.12.1\\Data\\", IFilesStorageEx::Priority::PRIOR_HIGH));
+
+		std::shared_ptr<IM2Manager> m2Manager = std::make_shared<CM2_Manager>(m_BaseManager);
+		m_BaseManager->AddManager<IM2Manager>(m2Manager);
 
 		OpenDBs(m_BaseManager);
 

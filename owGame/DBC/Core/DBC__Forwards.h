@@ -1,7 +1,7 @@
 #pragma once
 
 // Common
-#include "DBC__File.h"
+#include "DBC/Core/DBC__File.h"
 
 // All
 DBC_DEFINE(DBC_AnimationData)
