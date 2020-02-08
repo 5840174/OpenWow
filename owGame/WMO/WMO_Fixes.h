@@ -3,7 +3,7 @@
 #include "WMO.h"
 #include "WMO_Group.h"
 
-inline void FixColorVertexAlpha(std::shared_ptr<WMO_Group> _group)
+inline void FixColorVertexAlpha(WMO_Group* _group)
 {
 	uint32 begin_second_fixup = 0;
 	if (_group->m_Header.batchCounts[0])
@@ -11,7 +11,7 @@ inline void FixColorVertexAlpha(std::shared_ptr<WMO_Group> _group)
 		begin_second_fixup = *((uint16*)&_group->moba[(uint16)_group->m_Header.batchCounts[0]] - 2) + 1;
 	}
 
-	if (_group->m_ParentWMO.lock()->m_Header.flags.lighten_interiors)
+	if (_group->GetWMOModel().m_Header.flags.lighten_interiors)
 	{
 		for (uint32 i = begin_second_fixup; i < _group->mocv_count; ++i)
 		{
@@ -22,7 +22,7 @@ inline void FixColorVertexAlpha(std::shared_ptr<WMO_Group> _group)
 	{
 		uint8 v35, v36, v37;
 
-		if (_group->m_ParentWMO.lock()->m_Header.flags.skip_base_color)
+		if (_group->GetWMOModel().m_Header.flags.skip_base_color)
 		{
 			v35 = 0;
 			v36 = 0;
@@ -30,9 +30,9 @@ inline void FixColorVertexAlpha(std::shared_ptr<WMO_Group> _group)
 		}
 		else
 		{
-			v35 = (_group->m_ParentWMO.lock()->m_Header.ambColor >> 0) & 0xff;
-			v37 = (_group->m_ParentWMO.lock()->m_Header.ambColor >> 8) & 0xff;
-			v36 = (_group->m_ParentWMO.lock()->m_Header.ambColor >> 16) & 0xff;
+			v35 = (_group->GetWMOModel().m_Header.ambColor >> 0) & 0xff;
+			v37 = (_group->GetWMOModel().m_Header.ambColor >> 8) & 0xff;
+			v36 = (_group->GetWMOModel().m_Header.ambColor >> 16) & 0xff;
 		}
 
 		for (uint32 mocv_index = 0; mocv_index < begin_second_fixup; ++mocv_index)

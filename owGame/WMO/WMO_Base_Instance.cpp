@@ -44,9 +44,9 @@ std::shared_ptr<CWMO> CWMO_Base_Instance::getWMO() const
 	return m_WMO;
 }
 
-bool CWMO_Base_Instance::Load()
+bool CWMO_Base_Instance::Load(IRenderDevice& RenderDevice)
 {
-	std::shared_ptr<CWMO> wmo = GetBaseManager()->GetManager<IWMOManager>()->Add(m_WMOName);
+	std::shared_ptr<CWMO> wmo = GetBaseManager()->GetManager<IWMOManager>()->Add(RenderDevice, m_WMOName);
 	if (wmo)
 	{
 		setWMO(wmo);
@@ -54,11 +54,6 @@ bool CWMO_Base_Instance::Load()
 		return true;
 	}
 
-	return false;
-}
-
-bool CWMO_Base_Instance::Delete()
-{
 	return false;
 }
 
@@ -74,7 +69,7 @@ void CWMO_Base_Instance::UpdateCamera(const ICameraComponent3D* camera)
 #endif
 }
 
-bool CWMO_Base_Instance::Accept(IVisitor* visitor)
+void CWMO_Base_Instance::Accept(IVisitor* visitor)
 {
-	return SceneNode3D::Accept(visitor);
+	SceneNode3D::Accept(visitor);
 }

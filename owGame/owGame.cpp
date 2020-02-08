@@ -7,7 +7,9 @@
 #include "DBC/Core/DBC__Storage.h"
 #include "Settings/WoWSettingsGroup.h"
 #include "MPQFilesStorage.h"
+#include "ImageBLP.h"
 #include "M2/M2_Manager.h"
+#include "WMO/WMOsManager.h"
 
 #include "LiquidInstance.h"
 #include "RenderPass_Liquid.h"
@@ -36,10 +38,20 @@ public:
 		gLogInstance = dynamic_cast<CLog*>(m_BaseManager->GetManager<ILog>());
 
 		m_BaseManager->GetManager<ISettings>()->AddGroup("WoWSettings", std::make_shared<CWoWSettingsGroup>());
+		
+		// MPQ
 		m_BaseManager->GetManager<IFilesManager>()->AddFilesStorage("MPQStorage", std::make_shared<CMPQFilesStorage>("D:\\_games\\World of Warcraft 1.12.1\\Data\\", IFilesStorageEx::Priority::PRIOR_HIGH));
 
+		// BLP
+		m_BaseManager->GetManager<IImagesFactory>()->AddImageLoader(std::make_shared<CImageLoaderT<CImageBLP>>());
+
+		// M2
 		std::shared_ptr<IM2Manager> m2Manager = std::make_shared<CM2_Manager>(m_BaseManager);
 		m_BaseManager->AddManager<IM2Manager>(m2Manager);
+
+		// WMO
+		std::shared_ptr<IWMOManager> wmoManager = std::make_shared<WMOsManager>(m_BaseManager);
+		m_BaseManager->AddManager<IWMOManager>(wmoManager);
 
 		OpenDBs(m_BaseManager);
 

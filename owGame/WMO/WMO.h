@@ -21,11 +21,11 @@ class CWMO
 {
 	friend CWMO_Part_Portal;
 public:
-	CWMO(IBaseManager* BaseManager, const std::string& FileName);
+	CWMO(IBaseManager* BaseManager, IRenderDevice& RenderDevice, const std::string& FileName);
 	virtual ~CWMO();
 
 	// ISceneNodeProvider
-	void CreateInsances(std::weak_ptr<ISceneNode> _parent) override;
+	void CreateInsances(std::weak_ptr<ISceneNode3D> _parent) override;
 
 
 	bool Load();
@@ -34,14 +34,12 @@ public:
 
 	bool drawSkybox();
 
-#pragma region Getters
 public:
 	std::string getFilename() const { return m_FileName; }
 	BoundingBox	GetBounds() const { return m_Bounds; }
 
 	bool useAmbColor() const { return !(m_Header.flags.skip_base_color); }
 	std::shared_ptr<M2> getSkybox() { return m_Skybox; }
-#pragma endregion
 
 public:
 	const std::string                                                   m_FileName;
@@ -51,7 +49,7 @@ public:
 public:
 	//-- Materials --//
 	char*																m_TexturesNames;		// MOTX chunk
-	std::vector<std::shared_ptr<const WMO_Part_Material>>				m_Materials;			// MOMT chunk
+	std::vector<std::shared_ptr<WMO_Part_Material>>						m_Materials;			// MOMT chunk
 
 	//-- Groups --//
 
@@ -94,4 +92,5 @@ public:
 
 private:
 	IBaseManager* m_BaseManager;
+	IRenderDevice& m_RenderDevice;
 };

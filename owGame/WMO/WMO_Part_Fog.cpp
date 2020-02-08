@@ -3,13 +3,12 @@
 // General
 #include "Wmo_Part_Fog.h"
 
-WMO_Part_Fog::WMO_Part_Fog(const SWMO_FogDef& _proto)
+WMO_Part_Fog::WMO_Part_Fog(const SWMO_FogDef& WMOFogProto)
+	: m_WMOFogProto(WMOFogProto)
 {
-	fogDef = _proto;
-
-	color = vec4(fogDef.fog.color.r, fogDef.fog.color.g, fogDef.fog.color.b, fogDef.fog.color.a);
-	fogDef.position = Fix_XZmY(fogDef.position);
-	fogDef.fog.startScalar = fogDef.fog.startScalar * fogDef.fog.end;
+	color = vec4(m_WMOFogProto.fog.color.r, m_WMOFogProto.fog.color.g, m_WMOFogProto.fog.color.b, m_WMOFogProto.fog.color.a);
+	m_WMOFogProto.position = Fix_XZmY(m_WMOFogProto.position);
+	m_WMOFogProto.fog.startScalar = m_WMOFogProto.fog.startScalar * m_WMOFogProto.fog.end;
 }
 
 void WMO_Part_Fog::setup()

@@ -13,7 +13,7 @@ enum LightType
 class WMO_Part_Light 
 {
 public:
-	WMO_Part_Light(const SWMO_LightDef& _proto);
+	WMO_Part_Light(const SWMO_LightDef& WMOLightProto);
 
 	void setup(uint32 light);
 
@@ -21,5 +21,6 @@ public:
 	vec3 m_Position;
 	vec4 fcolor;
 
-	SWMO_LightDef lightDef;
+private:
+	const SWMO_LightDef m_WMOLightProto;
 };

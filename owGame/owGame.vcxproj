@@ -26,6 +26,7 @@
     <ClCompile Include="Client\Templates\ItemTemplate.cpp" />
     <ClCompile Include="Client\WorldSocket.cpp" />
     <ClCompile Include="DBC\Core\DBC__Storage.cpp" />
+    <ClCompile Include="ImageBLP.cpp" />
     <ClCompile Include="LiquidLayer.cpp" />
     <ClCompile Include="M2\M2.cpp" />
     <ClCompile Include="M2\M2_Animation.cpp" />
@@ -147,6 +148,7 @@
     <ClInclude Include="DBC\DBC_TerrainType.h" />
     <ClInclude Include="DBC\DBC_WMOAreaTable.h" />
     <ClInclude Include="DBC\DBC_WorldSafeLocs.h" />
+    <ClInclude Include="ImageBLP.h" />
     <ClInclude Include="Interfaces\ILiquid.h" />
     <ClInclude Include="Interfaces\Managers.h" />
     <ClInclude Include="Interfaces\SkyManager.h" />

@@ -5,28 +5,27 @@
 // General
 #include "Wmo_Part_Light.h"
 
-WMO_Part_Light::WMO_Part_Light(const SWMO_LightDef& _proto)
+WMO_Part_Light::WMO_Part_Light(const SWMO_LightDef& WMOLightProto)
+	: m_WMOLightProto(WMOLightProto)
 {
-	lightDef = _proto;
+	m_Position = vec3(m_WMOLightProto.pos.x, m_WMOLightProto.pos.z, -m_WMOLightProto.pos.y);
 
-	m_Position = vec3(lightDef.pos.x, lightDef.pos.z, -lightDef.pos.y);
-
-	fcolor = fromARGB(lightDef.color);
-	//fcolor *= lightDef.intensity;
+	fcolor = fromARGB(m_WMOLightProto.color);
+	//fcolor *= m_WMOLightProto.intensity;
 	fcolor.w = 1.0f;
 
 	/*
 
 	Light light;
 	light.m_Type = Light::LightType::Point;
-	light.m_PositionWS = vec4(lightDef.pos.x, lightDef.pos.z, -lightDef.pos.y, 1.0f);
+	light.m_PositionWS = vec4(m_WMOLightProto.pos.x, m_WMOLightProto.pos.z, -m_WMOLightProto.pos.y, 1.0f);
 	light.m_Color = fcolor;
 	light.m_Range = _proto.intensity;
 
 	setLight(light);
 	*/
 
-	Log::Warn("WMOLight: Created: Type %d, UseAtten %d, %f", lightDef.type, lightDef.useAtten, lightDef.attenStart, lightDef.attenEnd);
+	Log::Warn("WMOLight: Created: Type %d, UseAtten %d, %f", m_WMOLightProto.type, m_WMOLightProto.useAtten, m_WMOLightProto.attenStart, m_WMOLightProto.attenEnd);
 }
 
 void WMO_Part_Light::setup(uint32 light)

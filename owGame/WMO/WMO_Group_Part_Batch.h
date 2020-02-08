@@ -13,23 +13,21 @@ class WMO_Group_Part_Batch
 	: public ModelProxie
 {
 public:
-	WMO_Group_Part_Batch(const std::weak_ptr<const CWMO> _parentWMO, std::shared_ptr<IModel> _mesh, const SWMO_Group_BatchDef& _proto);
-
-	uint32 getBlendMode() const { return m_WMOMaterial->getBlendMode(); }
+	WMO_Group_Part_Batch(IRenderDevice& RenderDevice, const CWMO& WMOModel, const SWMO_Group_BatchDef& WMOGroupBatchProto);
+	virtual ~WMO_Group_Part_Batch();
 
 	// ModelProxie
-	bool Render(const RenderEventArgs* renderEventArgs, const IConstantBuffer* perObject, SGeometryPartParams GeometryPartParams = SGeometryPartParams()) override;
+	bool Render(const RenderEventArgs& renderEventArgs) const override;
 
 private:
-	const SWMO_Group_BatchDef                   m_Proto;
-	std::shared_ptr<const WMO_Part_Material>    m_WMOMaterial;
-	BoundingBox                                 m_Bounds;
+	BoundingBox m_Bounds;
 
-	// Parent
-	const std::weak_ptr<const CWMO>              m_ParentWMO;
-	const std::weak_ptr<const WMO_Group>        m_ParentGroup;
+private:
+	const CWMO& m_ParentWMO;
+	const SWMO_Group_BatchDef m_WMOGroupBatchProto;
 };
 
+/*
 struct WMO_Group_Part_BatchCompare
 {
 	bool operator() (const std::shared_ptr<WMO_Group_Part_Batch> left, const std::shared_ptr<WMO_Group_Part_Batch> right) const
@@ -37,3 +35,4 @@ struct WMO_Group_Part_BatchCompare
 		return left->getBlendMode() < right->getBlendMode();
 	}
 };
+*/

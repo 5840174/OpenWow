@@ -11,7 +11,7 @@ class CWMO_Base_Instance;
 class CWMO_Part_Portal
 {
 public:
-	CWMO_Part_Portal(std::shared_ptr<IRenderDevice> RenderDevice, const std::weak_ptr<const CWMO> _parentWMO, const SWMO_PortalDef& _proto);
+	CWMO_Part_Portal(IRenderDevice& RenderDevice, const CWMO& WMOModel, const SWMO_PortalDef& _proto);
 	virtual ~CWMO_Part_Portal();
 
 	uint16 getStartVertex() const { return m_StartVertex; }
@@ -35,8 +35,8 @@ private:
 	int32					m_GrInner;
 	int32					m_GrOuter;
 
-	std::shared_ptr<IModel>			m_Geom;
+	std::shared_ptr<IGeometry> m_Geom;
 
 private:
-	const std::weak_ptr<const CWMO> m_ParentWMO;
+	const CWMO& m_WMOModel;
 };

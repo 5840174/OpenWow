@@ -1,5 +1,7 @@
 ﻿#pragma once
 
+#include "DBC/Core/DBC__Storage.h"
+
 #include __PACK_BEGIN
 
 struct SWMO_HeaderDef
@@ -169,7 +171,7 @@ struct SWMO_FogDef
 		uint32 : 31;
 	} flags;
 
-	vec3 position;
+	glm::vec3 position;
 	float smallerRadius; // Smaller radius
 	float largerRadius;  // Larger radius
 

@@ -1,5 +1,7 @@
 #pragma once
 
+#include "DBC/Core/DBC__Storage.h"
+
 #include __PACK_BEGIN
 
 struct SWMOGroup_Flags
@@ -108,7 +110,7 @@ struct SWMO_Group_BatchDef
 	uint8 flags;
 	uint8 material_id; // index in MOMT
 
-	uint16 getVerticesCount() const { return vertexEnd - vertexStart; }
+	inline uint16 getVerticesCount() const { return vertexEnd - vertexStart; }
 };
 
 

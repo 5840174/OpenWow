@@ -1,19 +1,19 @@
 #pragma once
 
+#include "LiquidInstance.h"
 #include "WMO_Headers.h"
-
 #include "WMO_Group.h"
 
 class CWMO_Liquid_Instance 
-	: public SceneNode3D
+	: public Liquid_Instance
 {
 public:
-	CWMO_Liquid_Instance(const std::weak_ptr<const WMO_Group> _group);
+	CWMO_Liquid_Instance(const WMO_Group& WMOGroupObject);
 	virtual ~CWMO_Liquid_Instance();
 
 	// SceneNode3D
-	bool Accept(IVisitor* visitor) override;
+	void Accept(IVisitor* visitor) override;
 
 private:
-	const std::weak_ptr<const WMO_Group> m_Group; // used for visibility
+	const WMO_Group& m_WMOGroupObject; // used for visibility
 };

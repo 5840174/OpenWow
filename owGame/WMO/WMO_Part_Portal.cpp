@@ -8,10 +8,10 @@
 // General
 #include "WMO_Part_Portal.h"
 
-CWMO_Part_Portal::CWMO_Part_Portal(std::shared_ptr<IRenderDevice> RenderDevice, const std::weak_ptr<const CWMO> _parentWMO, const SWMO_PortalDef& _proto)
-	: m_ParentWMO(_parentWMO)
-	, m_GrInner(-1)
+CWMO_Part_Portal::CWMO_Part_Portal(IRenderDevice& RenderDevice, const CWMO& WMOModel, const SWMO_PortalDef& _proto)
+	: m_GrInner(-1)
 	, m_GrOuter(-1)
+	, m_WMOModel(WMOModel)
 {
 	m_StartVertex = _proto.startVertex;
 	m_Count = _proto.count;
@@ -20,8 +20,8 @@ CWMO_Part_Portal::CWMO_Part_Portal(std::shared_ptr<IRenderDevice> RenderDevice, 
 	m_Plane.normal = Fix_XZmY(_proto.plane.normal);
 	m_Plane.dist = _proto.plane.distance;
 
-	m_Geom = RenderDevice->CreateMesh();
-	m_Geom->AddVertexBuffer(BufferBinding("POSITION", 0), m_ParentWMO.lock()->m_PortalVB);
+	m_Geom = RenderDevice.GetObjectsFactory().CreateGeometry();
+	m_Geom->AddVertexBuffer(BufferBinding("POSITION", 0), m_WMOModel.m_PortalVB);
 }
 
 

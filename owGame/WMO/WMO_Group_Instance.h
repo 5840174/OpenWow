@@ -15,9 +15,10 @@ class CWMO_Group_Instance
 {
 public:
 #ifdef USE_M2_MODELS
-	typedef std::vector<std::shared_ptr<CWMO_Doodad_Instance>> DoodadInstances;
+	typedef std::vector<CWMO_Doodad_Instance*> DoodadInstances;
 #endif
-	typedef std::vector<std::shared_ptr<CWMO_Liquid_Instance>> LuqidInstances;
+	typedef std::vector<CWMO_Liquid_Instance*> LuqidInstances;
+
 public:
 	CWMO_Group_Instance(const std::shared_ptr<WMO_Group> _object);
 	virtual ~CWMO_Group_Instance();
@@ -37,7 +38,7 @@ public:
     const DoodadInstances& getDoodadsInstances() { return m_Doodads; }
 #endif
 
-    void addLiquidInstance(std::shared_ptr<CWMO_Liquid_Instance> _liquid) { m_Liquids.push_back(_liquid); }
+    void addLiquidInstance(CWMO_Liquid_Instance* _liquid) { m_Liquids.push_back(_liquid); }
     const LuqidInstances& getLiquidInstances() { return m_Liquids; }
 
 	// SceneNode3D
@@ -46,7 +47,7 @@ public:
 		return "WMOGroup '" + m_Object->m_GroupName + "'";
 	}
 
-	bool Accept(IVisitor* visitor) override;
+	void Accept(IVisitor* visitor) override;
 
 private:
 	const std::shared_ptr<WMO_Group> m_Object;

@@ -1,5 +1,7 @@
 #pragma once
 
+#include "Liquid.h"
+
 #include "WMO_Part_Material.h"
 
 class CWMO_Liquid 

@@ -8,5 +8,6 @@
 #include <znEngine.h>
 #pragma comment(lib, "znEngine.lib")
 
-#include "common.h"
+#include <owGame.h>
+#pragma comment(lib, "owGame.lib")
 

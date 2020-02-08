@@ -6,18 +6,19 @@
 class CWMO;
 // FORWARD END
 
-class WMO_Part_Material : public MaterialProxie
+class WMO_Part_Material 
+	: public MaterialProxie
 {
 public:
-	WMO_Part_Material(std::shared_ptr<IRenderDevice> RenderDevice, const std::weak_ptr<const CWMO> _parentWMO, const SWMO_MaterialDef& _proto);
+	WMO_Part_Material(IRenderDevice& RenderDevice, const CWMO& WMOModel, const SWMO_MaterialDef& WMOMaterialProto);
 	virtual ~WMO_Part_Material();
 	
-	uint32 getBlendMode() const { return m_Proto.blendMode; }
+	uint32 getBlendMode() const { return m_WMOMaterialProto.blendMode; }
 
     void UpdateConstantBuffer() const override;
 
 private:
-	const SWMO_MaterialDef         m_Proto;
+	
 
 	__declspec(align(16)) struct MaterialProperties
 	{
@@ -27,6 +28,7 @@ private:
 	};
 	MaterialProperties*            m_pProperties;
 
-	// Parent
-	const std::weak_ptr<const CWMO> m_ParentWMO;
+private:
+	const CWMO& m_WMOModel;
+	const SWMO_MaterialDef m_WMOMaterialProto;
 };

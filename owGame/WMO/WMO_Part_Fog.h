@@ -5,12 +5,13 @@
 class WMO_Part_Fog
 {
 public:
-	WMO_Part_Fog(const SWMO_FogDef& _proto);
+	WMO_Part_Fog(const SWMO_FogDef& WMOFogProto);
 
 	void setup();
 
 public:
 	vec4 color;
 
-	SWMO_FogDef fogDef;
+private:
+	SWMO_FogDef m_WMOFogProto;
 };

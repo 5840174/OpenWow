@@ -25,18 +25,6 @@
     <Filter Include="Skies">
       <UniqueIdentifier>{3f07336f-3b76-4126-bb3b-c0516a566da3}</UniqueIdentifier>
     </Filter>
-    <Filter Include="WMO">
-      <UniqueIdentifier>{a344d584-e53b-42b9-b11a-3f65870f7fd2}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="WMO\Groups">
-      <UniqueIdentifier>{550fd63d-df90-443d-b518-53bafb2321e2}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="WMO\Instances">
-      <UniqueIdentifier>{5bd35de4-8b78-483c-90cc-51fd0d150697}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="WMO\Parts">
-      <UniqueIdentifier>{e7a9007d-2a2e-4a1e-9c1a-92a5da501c20}</UniqueIdentifier>
-    </Filter>
     <Filter Include="GameStates">
       <UniqueIdentifier>{a64d42a4-debf-4588-9af4-7d7a8c9709c0}</UniqueIdentifier>
     </Filter>
@@ -78,59 +66,11 @@
     <ClCompile Include="Sky_Material.cpp">
       <Filter>Skies</Filter>
     </ClCompile>
-    <ClCompile Include="WMO\WMO_Part_Fog.cpp">
-      <Filter>WMO\Parts</Filter>
-    </ClCompile>
-    <ClCompile Include="WMO\WMO_Part_Light.cpp">
-      <Filter>WMO\Parts</Filter>
-    </ClCompile>
-    <ClCompile Include="WMO\WMO_Part_Material.cpp">
-      <Filter>WMO\Parts</Filter>
-    </ClCompile>
-    <ClCompile Include="WMO\WMO_Part_Portal.cpp">
-      <Filter>WMO\Parts</Filter>
-    </ClCompile>
-    <ClCompile Include="WMO\WMO_Base_Instance.cpp">
-      <Filter>WMO\Instances</Filter>
-    </ClCompile>
-    <ClCompile Include="WMO\WMO_Doodad_Instance.cpp">
-      <Filter>WMO\Instances</Filter>
-    </ClCompile>
-    <ClCompile Include="WMO\WMO_Group_Instance.cpp">
-      <Filter>WMO\Instances</Filter>
-    </ClCompile>
-    <ClCompile Include="WMO\WMO_Liquid_Instance.cpp">
-      <Filter>WMO\Instances</Filter>
-    </ClCompile>
-    <ClCompile Include="WMO\WMO_Group.cpp">
-      <Filter>WMO\Groups</Filter>
-    </ClCompile>
-    <ClCompile Include="WMO\WMO_Group_Part_Batch.cpp">
-      <Filter>WMO\Groups</Filter>
-    </ClCompile>
-    <ClCompile Include="WMO\WMO_Group_Part_BSP_Node.cpp">
-      <Filter>WMO\Groups</Filter>
-    </ClCompile>
-    <ClCompile Include="WMO\WMO.cpp">
-      <Filter>WMO</Filter>
-    </ClCompile>
-    <ClCompile Include="WMO\WMO_Liquid.cpp">
-      <Filter>WMO</Filter>
-    </ClCompile>
-    <ClCompile Include="WMO\WMO_PortalsController.cpp">
-      <Filter>WMO</Filter>
-    </ClCompile>
-    <ClCompile Include="WMO\WMOsManager.cpp">
-      <Filter>WMO</Filter>
-    </ClCompile>
     <ClCompile Include="MapWDT.cpp">
       <Filter>Map</Filter>
     </ClCompile>
     <ClCompile Include="MapWDL.cpp">
       <Filter>Map\WDL</Filter>
-    </ClCompile>
-    <ClCompile Include="WMO\RenderPass_WMO.cpp">
-      <Filter>RenderStuff</Filter>
     </ClCompile>
     <ClCompile Include="RenderPass_ADT_MCNK.cpp">
       <Filter>RenderStuff</Filter>
@@ -221,68 +161,11 @@
     <ClInclude Include="Sky_Material.h">
       <Filter>Skies</Filter>
     </ClInclude>
-    <ClInclude Include="WMO\WMO_Part_Fog.h">
-      <Filter>WMO\Parts</Filter>
-    </ClInclude>
-    <ClInclude Include="WMO\WMO_Part_Light.h">
-      <Filter>WMO\Parts</Filter>
-    </ClInclude>
-    <ClInclude Include="WMO\WMO_Part_Material.h">
-      <Filter>WMO\Parts</Filter>
-    </ClInclude>
-    <ClInclude Include="WMO\WMO_Part_Portal.h">
-      <Filter>WMO\Parts</Filter>
-    </ClInclude>
-    <ClInclude Include="WMO\WMO_Base_Instance.h">
-      <Filter>WMO\Instances</Filter>
-    </ClInclude>
-    <ClInclude Include="WMO\WMO_Doodad_Instance.h">
-      <Filter>WMO\Instances</Filter>
-    </ClInclude>
-    <ClInclude Include="WMO\WMO_Group_Instance.h">
-      <Filter>WMO\Instances</Filter>
-    </ClInclude>
-    <ClInclude Include="WMO\WMO_Liquid_Instance.h">
-      <Filter>WMO\Instances</Filter>
-    </ClInclude>
-    <ClInclude Include="WMO\WMO_Fixes.h">
-      <Filter>WMO\Groups</Filter>
-    </ClInclude>
-    <ClInclude Include="WMO\WMO_Group.h">
-      <Filter>WMO\Groups</Filter>
-    </ClInclude>
-    <ClInclude Include="WMO\WMO_Group_Headers.h">
-      <Filter>WMO\Groups</Filter>
-    </ClInclude>
-    <ClInclude Include="WMO\WMO_Group_Part_Batch.h">
-      <Filter>WMO\Groups</Filter>
-    </ClInclude>
-    <ClInclude Include="WMO\WMO_Group_Part_BSP_Node.h">
-      <Filter>WMO\Groups</Filter>
-    </ClInclude>
-    <ClInclude Include="WMO\WMO.h">
-      <Filter>WMO</Filter>
-    </ClInclude>
-    <ClInclude Include="WMO\WMO_Headers.h">
-      <Filter>WMO</Filter>
-    </ClInclude>
-    <ClInclude Include="WMO\WMO_Liquid.h">
-      <Filter>WMO</Filter>
-    </ClInclude>
-    <ClInclude Include="WMO\WMO_PortalsController.h">
-      <Filter>WMO</Filter>
-    </ClInclude>
-    <ClInclude Include="WMO\WMOsManager.h">
-      <Filter>WMO</Filter>
-    </ClInclude>
     <ClInclude Include="MapWDT.h">
       <Filter>Map</Filter>
     </ClInclude>
     <ClInclude Include="MapWDL.h">
       <Filter>Map\WDL</Filter>
-    </ClInclude>
-    <ClInclude Include="WMO\RenderPass_WMO.h">
-      <Filter>RenderStuff</Filter>
     </ClInclude>
     <ClInclude Include="RenderPass_ADT_MCNK.h">
       <Filter>RenderStuff</Filter>

@@ -12,13 +12,14 @@
 #include "WMO_Liquid_Instance.h"
 #include "WMO_Fixes.h"
 
-WMO_Group::WMO_Group(IBaseManager* BaseManager, const std::weak_ptr<const CWMO> _parentWMO, const uint32 _groupIndex, std::string _groupName, std::shared_ptr<IFile> _groupFile) 
-	: m_ParentWMO(_parentWMO)
-	, m_GroupName(_groupName)
+WMO_Group::WMO_Group(IBaseManager* BaseManager, IRenderDevice& RenderDevice, const CWMO& WMOModel, const uint32 _groupIndex, std::string _groupName, std::shared_ptr<IFile> _groupFile)
+	: m_GroupName(_groupName)
 	, m_GroupIndex(_groupIndex)
 	, m_F(_groupFile)
 	, m_IsMOCVExists(false)
 	, m_BaseManager(BaseManager)
+	, m_RenderDevice(RenderDevice)
+	, m_WMOModel(WMOModel)
 {
 	m_WMOLiqiud = nullptr;
 }
@@ -27,11 +28,11 @@ WMO_Group::~WMO_Group()
 {
 }
 
-void WMO_Group::CreateInsances(std::weak_ptr<CWMO_Group_Instance> _parent) const
+void WMO_Group::CreateInsances(CWMO_Group_Instance* _parent) const
 {
 	for (const auto& batch : m_WMOBatchIndexes)
 	{
-		_parent.lock()->GetComponent<CMeshComponent3D>()->AddMesh(batch);
+		_parent->GetComponent<CMeshComponent3D>()->AddMesh(batch);
 	}
 
 	if (m_WMOLiqiud != nullptr)
@@ -39,20 +40,22 @@ void WMO_Group::CreateInsances(std::weak_ptr<CWMO_Group_Instance> _parent) const
 		vec3 realPos = Fix_XZmY(m_LiquidHeader.pos);
 		realPos.y = 0.0f; // why they do this???
 
-		std::shared_ptr<CWMO_Liquid_Instance> liquid = _parent.lock()->CreateWrappedSceneNode<CWMO_Liquid_Instance>("SceneNode3D", weak_from_this());
-        std::dynamic_pointer_cast<ILiquidInstanceInitializaton>(liquid)->Initialize(m_WMOLiqiud, realPos);
-		_parent.lock()->addLiquidInstance(liquid);
+		CWMO_Liquid_Instance* liquid = _parent->CreateSceneNode<CWMO_Liquid_Instance>(*this);
+        liquid->LiquidInitialize(m_WMOLiqiud, realPos);
+		_parent->addLiquidInstance(liquid);
 	}
 
+#ifdef USE_M2_MODELS
 	for (const auto& index : m_DoodadsPlacementIndexes)
 	{
 		const SWMO_Doodad_PlacementInfo& placement = m_ParentWMO.lock()->m_DoodadsPlacementInfos[index];
 
-		std::shared_ptr<CWMO_Doodad_Instance> inst = _parent.lock()->CreateWrappedSceneNode<CWMO_Doodad_Instance>("SceneNode3D", m_ParentWMO.lock()->m_DoodadsFilenames + placement.flags.nameIndex, weak_from_this(), index);
+		CWMO_Doodad_Instance* inst = _parent.lock()->CreateSceneNode<CWMO_Doodad_Instance>(m_ParentWMO.lock()->m_DoodadsFilenames + placement.flags.nameIndex, weak_from_this(), index);
         inst->Initialize(placement);
 		m_BaseManager->GetManager<ILoader>()->AddToLoadQueue(inst);
 		_parent.lock()->addDoodadInstance(inst);
 	}
+#endif
 }
 
 uint32 WMO_Group::to_wmo_liquid(int x)
@@ -75,9 +78,6 @@ uint32 WMO_Group::to_wmo_liquid(int x)
 
 void WMO_Group::Load()
 {
-	std::shared_ptr<const CWMO> ParentWMO = m_ParentWMO.lock();
-	_ASSERT(ParentWMO != nullptr);
-
 	// Buffer
 	uint16* dataFromMOVI = nullptr;
 	std::shared_ptr<IBuffer>	IB_Default = nullptr;
@@ -138,7 +138,7 @@ void WMO_Group::Load()
 			uint32 indicesCount = size / sizeof(uint16);
 			uint16* indices = (uint16*)m_F->getDataFromCurrent();
 			// Buffer
-			IB_Default = m_BaseManager->GetManager<IRenderDevice>()->CreateIndexBuffer(indices, indicesCount);
+			IB_Default = m_RenderDevice.GetObjectsFactory().CreateIndexBuffer(indices, indicesCount);
 
 			dataFromMOVI = indices;
 		}
@@ -153,8 +153,8 @@ void WMO_Group::Load()
 				vertexes[i] = Fix_XZmY(vertexes[i]);
 			}
 			// Buffer
-			VB_Vertexes = m_BaseManager->GetManager<IRenderDevice>()->CreateVertexBuffer(vertexes, vertexesCount);
-			VB_Colors = m_BaseManager->GetManager<IRenderDevice>()->CreateVertexBuffer(vertexes, vertexesCount);
+			VB_Vertexes = m_RenderDevice.GetObjectsFactory().CreateVertexBuffer(vertexes, vertexesCount);
+			VB_Colors = m_RenderDevice.GetObjectsFactory().CreateVertexBuffer(vertexes, vertexesCount);
 			//m_Bounds.calculate(vertexes, vertexesCount);
 
 			dataFromMOVT = vertexes;
@@ -170,14 +170,14 @@ void WMO_Group::Load()
 				normals[i] = Fix_XZmY(normals[i]);
 			}
 			// Buffer
-			VB_Normals = m_BaseManager->GetManager<IRenderDevice>()->CreateVertexBuffer(normals, normalsCount);
+			VB_Normals = m_RenderDevice.GetObjectsFactory().CreateVertexBuffer(normals, normalsCount);
 		}
 		else if (strcmp(fourcc, "MOTV") == 0) // Texture coordinates
 		{
 			uint32 textureCoordsCount = size / sizeof(vec2);
 			vec2* textureCoords = (vec2*)m_F->getDataFromCurrent();
-			VB_TextureCoords.push_back(m_BaseManager->GetManager<IRenderDevice>()->CreateVertexBuffer(textureCoords, textureCoordsCount));
-			VB_TextureCoords.push_back(m_BaseManager->GetManager<IRenderDevice>()->CreateVertexBuffer(textureCoords, textureCoordsCount));
+			VB_TextureCoords.push_back(m_RenderDevice.GetObjectsFactory().CreateVertexBuffer(textureCoords, textureCoordsCount));
+			VB_TextureCoords.push_back(m_RenderDevice.GetObjectsFactory().CreateVertexBuffer(textureCoords, textureCoordsCount));
 		}
 		else if (strcmp(fourcc, "MOBA") == 0) // WMO_Group_Batch
 		{
@@ -244,7 +244,7 @@ void WMO_Group::Load()
 			memcpy(mocv, vertexColors, sizeof(C4Vec) * vertexColorsCount);
 			mocv_count = vertexColorsCount;
 
-			FixColorVertexAlpha(shared_from_this());
+			FixColorVertexAlpha(this);
 
 			// Convert
 			std::vector<vec4> vertexColorsConverted;
@@ -260,7 +260,7 @@ void WMO_Group::Load()
 			}
 
 			// Buffer
-			VB_Colors = m_BaseManager->GetManager<IRenderDevice>()->CreateVoidVertexBuffer(vertexColorsConverted.data(), vertexColorsConverted.size(), 0, sizeof(vec4));
+			VB_Colors = m_RenderDevice.GetObjectsFactory().CreateVoidVertexBuffer(vertexColorsConverted.data(), vertexColorsConverted.size(), 0, sizeof(vec4));
 			m_IsMOCVExists = vertexColorsCount > 0;
 
 			delete[] mocv;
@@ -269,10 +269,10 @@ void WMO_Group::Load()
 		{
 			m_F->readBytes(&m_LiquidHeader, sizeof(SWMO_Group_MLIQDef));
 
-			Log::Green("WMO[%s]: LiquidType CHUNK = HEADER[%d] [%d]", ParentWMO->m_FileName.c_str(), m_Header.liquidType, ParentWMO->m_Header.flags.use_liquid_type_dbc_id);
+			Log::Green("WMO[%s]: LiquidType CHUNK = HEADER[%d] [%d]", m_WMOModel.m_FileName.c_str(), m_Header.liquidType, m_WMOModel.m_Header.flags.use_liquid_type_dbc_id);
 
 			uint32 liquid_type;
-			if (ParentWMO->m_Header.flags.use_liquid_type_dbc_id)
+			if (m_WMOModel.m_Header.flags.use_liquid_type_dbc_id)
 			{
 				if (m_Header.liquidType < 21)
 				{
@@ -316,22 +316,25 @@ void WMO_Group::Load()
 
 	// Create geom
 	{
-		std::shared_ptr<IModel> mesh = m_BaseManager->GetManager<IRenderDevice>()->CreateMesh();
-		mesh->AddVertexBuffer(BufferBinding("POSITION", 0), VB_Vertexes);
-		mesh->AddVertexBuffer(BufferBinding("NORMAL", 0), VB_Normals);
+		std::shared_ptr<IGeometry> geometry = m_RenderDevice.GetObjectsFactory().CreateGeometry();
+		geometry->AddVertexBuffer(BufferBinding("POSITION", 0), VB_Vertexes);
+		geometry->AddVertexBuffer(BufferBinding("NORMAL", 0), VB_Normals);
 		//if (VB_Colors != nullptr)
-			mesh->AddVertexBuffer(BufferBinding("COLOR", 0), VB_Colors);
-		mesh->AddVertexBuffer(BufferBinding("TEXCOORD", 0), VB_TextureCoords[0]);
+		geometry->AddVertexBuffer(BufferBinding("COLOR", 0), VB_Colors);
+		geometry->AddVertexBuffer(BufferBinding("TEXCOORD", 0), VB_TextureCoords[0]);
 		//if (VB_TextureCoords.size() > 1)
-			mesh->AddVertexBuffer(BufferBinding("TEXCOORD", 1), VB_TextureCoords[1]);
-		mesh->SetIndexBuffer(IB_Default);
+		geometry->AddVertexBuffer(BufferBinding("TEXCOORD", 1), VB_TextureCoords[1]);
+		geometry->SetIndexBuffer(IB_Default);
 
-		for (const auto& batchProto : m_WMOBatchs)
+		for (const auto& WMOGroupBatchProto : m_WMOBatchs)
 		{
-			std::shared_ptr<WMO_Group_Part_Batch> batch = std::make_shared<WMO_Group_Part_Batch>(m_ParentWMO, mesh, batchProto);
+			std::shared_ptr<WMO_Group_Part_Batch> batch = std::make_shared<WMO_Group_Part_Batch>(m_RenderDevice, m_WMOModel, WMOGroupBatchProto);
+
+			batch->AddConnection(m_WMOModel.m_Materials[WMOGroupBatchProto.material_id], geometry, SGeometryDrawArgs(WMOGroupBatchProto.indexStart, WMOGroupBatchProto.indexCount));
+
 			m_WMOBatchIndexes.push_back(batch);
 		}
-		std::sort(m_WMOBatchIndexes.begin(), m_WMOBatchIndexes.end(), WMO_Group_Part_BatchCompare());
+		// TODO: enable me std::sort(m_WMOBatchIndexes.begin(), m_WMOBatchIndexes.end(), WMO_Group_Part_BatchCompare());
 		m_WMOBatchs.clear();
 	}
 }

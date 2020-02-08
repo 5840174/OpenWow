@@ -115,6 +115,9 @@
     <Filter Include="WMO\Parts">
       <UniqueIdentifier>{7f7bb52b-8998-4243-a061-21f8d98111c3}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Images">
+      <UniqueIdentifier>{2f25747a-c5bc-4f56-a25b-612399321c09}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Liquid.cpp">
@@ -332,6 +335,9 @@
     </ClCompile>
     <ClCompile Include="WMO\RenderPass_WMO.cpp">
       <Filter>RenderStuff</Filter>
+    </ClCompile>
+    <ClCompile Include="ImageBLP.cpp">
+      <Filter>Images</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -722,6 +728,9 @@
     </ClInclude>
     <ClInclude Include="WMO\RenderPass_WMO.h">
       <Filter>RenderStuff</Filter>
+    </ClInclude>
+    <ClInclude Include="ImageBLP.h">
+      <Filter>Images</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

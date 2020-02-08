@@ -7,23 +7,28 @@
 // General
 #include "WMO_Group_Part_Batch.h"
 
-WMO_Group_Part_Batch::WMO_Group_Part_Batch(const std::weak_ptr<const CWMO> _parentWMO, std::shared_ptr<IModel> _mesh, const SWMO_Group_BatchDef& _proto) 
-	: ModelProxie(_mesh)
-	, m_ParentWMO(_parentWMO)
-	, m_Proto(_proto)
+WMO_Group_Part_Batch::WMO_Group_Part_Batch(IRenderDevice& RenderDevice, const CWMO& WMOModel, const SWMO_Group_BatchDef& WMOGroupBatchProto)
+	: ModelProxie(RenderDevice.GetObjectsFactory().CreateModel())
+	, m_ParentWMO(WMOModel)
+	, m_WMOGroupBatchProto(WMOGroupBatchProto)
 {
-	m_WMOMaterial = m_ParentWMO.lock()->m_Materials[m_Proto.material_id];
-
-	m_Bounds.setMin(vec3(_proto.bx, _proto.by, _proto.bz));
-	m_Bounds.setMax(vec3(_proto.tx, _proto.ty, _proto.tz));
+	m_Bounds.setMin(vec3(m_WMOGroupBatchProto.bx, m_WMOGroupBatchProto.by, m_WMOGroupBatchProto.bz));
+	m_Bounds.setMax(vec3(m_WMOGroupBatchProto.tx, m_WMOGroupBatchProto.ty, m_WMOGroupBatchProto.tz));
 	m_Bounds.calculateCenter();
+
+	SetBounds(m_Bounds);
 }
 
-bool WMO_Group_Part_Batch::Render(const RenderEventArgs* renderEventArgs, const IConstantBuffer* perObject, SGeometryPartParams GeometryPartParams)
+WMO_Group_Part_Batch::~WMO_Group_Part_Batch()
 {
-	SetMaterial(m_WMOMaterial);
+}
 
-	GeometryPartParams.IndexStartLocation = m_Proto.indexStart;
-	GeometryPartParams.IndexCnt = m_Proto.indexCount;
-	return ModelProxie::Render(renderEventArgs, perObject, GeometryPartParams/*, m_Proto.vertexStart, m_Proto.vertexEnd - m_Proto.vertexStart*/);
+
+
+//
+// ModelProxie
+//
+bool WMO_Group_Part_Batch::Render(const RenderEventArgs& renderEventArgs) const
+{
+	return ModelProxie::Render(renderEventArgs);
 }
