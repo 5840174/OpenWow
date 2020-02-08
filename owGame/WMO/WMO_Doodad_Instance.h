@@ -6,7 +6,7 @@
 
 #include "WMO_Group.h"
 
-class CWMO_Doodad_Instance : public CM2_Base_Instance
+class ZN_API CWMO_Doodad_Instance : public CM2_Base_Instance
 {
 public:
 	CWMO_Doodad_Instance(std::string _m2Name, const std::weak_ptr<const WMO_Group> _parentGroup, uint32 _index);

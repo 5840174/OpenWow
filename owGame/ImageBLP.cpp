@@ -15,9 +15,7 @@ bool CImageBLP::LoadImageData(std::shared_ptr<IFile> File)
 	ImageBLP::BLPHeader header = { 0 };
 	File->seek(0);
 	File->read(&header);
-
-	LoadBPL(header, File);
-	return false;
+	return LoadBPL(header, File);
 }
 
 bool CImageBLP::IsFileSupported(std::shared_ptr<IFile> File)

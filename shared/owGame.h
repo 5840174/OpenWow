@@ -32,3 +32,4 @@
 #include "../owGame/WMO/WMO_Doodad_Instance.h"
 #include "../owGame/WMO/WMO_Liquid_Instance.h"
 #include "../owGame/WMO/WMOsManager.h"
+#include "../owGame/WMO/RenderPass_WMO.h"

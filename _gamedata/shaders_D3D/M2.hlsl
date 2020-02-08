@@ -1,4 +1,4 @@
-#include "IDB_SHADER_COMMON_TYPES"
+#include "IDB_SHADER_COMMON_INCLUDE"
 
 struct VertexShaderInput
 {
@@ -20,13 +20,7 @@ struct VertexShaderOutput
 };
 
 // Uniforms
-cbuffer PerObject : register(b0)
-{
-	float4x4 Model;
-	float4x4 View;
-	float4x4 Projection;
-}
-cbuffer Material : register(b1)
+cbuffer Material2 : register(b2)
 {
 	uint gIsAnimated;
 	uint gColorEnable;
@@ -77,7 +71,7 @@ VertexShaderOutput VS_main(VertexShaderInput IN)
 		newVertex = float4(IN.position, 1.0f);
 	}
 
-	const float4x4 mvp = mul(Projection, mul(View, Model));
+	const float4x4 mvp = mul(PF.Projection, mul(PF.View, PO.Model));
 
 	VertexShaderOutput OUT;
 	OUT.positionVS = mul(mvp, newVertex);
@@ -96,7 +90,7 @@ VertexShaderOutput VS_main(VertexShaderInput IN)
 	return OUT;
 }
 
-PixelShaderOutput PS_main(VertexShaderOutput IN) : SV_TARGET
+DefferedRenderPSOut PS_main(VertexShaderOutput IN) : SV_TARGET
 {
 	//float4 resultColor = Test(IN);
 	float4 resultColor = DiffuseTexture0.Sample(DiffuseTexture0Sampler, IN.texCoord0);
@@ -114,7 +108,7 @@ PixelShaderOutput PS_main(VertexShaderOutput IN) : SV_TARGET
 		if (resultColor.a <= (1.0f / 255.0f)) discard;
 	}
 	
-	PixelShaderOutput OUT;
+	DefferedRenderPSOut OUT;
 	OUT.PositionWS = IN.positionWS;
 	OUT.Diffuse = resultColor;
 	OUT.Specular = float4(0.5f, 0.5f, 0.5f, 1.0f);

@@ -1,4 +1,4 @@
-#include "IDB_SHADER_COMMON_TYPES"
+#include "IDB_SHADER_COMMON_INCLUDE"
 
 struct WMO_Material
 {
@@ -27,15 +27,9 @@ struct VertexShaderOutput
 
 
 // Uniforms
-cbuffer PerObject : register(b0)
+cbuffer Material2 : register(b2)
 {
-	float4x4 Model;
-	float4x4 View;
-	float4x4 Projection;
-}
-cbuffer Material : register(b2)
-{
-    WMO_Material Material;
+    WMO_Material Material2;
 };
 
 // Textures and samples
@@ -44,7 +38,7 @@ sampler   DiffuseTextureSampler : register(s0);
 
 VertexShaderOutput VS_main(VertexShaderInput IN)
 {
-	const float4x4 mvp = mul(Projection, mul(View, Model));
+	const float4x4 mvp = mul(PF.Projection, mul(PF.View, PO.Model));
 	
 	VertexShaderOutput OUT;
 	OUT.positionVS = mul(mvp, float4(IN.position, 1.0f));
@@ -57,15 +51,15 @@ VertexShaderOutput VS_main(VertexShaderInput IN)
 	return OUT;
 }
 
-PixelShaderOutput PS_main(VertexShaderOutput IN) : SV_TARGET
+DefferedRenderPSOut PS_main(VertexShaderOutput IN) : SV_TARGET
 {
 	float4 resultColor = DiffuseTexture.Sample(DiffuseTextureSampler, IN.texCoord0);
 	
-	if (Material.gBlendMode == 0) // GxBlend_Opaque
+	if (Material2.gBlendMode == 0) // GxBlend_Opaque
 	{
 		resultColor.a = 1.0f;
 	}
-	else if (Material.gBlendMode == 1) // GxBlend_AlphaKey
+	else if (Material2.gBlendMode == 1) // GxBlend_AlphaKey
 	{
 		if (resultColor.a < (224.0f / 255.0f)) discard;
 	}
@@ -74,7 +68,7 @@ PixelShaderOutput PS_main(VertexShaderOutput IN) : SV_TARGET
 		if (resultColor.a < (1.0f / 255.0f)) discard;
 	}
 	
-	PixelShaderOutput OUT;
+	DefferedRenderPSOut OUT;
 	OUT.PositionWS = float4(IN.positionWS.xyz, /*material*/ 1.0f);
 	OUT.Diffuse = resultColor;
 	OUT.Specular = float4(1.0f, 1.0f, 1.0f, 1.0f);

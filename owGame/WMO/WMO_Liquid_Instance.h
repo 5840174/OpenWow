@@ -4,7 +4,7 @@
 #include "WMO_Headers.h"
 #include "WMO_Group.h"
 
-class CWMO_Liquid_Instance 
+class ZN_API CWMO_Liquid_Instance
 	: public Liquid_Instance
 {
 public:

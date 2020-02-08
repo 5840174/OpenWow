@@ -1,6 +1,6 @@
 #pragma once
 
-class CRenderPass_WMO : public Base3DPass
+class ZN_API CRenderPass_WMO : public Base3DPass
 {
 public:
 	CRenderPass_WMO(IRenderDevice& RenderDevice, std::shared_ptr<IScene> scene);

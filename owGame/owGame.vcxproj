@@ -272,10 +272,10 @@
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PreprocessorDefinitions>_DEBUG;_WINDOWS;_USRDLL;OW_ENGINE_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>..\..\ZenonEngine\shared;..\..\ZenonEngine\Externals;..\shared;..\Externals;..\Externals\OpenSSL\include;..\owGame\;..\owGame\DBC\;..\owGame\Client\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <TreatSpecificWarningsAsErrors>
-      </TreatSpecificWarningsAsErrors>
+      <TreatSpecificWarningsAsErrors>4172</TreatSpecificWarningsAsErrors>
       <SupportJustMyCode>false</SupportJustMyCode>
       <WarningLevel>Level3</WarningLevel>
+      <DisableSpecificWarnings>4251</DisableSpecificWarnings>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>DebugFull</GenerateDebugInformation>
@@ -289,8 +289,8 @@
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PreprocessorDefinitions>NDEBUG;_WINDOWS;_USRDLL;OW_ENGINE_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>..\..\ZenonEngine\shared;..\..\ZenonEngine\Externals;..\shared;..\Externals;..\Externals\OpenSSL\include;..\owGame\;..\owGame\DBC\;..\owGame\Client\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <TreatSpecificWarningsAsErrors>
-      </TreatSpecificWarningsAsErrors>
+      <TreatSpecificWarningsAsErrors>4172</TreatSpecificWarningsAsErrors>
+      <DisableSpecificWarnings>4251</DisableSpecificWarnings>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>DebugFull</GenerateDebugInformation>

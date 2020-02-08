@@ -11,9 +11,11 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="SceneWoW.h" />
     <ClInclude Include="stdafx.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="SceneWoW.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>

@@ -5,7 +5,7 @@
 #include "WMO_Doodad_Instance.h"
 #include "WMO_Liquid_Instance.h"
 
-class CWMO_Base_Instance 
+class ZN_API CWMO_Base_Instance 
 	: public SceneNode3D
 {
 public:

@@ -10,9 +10,6 @@
     <Filter Include="DBC">
       <UniqueIdentifier>{356cc0f8-d08c-4813-b315-e727a27352e3}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Files">
-      <UniqueIdentifier>{e5bf550a-5a51-4482-87bc-533a4e241f7c}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Interfaces">
       <UniqueIdentifier>{fdee02f5-b0eb-43b0-9311-02e2c269f51e}</UniqueIdentifier>
     </Filter>
@@ -115,8 +112,8 @@
     <Filter Include="WMO\Parts">
       <UniqueIdentifier>{7f7bb52b-8998-4243-a061-21f8d98111c3}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Images">
-      <UniqueIdentifier>{2f25747a-c5bc-4f56-a25b-612399321c09}</UniqueIdentifier>
+    <Filter Include="WoW Specific">
+      <UniqueIdentifier>{e5bf550a-5a51-4482-87bc-533a4e241f7c}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -134,12 +131,6 @@
     </ClCompile>
     <ClCompile Include="LiquidLayer.cpp">
       <Filter>Liquid</Filter>
-    </ClCompile>
-    <ClCompile Include="WoWChunkReader.cpp">
-      <Filter>Files</Filter>
-    </ClCompile>
-    <ClCompile Include="MPQFilesStorage.cpp">
-      <Filter>Files</Filter>
     </ClCompile>
     <ClCompile Include="Client\ARC4.cpp">
       <Filter>Client\Cryptography</Filter>
@@ -336,8 +327,14 @@
     <ClCompile Include="WMO\RenderPass_WMO.cpp">
       <Filter>RenderStuff</Filter>
     </ClCompile>
+    <ClCompile Include="MPQFilesStorage.cpp">
+      <Filter>WoW Specific</Filter>
+    </ClCompile>
+    <ClCompile Include="WoWChunkReader.cpp">
+      <Filter>WoW Specific</Filter>
+    </ClCompile>
     <ClCompile Include="ImageBLP.cpp">
-      <Filter>Images</Filter>
+      <Filter>WoW Specific</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -356,10 +353,6 @@
     <ClInclude Include="..\shared\owGame.h">
       <Filter>Common</Filter>
     </ClInclude>
-    <ClInclude Include="WowChunkUtils.h" />
-    <ClInclude Include="WowConsts.h" />
-    <ClInclude Include="WowTime.h" />
-    <ClInclude Include="WowTypes.h" />
     <ClInclude Include="LiquidMaterial.h">
       <Filter>Liquid</Filter>
     </ClInclude>
@@ -437,12 +430,6 @@
     </ClInclude>
     <ClInclude Include="DBC\DBC_LiquidType.h">
       <Filter>DBC\Tables\Liquids</Filter>
-    </ClInclude>
-    <ClInclude Include="WoWChunkReader.h">
-      <Filter>Files</Filter>
-    </ClInclude>
-    <ClInclude Include="MPQFilesStorage.h">
-      <Filter>Files</Filter>
     </ClInclude>
     <ClInclude Include="DBC\DBC_WorldSafeLocs.h">
       <Filter>DBC\Tables</Filter>
@@ -729,16 +716,34 @@
     <ClInclude Include="WMO\RenderPass_WMO.h">
       <Filter>RenderStuff</Filter>
     </ClInclude>
+    <ClInclude Include="MPQFilesStorage.h">
+      <Filter>WoW Specific</Filter>
+    </ClInclude>
+    <ClInclude Include="WoWChunkReader.h">
+      <Filter>WoW Specific</Filter>
+    </ClInclude>
+    <ClInclude Include="WowChunkUtils.h">
+      <Filter>WoW Specific</Filter>
+    </ClInclude>
+    <ClInclude Include="WowConsts.h">
+      <Filter>WoW Specific</Filter>
+    </ClInclude>
+    <ClInclude Include="WowTime.h">
+      <Filter>WoW Specific</Filter>
+    </ClInclude>
+    <ClInclude Include="WowTypes.h">
+      <Filter>WoW Specific</Filter>
+    </ClInclude>
     <ClInclude Include="ImageBLP.h">
-      <Filter>Images</Filter>
+      <Filter>WoW Specific</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <None Include="WoWChunkReader.inl">
-      <Filter>Files</Filter>
-    </None>
     <None Include="DBC\Core\DBC__File.inl">
       <Filter>DBC</Filter>
+    </None>
+    <None Include="WoWChunkReader.inl">
+      <Filter>WoW Specific</Filter>
     </None>
   </ItemGroup>
 </Project>

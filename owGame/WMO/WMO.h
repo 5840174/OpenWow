@@ -15,7 +15,7 @@
 class CWMO_Base_Instance;
 // FORWARD END
 
-class CWMO 
+class ZN_API CWMO 
 	: public ISceneNodeProvider
 	, public std::enable_shared_from_this<CWMO>
 {

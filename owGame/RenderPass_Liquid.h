@@ -1,6 +1,6 @@
 #pragma once
 
-class CRenderPass_Liquid 
+class ZN_API CRenderPass_Liquid
 	: public Base3DPass
 {
 public:

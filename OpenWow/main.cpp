@@ -2,6 +2,7 @@
 
 static IBaseManager* BaseManager = nullptr;
 
+#include "SceneWoW.h"
 
 void main_internal(int argumentCount, char* arguments[])
 {
@@ -27,7 +28,7 @@ void main_internal(int argumentCount, char* arguments[])
 	const auto& firstRenderWindow = renderDevice.GetObjectsFactory().CreateRenderWindow(*nativeWindow, false);
 	app.AddRenderWindow(firstRenderWindow);
 
-	std::shared_ptr<IScene> scene = BaseManager->GetManager<IScenesFactory>()->CreateScene("SceneDefault");
+	std::shared_ptr<IScene> scene = std::make_shared<CSceneWoW>(BaseManager);//BaseManager->GetManager<IScenesFactory>()->CreateScene("SceneDefault");
 	scene->ConnectEvents(std::dynamic_pointer_cast<IRenderWindowEvents>(firstRenderWindow));
 	scene->Initialize();
 
