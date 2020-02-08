@@ -3,20 +3,20 @@
 // General
 #include "M2_Material.h"
 
-M2_Material::M2_Material(IBaseManager* BaseManager, std::vector<std::weak_ptr<const CM2_Part_Texture>> m2Textures)
-	: MaterialProxie(BaseManager->GetManager<IRenderDevice>()->CreateMaterial(sizeof(MaterialProperties)))
+M2_Material::M2_Material(IRenderDevice& RenderDevice, std::vector<std::weak_ptr<const CM2_Part_Texture>> m2Textures)
+	: MaterialProxie(RenderDevice.GetObjectsFactory().CreateMaterial(sizeof(MaterialProperties)))
 {
 	m_pProperties = (MaterialProperties*)_aligned_malloc(sizeof(MaterialProperties), 16);
 	*m_pProperties = MaterialProperties();
 	memset(m_pProperties, 0x00, sizeof(MaterialProperties));
 
-	std::shared_ptr<ISamplerState> g_Sampler = BaseManager->GetManager<IRenderDevice>()->CreateSamplerState();
-	g_Sampler->SetFilter(ISamplerState::MinFilter::MinLinear, ISamplerState::MagFilter::MagLinear, ISamplerState::MipFilter::MipLinear);
+	std::shared_ptr<ISamplerState> sampler = RenderDevice.GetObjectsFactory().CreateSamplerState();
+	sampler->SetFilter(ISamplerState::MinFilter::MinLinear, ISamplerState::MagFilter::MagLinear, ISamplerState::MipFilter::MipLinear);
 
 	_ASSERT(m2Textures.size() <= 2);
 	for (uint8 i = 0; i < m2Textures.size(); i++)
 	{
-        SetSampler(i, g_Sampler);
+        SetSampler(i, sampler);
 	}
 }
 

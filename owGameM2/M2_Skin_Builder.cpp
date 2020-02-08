@@ -9,148 +9,151 @@
 // Additional
 #include "ShaderResolver.h"
 
-CM2_Skin_Builder::CM2_Skin_Builder(IBaseManager* BaseManager, const CM2_Builder& _m2Builder, std::weak_ptr<M2> _model, const SM2_SkinProfile& _skinProto, std::shared_ptr<CM2_Skin> _skin, std::shared_ptr<IFile> _file)
-	: m_M2Builder(_m2Builder)
-	, m_ParentM2(_model)
-    , m_SkinProfile(_skinProto)
-    , m_Skin(_skin)
+CM2_Skin_Builder::CM2_Skin_Builder(IBaseManager* BaseManager, IRenderDevice& RenderDevice, const CM2_Builder& M2Builder, const M2& M2Model, const SM2_SkinProfile& SkinProfileProto, std::shared_ptr<IFile> _file)
+	: m_M2Builder(M2Builder)
+	, m_M2Model(M2Model)
+    , m_SkinProfileProto(SkinProfileProto)
     , m_F(_file)
 	, m_BaseManager(BaseManager)
+	, m_RenderDevice(RenderDevice)
 {}
 
-void CM2_Skin_Builder::Load()
+CM2_Skin_Builder::~CM2_Skin_Builder()
 {
-	Step1LoadProfile();
-	Step2InitBatches();
 }
 
-void CM2_Skin_Builder::Step1LoadProfile()
+std::shared_ptr<CM2_Skin> CM2_Skin_Builder::Load()
+{
+	std::shared_ptr<CM2_Skin> skin = std::make_shared<CM2_Skin>(m_M2Model);
+	Step1LoadProfile(skin);
+	Step2InitBatches(skin);
+	return skin;
+}
+
+void CM2_Skin_Builder::Step1LoadProfile(const std::shared_ptr<CM2_Skin>& M2SkinObject)
 {
 	std::shared_ptr<IFile> F = m_F.lock();
 	_ASSERT(F != nullptr);
 
-	std::shared_ptr<CM2_Skin> Skin = m_Skin.lock();
-	_ASSERT(Skin != nullptr);
-
 	//F->readBytes(&m_SkinProfile, sizeof(SM2_SkinProfile));
 
 	// Skin data
-	uint16*				t_verticesIndexes	= (uint16*)				(F->getData() + m_SkinProfile.vertices.offset);
-	uint16*				t_indexesIndexes	= (uint16*)				(F->getData() + m_SkinProfile.indices.offset);
-	SM2_SkinBones*		t_bonesIndexes		= (SM2_SkinBones*)		(F->getData() + m_SkinProfile.bones.offset);
-	SM2_SkinSection*	t_sections			= (SM2_SkinSection*)	(F->getData() + m_SkinProfile.submeshes.offset);
-	SM2_SkinBatch*		t_Batches			= (SM2_SkinBatch*)		(F->getData() + m_SkinProfile.batches.offset);
+	uint16*				t_verticesIndexes	= (uint16*)				(F->getData() + m_SkinProfileProto.vertices.offset);
+	uint16*				t_indexesIndexes	= (uint16*)				(F->getData() + m_SkinProfileProto.indices.offset);
+	SM2_SkinBones*		t_bonesIndexes		= (SM2_SkinBones*)		(F->getData() + m_SkinProfileProto.bones.offset);
+	SM2_SkinSection*	t_sections			= (SM2_SkinSection*)	(F->getData() + m_SkinProfileProto.submeshes.offset);
 
-	_ASSERT(m_SkinProfile.vertices.size == m_SkinProfile.bones.size);
+	_ASSERT(m_SkinProfileProto.vertices.size == m_SkinProfileProto.bones.size);
 
-	for (uint32 sectionIndex = 0; sectionIndex < m_SkinProfile.submeshes.size; sectionIndex++)
+	for (uint32 sectionIndex = 0; sectionIndex < m_SkinProfileProto.submeshes.size; sectionIndex++)
 	{
-		const SM2_SkinSection& section = t_sections[sectionIndex];
+		const SM2_SkinSection& sectionProto = t_sections[sectionIndex];
 		
 		std::vector<SM2_Vertex> vertexes;
-		for (uint32 vert = section.vertexStart; vert < section.vertexStart + section.vertexCount; vert++)
+		for (uint32 vert = sectionProto.vertexStart; vert < sectionProto.vertexStart + sectionProto.vertexCount; vert++)
 		{
 			SM2_Vertex newVertex = m_M2Builder.m_Vertexes[t_verticesIndexes[vert]];
-			for (uint32 bone = 0; bone < section.boneInfluences; ++bone)
+			for (uint32 bone = 0; bone < sectionProto.boneInfluences; ++bone)
 			{
 				uint8 boneIndex = t_bonesIndexes[vert].index[bone];
 				newVertex.bone_indices[bone] = boneIndex;
-				_ASSERT(boneIndex < section.boneCount);
+				_ASSERT(boneIndex < sectionProto.boneCount);
 			}
 			vertexes.push_back(newVertex);
 		}
 
 		std::vector<uint16> indexes;
-		for (uint16 ind = section.indexStart; ind < section.indexStart + section.indexCount; ind++)
+		for (uint16 ind = sectionProto.indexStart; ind < sectionProto.indexStart + sectionProto.indexCount; ind++)
 		{
 			uint16 index = t_indexesIndexes[ind];
-			_ASSERT(index >= section.vertexStart);
-			_ASSERT(index < section.vertexStart + section.vertexCount);
-			indexes.push_back(index - section.vertexStart);
+			_ASSERT(index >= sectionProto.vertexStart);
+			_ASSERT(index < sectionProto.vertexStart + sectionProto.vertexCount);
+			indexes.push_back(index - sectionProto.vertexStart);
 		}
 
-		std::shared_ptr<CM2_SkinSection> skinSection = std::make_shared<CM2_SkinSection>(m_BaseManager, m_ParentM2, sectionIndex, section, vertexes, indexes);
-		Skin->m_Sections.push_back(skinSection);
+		M2SkinObject->m_Sections.push_back(std::make_unique<CM2_SkinSection>(m_RenderDevice, m_M2Model, sectionIndex, sectionProto, vertexes, indexes));
 	}
 
 	//--
 
-	for (uint32 i = 0; i < m_SkinProfile.batches.size; i++)
-	{
-		m_SkinBatches.push_back(t_Batches[i]);
-	}
-
-	uint32	t_bonesMax = m_SkinProfile.boneCountMax;
+	uint32	t_bonesMax = m_SkinProfileProto.boneCountMax;
 	//_ASSERT(t_bonesMax == 256);
 	//Log::Warn("t_bonesMax = %d", t_bonesMax);
 }
 
-void CM2_Skin_Builder::Step2InitBatches()
+void CM2_Skin_Builder::Step2InitBatches(const std::shared_ptr<CM2_Skin>& M2SkinObject)
 {
-	std::shared_ptr<CM2_Skin> Skin = m_Skin.lock();
-	_ASSERT(Skin != nullptr);
+	const std::shared_ptr<const CM2_Comp_Materials> m2Materials = m_M2Model.getMaterials();
 
-	const std::shared_ptr<const CM2_Comp_Materials> materials = m_ParentM2.lock()->getMaterials();
+	std::shared_ptr<IFile> F = m_F.lock();
+	_ASSERT(F != nullptr);
 
-	for (const auto& it : m_SkinBatches)
+	SM2_SkinBatch* skinBatchesProtos = (SM2_SkinBatch*)(F->getData() + m_SkinProfileProto.batches.offset);
+
+	for (uint32 i = 0; i < m_SkinProfileProto.batches.size; i++)
 	{
-		std::shared_ptr<CM2_SkinSection> skinSection = Skin->m_Sections[it.skinSectionIndex];
+		const SM2_SkinBatch& skinBatchProto = skinBatchesProtos[i];
 
-		std::shared_ptr<CM2_Skin_Batch> batch = std::make_shared<CM2_Skin_Batch>(m_BaseManager, m_ParentM2, skinSection->getMesh());
+		const std::shared_ptr<CM2_SkinSection>& skinSection = M2SkinObject->m_Sections[skinBatchProto.skinSectionIndex];
 
-		//Log::Green("Shader = %d", it.shader_id);
-        batch->newShader = it.shader_id;
-		//batch->newShader = GetPixel(it);
+		std::unique_ptr<CM2_Skin_Batch> skinBatchObject = std::make_unique<CM2_Skin_Batch>(m_BaseManager, m_RenderDevice, m_M2Model, *skinSection);
+		
+		//Log::Green("Shader = %d", skinBatchProto.shader_id);
+        skinBatchObject->newShader = skinBatchProto.shader_id;
+		//skinBatchObject->newShader = GetPixel(skinBatchProto);
 
 		// Geometry data
-		batch->m_PriorityPlan = it.priorityPlane;
-		batch->m_SkinSection = skinSection;
+		skinBatchObject->m_PriorityPlan = skinBatchProto.priorityPlane;
 
 		// Get classes
-		batch->m_Material = (materials->GetMaterial(it.materialIndex));
+		skinBatchObject->m_M2ModelMaterial = (m2Materials->GetMaterial(skinBatchProto.materialIndex));
 
 		// Color
-		if (it.colorIndex != -1)
+		if (skinBatchProto.colorIndex != -1)
 		{
-			batch->m_Color = (materials->GetColor(it.colorIndex));
+			skinBatchObject->m_Color = (m2Materials->GetColor(skinBatchProto.colorIndex));
 		}
 
 		// Textures
-		for (uint32 i = 0; i < it.textureCount; i++)
+		for (uint32 i = 0; i < skinBatchProto.textureCount; i++)
 		{
-			batch->m_Textures.push_back((materials->GetTexture(it.texture_Index + i)));
+			skinBatchObject->m_Textures.push_back((m2Materials->GetTexture(skinBatchProto.texture_Index + i)));
 		}
 
 		// Texture unit
-		if (it.texture_CoordIndex != -1)
+		if (skinBatchProto.texture_CoordIndex != -1)
 		{
-			batch->m_TextureUnit = materials->m_TexturesUnitLookup[it.texture_CoordIndex];
+			skinBatchObject->m_TextureUnit = m2Materials->m_TexturesUnitLookup[skinBatchProto.texture_CoordIndex];
 		}
 
 		// Texture weight
-		if (it.texture_WeightIndex != -1)
+		if (skinBatchProto.texture_WeightIndex != -1)
 		{
-			batch->m_TextureWeight = (materials->m_TextureWeights[it.texture_WeightIndex]);
+			skinBatchObject->m_TextureWeight = (m2Materials->m_TextureWeights[skinBatchProto.texture_WeightIndex]);
 		}
 
 		// Texture transfowm
-		if (it.flags.TextureStatic == false)
+		if (skinBatchProto.flags.TextureStatic == false)
 		{
-			if (it.texture_TransformIndex != -1)
+			if (skinBatchProto.texture_TransformIndex != -1)
 			{
-				int16 index = materials->m_TexturesTransformLookup[it.texture_TransformIndex];
+				int16 index = m2Materials->m_TexturesTransformLookup[skinBatchProto.texture_TransformIndex];
 				if (index != -1)
 				{
-					batch->m_TextureTransform = (materials->GetTextureTransform(it.texture_TransformIndex));
+					skinBatchObject->m_TextureTransform = (m2Materials->GetTextureTransform(skinBatchProto.texture_TransformIndex));
 				}
 			}
 		}
 
-		batch->PostInit();
-		Skin->m_Batches.push_back(batch);
+		std::shared_ptr<M2_Material> m_TestMaterial = std::make_shared<M2_Material>(m_RenderDevice, skinBatchObject->m_Textures);
+		m_TestMaterial->SetWrapper(m_TestMaterial.get());
+
+		skinBatchObject->AddConnection(m_TestMaterial, skinSection);
+		
+		M2SkinObject->m_Batches.push_back(std::move(skinBatchObject));
 	}
 
-	std::sort(Skin->m_Batches.begin(), Skin->m_Batches.end(), [](const std::shared_ptr<CM2_Skin_Batch> left, const std::shared_ptr<CM2_Skin_Batch> right)
+	std::sort(M2SkinObject->m_Batches.begin(), M2SkinObject->m_Batches.end(), [](const std::shared_ptr<CM2_Skin_Batch> left, const std::shared_ptr<CM2_Skin_Batch> right)
 	{
 		return left->getPriorityPlan() < right->getPriorityPlan();
 	});

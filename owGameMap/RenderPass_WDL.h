@@ -11,7 +11,7 @@ public:
 
     // IVisitor
 	bool Visit3D(ISceneNode* node) override final;
-	bool Visit(IMesh* Mesh, SGeometryPartParams GeometryPartParams = SGeometryPartParams()) override final;
+	bool Visit(IModel* Mesh, SGeometryPartParams GeometryPartParams = SGeometryPartParams()) override final;
 
 private:
 	std::shared_ptr<ISettingGroup> m_WoWSettings;

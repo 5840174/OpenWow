@@ -5,14 +5,14 @@
 #include "DBC\\Core\DBC__Storage.h"
 
 class ZN_API CLiquidLayer 
-	: public MeshProxie
+	: public ModelProxie
 {
 public:
-	CLiquidLayer(IBaseManager* BaseManager, std::shared_ptr<IMesh> _mesh);
+	CLiquidLayer(IRenderDevice& RenderDevice, std::shared_ptr<IModel> Model);
 	virtual ~CLiquidLayer();
 
-	// IMesh
-	bool Render(const RenderEventArgs* renderEventArgs, const IConstantBuffer* perObject, SGeometryPartParams GeometryPartParams = SGeometryPartParams()) override;
+	// IModel
+	bool Render(const RenderEventArgs& renderEventArgs) const override;
 
 public:
 	std::shared_ptr<const DBC_LiquidTypeRecord> LiquidType;
@@ -34,14 +34,16 @@ public:
 
 	std::vector<bool> renderTiles;
 
-
+public:
 	// Render
 	void InitTextures(DBC_LIQUIDTYPE_Type::List _liquidType);
 
-	std::shared_ptr<LiquidMaterial> m_Material;
-	std::vector<std::shared_ptr<ITexture>>    m_Textures;
+	const std::shared_ptr<IMaterial> GetMaterial() const;
 
 private:
-	IBaseManager* m_BaseManager;
-	std::weak_ptr<ISkyManager> m_SkyManager;
+	std::vector<std::shared_ptr<ITexture>>    m_Textures;
+	std::shared_ptr<LiquidMaterial> m_Material;
+
+private:
+	IRenderDevice& m_RenderDevice;
 };

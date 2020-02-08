@@ -3,26 +3,28 @@
 // General
 #include "LiquidLayer.h"
 
-CLiquidLayer::CLiquidLayer(IBaseManager* BaseManager, std::shared_ptr<IMesh> _mesh)
-	: MeshProxie(_mesh)
-	, m_BaseManager(BaseManager)
-	, m_SkyManager(BaseManager->GetManager<ISkyManager>())
+CLiquidLayer::CLiquidLayer(IRenderDevice& RenderDevice, std::shared_ptr<IModel> Model)
+	: ModelProxie(Model)
+	, m_RenderDevice(RenderDevice)
 {
-	m_Material = std::make_shared<LiquidMaterial>(BaseManager);
-
-	SetMaterial(m_Material);
+	m_Material = std::make_shared<LiquidMaterial>(m_RenderDevice);
 }
 
 CLiquidLayer::~CLiquidLayer()
 {
 }
 
-bool CLiquidLayer::Render(const RenderEventArgs* renderEventArgs, const IConstantBuffer* perObject, SGeometryPartParams GeometryPartParams)
+
+
+//
+// IModel
+//
+bool CLiquidLayer::Render(const RenderEventArgs& renderEventArgs) const
 {
-	uint32_t texidx = (uint32_t)(renderEventArgs->TotalTime * 1000.0f / 60.0f) % m_Textures.size();
+	uint32_t texidx = (uint32_t)(renderEventArgs.TotalTime * 1000.0f / 60.0f) % m_Textures.size();
 	m_Material->SetTexture(0, m_Textures[texidx]);
 
-	std::shared_ptr<ISkyManager> SkyManager = m_SkyManager.lock();
+	std::shared_ptr<ISkyManager> SkyManager = nullptr; // m_SkyManager.lock();
 
 	if (SkyManager != nullptr)
 	{
@@ -39,9 +41,14 @@ bool CLiquidLayer::Render(const RenderEventArgs* renderEventArgs, const IConstan
 		m_Material->SetDeepAlpha(1.0f);
 	}
 
-	return MeshProxie::Render(renderEventArgs, perObject, GeometryPartParams);
+	return ModelProxie::Render(renderEventArgs);
 }
 
+
+
+//
+// Public
+//
 void CLiquidLayer::InitTextures(DBC_LIQUIDTYPE_Type::List _liquidType)
 {
     std::string baseName;
@@ -71,7 +78,12 @@ void CLiquidLayer::InitTextures(DBC_LIQUIDTYPE_Type::List _liquidType)
 	for (int i = 1; i <= 30; i++)
 	{
         sprintf(buf, "%s.%d.blp", baseName.c_str(), i);
-		std::shared_ptr<ITexture> texture = m_BaseManager->GetManager<IRenderDevice>()->CreateTexture2D(buf);
+		std::shared_ptr<ITexture> texture = m_RenderDevice.GetObjectsFactory().LoadTexture2D(buf);
 		m_Textures.push_back(texture);
 	}
+}
+
+const std::shared_ptr<IMaterial> CLiquidLayer::GetMaterial() const
+{
+	return m_Material;
 }

@@ -61,7 +61,7 @@ bool CRenderPass_WDL::Visit3D(ISceneNode* node)
     return Base3DPass::Visit3D(node);
 }
 
-bool CRenderPass_WDL::Visit(IMesh* Mesh, SGeometryPartParams GeometryPartParams)
+bool CRenderPass_WDL::Visit(IModel* Mesh, SGeometryPartParams GeometryPartParams)
 {
     CWDL_LowResTile* wdlMesh = dynamic_cast<CWDL_LowResTile*>(Mesh);
 	if (wdlMesh == nullptr)

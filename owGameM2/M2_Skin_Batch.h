@@ -11,29 +11,31 @@ class CM2_Skin_Builder;
 // FORWARD END
 
 class CM2_Skin_Batch 
-	: public MeshProxie
+	: public ModelProxie
 {
 	friend CM2_Skin_Builder;
 public:
-	CM2_Skin_Batch(IBaseManager* BaseManager, const std::weak_ptr<const M2> _parentM2, std::shared_ptr<IMesh> _mesh);
+	CM2_Skin_Batch(IBaseManager* BaseManager, IRenderDevice& RenderDevice, const M2& M2Model, const CM2_SkinSection& SkinSection);
+	virtual ~CM2_Skin_Batch();
 
-	void PostInit();
+	// IModel
+	bool Render(const RenderEventArgs& renderEventArgs) const override final;
 
-	// IMesh
-	bool Render(const RenderEventArgs* renderEventArgs, const IConstantBuffer* perObject, SGeometryPartParams GeometryPartParams = SGeometryPartParams()) override;
+	void Accept(IVisitor* visitor) override final;
 
+public:
 	int32                                 getPriorityPlan()  const { return m_PriorityPlan; }
-	std::weak_ptr<const CM2_SkinSection>  getSkin()          const { return m_SkinSection; }
+	const CM2_SkinSection&  getSkin()          const { return m_SkinSection; }
 
-	std::shared_ptr<const CM2_Part_Material> GetM2Material() const { return m_Material; }
+	std::shared_ptr<const CM2_Part_Material> GetM2Material() const { return m_M2ModelMaterial; }
 
 private:
 	int32												m_PriorityPlan;
-	std::shared_ptr<CM2_SkinSection>					m_SkinSection;
+	
 
 	// Material props
 	std::shared_ptr<const CM2_Part_Color>				m_Color;
-	std::shared_ptr<const CM2_Part_Material>			m_Material;
+	std::shared_ptr<const CM2_Part_Material>			m_M2ModelMaterial;
 	std::vector<std::weak_ptr<const CM2_Part_Texture>>	m_Textures;
 	int16												m_TextureUnit;
 	std::shared_ptr<const CM2_Part_TextureWeight>		m_TextureWeight;
@@ -42,9 +44,10 @@ private:
 	int32												newShader;
 	std::shared_ptr<M2_Material>                        m_TestMaterial;
 
-private: // Parent
-	const std::weak_ptr<const M2> m_ParentM2;
 
 private:
 	IBaseManager* m_BaseManager;
+	IRenderDevice& m_RenderDevice;
+	const M2& m_M2Model;
+	const CM2_SkinSection& m_SkinSection;
 };

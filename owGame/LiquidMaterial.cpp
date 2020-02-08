@@ -3,23 +3,11 @@
 // General
 #include "LiquidMaterial.h"
 
-LiquidMaterial::LiquidMaterial(IBaseManager* BaseManager) 
-	: MaterialProxie(BaseManager->GetManager<IRenderDevice>()->CreateMaterial(sizeof(MaterialProperties)))
+LiquidMaterial::LiquidMaterial(IRenderDevice& RenderDevice)
+	: MaterialProxie(RenderDevice.GetObjectsFactory().CreateMaterial(sizeof(MaterialProperties)))
 {
 	m_pProperties = (MaterialProperties*)_aligned_malloc(sizeof(MaterialProperties), 16);
 	*m_pProperties = MaterialProperties();
-
-
-
-	// Create samplers
-	std::shared_ptr<ISamplerState> g_Sampler = BaseManager->GetManager<IRenderDevice>()->CreateSamplerState();
-	g_Sampler->SetFilter(ISamplerState::MinFilter::MinLinear, ISamplerState::MagFilter::MagLinear, ISamplerState::MipFilter::MipLinear);
-	g_Sampler->SetWrapMode(ISamplerState::WrapMode::Clamp, ISamplerState::WrapMode::Clamp, ISamplerState::WrapMode::Clamp);
-
-	// Assign samplers
-	SetSampler(0, g_Sampler);
-
-
 }
 
 LiquidMaterial::~LiquidMaterial()
@@ -31,6 +19,11 @@ LiquidMaterial::~LiquidMaterial()
 	}
 }
 
+
+
+//
+// LiquidMaterial
+//
 void LiquidMaterial::SetShallowAlpha(float value)
 {
 	m_pProperties->gShallowAlpha = value;

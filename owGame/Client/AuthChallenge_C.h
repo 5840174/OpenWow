@@ -15,18 +15,18 @@ struct AuthChallenge_C : public ISendable
 		bb << (uint8)(Login.size() + 30);
 		bb << (uint8)0;
 
-		bb.Append(gamename, 4);
+		bb.writeBytes(gamename, 4);
 		bb << version1;
 		bb << version2;
 		bb << version3;
 		bb << build;
-		bb.Append((const uint8*)"68x", 4);   // x86
-		bb.Append((const uint8*)"niW", 4);   // Win
-		bb.Append((const uint8*)"SUne", 4);  // ruRU
+		bb.writeBytes((const uint8*)"68x", 4);   // x86
+		bb.writeBytes((const uint8*)"niW", 4);   // Win
+		bb.writeBytes((const uint8*)"SUne", 4);  // ruRU
 		bb << (uint32)180;
 		bb << IPv4;
 		bb << (uint8)Login.size();
-		bb.Write(Login);
+		bb.writeString(Login);
 
         _socket->SendBuf(reinterpret_cast<const char*>(bb.getData()), bb.getSize());
 	}

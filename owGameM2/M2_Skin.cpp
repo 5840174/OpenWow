@@ -11,11 +11,11 @@
 // Additional
 #include "M2_Part_Material.h"
 
-CM2_Skin::CM2_Skin(const std::weak_ptr<const M2> _model) 
-	: m_ParentM2(_model)
+CM2_Skin::CM2_Skin(const M2& M2Model)
+	: m_M2Model(M2Model)
 {}
 
-void CM2_Skin::CreateInsances(std::weak_ptr<ISceneNode> _parent)
+void CM2_Skin::CreateInsances(std::weak_ptr<ISceneNode3D> _parent)
 {
 	for (const auto& batch : m_Batches)
 	{

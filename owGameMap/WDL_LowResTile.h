@@ -5,12 +5,12 @@ class CMap;
 // FORWARD END
 
 class CWDL_LowResTile 
-	: public MeshProxie
+	: public ModelProxie
 {
 public:
-	CWDL_LowResTile(std::weak_ptr<const CMap> _parent, std::shared_ptr<IMesh> _mesh, uint32 _indexX, uint32 _indexZ);
+	CWDL_LowResTile(std::weak_ptr<const CMap> _parent, std::shared_ptr<IModel> _mesh, uint32 _indexX, uint32 _indexZ);
 
-	// IMesh
+	// IModel
 	bool Render(const RenderEventArgs* renderEventArgs, const IConstantBuffer* perObject, SGeometryPartParams GeometryPartParams = SGeometryPartParams()) override;
 
 private:

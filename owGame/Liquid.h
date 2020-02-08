@@ -5,7 +5,7 @@
 class ZN_API CLiquid
 {
 public:
-	CLiquid(IBaseManager* BaseManager, uint32 x, uint32 y);
+	CLiquid(IRenderDevice& RenderDevice, uint32 x, uint32 y);
     virtual ~CLiquid();
 
 protected:
@@ -22,7 +22,7 @@ public:
 	float                                                               ydir;
 
 private:
-	IBaseManager* m_BaseManager;
+	IRenderDevice& m_RenderDevice;
 
 private:
 	const vec3 defaultNormal = vec3(0.0f, 1.0f, 0.0f);

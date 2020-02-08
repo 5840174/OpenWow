@@ -46,8 +46,7 @@ void CAuthSocket::OnDisconnect()
 void CAuthSocket::OnRawData(const char * buf, size_t len)
 {
     CByteBuffer bb;
-    bb.Allocate(len);
-    bb.CopyData(reinterpret_cast<const uint8*>(buf), len);
+    bb.writeBytes(reinterpret_cast<const uint8*>(buf), len);
 
     eAuthCmd currHandler;
     bb.readBytes(&currHandler, sizeof(uint8));

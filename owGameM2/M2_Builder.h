@@ -9,7 +9,7 @@ class CM2_Builder
 {
 	friend CM2_Skin_Builder;
 public:
-	CM2_Builder(IBaseManager* BaseManager, std::shared_ptr<M2> _model);
+	CM2_Builder(IBaseManager* BaseManager, IRenderDevice& RenderDevice, std::shared_ptr<M2> _model);
 	virtual ~CM2_Builder();
 
 	bool Load();
@@ -53,4 +53,5 @@ private:
 	
 private:
 	IBaseManager*           m_BaseManager;
+	IRenderDevice&          m_RenderDevice;
 };

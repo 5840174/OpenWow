@@ -13,7 +13,7 @@ extern CLog* gLogInstance;
 class COpenWoWMapAndWMOPlguin
 	: public IznPlugin
 	, public ISceneNodeCreator
-	, public IGameStateCreator
+	, public ISceneCreator
 {
 public:
 	COpenWoWMapAndWMOPlguin(IBaseManager* BaseManager)
@@ -29,7 +29,7 @@ public:
 	//
 	bool Initialize() override
 	{
-		gLogInstance = std::dynamic_pointer_cast<CLog>(m_BaseManager->GetManager<ILog>()).get();
+		gLogInstance = dynamic_cast<CLog*>(m_BaseManager->GetManager<ILog>());
 
 		OpenDBs(m_BaseManager);
 
@@ -69,11 +69,11 @@ public:
 
 		return nullptr;
 	}
-	std::shared_ptr<ISceneNode> CreateSceneNode(std::weak_ptr<ISceneNode> Parent, size_t Index) const override
+	ISceneNode3D* CreateSceneNode3D(ISceneNode3D* Parent, size_t Index) const override
 	{
 		if (Index == 0)
 		{
-			return Parent.lock()->CreateSceneNode<CMap>(m_BaseManager);
+			return Parent->CreateSceneNode<CMap>(m_BaseManager);
 		}
 
 		return nullptr;
@@ -82,23 +82,19 @@ public:
 
 
 	//
-	// IGameStateCreator
+	// ISceneCreator
 	//
-	size_t GetGameStatesCount() const override
+	size_t GetScenesCount() const override
 	{
 		return 1;
 	}
-	std::string GetGameStateName(size_t Index) const override
+	std::string GetSceneTypeName(size_t Index) const override
 	{
 		return "GameState_Map";
 	}
-	GameStatePriority GetGameStatePriority(size_t Index) const override
+	std::shared_ptr<IScene> CreateScene(size_t Index) const override
 	{
-		return 5;
-	}
-	std::shared_ptr<IGameState> CreateGameState(size_t Index, std::shared_ptr<IRenderWindow> RenderWindow, IWindowEvents* WindowEvents) const override
-	{
-		return std::make_shared<CGameState_Map>(m_BaseManager, RenderWindow, WindowEvents);
+		return std::make_shared<CGameState_Map>(m_BaseManager);
 	}
 
 private:

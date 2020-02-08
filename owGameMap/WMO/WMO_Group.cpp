@@ -316,7 +316,7 @@ void WMO_Group::Load()
 
 	// Create geom
 	{
-		std::shared_ptr<IMesh> mesh = m_BaseManager->GetManager<IRenderDevice>()->CreateMesh();
+		std::shared_ptr<IModel> mesh = m_BaseManager->GetManager<IRenderDevice>()->CreateMesh();
 		mesh->AddVertexBuffer(BufferBinding("POSITION", 0), VB_Vertexes);
 		mesh->AddVertexBuffer(BufferBinding("NORMAL", 0), VB_Normals);
 		//if (VB_Colors != nullptr)

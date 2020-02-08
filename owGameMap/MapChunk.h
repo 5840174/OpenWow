@@ -48,8 +48,8 @@ private:
 	std::shared_ptr<ITexture>                        m_BlendRBGShadowATexture;
 
 	// Qulity
-	std::shared_ptr<IMesh>                          __geomHigh;
-	std::shared_ptr<IMesh>                          __geomDefault;
+	std::shared_ptr<IModel>                          __geomHigh;
+	std::shared_ptr<IModel>                          __geomDefault;
 
 private:
 	CMap*						m_MapController;

@@ -35,7 +35,7 @@ private:
 	int32					m_GrInner;
 	int32					m_GrOuter;
 
-	std::shared_ptr<IMesh>			m_Geom;
+	std::shared_ptr<IModel>			m_Geom;
 
 private:
 	const std::weak_ptr<const CWMO> m_ParentWMO;

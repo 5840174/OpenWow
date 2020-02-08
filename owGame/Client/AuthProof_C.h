@@ -12,9 +12,9 @@ struct AuthProof_C : public ISendable
 	{
 		CByteBuffer bb;
 		bb << (uint8)AUTH_LOGON_PROOF;
-		bb.Append(A, 32);
-		bb.Append(M1, SHA_DIGEST_LENGTH);
-        bb.WriteDummy(20);
+		bb.writeBytes(A, 32);
+		bb.writeBytes(M1, SHA_DIGEST_LENGTH);
+        bb.writeDummy(20);
 		bb << (uint8)0;
 		bb << (uint8)0;
 

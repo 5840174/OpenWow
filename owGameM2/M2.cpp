@@ -25,7 +25,7 @@ M2::M2(const std::string& name) :
 	//Log::Info("M2[%s]: Loading...", m_FileName.c_str());
 }
 
-void M2::CreateInsances(std::weak_ptr<ISceneNode> _parent)
+void M2::CreateInsances(std::weak_ptr<ISceneNode3D> _parent)
 {
 	for (auto& it : m_Skins)
 	{

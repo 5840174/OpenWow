@@ -7,8 +7,8 @@
 // General
 #include "WMO_Group_Part_Batch.h"
 
-WMO_Group_Part_Batch::WMO_Group_Part_Batch(const std::weak_ptr<const CWMO> _parentWMO, std::shared_ptr<IMesh> _mesh, const SWMO_Group_BatchDef& _proto) 
-	: MeshProxie(_mesh)
+WMO_Group_Part_Batch::WMO_Group_Part_Batch(const std::weak_ptr<const CWMO> _parentWMO, std::shared_ptr<IModel> _mesh, const SWMO_Group_BatchDef& _proto) 
+	: ModelProxie(_mesh)
 	, m_ParentWMO(_parentWMO)
 	, m_Proto(_proto)
 {
@@ -25,5 +25,5 @@ bool WMO_Group_Part_Batch::Render(const RenderEventArgs* renderEventArgs, const 
 
 	GeometryPartParams.IndexStartLocation = m_Proto.indexStart;
 	GeometryPartParams.IndexCnt = m_Proto.indexCount;
-	return MeshProxie::Render(renderEventArgs, perObject, GeometryPartParams/*, m_Proto.vertexStart, m_Proto.vertexEnd - m_Proto.vertexStart*/);
+	return ModelProxie::Render(renderEventArgs, perObject, GeometryPartParams/*, m_Proto.vertexStart, m_Proto.vertexEnd - m_Proto.vertexStart*/);
 }

@@ -10,14 +10,14 @@ class WMO_Group;
 // FORWARD END
 
 class WMO_Group_Part_Batch 
-	: public MeshProxie
+	: public ModelProxie
 {
 public:
-	WMO_Group_Part_Batch(const std::weak_ptr<const CWMO> _parentWMO, std::shared_ptr<IMesh> _mesh, const SWMO_Group_BatchDef& _proto);
+	WMO_Group_Part_Batch(const std::weak_ptr<const CWMO> _parentWMO, std::shared_ptr<IModel> _mesh, const SWMO_Group_BatchDef& _proto);
 
 	uint32 getBlendMode() const { return m_WMOMaterial->getBlendMode(); }
 
-	// MeshProxie
+	// ModelProxie
 	bool Render(const RenderEventArgs* renderEventArgs, const IConstantBuffer* perObject, SGeometryPartParams GeometryPartParams = SGeometryPartParams()) override;
 
 private:

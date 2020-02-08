@@ -187,7 +187,7 @@ void SkyManager::InitBuffer()
 	colorsBuffer = GetBaseManager()->GetManager<IRenderDevice>()->CreateVoidVertexBuffer(vertices.data(), vertices.size(), 0, sizeof(vec4));
 
 	// Geometry
-	std::shared_ptr<IMesh> __geom = GetBaseManager()->GetManager<IRenderDevice>()->CreateMesh();
+	std::shared_ptr<IModel> __geom = GetBaseManager()->GetManager<IRenderDevice>()->CreateMesh();
 	__geom->AddVertexBuffer(BufferBinding("POSITION", 0), vertexBuffer);
 	__geom->AddVertexBuffer(BufferBinding("COLOR", 0), colorsBuffer);
 

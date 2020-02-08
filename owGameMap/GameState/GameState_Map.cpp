@@ -24,7 +24,12 @@ bool CGameState_Map::Init()
 {
 	CGameState::Init();
 
+
+	std::shared_ptr<SceneNode3D> cameraNode = m_Scene3D->CreateSceneNode<SceneNode3D>(m_Scene3D->GetRootNode());
+	cameraNode->AddComponent(std::make_shared<CCameraComponent3D>(cameraNode));
+
 	SetCameraController(std::make_shared<CFreeCameraController>());
+	GetCameraController()->SetCamera(cameraNode->GetComponent<ICameraComponent3D>());
 	GetCameraController()->GetCamera()->SetPerspectiveProjection(ICameraComponent3D::EPerspectiveProjectionHand::Right, 45.0f, GetRenderWindow()->GetWindowWidth() / GetRenderWindow()->GetWindowHeight(), 0.5f, 4000.0f);
 
 	Load3D();

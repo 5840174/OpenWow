@@ -11,9 +11,5 @@ public:
 	virtual ~Liquid_Instance();
 
 	// ILiquidInstanceInitializaton
-    void Initialize(std::shared_ptr<CLiquid> LiquidObject, vec3 Position) override;
-
-	// ISceneNode
-	void Initialize() override;
-	void Finalize() override;
+    void LiquidInitialize(std::shared_ptr<CLiquid> LiquidObject, vec3 Position) override;
 };

@@ -11,27 +11,22 @@ class CM2_Builder;
 class CM2_Skin_Builder
 {
 public:
-	CM2_Skin_Builder(IBaseManager* BaseManager, const CM2_Builder& _m2Builder, std::weak_ptr<M2> _model, const SM2_SkinProfile& _skinProto, std::shared_ptr<CM2_Skin> _skin, std::shared_ptr<IFile> _file);
+	CM2_Skin_Builder(IBaseManager* BaseManager, IRenderDevice& RenderDevice, const CM2_Builder& _m2Builder, const M2& M2Model, const SM2_SkinProfile& SkinProfileProto, std::shared_ptr<IFile> _file);
+	virtual ~CM2_Skin_Builder();
 
-	void Load();
+	std::shared_ptr<CM2_Skin> Load();
 
 	// Loader
-	void Step1LoadProfile();
-	void Step2InitBatches();
+	void Step1LoadProfile(const std::shared_ptr<CM2_Skin>& M2SkinObject);
+	void Step2InitBatches(const std::shared_ptr<CM2_Skin>& M2SkinObject);
 
 private:
-	SM2_SkinProfile				m_SkinProfile;
-	std::weak_ptr<CM2_Skin>		m_Skin;
 	std::weak_ptr<IFile>		m_F;
 
-	//
-
-	std::vector<SM2_SkinBatch>	m_SkinBatches;
-
-	//--
-	const CM2_Builder&  m_M2Builder;
-	std::weak_ptr<M2>			m_ParentM2;
-
 private:
-	IBaseManager*           m_BaseManager;
+	IBaseManager*       m_BaseManager;
+	IRenderDevice&      m_RenderDevice;
+	const CM2_Builder&  m_M2Builder;
+	const M2&			m_M2Model;
+	const SM2_SkinProfile& m_SkinProfileProto;
 };

@@ -3,7 +3,7 @@
 #include "Map.h"
 
 class CGameState_Map 
-	: public CGameState
+	: public IScene
 {
 public:
 	CGameState_Map(IBaseManager * BaseManager, std::shared_ptr<IRenderWindow> RenderWindow, IWindowEvents* WindowEvents);

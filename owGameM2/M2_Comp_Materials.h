@@ -16,6 +16,7 @@ class CM2_Comp_Materials
 	friend class CM2_Builder;
 public:
 	CM2_Comp_Materials();
+	virtual ~CM2_Comp_Materials();
 
 	void calc(uint16 anim, uint32 time, uint32 globalTime);
 

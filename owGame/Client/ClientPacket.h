@@ -2,7 +2,8 @@
 
 #include "Opcodes.h"
 
-class CClientPacket : public CByteBuffer
+class CClientPacket 
+	: public CByteBuffer
 {
 public:
     CClientPacket(Opcodes Opcode);

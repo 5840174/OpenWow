@@ -16,7 +16,7 @@
 // Additional (meshes)
 #include "M2_Skin_Batch.h"
 
-CRenderPass_M2::CRenderPass_M2(std::shared_ptr<IRenderDevice> RenderDevice, std::shared_ptr<IScene> scene)
+CRenderPass_M2::CRenderPass_M2(IRenderDevice& RenderDevice, std::shared_ptr<IScene> scene)
 	: Base3DPass(RenderDevice, scene)
 {}
 
@@ -31,36 +31,23 @@ CRenderPass_M2::~CRenderPass_M2()
 std::shared_ptr<IRenderPassPipelined> CRenderPass_M2::CreatePipeline(std::shared_ptr<IRenderTarget> RenderTarget, const Viewport * Viewport)
 {
 	// CreateShaders
-	std::shared_ptr<IShader> g_pVertexShader;
-	std::shared_ptr<IShader> g_pPixelShader;
-	if (GetRenderDevice()->GetDeviceType() == RenderDeviceType::RenderDeviceType_DirectX)
-	{
-		g_pVertexShader = GetRenderDevice()->CreateShader(
-			EShaderType::VertexShader, "shaders_D3D/M2.hlsl", IShader::ShaderMacros(), "VS_main", "latest"
-		);
-		g_pVertexShader->LoadInputLayoutFromReflector();
+	std::shared_ptr<IShader> vertexShader = GetRenderDevice().GetObjectsFactory().CreateShader(EShaderType::VertexShader, "shaders_D3D/M2.hlsl", "VS_main");
+	vertexShader->LoadInputLayoutFromReflector();
 
-		g_pPixelShader = GetRenderDevice()->CreateShader(
-			EShaderType::PixelShader, "shaders_D3D/M2.hlsl", IShader::ShaderMacros(), "PS_main", "latest"
-		);
-	}
-	else if (GetRenderDevice()->GetDeviceType() == RenderDeviceType::RenderDeviceType_OpenGL)
-	{
-		_ASSERT(false);
-	}
+	std::shared_ptr<IShader> pixelShader = GetRenderDevice().GetObjectsFactory().CreateShader(EShaderType::PixelShader, "shaders_D3D/M2.hlsl", "PS_main");
 
 	// PIPELINES
-	std::shared_ptr<IPipelineState> M2Pipeline = GetRenderDevice()->CreatePipelineState();
-	M2Pipeline->GetBlendState()->SetBlendMode(alphaBlending);
-	M2Pipeline->GetDepthStencilState()->SetDepthMode(enableDepthWrites);
-	M2Pipeline->GetRasterizerState()->SetCullMode(IRasterizerState::CullMode::None);
-	M2Pipeline->GetRasterizerState()->SetFillMode(IRasterizerState::FillMode::Solid);
-	M2Pipeline->SetRenderTarget(RenderTarget);
-	M2Pipeline->GetRasterizerState()->SetViewport(Viewport);
-	M2Pipeline->SetShader(EShaderType::VertexShader, g_pVertexShader);
-	M2Pipeline->SetShader(EShaderType::PixelShader, g_pPixelShader);
+	std::shared_ptr<IPipelineState> pipeline = GetRenderDevice().GetObjectsFactory().CreatePipelineState();
+	pipeline->GetBlendState()->SetBlendMode(alphaBlending);
+	pipeline->GetDepthStencilState()->SetDepthMode(enableDepthWrites);
+	pipeline->GetRasterizerState()->SetCullMode(IRasterizerState::CullMode::None);
+	pipeline->GetRasterizerState()->SetFillMode(IRasterizerState::FillMode::Solid);
+	pipeline->SetRenderTarget(RenderTarget);
+	pipeline->GetRasterizerState()->SetViewport(Viewport);
+	pipeline->SetShader(EShaderType::VertexShader, vertexShader);
+	pipeline->SetShader(EShaderType::PixelShader, pixelShader);
 
-	return SetPipeline(M2Pipeline);
+	return SetPipeline(pipeline);
 }
 
 
@@ -68,20 +55,19 @@ std::shared_ptr<IRenderPassPipelined> CRenderPass_M2::CreatePipeline(std::shared
 //
 // IVisitor
 //
-bool CRenderPass_M2::Visit3D(ISceneNode* node)
+bool CRenderPass_M2::Visit(const ISceneNode3D* node)
 {
-    CM2_Base_Instance* m2Instance = dynamic_cast<CM2_Base_Instance*>(node);
-    if (m2Instance)
+    if (const CM2_Base_Instance* m2Instance = dynamic_cast<const CM2_Base_Instance*>(node))
     {
-        return Base3DPass::Visit3D(node);
+        return Base3DPass::Visit(m2Instance);
     }
 
     return false;
 }
 
-bool CRenderPass_M2::Visit(IMesh* Mesh, SGeometryPartParams GeometryPartParams)
+bool CRenderPass_M2::Visit(const IModel* Model)
 {
-	if (CM2_Skin_Batch* pMesh = dynamic_cast<CM2_Skin_Batch*>(Mesh))
+	if (const CM2_Skin_Batch* Model2 = dynamic_cast<const CM2_Skin_Batch*>(Model))
 	{
 		/*GetPipelineState()->GetBlendState().SetBlendMode(pMesh->GetM2Material()->GetBlendMode());
 		GetPipelineState()->GetBlendState().Bind();
@@ -94,7 +80,7 @@ bool CRenderPass_M2::Visit(IMesh* Mesh, SGeometryPartParams GeometryPartParams)
 
 		GetPipelineState()->Bind();*/
 
-        return Mesh->Render(GetRenderEventArgs(), m_PerObjectConstantBuffer.get(), GeometryPartParams);
+		return Base3DPass::Visit(Model2);
 	}
 
     return false;

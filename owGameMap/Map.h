@@ -9,7 +9,7 @@
 #include "MinimapProvider.h"
 
 class CMap 
-	: public SceneNodeBase
+	: public SceneNode3D
 {
 public:
 	CMap(IBaseManager* BaseManager);

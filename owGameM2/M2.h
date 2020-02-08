@@ -27,7 +27,7 @@ public:
 	M2(const std::string& name);
 
 	// ISceneNodeProvider
-	void CreateInsances(std::weak_ptr<ISceneNode> _parent);
+	void CreateInsances(std::weak_ptr<ISceneNode3D> _parent);
 
 	void update(double _time, double _dTime);
 	void calc(uint16 _animationIndex, uint32 _time, uint32 globalTime, cmat4 _viewMatrix, cmat4 _worldMatrix);
@@ -82,7 +82,7 @@ private:
 
 private:
 	// Buffers and geom
-	std::shared_ptr<IMesh>				m_CollisionGeom;
+	std::shared_ptr<IModel>				m_CollisionGeom;
 	uint32								m_CollisionIndCnt;
 	uint32								m_CollisionVetCnt;
 

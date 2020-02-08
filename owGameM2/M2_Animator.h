@@ -6,8 +6,8 @@
 class CM2_Animator
 {
 public:
-	CM2_Animator(const std::weak_ptr<const M2> _m2);
-	~CM2_Animator();
+	CM2_Animator(const M2& M2Model);
+	virtual ~CM2_Animator();
 
 	void PlayAnimation(int16 _id = -1, bool _loop = true);
 	void PrintList();
@@ -23,7 +23,6 @@ public:
 	//void setOnEndFunction(Function* _onEnd);
 
 private:
-	const std::weak_ptr<const M2>					m_M2;
 	std::unordered_map<uint16, std::shared_ptr<CM2_Animation>>	m_Animations;
 	const CM2_Animation*		m_CurrentAnimation;
 	bool						m_IsLoop;
@@ -33,4 +32,7 @@ private:
 
 	double						animtime;
 	uint32						m_CurrentTime;
+
+private:
+	const M2& m_M2Model;
 };

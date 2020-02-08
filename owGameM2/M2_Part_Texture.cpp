@@ -6,7 +6,7 @@
 // General
 #include "M2_Part_Texture.h"
 
-CM2_Part_Texture::CM2_Part_Texture(IBaseManager* BaseManager, std::shared_ptr<IFile> f, const SM2_Texture& _proto)
+CM2_Part_Texture::CM2_Part_Texture(IBaseManager* BaseManager, IRenderDevice& RenderDevice, std::shared_ptr<IFile> f, const SM2_Texture& _proto)
 	: m_Texture(nullptr)
 {
 	m_WrapX = _proto.flags.WRAPX == 0;
@@ -18,7 +18,7 @@ CM2_Part_Texture::CM2_Part_Texture(IBaseManager* BaseManager, std::shared_ptr<IF
 	if (m_SpecialType == SM2_Texture::Type::NONE)
 	{
 		std::string textureFileName = (const char*)(f->getData() + _proto.filename.offset);
-		m_Texture = BaseManager->GetManager<IRenderDevice>()->CreateTexture2D(textureFileName);
+		m_Texture = RenderDevice.GetObjectsFactory().LoadTexture2D(textureFileName);
 	}
 }
 

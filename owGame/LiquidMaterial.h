@@ -4,9 +4,10 @@ class ZN_API LiquidMaterial
 	: public MaterialProxie
 {
 public:
-	LiquidMaterial(IBaseManager* BaseManager);
+	LiquidMaterial(IRenderDevice& RenderDevice);
 	virtual ~LiquidMaterial();
 
+	// LiquidMaterial
 	void SetShallowAlpha(float value);
 	void SetDeepAlpha(float value);
 	void SetColorLight(vec3 value);

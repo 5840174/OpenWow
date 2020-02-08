@@ -65,8 +65,7 @@ void CWorldSocket::OnRawData(const char * buf, size_t len)
     //Log::Info("CWorldSocket: Receive data with size=%d", len);
 
     CByteBuffer bufferFromServer;
-    bufferFromServer.Allocate(len);
-    bufferFromServer.CopyData(reinterpret_cast<const uint8*>(buf), len);
+	bufferFromServer.writeBytes(buf, len);
 
     // Append to current packet
     if (m_CurrentPacket != nullptr)
@@ -176,7 +175,7 @@ void CWorldSocket::Packet2(CByteBuffer& _buf)
 
         // Fill data
         _ASSERT(_buf.getPos() + needToRead <= _buf.getSize());
-        m_CurrentPacket->Append(_buf.getDataFromCurrent(), needToRead);
+        m_CurrentPacket->writeBytes(_buf.getDataFromCurrent(), needToRead);
 
         _buf.seekRelative(needToRead);
         //Log::Info("Packet[%s] readed '%d' of %d'.", OpcodesNames[m_CurrentPacket->GetPacketOpcode()].c_str(), m_CurrentPacket->getSize(), m_CurrentPacket->GetPacketSize());
@@ -272,15 +271,15 @@ void CWorldSocket::S_AuthChallenge(CByteBuffer& _buff)
 	// Send auth packet to server. 
     CClientPacket p(CMSG_AUTH_SESSION);
     p << WoWClient->getClientBuild();
-    p.WriteDummy(4);
+    p.writeDummy(4);
     p << WoWClient->GetLogin();
-    p.Append(clientRandomSeed.AsByteArray(4).get(), 4);
-    p.Append(uSHA.GetDigest(), SHA_DIGEST_LENGTH);
+    p.writeBytes(clientRandomSeed.AsByteArray(4).get(), 4);
+    p.writeBytes(uSHA.GetDigest(), SHA_DIGEST_LENGTH);
 
     // We must pass addons to connect to private servers
     CByteBuffer addonsBuffer;
     S_AuthChallenge_CreateAddonsBuffer(addonsBuffer);
-    p.Append(addonsBuffer.getData(), addonsBuffer.getSize());
+    p.writeBytes(addonsBuffer.getData(), addonsBuffer.getSize());
 
     SendPacket(p);
 
@@ -414,7 +413,7 @@ void CWorldSocket::S_AuthChallenge_CreateAddonsBuffer(CByteBuffer& AddonsBuffer)
     }
 
     AddonsBuffer << static_cast<uint32>(addonsBuffer.getSize());
-    AddonsBuffer.WriteDummy(addonsBuffer.getSize());
+    AddonsBuffer.writeDummy(addonsBuffer.getSize());
 
     uLongf destLen = addonsBuffer.getSize();
     if (compress(AddonsBuffer.getDataFromCurrentEx() + sizeof(uint32), &destLen, addonsBuffer.getData(), addonsBuffer.getSize()) != Z_OK)
@@ -424,5 +423,6 @@ void CWorldSocket::S_AuthChallenge_CreateAddonsBuffer(CByteBuffer& AddonsBuffer)
     }
 
     //                  addonsRealSize + compressedSize
-    AddonsBuffer.Resize(sizeof(uint32) + destLen);
+    //AddonsBuffer.Resize(sizeof(uint32) + destLen);
+	_ASSERT(false);
 }

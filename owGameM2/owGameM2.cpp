@@ -25,7 +25,7 @@ public:
 	//
 	bool Initialize() override
 	{
-		gLogInstance = std::dynamic_pointer_cast<CLog>(m_BaseManager->GetManager<ILog>()).get();
+		gLogInstance = dynamic_cast<CLog*>(m_BaseManager->GetManager<ILog>());
 
 		OpenDBs(m_BaseManager);
 

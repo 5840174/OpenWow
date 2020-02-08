@@ -4,11 +4,11 @@
 #include "liquid.h"
 
 
-CLiquid::CLiquid(IBaseManager* BaseManager, uint32 x, uint32 y)
+CLiquid::CLiquid(IRenderDevice& RenderDevice, uint32 x, uint32 y)
 	: m_TilesX(x)
 	, m_TilesY(y)
 	, ydir(1.0f)
-	, m_BaseManager(BaseManager)
+	, m_RenderDevice(RenderDevice)
 {
 	m_TilesCount = (m_TilesX + 1) * (m_TilesY + 1);
 }
@@ -19,6 +19,7 @@ CLiquid::~CLiquid()
 
 #pragma region Types
 #include __PACK_BEGIN
+
 struct SLiquidVertex
 {
 	union
@@ -55,6 +56,7 @@ struct SLiquidFlag
 	uint8 fishable : 1;  // 0x40
 	uint8 shared : 1;    // 0x80
 };
+
 #include __PACK_END
 #pragma endregion
 
@@ -63,7 +65,7 @@ void CLiquid::createLayers(std::shared_ptr<const DBC_LiquidTypeRecord> _type, st
 	SLiquidVertex* map = (SLiquidVertex*)(f->getDataFromCurrent());
 	SLiquidFlag* flags = (SLiquidFlag*)(f->getDataFromCurrent() + m_TilesCount * sizeof(SLiquidVertex));
 
-	std::shared_ptr<CLiquidLayer> layer = std::make_shared<CLiquidLayer>(m_BaseManager, m_BaseManager->GetManager<IRenderDevice>()->CreateMesh());
+	std::shared_ptr<CLiquidLayer> layer = std::make_shared<CLiquidLayer>(m_RenderDevice, m_RenderDevice.GetObjectsFactory().CreateModel());
 	layer->LiquidType = _type;
 	layer->InitTextures(_type->Get_Type());
 
@@ -233,8 +235,11 @@ void CLiquid::createBuffer()
 			}
 		}
 
-		layer->AddVertexBuffer(BufferBinding("POSITION", 0), m_BaseManager->GetManager<IRenderDevice>()->CreateVertexBuffer(mh2oVerticesPos));
-		layer->AddVertexBuffer(BufferBinding("TEXCOORD", 0), m_BaseManager->GetManager<IRenderDevice>()->CreateVertexBuffer(mh2oVerticesTex));
-		layer->SetIndexBuffer(m_BaseManager->GetManager<IRenderDevice>()->CreateIndexBuffer(m_Indices));
+		std::shared_ptr<IGeometry> geometry = m_RenderDevice.GetObjectsFactory().CreateGeometry();
+		geometry->AddVertexBuffer(BufferBinding("POSITION", 0), m_RenderDevice.GetObjectsFactory().CreateVertexBuffer(mh2oVerticesPos));
+		geometry->AddVertexBuffer(BufferBinding("TEXCOORD", 0), m_RenderDevice.GetObjectsFactory().CreateVertexBuffer(mh2oVerticesTex));
+		geometry->SetIndexBuffer(m_RenderDevice.GetObjectsFactory().CreateIndexBuffer(m_Indices));
+
+		layer->AddConnection(layer->GetMaterial(), geometry);
 	}
 }

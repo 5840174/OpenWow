@@ -57,7 +57,7 @@ DBC_LOAD(DBC_LiquidType, "LiquidType.dbc")
 
 void OpenDBs(IBaseManager* BaseManager)
 {
-	std::shared_ptr<IFilesManager> filesManager = BaseManager->GetManager<IFilesManager>();
+	IFilesManager* filesManager = BaseManager->GetManager<IFilesManager>();
 
 	// All
 	DBC_AnimationData.Open(filesManager);

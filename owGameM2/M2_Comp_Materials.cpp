@@ -11,6 +11,10 @@ CM2_Comp_Materials::CM2_Comp_Materials() :
 {
 }
 
+CM2_Comp_Materials::~CM2_Comp_Materials()
+{
+}
+
 void CM2_Comp_Materials::calc(uint16 anim, uint32 time, uint32 globalTime)
 {
 	for (auto& it : m_Colors)

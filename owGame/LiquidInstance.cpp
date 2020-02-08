@@ -14,7 +14,7 @@ Liquid_Instance::~Liquid_Instance()
 //
 // ILiquidInstanceInitializaton
 //
-void Liquid_Instance::Initialize(std::shared_ptr<CLiquid> LiquidObject, vec3 Position)
+void Liquid_Instance::LiquidInitialize(std::shared_ptr<CLiquid> LiquidObject, vec3 Position)
 {
     // Transform
     {
@@ -36,12 +36,3 @@ void Liquid_Instance::Initialize(std::shared_ptr<CLiquid> LiquidObject, vec3 Pos
         meshes->AddMesh(it);
     }
 }
-
-void Liquid_Instance::Initialize()
-{
-}
-
-void Liquid_Instance::Finalize()
-{
-}
-

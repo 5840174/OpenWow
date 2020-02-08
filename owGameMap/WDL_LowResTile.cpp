@@ -6,8 +6,8 @@
 // General
 #include "WDL_LowResTile.h"
 
-CWDL_LowResTile::CWDL_LowResTile(std::weak_ptr<const CMap> _parent, std::shared_ptr<IMesh> _mesh, uint32 _indexX, uint32 _indexZ) :
-	MeshProxie(_mesh),
+CWDL_LowResTile::CWDL_LowResTile(std::weak_ptr<const CMap> _parent, std::shared_ptr<IModel> _mesh, uint32 _indexX, uint32 _indexZ) :
+	ModelProxie(_mesh),
 	m_MapController(_parent),
 	m_IndexX(_indexX),
 	m_IndexZ(_indexZ)
@@ -16,7 +16,7 @@ CWDL_LowResTile::CWDL_LowResTile(std::weak_ptr<const CMap> _parent, std::shared_
 
 
 //
-// IMesh
+// IModel
 //
 bool CWDL_LowResTile::Render(const RenderEventArgs* renderEventArgs, const IConstantBuffer* perObject, SGeometryPartParams GeometryPartParams)
 {
@@ -36,5 +36,5 @@ bool CWDL_LowResTile::Render(const RenderEventArgs* renderEventArgs, const ICons
 		return false;
 	}
 
-	return MeshProxie::Render(renderEventArgs, perObject, GeometryPartParams);
+	return ModelProxie::Render(renderEventArgs, perObject, GeometryPartParams);
 }

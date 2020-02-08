@@ -96,7 +96,7 @@ void CMapWDL::CreateInsances(std::weak_ptr<ISceneNode> _parent)
 				// Vertex buffer
 				std::shared_ptr<IBuffer> __vb = m_BaseManager->GetManager<IRenderDevice>()->CreateVertexBuffer(vecrtices);
 
-				std::shared_ptr<IMesh> __geom = m_BaseManager->GetManager<IRenderDevice>()->CreateMesh();
+				std::shared_ptr<IModel> __geom = m_BaseManager->GetManager<IRenderDevice>()->CreateMesh();
 				__geom->AddVertexBuffer(BufferBinding("POSITION", 0), __vb);
 				__geom->SetMaterial(m_LowResilutionTileMaterial);
 				

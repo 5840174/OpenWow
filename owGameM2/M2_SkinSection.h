@@ -10,20 +10,19 @@ class CM2_Skin_Builder;
 // FORWARD END
 
 class CM2_SkinSection
+	: public GeometryProxie
 {
-	friend class CM2_Skin_Builder;
 public:
-	CM2_SkinSection(IBaseManager* BaseManager, const std::weak_ptr<const M2> M2Model, const uint16 _index, const SM2_SkinSection& _proto, const std::vector<SM2_Vertex>& _vertexes, const std::vector<uint16>& _indexes);
+	CM2_SkinSection(IRenderDevice& RenderDevice, const M2& M2Model, const uint16 SkinSectionIndex, const SM2_SkinSection& SkinSectionProto, const std::vector<SM2_Vertex>& Vertexes, const std::vector<uint16>& Indexes);
+	virtual ~CM2_SkinSection();
 
-	uint16                        getIndex() const { return m_Index; }
-	const SM2_SkinSection&        getProto() const { return m_Proto; }
-	const std::shared_ptr<IMesh>  getMesh()  const { return m_Mesh; }
-
-private:
-	const uint16           m_Index;
-	const SM2_SkinSection  m_Proto;
-	std::shared_ptr<IMesh> m_Mesh;
+	uint16                        getIndex() const { return m_SkinSectionIndex; }
+	const SM2_SkinSection&        getProto() const { return m_SkinSectionProto; }
 
 private:
-	const std::weak_ptr<const M2> m_ParentM2;
+	const uint16           m_SkinSectionIndex;
+	const SM2_SkinSection  m_SkinSectionProto;
+
+private:
+	const M2& m_M2Model;
 };

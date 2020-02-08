@@ -65,8 +65,9 @@ bool CM2_Base_Instance::isMeshEnabled(uint32 _index) const
 }
 void CM2_Base_Instance::setSpecialTexture(SM2_Texture::Type _type, const std::string& _textureName)
 {
-	std::shared_ptr<ITexture> texture = GetBaseManager()->GetManager<IRenderDevice>()->CreateTexture2D(_textureName);
-	setSpecialTexture(_type, texture);
+	_ASSERT(false);
+	//std::shared_ptr<ITexture> texture = GetBaseManager()->GetManager<IRenderDevice>()->CreateTexture2D(_textureName);
+	//setSpecialTexture(_type, texture);
 }
 void CM2_Base_Instance::setSpecialTexture(SM2_Texture::Type _type, std::shared_ptr<ITexture> _texture)
 {
@@ -90,17 +91,17 @@ void CM2_Base_Instance::Initialize()
 {
 	for (uint8 i = 0; i < SM2_Texture::Type::COUNT; i++)
 	{
-		m_SpecialTextures[i] = GetBaseManager()->GetManager<IRenderDevice>()->GetDefaultTexture();
+		m_SpecialTextures[i] = nullptr; // TODO: GetBaseManager()->GetManager<IRenderDevice>()->GetDefaultTexture();
 	}
 }
 
-bool CM2_Base_Instance::Accept(IVisitor* visitor)
+void CM2_Base_Instance::Accept(IVisitor* visitor)
 {
 	//AbstractPass* visitorAsBasePass = dynamic_cast<AbstractPass*>(visitor);
 	//const ICamera* camera = visitorAsBasePass->GetRenderEventArgs()->Camera;
 
 	if (m_M2 == nullptr)
-		return false;
+		return;
 
 	//float distToCamera2D = (camera->GetTranslation() - GetComponent<IColliderComponent3D>()->GetBounds().getCenter()).length() - GetComponent<IColliderComponent3D>()->GetBounds().getRadius();
 	//if (distToCamera2D > m_QualitySettings->ADT_MDX_Distance)
@@ -138,7 +139,7 @@ bool CM2_Base_Instance::Accept(IVisitor* visitor)
 	}*/
 
 	// SceneNode3D
-	return SceneNode3D::Accept(visitor);
+	SceneNode3D::Accept(visitor);
 }
 
 //
@@ -171,14 +172,14 @@ void CM2_Base_Instance::InitAnimator()
 	// Create animator
 	if (m_M2->isAnimated())
 	{
-		m_Animator = std::make_shared<CM2_Animator>(m_M2);
+		m_Animator = std::make_shared<CM2_Animator>(*m_M2);
 	}
 }
 
 void CM2_Base_Instance::RegisterComponents()
 {
-	SetMeshComponent(AddComponent(std::make_shared<CMeshComponent3D>(shared_from_this())));
-    SetColliderComponent(AddComponent(std::make_shared<CM2_ColliderComponent>(shared_from_this())));
+	SetMeshComponent(AddComponent(std::make_shared<CMeshComponent3D>(*this)));
+    SetColliderComponent(AddComponent(std::make_shared<CM2_ColliderComponent>(*this)));
 }
 
 

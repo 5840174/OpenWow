@@ -6,7 +6,7 @@
 // Additional
 #include "M2_Skin_Builder.h"
 
-CM2_Builder::CM2_Builder(IBaseManager* BaseManager, std::shared_ptr<M2> _model) :
+CM2_Builder::CM2_Builder(IBaseManager* BaseManager, IRenderDevice& RenderDevice, std::shared_ptr<M2> _model) :
 	m_M2(_model),
 	m_F(nullptr),
 	m_GlobalLoops(nullptr),
@@ -15,7 +15,8 @@ CM2_Builder::CM2_Builder(IBaseManager* BaseManager, std::shared_ptr<M2> _model) 
 	m_Textures(nullptr),
 	m_TexturesWeight(nullptr),
 	m_TexturesTransform(nullptr),
-	m_BaseManager(BaseManager)
+	m_BaseManager(BaseManager),
+	m_RenderDevice(RenderDevice)
 {
 	// Fix filename
 	if (m_M2->m_FileName.back() != '2')
@@ -238,7 +239,7 @@ void CM2_Builder::Step5ColorAndTextures()
 		m_Textures = (SM2_Texture*)(m_F->getData() + m_Header.textures.offset);
 		for (uint32 i = 0; i < m_Header.textures.size; i++)
 		{
-			std::shared_ptr<CM2_Part_Texture> texture = std::make_shared<CM2_Part_Texture>(m_BaseManager, m_F, m_Textures[i]);
+			std::shared_ptr<CM2_Part_Texture> texture = std::make_shared<CM2_Part_Texture>(m_BaseManager, m_RenderDevice, m_F, m_Textures[i]);
 			materials->m_Textures.push_back(texture);
 		}
 	}
@@ -461,10 +462,8 @@ void CM2_Builder::Step8Skins()
 		m_Skins = (SM2_SkinProfile*)(m_F->getData() + m_Header.skin_profiles.offset);
 		for (uint32 i = 0; i < m_Header.skin_profiles.size; i++)
 		{
-			std::shared_ptr<CM2_Skin> skin = std::make_shared<CM2_Skin>(m_M2);
-
-			CM2_Skin_Builder builder(m_BaseManager, *this, m_M2, m_Skins[i], skin, m_F);
-			builder.Load();
+			CM2_Skin_Builder builder(m_BaseManager, m_RenderDevice, *this, *m_M2, m_Skins[i], m_F);
+			std::shared_ptr<CM2_Skin> skin = builder.Load();
 
             m_M2->m_Skins.push_back(skin);
 		}
@@ -490,7 +489,7 @@ void CM2_Builder::Step9Collision()
 			collisionVertices[i] = Fix_XZmY(collisionVertices[i]);
 		}
 
-		collisonVB = m_BaseManager->GetManager<IRenderDevice>()->CreateVertexBuffer(collisionVertices);
+		collisonVB = m_RenderDevice.GetObjectsFactory().CreateVertexBuffer(collisionVertices);
 	}
 
 	if (m_Header.collisionTriangles.size > 0)
@@ -502,7 +501,7 @@ void CM2_Builder::Step9Collision()
 			collisionTriangles.push_back(CollisionTriangles[i]);
 		}
 
-		collisonIB = m_BaseManager->GetManager<IRenderDevice>()->CreateIndexBuffer(collisionTriangles);
+		collisonIB = m_RenderDevice.GetObjectsFactory().CreateIndexBuffer(collisionTriangles);
 	}
 
 	if (collisonVB != nullptr && collisonIB != nullptr)

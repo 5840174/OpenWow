@@ -43,7 +43,7 @@ public:
 
 	// SceneNode3D
 	void								Initialize() override;
-	virtual bool                        Accept(IVisitor* visitor) override;
+	virtual void                        Accept(IVisitor* visitor) override;
 
 protected:
 	virtual void						UpdateLocalTransform();

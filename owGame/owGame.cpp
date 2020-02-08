@@ -32,7 +32,7 @@ public:
 	//
 	bool Initialize() override
 	{
-		gLogInstance = std::dynamic_pointer_cast<CLog>(m_BaseManager->GetManager<ILog>()).get();
+		gLogInstance = dynamic_cast<CLog*>(m_BaseManager->GetManager<ILog>());
 
 		m_BaseManager->GetManager<ISettings>()->AddGroup("WoWSettings", std::make_shared<CWoWSettingsGroup>());
 		m_BaseManager->GetManager<IFilesManager>()->AddFilesStorage("MPQStorage", std::make_shared<CMPQFilesStorage>("D:\\_games\\World of Warcraft 1.12.1\\Data\\", IFilesStorageEx::Priority::PRIOR_HIGH));
@@ -59,11 +59,11 @@ public:
 	//
 	// ISceneNodeCreator
 	//
-	size_t GetSceneNodesCount() const
+	size_t GetSceneNodesCount() const override
 	{
 		return 1;
 	}
-	std::string GetSceneNodeTypeName(size_t Index) const
+	std::string GetSceneNodeTypeName(size_t Index) const override
 	{
 		if (Index == 0)
 		{
@@ -72,14 +72,18 @@ public:
 
 		throw std::exception(("COpenWoWGamePlguin::GetSceneNodeTypeName: Index '" + std::to_string(Index) + "' out of bounds.").c_str());
 	}
-	std::shared_ptr<ISceneNode> CreateSceneNode(std::weak_ptr<ISceneNode> Parent, size_t Index) const
+	ISceneNode3D* CreateSceneNode3D(ISceneNode3D* Parent, size_t Index) const override
 	{
 		if (Index == 0)
 		{
-			return Parent.lock()->CreateSceneNode<Liquid_Instance>();
+			return Parent->CreateSceneNode<Liquid_Instance>();
 		}
 
-		throw std::exception(("COpenWoWGamePlguin::CreateSceneNode: Index '" + std::to_string(Index) + "' out of bounds.").c_str());
+		throw std::exception(("COpenWoWGamePlguin::CreateSceneNode3D: Index '" + std::to_string(Index) + "' out of bounds.").c_str());
+	}
+	ISceneNodeUI* CreateSceneNodeUI(ISceneNodeUI* Parent, size_t Index) const override
+	{
+		throw std::exception(("COpenWoWGamePlguin::CreateSceneNodeUI: Index '" + std::to_string(Index) + "' out of bounds.").c_str());
 	}
 	
 
@@ -102,7 +106,7 @@ public:
 		return "<error>";
 	}
 
-	std::shared_ptr<IRenderPass> CreateRenderPass(size_t Index, std::shared_ptr<IRenderDevice> RenderDevice, std::shared_ptr<IRenderTarget> RenderTarget, const Viewport * Viewport, std::shared_ptr<IScene> Scene) const
+	std::shared_ptr<IRenderPass> CreateRenderPass(size_t Index, IRenderDevice& RenderDevice, std::shared_ptr<IRenderTarget> RenderTarget, const Viewport * Viewport, std::shared_ptr<IScene> Scene) const override
 	{
 		if (Index == 0)
 		{
@@ -111,7 +115,7 @@ public:
 			return pass;
 		}
 		
-		return nullptr;
+		throw std::exception(("COpenWoWGamePlguin::CreateRenderPass: Index '" + std::to_string(Index) + "' out of bounds.").c_str());
 	}
 
 private:

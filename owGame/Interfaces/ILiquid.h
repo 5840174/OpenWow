@@ -8,5 +8,5 @@ ZN_INTERFACE ZN_API ILiquidInstanceInitializaton
 {
 	virtual ~ILiquidInstanceInitializaton() {}
 
-	virtual void Initialize(std::shared_ptr<CLiquid> LiquidObject, vec3 Position) = 0;
+	virtual void LiquidInitialize(std::shared_ptr<CLiquid> LiquidObject, vec3 Position) = 0;
 };
