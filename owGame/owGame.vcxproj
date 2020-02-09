@@ -11,6 +11,30 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\Externals\libmpq\libmpq\common.c">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="..\Externals\libmpq\libmpq\explode.c">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="..\Externals\libmpq\libmpq\extract.c">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="..\Externals\libmpq\libmpq\huffman.c">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="..\Externals\libmpq\libmpq\mpq.c">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="..\Externals\libmpq\libmpq\wave.c">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
+    </ClCompile>
     <ClCompile Include="Client\ARC4.cpp" />
     <ClCompile Include="Client\AuthCrypt.cpp" />
     <ClCompile Include="Client\AuthSocket.cpp" />
@@ -27,30 +51,6 @@
     <ClCompile Include="Client\WorldSocket.cpp" />
     <ClCompile Include="DBC\Core\DBC__Storage.cpp" />
     <ClCompile Include="Formats\ImageBLP.cpp" />
-    <ClCompile Include="Formats\libmpq\common.c">
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
-    </ClCompile>
-    <ClCompile Include="Formats\libmpq\explode.c">
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
-    </ClCompile>
-    <ClCompile Include="Formats\libmpq\extract.c">
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
-    </ClCompile>
-    <ClCompile Include="Formats\libmpq\huffman.c">
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
-    </ClCompile>
-    <ClCompile Include="Formats\libmpq\mpq.c">
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
-    </ClCompile>
-    <ClCompile Include="Formats\libmpq\wave.c">
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
-    </ClCompile>
     <ClCompile Include="Formats\MPQFilesStorage.cpp" />
     <ClCompile Include="LiquidLayer.cpp" />
     <ClCompile Include="M2\M2.cpp" />
@@ -114,6 +114,17 @@
     <ClCompile Include="WoWChunkReader.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\Externals\libmpq\libmpq\common.h" />
+    <ClInclude Include="..\Externals\libmpq\libmpq\crypt_buf.h" />
+    <ClInclude Include="..\Externals\libmpq\libmpq\explode.h" />
+    <ClInclude Include="..\Externals\libmpq\libmpq\extract.h" />
+    <ClInclude Include="..\Externals\libmpq\libmpq\huffman.h" />
+    <ClInclude Include="..\Externals\libmpq\libmpq\mpq-internal.h" />
+    <ClInclude Include="..\Externals\libmpq\libmpq\mpq.h" />
+    <ClInclude Include="..\Externals\libmpq\libmpq\pack_begin.h" />
+    <ClInclude Include="..\Externals\libmpq\libmpq\pack_end.h" />
+    <ClInclude Include="..\Externals\libmpq\libmpq\platform.h" />
+    <ClInclude Include="..\Externals\libmpq\libmpq\wave.h" />
     <ClInclude Include="..\shared\owGame.h" />
     <ClInclude Include="Client\ARC4.h" />
     <ClInclude Include="Client\AuthChallenge_C.h" />
@@ -174,15 +185,6 @@
     <ClInclude Include="DBC\DBC_WMOAreaTable.h" />
     <ClInclude Include="DBC\DBC_WorldSafeLocs.h" />
     <ClInclude Include="Formats\ImageBLP.h" />
-    <ClInclude Include="Formats\libmpq\common.h" />
-    <ClInclude Include="Formats\libmpq\crypt_buf.h" />
-    <ClInclude Include="Formats\libmpq\explode.h" />
-    <ClInclude Include="Formats\libmpq\extract.h" />
-    <ClInclude Include="Formats\libmpq\huffman.h" />
-    <ClInclude Include="Formats\libmpq\mpq-internal.h" />
-    <ClInclude Include="Formats\libmpq\mpq.h" />
-    <ClInclude Include="Formats\libmpq\platform.h" />
-    <ClInclude Include="Formats\libmpq\wave.h" />
     <ClInclude Include="Formats\MPQFilesStorage.h" />
     <ClInclude Include="Interfaces\ILiquid.h" />
     <ClInclude Include="Interfaces\Managers.h" />

@@ -339,29 +339,29 @@
     <ClCompile Include="WMO\WMO_Liquid.cpp">
       <Filter>WMO\Parts</Filter>
     </ClCompile>
-    <ClCompile Include="Formats\libmpq\common.c">
-      <Filter>Formats\libmpq</Filter>
-    </ClCompile>
-    <ClCompile Include="Formats\libmpq\explode.c">
-      <Filter>Formats\libmpq</Filter>
-    </ClCompile>
-    <ClCompile Include="Formats\libmpq\extract.c">
-      <Filter>Formats\libmpq</Filter>
-    </ClCompile>
-    <ClCompile Include="Formats\libmpq\huffman.c">
-      <Filter>Formats\libmpq</Filter>
-    </ClCompile>
-    <ClCompile Include="Formats\libmpq\mpq.c">
-      <Filter>Formats\libmpq</Filter>
-    </ClCompile>
-    <ClCompile Include="Formats\libmpq\wave.c">
-      <Filter>Formats\libmpq</Filter>
-    </ClCompile>
     <ClCompile Include="Formats\ImageBLP.cpp">
       <Filter>Formats</Filter>
     </ClCompile>
     <ClCompile Include="Formats\MPQFilesStorage.cpp">
       <Filter>Formats</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Externals\libmpq\libmpq\common.c">
+      <Filter>Formats\libmpq</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Externals\libmpq\libmpq\explode.c">
+      <Filter>Formats\libmpq</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Externals\libmpq\libmpq\extract.c">
+      <Filter>Formats\libmpq</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Externals\libmpq\libmpq\huffman.c">
+      <Filter>Formats\libmpq</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Externals\libmpq\libmpq\mpq.c">
+      <Filter>Formats\libmpq</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Externals\libmpq\libmpq\wave.c">
+      <Filter>Formats\libmpq</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -761,38 +761,44 @@
     <ClInclude Include="WMO\WMO_Liquid.h">
       <Filter>WMO\Parts</Filter>
     </ClInclude>
-    <ClInclude Include="Formats\libmpq\common.h">
-      <Filter>Formats\libmpq</Filter>
-    </ClInclude>
-    <ClInclude Include="Formats\libmpq\crypt_buf.h">
-      <Filter>Formats\libmpq</Filter>
-    </ClInclude>
-    <ClInclude Include="Formats\libmpq\explode.h">
-      <Filter>Formats\libmpq</Filter>
-    </ClInclude>
-    <ClInclude Include="Formats\libmpq\extract.h">
-      <Filter>Formats\libmpq</Filter>
-    </ClInclude>
-    <ClInclude Include="Formats\libmpq\huffman.h">
-      <Filter>Formats\libmpq</Filter>
-    </ClInclude>
-    <ClInclude Include="Formats\libmpq\mpq.h">
-      <Filter>Formats\libmpq</Filter>
-    </ClInclude>
-    <ClInclude Include="Formats\libmpq\mpq-internal.h">
-      <Filter>Formats\libmpq</Filter>
-    </ClInclude>
-    <ClInclude Include="Formats\libmpq\platform.h">
-      <Filter>Formats\libmpq</Filter>
-    </ClInclude>
-    <ClInclude Include="Formats\libmpq\wave.h">
-      <Filter>Formats\libmpq</Filter>
-    </ClInclude>
     <ClInclude Include="Formats\ImageBLP.h">
       <Filter>Formats</Filter>
     </ClInclude>
     <ClInclude Include="Formats\MPQFilesStorage.h">
       <Filter>Formats</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Externals\libmpq\libmpq\common.h">
+      <Filter>Formats\libmpq</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Externals\libmpq\libmpq\crypt_buf.h">
+      <Filter>Formats\libmpq</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Externals\libmpq\libmpq\explode.h">
+      <Filter>Formats\libmpq</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Externals\libmpq\libmpq\extract.h">
+      <Filter>Formats\libmpq</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Externals\libmpq\libmpq\huffman.h">
+      <Filter>Formats\libmpq</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Externals\libmpq\libmpq\mpq.h">
+      <Filter>Formats\libmpq</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Externals\libmpq\libmpq\mpq-internal.h">
+      <Filter>Formats\libmpq</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Externals\libmpq\libmpq\pack_begin.h">
+      <Filter>Formats\libmpq</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Externals\libmpq\libmpq\pack_end.h">
+      <Filter>Formats\libmpq</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Externals\libmpq\libmpq\platform.h">
+      <Filter>Formats\libmpq</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Externals\libmpq\libmpq\wave.h">
+      <Filter>Formats\libmpq</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
