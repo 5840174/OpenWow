@@ -62,6 +62,8 @@ CM2_SkinSection::CM2_SkinSection(IRenderDevice& RenderDevice, const M2& M2Model,
 	AddVertexBuffer(BufferBinding("TEXCOORD", 0), RenderDevice.GetObjectsFactory().CreateVoidVertexBuffer(tex0.data(), tex0.size(), 0, sizeof(vec2)));
 	AddVertexBuffer(BufferBinding("TEXCOORD", 1), RenderDevice.GetObjectsFactory().CreateVoidVertexBuffer(tex1.data(), tex1.size(), 0, sizeof(vec2)));
 	SetIndexBuffer(RenderDevice.GetObjectsFactory().CreateIndexBuffer(Indexes));
+
+	m_StructuredBuffer = m_RenderDevice.GetObjectsFactory().CreateStructuredBuffer(nullptr, m_SkinSectionProto.boneCount, sizeof(glm::mat4), CPUAccess::Write);
 }
 
 CM2_SkinSection::~CM2_SkinSection()
@@ -69,22 +71,24 @@ CM2_SkinSection::~CM2_SkinSection()
 	_aligned_free(m_Properties);
 }
 
-void CM2_SkinSection::UpdateGeometryProps(const CM2_Base_Instance * M2Instance)
+void CM2_SkinSection::UpdateGeometryProps(const RenderEventArgs& RenderEventArgs, const CM2_Base_Instance * M2Instance)
 {
-	/*bool isAnimated = m_M2Model.getSkeleton()->hasBones() && m_M2Model.m_IsAnimated;
+	M2Instance->getAnimator()->Update(RenderEventArgs.TotalTime, RenderEventArgs.DeltaTime);
+
+	bool isAnimated = m_M2Model.getSkeleton()->hasBones() && m_M2Model.m_IsAnimated;
 	m_Properties->gIsAnimated = isAnimated ? 1 : 0;
 	if (isAnimated)
 	{
 		m_Properties->gBonesMaxInfluences = m_SkinSectionProto.boneInfluences;
 
-		//for (uint16 i = skinProto.bonesStartIndex; i < skinProto.bonesStartIndex + skinProto.boneCount; i++)
-		//	skeleton->getBoneLookup(i)->SetNeedCalculate();
+		for (uint16 i = m_SkinSectionProto.bonesStartIndex; i < m_SkinSectionProto.bonesStartIndex + m_SkinSectionProto.boneCount; i++)
+			m_M2Model.getSkeleton()->getBoneLookup(i)->SetNeedCalculate();
 
-		//for (uint16 i = skinProto.bonesStartIndex; i < skinProto.bonesStartIndex + skinProto.boneCount; i++)
-		//	skeleton->getBoneLookup(i)->calcMatrix(sceneNodeAsM2Instance->getAnimator()->getSequenceIndex(), sceneNodeAsM2Instance->getAnimator()->getCurrentTime(), static_cast<uint32>(renderEventArgs.TotalTime));
+		for (uint16 i = m_SkinSectionProto.bonesStartIndex; i < m_SkinSectionProto.bonesStartIndex + m_SkinSectionProto.boneCount; i++)
+			m_M2Model.getSkeleton()->getBoneLookup(i)->calcMatrix(M2Instance->getAnimator()->getSequenceIndex(), M2Instance->getAnimator()->getCurrentTime(), static_cast<uint32>(RenderEventArgs.TotalTime));
 
-		//for (uint16 i = skinProto.bonesStartIndex; i < skinProto.bonesStartIndex + skinProto.boneCount; i++)
-		//	skeleton->getBoneLookup(i)->calcBillboard(camera->GetViewMatrix(), sceneNodeAsM2Instance->GetWorldTransfom());
+		//for (uint16 i = m_SkinSectionProto.bonesStartIndex; i < m_SkinSectionProto.bonesStartIndex + m_SkinSectionProto.boneCount; i++)
+		//	m_M2Model.getSkeleton()->getBoneLookup(i)->calcBillboard(camera->GetViewMatrix(), M2Instance->GetWorldTransfom());
 
 		std::vector<glm::mat4> bones;
 		for (uint16 i = m_SkinSectionProto.bonesStartIndex; i < m_SkinSectionProto.bonesStartIndex + m_SkinSectionProto.boneCount; i++)
@@ -93,9 +97,11 @@ void CM2_SkinSection::UpdateGeometryProps(const CM2_Base_Instance * M2Instance)
 			bones.push_back(m_M2Model.getSkeleton()->getBoneLookup(i)->getTransformMatrix());
 		}
 
-		for (uint8 i = 0; i < bones.size(); i++)
-			m_Properties->Bones[i] = bones[i];
-	}*/
+		//for (uint8 i = 0; i < bones.size(); i++)
+		//	m_Properties->Bones[i] = bones[i];
+
+		m_StructuredBuffer->Set(bones);
+	}
 
 	m_PropertiesBuffer->Set(m_Properties, sizeof(ShaderM2GeometryProperties));
 }
@@ -103,4 +109,9 @@ void CM2_SkinSection::UpdateGeometryProps(const CM2_Base_Instance * M2Instance)
 const std::shared_ptr<IConstantBuffer>& CM2_SkinSection::GetGeometryPropsBuffer() const
 {
 	return m_PropertiesBuffer;
+}
+
+const std::shared_ptr<IStructuredBuffer>& CM2_SkinSection::GetGeometryBonesBuffer() const
+{
+	return m_StructuredBuffer;
 }

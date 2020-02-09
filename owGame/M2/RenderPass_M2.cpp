@@ -56,6 +56,9 @@ std::shared_ptr<IRenderPassPipelined> CRenderPass_M2::CreatePipeline(std::shared
 	m_ShaderM2GeometryParameter = &vertexShader->GetShaderParameterByName("M2Geometry");
 	_ASSERT(m_ShaderM2GeometryParameter->IsValid());
 
+	m_ShaderM2GeometryBonesParameter = &vertexShader->GetShaderParameterByName("Bones");
+	_ASSERT(m_ShaderM2GeometryBonesParameter->IsValid());
+
 	return SetPipeline(pipeline);
 }
 
@@ -102,9 +105,13 @@ bool CRenderPass_M2::Visit(const IModel* Model)
 			if (!m_CurrentM2Model->isMeshEnabled(meshPartID))
 				continue;
 
-			geom->UpdateGeometryProps(m_CurrentM2Model);
+			geom->UpdateGeometryProps(GetRenderEventArgs(), m_CurrentM2Model);
 			m_ShaderM2GeometryParameter->SetConstantBuffer(geom->GetGeometryPropsBuffer());
 			m_ShaderM2GeometryParameter->Bind();
+
+			m_ShaderM2GeometryBonesParameter->SetStructuredBuffer(geom->GetGeometryBonesBuffer());
+			m_ShaderM2GeometryBonesParameter->Bind();
+
 			{
 				
 				geomInternal->Render_BindAllBuffers(GetRenderEventArgs(), vertexShader);
@@ -127,6 +134,8 @@ bool CRenderPass_M2::Visit(const IModel* Model)
 
 				geomInternal->Render_UnbindAllBuffers(GetRenderEventArgs(), vertexShader);
 			}
+			m_ShaderM2GeometryBonesParameter->Unbind();
+
 			m_ShaderM2GeometryParameter->Unbind();
 		}
 

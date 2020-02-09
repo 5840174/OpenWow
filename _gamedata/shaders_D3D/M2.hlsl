@@ -36,13 +36,11 @@ cbuffer Material : register(b2)
 };
 
 // Uniforms
-cbuffer M2Geometry : register(b5)
+cbuffer M2Geometry : register(b7)
 {
 	uint gIsAnimated;
 	uint gBonesMaxInfluences;
 	float2 __padding1;
-	
-	float4x4 Bones[200];
 };
 
 // Textures and samples
@@ -50,6 +48,8 @@ Texture2D DiffuseTexture0        : register(t0);
 Texture2D DiffuseTexture1        : register(t1);
 sampler   DiffuseTexture0Sampler : register(s0);
 sampler   DiffuseTexture1Sampler : register(s1);
+
+StructuredBuffer<float4x4> Bones  : register(t2);
 
 float4 Test(VertexShaderOutput IN);
 

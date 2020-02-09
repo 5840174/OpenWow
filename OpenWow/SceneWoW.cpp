@@ -83,6 +83,7 @@ void CSceneWoW::OnWindowKeyReleased(KeyEventArgs & e)
 void CSceneWoW::Load3D()
 {
 	CWMO_Base_Instance* wmoInstance = GetRootNode3D()->CreateSceneNode<CWMO_Base_Instance>("World\\wmo\\Azeroth\\Buildings\\Stormwind\\Stormwind.wmo");
+
 	wmoInstance->Load(GetRenderDevice());
 
 	skyManager = GetRootNode3D()->CreateSceneNode<SkyManager>(GetRenderDevice());

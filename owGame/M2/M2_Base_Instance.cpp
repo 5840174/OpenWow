@@ -122,7 +122,7 @@ void CM2_Base_Instance::Accept(IVisitor* visitor)
 
 	/*if (m_M2->isAnimated())
 	{
-		m_Animator->Update(visitorAsBasePass->GetRenderEventArgs()->TotalTime, visitorAsBasePass->GetRenderEventArgs()->ElapsedTime);
+		m_Animator->Update(visitorAsBasePass->GetRenderEventArgs()->TotalTime, visitorAsBasePass->GetRenderEventArgs()->DeltaTime);
 
 		//if (m_Object->isBillboard())
 		//{
