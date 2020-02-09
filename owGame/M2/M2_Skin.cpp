@@ -11,14 +11,22 @@
 // Additional
 #include "M2_Part_Material.h"
 
-CM2_Skin::CM2_Skin(const M2& M2Model)
-	: m_M2Model(M2Model)
+CM2_Skin::CM2_Skin(IRenderDevice& RenderDevice, const M2& M2Model)
+	: ModelProxie(RenderDevice.GetObjectsFactory().CreateModel())
+	, m_RenderDevice(RenderDevice)
+	, m_M2Model(M2Model)
 {}
+
+CM2_Skin::~CM2_Skin()
+{
+}
+
+void CM2_Skin::Accept(IVisitor * visitor)
+{
+	visitor->Visit(this);
+}
 
 void CM2_Skin::CreateInsances(ISceneNode3D* _parent)
 {
-	for (const auto& batch : m_Batches)
-	{
-		_parent->GetComponent<IMeshComponent3D>()->AddMesh(batch);
-	}
+	_parent->GetComponent<IMeshComponent3D>()->AddMesh(shared_from_this());
 }

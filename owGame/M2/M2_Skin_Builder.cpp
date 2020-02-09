@@ -24,7 +24,7 @@ CM2_Skin_Builder::~CM2_Skin_Builder()
 
 std::shared_ptr<CM2_Skin> CM2_Skin_Builder::Load()
 {
-	std::shared_ptr<CM2_Skin> skin = std::make_shared<CM2_Skin>(m_M2Model);
+	std::shared_ptr<CM2_Skin> skin = std::make_shared<CM2_Skin>(m_RenderDevice, m_M2Model);
 	Step1LoadProfile(skin);
 	Step2InitBatches(skin);
 	return skin;
@@ -71,7 +71,7 @@ void CM2_Skin_Builder::Step1LoadProfile(const std::shared_ptr<CM2_Skin>& M2SkinO
 			indexes.push_back(index - sectionProto.vertexStart);
 		}
 
-		M2SkinObject->m_Sections.push_back(std::make_unique<CM2_SkinSection>(m_RenderDevice, m_M2Model, sectionIndex, sectionProto, vertexes, indexes));
+		M2SkinObject->m_Sections.push_back(std::make_shared<CM2_SkinSection>(m_RenderDevice, m_M2Model, sectionIndex, sectionProto, vertexes, indexes));
 	}
 
 	//--
@@ -89,71 +89,28 @@ void CM2_Skin_Builder::Step2InitBatches(const std::shared_ptr<CM2_Skin>& M2SkinO
 	_ASSERT(F != nullptr);
 
 	SM2_SkinBatch* skinBatchesProtos = (SM2_SkinBatch*)(F->getData() + m_SkinProfileProto.batches.offset);
-
 	for (uint32 i = 0; i < m_SkinProfileProto.batches.size; i++)
 	{
-		const SM2_SkinBatch& skinBatchProto = skinBatchesProtos[i];
+		std::shared_ptr<CM2_Skin_Batch> skinBatchObject = std::make_shared<CM2_Skin_Batch>(m_BaseManager, m_RenderDevice, m_M2Model, skinBatchesProtos[i]);
+		M2SkinObject->m_Batches.push_back(skinBatchObject);
 
-		const std::shared_ptr<CM2_SkinSection>& skinSection = M2SkinObject->m_Sections[skinBatchProto.skinSectionIndex];
-
-		std::unique_ptr<CM2_Skin_Batch> skinBatchObject = std::make_unique<CM2_Skin_Batch>(m_BaseManager, m_RenderDevice, m_M2Model, *skinSection);
-		
-		//Log::Green("Shader = %d", skinBatchProto.shader_id);
-        skinBatchObject->newShader = skinBatchProto.shader_id;
-		//skinBatchObject->newShader = GetPixel(skinBatchProto);
-
-		// Geometry data
-		skinBatchObject->m_PriorityPlan = skinBatchProto.priorityPlane;
-
-		// Get classes
-		skinBatchObject->m_M2ModelMaterial = (m2Materials->GetMaterial(skinBatchProto.materialIndex));
-
-		// Color
-		if (skinBatchProto.colorIndex != -1)
+		auto& ttIter = M2SkinObject->m_TTT.find(M2SkinObject->m_Sections[skinBatchesProtos[i].skinSectionIndex]);
+		if (ttIter == M2SkinObject->m_TTT.end())
 		{
-			skinBatchObject->m_Color = (m2Materials->GetColor(skinBatchProto.colorIndex));
+			M2SkinObject->m_TTT.insert(std::make_pair(M2SkinObject->m_Sections[skinBatchesProtos[i].skinSectionIndex], std::vector<std::shared_ptr<CM2_Skin_Batch>>({ skinBatchObject })));
+		}
+		else
+		{
+			ttIter->second.push_back(skinBatchObject);
 		}
 
-		// Textures
-		for (uint32 i = 0; i < skinBatchProto.textureCount; i++)
-		{
-			skinBatchObject->m_Textures.push_back((m2Materials->GetTexture(skinBatchProto.texture_Index + i)));
-		}
-
-		// Texture unit
-		if (skinBatchProto.texture_CoordIndex != -1)
-		{
-			skinBatchObject->m_TextureUnit = m2Materials->m_TexturesUnitLookup[skinBatchProto.texture_CoordIndex];
-		}
-
-		// Texture weight
-		if (skinBatchProto.texture_WeightIndex != -1)
-		{
-			skinBatchObject->m_TextureWeight = (m2Materials->m_TextureWeights[skinBatchProto.texture_WeightIndex]);
-		}
-
-		// Texture transfowm
-		if (skinBatchProto.flags.TextureStatic == false)
-		{
-			if (skinBatchProto.texture_TransformIndex != -1)
-			{
-				int16 index = m2Materials->m_TexturesTransformLookup[skinBatchProto.texture_TransformIndex];
-				if (index != -1)
-				{
-					skinBatchObject->m_TextureTransform = (m2Materials->GetTextureTransform(skinBatchProto.texture_TransformIndex));
-				}
-			}
-		}
-
-		std::shared_ptr<M2_Material> m_TestMaterial = std::make_shared<M2_Material>(m_RenderDevice, skinBatchObject->m_Textures);
-
-		skinBatchObject->AddConnection(m_TestMaterial, skinSection);
-		
-		M2SkinObject->m_Batches.push_back(std::move(skinBatchObject));
+		//std::shared_ptr<IModel> model = m_RenderDevice.GetObjectsFactory().CreateModel();
+		//model->AddConnection(skinBatchObject, M2SkinObject->m_Sections[skinBatchesProtos[i].skinSectionIndex]);
+		//M2SkinObject->m_Models.push_back(model);
 	}
 
-	std::sort(M2SkinObject->m_Batches.begin(), M2SkinObject->m_Batches.end(), [](const std::shared_ptr<CM2_Skin_Batch> left, const std::shared_ptr<CM2_Skin_Batch> right)
-	{
-		return left->getPriorityPlan() < right->getPriorityPlan();
-	});
+	//std::sort(M2SkinObject->m_Batches.begin(), M2SkinObject->m_Batches.end(), [](const std::shared_ptr<CM2_Skin_Batch> left, const std::shared_ptr<CM2_Skin_Batch> right)
+	//{
+	//	return left->m_PriorityPlan < right->m_PriorityPlan;
+	//});
 }

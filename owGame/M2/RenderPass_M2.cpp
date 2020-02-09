@@ -53,6 +53,9 @@ std::shared_ptr<IRenderPassPipelined> CRenderPass_M2::CreatePipeline(std::shared
 	pipeline->SetSampler(0, sampler);
 	pipeline->SetSampler(1, sampler);
 
+	m_ShaderM2GeometryParameter = &vertexShader->GetShaderParameterByName("M2Geometry");
+	_ASSERT(m_ShaderM2GeometryParameter->IsValid());
+
 	return SetPipeline(pipeline);
 }
 
@@ -74,7 +77,7 @@ bool CRenderPass_M2::Visit(const ISceneNode3D* node)
 
 bool CRenderPass_M2::Visit(const IModel* Model)
 {
-	if (const CM2_Skin_Batch* m2Batch = dynamic_cast<const CM2_Skin_Batch*>(Model))
+	if (const CM2_Skin* m2Skin = dynamic_cast<const CM2_Skin*>(Model))
 	{
 		/*GetPipelineState()->GetBlendState().SetBlendMode(pMesh->GetM2Material()->GetBlendMode());
 		GetPipelineState()->GetBlendState().Bind();
@@ -87,105 +90,47 @@ bool CRenderPass_M2::Visit(const IModel* Model)
 
 		GetPipelineState()->Bind();*/
 
-
-
-		const SM2_SkinSection& skinProto = m2Batch->getSkin().getProto();
-
-		uint32 meshPartID = skinProto.meshPartID;
-		if (!m_CurrentM2Model->isMeshEnabled(meshPartID))
-		{
-			return false;
-		}
-
-		
-
-		
-
-		std::shared_ptr<CM2_Comp_Skeleton> skeleton = m_CurrentM2Model->getM2()->getSkeleton();
-
-		
-
 		const ShaderMap& shaders = GetPipeline().GetShaders();
 		const IShader* vertexShader = shaders.at(EShaderType::VertexShader).get();
 
-		for (const auto& connection : m2Batch->GetConnections())
+		for (const auto& it : m2Skin->GetTTT())
 		{
-			M2_Material* m2Material = dynamic_cast<M2_Material*>(connection.Material.get());
+			const auto& geom = it.first;
+			std::shared_ptr<IGeometryInternal> geomInternal = std::dynamic_pointer_cast<IGeometryInternal>(geom);
 
+			uint32 meshPartID = geom->getProto().meshPartID;
+			if (!m_CurrentM2Model->isMeshEnabled(meshPartID))
+				continue;
 
-			m2Material->SetBlendMode(static_cast<uint32>(m2Batch->m_M2ModelMaterial->getBlendMode()));
-
-			bool isAnimated = skeleton->hasBones() && m_CurrentM2Model->getM2()->m_IsAnimated;
-			m2Material->SetAnimated(isAnimated ? 1 : 0);
-			if (isAnimated)
+			geom->UpdateGeometryProps(m_CurrentM2Model);
+			m_ShaderM2GeometryParameter->SetConstantBuffer(geom->GetGeometryPropsBuffer());
+			m_ShaderM2GeometryParameter->Bind();
 			{
-				m2Material->SetMaxInfluences(skinProto.boneInfluences);
+				
+				geomInternal->Render_BindAllBuffers(GetRenderEventArgs(), vertexShader);
 
-				//for (uint16 i = skinProto.bonesStartIndex; i < skinProto.bonesStartIndex + skinProto.boneCount; i++)
-				//	skeleton->getBoneLookup(i)->SetNeedCalculate();
 
-				//for (uint16 i = skinProto.bonesStartIndex; i < skinProto.bonesStartIndex + skinProto.boneCount; i++)
-				//	skeleton->getBoneLookup(i)->calcMatrix(sceneNodeAsM2Instance->getAnimator()->getSequenceIndex(), sceneNodeAsM2Instance->getAnimator()->getCurrentTime(), static_cast<uint32>(renderEventArgs.TotalTime));
-
-				//for (uint16 i = skinProto.bonesStartIndex; i < skinProto.bonesStartIndex + skinProto.boneCount; i++)
-				//	skeleton->getBoneLookup(i)->calcBillboard(camera->GetViewMatrix(), sceneNodeAsM2Instance->GetWorldTransfom());
-
-				std::vector<mat4> bones;
-				for (uint16 i = skinProto.bonesStartIndex; i < skinProto.bonesStartIndex + skinProto.boneCount; i++)
+				for (const auto& it2 : it.second)
 				{
-					_ASSERT(skeleton->isLookupBoneCorrect(i));
-					bones.push_back(skeleton->getBoneLookup(i)->getTransformMatrix());
+					const auto& mat = it2;
+
+					mat->UpdateMaterialProps(m_CurrentM2Model);
+					mat->Bind(shaders);
+					{
+						SGeometryDrawArgs geometryDrawArgs = { 0 };
+						geometryDrawArgs.IndexCnt = geom->getProto().indexCount;
+						geometryDrawArgs.VertexCnt = geom->getProto().vertexCount;
+						geomInternal->Render_Draw(geometryDrawArgs);
+					}
+					mat->Unbind(shaders);
 				}
 
-				m2Material->SetBones(bones);
+				geomInternal->Render_UnbindAllBuffers(GetRenderEventArgs(), vertexShader);
 			}
-
-			// Shader
-			m2Material->SetNewShader(/*newShader*/0);
-
-			// Model color
-			bool isColorEnable = (m2Batch->m_Color != nullptr);
-			m2Material->SetColorEnable(isColorEnable);
-			if (isColorEnable)
-			{
-				m2Material->SetColor(m2Batch->m_Color->getValue());
-			}
-
-			// Textures
-			for (uint32 i = 0; i < m2Batch->m_Textures.size(); i++)
-			{
-				std::shared_ptr<const CM2_Part_Texture> m2Texture = m2Batch->m_Textures[i].lock();
-
-				m2Material->SetTexture(i, m2Texture->GetResultTexture(m_CurrentM2Model));
-				//m2Material->GetSampler(i)->SetWrapMode(m2Texture->GetTextureWrapX(), m2Texture->GetTextureWrapY());
-			}
-
-			// Texture alpha
-			bool isTextureWeightEnable = (m2Batch->m_TextureWeight != nullptr);
-			m2Material->SetTextureWeightEnable(isTextureWeightEnable);
-			if (isTextureWeightEnable)
-			{
-				m2Material->SetTextureWeight(m2Batch->m_TextureWeight->getValue());
-			}
-
-			// Texture transform
-			bool isTextureTransformEnable = (m2Batch->m_TextureTransform != nullptr);
-			m2Material->SetTextureAnimEnable(isTextureTransformEnable);
-			if (isTextureTransformEnable)
-			{
-				m2Material->SetTextureAnimMatrix(m2Batch->m_TextureTransform->getValue());
-			}
-
-			SGeometryDrawArgs geometryDrawArgs = connection.GeometryDrawArgs;
-			geometryDrawArgs.IndexCnt = skinProto.indexCount;
-			geometryDrawArgs.VertexCnt = skinProto.vertexCount;
-
-			m2Material->Bind(shaders);
-			connection.Geometry->Render(GetRenderEventArgs(), vertexShader, connection.GeometryDrawArgs);
-			m2Material->Unbind(shaders);
+			m_ShaderM2GeometryParameter->Unbind();
 		}
 
-		return Base3DPass::Visit(m2Batch);
+		return true;
 	}
 
     return false;

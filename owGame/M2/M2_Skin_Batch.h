@@ -2,7 +2,6 @@
 
 #include "M2_Part_Material.h"
 #include "M2_SkinSection.h"
-#include "M2_Material.h"
 
 // FORWARD BEGIN
 class M2;
@@ -10,23 +9,21 @@ class CM2_Base_Instance;
 class CM2_Skin_Builder;
 // FORWARD END
 
+/**
+  * M2 Batch что-то вроде прохода над геометрией. Имеет свои текстуры, цвета и тд.
+  * Несколько батчей могут рисовать одну и ту же геометрию
+*/
 class CM2_Skin_Batch 
-	: public ModelProxie
+	: public MaterialProxie
 {
 	friend CM2_Skin_Builder;
 public:
-	CM2_Skin_Batch(IBaseManager* BaseManager, IRenderDevice& RenderDevice, const M2& M2Model, const CM2_SkinSection& SkinSection);
+	CM2_Skin_Batch(IBaseManager* BaseManager, IRenderDevice& RenderDevice, const M2& M2Model, const SM2_SkinBatch& SkinBatchProto);
 	virtual ~CM2_Skin_Batch();
 
-	// IModel
-	bool Render(const RenderEventArgs& renderEventArgs) const override final;
+	void UpdateMaterialProps(const CM2_Base_Instance* M2Instance);
 
-	// IVisitorAcceptable
-	void Accept(IVisitor* visitor) override final;
-
-public:
-	int32 getPriorityPlan()  const { return m_PriorityPlan; }
-	const CM2_SkinSection&  getSkin() const { return m_SkinSection; }
+	void UpdateConstantBuffer() const override;
 
 public:
 	int32												m_PriorityPlan;
@@ -40,12 +37,43 @@ public:
 	std::shared_ptr<const CM2_Part_TextureTransform>	m_TextureTransform;
 
 	int32												newShader;
-	std::shared_ptr<M2_Material>                        m_TestMaterial;
 
+private:
+	__declspec(align(16)) struct ShaderM2BatchProperties
+	{
+		ShaderM2BatchProperties()
+			: gBlendMode(0)
+			, gShader(0)
+
+			, gColorEnable(false)
+			, gTextureWeightEnable(false)
+			, gTextureAnimEnable(false)
+			, gTextureWeight(1.0f)
+
+			, gColor(glm::vec4(1.0))
+			, gTextureAnimMatrix(glm::mat4(1.0f))
+		{}
+
+		uint32     gBlendMode;
+		uint32     gShader;
+		glm::vec2   __padding;
+
+		uint32     gColorEnable;
+		uint32     gTextureWeightEnable;
+		uint32     gTextureAnimEnable;
+		float      gTextureWeight;
+
+		glm::vec4  gColor;
+		glm::mat4  gTextureAnimMatrix;
+
+
+		//-------------------------- ( 32 bytes )
+	};
+	ShaderM2BatchProperties* m_Properties;
 
 private:
 	IBaseManager* m_BaseManager;
 	IRenderDevice& m_RenderDevice;
 	const M2& m_M2Model;
-	const CM2_SkinSection& m_SkinSection;
+	const SM2_SkinBatch& m_SkinBatchProto;
 };

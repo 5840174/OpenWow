@@ -18,4 +18,6 @@ public:
 	
 private:
 	const CM2_Base_Instance* m_CurrentM2Model;
+
+	IShaderParameter* m_ShaderM2GeometryParameter;
 };

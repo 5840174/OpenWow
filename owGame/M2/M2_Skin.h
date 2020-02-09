@@ -12,19 +12,32 @@ class CM2_Skin_Builder;
 // FORWARD END
 
 class CM2_Skin 
-	: public ISceneNodeProvider
+	: public ModelProxie
+	, public ISceneNodeProvider
 {
 	friend CM2_Skin_Builder;
 public:
-	CM2_Skin(const M2& M2Model);
+	CM2_Skin(IRenderDevice& RenderDevice, const M2& M2Model);
+	virtual ~CM2_Skin();
+
+	const std::unordered_map<std::shared_ptr<CM2_SkinSection>, std::vector<std::shared_ptr<CM2_Skin_Batch>>>& GetTTT() const
+	{
+		return m_TTT;
+	}
+
+	// IModel
+	void Accept(IVisitor* visitor) override final;
 
 	// ISceneNodeProvider
 	void CreateInsances(ISceneNode3D* _parent) override;
 
 private:
-	std::vector<std::shared_ptr<CM2_SkinSection>>	m_Sections;
-	std::vector<std::shared_ptr<CM2_Skin_Batch>>   m_Batches;
+	std::vector<std::shared_ptr<CM2_SkinSection>> m_Sections; // 'Geometries'
+	std::vector<std::shared_ptr<CM2_Skin_Batch>> m_Batches;   // 'Materials'
 
+	std::unordered_map<std::shared_ptr<CM2_SkinSection>, std::vector<std::shared_ptr<CM2_Skin_Batch>>> m_TTT;
+	
 private: // PARENT
+	IRenderDevice& m_RenderDevice;
 	const M2& m_M2Model;
 };

@@ -192,9 +192,6 @@
     <ClCompile Include="M2\ShaderResolver.cpp">
       <Filter>M2</Filter>
     </ClCompile>
-    <ClCompile Include="M2\M2_Material.cpp">
-      <Filter>M2\Skins</Filter>
-    </ClCompile>
     <ClCompile Include="M2\M2_Skin.cpp">
       <Filter>M2\Skins</Filter>
     </ClCompile>
@@ -607,9 +604,6 @@
     </ClInclude>
     <ClInclude Include="M2\M2_Types.h">
       <Filter>M2\Types</Filter>
-    </ClInclude>
-    <ClInclude Include="M2\M2_Material.h">
-      <Filter>M2\Skins</Filter>
     </ClInclude>
     <ClInclude Include="M2\M2_Skin.h">
       <Filter>M2\Skins</Filter>

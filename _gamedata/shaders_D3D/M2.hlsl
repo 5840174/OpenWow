@@ -20,28 +20,29 @@ struct VertexShaderOutput
 };
 
 // Uniforms
-cbuffer Material2 : register(b2)
+cbuffer Material : register(b2)
+{
+	uint      gBlendMode;
+	uint      gShader;
+	float2    __padding0;
+	
+	uint      gColorEnable;
+	uint      gTextureWeightEnable;
+	uint      gTextureAnimEnable;
+	float     gTextureWeight;
+	
+	float4    gColor;
+	float4x4  gTextureAnimMatrix;
+};
+
+// Uniforms
+cbuffer M2Geometry : register(b5)
 {
 	uint gIsAnimated;
-	uint gColorEnable;
-	uint gTextureWeightEnable;
-	uint gTextureAnimEnable;
-	// 16 bytes
-	
 	uint gBonesMaxInfluences;
-	uint gBlendMode;
-	uint gShader;
-	float gTextureWeight;
-	// 16 bytes
-	
-    float4x4 gTextureAnimMatrix;
-	// 64 bytes
-	
-	float4   gColor;
-	// 16 bytes
+	float2 __padding1;
 	
 	float4x4 Bones[200];
-	// 64 * 200 bytes
 };
 
 // Textures and samples

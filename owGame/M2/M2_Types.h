@@ -114,7 +114,7 @@ struct SM2_Texture
 		MONSTER_2,			// Monster Skin 2 //Skin for creatures or gameobjects #2
 		MONSTER_3,			// Monster Skin 3 //Skin for creatures or gameobjects #3
 		ITEM_ICON,			// Item Icon // Used on inventory art M2s(2) : ui - button.m2 and forcedbackpackitem.m2(CSimpleModel_ReplaceIconTexture("texture"))
-		
+
 		COUNT
 	} type;
 
