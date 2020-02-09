@@ -1,4 +1,4 @@
-#include "IDB_SHADER_COMMON_TYPES"
+#include "IDB_SHADER_COMMON_INCLUDE"
 
 struct VertexShaderInput
 {
@@ -15,12 +15,6 @@ struct VertexShaderOutput
 
 
 // Uniforms
-cbuffer PerObject : register(b0)
-{
-	float4x4 Model;
-	float4x4 View;
-	float4x4 Projection;
-}
 cbuffer Material : register(b2)
 {
    uint   gBlendMode;
@@ -29,7 +23,7 @@ cbuffer Material : register(b2)
 
 VertexShaderOutput VS_main(VertexShaderInput IN)
 {
-	const float4x4 mvp = mul(Projection, mul(View, Model));
+	const float4x4 mvp = mul(PF.Projection, mul(PF.View, PO.Model));
 	
 	VertexShaderOutput OUT;
 	OUT.positionVS = mul(mvp, float4(IN.position, 1.0f));
@@ -38,9 +32,9 @@ VertexShaderOutput VS_main(VertexShaderInput IN)
 	return OUT;
 }
 
-PixelShaderOutput PS_main(VertexShaderOutput IN) : SV_TARGET
+DefferedRenderPSOut PS_main(VertexShaderOutput IN) : SV_TARGET
 {
-	PixelShaderOutput OUT;
+	DefferedRenderPSOut OUT;
 	OUT.PositionWS = float4(IN.positionWS.xyz, /*material*/ 0.0f);
 	OUT.Diffuse = float4(IN.color.rgb, 1.0f);
 	return OUT;

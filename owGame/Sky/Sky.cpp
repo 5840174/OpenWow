@@ -6,26 +6,24 @@
 // General
 #include "Sky.h"
 
-const float skymul = 36.0f;
+const float cSkyMultiplier = 36.0f;
 
 Sky::Sky() :
 	m_LightRecord(nullptr)
 {}
 
-Sky::Sky(std::shared_ptr<DBC_LightRecord> LightData) 
-    : m_LightRecord(LightData)
+Sky::Sky(const std::shared_ptr<DBC_LightRecord>& LightData)
+	: m_LightRecord(LightData)
 {
-	m_Position.x = m_LightRecord->Get_PositionX() / skymul;
-	m_Position.y = m_LightRecord->Get_PositionY() / skymul;
-	m_Position.z = m_LightRecord->Get_PositionZ() / skymul;
-	m_Range.min = m_LightRecord->Get_RadiusInner() / skymul;
-	m_Range.max = m_LightRecord->Get_RadiusOuter() / skymul;
+	m_Position.x = m_LightRecord->Get_PositionX() / cSkyMultiplier;
+	m_Position.y = m_LightRecord->Get_PositionY() / cSkyMultiplier;
+	m_Position.z = m_LightRecord->Get_PositionZ() / cSkyMultiplier;
+	m_Range.min = m_LightRecord->Get_RadiusInner() / cSkyMultiplier;
+	m_Range.max = m_LightRecord->Get_RadiusOuter() / cSkyMultiplier;
 
 	m_IsGlobalSky = (m_Position.x == 0.0f && m_Position.y == 0.0f && m_Position.z == 0.0f);
 	if (m_IsGlobalSky)
-	{
-		Log::Green("Sky [%d] is GLOBAL!!!!", m_LightRecord->Get_ID());
-	}
+		Log::Info("Sky: [%d] is global sky.", m_LightRecord->Get_ID());
 
 	LoadParams(LightParamsNames::ParamsClear);
 }
@@ -37,12 +35,18 @@ Sky::~Sky()
 class SkyParam_Color : public Sky::SkyParam<vec3>
 {
 public:
-	SkyParam_Color(uint32 _time, uint32 _color) : SkyParam<vec3>(_time, fromRGB(_color)) {}
+	SkyParam_Color(uint32 _time, uint32 _color)
+		: SkyParam<vec3>(_time, fromRGB(_color))
+	{}
 };
+
+
 class SkyParam_Fog : public Sky::SkyParam<float>
 {
 public:
-	SkyParam_Fog(uint32 _time, float _param) : SkyParam<float>(_time, _param) {}
+	SkyParam_Fog(uint32 _time, float _param)
+		: SkyParam<float>(_time, _param)
+	{}
 };
 
 void Sky::LoadParams(LightParamsNames _param)
@@ -56,7 +60,7 @@ void Sky::LoadParams(LightParamsNames _param)
 		m_FloatBand_Fogs[i].clear();
 	}
 
-	std::shared_ptr<const DBC_LightParamsRecord> paramRecord = DBC_LightParams[m_LightRecord->Get_LightParams(_param)];
+	std::shared_ptr<const DBC_LightParamsRecord> paramRecord = DBC_LightParams[m_LightRecord->Get_LightParams(static_cast<uint8>(_param))];
 	_ASSERT(paramRecord != nullptr);
 	uint32 paramSet = paramRecord->Get_ID();
 
@@ -71,7 +75,7 @@ void Sky::LoadParams(LightParamsNames _param)
 
 	if (m_Params.GetSkybox() != nullptr)
 	{
-		Log::Green("!!!Skybox name = [%s]", m_Params.GetSkybox()->Get_Filename());
+		Log::Info("Sky: Skybox name = '%s'.", m_Params.GetSkybox()->Get_Filename());
 	}
 
 	//-- Color params
@@ -95,13 +99,11 @@ void Sky::LoadParams(LightParamsNames _param)
 		{
 			// Read time & fog param
 			float param = lightFogRecord->Get_Values(l);
-			if (i == LightFogs::LIGHT_FOG_DISTANCE)	param /= skymul;
+			if (i == LightFogs::LIGHT_FOG_DISTANCE)	param /= cSkyMultiplier;
 			m_FloatBand_Fogs[i].push_back(SkyParam_Fog(lightFogRecord->Get_Times(l), param));
 		}
 	}
 }
-
-
 
 CSkyParams& Sky::Interpolate(uint32 _time)
 {
@@ -113,5 +115,3 @@ CSkyParams& Sky::Interpolate(uint32 _time)
 
 	return m_Params;
 }
-
-

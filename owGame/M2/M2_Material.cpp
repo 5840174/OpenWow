@@ -8,16 +8,8 @@ M2_Material::M2_Material(IRenderDevice& RenderDevice, std::vector<std::weak_ptr<
 {
 	m_pProperties = (MaterialProperties*)_aligned_malloc(sizeof(MaterialProperties), 16);
 	*m_pProperties = MaterialProperties();
-	memset(m_pProperties, 0x00, sizeof(MaterialProperties));
 
-	std::shared_ptr<ISamplerState> sampler = RenderDevice.GetObjectsFactory().CreateSamplerState();
-	sampler->SetFilter(ISamplerState::MinFilter::MinLinear, ISamplerState::MagFilter::MagLinear, ISamplerState::MipFilter::MipLinear);
-
-	_ASSERT(m2Textures.size() <= 2);
-	for (uint8 i = 0; i < m2Textures.size(); i++)
-	{
-        SetSampler(i, sampler);
-	}
+	SetWrapper(this);
 }
 
 M2_Material::~M2_Material()

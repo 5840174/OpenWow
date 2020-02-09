@@ -21,18 +21,16 @@ public:
 	// IModel
 	bool Render(const RenderEventArgs& renderEventArgs) const override final;
 
+	// IVisitorAcceptable
 	void Accept(IVisitor* visitor) override final;
 
 public:
-	int32                                 getPriorityPlan()  const { return m_PriorityPlan; }
-	const CM2_SkinSection&  getSkin()          const { return m_SkinSection; }
+	int32 getPriorityPlan()  const { return m_PriorityPlan; }
+	const CM2_SkinSection&  getSkin() const { return m_SkinSection; }
 
-	std::shared_ptr<const CM2_Part_Material> GetM2Material() const { return m_M2ModelMaterial; }
-
-private:
+public:
 	int32												m_PriorityPlan;
 	
-
 	// Material props
 	std::shared_ptr<const CM2_Part_Color>				m_Color;
 	std::shared_ptr<const CM2_Part_Material>			m_M2ModelMaterial;

@@ -11,15 +11,11 @@
 #include "M2/M2_Manager.h"
 #include "WMO/WMOsManager.h"
 
-#include "Liquid/LiquidInstance.h"
-#include "RenderPass_Liquid.h"
 
 extern CLog* gLogInstance;
 
 class ZN_API COpenWoWGamePlguin
 	: public IznPlugin
-	, public ISceneNodeCreator
-	, public IRenderPassCreator
 {
 public:
 	COpenWoWGamePlguin(IBaseManager* BaseManager)
@@ -68,70 +64,6 @@ public:
 	std::string GetDescription() const override
 	{
 		return "";
-	}
-
-
-
-	//
-	// ISceneNodeCreator
-	//
-	size_t GetSceneNodesCount() const override
-	{
-		return 1;
-	}
-	std::string GetSceneNodeTypeName(size_t Index) const override
-	{
-		if (Index == 0)
-		{
-			return "WoWLiquid";
-		}
-
-		throw std::exception(("COpenWoWGamePlguin::GetSceneNodeTypeName: Index '" + std::to_string(Index) + "' out of bounds.").c_str());
-	}
-	ISceneNode3D* CreateSceneNode3D(ISceneNode3D* Parent, size_t Index) const override
-	{
-		if (Index == 0)
-		{
-			return Parent->CreateSceneNode<Liquid_Instance>();
-		}
-
-		throw std::exception(("COpenWoWGamePlguin::CreateSceneNode3D: Index '" + std::to_string(Index) + "' out of bounds.").c_str());
-	}
-	ISceneNodeUI* CreateSceneNodeUI(ISceneNodeUI* Parent, size_t Index) const override
-	{
-		throw std::exception(("COpenWoWGamePlguin::CreateSceneNodeUI: Index '" + std::to_string(Index) + "' out of bounds.").c_str());
-	}
-	
-
-
-	//
-	// IRenderPassCreator
-	//
-	size_t GetRenderPassCount() const override
-	{
-		return 1;
-	}
-
-	std::string GetRenderPassName(size_t Index) const override
-	{
-		if (Index == 0)
-		{
-			return "LiquidPass";
-		}
-
-		return "<error>";
-	}
-
-	std::shared_ptr<IRenderPass> CreateRenderPass(size_t Index, IRenderDevice& RenderDevice, std::shared_ptr<IRenderTarget> RenderTarget, const Viewport * Viewport, std::shared_ptr<IScene> Scene) const override
-	{
-		if (Index == 0)
-		{
-			std::shared_ptr<CRenderPass_Liquid> pass = std::make_shared<CRenderPass_Liquid>(RenderDevice, Scene);
-			pass->CreatePipeline(RenderTarget, Viewport);
-			return pass;
-		}
-		
-		throw std::exception(("COpenWoWGamePlguin::CreateRenderPass: Index '" + std::to_string(Index) + "' out of bounds.").c_str());
 	}
 
 private:

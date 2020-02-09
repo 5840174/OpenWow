@@ -12,9 +12,9 @@ public:
 	cmat4 getValue() const { return matrix; }
 
 private:
-	M2_Animated<vec3> trans;
-	M2_Animated<quat> roll;
-	M2_Animated<vec3> scale;
+	M2_Animated<glm::vec3> trans;
+	M2_Animated<glm::quat> roll;
+	M2_Animated<glm::vec3> scale;
 
-	mat4					matrix;
+	glm::mat4					matrix;
 };

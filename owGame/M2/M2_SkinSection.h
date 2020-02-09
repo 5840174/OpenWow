@@ -16,13 +16,13 @@ public:
 	CM2_SkinSection(IRenderDevice& RenderDevice, const M2& M2Model, const uint16 SkinSectionIndex, const SM2_SkinSection& SkinSectionProto, const std::vector<SM2_Vertex>& Vertexes, const std::vector<uint16>& Indexes);
 	virtual ~CM2_SkinSection();
 
-	uint16                        getIndex() const { return m_SkinSectionIndex; }
-	const SM2_SkinSection&        getProto() const { return m_SkinSectionProto; }
+	uint16                  getIndex() const { return m_SkinSectionIndex; }
+	const SM2_SkinSection&  getProto() const { return m_SkinSectionProto; }
 
 private:
-	const uint16           m_SkinSectionIndex;
-	const SM2_SkinSection  m_SkinSectionProto;
+	const uint16            m_SkinSectionIndex;
+	const SM2_SkinSection   m_SkinSectionProto;
 
 private:
-	const M2& m_M2Model;
+	const M2&               m_M2Model;
 };

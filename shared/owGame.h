@@ -20,6 +20,7 @@
 // Liquid
 #include "../owGame/Liquid/Liquid.h"
 #include "../owGame/Liquid/LiquidInstance.h"
+#include "../owGame/Liquid/RenderPass_Liquid.h"
 
 // M2
 #include "../owGame/M2/M2_Base_Instance.h"
@@ -33,3 +34,7 @@
 #include "../owGame/WMO/WMO_Liquid_Instance.h"
 #include "../owGame/WMO/WMOsManager.h"
 #include "../owGame/WMO/RenderPass_WMO.h"
+
+// Sky
+#include "../owGame/Sky/SkyManager.h"
+#include "../owGame/Sky/RenderPass_Sky.h"

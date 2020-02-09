@@ -56,6 +56,7 @@
     <ClCompile Include="Liquid\LiquidInstance.cpp" />
     <ClCompile Include="Liquid\LiquidLayer.cpp" />
     <ClCompile Include="Liquid\LiquidMaterial.cpp" />
+    <ClCompile Include="Liquid\RenderPass_Liquid.cpp" />
     <ClCompile Include="M2\M2.cpp" />
     <ClCompile Include="M2\M2_Animation.cpp" />
     <ClCompile Include="M2\M2_Animator.cpp" />
@@ -89,8 +90,12 @@
     <ClCompile Include="M2\RenderPass_M2.cpp" />
     <ClCompile Include="M2\ShaderResolver.cpp" />
     <ClCompile Include="owGame.cpp" />
-    <ClCompile Include="RenderPass_Liquid.cpp" />
     <ClCompile Include="Settings\WoWSettingsGroup.cpp" />
+    <ClCompile Include="Sky\RenderPass_Sky.cpp" />
+    <ClCompile Include="Sky\Sky.cpp" />
+    <ClCompile Include="Sky\SkyManager.cpp" />
+    <ClCompile Include="Sky\SkyParams.cpp" />
+    <ClCompile Include="Sky\Sky_Material.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
@@ -193,6 +198,7 @@
     <ClInclude Include="Liquid\LiquidInstance.h" />
     <ClInclude Include="Liquid\LiquidLayer.h" />
     <ClInclude Include="Liquid\LiquidMaterial.h" />
+    <ClInclude Include="Liquid\RenderPass_Liquid.h" />
     <ClInclude Include="M2\M2.h" />
     <ClInclude Include="M2\M2_Animated.h" />
     <ClInclude Include="M2\M2_AnimatedConverters.h" />
@@ -232,8 +238,12 @@
     <ClInclude Include="M2\ParticleSystem.h" />
     <ClInclude Include="M2\RenderPass_M2.h" />
     <ClInclude Include="M2\ShaderResolver.h" />
-    <ClInclude Include="RenderPass_Liquid.h" />
     <ClInclude Include="Settings\WoWSettingsGroup.h" />
+    <ClInclude Include="Sky\RenderPass_Sky.h" />
+    <ClInclude Include="Sky\Sky.h" />
+    <ClInclude Include="Sky\SkyManager.h" />
+    <ClInclude Include="Sky\SkyParams.h" />
+    <ClInclude Include="Sky\Sky_Material.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="WMO\RenderPass_WMO.h" />
     <ClInclude Include="WMO\WMO.h" />
@@ -262,6 +272,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="DBC\Core\DBC__File.inl" />
+    <None Include="Sky\Sky.inl" />
     <None Include="WoWChunkReader.inl" />
   </ItemGroup>
   <PropertyGroup Label="Globals">

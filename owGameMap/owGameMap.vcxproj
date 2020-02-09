@@ -27,10 +27,6 @@
     <ClCompile Include="MapM2Instance.cpp" />
     <ClCompile Include="MinimapProvider.cpp" />
     <ClCompile Include="RenderPass_MapTile.cpp" />
-    <ClCompile Include="Sky.cpp" />
-    <ClCompile Include="SkyManager.cpp" />
-    <ClCompile Include="SkyParams.cpp" />
-    <ClCompile Include="Sky_Material.cpp" />
     <ClCompile Include="RenderPass_Sky.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
@@ -61,10 +57,6 @@
     <ClInclude Include="MapM2Instance.h" />
     <ClInclude Include="MinimapProvider.h" />
     <ClInclude Include="RenderPass_MapTile.h" />
-    <ClInclude Include="Sky.h" />
-    <ClInclude Include="SkyManager.h" />
-    <ClInclude Include="SkyParams.h" />
-    <ClInclude Include="Sky_Material.h" />
     <ClInclude Include="RenderPass_Sky.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="MapWDL.h" />
@@ -73,9 +65,6 @@
     <ClInclude Include="RenderPass_WDL.h" />
     <ClInclude Include="MapWDT.h" />
     <ClInclude Include="MapWMOInstance.h" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Sky.inl" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{C29C7FEE-86D9-4EEF-965F-68B89C516FAE}</ProjectGuid>

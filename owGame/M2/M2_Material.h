@@ -2,7 +2,8 @@
 
 #include "M2_Part_Texture.h"
 
-class M2_Material : public MaterialProxie
+class M2_Material 
+	: public MaterialProxie
 {
 public:
 	M2_Material(IRenderDevice& RenderDevice, std::vector<std::weak_ptr<const CM2_Part_Texture>> m2Textures);

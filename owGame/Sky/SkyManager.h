@@ -2,38 +2,30 @@
 
 #include "Sky.h"
 
-// FORWARD BEGIN
-class CMap;
-// FORWARD END
-
-class SkyManager 
+class ZN_API SkyManager
 	: public SceneNode3D
-	, public CLoadableObject
 	, public ISkyManager
 {
 public:
-	                                                SkyManager(ISceneNode* RealParent);
-	virtual                                         ~SkyManager();
+	SkyManager(IRenderDevice& RenderDevice);
+	virtual ~SkyManager();
+
+	// ILoadableObject
+	bool                                            Load(uint32 MapID);
 
 	// SceneNode3D
 	void                                            UpdateCamera(const ICameraComponent3D* camera) override;
 
-    // ILoadableObject
-    bool                                            Load() override;
-
 	// ISkyManager
 	void                                            Calculate(const ICameraComponent3D* camera, uint32 _time) override;
 	bool                                            HasSkies() const override { return !skies.empty(); }
-	vec3                                            GetColor(LightColors::List _color) const override { return m_Interpolated.GetColor(_color); }
+	glm::vec3                                       GetColor(LightColors::List _color) const override { return m_Interpolated.GetColor(_color); }
 	float                                           GetFog(LightFogs::List _fog) const override { return m_Interpolated.GetFog(_fog); }
 	float                                           GetGlow() const override { return m_Interpolated.GetGlow(); }
-    float                                           GetWaterShallowAlpha() const override { return m_Interpolated.GetWaterAplha(LightWaterAlpha::WATER_SHALLOW); }
+	float                                           GetWaterShallowAlpha() const override { return m_Interpolated.GetWaterAplha(LightWaterAlpha::WATER_SHALLOW); }
 	float                                           GetWaterDarkAlpha() const override { return m_Interpolated.GetWaterAplha(LightWaterAlpha::WATER_DEEP); }
 	float                                           GetOceanShallowAlpha() const override { return m_Interpolated.GetWaterAplha(LightWaterAlpha::OCEAN_SHALLOW); }
 	float                                           GetOceanDarkAlpha() const override { return m_Interpolated.GetWaterAplha(LightWaterAlpha::OCEAN_DEEP); }
-
-protected:
-    CMap*											GetMapController() const;
 
 private:
 	void                                            InitBuffer();
@@ -46,10 +38,7 @@ private:
 
 	std::vector<std::shared_ptr<Sky>>               skies;
 
-
-
-
-
-	ISceneNode* m_Parent;
+private:
+	IRenderDevice& m_RenderDevice;
 };
 

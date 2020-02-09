@@ -22,9 +22,6 @@
     <Filter Include="Map\WDL">
       <UniqueIdentifier>{33702109-edc7-4dcf-a921-d1413fa8219c}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Skies">
-      <UniqueIdentifier>{3f07336f-3b76-4126-bb3b-c0516a566da3}</UniqueIdentifier>
-    </Filter>
     <Filter Include="GameStates">
       <UniqueIdentifier>{a64d42a4-debf-4588-9af4-7d7a8c9709c0}</UniqueIdentifier>
     </Filter>
@@ -42,29 +39,17 @@
     <ClCompile Include="MinimapProvider.cpp">
       <Filter>Minimap</Filter>
     </ClCompile>
-    <ClCompile Include="Sky.cpp">
-      <Filter>Skies</Filter>
-    </ClCompile>
-    <ClCompile Include="SkyManager.cpp">
-      <Filter>Skies</Filter>
-    </ClCompile>
     <ClCompile Include="DayNightCycle.cpp">
       <Filter>Environment</Filter>
     </ClCompile>
     <ClCompile Include="DayNightPhase.cpp">
       <Filter>Environment</Filter>
     </ClCompile>
-    <ClCompile Include="SkyParams.cpp">
-      <Filter>Skies</Filter>
-    </ClCompile>
     <ClCompile Include="WDL_LowResTile.cpp">
       <Filter>Map\WDL</Filter>
     </ClCompile>
     <ClCompile Include="WDL_Node_Material.cpp">
       <Filter>Map\WDL</Filter>
-    </ClCompile>
-    <ClCompile Include="Sky_Material.cpp">
-      <Filter>Skies</Filter>
     </ClCompile>
     <ClCompile Include="MapWDT.cpp">
       <Filter>Map</Filter>
@@ -137,29 +122,17 @@
     <ClInclude Include="..\shared\owGameMap.h">
       <Filter>Common</Filter>
     </ClInclude>
-    <ClInclude Include="Sky.h">
-      <Filter>Skies</Filter>
-    </ClInclude>
-    <ClInclude Include="SkyManager.h">
-      <Filter>Skies</Filter>
-    </ClInclude>
     <ClInclude Include="DayNightCycle.h">
       <Filter>Environment</Filter>
     </ClInclude>
     <ClInclude Include="DayNightPhase.h">
       <Filter>Environment</Filter>
     </ClInclude>
-    <ClInclude Include="SkyParams.h">
-      <Filter>Skies</Filter>
-    </ClInclude>
     <ClInclude Include="WDL_LowResTile.h">
       <Filter>Map\WDL</Filter>
     </ClInclude>
     <ClInclude Include="WDL_Node_Material.h">
       <Filter>Map\WDL</Filter>
-    </ClInclude>
-    <ClInclude Include="Sky_Material.h">
-      <Filter>Skies</Filter>
     </ClInclude>
     <ClInclude Include="MapWDT.h">
       <Filter>Map</Filter>
@@ -203,10 +176,5 @@
     <ClInclude Include="RenderPass_MapTile.h">
       <Filter>RenderStuff</Filter>
     </ClInclude>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Sky.inl">
-      <Filter>Skies</Filter>
-    </None>
   </ItemGroup>
 </Project>

@@ -146,7 +146,6 @@ void CM2_Skin_Builder::Step2InitBatches(const std::shared_ptr<CM2_Skin>& M2SkinO
 		}
 
 		std::shared_ptr<M2_Material> m_TestMaterial = std::make_shared<M2_Material>(m_RenderDevice, skinBatchObject->m_Textures);
-		m_TestMaterial->SetWrapper(m_TestMaterial.get());
 
 		skinBatchObject->AddConnection(m_TestMaterial, skinSection);
 		

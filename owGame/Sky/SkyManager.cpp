@@ -1,8 +1,5 @@
 #include "stdafx.h"
 
-// Include
-#include "Map.h"
-
 // General
 #include "SkyManager.h"
 
@@ -17,12 +14,46 @@ const float  C_SkyAngles[] = { 90.0f,                          30.0f,           
 const uint32 C_Skycolors[] = { LightColors::LIGHT_COLOR_SKY_0, LightColors::LIGHT_COLOR_SKY_1, LightColors::LIGHT_COLOR_SKY_2, LightColors::LIGHT_COLOR_SKY_3, LightColors::LIGHT_COLOR_SKY_4, LightColors::LIGHT_COLOR_FOG, LightColors::LIGHT_COLOR_FOG };
 const uint32 C_SkycolorsCount = 7;
 
-SkyManager::SkyManager(ISceneNode* RealParent)
-	: m_Parent(RealParent)
+SkyManager::SkyManager(IRenderDevice& RenderDevice)
+	: m_RenderDevice(RenderDevice)
 {}
 
 SkyManager::~SkyManager()
 {}
+
+bool SkyManager::Load(uint32 MapID)
+{
+	for (const auto& it : DBC_Light)
+	{
+		if (MapID == it->Get_MapID()->Get_ID())
+		{
+			std::shared_ptr<Sky> sky = std::make_shared<Sky>(it);
+			skies.push_back(sky);
+		}
+	}
+
+	std::sort(skies.begin(), skies.end(), [](const std::shared_ptr<Sky>& lhs, const std::shared_ptr<Sky>& rhs)
+	{
+		if (lhs->m_IsGlobalSky)
+			return false;
+		else if (rhs->m_IsGlobalSky)
+			return true;
+		else
+			return lhs->m_Range.max < rhs->m_Range.max;
+	});
+
+	if (skies.size() > 0 && !skies.back()->m_IsGlobalSky)
+	{
+		Log::Error("Sky: Sky for maps [%d] size [%d] don't have global sky!!!", MapID, skies.size());
+		skies.back()->m_IsGlobalSky = true;
+	}
+
+	InitBuffer();
+
+	return true;
+}
+
+
 
 //
 // SceneNode3D
@@ -32,44 +63,11 @@ void SkyManager::UpdateCamera(const ICameraComponent3D* camera)
 	if (skies.empty())
 		return;
 
-	Calculate(camera, GetMapController()->getTime()->GetTime());
+	Calculate(camera, 1440/*GetMapController()->getTime()->GetTime()*/);
 
 	SetTranslate(camera->GetTranslation());
 }
 
-bool SkyManager::Load()
-{
-    for (const auto& it : DBC_Light)
-    {
-        if (GetMapController()->GetMapDBCRecord()->Get_ID() == it->Get_MapID()->Get_ID())
-        {
-            std::shared_ptr<Sky> sky = std::make_shared<Sky>(it);
-            skies.push_back(sky);
-        }
-    }
-
-    std::sort(skies.begin(), skies.end(), [](const std::shared_ptr<Sky>& lhs, const std::shared_ptr<Sky>& rhs)
-    {
-        if (lhs->m_IsGlobalSky)
-            return false;
-        else if (rhs->m_IsGlobalSky)
-            return true;
-        else
-            return lhs->m_Range.max < rhs->m_Range.max;
-    });
-
-    if (skies.size() > 0 && !skies.back()->m_IsGlobalSky)
-    {
-        Log::Error("Sky for maps [%d] size [%d] don't have global sky!!!", GetMapController()->GetMapDBCRecord()->Get_ID(), skies.size());
-        skies.back()->m_IsGlobalSky = true;
-    }
-
-    InitBuffer();
-
-    setLoaded();
-
-    return true;
-}
 
 
 //
@@ -110,46 +108,8 @@ void SkyManager::Calculate(const ICameraComponent3D* camera, uint32 _time)
 		}
 	}
 
-	std::shared_ptr<IBuffer> colorsBufferNew = GetBaseManager()->GetManager<IRenderDevice>()->CreateVertexBuffer(colors);
-	colorsBuffer->Copy(colorsBufferNew);
-	GetBaseManager()->GetManager<IRenderDevice>()->DestroyVertexBuffer(colorsBufferNew);
-}
-
-
-
-/*bool SkyManager::DEBUG_Render()
-{
-	_Render->r.setFillMode(R_FillMode::RS_FILL_WIREFRAME);
-
-	CDebug_GeometryPass* pass = _Render->getTechniquesMgr()->Debug_Pass.operator->();
-	pass->Bind();
-	{
-		_Render->r.setGeometry(_Render->getRenderStorage()->_sphereGeo);
-
-		for (auto& it : skies)
-		{
-			mat4 worldMatrix;
-			worldMatrix = glm::translate(worldMatrix, it->m_Position);
-			worldMatrix = glm::scale(worldMatrix, vec3(it->m_Range.max));
-			pass->setWorld(worldMatrix);
-
-			pass->SetColor4(vec4(1.0f, 1.0f, 0.0f, 0.3f));
-
-			_Render->r.drawIndexed(0, 128 * 3, 0, 126, nullptr, false);
-		}
-	}
-	pass->Unbind();
-
-
-	_Render->r.setFillMode(R_FillMode::RS_FILL_SOLID);
-
-	return false;
-}*/
-
-
-CMap* SkyManager::GetMapController() const
-{
-    return dynamic_cast<CMap*>(m_Parent);
+	std::shared_ptr<IBuffer> colorsBufferNew = m_RenderDevice.GetObjectsFactory().CreateVertexBuffer(colors);
+	colorsBuffer->Copy(colorsBufferNew.get());
 }
 
 void SkyManager::InitBuffer()
@@ -181,22 +141,23 @@ void SkyManager::InitBuffer()
 	}
 
 	// Vertex buffer
-	std::shared_ptr<IBuffer> vertexBuffer = GetBaseManager()->GetManager<IRenderDevice>()->CreateVertexBuffer(vertices);
+	std::shared_ptr<IBuffer> vertexBuffer = m_RenderDevice.GetObjectsFactory().CreateVertexBuffer(vertices);
 
 	// Colors buffer
-	colorsBuffer = GetBaseManager()->GetManager<IRenderDevice>()->CreateVoidVertexBuffer(vertices.data(), vertices.size(), 0, sizeof(vec4));
+	colorsBuffer = m_RenderDevice.GetObjectsFactory().CreateVoidVertexBuffer(vertices.data(), vertices.size(), 0, sizeof(vec4));
 
 	// Geometry
-	std::shared_ptr<IModel> __geom = GetBaseManager()->GetManager<IRenderDevice>()->CreateMesh();
-	__geom->AddVertexBuffer(BufferBinding("POSITION", 0), vertexBuffer);
-	__geom->AddVertexBuffer(BufferBinding("COLOR", 0), colorsBuffer);
+	std::shared_ptr<IGeometry> geometry = m_RenderDevice.GetObjectsFactory().CreateGeometry();
+	geometry->AddVertexBuffer(BufferBinding("POSITION", 0), vertexBuffer);
+	geometry->AddVertexBuffer(BufferBinding("COLOR", 0), colorsBuffer);
 
 	// Material
-	std::shared_ptr<IMaterial> material = std::make_shared<Sky_Material>(GetBaseManager()->GetManager<IRenderDevice>());
-	material->SetWrapper(material);
-	__geom->SetMaterial(material);
+	std::shared_ptr<IMaterial> material = std::make_shared<Sky_Material>(m_RenderDevice);
 
-	GetComponent<CMeshComponent3D>()->AddMesh(__geom);
+	std::shared_ptr<IModel> model = m_RenderDevice.GetObjectsFactory().CreateModel();
+	model->AddConnection(material, geometry);
+
+	GetComponent<CMeshComponent3D>()->AddMesh(model);
 }
 
 void SkyManager::CalculateSkiesWeights(cvec3 pos)

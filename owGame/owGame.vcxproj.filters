@@ -121,6 +121,12 @@
     <Filter Include="Formats\libmpq">
       <UniqueIdentifier>{14e1aaa0-6678-4ad5-bb31-9baf87369fa6}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Sky">
+      <UniqueIdentifier>{11ff9745-551e-4ffc-8a44-4649dcd10a25}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sky\Environment">
+      <UniqueIdentifier>{36ffc6b8-487b-428d-8202-edfaf3cd1128}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -176,9 +182,6 @@
     </ClCompile>
     <ClCompile Include="DBC\Core\DBC__Storage.cpp">
       <Filter>DBC</Filter>
-    </ClCompile>
-    <ClCompile Include="RenderPass_Liquid.cpp">
-      <Filter>RenderStuff</Filter>
     </ClCompile>
     <ClCompile Include="M2\M2.cpp">
       <Filter>M2</Filter>
@@ -362,6 +365,24 @@
     </ClCompile>
     <ClCompile Include="Liquid\LiquidMaterial.cpp">
       <Filter>Liquid</Filter>
+    </ClCompile>
+    <ClCompile Include="Sky\Sky.cpp">
+      <Filter>Sky</Filter>
+    </ClCompile>
+    <ClCompile Include="Sky\Sky_Material.cpp">
+      <Filter>Sky</Filter>
+    </ClCompile>
+    <ClCompile Include="Sky\SkyManager.cpp">
+      <Filter>Sky</Filter>
+    </ClCompile>
+    <ClCompile Include="Sky\SkyParams.cpp">
+      <Filter>Sky</Filter>
+    </ClCompile>
+    <ClCompile Include="Sky\RenderPass_Sky.cpp">
+      <Filter>RenderStuff</Filter>
+    </ClCompile>
+    <ClCompile Include="Liquid\RenderPass_Liquid.cpp">
+      <Filter>RenderStuff</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -556,9 +577,6 @@
     </ClInclude>
     <ClInclude Include="DBC\Core\DBC__Storage.h">
       <Filter>DBC</Filter>
-    </ClInclude>
-    <ClInclude Include="RenderPass_Liquid.h">
-      <Filter>RenderStuff</Filter>
     </ClInclude>
     <ClInclude Include="M2\M2.h">
       <Filter>M2</Filter>
@@ -800,6 +818,24 @@
     <ClInclude Include="Liquid\LiquidMaterial.h">
       <Filter>Liquid</Filter>
     </ClInclude>
+    <ClInclude Include="Sky\Sky.h">
+      <Filter>Sky</Filter>
+    </ClInclude>
+    <ClInclude Include="Sky\Sky_Material.h">
+      <Filter>Sky</Filter>
+    </ClInclude>
+    <ClInclude Include="Sky\SkyManager.h">
+      <Filter>Sky</Filter>
+    </ClInclude>
+    <ClInclude Include="Sky\SkyParams.h">
+      <Filter>Sky</Filter>
+    </ClInclude>
+    <ClInclude Include="Sky\RenderPass_Sky.h">
+      <Filter>RenderStuff</Filter>
+    </ClInclude>
+    <ClInclude Include="Liquid\RenderPass_Liquid.h">
+      <Filter>RenderStuff</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="DBC\Core\DBC__File.inl">
@@ -807,6 +843,9 @@
     </None>
     <None Include="WoWChunkReader.inl">
       <Filter>WoW Specific</Filter>
+    </None>
+    <None Include="Sky\Sky.inl">
+      <Filter>Sky</Filter>
     </None>
   </ItemGroup>
 </Project>

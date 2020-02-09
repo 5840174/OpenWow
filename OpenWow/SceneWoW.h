@@ -24,5 +24,5 @@ private:
 	void LoadUI();
 
 private:
-
+	SkyManager* skyManager;
 };
