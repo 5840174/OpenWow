@@ -46,11 +46,11 @@ void CWMO_Doodad_Instance::Initialize()
 {
 }
 
-bool CWMO_Doodad_Instance::Accept(IVisitor* visitor)
+void CWMO_Doodad_Instance::Accept(IVisitor* visitor)
 {
 	if (!m_PortalVis)
 	{
-		return false;
+		return;
 	}
 
 	return CM2_Base_Instance::Accept(visitor);

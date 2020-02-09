@@ -7,6 +7,12 @@
 #include <sockets\\SocketHandlerThread.h>
 #pragma comment(lib, "sockets.lib")
 
+/**
+  * Enable or disable M2 models support
+*/
+//#define USE_M2_MODELS
+
+
 // Interfaces
 #include "Interfaces/ILiquid.h"
 #include "Interfaces/SkyManager.h"

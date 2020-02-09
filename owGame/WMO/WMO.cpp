@@ -39,8 +39,7 @@ void CWMO::CreateInsances(ISceneNode3D* _parent)
 
 	for (const auto& it : m_Groups)
 	{
-		CWMO_Group_Instance* groupInstance = _parent->CreateSceneNode<CWMO_Group_Instance>(it);
-		groupInstance->Initialize();
+		CWMO_Group_Instance* groupInstance = _parent->CreateSceneNode<CWMO_Group_Instance>(*it);
 		parentAsWMOInstance->AddGroupInstance(groupInstance);
 		if (it->m_Header.flags.IS_OUTDOOR)
 		{

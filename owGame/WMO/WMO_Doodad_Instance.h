@@ -2,11 +2,12 @@
 
 #ifdef USE_M2_MODELS
 
+#include "M2/M2_Base_Instance.h"
 #include "WMO_Headers.h"
-
 #include "WMO_Group.h"
 
-class ZN_API CWMO_Doodad_Instance : public CM2_Base_Instance
+class ZN_API CWMO_Doodad_Instance 
+	: public CM2_Base_Instance
 {
 public:
 	CWMO_Doodad_Instance(std::string _m2Name, const std::weak_ptr<const WMO_Group> _parentGroup, uint32 _index);
@@ -22,7 +23,7 @@ public:
 	// SceneNode3D
 	void Initialize() override;
 
-	bool Accept(IVisitor* visitor) override;
+	void Accept(IVisitor* visitor) override;
 
 private:
 	const std::weak_ptr<const WMO_Group>	m_ParentGroup;

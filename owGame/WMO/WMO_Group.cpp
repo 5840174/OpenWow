@@ -48,12 +48,12 @@ void WMO_Group::CreateInsances(CWMO_Group_Instance* _parent) const
 #ifdef USE_M2_MODELS
 	for (const auto& index : m_DoodadsPlacementIndexes)
 	{
-		const SWMO_Doodad_PlacementInfo& placement = m_ParentWMO.lock()->m_DoodadsPlacementInfos[index];
+		const SWMO_Doodad_PlacementInfo& placement = m_WMOModel.m_DoodadsPlacementInfos[index];
 
-		CWMO_Doodad_Instance* inst = _parent.lock()->CreateSceneNode<CWMO_Doodad_Instance>(m_ParentWMO.lock()->m_DoodadsFilenames + placement.flags.nameIndex, weak_from_this(), index);
+		CWMO_Doodad_Instance* inst = _parent->CreateSceneNode<CWMO_Doodad_Instance>(m_WMOModel.m_DoodadsFilenames + placement.flags.nameIndex, weak_from_this(), index);
         inst->Initialize(placement);
-		m_BaseManager->GetManager<ILoader>()->AddToLoadQueue(inst);
-		_parent.lock()->addDoodadInstance(inst);
+		inst->Load();
+		_parent->addDoodadInstance(inst);
 	}
 #endif
 }
@@ -225,6 +225,12 @@ void WMO_Group::Load()
 
 			collisionCount = size / sizeof(SWMO_Group_MOBNDef);
 			collisions = (SWMO_Group_MOBNDef*)m_F->getDataFromCurrent();
+
+			for (uint32 i = 0; i < collisionCount; i++)
+			{
+				std::shared_ptr<CWMO_Group_Part_BSP_Node> collisionNode = std::make_shared<CWMO_Group_Part_BSP_Node>(*this, collisions[i]);
+				m_CollisionNodes.push_back(collisionNode);
+			}
 		}
 		else if (strcmp(fourcc, "MOBR") == 0)
 		{
@@ -308,12 +314,6 @@ void WMO_Group::Load()
 			Log::Fatal("WMO_Group[]: No implement group chunk %s [%d].", fourcc, size);
 		}
 		m_F->seek(nextpos);
-	}
-
-	for (uint32 i = 0; i < collisionCount; i++)
-	{
-		std::shared_ptr<CWMO_Group_Part_BSP_Node> collisionNode = std::make_shared<CWMO_Group_Part_BSP_Node>(shared_from_this(), collisions[i]);
-		m_CollisionNodes.push_back(collisionNode);
 	}
 
 	m_F = nullptr;

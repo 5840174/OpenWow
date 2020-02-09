@@ -9,7 +9,8 @@ class WMO_Group;
 class CWMO_Group_Part_BSP_Node
 {
 public:
-	CWMO_Group_Part_BSP_Node(const std::weak_ptr<const WMO_Group> _parentGroup, const SWMO_Group_MOBNDef& _proto);
+	CWMO_Group_Part_BSP_Node(const WMO_Group& WMOGroup, const SWMO_Group_MOBNDef& _proto);
+	virtual ~CWMO_Group_Part_BSP_Node();
 
 	void Render(cmat4 _worldMatrix);
 

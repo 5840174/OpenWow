@@ -2,8 +2,6 @@
 
 #include "WMO_Headers.h"
 
-#include "WMO_Part_Material.h"
-
 // FORWARD BEGIN
 class CWMO;
 class WMO_Group;

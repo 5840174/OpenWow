@@ -20,12 +20,12 @@ public:
 	typedef std::vector<CWMO_Liquid_Instance*> LuqidInstances;
 
 public:
-	CWMO_Group_Instance(const std::shared_ptr<WMO_Group> _object);
+	CWMO_Group_Instance(const WMO_Group& WMOGroupObject);
 	virtual ~CWMO_Group_Instance();
 
     void Initialize();
 
-    std::shared_ptr<WMO_Group> getObject() const { return m_Object; }
+    const WMO_Group& getObject() const { return m_WMOGroupObject; }
 
     void SetPortalVisible(bool Value);
     bool GetPortalVisible() const;
@@ -34,7 +34,7 @@ public:
     bool GetPortalCalculated() const;
 
 #ifdef USE_M2_MODELS
-    void addDoodadInstance(std::shared_ptr<CWMO_Doodad_Instance> _doodad) { m_Doodads.push_back(_doodad); }
+    void addDoodadInstance(CWMO_Doodad_Instance* _doodad) { m_Doodads.push_back(_doodad); }
     const DoodadInstances& getDoodadsInstances() { return m_Doodads; }
 #endif
 
@@ -42,15 +42,15 @@ public:
     const LuqidInstances& getLiquidInstances() { return m_Liquids; }
 
 	// SceneNode3D
-	std::string                              GetName() const override
+	std::string GetName() const override
 	{
-		return "WMOGroup '" + m_Object->m_GroupName + "'";
+		return "WMOGroup '" + m_WMOGroupObject.m_GroupName + "'";
 	}
 
 	void Accept(IVisitor* visitor) override;
 
 private:
-	const std::shared_ptr<WMO_Group> m_Object;
+	
 
 	bool                             m_PortalsVis;
 	bool                             m_Calculated;
@@ -59,4 +59,8 @@ private:
 	DoodadInstances                  m_Doodads;
 #endif
 	LuqidInstances                   m_Liquids;
+
+
+private:
+	const WMO_Group& m_WMOGroupObject;
 };

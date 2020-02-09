@@ -8,10 +8,10 @@
 // General
 #include "WMO_Group_Instance.h"
 
-CWMO_Group_Instance::CWMO_Group_Instance(const std::shared_ptr<WMO_Group> _object) :
-	m_Object(_object),
-	m_PortalsVis(true),
-	m_Calculated(false)
+CWMO_Group_Instance::CWMO_Group_Instance(const WMO_Group& WMOGroupObject) 
+	: m_PortalsVis(true)
+	, m_Calculated(false)
+	, m_WMOGroupObject(WMOGroupObject)
 {
 }
 
@@ -21,7 +21,7 @@ CWMO_Group_Instance::~CWMO_Group_Instance()
 
 void CWMO_Group_Instance::Initialize()
 {
-    BoundingBox bbox = m_Object->m_Bounds;
+    BoundingBox bbox = m_WMOGroupObject.m_Bounds;
     bbox.calculateCenter();
     bbox.transform(GetParentWorldTransform());
     GetComponent<IColliderComponent3D>()->SetBounds(bbox);

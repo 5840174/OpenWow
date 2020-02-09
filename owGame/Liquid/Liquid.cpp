@@ -9,9 +9,7 @@ CLiquid::CLiquid(IRenderDevice& RenderDevice, uint32 x, uint32 y)
 	, m_TilesY(y)
 	, ydir(1.0f)
 	, m_RenderDevice(RenderDevice)
-{
-	m_TilesCount = (m_TilesX + 1) * (m_TilesY + 1);
-}
+{}
 
 CLiquid::~CLiquid()
 {
@@ -63,7 +61,7 @@ struct SLiquidFlag
 void CLiquid::createLayers(std::shared_ptr<const DBC_LiquidTypeRecord> _type, std::shared_ptr<IFile> f)
 {
 	SLiquidVertex* map = (SLiquidVertex*)(f->getDataFromCurrent());
-	SLiquidFlag* flags = (SLiquidFlag*)(f->getDataFromCurrent() + m_TilesCount * sizeof(SLiquidVertex));
+	SLiquidFlag* flags = (SLiquidFlag*)(f->getDataFromCurrent() + ((m_TilesX + 1) * (m_TilesY + 1)) * sizeof(SLiquidVertex));
 
 	std::shared_ptr<CLiquidLayer> layer = std::make_shared<CLiquidLayer>(m_RenderDevice);
 	layer->LiquidType = _type;
@@ -132,14 +130,3 @@ void CLiquid::createLayers(std::shared_ptr<const DBC_LiquidTypeRecord> _type, st
 
 	m_WaterLayers.push_back(layer);
 }
-
-#pragma region Types
-#include __PACK_BEGIN
-struct SLiquidVertexData
-{
-	vec3 position;
-	vec3 textureCoord;
-};
-#include __PACK_END
-#pragma endregion
-

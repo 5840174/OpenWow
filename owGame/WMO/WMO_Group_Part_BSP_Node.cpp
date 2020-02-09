@@ -6,7 +6,7 @@
 // General
 #include "WMO_Group_Part_BSP_Node.h"
 
-CWMO_Group_Part_BSP_Node::CWMO_Group_Part_BSP_Node(const std::weak_ptr<const WMO_Group> _parentGroup, const SWMO_Group_MOBNDef& _proto) :
+CWMO_Group_Part_BSP_Node::CWMO_Group_Part_BSP_Node(const WMO_Group& WMOGroup, const SWMO_Group_MOBNDef& _proto) :
 	m_Proto(_proto)
 {
 	std::vector<vec3> collisionVertices;
@@ -25,6 +25,10 @@ CWMO_Group_Part_BSP_Node::CWMO_Group_Part_BSP_Node(const std::weak_ptr<const WMO
 	m_GEOM_Collision->finishCreatingGeometry();*/
 
 	color = vec4(0.0f, 1.0f, 0.0f, 1.0f);
+}
+
+CWMO_Group_Part_BSP_Node::~CWMO_Group_Part_BSP_Node()
+{
 }
 
 void CWMO_Group_Part_BSP_Node::Render(cmat4 _worldMatrix)
