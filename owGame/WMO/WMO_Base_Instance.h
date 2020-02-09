@@ -12,7 +12,7 @@ public:
 	typedef std::vector<CWMO_Group_Instance*> GroupInstances;
 
 public:
-	CWMO_Base_Instance(std::string _wmoName);
+	CWMO_Base_Instance(const CWMO& WMOObject);
 	virtual ~CWMO_Base_Instance();
 
 	void Initialize();
@@ -20,32 +20,25 @@ public:
 	void                                            CreateInstances();
 
 	// CWMO_Base_Instance
-	void                                            setWMO(std::shared_ptr<CWMO> _model);
-	std::shared_ptr<CWMO>                           getWMO() const;
+	const CWMO&                           getWMO() const;
 
 	void AddGroupInstance(CWMO_Group_Instance* _group) { m_GroupInstances.push_back(_group); }
-	GroupInstances& getGroupInstances() { return m_GroupInstances; }
+	const GroupInstances& getGroupInstances() const { return m_GroupInstances; }
 
 	void AddOutdoorGroupInstance(CWMO_Group_Instance* _group) { m_OutdoorGroupInstances.push_back(_group); }
-	GroupInstances& getGroupOutdoorInstances() { return m_OutdoorGroupInstances; }
+	const GroupInstances& getGroupOutdoorInstances() const { return m_OutdoorGroupInstances; }
 
 	const vec3* getVerts() const { return m_ConvertedVerts.data(); }
 
-	bool                                            Load(IRenderDevice& RenderDevice);
-
 	// SceneNode3D
-	std::string                              GetName() const override
-	{
-		return "WMO '" + m_WMOName + "'";
-	}
+	std::string                              GetName() const override { return "WMO '" + m_WMOObject.getFilename() + "'"; }
 
 	void                                            UpdateCamera(const ICameraComponent3D* camera) override;
 
 	void                                            Accept(IVisitor* visitor) override;
 
 protected:
-	std::string                                     m_WMOName;
-	std::shared_ptr<CWMO>                           m_WMO;
+	const CWMO&                           m_WMOObject;
 	//SWMO_Doodad_SetInfo                           m_DoodadSetInfo;
 
 	std::vector<vec3>                               m_ConvertedVerts;

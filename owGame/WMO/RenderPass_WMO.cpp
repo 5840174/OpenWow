@@ -138,7 +138,7 @@ void CRenderPass_WMO2::Render(RenderEventArgs & e)
 		it.first->Unbind(GetRenderEventArgs().PipelineState->GetShaders());
 	}
 
-	Log::Info("Size = '%d'", m_Filled.size());
+	//Log::Info("Size = '%d'", m_Filled.size());
 }
 
 std::shared_ptr<IRenderPassPipelined> CRenderPass_WMO2::CreatePipeline(std::shared_ptr<IRenderTarget> RenderTarget, const Viewport * Viewport)

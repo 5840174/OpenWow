@@ -74,7 +74,7 @@ void CWMO_Part_Portal::setGroup(int32 _group, int16 side)
 	}
 }
 
-bool CWMO_Part_Portal::IsVisible(std::shared_ptr<CWMO_Base_Instance> _localContr, const Plane* _planes, uint32 _planesCount) const
+bool CWMO_Part_Portal::IsVisible(const CWMO_Base_Instance* _localContr, const Plane* _planes, uint32 _planesCount) const
 {
 	if (_planes == nullptr || _planesCount == 0)
 		return false;

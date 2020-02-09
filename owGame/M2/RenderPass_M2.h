@@ -10,15 +10,40 @@ public:
 	virtual ~CRenderPass_M2();
 
 	// IRenderPassPipelined
-	std::shared_ptr<IRenderPassPipelined> CreatePipeline(std::shared_ptr<IRenderTarget> RenderTarget, const Viewport* Viewport) override final;
+	virtual std::shared_ptr<IRenderPassPipelined> CreatePipeline(std::shared_ptr<IRenderTarget> RenderTarget, const Viewport* Viewport) override;
 
     // IVisitor
-    bool Visit(const ISceneNode3D* node) override final;
-	bool Visit(const IModel* Model) override final;
-	
-private:
+    virtual bool Visit(const ISceneNode3D* node) override;
+	virtual bool Visit(const IModel* Model) override ;
+	bool VisitInstanced(const IModel* Model, size_t cnt);
+protected:
 	const CM2_Base_Instance* m_CurrentM2Model;
 
 	IShaderParameter* m_ShaderM2GeometryParameter;
 	IShaderParameter* m_ShaderM2GeometryBonesParameter;
+};
+
+
+//==========================================================================================
+
+
+class ZN_API CRenderPass_M2_Instanced
+	: public CRenderPass_M2
+{
+public:
+	CRenderPass_M2_Instanced(IRenderDevice& RenderDevice, const std::shared_ptr<BuildRenderListPassTemplated<CM2_Base_Instance>>& List, std::shared_ptr<IScene> scene);
+	virtual ~CRenderPass_M2_Instanced();
+
+	void Render(RenderEventArgs& e) override;
+
+	// IRenderPassPipelined
+	virtual std::shared_ptr<IRenderPassPipelined> CreatePipeline(std::shared_ptr<IRenderTarget> RenderTarget, const Viewport* Viewport) override;
+
+	// IVisitor
+	bool Visit(const ISceneNode3D* node) override final;
+	bool Visit(const IModel* Model) override final;
+
+private:
+	const std::shared_ptr<BuildRenderListPassTemplated<CM2_Base_Instance>> m_RenderListPass;
+	IShaderParameter* m_ShaderInstancesBufferParameter;
 };

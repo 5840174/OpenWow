@@ -41,7 +41,7 @@ CM2_SkinSection::CM2_SkinSection(IRenderDevice& RenderDevice, const M2& M2Model,
 	{
 		SM2_Vertex_BoneWeight m2_weights;
 		SM2_Vertex_BoneIndex m2_indexes;
-		for (uint8 i = 0; i < 4; i++)
+		for (size_t i = 0; i < 4; i++)
 		{
 			m2_weights.weights[i] = static_cast<float>(it.bone_weights[i]) / 255.0f;
 			m2_indexes.indexes[i] = it.bone_indices[i];
@@ -63,7 +63,11 @@ CM2_SkinSection::CM2_SkinSection(IRenderDevice& RenderDevice, const M2& M2Model,
 	AddVertexBuffer(BufferBinding("TEXCOORD", 1), RenderDevice.GetObjectsFactory().CreateVoidVertexBuffer(tex1.data(), tex1.size(), 0, sizeof(vec2)));
 	SetIndexBuffer(RenderDevice.GetObjectsFactory().CreateIndexBuffer(Indexes));
 
-	m_StructuredBuffer = m_RenderDevice.GetObjectsFactory().CreateStructuredBuffer(nullptr, m_SkinSectionProto.boneCount, sizeof(glm::mat4), CPUAccess::Write);
+	if (m_SkinSectionProto.boneCount > 0)
+	{
+		m_BonesList.resize(m_SkinSectionProto.boneCount);
+		m_StructuredBuffer = m_RenderDevice.GetObjectsFactory().CreateStructuredBuffer(m_BonesList, CPUAccess::Write);
+	}
 }
 
 CM2_SkinSection::~CM2_SkinSection()
@@ -81,26 +85,22 @@ void CM2_SkinSection::UpdateGeometryProps(const RenderEventArgs& RenderEventArgs
 	{
 		m_Properties->gBonesMaxInfluences = m_SkinSectionProto.boneInfluences;
 
-		for (uint16 i = m_SkinSectionProto.bonesStartIndex; i < m_SkinSectionProto.bonesStartIndex + m_SkinSectionProto.boneCount; i++)
-			m_M2Model.getSkeleton()->getBoneLookup(i)->SetNeedCalculate();
+		for (uint16 i = 0; i < m_SkinSectionProto.boneCount; i++)
+			m_M2Model.getSkeleton()->getBoneLookup(m_SkinSectionProto.bonesStartIndex + i)->SetNeedCalculate();
 
-		for (uint16 i = m_SkinSectionProto.bonesStartIndex; i < m_SkinSectionProto.bonesStartIndex + m_SkinSectionProto.boneCount; i++)
-			m_M2Model.getSkeleton()->getBoneLookup(i)->calcMatrix(M2Instance->getAnimator()->getSequenceIndex(), M2Instance->getAnimator()->getCurrentTime(), static_cast<uint32>(RenderEventArgs.TotalTime));
+		for (uint16 i = 0; i < m_SkinSectionProto.boneCount; i++)
+			m_M2Model.getSkeleton()->getBoneLookup(m_SkinSectionProto.bonesStartIndex + i)->calcMatrix(M2Instance->getAnimator()->getSequenceIndex(), M2Instance->getAnimator()->getCurrentTime(), static_cast<uint32>(RenderEventArgs.TotalTime));
 
-		//for (uint16 i = m_SkinSectionProto.bonesStartIndex; i < m_SkinSectionProto.bonesStartIndex + m_SkinSectionProto.boneCount; i++)
-		//	m_M2Model.getSkeleton()->getBoneLookup(i)->calcBillboard(camera->GetViewMatrix(), M2Instance->GetWorldTransfom());
+		for (uint16 i = 0; i < m_SkinSectionProto.boneCount; i++)
+			m_M2Model.getSkeleton()->getBoneLookup(m_SkinSectionProto.bonesStartIndex + i)->calcBillboard(RenderEventArgs.Camera->GetViewMatrix(), M2Instance->GetWorldTransfom());
 
-		std::vector<glm::mat4> bones;
-		for (uint16 i = m_SkinSectionProto.bonesStartIndex; i < m_SkinSectionProto.bonesStartIndex + m_SkinSectionProto.boneCount; i++)
+		for (uint16 i = 0; i < m_SkinSectionProto.boneCount; i++)
 		{
-			_ASSERT(m_M2Model.getSkeleton()->isLookupBoneCorrect(i));
-			bones.push_back(m_M2Model.getSkeleton()->getBoneLookup(i)->getTransformMatrix());
+			_ASSERT(m_M2Model.getSkeleton()->isLookupBoneCorrect(m_SkinSectionProto.bonesStartIndex + i));
+			m_BonesList[i] = m_M2Model.getSkeleton()->getBoneLookup(m_SkinSectionProto.bonesStartIndex + i)->getTransformMatrix();
 		}
 
-		//for (uint8 i = 0; i < bones.size(); i++)
-		//	m_Properties->Bones[i] = bones[i];
-
-		m_StructuredBuffer->Set(bones);
+		m_StructuredBuffer->Set(m_BonesList);
 	}
 
 	m_PropertiesBuffer->Set(m_Properties, sizeof(ShaderM2GeometryProperties));

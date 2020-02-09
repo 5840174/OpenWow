@@ -4,7 +4,7 @@ struct VertexShaderInput
 {
 	float3 position  : POSITION;
 	float4 boneWeight: BLENDWEIGHT0;
-	uint4  boneIndex : BLENDINDICES0;
+	uint4   boneIndex : BLENDINDICES0;
 	float3 normal    : NORMAL0;
 	float2 texCoord0 : TEXCOORD0;
 	float2 texCoord1 : TEXCOORD1;
@@ -50,10 +50,12 @@ sampler   DiffuseTexture0Sampler : register(s0);
 sampler   DiffuseTexture1Sampler : register(s1);
 
 StructuredBuffer<float4x4> Bones  : register(t2);
+StructuredBuffer<float4x4> Instances  : register(t3);
 
 float4 Test(VertexShaderOutput IN);
 
-VertexShaderOutput VS_main(VertexShaderInput IN)
+
+VertexShaderOutput DoPSRender(VertexShaderInput IN, float4x4 ModelMatrix)
 {
 	float4 newVertex = float4(0.0f, 0.0f, 0.0f, 0.0f);
 	
@@ -63,7 +65,13 @@ VertexShaderOutput VS_main(VertexShaderInput IN)
 		{
 			if (IN.boneWeight[i] > 0.0f)
 			{
-				newVertex += mul(Bones[IN.boneIndex[i]], float4(IN.position, 1.0f) * IN.boneWeight[i]);
+				uint boneIndexes[4];
+				boneIndexes[0] = (IN.boneIndex & 0xFF000000u >> 24) & 0x000000FFu;
+				boneIndexes[1] = (IN.boneIndex & 0x00FF0000u >> 16) & 0x000000FFu;
+				boneIndexes[2] = (IN.boneIndex & 0x0000FF00u >>  8) & 0x000000FFu;
+				boneIndexes[3] = (IN.boneIndex & 0x000000FFu      ) & 0x000000FFu;
+			
+				newVertex += mul(Bones[boneIndexes[i]], float4(IN.position, 1.0f) * IN.boneWeight[i]);
 			}
 		}
 	}
@@ -72,24 +80,35 @@ VertexShaderOutput VS_main(VertexShaderInput IN)
 		newVertex = float4(IN.position, 1.0f);
 	}
 
-	const float4x4 mvp = mul(PF.Projection, mul(PF.View, PO.Model));
+	const float4x4 mvp = mul(PF.Projection, mul(PF.View, ModelMatrix));
 
 	VertexShaderOutput OUT;
 	OUT.positionVS = mul(mvp, newVertex);
 	OUT.positionWS = newVertex;
 	OUT.normal = mul(mvp, IN.normal);
-	//if (gTextureAnimEnable)
-	//{
-	//	OUT.texCoord0 = (mul(gTextureAnimMatrix, float4(IN.texCoord0, 1.0f, 1.0f))).xy;
-	//	OUT.texCoord1 = (mul(gTextureAnimMatrix, float4(IN.texCoord1, 1.0f, 1.0f))).xy;
-	//}
-	//else
+	if (gTextureAnimEnable)
+	{
+		OUT.texCoord0 = (mul(gTextureAnimMatrix, float4(IN.texCoord0, 1.0f, 1.0f))).xy;
+		OUT.texCoord1 = (mul(gTextureAnimMatrix, float4(IN.texCoord1, 1.0f, 1.0f))).xy;
+	}
+	else
 	{
 		OUT.texCoord0 = float2(IN.texCoord0.x, 1.0f - IN.texCoord0.y);
 		OUT.texCoord1 = IN.texCoord1;
 	}
 	return OUT;
 }
+
+VertexShaderOutput VS_main(VertexShaderInput IN)
+{
+	return DoPSRender(IN, PO.Model);
+}
+
+VertexShaderOutput VS_main_Inst(VertexShaderInput IN, uint InstanceID : SV_InstanceID)
+{
+	return DoPSRender(IN, Instances[InstanceID]);
+}
+
 
 DefferedRenderPSOut PS_main(VertexShaderOutput IN) : SV_TARGET
 {

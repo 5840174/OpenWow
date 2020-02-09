@@ -3,22 +3,24 @@
 // General
 #include "WMO_Base_Instance.h"
 
-CWMO_Base_Instance::CWMO_Base_Instance(std::string _wmoName) 
-    : m_WMOName(_wmoName)
-{}
+CWMO_Base_Instance::CWMO_Base_Instance(const CWMO& WMOObject)
+    : m_WMOObject(WMOObject)
+{
+	
+}
 
 CWMO_Base_Instance::~CWMO_Base_Instance()
 {}
 
 void CWMO_Base_Instance::Initialize()
 {
-
+	CreateInstances();
 }
 
 
 void CWMO_Base_Instance::CreateInstances()
 {
-	m_WMO->CreateInsances(this);
+	m_WMOObject.CreateInsances(this);
 
 #ifndef WMO_DISABLE_PORTALS
 	if (m_WMO->m_PortalController != nullptr)
@@ -31,32 +33,11 @@ void CWMO_Base_Instance::CreateInstances()
 #endif
 }
 
-void CWMO_Base_Instance::setWMO(std::shared_ptr<CWMO> _model)
+
+const CWMO& CWMO_Base_Instance::getWMO() const
 {
-	_ASSERT(m_WMO == nullptr);
-	_ASSERT(_model != nullptr);
-
-	m_WMO = _model;
+	return m_WMOObject;
 }
-
-std::shared_ptr<CWMO> CWMO_Base_Instance::getWMO() const
-{
-	return m_WMO;
-}
-
-bool CWMO_Base_Instance::Load(IRenderDevice& RenderDevice)
-{
-	std::shared_ptr<CWMO> wmo = GetBaseManager()->GetManager<IWMOManager>()->Add(RenderDevice, m_WMOName);
-	if (wmo)
-	{
-		setWMO(wmo);
-		CreateInstances();
-		return true;
-	}
-
-	return false;
-}
-
 
 
 void CWMO_Base_Instance::UpdateCamera(const ICameraComponent3D* camera)
@@ -64,7 +45,7 @@ void CWMO_Base_Instance::UpdateCamera(const ICameraComponent3D* camera)
 #ifndef WMO_DISABLE_PORTALS
 	if (m_WMO && m_WMO->m_PortalController)
 	{
-		m_WMO->m_PortalController->Update(std::dynamic_pointer_cast<CWMO_Base_Instance>(shared_from_this()), camera);
+		m_WMO->m_PortalController->Update(this, camera);
 	}
 #endif
 }

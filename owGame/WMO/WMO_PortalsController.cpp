@@ -14,16 +14,13 @@
 
 #ifndef WMO_DISABLE_PORTALS
 
-CWMO_PortalsController::CWMO_PortalsController(const std::weak_ptr<const CWMO> _parentWMO) :
-	m_ParentWMO(_parentWMO)
+CWMO_PortalsController::CWMO_PortalsController(const CWMO& WMOObject) 
+	: m_WMOObject(WMOObject)
 {
-	std::shared_ptr<const CWMO> ParentWMO = m_ParentWMO.lock();
-	_ASSERT(ParentWMO != nullptr);
-
-	for (auto& it : ParentWMO->m_PortalReferences)
+	for (auto& it : m_WMOObject.m_PortalReferences)
 	{
-		std::shared_ptr<CWMO_Part_Portal> portal = ParentWMO->m_Portals[it.portalIndex];
-		std::shared_ptr<WMO_Group> group = ParentWMO->m_Groups[it.groupIndex];
+		std::shared_ptr<CWMO_Part_Portal> portal = m_WMOObject.m_Portals[it.portalIndex];
+		std::shared_ptr<WMO_Group> group = m_WMOObject.m_Groups[it.groupIndex];
 
 		if (it.groupIndex == group->m_GroupIndex)
 		{
@@ -67,7 +64,7 @@ void CWMO_PortalsController::GetPolyFrustum(const vec3* poly, uint32 num_verts, 
 	_frustum->buildCustomFrustrum(_portalPlanes, num_verts);
 }
 
-void CWMO_PortalsController::Update(std::shared_ptr<CWMO_Base_Instance> _localContr, const ICameraComponent3D* _camera)
+void CWMO_PortalsController::Update(const CWMO_Base_Instance* _localContr, const ICameraComponent3D* _camera)
 {
 	// Reset all flags
 	for (auto& group : _localContr->getGroupInstances())
@@ -90,21 +87,21 @@ void CWMO_PortalsController::Update(std::shared_ptr<CWMO_Base_Instance> _localCo
 
 	bool insideIndoor = false;
 
-	if (m_ParentWMO.lock()->GetBounds().isPointInside(_InvWorldCamera))
+	if (m_WMOObject.GetBounds().isPointInside(_InvWorldCamera))
 	{
-		for (auto& group : _localContr->getGroupInstances())
+		for (const auto& group : _localContr->getGroupInstances())
 		{
 			if (!(group->GetComponent<CColliderComponent3D>()->GetBounds().isPointInside(_camera->GetTranslation())))
 			{
 				continue;
 			}
 
-			if (!group->getObject()->m_Header.flags.HAS_COLLISION)
+			if (!group->getObject().m_Header.flags.HAS_COLLISION)
 			{
 				continue;
 			}
 
-			if (group->getObject()->m_Header.flags.IS_OUTDOOR)
+			if (group->getObject().m_Header.flags.IS_OUTDOOR)
 			{
 				continue;
 			}
@@ -115,7 +112,7 @@ void CWMO_PortalsController::Update(std::shared_ptr<CWMO_Base_Instance> _localCo
 				continue;
 			}
 
-			if (group->getObject()->m_Header.flags.IS_INDOOR)
+			if (group->getObject().m_Header.flags.IS_INDOOR)
 			{
 				insideIndoor = true;
 			}
@@ -134,14 +131,14 @@ void CWMO_PortalsController::Update(std::shared_ptr<CWMO_Base_Instance> _localCo
 	}
 }
 
-bool CWMO_PortalsController::Recur(std::shared_ptr<CWMO_Base_Instance> _localContr, std::shared_ptr<CWMO_Group_Instance> _group, const ICameraComponent3D* _camera, cvec3 _InvWorldCamera, const Frustum* _frustum, bool _isFirstIteration)
+bool CWMO_PortalsController::Recur(const CWMO_Base_Instance* _localContr, CWMO_Group_Instance* _group, const ICameraComponent3D* _camera, cvec3 _InvWorldCamera, const Frustum& _frustum, bool _isFirstIteration)
 {
 	if (_group == nullptr || _group->GetPortalCalculated())
 	{
 		return false;
 	}
 
-	if (_camera->GetFrustum()->cullBox(_group->GetComponent<CColliderComponent3D>()->GetBounds()))
+	if (_camera->GetFrustum().cullBox(_group->GetComponent<CColliderComponent3D>()->GetBounds()))
 	{
 		return false;
 	}
@@ -151,25 +148,25 @@ bool CWMO_PortalsController::Recur(std::shared_ptr<CWMO_Base_Instance> _localCon
 	_group->SetPortalCalculated(true);
 
 #ifdef USE_M2_MODELS
-	for (auto& doodad : _group->getDoodadsInstances())
+	for (const auto& doodad : _group->getDoodadsInstances())
 	{
-		if (doodad && (_isFirstIteration || !_frustum->cullBox(doodad->GetComponent<IColliderComponent3D>()->GetBounds())))
+		if (doodad && (_isFirstIteration || !_frustum.cullBox(doodad->GetComponent<IColliderComponent3D>()->GetBounds())))
 		{
 			doodad->setPortalVisibility(true);
 		}
 	}
 #endif
 
-	for (auto& p : _group->getObject()->m_Portals)
+	for (const auto& p : _group->getObject().m_Portals)
 	{
 		// If we don't see portal // TODO: Don't use it on first step
-		if (_camera->GetFrustum()->cullPoly(_localContr->getVerts() + p->getStartVertex(), p->getCount()))
+		if (_camera->GetFrustum().cullPoly(_localContr->getVerts() + p->getStartVertex(), p->getCount()))
 		{
 			continue;
 		}
 
 		// And we don't see portal from other portal
-		if (!p->IsVisible(_localContr, _frustum->getPlanes(), _frustum->getPlanesCnt()))
+		if (!p->IsVisible(_localContr, _frustum.getPlanes(), _frustum.getPlanesCnt()))
 		{
 			continue;
 		}
@@ -188,7 +185,7 @@ bool CWMO_PortalsController::Recur(std::shared_ptr<CWMO_Base_Instance> _localCon
 		);
 
 		// Find attached to portal group
-		std::shared_ptr<CWMO_Group_Instance> groupInstance = nullptr;
+		CWMO_Group_Instance* groupInstance = nullptr;
 		int32 groupIndex = isPositive ? p->getGrInner() : p->getGrOuter();
 		if (groupIndex >= 0 && groupIndex < _localContr->getGroupInstances().size())
 		{
@@ -201,7 +198,7 @@ bool CWMO_PortalsController::Recur(std::shared_ptr<CWMO_Base_Instance> _localCon
 			groupInstance,
 			_camera,
 			_InvWorldCamera,
-			&portalFrustum,
+			portalFrustum,
 			false
 		);
 	}

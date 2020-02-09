@@ -5,11 +5,11 @@
 // General
 #include "WMO_Doodad_Instance.h"
 
-CWMO_Doodad_Instance::CWMO_Doodad_Instance(std::string _m2Name, const std::weak_ptr<const WMO_Group> _parentGroup, uint32 _index) :
-	CM2_Base_Instance(_m2Name),
-	m_ParentGroup(_parentGroup),
-	m_Index(_index),
-	m_PortalVis(true)
+CWMO_Doodad_Instance::CWMO_Doodad_Instance(const M2& M2Object, const WMO_Group& WMOGroupObject, uint32 _index) 
+	: CM2_Base_Instance(M2Object)
+	, m_WMOGroupObject(WMOGroupObject)
+	, m_Index(_index)
+	, m_PortalVis(true)
 {
 	/*if (_mdxObject->getFilename().find("LD_LIGHTSHAFT") != -1)
 	{
@@ -44,16 +44,15 @@ void CWMO_Doodad_Instance::Initialize(const SWMO_Doodad_PlacementInfo & _placeme
 
 void CWMO_Doodad_Instance::Initialize()
 {
+	__super::Initialize();
 }
 
 void CWMO_Doodad_Instance::Accept(IVisitor* visitor)
 {
-	if (!m_PortalVis)
+	if (m_PortalVis)
 	{
-		return;
+		return CM2_Base_Instance::Accept(visitor);
 	}
-
-	return CM2_Base_Instance::Accept(visitor);
 }
 
 #endif

@@ -50,9 +50,11 @@ void WMO_Group::CreateInsances(CWMO_Group_Instance* _parent) const
 	{
 		const SWMO_Doodad_PlacementInfo& placement = m_WMOModel.m_DoodadsPlacementInfos[index];
 
-		CWMO_Doodad_Instance* inst = _parent->CreateSceneNode<CWMO_Doodad_Instance>(m_WMOModel.m_DoodadsFilenames + placement.flags.nameIndex, weak_from_this(), index);
+		std::string doodadFileName = m_WMOModel.m_DoodadsFilenames + placement.flags.nameIndex;
+
+		std::shared_ptr<M2> m2 = m_BaseManager->GetManager<IM2Manager>()->Add(m_RenderDevice, doodadFileName);
+		CWMO_Doodad_Instance* inst = _parent->CreateSceneNode<CWMO_Doodad_Instance>(*m2, *this, index);
         inst->Initialize(placement);
-		inst->Load();
 		_parent->addDoodadInstance(inst);
 	}
 #endif

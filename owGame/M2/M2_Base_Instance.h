@@ -4,17 +4,15 @@
 
 class ZN_API CM2_Base_Instance 
 	: public SceneNode3D
-	, public CLoadableObject
 {
 public:
-	CM2_Base_Instance(std::string _m2Name);
+	CM2_Base_Instance(const M2& M2Objec);
 	virtual ~CM2_Base_Instance();
 
 	void                                CreateInstances();
 
 	// CM2_Base_Instance
-	void                                setM2(std::shared_ptr<M2> _model);
-	std::shared_ptr<M2>                 getM2() const { return m_M2; }
+	const M2&                           getM2() const { return m_M2; }
 
 	void                                Attach(std::shared_ptr<CM2_Part_Attachment> _attachment);
 	void                                Detach();
@@ -38,9 +36,6 @@ public:
     // Components
     virtual void                        RegisterComponents() override;
 
-	// ILoadableObject
-	virtual bool                        Load() override;
-
 	// SceneNode3D
 	void								Initialize() override;
 	virtual void                        Accept(IVisitor* visitor) override;
@@ -49,7 +44,7 @@ protected:
 	virtual void						UpdateLocalTransform();
 
 protected:
-	void InitAnimator();
+	void                                InitAnimator();
 
 private:
 	// Color & Alpha
@@ -64,7 +59,6 @@ private:
 	bool                                m_NeedRecalcAnimation;
 
 private:
-	std::shared_ptr<M2>                 m_M2;
-	std::string                         m_M2Name;
+	const M2&                           m_M2;
 	std::shared_ptr<CM2_Part_Attachment>m_Attached;
 };

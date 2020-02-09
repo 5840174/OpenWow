@@ -32,7 +32,7 @@ CWMO::~CWMO()
 //
 // ISceneNodeProvider
 //
-void CWMO::CreateInsances(ISceneNode3D* _parent)
+void CWMO::CreateInsances(ISceneNode3D* _parent) const
 {
 	CWMO_Base_Instance* parentAsWMOInstance = dynamic_cast<CWMO_Base_Instance*>(_parent);
 	_ASSERT(parentAsWMOInstance != nullptr);
@@ -251,7 +251,7 @@ bool CWMO::Load()
 	if (m_Portals.size() > 0)
 	{
 #ifndef WMO_DISABLE_PORTALS
-		m_PortalController = std::make_shared<CWMO_PortalsController>(shared_from_this());
+		m_PortalController = std::make_shared<CWMO_PortalsController>(*this);
 
 		for (auto& it : m_PortalReferences)
 		{

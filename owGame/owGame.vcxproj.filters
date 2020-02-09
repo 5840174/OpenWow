@@ -285,9 +285,6 @@
     <ClCompile Include="WMO\WMO_Group.cpp">
       <Filter>WMO\Groups</Filter>
     </ClCompile>
-    <ClCompile Include="WMO\WMO_Group_Instance.cpp">
-      <Filter>WMO\Groups</Filter>
-    </ClCompile>
     <ClCompile Include="WMO\WMO_Group_Part_Batch.cpp">
       <Filter>WMO\Groups</Filter>
     </ClCompile>
@@ -380,6 +377,9 @@
     </ClCompile>
     <ClCompile Include="Liquid\RenderPass_Liquid.cpp">
       <Filter>RenderStuff</Filter>
+    </ClCompile>
+    <ClCompile Include="WMO\WMO_Group_Instance.cpp">
+      <Filter>WMO\Instances</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -704,9 +704,6 @@
     <ClInclude Include="WMO\WMO_Group_Headers.h">
       <Filter>WMO\Groups</Filter>
     </ClInclude>
-    <ClInclude Include="WMO\WMO_Group_Instance.h">
-      <Filter>WMO\Groups</Filter>
-    </ClInclude>
     <ClInclude Include="WMO\WMO_Group_Part_Batch.h">
       <Filter>WMO\Groups</Filter>
     </ClInclude>
@@ -829,6 +826,9 @@
     </ClInclude>
     <ClInclude Include="Liquid\RenderPass_Liquid.h">
       <Filter>RenderStuff</Filter>
+    </ClInclude>
+    <ClInclude Include="WMO\WMO_Group_Instance.h">
+      <Filter>WMO\Instances</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -25,7 +25,7 @@ public:
 	virtual ~CWMO();
 
 	// ISceneNodeProvider
-	void CreateInsances(ISceneNode3D* _parent) override;
+	void CreateInsances(ISceneNode3D* _parent) const override;
 
 	bool Load();
 

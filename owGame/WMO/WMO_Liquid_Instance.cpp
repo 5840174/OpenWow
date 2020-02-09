@@ -14,10 +14,8 @@ CWMO_Liquid_Instance::~CWMO_Liquid_Instance()
 
 void CWMO_Liquid_Instance::Accept(IVisitor* visitor)
 {
-	//if (!m_Group.lock()->m_PortalsVis)
+	//if (m_Group.lock()->m_PortalsVis)
 	//{
-	//	return false;
+		Liquid_Instance::Accept(visitor);
 	//}
-
-	Liquid_Instance::Accept(visitor);
 }

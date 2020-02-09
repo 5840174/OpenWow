@@ -78,11 +78,11 @@ struct SM2_Bone
 
 struct SM2_Vertex
 {
-	vec3	pos;				// 0-12
-	uint8	bone_weights[4];	// 12-16
-	uint8	bone_indices[4];	// 16-20
-	vec3	normal;				// 20-32
-	vec2	tex_coords[2];		// 32-40, 40-48		// two DiffuseTextures, depending on shader used
+	glm::vec3	pos;				// 0-12
+	uint8	    bone_weights[4];	// 12-16
+	uint8	    bone_indices[4];	// 16-20
+	glm::vec3	normal;				// 20-32
+	glm::vec2	tex_coords[2];		// 32-40, 40-48		// two DiffuseTextures, depending on shader used
 };
 #include __PACK_END
 

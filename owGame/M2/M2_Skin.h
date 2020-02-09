@@ -13,7 +13,6 @@ class CM2_Skin_Builder;
 
 class CM2_Skin 
 	: public ModelProxie
-	, public ISceneNodeProvider
 {
 	friend CM2_Skin_Builder;
 public:
@@ -27,9 +26,6 @@ public:
 
 	// IModel
 	void Accept(IVisitor* visitor) override final;
-
-	// ISceneNodeProvider
-	void CreateInsances(ISceneNode3D* _parent) override;
 
 private:
 	std::vector<std::shared_ptr<CM2_SkinSection>> m_Sections; // 'Geometries'

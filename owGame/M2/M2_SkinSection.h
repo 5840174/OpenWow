@@ -38,12 +38,12 @@ private:
 		uint32 gIsAnimated;
 		uint32 gBonesMaxInfluences;
 		glm::vec2 __padding;
-
-		//glm::mat4 Bones[200];
 	};
 	ShaderM2GeometryProperties* m_Properties;
 
 	std::shared_ptr<IConstantBuffer> m_PropertiesBuffer;
+
+	std::vector<glm::mat4> m_BonesList;
 	std::shared_ptr<IStructuredBuffer> m_StructuredBuffer;
 
 private:

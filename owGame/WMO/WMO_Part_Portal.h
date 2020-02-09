@@ -22,7 +22,7 @@ public:
 	int32 getGrInner() { return m_GrInner; }
 	int32 getGrOuter() { return m_GrOuter; }
 
-	bool IsVisible(std::shared_ptr<CWMO_Base_Instance> _localContr, const Plane* _planes, uint32 _planesCount) const;
+	bool IsVisible(const CWMO_Base_Instance* _localContr, const Plane* _planes, uint32 _planesCount) const;
 	bool IsPositive(cvec3 _InvWorldCamera) const;
 
 private:

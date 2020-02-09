@@ -25,45 +25,14 @@ M2::M2(const std::string& name) :
 	//Log::Info("M2[%s]: Loading...", m_FileName.c_str());
 }
 
-void M2::CreateInsances(ISceneNode3D* _parent)
+void M2::CreateInsances(ISceneNode3D* _parent) const
 {
 	for (auto& it : m_Skins)
 	{
-		it->CreateInsances(_parent);
+		_parent->GetComponent<IMeshComponent3D>()->AddMesh(it);
 		break;
 	}
 }
-
-/*void M2::Render(CM2_Base_Instance* _instance)
-{
-	if (m_IsContainGeom)
-	{
-		CM2_Pass* pass = _Render->getTechniquesMgr()->M2_Pass.operator->();
-		pass->Bind();
-		{
-			pass->setWorld(_instance->GetWorldTransfom());
-			pass->SetColorDoodad(_instance->getColor());
-
-			//for (auto& it : m_Skins)
-			//{
-			//	it->Draw(_instance);
-			//	break;
-			//}
-			m_Skins.back()->Draw(_instance);
-		}
-		pass->Unbind();
-
-		//RenderCollision(_worldMatrix);
-
-		//for (auto& it : m_Skins)
-		//{
-		//it->RenderNormals();
-		//}
-	}
-
-	// Ribbons
-	//m_Miscellaneous->render(_instance->GetWorldTransfom());
-}*/
 
 void M2::update(double _time, double _dTime)
 {

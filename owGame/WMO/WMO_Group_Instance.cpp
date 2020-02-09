@@ -49,10 +49,8 @@ bool CWMO_Group_Instance::GetPortalCalculated() const
 
 void CWMO_Group_Instance::Accept(IVisitor* visitor)
 {
-	if (!m_PortalsVis)
+	if (m_PortalsVis)
 	{
-		return;
-	}
-
-	SceneNode3D::Accept(visitor);
+		SceneNode3D::Accept(visitor);
+	}	
 }

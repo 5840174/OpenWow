@@ -27,17 +27,7 @@ const CM2_Base_Instance& CM2_ColliderComponent::GetOwnerNode()
 //
 void CM2_ColliderComponent::UpdateBounds()
 {
-    std::shared_ptr<M2> m2Model = GetOwnerNode().getM2();
-    if (m2Model)
-    {
-        BoundingBox bbox = m2Model->GetBounds();
-        bbox.transform(GetOwnerNode().GetWorldTransfom());
-        GetComponent<CColliderComponent3D>()->SetBounds(bbox);
-    }
-    else
-    {
-        BoundingBox bbox;
-        bbox.calculateCenter();
-        GetComponent<CColliderComponent3D>()->SetBounds(bbox);
-    }
+    BoundingBox bbox = GetOwnerNode().getM2().GetBounds();
+    bbox.transform(GetOwnerNode().GetWorldTransfom());
+    GetComponent<CColliderComponent3D>()->SetBounds(bbox);
 }

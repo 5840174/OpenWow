@@ -6,21 +6,20 @@
 // Additional
 #include "M2_ColliderComponent.h"
 
-CM2_Base_Instance::CM2_Base_Instance(std::string _m2Name) :
-	m_M2(nullptr),
-	m_M2Name(_m2Name),
-	m_Attached(nullptr),
-	m_Animator(nullptr),
-	m_NeedRecalcAnimation(true),
-	m_Color(vec4(1.0f, 1.0f, 1.0f, 1.0f)),
-	m_Alpha(1.0f)
+CM2_Base_Instance::CM2_Base_Instance(const M2& M2Object) 
+	: m_M2(M2Object)
+	, m_Attached(nullptr)
+	, m_Animator(nullptr)
+	, m_NeedRecalcAnimation(true)
+	, m_Color(vec4(1.0f, 1.0f, 1.0f, 1.0f))
+	, m_Alpha(1.0f)
 {
 
 }
 
 CM2_Base_Instance::~CM2_Base_Instance()
 {
-	if (m_M2->isAnimated())
+	if (m_M2.isAnimated())
 	{
 		//_Bindings->UnregisterUpdatableObject(this);
 	}
@@ -30,7 +29,7 @@ CM2_Base_Instance::~CM2_Base_Instance()
 
 void CM2_Base_Instance::CreateInstances()
 {
-	m_M2->CreateInsances(this);
+	m_M2.CreateInsances(this);
 }
 
 void CM2_Base_Instance::Attach(std::shared_ptr<CM2_Part_Attachment> _attachment)
@@ -46,16 +45,6 @@ void CM2_Base_Instance::Detach()
 std::shared_ptr<CM2_Part_Attachment> CM2_Base_Instance::GetAttachPoint() const
 {
     return m_Attached;
-}
-
-void CM2_Base_Instance::setM2(std::shared_ptr<M2> _model)
-{
-	_ASSERT(m_M2 == nullptr);
-	_ASSERT(_model != nullptr);
-	m_M2 = _model;
-
-	InitAnimator();
-	//UpdateLocalTransform();
 }
 
 // Mesh & textures provider
@@ -89,6 +78,10 @@ std::shared_ptr<ITexture> CM2_Base_Instance::getSpecialTexture(SM2_Texture::Type
 
 void CM2_Base_Instance::Initialize()
 {
+	InitAnimator();
+	UpdateLocalTransform();
+	CreateInstances();
+
 	for (uint8 i = 0; i < SM2_Texture::Type::COUNT; i++)
 	{
 		m_SpecialTextures[i] = nullptr; // TODO: GetBaseManager()->GetManager<IRenderDevice>()->GetDefaultTexture();
@@ -99,9 +92,6 @@ void CM2_Base_Instance::Accept(IVisitor* visitor)
 {
 	//AbstractPass* visitorAsBasePass = dynamic_cast<AbstractPass*>(visitor);
 	//const ICamera* camera = visitorAsBasePass->GetRenderEventArgs()->Camera;
-
-	if (m_M2 == nullptr)
-		return;
 
 	//float distToCamera2D = (camera->GetTranslation() - GetComponent<IColliderComponent3D>()->GetBounds().getCenter()).length() - GetComponent<IColliderComponent3D>()->GetBounds().getRadius();
 	//if (distToCamera2D > m_QualitySettings->ADT_MDX_Distance)
@@ -120,7 +110,7 @@ void CM2_Base_Instance::Accept(IVisitor* visitor)
         //GetComponent<ITransformComponent3D>()->ForceRecalculateLocalTransform();
 	}
 
-	/*if (m_M2->isAnimated())
+	/*if (m_M2.isAnimated())
 	{
 		m_Animator->Update(visitorAsBasePass->GetRenderEventArgs()->TotalTime, visitorAsBasePass->GetRenderEventArgs()->DeltaTime);
 
@@ -132,7 +122,7 @@ void CM2_Base_Instance::Accept(IVisitor* visitor)
 		//{
 		//if (!m_NeedRecalcAnimation)
 		//{
-		m_M2->calc(m_Animator->getSequenceIndex(), m_Animator->getCurrentTime(), static_cast<uint32>(visitorAsBasePass->GetRenderEventArgs()->TotalTime), camera->GetViewMatrix(), GetWorldTransfom());
+		m_M2.calc(m_Animator->getSequenceIndex(), m_Animator->getCurrentTime(), static_cast<uint32>(visitorAsBasePass->GetRenderEventArgs()->TotalTime), camera->GetViewMatrix(), GetWorldTransfom());
 		//	m_NeedRecalcAnimation = true;
 		//}
 		//}
@@ -170,9 +160,9 @@ void CM2_Base_Instance::UpdateLocalTransform()
 void CM2_Base_Instance::InitAnimator()
 {
 	// Create animator
-	if (m_M2->isAnimated())
+	if (m_M2.isAnimated())
 	{
-		m_Animator = std::make_shared<CM2_Animator>(*m_M2);
+		m_Animator = std::make_shared<CM2_Animator>(m_M2);
 	}
 }
 
@@ -180,30 +170,4 @@ void CM2_Base_Instance::RegisterComponents()
 {
 	SetMeshComponent(AddComponent(std::make_shared<CMeshComponent3D>(*this)));
     SetColliderComponent(AddComponent(std::make_shared<CM2_ColliderComponent>(*this)));
-}
-
-
-
-
-
-
-
-
-
-
-//
-// // ILoadableObject
-//
-bool CM2_Base_Instance::Load()
-{
-	std::shared_ptr<M2> m2 = GetBaseManager()->GetManager<IM2Manager>()->Add(GetBaseManager()->GetApplication().GetRenderDevice(), m_M2Name);
-	if (m2)
-	{
-		setM2(m2);
-
-		CreateInstances();
-		return true;
-	}
-
-	return false;
 }

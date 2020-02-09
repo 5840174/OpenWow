@@ -24,5 +24,6 @@ private:
 	void LoadUI();
 
 private:
+	CWMO_Base_Instance* wmoInstance;
 	SkyManager* skyManager;
 };

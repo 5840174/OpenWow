@@ -25,8 +25,3 @@ void CM2_Skin::Accept(IVisitor * visitor)
 {
 	visitor->Visit(this);
 }
-
-void CM2_Skin::CreateInsances(ISceneNode3D* _parent)
-{
-	_parent->GetComponent<IMeshComponent3D>()->AddMesh(shared_from_this());
-}
