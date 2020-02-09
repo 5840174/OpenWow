@@ -1,6 +1,6 @@
 #pragma once
 
-namespace ImageBLP
+namespace BLPFormat
 {
 	#define LIBBLP_MIPMAP_COUNT 16
 	#define LIBBLP_PALETTE_SIZE 256
@@ -63,7 +63,7 @@ public:
 
 protected:
 	bool LoadImageData(std::shared_ptr<IFile> File);
-	bool LoadBPL(const ImageBLP::BLPHeader& header, std::shared_ptr<IFile> f);
+	bool LoadBPL(const BLPFormat::BLPHeader& header, std::shared_ptr<IFile> f);
 
 	template <class DECODER>
 	bool LoadDXT_Helper(std::shared_ptr<IFile> io);

@@ -8,6 +8,8 @@ LiquidMaterial::LiquidMaterial(IRenderDevice& RenderDevice)
 {
 	m_pProperties = (MaterialProperties*)_aligned_malloc(sizeof(MaterialProperties), 16);
 	*m_pProperties = MaterialProperties();
+
+	SetWrapper(this);
 }
 
 LiquidMaterial::~LiquidMaterial()

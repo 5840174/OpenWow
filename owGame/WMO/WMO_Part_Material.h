@@ -18,12 +18,10 @@ public:
     void UpdateConstantBuffer() const override;
 
 private:
-	
-
 	__declspec(align(16)) struct MaterialProperties
 	{
 		uint32 m_BlendMode;
-		vec3   m_Pad;
+		glm::vec3   m_Pad;
 		//-------------------------- ( 32 bytes )
 	};
 	MaterialProperties*            m_pProperties;

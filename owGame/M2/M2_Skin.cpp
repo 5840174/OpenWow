@@ -15,10 +15,10 @@ CM2_Skin::CM2_Skin(const M2& M2Model)
 	: m_M2Model(M2Model)
 {}
 
-void CM2_Skin::CreateInsances(std::weak_ptr<ISceneNode3D> _parent)
+void CM2_Skin::CreateInsances(ISceneNode3D* _parent)
 {
 	for (const auto& batch : m_Batches)
 	{
-		_parent.lock()->GetComponent<IMeshComponent3D>()->AddMesh(batch);
+		_parent->GetComponent<IMeshComponent3D>()->AddMesh(batch);
 	}
 }

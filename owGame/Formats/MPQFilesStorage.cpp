@@ -2,7 +2,6 @@
 
 // General
 #include "MPQFilesStorage.h"
-#pragma comment(lib, "libmpq.lib")
 
 CMPQFilesStorage::CMPQFilesStorage(std::string _path, Priority _priority)
 	: m_Path(_path)

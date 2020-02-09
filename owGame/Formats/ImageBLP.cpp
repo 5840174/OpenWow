@@ -2,6 +2,7 @@
 
 #include "ImageBLP.h"
 
+
 CImageBLP::CImageBLP()
 {
 }
@@ -12,7 +13,7 @@ CImageBLP::~CImageBLP()
 
 bool CImageBLP::LoadImageData(std::shared_ptr<IFile> File)
 {
-	ImageBLP::BLPHeader header = { 0 };
+	BLPFormat::BLPHeader header = { 0 };
 	File->seek(0);
 	File->read(&header);
 	return LoadBPL(header, File);
@@ -26,7 +27,7 @@ bool CImageBLP::IsFileSupported(std::shared_ptr<IFile> File)
 		if (Utils::ToLower(File->Extension()) != "blp")
 			return false;
 
-	ImageBLP::BLPHeader header = { 0 };
+	BLPFormat::BLPHeader header = { 0 };
 	File->seek(0);
 	File->read(&header);
 	return (header.magic[0] == 'B' && header.magic[1] == 'L' && header.magic[2] == 'P' && header.magic[3] == '2' && header.type == 1);
@@ -46,7 +47,7 @@ std::shared_ptr<CImageBLP> CImageBLP::CreateImage(std::shared_ptr<IFile> File)
 	return imageBLP;
 }
 
-bool CImageBLP::LoadBPL(const ImageBLP::BLPHeader& header, std::shared_ptr<IFile> f)
+bool CImageBLP::LoadBPL(const BLPFormat::BLPHeader& header, std::shared_ptr<IFile> f)
 {
 	if (header.width & (header.width - 1))
 	{
@@ -80,7 +81,7 @@ bool CImageBLP::LoadBPL(const ImageBLP::BLPHeader& header, std::shared_ptr<IFile
 
 		switch (header.colorEncoding)
 		{
-		case ImageBLP::BLPColorEncoding::COLOR_PALETTE:
+		case BLPFormat::BLPColorEncoding::COLOR_PALETTE:
 		{
 			// Data in mipmaps in indices info pallete
 			uint8_t* indexInPalleteBuffer = new uint8_t[header.mipSizes[currentMip]];
@@ -136,20 +137,20 @@ bool CImageBLP::LoadBPL(const ImageBLP::BLPHeader& header, std::shared_ptr<IFile
 		}
 		break;
 
-		case ImageBLP::BLPColorEncoding::COLOR_DXT:
+		case BLPFormat::BLPColorEncoding::COLOR_DXT:
 		{
 			f->seek(header.mipOffsets[currentMip]);
 
 			switch (header.pixelFormat)
 			{
-			case ImageBLP::BLPPixelFormat::PIXEL_DXT1:
-				LoadDXT_Helper <DXT_BLOCKDECODER_1>(f);
+			case BLPFormat::BLPPixelFormat::PIXEL_DXT1:
+				LoadDXT_Helper <DDSFormat::DXT_BLOCKDECODER_1>(f);
 				break;
-			case ImageBLP::BLPPixelFormat::PIXEL_DXT3:
-				LoadDXT_Helper <DXT_BLOCKDECODER_3>(f);
+			case BLPFormat::BLPPixelFormat::PIXEL_DXT3:
+				LoadDXT_Helper <DDSFormat::DXT_BLOCKDECODER_3>(f);
 				break;
-			case ImageBLP::BLPPixelFormat::PIXEL_DXT5:
-				LoadDXT_Helper <DXT_BLOCKDECODER_5>(f);
+			case BLPFormat::BLPPixelFormat::PIXEL_DXT5:
+				LoadDXT_Helper <DDSFormat::DXT_BLOCKDECODER_5>(f);
 				break;
 			default:
 				_ASSERT(false); //LIBBLP_ERROR_FORMAT
@@ -158,7 +159,7 @@ bool CImageBLP::LoadBPL(const ImageBLP::BLPHeader& header, std::shared_ptr<IFile
 		}
 		break;
 
-		case ImageBLP::BLPColorEncoding::COLOR_ARGB8888:
+		case BLPFormat::BLPColorEncoding::COLOR_ARGB8888:
 		{
 			f->seek(header.mipOffsets[currentMip]);
 			f->readBytes(m_Data, header.mipSizes[currentMip]);

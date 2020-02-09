@@ -3,8 +3,8 @@
 // General
 #include "WMO_Liquid.h"
 
-CWMO_Liquid::CWMO_Liquid(IBaseManager* BaseManager, uint32 _x, uint32 _y) :
-	CLiquid(BaseManager, _x, _y)
+CWMO_Liquid::CWMO_Liquid(IRenderDevice& RenderDevice, uint32 _x, uint32 _y) :
+	CLiquid(RenderDevice, _x, _y)
 {}
 
 CWMO_Liquid::~CWMO_Liquid()

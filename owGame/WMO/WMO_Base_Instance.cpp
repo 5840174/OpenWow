@@ -18,7 +18,7 @@ void CWMO_Base_Instance::Initialize()
 
 void CWMO_Base_Instance::CreateInstances()
 {
-	m_WMO->CreateInsances(std::static_pointer_cast<CWMO_Base_Instance>(shared_from_this()));
+	m_WMO->CreateInsances(this);
 
 #ifndef WMO_DISABLE_PORTALS
 	if (m_WMO->m_PortalController != nullptr)

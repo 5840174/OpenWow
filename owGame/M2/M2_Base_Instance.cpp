@@ -30,7 +30,7 @@ CM2_Base_Instance::~CM2_Base_Instance()
 
 void CM2_Base_Instance::CreateInstances()
 {
-	m_M2->CreateInsances(std::static_pointer_cast<CM2_Base_Instance>(shared_from_this()));
+	m_M2->CreateInsances(this);
 }
 
 void CM2_Base_Instance::Attach(std::shared_ptr<CM2_Part_Attachment> _attachment)

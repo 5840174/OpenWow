@@ -115,6 +115,12 @@
     <Filter Include="WoW Specific">
       <UniqueIdentifier>{e5bf550a-5a51-4482-87bc-533a4e241f7c}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Formats">
+      <UniqueIdentifier>{da43f205-a364-4a50-8561-0abb24dabc5d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Formats\libmpq">
+      <UniqueIdentifier>{14e1aaa0-6678-4ad5-bb31-9baf87369fa6}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Liquid.cpp">
@@ -327,14 +333,35 @@
     <ClCompile Include="WMO\RenderPass_WMO.cpp">
       <Filter>RenderStuff</Filter>
     </ClCompile>
-    <ClCompile Include="MPQFilesStorage.cpp">
-      <Filter>WoW Specific</Filter>
-    </ClCompile>
     <ClCompile Include="WoWChunkReader.cpp">
       <Filter>WoW Specific</Filter>
     </ClCompile>
-    <ClCompile Include="ImageBLP.cpp">
-      <Filter>WoW Specific</Filter>
+    <ClCompile Include="WMO\WMO_Liquid.cpp">
+      <Filter>WMO\Parts</Filter>
+    </ClCompile>
+    <ClCompile Include="Formats\libmpq\common.c">
+      <Filter>Formats\libmpq</Filter>
+    </ClCompile>
+    <ClCompile Include="Formats\libmpq\explode.c">
+      <Filter>Formats\libmpq</Filter>
+    </ClCompile>
+    <ClCompile Include="Formats\libmpq\extract.c">
+      <Filter>Formats\libmpq</Filter>
+    </ClCompile>
+    <ClCompile Include="Formats\libmpq\huffman.c">
+      <Filter>Formats\libmpq</Filter>
+    </ClCompile>
+    <ClCompile Include="Formats\libmpq\mpq.c">
+      <Filter>Formats\libmpq</Filter>
+    </ClCompile>
+    <ClCompile Include="Formats\libmpq\wave.c">
+      <Filter>Formats\libmpq</Filter>
+    </ClCompile>
+    <ClCompile Include="Formats\ImageBLP.cpp">
+      <Filter>Formats</Filter>
+    </ClCompile>
+    <ClCompile Include="Formats\MPQFilesStorage.cpp">
+      <Filter>Formats</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -716,9 +743,6 @@
     <ClInclude Include="WMO\RenderPass_WMO.h">
       <Filter>RenderStuff</Filter>
     </ClInclude>
-    <ClInclude Include="MPQFilesStorage.h">
-      <Filter>WoW Specific</Filter>
-    </ClInclude>
     <ClInclude Include="WoWChunkReader.h">
       <Filter>WoW Specific</Filter>
     </ClInclude>
@@ -734,8 +758,41 @@
     <ClInclude Include="WowTypes.h">
       <Filter>WoW Specific</Filter>
     </ClInclude>
-    <ClInclude Include="ImageBLP.h">
-      <Filter>WoW Specific</Filter>
+    <ClInclude Include="WMO\WMO_Liquid.h">
+      <Filter>WMO\Parts</Filter>
+    </ClInclude>
+    <ClInclude Include="Formats\libmpq\common.h">
+      <Filter>Formats\libmpq</Filter>
+    </ClInclude>
+    <ClInclude Include="Formats\libmpq\crypt_buf.h">
+      <Filter>Formats\libmpq</Filter>
+    </ClInclude>
+    <ClInclude Include="Formats\libmpq\explode.h">
+      <Filter>Formats\libmpq</Filter>
+    </ClInclude>
+    <ClInclude Include="Formats\libmpq\extract.h">
+      <Filter>Formats\libmpq</Filter>
+    </ClInclude>
+    <ClInclude Include="Formats\libmpq\huffman.h">
+      <Filter>Formats\libmpq</Filter>
+    </ClInclude>
+    <ClInclude Include="Formats\libmpq\mpq.h">
+      <Filter>Formats\libmpq</Filter>
+    </ClInclude>
+    <ClInclude Include="Formats\libmpq\mpq-internal.h">
+      <Filter>Formats\libmpq</Filter>
+    </ClInclude>
+    <ClInclude Include="Formats\libmpq\platform.h">
+      <Filter>Formats\libmpq</Filter>
+    </ClInclude>
+    <ClInclude Include="Formats\libmpq\wave.h">
+      <Filter>Formats\libmpq</Filter>
+    </ClInclude>
+    <ClInclude Include="Formats\ImageBLP.h">
+      <Filter>Formats</Filter>
+    </ClInclude>
+    <ClInclude Include="Formats\MPQFilesStorage.h">
+      <Filter>Formats</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

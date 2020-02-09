@@ -26,26 +26,21 @@ CWMO::CWMO(IBaseManager* BaseManager, IRenderDevice& RenderDevice, const std::st
 
 CWMO::~CWMO()
 {
-	Log::Info("WMO[%s]: Unloading...", m_FileName.c_str());
-
-	//
-
-	SafeDeleteArray(m_TexturesNames);
 	SafeDeleteArray(m_DoodadsFilenames);
 }
 
 //
 // ISceneNodeProvider
 //
-void CWMO::CreateInsances(std::weak_ptr<ISceneNode3D> _parent)
+void CWMO::CreateInsances(ISceneNode3D* _parent)
 {
-	std::shared_ptr<CWMO_Base_Instance> parentAsWMOInstance = std::dynamic_pointer_cast<CWMO_Base_Instance>(_parent.lock());
+	CWMO_Base_Instance* parentAsWMOInstance = dynamic_cast<CWMO_Base_Instance*>(_parent);
 	_ASSERT(parentAsWMOInstance != nullptr);
 
 	for (const auto& it : m_Groups)
 	{
-		CWMO_Group_Instance* groupInstance = _parent.lock()->CreateSceneNode<CWMO_Group_Instance>(it);
-        groupInstance->Initialize();
+		CWMO_Group_Instance* groupInstance = _parent->CreateSceneNode<CWMO_Group_Instance>(it);
+		groupInstance->Initialize();
 		parentAsWMOInstance->AddGroupInstance(groupInstance);
 		if (it->m_Header.flags.IS_OUTDOOR)
 		{
@@ -79,24 +74,33 @@ bool CWMO::Load()
 	{
 		buffer = reader.OpenChunk("MOHD");
 		buffer->readBytes(&m_Header, sizeof(SWMO_HeaderDef));
-		m_Bounds.set(m_Header.bounding_box.min, m_Header.bounding_box.max, true);
+
+		glm::vec3 boundsMin = Fix_XZmY(m_Header.bounding_box.min);
+		glm::vec3 boundsMax = Fix_XZmY(m_Header.bounding_box.max);
+		std::swap(boundsMin.z, boundsMax.z);
+
+		m_Bounds.set(boundsMin, boundsMax);
 	}
 
 	// Textures
 	{
 		buffer = reader.OpenChunk("MOTX");
-		m_TexturesNames = new char[buffer->getSize() + 1];
-		buffer->readBytes(m_TexturesNames, buffer->getSize());
+		m_TexturesNames = std::unique_ptr<char[]>(new char[buffer->getSize() + 1]);
+		buffer->readBytes(m_TexturesNames.get(), buffer->getSize());
 		m_TexturesNames[buffer->getSize()] = 0x00;
 	}
 
 	// Materials
+	size_t cntr = 0;
 	{
-		for (auto mat : reader.OpenChunkT<SWMO_MaterialDef>("MOMT"))
+		for (const auto& mat : reader.OpenChunkT<SWMO_MaterialDef>("MOMT"))
 		{
-			m_Materials.push_back(std::make_shared<WMO_Part_Material>(m_RenderDevice, *this, mat));
+			std::shared_ptr<WMO_Part_Material> material = std::make_shared<WMO_Part_Material>(m_RenderDevice, *this, mat);
+			material->SetName(m_FileName + "_Material_" + std::to_string(cntr++));
+			m_Materials.push_back(material);
 		}
 		_ASSERT(m_Materials.size() == m_Header.nTextures);
+		Log::Info("WMO: Materials count = '%d'", m_Materials.size());
 	}
 
 	// Group names
@@ -114,7 +118,7 @@ bool CWMO::Load()
 	// Group info
 	{
 		uint32 cntr = 0;
-		for (auto groupInfo : reader.OpenChunkT<WMO_GroupInfoDef>("MOGI"))
+		for (const auto& groupInfo : reader.OpenChunkT<WMO_GroupInfoDef>("MOGI"))
 		{
 			char temp[256];
 			strcpy_s(temp, m_FileName.c_str());
@@ -150,18 +154,18 @@ bool CWMO::Load()
 
 	// Portal vertices
 	{
-		for (auto pv : reader.OpenChunkT<vec3>("MOPV"))
+		for (const auto& pv : reader.OpenChunkT<glm::vec3>("MOPV"))
 		{
 			m_PortalVertices.push_back(Fix_XZmY(pv));
 		}
 
-		if (! m_PortalVertices.empty())
+		if (!m_PortalVertices.empty())
 			m_PortalVB = m_RenderDevice.GetObjectsFactory().CreateVertexBuffer(m_PortalVertices);
 	}
 
 	// Portal defs
 	{
-		for (auto pt : reader.OpenChunkT<SWMO_PortalDef>("MOPT"))
+		for (const auto& pt : reader.OpenChunkT<SWMO_PortalDef>("MOPT"))
 		{
 			m_Portals.push_back(std::make_shared<CWMO_Part_Portal>(m_RenderDevice, *this, pt));
 		}
@@ -169,7 +173,7 @@ bool CWMO::Load()
 
 	// Portal references
 	{
-		for (auto pr : reader.OpenChunkT<SWMO_PortalReferencesDef>("MOPR"))
+		for (const auto& pr : reader.OpenChunkT<SWMO_PortalReferencesDef>("MOPR"))
 		{
 			m_PortalReferences.push_back(pr);
 		}
@@ -177,7 +181,7 @@ bool CWMO::Load()
 
 	// Visible vertices
 	{
-		for (auto vv : reader.OpenChunkT<vec3>("MOVV"))
+		for (const auto& vv : reader.OpenChunkT<vec3>("MOVV"))
 		{
 			m_VisibleBlockVertices.push_back(Fix_XZmY(vv));
 		}
@@ -185,7 +189,7 @@ bool CWMO::Load()
 
 	// Visible blocks
 	{
-		for (auto vb : reader.OpenChunkT<SWMO_VisibleBlockListDef>("MOVB"))
+		for (const auto& vb : reader.OpenChunkT<SWMO_VisibleBlockListDef>("MOVB"))
 		{
 			m_VisibleBlockList.push_back(vb);
 		}
@@ -193,18 +197,21 @@ bool CWMO::Load()
 
 	// Lights
 	{
-		for (auto lt : reader.OpenChunkT<SWMO_LightDef>("MOLT"))
+		for (const auto& lt : reader.OpenChunkT<SWMO_LightDef>("MOLT"))
 		{
 			m_Lights.push_back(std::make_shared<WMO_Part_Light>(lt));
 		}
+		Log::Info("WMO: Lights count = '%d'", m_Lights.size());
 	}
 
 	// Doodads set
 	{
-		for (auto ds : reader.OpenChunkT<SWMO_Doodad_SetInfo>("MODS"))
+		for (const auto& ds : reader.OpenChunkT<SWMO_Doodad_SetInfo>("MODS"))
 		{
 			m_DoodadsSetInfos.push_back(ds);
 		}
+
+		Log::Info("WMO: Doodads count = '%d'", m_DoodadsSetInfos.size());
 	}
 
 	// Doodads filenames
@@ -220,7 +227,7 @@ bool CWMO::Load()
 
 	// Doodads placemnts
 	{
-		for (auto dd : reader.OpenChunkT<SWMO_Doodad_PlacementInfo>("MODD"))
+		for (const auto& dd : reader.OpenChunkT<SWMO_Doodad_PlacementInfo>("MODD"))
 		{
 			m_DoodadsPlacementInfos.push_back(dd);
 		}
@@ -231,7 +238,7 @@ bool CWMO::Load()
 
 	// Fog
 	{
-		for (auto fog : reader.OpenChunkT<SWMO_FogDef>("MFOG"))
+		for (const auto& fog : reader.OpenChunkT<SWMO_FogDef>("MFOG"))
 		{
 			m_Fogs.push_back(std::make_shared<WMO_Part_Fog>(fog));
 		}
@@ -251,12 +258,12 @@ bool CWMO::Load()
 		{
 			_ASSERT(it.portalIndex < m_Portals.size());
 			_ASSERT(it.groupIndex < m_Groups.size());
-		}
+}
 #endif
 	}
 
 	// Init m_Groups
-	for (auto it : m_Groups)
+	for (const auto& it : m_Groups)
 	{
 		it->Load();
 
@@ -268,38 +275,6 @@ bool CWMO::Load()
 			m_OutdoorGroups.push_back(it);
 		}
 	}
-
-	return true;
-}
-
-void CWMO::Render(CWMO_Base_Instance* _localContr) const
-{
-	/*for (auto& it : m_Portals)
-	{
-		it->Render(_localContr->GetWorldTransfom());
-	}*/
-
-
-	for (auto& it : m_Lights)
-	{
-		//it->Render(_localContr->GetWorldTransfom());
-	}
-}
-
-bool CWMO::drawSkybox()
-{
-	/*if (m_Skybox == nullptr)
-	{
-		return false;
-	}
-
-	mat4 worldMatrix;
-	worldMatrix = glm::translate(worldMatrix, _Render->getCamera()->Position);
-	worldMatrix = glm::scale(worldMatrix, vec3(2.0f));*/
-
-	//m_Skybox->Render(worldMatrix, nullptr, vec4(1.0f), 0, 0, 0);
-
-	//_World->EnvM()->m_HasSky = true;
 
 	return true;
 }

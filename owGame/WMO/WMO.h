@@ -25,14 +25,9 @@ public:
 	virtual ~CWMO();
 
 	// ISceneNodeProvider
-	void CreateInsances(std::weak_ptr<ISceneNode3D> _parent) override;
-
+	void CreateInsances(ISceneNode3D* _parent) override;
 
 	bool Load();
-
-	void Render(CWMO_Base_Instance* _localContr) const;
-
-	bool drawSkybox();
 
 public:
 	std::string getFilename() const { return m_FileName; }
@@ -48,7 +43,7 @@ public:
 
 public:
 	//-- Materials --//
-	char*																m_TexturesNames;		// MOTX chunk
+	std::unique_ptr<char[]>												m_TexturesNames;		// MOTX chunk
 	std::vector<std::shared_ptr<WMO_Part_Material>>						m_Materials;			// MOMT chunk
 
 	//-- Groups --//

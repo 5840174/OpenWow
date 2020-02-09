@@ -25,7 +25,7 @@ WMO_Part_Light::WMO_Part_Light(const SWMO_LightDef& WMOLightProto)
 	setLight(light);
 	*/
 
-	Log::Warn("WMOLight: Created: Type %d, UseAtten %d, %f", m_WMOLightProto.type, m_WMOLightProto.useAtten, m_WMOLightProto.attenStart, m_WMOLightProto.attenEnd);
+	//Log::Warn("WMOLight: Created: Type %d, UseAtten %d, %f", m_WMOLightProto.type, m_WMOLightProto.useAtten, m_WMOLightProto.attenStart, m_WMOLightProto.attenEnd);
 }
 
 void WMO_Part_Light::setup(uint32 light)

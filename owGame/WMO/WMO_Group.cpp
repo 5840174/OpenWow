@@ -121,7 +121,11 @@ void WMO_Group::Load()
 			_ASSERT(m_Header.flags.HAS_3_MOTV == 0);
 
 			// Bounds
-			m_Bounds.set(m_Header.boundingBox.min, m_Header.boundingBox.max, true);
+			glm::vec3 boundsMin = Fix_XZmY(m_Header.boundingBox.min);
+			glm::vec3 boundsMax = Fix_XZmY(m_Header.boundingBox.max);
+			std::swap(boundsMin.z, boundsMax.z);
+
+			m_Bounds.set(boundsMin, boundsMax);
 		}
 		else if (strcmp(fourcc, "MOPY") == 0) // Material info for triangles
 		{
@@ -295,8 +299,8 @@ void WMO_Group::Load()
 				}
 			}
 
-			//m_WMOLiqiud = std::make_shared<CWMO_Liquid>(m_LiquidHeader.A, m_LiquidHeader.B);
-			//m_WMOLiqiud->CreateFromWMO(m_F, ParentWMO->m_Materials[m_LiquidHeader.materialID], DBC_LiquidType[liquid_type], m_Header.flags.IS_INDOOR);
+			m_WMOLiqiud = std::make_shared<CWMO_Liquid>(m_RenderDevice, m_LiquidHeader.A, m_LiquidHeader.B);
+			m_WMOLiqiud->CreateFromWMO(m_F, m_WMOModel.m_Materials[m_LiquidHeader.materialID], DBC_LiquidType[1], m_Header.flags.IS_INDOOR);
 
 		}
 		else
@@ -337,77 +341,4 @@ void WMO_Group::Load()
 		// TODO: enable me std::sort(m_WMOBatchIndexes.begin(), m_WMOBatchIndexes.end(), WMO_Group_Part_BatchCompare());
 		m_WMOBatchs.clear();
 	}
-}
-
-void WMO_Group::initLighting()
-{
-	/*if (m_Header.flags.FLAG_IS_INDOOR && m_Header.flags.FLAG_HAS_VERTEX_COLORS)
-	{
-		vec3 dirmin(1, 1, 1);
-		float lenmin;
-		int lmin;
-		for (uint32 i = 0; i < m_DoodadsIndexesCount; i++)
-		{
-			lenmin = 999999.0f * 999999.0f;
-			lmin = 0;
-			DoodadInstance* mi = m_ParentWMO->m_M2Instances[m_PlacementInfoIndexes[i]];
-			for (uint32 j = 0; j < m_ParentWMO->m_Header.nLights; j++)
-			{
-				WMO_Part_Light* l = m_ParentWMO->m_Lights[j];
-				vec3 dir = l->lightDef.pos - mi->placementInfo->position;
-				float ll = dir.length2();
-				if (ll < lenmin)
-				{
-					lenmin = ll;
-					dirmin = dir;
-					lmin = j;
-				}
-			}
-			mi->light = lmin;
-			mi->ldir = dirmin;
-		}
-		m_EnableOutdoorLights = false;
-	}
-	else
-	{
-		m_EnableOutdoorLights = true;
-	}*/
-}
-
-//
-
-
-
-void WMO_Group::Render(cmat4 _world) const
-{
-	/*{
-		CWMO_GeomertyPass* pass = _Render->getTechniquesMgr()->WMO_Pass.operator->();
-		pass->Bind();
-		{
-			pass->setWorld(_world);
-
-			// Vertex colors
-			pass->SetHasMOCV(m_IsMOCVExists && m_Quality.WMO_MOCV);
-
-			// Ambient color
-			pass->SetUseAmbColor(m_Quality.WMO_AmbColor);
-			//pass->SetAmbColor(m_ParentWMO->m_Header.getAmbColor());
-
-			for (auto it : m_WMOBatchIndexes)
-			{
-				it->Render();
-			}
-		}
-		pass->Unbind();
-	}*/
-
-	//RenderCollision(_world);
-}
-
-void WMO_Group::RenderCollision(cmat4 _world) const
-{
-	/*for (auto& node : m_CollisionNodes)
-	{
-		node->Render(_world);
-	}*/
 }

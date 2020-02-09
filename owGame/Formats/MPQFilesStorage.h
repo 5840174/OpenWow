@@ -1,7 +1,6 @@
 #pragma once
 
-// MPQ Files
-#include <libmpq/mpq.h>
+#include "libmpq/mpq.h"
 
 struct SMPQFileLocation
 {

@@ -27,10 +27,6 @@ public:
 	uint32 to_wmo_liquid(int x);
 
 	void Load();
-	void initLighting();
-
-	void Render(cmat4 _world) const;
-	void RenderCollision(cmat4 _world) const;
 
 	const CWMO& GetWMOModel() const { return m_WMOModel; }
 

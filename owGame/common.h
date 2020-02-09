@@ -17,3 +17,14 @@
 #include "WowConsts.h"
 #include "WowTime.h"
 #include "WowChunkUtils.h"
+
+
+static inline vec3 Fix_XZY(cvec3 _vec)
+{
+	return vec3(_vec.x, _vec.z, _vec.y);
+}
+
+static inline vec3 Fix_XZmY(cvec3 _vec)
+{
+	return vec3(_vec.x, _vec.z, -_vec.y);
+}

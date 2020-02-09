@@ -89,7 +89,13 @@ void CM2_Builder::Step1Header()
 	}
 
 	// Bounds
-	m_M2->m_Bounds.set(m_Header.bounding_box.min, m_Header.bounding_box.max, true);
+	glm::vec3 boundsMin = m_Header.bounding_box.min;
+	glm::vec3 boundsMax = m_Header.bounding_box.max;
+	boundsMin = Fix_XZmY(boundsMin);
+	boundsMax = Fix_XZmY(boundsMax);
+	std::swap(boundsMin.z, boundsMax.z);
+
+	m_M2->m_Bounds.set(boundsMin, boundsMax);
 }
 
 void CM2_Builder::Step2GlobalLoops()

@@ -26,7 +26,7 @@ WMO_Part_Material::WMO_Part_Material(IRenderDevice& RenderDevice, const CWMO& WM
     SetSampler(0, sampler);
 
 	// This
-	std::string textureName = m_WMOModel.m_TexturesNames + m_WMOMaterialProto.diffuseNameIndex;
+	std::string textureName = m_WMOModel.m_TexturesNames.get() + m_WMOMaterialProto.diffuseNameIndex;
 	std::shared_ptr<ITexture> texture = RenderDevice.GetObjectsFactory().LoadTexture2D(textureName);
 	SetTexture(0, texture);
 

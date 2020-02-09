@@ -19,7 +19,7 @@ public:
 	CM2_Skin(const M2& M2Model);
 
 	// ISceneNodeProvider
-	void CreateInsances(std::weak_ptr<ISceneNode3D> _parent) override;
+	void CreateInsances(ISceneNode3D* _parent) override;
 
 private:
 	std::vector<std::shared_ptr<CM2_SkinSection>>	m_Sections;
