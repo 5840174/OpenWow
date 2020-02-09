@@ -1,4 +1,4 @@
 [submodule "Externals/libmpq"]
 	path = Externals/libmpq
-	url = https://github.com/ge0rg/libmpq
+	url = https://github.com/bouzi71/libmpq
 	branch = master
