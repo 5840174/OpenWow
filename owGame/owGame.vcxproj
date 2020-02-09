@@ -52,7 +52,10 @@
     <ClCompile Include="DBC\Core\DBC__Storage.cpp" />
     <ClCompile Include="Formats\ImageBLP.cpp" />
     <ClCompile Include="Formats\MPQFilesStorage.cpp" />
-    <ClCompile Include="LiquidLayer.cpp" />
+    <ClCompile Include="Liquid\Liquid.cpp" />
+    <ClCompile Include="Liquid\LiquidInstance.cpp" />
+    <ClCompile Include="Liquid\LiquidLayer.cpp" />
+    <ClCompile Include="Liquid\LiquidMaterial.cpp" />
     <ClCompile Include="M2\M2.cpp" />
     <ClCompile Include="M2\M2_Animation.cpp" />
     <ClCompile Include="M2\M2_Animator.cpp" />
@@ -87,9 +90,6 @@
     <ClCompile Include="M2\ShaderResolver.cpp" />
     <ClCompile Include="owGame.cpp" />
     <ClCompile Include="RenderPass_Liquid.cpp" />
-    <ClCompile Include="LiquidInstance.cpp" />
-    <ClCompile Include="Liquid.cpp" />
-    <ClCompile Include="LiquidMaterial.cpp" />
     <ClCompile Include="Settings\WoWSettingsGroup.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
@@ -189,7 +189,10 @@
     <ClInclude Include="Interfaces\ILiquid.h" />
     <ClInclude Include="Interfaces\Managers.h" />
     <ClInclude Include="Interfaces\SkyManager.h" />
-    <ClInclude Include="LiquidLayer.h" />
+    <ClInclude Include="Liquid\Liquid.h" />
+    <ClInclude Include="Liquid\LiquidInstance.h" />
+    <ClInclude Include="Liquid\LiquidLayer.h" />
+    <ClInclude Include="Liquid\LiquidMaterial.h" />
     <ClInclude Include="M2\M2.h" />
     <ClInclude Include="M2\M2_Animated.h" />
     <ClInclude Include="M2\M2_AnimatedConverters.h" />
@@ -230,9 +233,6 @@
     <ClInclude Include="M2\RenderPass_M2.h" />
     <ClInclude Include="M2\ShaderResolver.h" />
     <ClInclude Include="RenderPass_Liquid.h" />
-    <ClInclude Include="LiquidInstance.h" />
-    <ClInclude Include="Liquid.h" />
-    <ClInclude Include="LiquidMaterial.h" />
     <ClInclude Include="Settings\WoWSettingsGroup.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="WMO\RenderPass_WMO.h" />

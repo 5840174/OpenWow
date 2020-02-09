@@ -6,12 +6,12 @@
 // Additional
 #include "DBC/Core/DBC__Storage.h"
 #include "Settings/WoWSettingsGroup.h"
-#include "MPQFilesStorage.h"
-#include "ImageBLP.h"
+#include "Formats/MPQFilesStorage.h"
+#include "Formats/ImageBLP.h"
 #include "M2/M2_Manager.h"
 #include "WMO/WMOsManager.h"
 
-#include "LiquidInstance.h"
+#include "Liquid/LiquidInstance.h"
 #include "RenderPass_Liquid.h"
 
 extern CLog* gLogInstance;

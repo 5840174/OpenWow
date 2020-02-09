@@ -8,8 +8,11 @@ class ZN_API CLiquidLayer
 	: public ModelProxie
 {
 public:
-	CLiquidLayer(IRenderDevice& RenderDevice, std::shared_ptr<IModel> Model);
+	CLiquidLayer(IRenderDevice& RenderDevice);
 	virtual ~CLiquidLayer();
+
+	std::shared_ptr<IGeometry> CreateGeometry(float YDir);
+	std::shared_ptr<IMaterial> GetMaterial() const;
 
 	// IModel
 	bool Render(const RenderEventArgs& renderEventArgs) const override;
@@ -38,7 +41,7 @@ public:
 	// Render
 	void InitTextures(DBC_LIQUIDTYPE_Type::List _liquidType);
 
-	const std::shared_ptr<IMaterial> GetMaterial() const;
+	
 
 private:
 	std::vector<std::shared_ptr<ITexture>>    m_Textures;

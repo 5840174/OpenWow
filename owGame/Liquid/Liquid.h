@@ -10,7 +10,6 @@ public:
 
 protected:
 	void createLayers(std::shared_ptr<const DBC_LiquidTypeRecord> _type, std::shared_ptr<IFile> f);
-	void createBuffer();
 	
 public:
 	uint32                                                              m_TilesX, m_TilesY;

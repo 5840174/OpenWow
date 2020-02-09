@@ -123,20 +123,8 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Liquid.cpp">
-      <Filter>Liquid</Filter>
-    </ClCompile>
-    <ClCompile Include="LiquidInstance.cpp">
-      <Filter>Liquid</Filter>
-    </ClCompile>
     <ClCompile Include="stdafx.cpp">
       <Filter>Common</Filter>
-    </ClCompile>
-    <ClCompile Include="LiquidMaterial.cpp">
-      <Filter>Liquid</Filter>
-    </ClCompile>
-    <ClCompile Include="LiquidLayer.cpp">
-      <Filter>Liquid</Filter>
     </ClCompile>
     <ClCompile Include="Client\ARC4.cpp">
       <Filter>Client\Cryptography</Filter>
@@ -363,14 +351,20 @@
     <ClCompile Include="..\Externals\libmpq\libmpq\wave.c">
       <Filter>Formats\libmpq</Filter>
     </ClCompile>
+    <ClCompile Include="Liquid\Liquid.cpp">
+      <Filter>Liquid</Filter>
+    </ClCompile>
+    <ClCompile Include="Liquid\LiquidInstance.cpp">
+      <Filter>Liquid</Filter>
+    </ClCompile>
+    <ClCompile Include="Liquid\LiquidLayer.cpp">
+      <Filter>Liquid</Filter>
+    </ClCompile>
+    <ClCompile Include="Liquid\LiquidMaterial.cpp">
+      <Filter>Liquid</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Liquid.h">
-      <Filter>Liquid</Filter>
-    </ClInclude>
-    <ClInclude Include="LiquidInstance.h">
-      <Filter>Liquid</Filter>
-    </ClInclude>
     <ClInclude Include="common.h">
       <Filter>Common</Filter>
     </ClInclude>
@@ -379,12 +373,6 @@
     </ClInclude>
     <ClInclude Include="..\shared\owGame.h">
       <Filter>Common</Filter>
-    </ClInclude>
-    <ClInclude Include="LiquidMaterial.h">
-      <Filter>Liquid</Filter>
-    </ClInclude>
-    <ClInclude Include="LiquidLayer.h">
-      <Filter>Liquid</Filter>
     </ClInclude>
     <ClInclude Include="DBC\DBC_AreaTable.h">
       <Filter>DBC\Tables\Area</Filter>
@@ -799,6 +787,18 @@
     </ClInclude>
     <ClInclude Include="..\Externals\libmpq\libmpq\wave.h">
       <Filter>Formats\libmpq</Filter>
+    </ClInclude>
+    <ClInclude Include="Liquid\Liquid.h">
+      <Filter>Liquid</Filter>
+    </ClInclude>
+    <ClInclude Include="Liquid\LiquidInstance.h">
+      <Filter>Liquid</Filter>
+    </ClInclude>
+    <ClInclude Include="Liquid\LiquidLayer.h">
+      <Filter>Liquid</Filter>
+    </ClInclude>
+    <ClInclude Include="Liquid\LiquidMaterial.h">
+      <Filter>Liquid</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
