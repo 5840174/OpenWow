@@ -25,14 +25,7 @@ CMapWMOInstance::CMapWMOInstance(const CWMO& WMOObject, const ADT_MODF & _placem
 		SetRotation(vec3(rotate.z, rotate.y, rotate.x));
 	}
 
-	// CColliderComponent
-	{
-		std::shared_ptr<CColliderComponent3D> colliderComponent = GetComponent<CColliderComponent3D>();
-
-		// Bounds
-		BoundingBox bbox(_placementInfo.boundingBox.min, _placementInfo.boundingBox.max);
-		colliderComponent->SetBounds(bbox);
-	}
+	m_ThisBounds = BoundingBox(_placementInfo.boundingBox.min, _placementInfo.boundingBox.max);
 }
 
 CMapWMOInstance::~CMapWMOInstance()
@@ -41,8 +34,32 @@ CMapWMOInstance::~CMapWMOInstance()
 }
 
 
+void CMapWMOInstance::Initialize()
+{
+	// CColliderComponent
+	{
+		std::shared_ptr<CColliderComponent3D> colliderComponent = GetComponent<CColliderComponent3D>();
+
+		// Bounds
+		colliderComponent->SetBounds(m_ThisBounds);
+	}
+
+	__super::Initialize();
+}
+
 void CMapWMOInstance::Accept(IVisitor* visitor)
 {
+	const auto& idIter = m_AlreadyDraw.find(m_UniqueId);
+	if (idIter != m_AlreadyDraw.end())
+	{
+		if (idIter->second != this)
+			return;
+	}
+	else
+	{
+		m_AlreadyDraw.insert(std::make_pair(m_UniqueId, this));
+	}
+
 	//CRenderPass_WMO* passAsWMOPass = dynamic_cast<CRenderPass_WMO*>(visitor);
 	// (passAsWMOPass == nullptr)
 	//	return false;
@@ -84,4 +101,4 @@ void CMapWMOInstance::reset()
 {
 	m_AlreadyDraw.clear();
 }
-std::set<uint32> CMapWMOInstance::m_AlreadyDraw;
+std::unordered_map<uint32, const CMapWMOInstance*> CMapWMOInstance::m_AlreadyDraw;

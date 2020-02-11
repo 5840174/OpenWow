@@ -351,7 +351,7 @@ bool CMapChunk::Load()
 	mat->SetShadowMapExists(header.flags.has_mcsh == 1);
 
 	{ // Geom High
-		std::vector<uint16>& mapArrayHigh = _MapShared->GenarateHighMapArray(header.holes);
+		const std::vector<uint16>& mapArrayHigh = _MapShared->GenarateHighMapArray(header.holes);
 		std::shared_ptr<IBuffer> __ibHigh = m_RenderDevice.GetObjectsFactory().CreateIndexBuffer(mapArrayHigh);
 
 		std::shared_ptr<IGeometry> defaultGeometry = m_RenderDevice.GetObjectsFactory().CreateGeometry();

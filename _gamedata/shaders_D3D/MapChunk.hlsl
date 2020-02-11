@@ -5,13 +5,6 @@
 #define _IS_NORTREND 0 // should be defined by the application.
 #endif
 
-struct MapChunk_Material
-{
-	uint   LayersCnt;
-	bool   ShadowMapExists;
-    //-------------------------- ( 16 bytes )
-};
-
 struct VertexShaderInput
 {
 	float3 position       : POSITION;
@@ -35,7 +28,9 @@ struct VertexShaderOutput
 // Uniforms
 cbuffer Material : register(b2)
 {
-    MapChunk_Material Material;
+	uint   LayersCnt;
+	bool   ShadowMapExists;
+    //-------------------------- ( 16 bytes )
 };
 
 // Textures and samples
@@ -77,21 +72,21 @@ DefferedRenderPSOut PS_main(VertexShaderOutput IN) : SV_TARGET
 
 	/* NORTREND */
 	float alphaSumma = 0.0;
-	if (Material.LayersCnt >= 2)
+	if (LayersCnt >= 2)
 	{
 		float alphaCurrent = AlphaMap.Sample(AlphaMapSampler, IN.texCoordAlpha).r;
 		alphaSumma += alphaCurrent;
 		layersColor += ColorMap1.Sample(ColorMapSampler, IN.texCoordDetail).rgb * alphaCurrent;
 		layersSpec += SpecMap1.Sample(ColorMapSampler, IN.texCoordDetail) * alphaCurrent;
 	}
-	if (Material.LayersCnt >= 3)
+	if (LayersCnt >= 3)
 	{
 		float alphaCurrent = AlphaMap.Sample(AlphaMapSampler, IN.texCoordAlpha).g;
 		alphaSumma += alphaCurrent;
 		layersColor += ColorMap2.Sample(ColorMapSampler, IN.texCoordDetail).rgb * alphaCurrent;
 		layersSpec += SpecMap2.Sample(ColorMapSampler, IN.texCoordDetail) * alphaCurrent;
 	}
-	if (Material.LayersCnt >= 4)
+	if (LayersCnt >= 4)
 	{
 		float alphaCurrent = AlphaMap.Sample(AlphaMapSampler, IN.texCoordAlpha).b;
 		alphaSumma += alphaCurrent;
@@ -106,19 +101,19 @@ DefferedRenderPSOut PS_main(VertexShaderOutput IN) : SV_TARGET
 	/* NOT NORTREND */
 	layersColor = ColorMap0.Sample(ColorMapSampler, IN.texCoordDetail).rgb;
 	layersSpec = SpecMap0.Sample(ColorMapSampler, IN.texCoordDetail);
-	if (Material.LayersCnt >= 2)
+	if (LayersCnt >= 2)
 	{
 		float alphaCurrent = AlphaMap.Sample(AlphaMapSampler, IN.texCoordAlpha).r;
 		layersColor = lerp(layersColor, ColorMap1.Sample(ColorMapSampler, IN.texCoordDetail).rgb, alphaCurrent);
 		layersSpec = lerp(layersSpec, SpecMap1.Sample(ColorMapSampler, IN.texCoordDetail), alphaCurrent);
 	}
-	if (Material.LayersCnt >= 3)
+	if (LayersCnt >= 3)
 	{
 		float alphaCurrent = AlphaMap.Sample(AlphaMapSampler, IN.texCoordAlpha).g;
 		layersColor = lerp(layersColor, ColorMap2.Sample(ColorMapSampler, IN.texCoordDetail).rgb, alphaCurrent);
 		layersSpec = lerp(layersSpec, SpecMap2.Sample(ColorMapSampler, IN.texCoordDetail), alphaCurrent);
 	}
-	if (Material.LayersCnt >= 4)
+	if (LayersCnt >= 4)
 	{
 		float alphaCurrent = AlphaMap.Sample(AlphaMapSampler, IN.texCoordAlpha).b;
 		layersColor = lerp(layersColor, ColorMap3.Sample(ColorMapSampler, IN.texCoordDetail).rgb, alphaCurrent);
@@ -129,7 +124,7 @@ DefferedRenderPSOut PS_main(VertexShaderOutput IN) : SV_TARGET
 	
 #endif
 
-	if (Material.ShadowMapExists)
+	if (ShadowMapExists)
 	{
 		float alphaShadow = AlphaMap.Sample(AlphaMapSampler, IN.texCoordAlpha).a;
 		resultColor = lerp(resultColor,  float3(0.0, 0.0, 0.0), alphaShadow);

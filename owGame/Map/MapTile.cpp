@@ -232,14 +232,12 @@ bool CMapTile::Load()
 	for (uint32_t i = 0; i < C_ChunksInTileGlobal; i++)
 	{
 		CMapChunk* chunk = CreateSceneNode<CMapChunk>(m_RenderDevice, m_Map, *this, f->Path_Name(), chunks[i]);
+		chunk->PreLoad();
 		chunk->Load();
 		m_Chunks.push_back(chunk);
-
-		// Update THIS bounds
-		BoundingBox bbox = GetComponent<IColliderComponent3D>()->GetBounds();
-		bbox.makeUnion(chunk->GetComponent<IColliderComponent3D>()->GetBounds());
-		GetComponent<IColliderComponent3D>()->SetBounds(bbox);
 	}
+
+
 
 	//-- WMOs --------------------------------------------------------------------------
 
@@ -250,11 +248,6 @@ bool CMapTile::Load()
 		CMapWMOInstance* inst = CreateSceneNode<CMapWMOInstance>(*wmo, it);
         m_WMOsInstances.push_back(inst);
 //#endif
-
-		// Update THIS bounds
-		BoundingBox bbox = GetComponent<IColliderComponent3D>()->GetBounds();
-		bbox.makeUnion(inst->GetComponent<IColliderComponent3D>()->GetBounds());
-		GetComponent<IColliderComponent3D>()->SetBounds(bbox);
 	}
 
 	//-- MDXs -------------------------------------------------------------------------
@@ -263,14 +256,12 @@ bool CMapTile::Load()
 	{
 //#ifndef _DEBUG
 		std::shared_ptr<M2> m2 = m_BaseManager->GetManager<IM2Manager>()->Add(m_RenderDevice, m_MDXsNames[it.nameIndex]);
-		CMapM2Instance* inst = CreateSceneNode<CMapM2Instance>(*m2, it);
-		m_MDXsInstances.push_back(inst);
+		if (m2)
+		{
+			CMapM2Instance* inst = CreateSceneNode<CMapM2Instance>(*m2, it);
+			m_MDXsInstances.push_back(inst);
+		}
 //#endif
-
-		// Update THIS bounds
-		BoundingBox bbox = GetComponent<IColliderComponent3D>()->GetBounds();
-		bbox.makeUnion(inst->GetComponent<IColliderComponent3D>()->GetBounds());
-		GetComponent<IColliderComponent3D>()->SetBounds(bbox);
 	}
 	//---------------------------------------------------------------------------------
 #endif

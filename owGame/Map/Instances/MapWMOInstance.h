@@ -19,7 +19,7 @@ struct ADT_MODF
 	uint16 scale;			// Legion+
 };
 
-class CMapWMOInstance 
+class ZN_API CMapWMOInstance 
 	: public CWMO_Base_Instance
 {
 public:
@@ -27,15 +27,18 @@ public:
 	virtual ~CMapWMOInstance();
 
 	// ISceneNode
+	void Initialize() override;
+
 	void Accept(IVisitor* visitor) override;
 
 	void DoUpdate(UpdateEventArgs& e) override;
 
 private:
-	uint32									m_UniqueId;
+	uint32 m_UniqueId;
+	BoundingBox m_ThisBounds;
 
 public:	// Static
 	static void reset();
 private:
-	static std::set<uint32> m_AlreadyDraw;
+	static std::unordered_map<uint32, const CMapWMOInstance*> m_AlreadyDraw;
 };

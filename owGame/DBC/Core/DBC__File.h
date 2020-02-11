@@ -89,7 +89,7 @@ public: \
 	CONCAT_RECORD(accessName)(const DBCFile<CONCAT_RECORD(accessName)>::Iterator& _iterator) : \
 		Record(_iterator->m_DBC_Stats, _iterator->m_Offset) \
 	{} \
-	CONCAT_RECORD(accessName)(DBCFile<CONCAT_RECORD(accessName)>* file, const uint8* offset) : \
+	CONCAT_RECORD(accessName)(const DBCFile<CONCAT_RECORD(accessName)>* file, const uint8* offset) : \
 		Record(file, offset) \
 	{} \
 	CONCAT_DESTRUCTOR(accessName) \
@@ -105,7 +105,7 @@ public:
 //------------------------------------------
 
 // Placed in *.cpp files
-#define DBC_LOAD(accessName, fileName) DBCFile<CONCAT_RECORD(accessName)> accessName(fileName);
+#define DBC_LOAD(accessName) DBCFile<CONCAT_RECORD(accessName)> accessName;
 
 // Placed in *.h files
 #define DBC_DEFINE(accessName) \
@@ -235,15 +235,15 @@ protected:
 ///////////////////////////////////
 class File;
 template <class RECORD_T>
-class ZN_API DBCFile 
+class DBCFile 
 	: public DBCStats
 {
 	friend RECORD_T;
 public:
-	DBCFile(const char* _fileName);
+	DBCFile();
 	virtual ~DBCFile();
 
-	bool Open(IFilesManager* FilesManager);
+	bool Open(IFilesManager* FilesManager, const std::string& FileName);
 
 	// Get data by id
 	std::shared_ptr<RECORD_T> operator[](uint32 _id);
@@ -296,7 +296,6 @@ protected:
 	std::multimap<uint32, std::shared_ptr<RECORD_T>> m_Records;
 
 private:
-	std::string            m_FileName;
 	std::shared_ptr<IFile> m_File;
 };
 

@@ -51,12 +51,12 @@ std::shared_ptr<IRenderPassPipelined> CRenderPass_ADT_MCNK::CreatePipeline(std::
 	// Create samplers
 	std::shared_ptr<ISamplerState> linearClampSampler = GetRenderDevice().GetObjectsFactory().CreateSamplerState();
 	linearClampSampler->SetFilter(ISamplerState::MinFilter::MinLinear, ISamplerState::MagFilter::MagLinear, ISamplerState::MipFilter::MipLinear);
-	linearClampSampler->SetFilter(ISamplerState::MinFilter::MinNearest, ISamplerState::MagFilter::MagNearest, ISamplerState::MipFilter::MipNearest);
+	//linearClampSampler->SetFilter(ISamplerState::MinFilter::MinNearest, ISamplerState::MagFilter::MagNearest, ISamplerState::MipFilter::MipNearest);
 	linearClampSampler->SetWrapMode(ISamplerState::WrapMode::Clamp, ISamplerState::WrapMode::Clamp, ISamplerState::WrapMode::Clamp);
 
 	std::shared_ptr<ISamplerState> linearRepeatSampler = GetRenderDevice().GetObjectsFactory().CreateSamplerState();
 	linearRepeatSampler->SetFilter(ISamplerState::MinFilter::MinLinear, ISamplerState::MagFilter::MagLinear, ISamplerState::MipFilter::MipLinear);
-	linearRepeatSampler->SetFilter(ISamplerState::MinFilter::MinNearest, ISamplerState::MagFilter::MagNearest, ISamplerState::MipFilter::MipNearest);
+	//linearRepeatSampler->SetFilter(ISamplerState::MinFilter::MinNearest, ISamplerState::MagFilter::MagNearest, ISamplerState::MipFilter::MipNearest);
 	linearRepeatSampler->SetWrapMode(ISamplerState::WrapMode::Repeat, ISamplerState::WrapMode::Repeat, ISamplerState::WrapMode::Repeat);
 
 	pipeline->SetSampler(0, linearRepeatSampler);
@@ -75,9 +75,8 @@ std::shared_ptr<IRenderPassPipelined> CRenderPass_ADT_MCNK::CreatePipeline(std::
 //
 bool CRenderPass_ADT_MCNK::Visit(const ISceneNode3D* node)
 {
-    const CMapChunk* adtMCNKInstance = dynamic_cast<const CMapChunk*>(node);
-    if (adtMCNKInstance == nullptr)
-        return false;
+    if (const CMapChunk* adtMCNKInstance = dynamic_cast<const CMapChunk*>(node))
+		return Base3DPass::Visit(node);
 
-    return Base3DPass::Visit(node);
+	return false;
 }

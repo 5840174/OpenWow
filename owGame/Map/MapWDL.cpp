@@ -94,10 +94,7 @@ void CMapWDL::CreateInsances(ISceneNode3D* _parent) const
 				std::shared_ptr<IBuffer> __vb = m_RenderDevice.GetObjectsFactory().CreateVertexBuffer(vecrtices);
 
 				std::shared_ptr<IGeometry> geometry = m_RenderDevice.GetObjectsFactory().CreateGeometry();
-				geometry->AddVertexBuffer(BufferBinding("POSITION", 0), __vb);
-
-				std::shared_ptr<IModel> model = m_RenderDevice.GetObjectsFactory().CreateModel();
-				
+				geometry->AddVertexBuffer(BufferBinding("POSITION", 0), __vb);		
 				
 				std::shared_ptr<CWDL_LowResTile> lowResTile = std::make_shared<CWDL_LowResTile>(m_RenderDevice, m_MapController, i, j);
 				lowResTile->AddConnection(m_LowResilutionTileMaterial, geometry);

@@ -15,12 +15,11 @@ public:
 	CWMO_Base_Instance(const CWMO& WMOObject);
 	virtual ~CWMO_Base_Instance();
 
-	void Initialize();
 
-	void                                            CreateInstances();
+	void CreateInstances();
 
 	// CWMO_Base_Instance
-	const CWMO&                           getWMO() const;
+	const CWMO& getWMO() const;
 
 	void AddGroupInstance(CWMO_Group_Instance* _group) { m_GroupInstances.push_back(_group); }
 	const GroupInstances& getGroupInstances() const { return m_GroupInstances; }
@@ -31,11 +30,10 @@ public:
 	const vec3* getVerts() const { return m_ConvertedVerts.data(); }
 
 	// SceneNode3D
-	std::string                              GetName() const override { return "WMO '" + m_WMOObject.getFilename() + "'"; }
-
-	void                                            UpdateCamera(const ICameraComponent3D* camera) override;
-
-	void                                            Accept(IVisitor* visitor) override;
+	virtual void Initialize() override;
+	std::string GetName() const override;
+	void UpdateCamera(const ICameraComponent3D* camera) override;
+	void Accept(IVisitor* visitor) override;
 
 protected:
 	const CWMO&                           m_WMOObject;

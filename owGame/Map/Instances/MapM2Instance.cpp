@@ -32,6 +32,16 @@ CMapM2Instance::~CMapM2Instance()
 //
 void CMapM2Instance::Accept(IVisitor* visitor)
 {
+	const auto& idIter = m_AlreadyDraw.find(m_UniqueId);
+	if (idIter != m_AlreadyDraw.end())
+	{
+		if (idIter->second != this)
+			return;
+	}
+	else
+	{
+		m_AlreadyDraw.insert(std::make_pair(m_UniqueId, this));
+	}
 	//CRenderPass_M2* passAsM2Pass = dynamic_cast<CRenderPass_M2*>(visitor);
     //if (passAsM2Pass == nullptr)
     //    return false;
@@ -62,11 +72,10 @@ void CMapM2Instance::DoUpdate(UpdateEventArgs & e)
 	//}
 }
 
-//
-std::set<uint32> CMapM2Instance::m_AlreadyDraw;
 void CMapM2Instance::reset()
 {
 	m_AlreadyDraw.clear();
 }
+std::unordered_map<uint32, const CMapM2Instance*> CMapM2Instance::m_AlreadyDraw;
 
 #endif

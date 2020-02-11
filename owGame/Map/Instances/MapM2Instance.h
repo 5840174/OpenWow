@@ -19,7 +19,7 @@ struct ADT_MDXDef
     } flags;
 };
 
-class CMapM2Instance 
+class ZN_API CMapM2Instance 
 	: public CM2_Base_Instance
 {
 public:
@@ -37,7 +37,7 @@ public:
 public:	// Static
 	static void reset();
 private:
-	static std::set<uint32> m_AlreadyDraw;
+	static std::unordered_map<uint32, const CMapM2Instance*> m_AlreadyDraw;
 };
 
 #endif

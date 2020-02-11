@@ -1,49 +1,47 @@
 #pragma once
 
 template<class RECORD_T>
-inline DBCFile<RECORD_T>::DBCFile(const char* _fileName) :
-	m_File(nullptr)
-{
-	m_FileName = std::string("DBFilesClient\\") + std::string(_fileName);
-}
+inline DBCFile<RECORD_T>::DBCFile()
+{}
 
 template<class RECORD_T>
 inline DBCFile<RECORD_T>::~DBCFile()
-{
-	m_Records.clear();
-}
+{}
 
 template<class RECORD_T>
-inline bool DBCFile<RECORD_T>::Open(IFilesManager* FilesManager)
+inline bool DBCFile<RECORD_T>::Open(IFilesManager* FilesManager, const std::string& FileName)
 {
-	m_File = FilesManager->Open(m_FileName);
-	if (m_File == nullptr)
+	std::shared_ptr<IFile> file = FilesManager->Open(std::string("DBFilesClient\\") + FileName);
+	if (file == nullptr)
 	{
+		Log::Warn("DBCFile[%s]: Not found.", FileName.c_str());
 		return false;
 	}
 
+	m_File = file;
+
 	char header[5];
-	m_File->readBytes(header, 4);
+	file->readBytes(header, 4);
 	header[4] = '\0';
 	_ASSERT(header[0] == 'W' && header[1] == 'D' && header[2] == 'B' && header[3] == 'C');
 
 
-	m_File->readBytes(&recordCount, 4);// Number of records
-	m_File->readBytes(&fieldCount, 4); // Number of fields
-	m_File->readBytes(&recordSize, 4); // Size of a record
-	m_File->readBytes(&stringSize, 4); // String size
+	file->readBytes(&recordCount, 4);// Number of records
+	file->readBytes(&fieldCount, 4); // Number of fields
+	file->readBytes(&recordSize, 4); // Size of a record
+	file->readBytes(&stringSize, 4); // String size
 
-	Log::Info("DBCFile[%s]: HEAD [%s], Size [%d]", m_File->Path_Name().c_str(), header, recordCount);
+	Log::Info("DBCFile[%s]: Records count = '%d'.", FileName.c_str(), header, recordCount);
 
 	_ASSERT(fieldCount * 4 == recordSize);
 
-	uint64_t stringTableOffset = m_File->getPos() + recordSize * recordCount;
-	stringTable = m_File->getData() + stringTableOffset;
+	uint64_t stringTableOffset = file->getPos() + recordSize * recordCount;
+	stringTable = file->getData() + stringTableOffset;
 
 	// Fill record table
-	for (uint64_t _offset = m_File->getPos(); _offset != stringTableOffset; _offset += recordSize)
+	for (uint64_t _offset = file->getPos(); _offset != stringTableOffset; _offset += recordSize)
 	{
-		std::shared_ptr<RECORD_T> record = std::make_shared<RECORD_T>(this, const_cast<uint8*>(m_File->getData() + _offset));
+		std::shared_ptr<RECORD_T> record = std::make_shared<RECORD_T>(this, const_cast<uint8*>(file->getData() + _offset));
 		m_Records.insert(std::make_pair(record->Get_ID(), record));
 	}
 

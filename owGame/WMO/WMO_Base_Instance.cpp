@@ -12,10 +12,7 @@ CWMO_Base_Instance::CWMO_Base_Instance(const CWMO& WMOObject)
 CWMO_Base_Instance::~CWMO_Base_Instance()
 {}
 
-void CWMO_Base_Instance::Initialize()
-{
-	CreateInstances();
-}
+
 
 
 void CWMO_Base_Instance::CreateInstances()
@@ -39,6 +36,20 @@ const CWMO& CWMO_Base_Instance::getWMO() const
 	return m_WMOObject;
 }
 
+
+
+//
+// SceneNode
+//
+void CWMO_Base_Instance::Initialize()
+{
+	CreateInstances();
+}
+
+std::string CWMO_Base_Instance::GetName() const 
+{ 
+	return "WMO '" + m_WMOObject.getFilename() + "'"; 
+}
 
 void CWMO_Base_Instance::UpdateCamera(const ICameraComponent3D* camera)
 {
