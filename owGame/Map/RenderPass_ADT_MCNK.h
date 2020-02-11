@@ -1,6 +1,7 @@
 #pragma once
 
-class CRenderPass_ADT_MCNK : public Base3DPass
+class ZN_API CRenderPass_ADT_MCNK 
+	: public Base3DPass
 {
 public:
 	CRenderPass_ADT_MCNK(IRenderDevice& RenderDevice, std::shared_ptr<IScene> scene);

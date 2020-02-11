@@ -6,27 +6,29 @@
 // General
 #include "WDL_LowResTile.h"
 
-CWDL_LowResTile::CWDL_LowResTile(std::weak_ptr<const CMap> _parent, std::shared_ptr<IModel> _mesh, uint32 _indexX, uint32 _indexZ) :
-	ModelProxie(_mesh),
-	m_MapController(_parent),
-	m_IndexX(_indexX),
-	m_IndexZ(_indexZ)
+CWDL_LowResTile::CWDL_LowResTile(IRenderDevice& RenderDevice, const CMap& Map, int IndexX, int IndexZ)
+	: ModelProxie(RenderDevice.GetObjectsFactory().CreateModel())
+	, m_MapController(Map)
+	, m_IndexX(IndexX)
+	, m_IndexZ(IndexZ)
 {
 }
+
+CWDL_LowResTile::~CWDL_LowResTile()
+{
+}
+
 
 
 //
 // IModel
 //
-bool CWDL_LowResTile::Render(const RenderEventArgs* renderEventArgs, const IConstantBuffer* perObject, SGeometryPartParams GeometryPartParams)
+bool CWDL_LowResTile::Render(const RenderEventArgs& renderEventArgs) const
 {
-	std::shared_ptr<const CMap> MapController = m_MapController.lock();
-	_ASSERT(MapController != NULL);
+	int32 currentX = m_MapController.GetCurrentX();
+	int32 currentZ = m_MapController.GetCurrentZ();
 
-	int32 currentX = MapController->GetCurrentX();
-	int32 currentZ = MapController->GetCurrentZ();
-
-	if (MapController->getTileIsCurrent(m_IndexX, m_IndexZ))
+	if (m_MapController.getTileIsCurrent(m_IndexX, m_IndexZ))
 	{
 		return false;
 	}
@@ -36,5 +38,6 @@ bool CWDL_LowResTile::Render(const RenderEventArgs* renderEventArgs, const ICons
 		return false;
 	}
 
-	return ModelProxie::Render(renderEventArgs, perObject, GeometryPartParams);
+	return ModelProxie::Render(renderEventArgs);
 }
+

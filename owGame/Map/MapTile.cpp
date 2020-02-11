@@ -6,42 +6,29 @@
 // General
 #include "MapTile.h"
 
-CMapTile::CMapTile(ISceneNode3D* RealParent)
-	: m_Parent(RealParent)
+CMapTile::CMapTile(IBaseManager* BaseManager, IRenderDevice& RenderDevice, const CMap& Map, uint32 IndexX, uint32 IndexZ)
+	: m_BaseManager(BaseManager)
+	, m_RenderDevice(RenderDevice)
+	, m_Map(Map)
+	, m_IndexX(IndexX)
+	, m_IndexZ(IndexZ)
 {}
 
 CMapTile::~CMapTile()
 {}
 
-void CMapTile::Initialize()
+
+const int CMapTile::getIndexX() const
 {
+	return m_IndexX;
 }
 
-void CMapTile::Initialize(uint32 _intexX, uint32 _intexZ)
+const int CMapTile::getIndexZ() const
 {
-    m_IndexX = _intexX;
-    m_IndexZ = _intexZ;
-
-    // CTransformComponent
-    {
-        //transformComponent->SetTranslate(vec3(_intexX * C_TileSize, 0.0f, _intexZ * C_TileSize));
-    }
-
-    // CColliderComponent
-    {
-        std::shared_ptr<CColliderComponent3D> colliderComponent = GetComponent<CColliderComponent3D>();
-        vec3 translate = GetTranslation();
-
-        BoundingBox bbox
-        (
-            vec3(translate.x, Math::MaxFloat, translate.z),
-            vec3(translate.x + C_TileSize, Math::MinFloat, translate.z + C_TileSize)
-        );
-        colliderComponent->SetBounds(bbox);
-    }
+	return m_IndexZ;
 }
 
-std::shared_ptr<CMapChunk> CMapTile::getChunk(int32 x, int32 z)
+const CMapChunk* CMapTile::getChunk(int32 x, int32 z) const
 {
     if (x < 0 || x >= C_ChunksInTile || z < 0 || z >= C_ChunksInTile)
         return nullptr;
@@ -49,13 +36,39 @@ std::shared_ptr<CMapChunk> CMapTile::getChunk(int32 x, int32 z)
     return m_Chunks[x * C_ChunksInTile + z];
 }
 
+const CMap & CMapTile::GetMap() const
+{
+	return m_Map;
+}
+
 //
 // SceneNode3D
 //
+void CMapTile::Initialize()
+{
+	// CColliderComponent
+	{
+		std::shared_ptr<CColliderComponent3D> colliderComponent = GetComponent<CColliderComponent3D>();
+		vec3 translate = GetTranslation();
+
+		BoundingBox bbox
+		(
+			vec3(translate.x, Math::MaxFloat, translate.z),
+			vec3(translate.x + C_TileSize, Math::MinFloat, translate.z + C_TileSize)
+		);
+		colliderComponent->SetBounds(bbox);
+	}
+}
+
+std::string CMapTile::GetName() const
+{
+	return "MapTile " + std::to_string(m_IndexX) + " - " + std::to_string(m_IndexZ);
+}
+
 bool CMapTile::Load()
 {
 	char filename[256];
-	sprintf_s(filename, "%s_%d_%d.adt", GetMapController()->GetMapFolder().c_str(), m_IndexX, m_IndexZ);
+	sprintf_s(filename, "%s_%d_%d.adt", m_Map.GetMapFolder().c_str(), m_IndexX, m_IndexZ);
 
 	std::shared_ptr<IFile> f = GetBaseManager()->GetManager<IFilesManager>()->Open(filename);
 	uint32_t startPos = f->getPos() + 20;
@@ -206,21 +219,20 @@ bool CMapTile::Load()
 	for (auto& it : m_Textures)
 	{
 		// PreLoad diffuse texture
-		it->diffuseTexture = GetBaseManager()->GetManager<IRenderDevice>()->CreateTexture2D(it->textureName);
+		it->diffuseTexture = m_RenderDevice.GetObjectsFactory().LoadTexture2D(it->textureName);
 
 		// PreLoad specular texture
 		std::string specularTextureName = it->textureName;
 		specularTextureName = specularTextureName.insert(specularTextureName.length() - 4, "_s");
-		it->specularTexture = GetBaseManager()->GetManager<IRenderDevice>()->CreateTexture2D(specularTextureName);
+		it->specularTexture = m_RenderDevice.GetObjectsFactory().LoadTexture2D(specularTextureName);
 	}
 
 	//-- Load Chunks ---------------------------------------------------------------------
 
 	for (uint32_t i = 0; i < C_ChunksInTileGlobal; i++)
 	{
-		std::shared_ptr<CMapChunk> chunk = CreateWrappedSceneNode<CMapChunk>("SceneNode3D", GetMapController(), std::static_pointer_cast<CMapTile>(shared_from_this()));
-        chunk->Initialize(f->Path_Name(), chunks[i]);
-		GetBaseManager()->GetManager<ILoader>()->AddToLoadQueue(chunk);
+		CMapChunk* chunk = CreateSceneNode<CMapChunk>(m_RenderDevice, m_Map, *this, f->Path_Name(), chunks[i]);
+		chunk->Load();
 		m_Chunks.push_back(chunk);
 
 		// Update THIS bounds
@@ -234,9 +246,8 @@ bool CMapTile::Load()
 	for (auto& it : m_WMOsPlacementInfo)
 	{
 //#ifndef _DEBUG
-		std::shared_ptr<CMapWMOInstance> inst = CreateWrappedSceneNode<CMapWMOInstance>("SceneNode3D", m_WMOsNames[it.nameIndex]);
-        inst->Initialize(it);
-		GetBaseManager()->GetManager<ILoader>()->AddToLoadQueue(inst);
+		std::shared_ptr<CWMO> wmo = m_BaseManager->GetManager<IWMOManager>()->Add(m_RenderDevice, m_WMOsNames[it.nameIndex]);
+		CMapWMOInstance* inst = CreateSceneNode<CMapWMOInstance>(*wmo, it);
         m_WMOsInstances.push_back(inst);
 //#endif
 
@@ -251,9 +262,8 @@ bool CMapTile::Load()
 	for (auto& it : m_MDXsPlacementInfo)
 	{
 //#ifndef _DEBUG
-		std::shared_ptr<CMapM2Instance> inst = CreateSceneNode<CMapM2Instance>(m_MDXsNames[it.nameIndex]);
-        inst->Initialize(it);
-		GetBaseManager()->GetManager<ILoader>()->AddToLoadQueue(inst);
+		std::shared_ptr<M2> m2 = m_BaseManager->GetManager<IM2Manager>()->Add(m_RenderDevice, m_MDXsNames[it.nameIndex]);
+		CMapM2Instance* inst = CreateSceneNode<CMapM2Instance>(*m2, it);
 		m_MDXsInstances.push_back(inst);
 //#endif
 
@@ -274,14 +284,4 @@ bool CMapTile::Load()
 bool CMapTile::Delete()
 {
 	return true;
-}
-
-
-
-//
-// Protected
-//
-CMap* CMapTile::GetMapController() const
-{
-    return dynamic_cast<CMap*>(m_Parent);
 }

@@ -6,10 +6,33 @@
 // Additional
 #include "WMO\\RenderPass_WMO.h"
 
-CMapWMOInstance::CMapWMOInstance(const CWMO& WMOObject) :
-	CWMO_Base_Instance(WMOObject)
+CMapWMOInstance::CMapWMOInstance(const CWMO& WMOObject, const ADT_MODF & _placementInfo)
+	: CWMO_Base_Instance(WMOObject)
 {
+	m_UniqueId = _placementInfo.uniqueId;
+	uint16 doodadSetIndex = _placementInfo.doodadSetIndex;
+	//m_DoodadSetInfo = _wmoObject->m_DoodadsSetInfos[doodadSetIndex];
 
+	// CTransformComponent
+	{
+		// Translate
+		SetTranslate(_placementInfo.position);
+
+		// Rotate
+		vec3 rotate = glm::radians(_placementInfo.rotation);
+		rotate.x = -rotate.x;
+		rotate.y = rotate.y - glm::half_pi<float>();
+		SetRotation(vec3(rotate.z, rotate.y, rotate.x));
+	}
+
+	// CColliderComponent
+	{
+		std::shared_ptr<CColliderComponent3D> colliderComponent = GetComponent<CColliderComponent3D>();
+
+		// Bounds
+		BoundingBox bbox(_placementInfo.boundingBox.min, _placementInfo.boundingBox.max);
+		colliderComponent->SetBounds(bbox);
+	}
 }
 
 CMapWMOInstance::~CMapWMOInstance()
@@ -17,38 +40,6 @@ CMapWMOInstance::~CMapWMOInstance()
 	//Log::Info("ADT_WMO Deleted");
 }
 
-void CMapWMOInstance::Initialize()
-{
-	CWMO_Base_Instance::Initialize();
-}
-
-void CMapWMOInstance::Initialize(const ADT_MODF & _placementInfo)
-{
-    m_UniqueId = _placementInfo.uniqueId;
-    uint16 doodadSetIndex = _placementInfo.doodadSetIndex;
-    //m_DoodadSetInfo = _wmoObject->m_DoodadsSetInfos[doodadSetIndex];
-
-    // CTransformComponent
-    {
-        // Translate
-        SetTranslate(_placementInfo.position);
-
-        // Rotate
-        vec3 rotate = glm::radians(_placementInfo.rotation);
-        rotate.x = -rotate.x;
-        rotate.y = rotate.y - glm::half_pi<float>();
-        SetRotation(vec3(rotate.z, rotate.y, rotate.x));
-    }
-
-    // CColliderComponent
-    {
-        std::shared_ptr<CColliderComponent3D> colliderComponent = GetComponent<CColliderComponent3D>();
-
-        // Bounds
-        BoundingBox bbox(_placementInfo.boundingBox.min, _placementInfo.boundingBox.max);
-        colliderComponent->SetBounds(bbox);
-    }
-}
 
 void CMapWMOInstance::Accept(IVisitor* visitor)
 {

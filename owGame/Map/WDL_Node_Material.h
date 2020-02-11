@@ -1,9 +1,10 @@
 #pragma once
 
-class WDL_Node_Material : public MaterialProxie
+class WDL_Node_Material 
+	: public MaterialProxie
 {
 public:
-	WDL_Node_Material(std::shared_ptr<IRenderDevice> RenderDevice);
+	WDL_Node_Material(IRenderDevice& RenderDevice);
 	virtual ~WDL_Node_Material();
 
 	cvec4 GetDiffuseColor() const;
@@ -18,7 +19,7 @@ private:
 		MaterialProperties()
 			: m_DiffuseColor(1, 1, 1, 1)
 		{}
-		vec4   m_DiffuseColor;
+		glm::vec4   m_DiffuseColor;
 		//-------------------------- ( 32 bytes )
 	};
 	MaterialProperties* m_pProperties;

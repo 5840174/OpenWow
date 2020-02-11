@@ -8,7 +8,7 @@ class ADT_MCNK_Material
 	: public MaterialProxie
 {
 public:
-	ADT_MCNK_Material(IRenderDevice& RenderDevice, const std::weak_ptr<CMapTile> _parentADT);
+	ADT_MCNK_Material(IRenderDevice& RenderDevice);
 	virtual ~ADT_MCNK_Material();
 
 	void SetLayersCnt(uint32 value);

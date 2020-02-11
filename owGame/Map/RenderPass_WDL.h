@@ -1,6 +1,6 @@
 #pragma once
 
-class CRenderPass_WDL 
+class ZN_API CRenderPass_WDL
 	: public Base3DPass
 {
 public:

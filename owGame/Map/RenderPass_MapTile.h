@@ -1,10 +1,10 @@
 #pragma once
 
-class CRenderPass_MapTile 
+class ZN_API CRenderPass_MapTile
 	: public ScenePass
 {
 public:
-	CRenderPass_MapTile(std::shared_ptr<IRenderDevice> RenderDevice, std::shared_ptr<IScene> scene);
+	CRenderPass_MapTile(IRenderDevice& RenderDevice, std::shared_ptr<IScene> scene);
 	virtual ~CRenderPass_MapTile();
 
     // IVisitor

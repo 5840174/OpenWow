@@ -1,5 +1,7 @@
 #pragma once
 
+#include "DBC/Core/DBC__Storage.h"
+
 struct ADT_MHDR
 {
 	struct Flags

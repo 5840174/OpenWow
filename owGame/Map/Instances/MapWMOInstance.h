@@ -23,12 +23,8 @@ class CMapWMOInstance
 	: public CWMO_Base_Instance
 {
 public:
-	CMapWMOInstance(const CWMO& WMOObject);
+	CMapWMOInstance(const CWMO& WMOObject, const ADT_MODF& _placementInfo);
 	virtual ~CMapWMOInstance();
-
-	void Initialize() override;
-
-    void Initialize(const ADT_MODF& _placementInfo);
 
 	// ISceneNode
 	void Accept(IVisitor* visitor) override;

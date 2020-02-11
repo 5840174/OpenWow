@@ -4,32 +4,25 @@
 #include "Map/Instances/MapM2Instance.h"
 #include "Map/Instances/MapWMOInstance.h"
 
-#include "Map_Headers.h"
-
 // FORWARD BEGIN
 class CMap;
 // FORWARD END
 
-class CMapTile
+class ZN_API CMapTile
 	: public SceneNode3D
 	, public CLoadableObject
 {
 public:
-	CMapTile(ISceneNode3D* RealParent);
+	CMapTile(IBaseManager* BaseManager, IRenderDevice& RenderDevice, const CMap& Map, uint32 IndexX, uint32 IndexZ);
 	virtual ~CMapTile();
 
-	void											Initialize() override;
-
-
-	void                                            Initialize(uint32 _intexX, uint32 _intexZ);
-
-	std::shared_ptr<CMapChunk>                      getChunk(int32 x, int32 z);
-
+	const int                                       getIndexX() const;
+	const int                                       getIndexZ() const;
+	const CMapChunk*                                getChunk(int32 x, int32 z) const;
+	const CMap&                                     GetMap() const;
 	// SceneNode3D
-	std::string                              GetName() const override
-	{
-		return "MapTile " + std::to_string(m_IndexX) + " - " + std::to_string(m_IndexZ);
-	}
+	void											Initialize() override;
+	std::string                                     GetName() const override;
 
 	// ILoadableObject
 	bool                                            Load() override;
@@ -37,19 +30,19 @@ public:
 	uint32                                          getPriority() const override { return 0; };
 
 public:
-	mutable int										m_IndexX;
-	mutable int										m_IndexZ;
-
 	ADT_MHDR                                        header;
 	std::vector<std::shared_ptr<ADT_TextureInfo>>	m_Textures;
 
 	// Instances
-	std::vector<std::shared_ptr<CMapWMOInstance>>	m_WMOsInstances;
-	std::vector<std::shared_ptr<ISceneNode3D>>		m_MDXsInstances;
-	std::vector<std::shared_ptr<CMapChunk>>			m_Chunks;
-
-	CMap*							                GetMapController() const;
+	std::vector<CMapWMOInstance*>	m_WMOsInstances;
+	std::vector<CMapM2Instance*>	m_MDXsInstances;
+	std::vector<CMapChunk*>			m_Chunks;
 
 private:
-	ISceneNode3D* m_Parent;
+	IBaseManager* m_BaseManager;
+	IRenderDevice& m_RenderDevice;
+	const CMap& m_Map;
+
+	const int m_IndexX;
+	const int m_IndexZ;
 };

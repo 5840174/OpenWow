@@ -23,15 +23,11 @@ class CMapM2Instance
 	: public CM2_Base_Instance
 {
 public:
-	CMapM2Instance(const M2& M2Objec);
+	CMapM2Instance(const M2& M2Object, const ADT_MDXDef& _placementInfo);
 	virtual ~CMapM2Instance();
 
-	void Initialize() override;
-
-    void Initialize(const ADT_MDXDef& _placementInfo);
-
 	// ISceneNode
-	bool Accept(IVisitor* visitor) override;
+	void Accept(IVisitor* visitor) override;
 
 	void DoUpdate(UpdateEventArgs& e) override;
 

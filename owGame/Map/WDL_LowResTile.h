@@ -8,14 +8,15 @@ class CWDL_LowResTile
 	: public ModelProxie
 {
 public:
-	CWDL_LowResTile(std::weak_ptr<const CMap> _parent, std::shared_ptr<IModel> _mesh, uint32 _indexX, uint32 _indexZ);
+	CWDL_LowResTile(IRenderDevice& RenderDevice, const CMap& Map, int IndexX, int IndexZ);
+	virtual ~CWDL_LowResTile();
 
 	// IModel
-	bool Render(const RenderEventArgs* renderEventArgs, const IConstantBuffer* perObject, SGeometryPartParams GeometryPartParams = SGeometryPartParams()) override;
+	bool Render(const RenderEventArgs& renderEventArgs) const override;
 
 private:
-	const int m_IndexX, m_IndexZ;
+	const CMap& m_MapController;
 
-	// PARENT
-	const std::weak_ptr<const CMap> m_MapController;
+	const int m_IndexX;
+	const int m_IndexZ;
 };

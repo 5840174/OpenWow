@@ -136,6 +136,9 @@
     <Filter Include="Map\WDL">
       <UniqueIdentifier>{bb76c07f-90a6-4966-a672-a5060771da06}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Map\Tile">
+      <UniqueIdentifier>{8e09b810-06e3-4697-82ff-ea38a6b7c0a4}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -411,16 +414,7 @@
     <ClCompile Include="Map\Map_Shared.cpp">
       <Filter>Map</Filter>
     </ClCompile>
-    <ClCompile Include="Map\MapChunk.cpp">
-      <Filter>Map</Filter>
-    </ClCompile>
-    <ClCompile Include="Map\MapChunkMaterial.cpp">
-      <Filter>Map</Filter>
-    </ClCompile>
     <ClCompile Include="Map\MapLiquid.cpp">
-      <Filter>Map</Filter>
-    </ClCompile>
-    <ClCompile Include="Map\MapTile.cpp">
       <Filter>Map</Filter>
     </ClCompile>
     <ClCompile Include="Map\MapWDT.cpp">
@@ -446,6 +440,15 @@
     </ClCompile>
     <ClCompile Include="Map\MapWDL.cpp">
       <Filter>Map\WDL</Filter>
+    </ClCompile>
+    <ClCompile Include="Map\MapChunk.cpp">
+      <Filter>Map\Tile</Filter>
+    </ClCompile>
+    <ClCompile Include="Map\MapChunkMaterial.cpp">
+      <Filter>Map\Tile</Filter>
+    </ClCompile>
+    <ClCompile Include="Map\MapTile.cpp">
+      <Filter>Map\Tile</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -920,16 +923,7 @@
     <ClInclude Include="Map\Map_Shared.h">
       <Filter>Map</Filter>
     </ClInclude>
-    <ClInclude Include="Map\MapChunk.h">
-      <Filter>Map</Filter>
-    </ClInclude>
-    <ClInclude Include="Map\MapChunkMaterial.h">
-      <Filter>Map</Filter>
-    </ClInclude>
     <ClInclude Include="Map\MapLiquid.h">
-      <Filter>Map</Filter>
-    </ClInclude>
-    <ClInclude Include="Map\MapTile.h">
       <Filter>Map</Filter>
     </ClInclude>
     <ClInclude Include="Map\MapWDT.h">
@@ -955,6 +949,15 @@
     </ClInclude>
     <ClInclude Include="Map\MapWDL.h">
       <Filter>Map\WDL</Filter>
+    </ClInclude>
+    <ClInclude Include="Map\MapChunk.h">
+      <Filter>Map\Tile</Filter>
+    </ClInclude>
+    <ClInclude Include="Map\MapChunkMaterial.h">
+      <Filter>Map\Tile</Filter>
+    </ClInclude>
+    <ClInclude Include="Map\MapTile.h">
+      <Filter>Map\Tile</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

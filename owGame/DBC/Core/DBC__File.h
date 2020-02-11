@@ -83,7 +83,7 @@ const std::shared_ptr<_dbc##Record> _dispName()       \
 
 // Class begin
 #define DBC_DEF_BEGIN(accessName) \
-class CONCAT_RECORD(accessName) : public Record { \
+class ZN_API CONCAT_RECORD(accessName) : public Record { \
 public: \
 	CONCAT_RECORD(accessName)() {} \
 	CONCAT_RECORD(accessName)(const DBCFile<CONCAT_RECORD(accessName)>::Iterator& _iterator) : \
@@ -116,10 +116,10 @@ extern DBCFile<CONCAT_RECORD(accessName)> accessName;
 
 
 // FORWARD BEGIN
-class Record;
+class ZN_API Record;
 // FORWARD END
 
-class DBCStats
+class ZN_API DBCStats
 {
 	friend Record;
 public:
@@ -143,7 +143,7 @@ protected:
 ///////////////////////////////////
 // Record type
 ///////////////////////////////////
-class Record
+class ZN_API Record
 {
 public:
 	Record() : 
@@ -235,7 +235,8 @@ protected:
 ///////////////////////////////////
 class File;
 template <class RECORD_T>
-class DBCFile : public DBCStats
+class ZN_API DBCFile 
+	: public DBCStats
 {
 	friend RECORD_T;
 public:

@@ -8,7 +8,7 @@
 #include "MapWDL.h"
 #include "MinimapProvider.h"
 
-class CMap
+class ZN_API CMap
 	: public SceneNode3D
 {
 public:
@@ -23,7 +23,7 @@ public:
 	//
 	void                                            EnterMap(vec3 _cameraPosition);
 	void                                            EnterMap(int32 x, int32 z);
-	std::shared_ptr<CMapTile>                       LoadTile(int32 x, int32 z);
+	CMapTile*                                       LoadTile(int32 x, int32 z);
 	void                                            ClearCache();
 	uint32                                          GetAreaID(ICameraComponent3D* camera);
 
@@ -37,7 +37,6 @@ public:
 
 public: // Getters
 	std::string                                     GetMapFolder() const { return m_MapFolderName; }
-	std::shared_ptr<DBC_MapRecord>                  GetMapDBCRecord() const { return m_MapDBCRecord; }
 
 	bool                                            isUncompressedAlpha() const { return m_WDT->getFlags().Flag_8bitMCAL; }
 	bool                                            isTileBased() const { return m_WDT->MapHasTiles(); }
@@ -48,7 +47,7 @@ public: // Getters
 	void                                            SetOutOfBounds(bool _value) { m_IsOnInvalidTile = _value; }
 	bool                                            IsOutOfBounds() const { return m_IsOnInvalidTile; }
 
-	std::shared_ptr<ITexture>                        getMinimap() const { return m_WDL->getMinimap(); }
+	std::shared_ptr<ITexture>                       getMinimap() const { return m_WDL->getMinimap(); }
 	WowTime*                                        getTime() { return &m_GameTime; }
 
 	bool                                            getTileIsCurrent(int x, int z) const;
@@ -59,8 +58,8 @@ private:
 	std::string                                     m_MapFolderName;
 	std::shared_ptr<DBC_MapRecord>                  m_MapDBCRecord;
 
-	std::shared_ptr<CMapTile>	                    m_ADTCache[C_TilesCacheSize];
-	std::shared_ptr<CMapTile>	                    m_Current[C_RenderedTiles][C_RenderedTiles];
+	CMapTile*	                                    m_ADTCache[C_TilesCacheSize];
+	CMapTile*	                                    m_Current[C_RenderedTiles][C_RenderedTiles];
 	int32					                        m_CurrentTileX, m_CurrentTileZ;
 	bool					                        m_IsOnInvalidTile;
 

@@ -37,7 +37,7 @@ class CMapWDT
 	: public ISceneNodeProvider
 {
 public:
-	CMapWDT(IBaseManager* BaseManager, std::weak_ptr<const CMap> _mapController);
+	CMapWDT(IBaseManager* BaseManager, IRenderDevice& RenderDevice, const CMap& Map);
 	virtual ~CMapWDT();
 
 	// ISceneNodeProvider
@@ -60,11 +60,10 @@ private:
 private:
 	std::string							m_GlobalWMOName;
 	ADT_MODF							m_GlobalWMOPlacementInfo;
-	const CMapWMOInstance*	                m_GlobalWMO;
+	mutable CMapWMOInstance*	        m_GlobalWMO;
 
-private: // PARENT
-	const std::weak_ptr<const CMap>  m_MapController;
-
-private:
+private: 
 	IBaseManager* m_BaseManager;
+	IRenderDevice& m_RenderDevice;
+	const CMap&  m_Map;	
 };

@@ -12,26 +12,20 @@
 #include "Map_Shared.h"
 #include "MapChunkMaterial.h"
 
-CMapChunk::CMapChunk(CMap* _mapController, std::weak_ptr<CMapTile> _parentTile) 
-	: m_MapController(_mapController)
-	, m_ParentADT(_parentTile)
-{}
+CMapChunk::CMapChunk(IRenderDevice& RenderDevice, const CMap& Map, const CMapTile& MapTile, const std::string& FileName, const ADT_MCIN& MCIN)
+	: m_RenderDevice(RenderDevice)
+	, m_MapController(Map)
+	, m_ParentADT(MapTile)
+	, m_FileName(FileName)
+	, m_MCIN(MCIN)
+{
+	memset(mcly, 0x00, sizeof(ADT_MCNK_MCLY) * 4);
+}
 
 CMapChunk::~CMapChunk()
 {
 }
 
-void CMapChunk::Initialize()
-{
-}
-
-void CMapChunk::Initialize(const std::string & _fileName, const ADT_MCIN & _mcin)
-{
-    m_FileName = _fileName;
-    mcin = _mcin;
-
-    memset(mcly, 0x00, sizeof(ADT_MCNK_MCLY) * 4);
-}
 
 uint32 CMapChunk::GetAreaID() const
 {
@@ -42,6 +36,14 @@ uint32 CMapChunk::GetAreaID() const
 //
 // ISceneNode
 //
+void CMapChunk::Initialize()
+{
+}
+
+std::string CMapChunk::GetName() const
+{
+	return "MapChunk " + std::to_string(m_MCIN.offset);
+}
 
 void CMapChunk::Accept(IVisitor* visitor)
 {
@@ -63,13 +65,13 @@ bool CMapChunk::PreLoad()
 	if (m_File == nullptr)
 		return false;
 
-	m_File->seek(mcin.offset);
+	m_File->seek(m_MCIN.offset);
 
 	// Chunk + size (8)
 	m_File->seekRelative(4); // MCNK
 	uint32_t size;
 	m_File->readBytes(&size, sizeof(uint32_t));
-	_ASSERT(size + 8 == mcin.size);
+	_ASSERT(size + 8 == m_MCIN.size);
 
 	uint32_t startPos = m_File->getPos();
 
@@ -152,7 +154,7 @@ bool CMapChunk::Load()
 
 		//normalsBuffer = _Render->r.createVertexBuffer(C_MapBufferSize * sizeof(vec3), tempNormals, false);
 		//normalsBuffer = _Render->r.createVertexBuffer(C_MapBufferSize * sizeof(int24), normals_INT24, false);
-		normalsBuffer = GetBaseManager()->GetManager<IRenderDevice>()->CreateVertexBuffer(tempNormals, C_MapBufferSize);
+		normalsBuffer = m_RenderDevice.GetObjectsFactory().CreateVertexBuffer(tempNormals, C_MapBufferSize);
 	}
 
 	// Heights
@@ -197,22 +199,19 @@ bool CMapChunk::Load()
 		bbox.calculateCenter();
         GetComponent<CColliderComponent3D>()->SetBounds(bbox);
 
-		verticesBuffer = GetBaseManager()->GetManager<IRenderDevice>()->CreateVertexBuffer(tempVertexes, C_MapBufferSize);
+		verticesBuffer = m_RenderDevice.GetObjectsFactory().CreateVertexBuffer(tempVertexes, C_MapBufferSize);
 	}
 
 	// Textures
 	m_File->seek(startPos + header.ofsLayer);
 	{
-		std::shared_ptr<CMapTile> parentADT = m_ParentADT.lock();
-		_ASSERT(parentADT != NULL);
-
 		for (uint32 i = 0; i < header.nLayers; i++)
 		{
 			m_File->readBytes(&mcly[i], sizeof(ADT_MCNK_MCLY));
 			//m_DiffuseTextures[i] = parentADT->m_Textures.at(i)->diffuseTexture;
 			//m_SpecularTextures[i] = parentADT->m_Textures.at(i)->specularTexture;
-			m_DiffuseTextures[i] = parentADT->m_Textures.at(mcly[i].textureIndex)->diffuseTexture;
-			m_SpecularTextures[i] = parentADT->m_Textures.at(mcly[i].textureIndex)->specularTexture;
+			m_DiffuseTextures[i] = m_ParentADT.m_Textures.at(mcly[i].textureIndex)->diffuseTexture;
+			m_SpecularTextures[i] = m_ParentADT.m_Textures.at(mcly[i].textureIndex)->specularTexture;
 		}
 	}
 
@@ -244,9 +243,6 @@ bool CMapChunk::Load()
 	// Alpha
 	m_File->seek(startPos + header.ofsAlpha);
 	{
-		CMap* mapController = m_MapController;
-		_ASSERT(mapController != NULL);
-
 		for (uint32 i = 1; i < header.nLayers; i++)
 		{
 			uint8 amap[64 * 64];
@@ -278,7 +274,7 @@ bool CMapChunk::Load()
 					offset_output += n;
 				}
 			}
-			else if (mapController->isUncompressedAlpha()) // Uncomressed (4096)
+			else if (m_MapController.isUncompressedAlpha()) // Uncomressed (4096)
 			{
 				memcpy(amap, abuf, 64 * 64);
 			}
@@ -315,7 +311,7 @@ bool CMapChunk::Load()
 		}
 	}
 
-	m_BlendRBGShadowATexture = GetBaseManager()->GetManager<IRenderDevice>()->CreateTexture();
+	m_BlendRBGShadowATexture = m_RenderDevice.GetObjectsFactory().CreateEmptyTexture();
 	m_BlendRBGShadowATexture->LoadTextureCustom(64, 64, blendbuf);
 
 	// Liquids
@@ -326,13 +322,13 @@ bool CMapChunk::Load()
 			CRange height;
 			m_File->readBytes(&height, 8);
 
-			std::shared_ptr<CADT_Liquid> m_Liquid = std::make_shared<CADT_Liquid>(GetBaseManager(), 8, 8);
+			std::shared_ptr<CADT_Liquid> m_Liquid = std::make_shared<CADT_Liquid>(m_RenderDevice, 8, 8);
 			m_Liquid->CreateFromMCLQ(m_File, header);
 
             vec3 position = vec3(0.0f, - GetTranslation().y, 0.0f);
 
-			std::shared_ptr<Liquid_Instance> liq = CreateSceneNode<Liquid_Instance>();
-			liq->Initialize(m_Liquid, position);
+			Liquid_Instance* liq = CreateSceneNode<Liquid_Instance>();
+			liq->LiquidInitialize(m_Liquid, position);
 		}
 	}
 
@@ -343,8 +339,8 @@ bool CMapChunk::Load()
 		return true;
 
 	// Material
-	std::shared_ptr<ADT_MCNK_Material> mat = std::make_shared<ADT_MCNK_Material>(GetBaseManager()->GetManager<IRenderDevice>(), m_ParentADT);
-	mat->SetWrapper(mat);
+	std::shared_ptr<ADT_MCNK_Material> mat = std::make_shared<ADT_MCNK_Material>(m_RenderDevice);
+
 	for (uint32 i = 0; i < header.nLayers; i++)
 	{
 		mat->SetTexture(i, m_DiffuseTextures[i]); // DXT1
@@ -356,17 +352,19 @@ bool CMapChunk::Load()
 
 	{ // Geom High
 		std::vector<uint16>& mapArrayHigh = _MapShared->GenarateHighMapArray(header.holes);
-		std::shared_ptr<IBuffer> __ibHigh = GetBaseManager()->GetManager<IRenderDevice>()->CreateIndexBuffer(mapArrayHigh);
+		std::shared_ptr<IBuffer> __ibHigh = m_RenderDevice.GetObjectsFactory().CreateIndexBuffer(mapArrayHigh);
 
-		__geomDefault = GetBaseManager()->GetManager<IRenderDevice>()->CreateMesh();
-		__geomDefault->AddVertexBuffer(BufferBinding("POSITION", 0), verticesBuffer);
-		__geomDefault->AddVertexBuffer(BufferBinding("NORMAL", 0), normalsBuffer);
-		__geomDefault->AddVertexBuffer(BufferBinding("TEXCOORD", 0), _MapShared->BufferTextureCoordDetail);
-		__geomDefault->AddVertexBuffer(BufferBinding("TEXCOORD", 1), _MapShared->BufferTextureCoordAlpha);
-		__geomDefault->SetIndexBuffer(__ibHigh);
-		__geomDefault->SetMaterial(mat);
+		std::shared_ptr<IGeometry> defaultGeometry = m_RenderDevice.GetObjectsFactory().CreateGeometry();
+		defaultGeometry->AddVertexBuffer(BufferBinding("POSITION", 0), verticesBuffer);
+		defaultGeometry->AddVertexBuffer(BufferBinding("NORMAL", 0), normalsBuffer);
+		defaultGeometry->AddVertexBuffer(BufferBinding("TEXCOORD", 0), _MapShared->BufferTextureCoordDetail);
+		defaultGeometry->AddVertexBuffer(BufferBinding("TEXCOORD", 1), _MapShared->BufferTextureCoordAlpha);
+		defaultGeometry->SetIndexBuffer(__ibHigh);
 
-		GetComponent<CMeshComponent3D>()->AddMesh(__geomDefault);
+		std::shared_ptr<IModel> model = m_RenderDevice.GetObjectsFactory().CreateModel();
+		model->AddConnection(mat, defaultGeometry);
+
+		GetComponent<CMeshComponent3D>()->AddMesh(model);
 	}
 
 

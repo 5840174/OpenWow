@@ -1,4 +1,4 @@
-#include "IDB_SHADER_COMMON_TYPES"
+#include "IDB_SHADER_COMMON_INCLUDE"
 
 #ifndef _IS_NORTREND
 #pragma message( "_IS_NORTREND undefined. Default to 0.")
@@ -33,12 +33,6 @@ struct VertexShaderOutput
 
 
 // Uniforms
-cbuffer PerObject : register(b0)
-{
-	float4x4 Model;
-	float4x4 View;
-	float4x4 Projection;
-}
 cbuffer Material : register(b2)
 {
     MapChunk_Material Material;
@@ -59,7 +53,7 @@ sampler   AlphaMapSampler : register(s1);
 
 VertexShaderOutput VS_main(VertexShaderInput IN)
 {
-	const float4x4 mvp = mul(Projection, mul(View, Model));
+	const float4x4 mvp = mul(PF.Projection, mul(PF.View, PO.Model));
 
 	VertexShaderOutput OUT;
 	OUT.positionVS = mul(mvp, float4(IN.position, 1.0f));
@@ -72,7 +66,7 @@ VertexShaderOutput VS_main(VertexShaderInput IN)
 	return OUT;
 }
 
-PixelShaderOutput PS_main(VertexShaderOutput IN) : SV_TARGET
+DefferedRenderPSOut PS_main(VertexShaderOutput IN) : SV_TARGET
 {
 	float3 layersColor = float3(0,0,0);
 	float4 layersSpec = float4(0,0,0,0);
@@ -141,7 +135,7 @@ PixelShaderOutput PS_main(VertexShaderOutput IN) : SV_TARGET
 		resultColor = lerp(resultColor,  float3(0.0, 0.0, 0.0), alphaShadow);
 	}
 	
-	PixelShaderOutput OUT;
+	DefferedRenderPSOut OUT;
 	OUT.PositionWS = IN.positionWS;
 	OUT.Diffuse = float4(resultColor, 1.0f);
 	OUT.Specular = resultSpec;

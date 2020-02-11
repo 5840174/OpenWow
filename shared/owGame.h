@@ -39,3 +39,10 @@
 #include "../owGame/Sky/SkyManager.h"
 #include "../owGame/Sky/Environment/EnvironmentManager.h"
 #include "../owGame/Sky/RenderPass_Sky.h"
+
+// Map 
+#include "../owGame/Map/Map.h"
+#include "../owGame/Map/RenderPass_MapTile.h"
+#include "../owGame/Map/RenderPass_WDL.h"
+#include "../owGame/Map/RenderPass_ADT_MCNK.h"
+

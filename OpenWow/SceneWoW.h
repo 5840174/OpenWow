@@ -28,4 +28,5 @@ private:
 	CM2_Base_Instance* m2Instance;
 	SkyManager* skyManager;
 	EnvironmentManager* environmentManager;
+	CMap* map;
 };

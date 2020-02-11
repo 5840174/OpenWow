@@ -58,9 +58,8 @@ struct LightWaterAlpha
     };
 };
 
-struct 
-	__declspec(uuid("8D86DF19-0FB3-47F3-B0BC-215788EA5500"))
-	ISkyManager : public IManager
+ZN_INTERFACE __declspec(uuid("8D86DF19-0FB3-47F3-B0BC-215788EA5500")) ISkyManager 
+	: public IManager
 {
 	virtual ~ISkyManager() = 0 {};
 

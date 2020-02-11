@@ -7,10 +7,11 @@
 // General
 #include "MapWDL.h"
 
-CMapWDL::CMapWDL(IBaseManager* BaseManager, std::weak_ptr<const CMap> MapController) 
-	: m_MapController(MapController)
-	, m_Minimap(nullptr)
+CMapWDL::CMapWDL(IBaseManager* BaseManager, IRenderDevice& RenderDevice, const CMap& Map)
+	: m_Minimap(nullptr)
 	, m_BaseManager(BaseManager)
+	, m_RenderDevice(RenderDevice)
+	, m_MapController(Map)
 {}
 
 CMapWDL::~CMapWDL()
@@ -22,12 +23,9 @@ CMapWDL::~CMapWDL()
 //
 // ISceneNodeProvider
 //
-void CMapWDL::CreateInsances(std::weak_ptr<ISceneNode> _parent)
+void CMapWDL::CreateInsances(ISceneNode3D* _parent) const
 {
-	std::shared_ptr<const CMap> mapController = m_MapController.lock();
-	_ASSERT(mapController != NULL);
-
-	std::string fileName = mapController->GetMapFolder() + ".wdl";
+	std::string fileName = m_MapController.GetMapFolder() + ".wdl";
 
 	// Low-resolution tiles
 	std::shared_ptr<IFile> f = m_BaseManager->GetManager<IFilesManager>()->Open(fileName);
@@ -38,8 +36,7 @@ void CMapWDL::CreateInsances(std::weak_ptr<ISceneNode> _parent)
 	}
 
 	// Material
-	m_LowResilutionTileMaterial = std::make_shared<WDL_Node_Material>(m_BaseManager->GetManager<IRenderDevice>());
-	m_LowResilutionTileMaterial->SetWrapper(m_LowResilutionTileMaterial);
+	m_LowResilutionTileMaterial = std::make_shared<WDL_Node_Material>(m_RenderDevice);
 
 	// Heightmap
 	vec3 lowres[17][17];
@@ -92,17 +89,19 @@ void CMapWDL::CreateInsances(std::weak_ptr<ISceneNode> _parent)
 						vecrtices.push_back(lowres[y][x]);
 					}
 				}
-#if 0
-				// Vertex buffer
-				std::shared_ptr<IBuffer> __vb = m_BaseManager->GetManager<IRenderDevice>()->CreateVertexBuffer(vecrtices);
 
-				std::shared_ptr<IModel> __geom = m_BaseManager->GetManager<IRenderDevice>()->CreateMesh();
-				__geom->AddVertexBuffer(BufferBinding("POSITION", 0), __vb);
-				__geom->SetMaterial(m_LowResilutionTileMaterial);
+				// Vertex buffer
+				std::shared_ptr<IBuffer> __vb = m_RenderDevice.GetObjectsFactory().CreateVertexBuffer(vecrtices);
+
+				std::shared_ptr<IGeometry> geometry = m_RenderDevice.GetObjectsFactory().CreateGeometry();
+				geometry->AddVertexBuffer(BufferBinding("POSITION", 0), __vb);
+
+				std::shared_ptr<IModel> model = m_RenderDevice.GetObjectsFactory().CreateModel();
 				
-				std::shared_ptr<CWDL_LowResTile> lowResTile = std::make_shared<CWDL_LowResTile>(m_MapController, __geom, i, j);
-				_parent.lock()->GetComponent<CMeshComponent3D>()->AddMesh(lowResTile);
-#endif
+				
+				std::shared_ptr<CWDL_LowResTile> lowResTile = std::make_shared<CWDL_LowResTile>(m_RenderDevice, m_MapController, i, j);
+				lowResTile->AddConnection(m_LowResilutionTileMaterial, geometry);
+				_parent->GetComponent<CMeshComponent3D>()->AddMesh(lowResTile);
 			}
 		}
 	}
@@ -111,10 +110,9 @@ void CMapWDL::CreateInsances(std::weak_ptr<ISceneNode> _parent)
 	Log::Green("Map_GlobalWMOs[]: Low WMOs count [%d].", m_LowResolutionWMOsPlacementInfo.size());
 	for (auto it : m_LowResolutionWMOsPlacementInfo)
 	{
-		std::shared_ptr<CMapWMOInstance> wmoInstance = _parent.lock()->CreateWrappedSceneNode<CMapWMOInstance>("SceneNode3D", m_LowResolutionWMOsNames[it.nameIndex]);
-		wmoInstance->Initialize(it);
-		m_BaseManager->GetManager<ILoader>()->AddToLoadQueue(wmoInstance);
-		m_LowResolutionWMOs.push_back(wmoInstance);
+		_ASSERT(false);
+		//CMapWMOInstance* wmoInstance = _parent->CreateSceneNode<CMapWMOInstance>(m_LowResolutionWMOsNames[it.nameIndex], it);
+		//m_LowResolutionWMOs.push_back(wmoInstance);
 	}
 }
 
@@ -126,10 +124,7 @@ void CMapWDL::UpdateCamera(const ICameraComponent3D * camera)
 
 void CMapWDL::Load()
 {
-	std::shared_ptr<const CMap> mapController = m_MapController.lock();
-	_ASSERT(mapController != NULL);
-
-	std::string fileName = mapController->GetMapFolder() + ".wdl";
+	std::string fileName = m_MapController.GetMapFolder() + ".wdl";
 
 	std::shared_ptr<IFile> f = m_BaseManager->GetManager<IFilesManager>()->Open(fileName);
 	if (f == nullptr)
@@ -285,7 +280,7 @@ void CMapWDL::Load()
 	}
 
 	// Finish minimap
-	m_Minimap = m_BaseManager->GetManager<IRenderDevice>()->CreateTexture();
+	m_Minimap = m_RenderDevice.GetObjectsFactory().CreateEmptyTexture();
 	m_Minimap->LoadTextureCustom(512, 512, texbuf);
 	delete[] texbuf;
 }

@@ -48,28 +48,17 @@ void CMap::MapPreLoad(std::shared_ptr<DBC_MapRecord> _map)
 	Log::Print("Map[%s]: Id [%d]. Preloading...", m_MapDBCRecord->Get_Directory(), m_MapDBCRecord->Get_ID());
 
 	m_WDL.reset();
-	m_WDL = std::make_shared<CMapWDL>(m_BaseManager, std::static_pointer_cast<CMap>(shared_from_this()));
+	m_WDL = std::make_shared<CMapWDL>(m_BaseManager, m_RenderDevice, *this);
 	m_WDL->Load();
 
 	m_WDT.reset();
-	m_WDT = std::make_shared<CMapWDT>(m_BaseManager, std::static_pointer_cast<CMap>(shared_from_this()));
+	m_WDT = std::make_shared<CMapWDT>(m_BaseManager, m_RenderDevice, *this);
 }
 
 void CMap::MapLoad()
 {
 	Log::Print("Map[%s]: Id [%d]. Loading...", m_MapDBCRecord->Get_Directory(), m_MapDBCRecord->Get_ID());
 
-	GetBaseManager()->RemoveManager<ISkyManager>();
-	m_SkyManager.reset();
-
-	m_SkyManager = CreateWrappedSceneNode<SkyManager>("SceneNode3D", this);
-    m_SkyManager->Load();
-	GetBaseManager()->AddManager<ISkyManager>(m_SkyManager);
-
-	m_EnvironmentManager.reset();
-	m_EnvironmentManager = std::make_shared<EnvironmentManager>(m_BaseManager);
-
-	// Load data
 	m_WDT->Load();
 }
 
@@ -77,21 +66,20 @@ void CMap::MapPostLoad()
 {
 	Log::Print("Map[%s]: Id [%d]. Postloading...", m_MapDBCRecord->Get_Directory(), m_MapDBCRecord->Get_ID());
 
-	m_WDT->CreateInsances(weak_from_this());
-	m_WDL->CreateInsances(weak_from_this());
+	m_WDT->CreateInsances(this);
+	m_WDL->CreateInsances(this);
 }
 
 void CMap::Unload()
 {
 	m_WDL.reset();
 	m_WDT.reset();
-	m_SkyManager.reset();
 
 	for (int i = 0; i < C_TilesCacheSize; i++)
 	{
 		if (m_ADTCache[i] != nullptr)
 		{
-			m_ADTCache[i].reset();
+			RemoveChild(m_ADTCache[i]);
 		}
 	}
 
@@ -99,7 +87,7 @@ void CMap::Unload()
 	{
 		for (int j = 0; j < C_RenderedTiles; j++)
 		{
-			m_Current[i][j].reset();
+			RemoveChild(m_Current[i][j]);
 		}
 	}
 }
@@ -168,7 +156,7 @@ void CMap::EnterMap(int32 x, int32 z)
 	}
 }
 
-std::shared_ptr<CMapTile> CMap::LoadTile(int32 x, int32 z)
+CMapTile* CMap::LoadTile(int32 x, int32 z)
 {
 	if (IsBadTileIndex(x, z))
 	{
@@ -184,7 +172,7 @@ std::shared_ptr<CMapTile> CMap::LoadTile(int32 x, int32 z)
 	int firstnull = C_TilesCacheSize;
 	for (int i = 0; i < C_TilesCacheSize; i++)
 	{
-		if ((m_ADTCache[i] != nullptr) && (m_ADTCache[i]->m_IndexX == x) && (m_ADTCache[i]->m_IndexZ == z))
+		if ((m_ADTCache[i] != nullptr) && (m_ADTCache[i]->getIndexX() == x) && (m_ADTCache[i]->getIndexZ() == z))
 		{
 			return m_ADTCache[i];
 		}
@@ -207,7 +195,7 @@ std::shared_ptr<CMapTile> CMap::LoadTile(int32 x, int32 z)
 				continue;
 			}
 
-			score = abs(m_ADTCache[i]->m_IndexX - m_CurrentTileX) + abs(m_ADTCache[i]->m_IndexZ - m_CurrentTileZ);
+			score = abs(m_ADTCache[i]->getIndexX() - m_CurrentTileX) + abs(m_ADTCache[i]->getIndexZ() - m_CurrentTileZ);
 
 			if (score > maxscore)
 			{
@@ -217,14 +205,13 @@ std::shared_ptr<CMapTile> CMap::LoadTile(int32 x, int32 z)
 		}
 
 		// maxidx is the winner (loser)
-		m_ADTCache[maxidx].reset();
+		RemoveChild(m_ADTCache[maxidx]);
 		firstnull = maxidx;
 	}
 
 	// Create new tile
-	m_ADTCache[firstnull] = CreateSceneNode<CMapTile>(this);
-    m_ADTCache[firstnull]->Initialize(x, z);
-	m_BaseManager->GetManager<ILoader>()->AddToLoadQueue(m_ADTCache[firstnull]);
+	m_ADTCache[firstnull] = CreateSceneNode<CMapTile>(m_BaseManager, m_RenderDevice, *this, x, z);
+	m_ADTCache[firstnull]->Load();
 	return m_ADTCache[firstnull];
 }
 
@@ -232,9 +219,9 @@ void CMap::ClearCache()
 {
 	for (int i = 0; i < C_TilesCacheSize; i++)
 	{
-		if (m_ADTCache[i] != nullptr && !IsTileInCurrent(m_ADTCache[i]))
+		if (m_ADTCache[i] != nullptr && !IsTileInCurrent(*m_ADTCache[i]))
 		{
-			m_ADTCache[i].reset();
+			m_ADTCache[i] = 0;
 		}
 	}
 }
@@ -265,13 +252,13 @@ uint32 CMap::GetAreaID(ICameraComponent3D* camera)
 	int32 indexX = tileZ - m_CurrentTileZ + static_cast<int32>(C_RenderedTiles / 2);
 	int32 indexY = tileX - m_CurrentTileX + static_cast<int32>(C_RenderedTiles / 2);
 
-	std::shared_ptr<CMapTile> curTile = m_Current[indexX][indexY];
+	CMapTile* curTile = m_Current[indexX][indexY];
 	if (curTile == nullptr)
 	{
 		return UINT32_MAX;
 	}
 
-	std::shared_ptr<CMapChunk> curChunk = curTile->getChunk(chunkX, chunkZ);
+	const CMapChunk* curChunk = curTile->getChunk(chunkX, chunkZ);
 	if (curChunk == nullptr)
 	{
 		return UINT32_MAX;
@@ -283,14 +270,14 @@ uint32 CMap::GetAreaID(ICameraComponent3D* camera)
 bool CMap::getTileIsCurrent(int x, int z) const
 {
     int midTile = static_cast<uint32>(C_RenderedTiles / 2);
-    std::shared_ptr<CMapTile> currentTile = m_Current[midTile][midTile];
+    CMapTile* currentTile = m_Current[midTile][midTile];
     if (currentTile == nullptr)
     {
         return false;
     }
 
-    int32 currentX = currentTile->m_IndexX;
-    int32 currentZ = currentTile->m_IndexZ;
+    int32 currentX = currentTile->getIndexX();
+    int32 currentZ = currentTile->getIndexZ();
 
     return (
         x >= (currentX - (C_RenderedTiles / 2)) &&
@@ -305,7 +292,7 @@ bool CMap::IsTileInCurrent(const CMapTile& _mapTile)
 	for (int i = 0; i < C_RenderedTiles; i++)
 		for (int j = 0; j < C_RenderedTiles; j++)
 			if (m_Current[i][j] != nullptr)
-				if (m_Current[i][j].get() == &_mapTile)
+				if (m_Current[i][j] == &_mapTile)
 					return true;
 	return false;
 }

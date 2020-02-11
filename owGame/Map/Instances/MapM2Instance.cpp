@@ -7,37 +7,30 @@
 
 // Additional
 
-CMapM2Instance::CMapM2Instance(const M2& M2Objec) :
-	CM2_Base_Instance(M2Objec)
-{}
+CMapM2Instance::CMapM2Instance(const M2& M2Object, const ADT_MDXDef& _placementInfo) 
+	: CM2_Base_Instance(M2Object)
+{
+	m_UniqueId = _placementInfo.uniqueId;
+
+	// CTransformComponent
+	{
+		SetTranslate(_placementInfo.position);
+		vec3 rotate = glm::radians(_placementInfo.rotation);
+		rotate.x = -rotate.x;
+		rotate.y = rotate.y - glm::half_pi<float>();
+		SetRotation(vec3(rotate.z, rotate.y, rotate.x));
+		SetScale(vec3(static_cast<float>(_placementInfo.scale) / 1024.0f));
+	}
+}
 
 CMapM2Instance::~CMapM2Instance()
 {}
-
-void CMapM2Instance::Initialize()
-{
-}
-
-void CMapM2Instance::Initialize(const ADT_MDXDef & _placementInfo)
-{
-    m_UniqueId = _placementInfo.uniqueId;
-
-    // CTransformComponent
-    {
-        SetTranslate(_placementInfo.position);
-        vec3 rotate = glm::radians(_placementInfo.rotation);
-        rotate.x = -rotate.x;
-        rotate.y = rotate.y - glm::half_pi<float>();
-        SetRotation(vec3(rotate.z, rotate.y, rotate.x));
-        SetScale(vec3(static_cast<float>(_placementInfo.scale) / 1024.0f));
-    }
-}
 
 
 //
 // ISceneNode
 //
-bool CMapM2Instance::Accept(IVisitor* visitor)
+void CMapM2Instance::Accept(IVisitor* visitor)
 {
 	//CRenderPass_M2* passAsM2Pass = dynamic_cast<CRenderPass_M2*>(visitor);
     //if (passAsM2Pass == nullptr)

@@ -7,20 +7,19 @@
 #include "MapChunkMaterial.h"
 
 
-ADT_MCNK_Material::ADT_MCNK_Material(IRenderDevice& RenderDevice, const std::weak_ptr<CMapTile> _parentADT) :
-	MaterialProxie(RenderDevice.GetObjectsFactory().CreateMaterial(sizeof(MaterialProperties)))
+ADT_MCNK_Material::ADT_MCNK_Material(IRenderDevice& RenderDevice) 
+	: MaterialProxie(RenderDevice.GetObjectsFactory().CreateMaterial(sizeof(MaterialProperties)))
 {
 	m_pProperties = (MaterialProperties*)_aligned_malloc(sizeof(MaterialProperties), 16);
 	*m_pProperties = MaterialProperties();
+
+	SetWrapper(this);
 }
 
 ADT_MCNK_Material::~ADT_MCNK_Material()
 {
-	if (m_pProperties)
-	{
-		_aligned_free(m_pProperties);
-		m_pProperties = nullptr;
-	}
+	_aligned_free(m_pProperties);
+	m_pProperties = nullptr;
 }
 
 //--
