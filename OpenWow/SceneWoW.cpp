@@ -54,7 +54,7 @@ void CSceneWoW::OnRayIntersected(const glm::vec3& Point)
 //
 void CSceneWoW::OnPreRender(RenderEventArgs& e)
 {
-	wmoInstance->UpdateCamera(GetCameraController()->GetCamera().get());
+	//wmoInstance->UpdateCamera(GetCameraController()->GetCamera().get());
 	skyManager->UpdateCamera(GetCameraController()->GetCamera().get());
 
 	SceneBase::OnPreRender(e);
@@ -83,11 +83,16 @@ void CSceneWoW::OnWindowKeyReleased(KeyEventArgs & e)
 //
 void CSceneWoW::Load3D()
 {
-	auto wmo = GetBaseManager()->GetManager<IWMOManager>()->Add(GetRenderDevice(), "World\\wmo\\Azeroth\\Buildings\\Stormwind\\Stormwind.wmo");
-	wmoInstance = GetRootNode3D()->CreateSceneNode<CWMO_Base_Instance>(*wmo);
+	//auto wmo = GetBaseManager()->GetManager<IWMOManager>()->Add(GetRenderDevice(), "World\\wmo\\Azeroth\\Buildings\\Stormwind\\Stormwind.wmo");
+	//wmoInstance = GetRootNode3D()->CreateSceneNode<CWMO_Base_Instance>(*wmo);
+
+	auto m2 = GetBaseManager()->GetManager<IM2Manager>()->Add(GetRenderDevice(), "Creature\\KelThuzad\\KelThuzad.m2");
+	m2Instance = GetRootNode3D()->CreateSceneNode<CM2_Base_Instance>(*m2);
 
 	skyManager = GetRootNode3D()->CreateSceneNode<SkyManager>(GetRenderDevice());
 	skyManager->Load(0);
+
+	environmentManager = GetBaseManager()->AddManager<EnvironmentManager>(std::make_shared<EnvironmentManager>(GetBaseManager()));
 
 	std::shared_ptr<BuildRenderListPassTemplated<CWMO_Group_Instance>> wmoListPass = std::make_shared<BuildRenderListPassTemplated<CWMO_Group_Instance>>(GetRenderDevice(), shared_from_this());
 	std::shared_ptr<BuildRenderListPassTemplated<CM2_Base_Instance>> m2ListPass = std::make_shared<BuildRenderListPassTemplated<CM2_Base_Instance>>(GetRenderDevice(), shared_from_this());

@@ -25,5 +25,7 @@ private:
 
 private:
 	CWMO_Base_Instance* wmoInstance;
+	CM2_Base_Instance* m2Instance;
 	SkyManager* skyManager;
+	EnvironmentManager* environmentManager;
 };

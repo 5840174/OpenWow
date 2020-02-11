@@ -127,6 +127,15 @@
     <Filter Include="Sky\Environment">
       <UniqueIdentifier>{36ffc6b8-487b-428d-8202-edfaf3cd1128}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Map">
+      <UniqueIdentifier>{8e54c6e7-8150-40a4-883e-dd536bae98a1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Map\Instances">
+      <UniqueIdentifier>{dfa91d08-1b9d-4b4a-b8f7-c6882bcf1ce1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Map\WDL">
+      <UniqueIdentifier>{bb76c07f-90a6-4966-a672-a5060771da06}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -380,6 +389,63 @@
     </ClCompile>
     <ClCompile Include="WMO\WMO_Group_Instance.cpp">
       <Filter>WMO\Instances</Filter>
+    </ClCompile>
+    <ClCompile Include="Sky\Environment\DayNightCycle.cpp">
+      <Filter>Sky\Environment</Filter>
+    </ClCompile>
+    <ClCompile Include="Sky\Environment\DayNightPhase.cpp">
+      <Filter>Sky\Environment</Filter>
+    </ClCompile>
+    <ClCompile Include="Sky\Environment\EnvironmentManager.cpp">
+      <Filter>Sky\Environment</Filter>
+    </ClCompile>
+    <ClCompile Include="Map\Instances\MapM2Instance.cpp">
+      <Filter>Map\Instances</Filter>
+    </ClCompile>
+    <ClCompile Include="Map\Instances\MapWMOInstance.cpp">
+      <Filter>Map\Instances</Filter>
+    </ClCompile>
+    <ClCompile Include="Map\Map.cpp">
+      <Filter>Map</Filter>
+    </ClCompile>
+    <ClCompile Include="Map\Map_Shared.cpp">
+      <Filter>Map</Filter>
+    </ClCompile>
+    <ClCompile Include="Map\MapChunk.cpp">
+      <Filter>Map</Filter>
+    </ClCompile>
+    <ClCompile Include="Map\MapChunkMaterial.cpp">
+      <Filter>Map</Filter>
+    </ClCompile>
+    <ClCompile Include="Map\MapLiquid.cpp">
+      <Filter>Map</Filter>
+    </ClCompile>
+    <ClCompile Include="Map\MapTile.cpp">
+      <Filter>Map</Filter>
+    </ClCompile>
+    <ClCompile Include="Map\MapWDT.cpp">
+      <Filter>Map</Filter>
+    </ClCompile>
+    <ClCompile Include="Map\MinimapProvider.cpp">
+      <Filter>Map</Filter>
+    </ClCompile>
+    <ClCompile Include="Map\RenderPass_ADT_MCNK.cpp">
+      <Filter>RenderStuff</Filter>
+    </ClCompile>
+    <ClCompile Include="Map\RenderPass_MapTile.cpp">
+      <Filter>RenderStuff</Filter>
+    </ClCompile>
+    <ClCompile Include="Map\RenderPass_WDL.cpp">
+      <Filter>RenderStuff</Filter>
+    </ClCompile>
+    <ClCompile Include="Map\WDL_LowResTile.cpp">
+      <Filter>Map\WDL</Filter>
+    </ClCompile>
+    <ClCompile Include="Map\WDL_Node_Material.cpp">
+      <Filter>Map\WDL</Filter>
+    </ClCompile>
+    <ClCompile Include="Map\MapWDL.cpp">
+      <Filter>Map\WDL</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -829,6 +895,66 @@
     </ClInclude>
     <ClInclude Include="WMO\WMO_Group_Instance.h">
       <Filter>WMO\Instances</Filter>
+    </ClInclude>
+    <ClInclude Include="Sky\Environment\DayNightCycle.h">
+      <Filter>Sky\Environment</Filter>
+    </ClInclude>
+    <ClInclude Include="Sky\Environment\DayNightPhase.h">
+      <Filter>Sky\Environment</Filter>
+    </ClInclude>
+    <ClInclude Include="Sky\Environment\EnvironmentManager.h">
+      <Filter>Sky\Environment</Filter>
+    </ClInclude>
+    <ClInclude Include="Map\Instances\MapM2Instance.h">
+      <Filter>Map\Instances</Filter>
+    </ClInclude>
+    <ClInclude Include="Map\Instances\MapWMOInstance.h">
+      <Filter>Map\Instances</Filter>
+    </ClInclude>
+    <ClInclude Include="Map\Map.h">
+      <Filter>Map</Filter>
+    </ClInclude>
+    <ClInclude Include="Map\Map_Headers.h">
+      <Filter>Map</Filter>
+    </ClInclude>
+    <ClInclude Include="Map\Map_Shared.h">
+      <Filter>Map</Filter>
+    </ClInclude>
+    <ClInclude Include="Map\MapChunk.h">
+      <Filter>Map</Filter>
+    </ClInclude>
+    <ClInclude Include="Map\MapChunkMaterial.h">
+      <Filter>Map</Filter>
+    </ClInclude>
+    <ClInclude Include="Map\MapLiquid.h">
+      <Filter>Map</Filter>
+    </ClInclude>
+    <ClInclude Include="Map\MapTile.h">
+      <Filter>Map</Filter>
+    </ClInclude>
+    <ClInclude Include="Map\MapWDT.h">
+      <Filter>Map</Filter>
+    </ClInclude>
+    <ClInclude Include="Map\MinimapProvider.h">
+      <Filter>Map</Filter>
+    </ClInclude>
+    <ClInclude Include="Map\RenderPass_ADT_MCNK.h">
+      <Filter>RenderStuff</Filter>
+    </ClInclude>
+    <ClInclude Include="Map\RenderPass_MapTile.h">
+      <Filter>RenderStuff</Filter>
+    </ClInclude>
+    <ClInclude Include="Map\RenderPass_WDL.h">
+      <Filter>RenderStuff</Filter>
+    </ClInclude>
+    <ClInclude Include="Map\WDL_LowResTile.h">
+      <Filter>Map\WDL</Filter>
+    </ClInclude>
+    <ClInclude Include="Map\WDL_Node_Material.h">
+      <Filter>Map\WDL</Filter>
+    </ClInclude>
+    <ClInclude Include="Map\MapWDL.h">
+      <Filter>Map\WDL</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

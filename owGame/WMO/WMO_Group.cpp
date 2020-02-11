@@ -8,6 +8,7 @@
 #include "WMO_Group.h"
 
 // Additional 
+#include "WoWChunkReader.h"
 #include "WMO_Doodad_Instance.h"
 #include "WMO_Liquid_Instance.h"
 #include "WMO_Fixes.h"

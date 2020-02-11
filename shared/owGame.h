@@ -35,6 +35,7 @@
 #include "../owGame/WMO/WMOsManager.h"
 #include "../owGame/WMO/RenderPass_WMO.h"
 
-// Sky
+// Sky & Enviorement
 #include "../owGame/Sky/SkyManager.h"
+#include "../owGame/Sky/Environment/EnvironmentManager.h"
 #include "../owGame/Sky/RenderPass_Sky.h"
