@@ -29,4 +29,5 @@ private:
 	SkyManager* skyManager;
 	EnvironmentManager* environmentManager;
 	CMap* map;
+	WowTime wowGameTime;
 };

@@ -19,8 +19,8 @@ CMapShared::CMapShared(IRenderDevice& RenderDevice)
 	m_DefaultMapStrip = GenarateDefaultMapArray();
 
 	// init texture coordinates for detail map:
-	vec2 detailTextureCoord[C_MapBufferSize];
-	vec2* dtc = detailTextureCoord;
+	glm::vec2 detailTextureCoord[C_MapBufferSize];
+	glm::vec2* dtc = detailTextureCoord;
 	const float detail_half = 0.5f * C_DetailSize / 8.0f;
 	for (int j = 0; j < 17; j++)
 	{
@@ -32,14 +32,14 @@ CMapShared::CMapShared(IRenderDevice& RenderDevice)
 			{
 				tx += detail_half;
 			}
-			*dtc++ = vec2(tx, ty);
+			*dtc++ = glm::vec2(tx, ty);
 		}
 	}
 	BufferTextureCoordDetail = RenderDevice.GetObjectsFactory().CreateVertexBuffer(detailTextureCoord, C_MapBufferSize);
 
 	// init texture coordinates for alpha map:
-	vec2 alphaTextureCoord[C_MapBufferSize];
-	vec2* atc = alphaTextureCoord;
+	glm::vec2 alphaTextureCoord[C_MapBufferSize];
+	glm::vec2* atc = alphaTextureCoord;
 	const float alpha_half = 0.5f * 1.0f / 8.0f;
 	for (int j = 0; j < 17; j++)
 	{
@@ -51,7 +51,7 @@ CMapShared::CMapShared(IRenderDevice& RenderDevice)
 			{
 				tx += alpha_half;
 			}
-			*atc++ = vec2(tx, ty);
+			*atc++ = glm::vec2(tx, ty);
 		}
 	}
 	BufferTextureCoordAlpha = RenderDevice.GetObjectsFactory().CreateVertexBuffer(alphaTextureCoord, C_MapBufferSize);

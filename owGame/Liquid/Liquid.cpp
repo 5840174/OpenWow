@@ -58,10 +58,10 @@ struct SLiquidFlag
 #include __PACK_END
 #pragma endregion
 
-void CLiquid::createLayers(std::shared_ptr<const DBC_LiquidTypeRecord> _type, std::shared_ptr<IFile> f)
+void CLiquid::createLayers(std::shared_ptr<const DBC_LiquidTypeRecord> _type, const std::shared_ptr<IByteBuffer>& Bytes)
 {
-	SLiquidVertex* map = (SLiquidVertex*)(f->getDataFromCurrent());
-	SLiquidFlag* flags = (SLiquidFlag*)(f->getDataFromCurrent() + ((m_TilesX + 1) * (m_TilesY + 1)) * sizeof(SLiquidVertex));
+	SLiquidVertex* map = (SLiquidVertex*)(Bytes->getDataFromCurrent());
+	SLiquidFlag* flags = (SLiquidFlag*)(Bytes->getDataFromCurrent() + ((m_TilesX + 1) * (m_TilesY + 1)) * sizeof(SLiquidVertex));
 
 	std::shared_ptr<CLiquidLayer> layer = std::make_shared<CLiquidLayer>(m_RenderDevice);
 	layer->LiquidType = _type;

@@ -12,12 +12,11 @@
 #include "Map_Shared.h"
 #include "MapChunkMaterial.h"
 
-CMapChunk::CMapChunk(IRenderDevice& RenderDevice, const CMap& Map, const CMapTile& MapTile, const std::string& FileName, const ADT_MCIN& MCIN)
+CMapChunk::CMapChunk(IRenderDevice& RenderDevice, const CMap& Map, const CMapTile& MapTile, const std::shared_ptr<IByteBuffer>& Bytes)
 	: m_RenderDevice(RenderDevice)
-	, m_MapController(Map)
-	, m_ParentADT(MapTile)
-	, m_FileName(FileName)
-	, m_MCIN(MCIN)
+	, m_Map(Map)
+	, m_MapTile(MapTile)
+	, m_File(Bytes)
 {
 	memset(mcly, 0x00, sizeof(ADT_MCNK_MCLY) * 4);
 }
@@ -42,7 +41,7 @@ void CMapChunk::Initialize()
 
 std::string CMapChunk::GetName() const
 {
-	return "MapChunk " + std::to_string(m_MCIN.offset);
+	return "MapChunk " + 2/*std::to_string(m_MCIN.offset)*/;
 }
 
 void CMapChunk::Accept(IVisitor* visitor)
@@ -61,17 +60,14 @@ void CMapChunk::Accept(IVisitor* visitor)
 
 bool CMapChunk::PreLoad()
 {
-	m_File = GetBaseManager()->GetManager<IFilesManager>()->Open(m_FileName);
-	if (m_File == nullptr)
-		return false;
-
-	m_File->seek(m_MCIN.offset);
+	//m_File->seek(m_MCIN.offset);
 
 	// Chunk + size (8)
-	m_File->seekRelative(4); // MCNK
+	uint32_t offset;
+	m_File->read(&offset);
+
 	uint32_t size;
-	m_File->readBytes(&size, sizeof(uint32_t));
-	_ASSERT(size + 8 == m_MCIN.size);
+	m_File->read(&size);
 
 	uint32_t startPos = m_File->getPos();
 
@@ -210,8 +206,8 @@ bool CMapChunk::Load()
 			m_File->readBytes(&mcly[i], sizeof(ADT_MCNK_MCLY));
 			//m_DiffuseTextures[i] = parentADT->m_Textures.at(i)->diffuseTexture;
 			//m_SpecularTextures[i] = parentADT->m_Textures.at(i)->specularTexture;
-			m_DiffuseTextures[i] = m_ParentADT.m_Textures.at(mcly[i].textureIndex)->diffuseTexture;
-			m_SpecularTextures[i] = m_ParentADT.m_Textures.at(mcly[i].textureIndex)->specularTexture;
+			m_DiffuseTextures[i] = m_MapTile.m_Textures.at(mcly[i].textureIndex)->diffuseTexture;
+			m_SpecularTextures[i] = m_MapTile.m_Textures.at(mcly[i].textureIndex)->specularTexture;
 		}
 	}
 
@@ -274,7 +270,7 @@ bool CMapChunk::Load()
 					offset_output += n;
 				}
 			}
-			else if (m_MapController.isUncompressedAlpha()) // Uncomressed (4096)
+			else if (m_Map.isUncompressedAlpha()) // Uncomressed (4096)
 			{
 				memcpy(amap, abuf, 64 * 64);
 			}

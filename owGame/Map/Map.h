@@ -25,7 +25,7 @@ public:
 	void                                            EnterMap(int32 x, int32 z);
 	CMapTile*                                       LoadTile(int32 x, int32 z);
 	void                                            ClearCache();
-	uint32                                          GetAreaID(ICameraComponent3D* camera);
+	uint32                                          GetAreaID(const ICameraComponent3D* camera);
 
 	// Scene node
 	std::string										GetName() const override
@@ -48,7 +48,6 @@ public: // Getters
 	bool                                            IsOutOfBounds() const { return m_IsOnInvalidTile; }
 
 	std::shared_ptr<ITexture>                       getMinimap() const { return m_WDL->getMinimap(); }
-	WowTime*                                        getTime() { return &m_GameTime; }
 
 	bool                                            getTileIsCurrent(int x, int z) const;
 	bool                                            IsTileInCurrent(const CMapTile& _mapTile);
@@ -58,14 +57,14 @@ private:
 	std::string                                     m_MapFolderName;
 	std::shared_ptr<DBC_MapRecord>                  m_MapDBCRecord;
 
+
 	CMapTile*	                                    m_ADTCache[C_TilesCacheSize];
 	CMapTile*	                                    m_Current[C_RenderedTiles][C_RenderedTiles];
 	int32					                        m_CurrentTileX, m_CurrentTileZ;
 	bool					                        m_IsOnInvalidTile;
 
-	std::shared_ptr<CMapWDT>	                    m_WDT;
-	std::shared_ptr<CMapWDL>	                    m_WDL;
-	WowTime					                        m_GameTime;
+	std::unique_ptr<CMapWDT>	                    m_WDT;
+	std::unique_ptr<CMapWDL>	                    m_WDL;
 
 	// Minimap
 	CMinimapProvider*		                        mProvider;

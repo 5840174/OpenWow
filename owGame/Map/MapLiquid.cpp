@@ -11,7 +11,7 @@ CADT_Liquid::~CADT_Liquid()
 {
 }
 
-void CADT_Liquid::CreateFromMCLQ(std::shared_ptr<IFile> f, ADT_MCNK_Header header)
+void CADT_Liquid::CreateFromMCLQ(const std::shared_ptr<IByteBuffer>& Bytes, ADT_MCNK_Header header)
 {
-	createLayers(header.getLiquidType(), f);
+	createLayers(header.getLiquidType(), Bytes);
 }

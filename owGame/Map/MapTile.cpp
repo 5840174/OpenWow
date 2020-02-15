@@ -231,12 +231,12 @@ bool CMapTile::Load()
 
 	for (uint32_t i = 0; i < C_ChunksInTileGlobal; i++)
 	{
-		CMapChunk* chunk = CreateSceneNode<CMapChunk>(m_RenderDevice, m_Map, *this, f->Path_Name(), chunks[i]);
-		chunk->PreLoad();
-		chunk->Load();
+		CMapChunk* chunk = CreateSceneNode<CMapChunk>(m_RenderDevice, m_Map, *this, std::make_shared<CByteBuffer>(f->getData() + chunks[i].offset, chunks[i].size));
+		//chunk->PreLoad();
+		GetBaseManager()->GetManager<ILoader>()->AddToLoadQueue(chunk);
+		//chunk->Load();
 		m_Chunks.push_back(chunk);
 	}
-
 
 
 	//-- WMOs --------------------------------------------------------------------------
@@ -265,7 +265,6 @@ bool CMapTile::Load()
 	}
 	//---------------------------------------------------------------------------------
 #endif
-
 
 	Log::Green("CMapTile[%d, %d, %s]: Loaded!", m_IndexX, m_IndexZ, filename);
 

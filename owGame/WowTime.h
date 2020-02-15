@@ -2,7 +2,7 @@
 
 #include "WowConsts.h"
 
-class WowTime
+class ZN_API WowTime
 {
 public:
 	inline void Set(uint32 _seconds)

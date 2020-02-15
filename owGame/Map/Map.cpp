@@ -17,12 +17,6 @@ CMap::CMap(IBaseManager* BaseManager, IRenderDevice& RenderDevice)
 		_MapShared = new CMapShared(m_RenderDevice);
 	}
 
-
-	/*time_t t = time(0);   // get time now
-	tm* now = localtime(&t);
-	m_GameTime.Set(now->tm_hour, now->tm_min);*/
-	m_GameTime.Set(11, 0);
-
 	mProvider = nullptr;
 	dir = nullptr;
 
@@ -48,11 +42,11 @@ void CMap::MapPreLoad(std::shared_ptr<DBC_MapRecord> _map)
 	Log::Print("Map[%s]: Id [%d]. Preloading...", m_MapDBCRecord->Get_Directory(), m_MapDBCRecord->Get_ID());
 
 	m_WDL.reset();
-	m_WDL = std::make_shared<CMapWDL>(m_BaseManager, m_RenderDevice, *this);
+	m_WDL = std::make_unique<CMapWDL>(m_BaseManager, m_RenderDevice, *this);
 	m_WDL->Load();
 
 	m_WDT.reset();
-	m_WDT = std::make_shared<CMapWDT>(m_BaseManager, m_RenderDevice, *this);
+	m_WDT = std::make_unique<CMapWDT>(m_BaseManager, m_RenderDevice, *this);
 }
 
 void CMap::MapLoad()
@@ -67,7 +61,7 @@ void CMap::MapPostLoad()
 	Log::Print("Map[%s]: Id [%d]. Postloading...", m_MapDBCRecord->Get_Directory(), m_MapDBCRecord->Get_ID());
 
 	m_WDT->CreateInsances(this);
-	//m_WDL->CreateInsances(this);
+	m_WDL->CreateInsances(this);
 }
 
 void CMap::Unload()
@@ -226,7 +220,7 @@ void CMap::ClearCache()
 	}
 }
 
-uint32 CMap::GetAreaID(ICameraComponent3D* camera)
+uint32 CMap::GetAreaID(const ICameraComponent3D* camera)
 {
 	if (!m_WDT->MapHasTiles())
 	{

@@ -27,12 +27,17 @@ void CSceneWoW::Initialize()
 	GetCameraController()->SetCamera(cameraNode->GetComponent<ICameraComponent3D>());
 	GetCameraController()->GetCamera()->SetPerspectiveProjection(ICameraComponent3D::EPerspectiveProjectionHand::Right, 45.0f, 1.0f/*GetRenderWindow()->GetWindowWidth() / GetRenderWindow()->GetWindowHeight()*/, 0.5f, 10000.0f);
 
+	GetBaseManager()->GetManager<ILoader>()->SetCamera(cameraNode->GetComponent<CCameraComponent3D>());
+
 	Load3D();
 	LoadUI();
 
 	//cameraNode->SetTranslate(vec3(-50, 160, 170));
 	//GetCameraController()->GetCamera()->SetYaw(-51);
 	//GetCameraController()->GetCamera()->SetPitch(-38);
+
+
+	GetBaseManager()->GetManager<ILoader>()->Start();
 }
 
 void CSceneWoW::Finalize()
@@ -98,11 +103,12 @@ void CSceneWoW::Load3D()
 
 	environmentManager = GetBaseManager()->AddManager<EnvironmentManager>(std::make_shared<EnvironmentManager>(GetBaseManager()));
 
-
-
-
 	map = GetRootNode3D()->CreateSceneNode<CMap>(GetBaseManager(), GetRenderDevice());
 
+	/*time_t t = time(0);   // get time now
+	tm* now = localtime(&t);
+	m_GameTime.Set(now->tm_hour, now->tm_min);*/
+	wowGameTime.Set(11, 0);
 
 	const float x = 40;
 	const float y = 31;
@@ -114,6 +120,7 @@ void CSceneWoW::Load3D()
 	GetCameraController()->GetCamera()->SetTranslation(vec3(x * C_TileSize + C_TileSize / 2.0f, 300, y * C_TileSize + C_TileSize / 2.0f));
 	GetCameraController()->GetCamera()->SetYaw(48.8);
 	GetCameraController()->GetCamera()->SetPitch(-27.8);
+
 
 	std::shared_ptr<BuildRenderListPassTemplated<CWMO_Group_Instance>> wmoListPass = std::make_shared<BuildRenderListPassTemplated<CWMO_Group_Instance>>(GetRenderDevice(), shared_from_this());
 	std::shared_ptr<BuildRenderListPassTemplated<CM2_Base_Instance>> m2ListPass = std::make_shared<BuildRenderListPassTemplated<CM2_Base_Instance>>(GetRenderDevice(), shared_from_this());

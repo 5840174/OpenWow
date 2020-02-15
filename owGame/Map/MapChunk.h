@@ -12,7 +12,7 @@ class ZN_API CMapChunk
 	, public CLoadableObject
 {
 public:
-	CMapChunk(IRenderDevice& RenderDevice, const CMap& Map, const CMapTile& MapTile, const std::string& FileName, const ADT_MCIN& MCIN);
+	CMapChunk(IRenderDevice& RenderDevice, const CMap& Map, const CMapTile& MapTile, const std::shared_ptr<IByteBuffer>& Bytes);
 	virtual ~CMapChunk();
 
 
@@ -31,7 +31,6 @@ public:
 	uint32                                          getPriority() const override { return 1; };
 
 private:
-	std::shared_ptr<IFile>                          m_File;
 	ADT_MCNK_Header                                 header;
 
 	ADT_MCNK_MCLY                                   mcly[4];
@@ -42,9 +41,8 @@ private:
 
 private:
 	IRenderDevice&                  m_RenderDevice;
-	const CMap&						m_MapController;
-	const CMapTile&			        m_ParentADT;
+	const CMap&						m_Map;
+	const CMapTile&			        m_MapTile;
 
-	const std::string               m_FileName;
-	const ADT_MCIN                  m_MCIN;
+	std::shared_ptr<IByteBuffer>    m_File;
 };
