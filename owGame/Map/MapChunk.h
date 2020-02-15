@@ -33,11 +33,7 @@ public:
 private:
 	ADT_MCNK_Header                                 header;
 
-	ADT_MCNK_MCLY                                   mcly[4];
-	std::shared_ptr<ITexture>                        m_DiffuseTextures[4];
-	std::shared_ptr<ITexture>                        m_SpecularTextures[4];
-
-	std::shared_ptr<ITexture>                        m_BlendRBGShadowATexture;
+	uint32                          m_AreaID;
 
 private:
 	IRenderDevice&                  m_RenderDevice;

@@ -34,7 +34,7 @@ std::shared_ptr<IRenderPassPipelined> CRenderPass_WDL::CreatePipeline(std::share
 	pipeline->GetBlendState()->SetBlendMode(disableBlending);
 	pipeline->GetDepthStencilState()->SetDepthMode(disableDepthWrites);
 	pipeline->GetRasterizerState()->SetCullMode(IRasterizerState::CullMode::Back);
-	pipeline->GetRasterizerState()->SetFillMode(IRasterizerState::FillMode::Solid);
+	pipeline->GetRasterizerState()->SetFillMode(IRasterizerState::FillMode::Wireframe);
 	pipeline->SetRenderTarget(RenderTarget);
 	pipeline->GetRasterizerState()->SetViewport(Viewport);
 	pipeline->SetShader(EShaderType::VertexShader, vertexShader);

@@ -17,7 +17,6 @@ class CWMO_Base_Instance;
 
 class ZN_API CWMO 
 	: public ISceneNodeProvider
-	, public std::enable_shared_from_this<CWMO>
 {
 	friend CWMO_Part_Portal;
 public:

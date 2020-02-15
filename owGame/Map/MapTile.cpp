@@ -240,6 +240,7 @@ bool CMapTile::Load()
 		m_Chunks.push_back(chunk);
 	}
 
+#if 0
 
 	//-- WMOs --------------------------------------------------------------------------
 
@@ -269,6 +270,8 @@ bool CMapTile::Load()
 //#endif
 	}
 	//---------------------------------------------------------------------------------
+#endif
+
 #endif
 
 	Log::Green("CMapTile[%d, %d, %s]: Loaded!", m_IndexX, m_IndexZ, filename);

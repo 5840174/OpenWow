@@ -17,18 +17,15 @@ CMapChunk::CMapChunk(IRenderDevice& RenderDevice, const CMap& Map, const CMapTil
 	, m_Map(Map)
 	, m_MapTile(MapTile)
 	, m_File(Bytes)
-{
-	memset(mcly, 0x00, sizeof(ADT_MCNK_MCLY) * 4);
-}
+{}
 
 CMapChunk::~CMapChunk()
-{
-}
+{}
 
 
 uint32 CMapChunk::GetAreaID() const
 {
-    return header.areaid;
+    return m_AreaID;
 }
 
 
@@ -74,21 +71,22 @@ bool CMapChunk::PreLoad()
 	// Read header
 	m_File->readBytes(&header, sizeof(ADT_MCNK_Header));
 
+	m_AreaID = header.areaid;
 
 	// Scene node params
     {
         // Set translate
-        SetTranslate(vec3(header.xpos * (-1.0f) + C_ZeroPoint, header.ypos, header.zpos * (-1.0f) + C_ZeroPoint));
+        SetTranslate(glm::vec3(header.xpos * (-1.0f) + C_ZeroPoint, header.ypos, header.zpos * (-1.0f) + C_ZeroPoint));
     }
 
     {
-        vec3 translate = GetTranslation();
+		glm::vec3 translate = GetTranslation();
 
         // Bounds
         BoundingBox bbox
         (
-            vec3(translate.x, Math::MaxFloat, translate.z),
-            vec3(translate.x + C_ChunkSize, Math::MinFloat, translate.z + C_ChunkSize)
+            glm::vec3(translate.x,               Math::MaxFloat, translate.z),
+			glm::vec3(translate.x + C_ChunkSize, Math::MinFloat, translate.z + C_ChunkSize)
         );
 
 		GetComponent<CColliderComponent3D>()->SetBounds(bbox);
@@ -199,6 +197,12 @@ bool CMapChunk::Load()
 	}
 
 	// Textures
+	ADT_MCNK_MCLY mcly[4];
+	std::shared_ptr<ITexture> m_DiffuseTextures[4];
+	std::shared_ptr<ITexture> m_SpecularTextures[4];
+
+	std::shared_ptr<ITexture> m_BlendRBGShadowATexture;
+
 	m_File->seek(startPos + header.ofsLayer);
 	{
 		for (uint32 i = 0; i < header.nLayers; i++)
