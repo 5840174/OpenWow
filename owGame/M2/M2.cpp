@@ -1,28 +1,29 @@
 #include "stdafx.h"
 
-// Include
-#include "M2_Base_Instance.h"
-#include "M2_Builder.h"
-#include "M2_Skin_Builder.h"
-
 // General
 #include "M2.h"
 
-M2::M2(const std::string& name) :
-	m_FileName(name),
-	m_UniqueName(""),
+// Additional
+#include "M2_Builder.h"
+#include "M2_Skin_Builder.h"
 
-	m_Materials(nullptr),
-	m_Miscellaneous(nullptr),
-	m_Skeleton(nullptr),
+M2::M2(IBaseManager* BaseManager, IRenderDevice& RenderDevice, const std::string& name) 
+	: m_FileName(name)
+	, m_UniqueName("")
 
 	// Loops and sequences
-	m_IsAnimated(false),
+	, m_IsAnimated(false)
 
 	// Vertices
-	m_IsContainGeom(false)
+	, m_IsContainGeom(false)
+	, m_BaseManager(BaseManager)
+	, m_RenderDevice(RenderDevice)
 {
 	//Log::Info("M2[%s]: Loading...", m_FileName.c_str());
+}
+
+M2::~M2()
+{
 }
 
 void M2::CreateInsances(ISceneNode3D* _parent) const
@@ -32,6 +33,15 @@ void M2::CreateInsances(ISceneNode3D* _parent) const
 		_parent->GetComponent<IMeshComponent3D>()->AddMesh(it);
 		break;
 	}
+}
+
+bool M2::Load()
+{
+	CM2_Builder builder(m_BaseManager, m_RenderDevice, this);
+	if (! builder.Load())
+		return false;
+
+	return true;
 }
 
 void M2::update(double _time, double _dTime)

@@ -64,7 +64,9 @@ void CSceneWoW::OnPreRender(RenderEventArgs& e)
 	map->UpdateCamera(GetCameraController()->GetCamera().get());
 
 	CMapWMOInstance::reset();
+#ifdef USE_M2_MODELS
 	CMapM2Instance::reset();
+#endif
 
 	SceneBase::OnPreRender(e);
 }

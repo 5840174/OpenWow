@@ -28,7 +28,7 @@ CM2_SkinSection::CM2_SkinSection(IRenderDevice& RenderDevice, const M2& M2Model,
 	m_Properties = (ShaderM2GeometryProperties*)_aligned_malloc(sizeof(ShaderM2GeometryProperties), 16);
 	(*m_Properties) = ShaderM2GeometryProperties();
 
-	m_PropertiesBuffer = RenderDevice.GetObjectsFactory().CreateConstantBuffer(m_Properties, sizeof(ShaderM2GeometryProperties));
+	m_PropertiesBuffer = RenderDevice.GetObjectsFactory().CreateConstantBuffer(nullptr, sizeof(ShaderM2GeometryProperties));
 
 	std::vector<vec3> verts;
 	std::vector<SM2_Vertex_BoneWeight> weights;

@@ -234,13 +234,10 @@ bool CMapTile::Load()
 	for (uint32_t i = 0; i < C_ChunksInTileGlobal; i++)
 	{
 		CMapChunk* chunk = CreateSceneNode<CMapChunk>(m_RenderDevice, m_Map, *this, std::make_shared<CByteBuffer>(f->getData() + chunks[i].offset, chunks[i].size));
-		//chunk->PreLoad();
 		GetBaseManager()->GetManager<ILoader>()->AddToLoadQueue(chunk);
-		//chunk->Load();
 		m_Chunks.push_back(chunk);
 	}
 
-#if 0
 
 	//-- WMOs --------------------------------------------------------------------------
 
@@ -251,10 +248,12 @@ bool CMapTile::Load()
 		if (wmo)
 		{
 			CMapWMOInstance* inst = CreateSceneNode<CMapWMOInstance>(*wmo, it);
+			GetBaseManager()->GetManager<ILoader>()->AddToLoadQueue(inst);
 			m_WMOsInstances.push_back(inst);
 		}
 //#endif
 	}
+
 
 	//-- MDXs -------------------------------------------------------------------------
 #ifdef USE_M2_MODELS
@@ -265,13 +264,12 @@ bool CMapTile::Load()
 		if (m2)
 		{
 			CMapM2Instance* inst = CreateSceneNode<CMapM2Instance>(*m2, it);
+			GetBaseManager()->GetManager<ILoader>()->AddToLoadQueue(inst);
 			m_MDXsInstances.push_back(inst);
 		}
 //#endif
 	}
 	//---------------------------------------------------------------------------------
-#endif
-
 #endif
 
 	Log::Green("CMapTile[%d, %d, %s]: Loaded!", m_IndexX, m_IndexZ, filename);

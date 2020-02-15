@@ -9,7 +9,7 @@ class CM2_Builder
 {
 	friend CM2_Skin_Builder;
 public:
-	CM2_Builder(IBaseManager* BaseManager, IRenderDevice& RenderDevice, std::shared_ptr<M2> _model);
+	CM2_Builder(IBaseManager* BaseManager, IRenderDevice& RenderDevice, M2* _model);
 	virtual ~CM2_Builder();
 
 	bool Load();
@@ -30,7 +30,7 @@ public:
 	bool IsAnimated() const { return m_M2->m_IsAnimated; }
 
 private:
-	std::shared_ptr<M2>     m_M2;
+	M2*     m_M2;
 	std::shared_ptr<IFile>  m_F;
 	SM2_Header				m_Header;
 

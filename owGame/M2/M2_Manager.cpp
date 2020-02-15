@@ -41,15 +41,8 @@ std::shared_ptr<M2> CM2_Manager::CreateAction(IRenderDevice& RenderDevice, const
 		return nullptr;
 	}*/
 
-	std::shared_ptr<M2> model = std::make_shared<M2>(name);
-
-	CM2_Builder builder(m_BaseManager, RenderDevice, model);
-	if (!builder.Load())
-	{
-		model.reset();
-		return m_DefaultModel;
-	}
-
+	std::shared_ptr<M2> model = std::make_shared<M2>(m_BaseManager, RenderDevice, name);
+	m_BaseManager->GetManager<ILoader>()->AddToLoadQueue(model.get());
 	return model;
 }
 bool CM2_Manager::DeleteAction(const std::string& name)

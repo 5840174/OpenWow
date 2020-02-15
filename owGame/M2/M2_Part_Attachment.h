@@ -102,7 +102,7 @@ struct M2_AttachmentType
 class CM2_Part_Attachment
 {
 public:
-	CM2_Part_Attachment(const std::weak_ptr<const M2> _parentM2, std::shared_ptr<IFile> f, const SM2_Attachment& _proto, cGlobalLoopSeq global);
+	CM2_Part_Attachment(const M2& M2Model, std::shared_ptr<IFile> f, const SM2_Attachment& _proto, cGlobalLoopSeq global);
 	
 	const std::weak_ptr<const CM2_Part_Bone> getBone() const { return m_Bone; }
 	const cvec3 getPosition() const { return m_Position; }

@@ -18,7 +18,6 @@ public:
 
 	// CRefManager1Dim
 	std::shared_ptr<CWMO> CreateAction(IRenderDevice& RenderDevice, const std::string& name) override;
-	void LoadAction(std::string name, std::shared_ptr<CWMO>& item);
 	bool DeleteAction(const std::string& name) override;
 	void MakeContext();
 

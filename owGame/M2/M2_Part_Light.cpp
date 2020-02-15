@@ -6,7 +6,7 @@
 // General
 #include "M2_Part_Light.h"
 
-CM2_Part_Light::CM2_Part_Light(const std::weak_ptr<M2> _parentM2, std::shared_ptr<IFile> f, const SM2_Light& _proto, cGlobalLoopSeq global) :
+CM2_Part_Light::CM2_Part_Light(const M2& M2Model, std::shared_ptr<IFile> f, const SM2_Light& _proto, cGlobalLoopSeq global) :
 	ambColorValue(vec3(1.0f, 1.0f, 1.0f)),
 	ambIntensityValue(1.0f),
 	diffColorValue(vec3(1.0f, 1.0f, 1.0f)),
@@ -18,7 +18,7 @@ CM2_Part_Light::CM2_Part_Light(const std::weak_ptr<M2> _parentM2, std::shared_pt
 	type = _proto.type;
 	if (_proto.bone != -1)
 	{
-		m_Bone = _parentM2.lock()->getSkeleton()->getBoneLookup(_proto.bone);
+		m_Bone = M2Model.getSkeleton()->getBoneLookup(_proto.bone);
 	}
 
 	position = Fix_XZmY(_proto.position);

@@ -17,6 +17,7 @@ class CWMO_Base_Instance;
 
 class ZN_API CWMO 
 	: public ISceneNodeProvider
+	, public CLoadableObject
 {
 	friend CWMO_Part_Portal;
 public:
@@ -26,7 +27,8 @@ public:
 	// ISceneNodeProvider
 	void CreateInsances(ISceneNode3D* _parent) const override;
 
-	bool Load();
+	// CLoadableObject
+	bool Load() override;
 
 public:
 	std::string getFilename() const { return m_FileName; }

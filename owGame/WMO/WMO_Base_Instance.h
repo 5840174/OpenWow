@@ -7,6 +7,7 @@
 
 class ZN_API CWMO_Base_Instance 
 	: public SceneNode3D
+	, public CLoadableObject
 {
 public:
 	typedef std::vector<CWMO_Group_Instance*> GroupInstances;
@@ -15,8 +16,10 @@ public:
 	CWMO_Base_Instance(const CWMO& WMOObject);
 	virtual ~CWMO_Base_Instance();
 
-
 	void CreateInstances();
+
+	// CLoadableObject
+	bool Load() override;
 
 	// CWMO_Base_Instance
 	const CWMO& getWMO() const;

@@ -10,7 +10,7 @@ class M2;
 class CM2_Part_Event
 {
 public:
-	CM2_Part_Event(const std::weak_ptr<M2> _parentM2, std::shared_ptr<IFile> f, const SM2_Event& _proto, cGlobalLoopSeq global);
+	CM2_Part_Event(const M2& M2Model, std::shared_ptr<IFile> f, const SM2_Event& _proto, cGlobalLoopSeq global);
 
 private:
 	char					m_ID[4];

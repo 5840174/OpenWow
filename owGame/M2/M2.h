@@ -13,21 +13,25 @@
 #include "M2_Skin.h"
 
 // FORWARD BEGIN
-class CM2_Base_Instance;
 class CM2_Builder;
 class CM2_Skin_Builder;
 // FORWARD END
 
 class M2 
 	: public ISceneNodeProvider
+	, public CLoadableObject
 {
 	friend class CM2_Builder;
 	friend class CM2_Skin_Builder;
 public:
-	M2(const std::string& name);
+	M2(IBaseManager* BaseManager, IRenderDevice& RenderDevice, const std::string& name);
+	virtual ~M2();
 
 	// ISceneNodeProvider
 	void CreateInsances(ISceneNode3D* _parent) const override;
+
+	// CLoadableObject
+	bool Load() override;
 
 	void update(double _time, double _dTime);
 	void calc(uint16 _animationIndex, uint32 _time, uint32 globalTime, cmat4 _viewMatrix, cmat4 _worldMatrix);
@@ -85,6 +89,10 @@ private:
 	std::shared_ptr<IModel>				m_CollisionGeom;
 	uint32								m_CollisionIndCnt;
 	uint32								m_CollisionVetCnt;
+
+private:
+	IBaseManager* m_BaseManager;
+	IRenderDevice& m_RenderDevice;
 
 private: // Static and Consts
 	const uint8							C_TexturesMaxCount = 128;

@@ -7,7 +7,8 @@
 #include "M2_ColliderComponent.h"
 
 CM2_Base_Instance::CM2_Base_Instance(const M2& M2Object) 
-	: m_M2(M2Object)
+	: CLoadableObject(&M2Object)
+	, m_M2(M2Object)
 	, m_Attached(nullptr)
 	, m_Animator(nullptr)
 	, m_NeedRecalcAnimation(true)
@@ -30,6 +31,20 @@ CM2_Base_Instance::~CM2_Base_Instance()
 void CM2_Base_Instance::CreateInstances()
 {
 	m_M2.CreateInsances(this);
+}
+
+bool CM2_Base_Instance::Load()
+{
+	InitAnimator();
+	UpdateLocalTransform();
+	CreateInstances();
+
+	for (uint8 i = 0; i < SM2_Texture::Type::COUNT; i++)
+	{
+		m_SpecialTextures[i] = nullptr; // TODO: GetBaseManager()->GetManager<IRenderDevice>()->GetDefaultTexture();
+	}
+
+	return true;
 }
 
 void CM2_Base_Instance::Attach(std::shared_ptr<CM2_Part_Attachment> _attachment)
@@ -78,14 +93,7 @@ std::shared_ptr<ITexture> CM2_Base_Instance::getSpecialTexture(SM2_Texture::Type
 
 void CM2_Base_Instance::Initialize()
 {
-	InitAnimator();
-	UpdateLocalTransform();
-	CreateInstances();
 
-	for (uint8 i = 0; i < SM2_Texture::Type::COUNT; i++)
-	{
-		m_SpecialTextures[i] = nullptr; // TODO: GetBaseManager()->GetManager<IRenderDevice>()->GetDefaultTexture();
-	}
 }
 
 void CM2_Base_Instance::Accept(IVisitor* visitor)

@@ -35,7 +35,9 @@ public:
 
 	// Instances
 	std::vector<CMapWMOInstance*>	m_WMOsInstances;
+#ifdef USE_M2_MODELS
 	std::vector<CMapM2Instance*>	m_MDXsInstances;
+#endif
 	std::vector<CMapChunk*>			m_Chunks;
 
 private:

@@ -6,7 +6,7 @@
 // Additional
 #include "M2_Skin_Builder.h"
 
-CM2_Builder::CM2_Builder(IBaseManager* BaseManager, IRenderDevice& RenderDevice, std::shared_ptr<M2> _model) :
+CM2_Builder::CM2_Builder(IBaseManager* BaseManager, IRenderDevice& RenderDevice, M2* _model) :
 	m_M2(_model),
 	m_F(nullptr),
 	m_GlobalLoops(nullptr),
@@ -353,7 +353,7 @@ void CM2_Builder::Step6Misc()
 		SM2_Attachment* Attachments = (SM2_Attachment*)(m_F->getData() + m_Header.attachments.offset);
 		for (uint32 i = 0; i < m_Header.attachments.size; i++)
 		{
-			std::shared_ptr<CM2_Part_Attachment> attachment = std::make_shared<CM2_Part_Attachment>(m_M2, m_F, Attachments[i], m_GlobalLoops);
+			std::shared_ptr<CM2_Part_Attachment> attachment = std::make_shared<CM2_Part_Attachment>(*m_M2, m_F, Attachments[i], m_GlobalLoops);
 			miscellaneous->m_Attachments.push_back(attachment);
 		}
 
@@ -377,7 +377,7 @@ void CM2_Builder::Step6Misc()
 		SM2_Event* Events = (SM2_Event*)(m_F->getData() + m_Header.events.offset);
 		for (uint32 i = 0; i < m_Header.events.size; i++)
 		{
-			std::shared_ptr<CM2_Part_Event> event = std::make_shared<CM2_Part_Event>(m_M2, m_F, Events[i], m_GlobalLoops);
+			std::shared_ptr<CM2_Part_Event> event = std::make_shared<CM2_Part_Event>(*m_M2, m_F, Events[i], m_GlobalLoops);
 			miscellaneous->m_Events.push_back(event);
 		}
 
@@ -391,7 +391,7 @@ void CM2_Builder::Step6Misc()
 		SM2_Light* Lights = (SM2_Light*)(m_F->getData() + m_Header.lights.offset);
 		for (uint32 i = 0; i < m_Header.lights.size; i++)
 		{
-			std::shared_ptr<CM2_Part_Light> light = std::make_shared<CM2_Part_Light>(m_M2, m_F, Lights[i], m_GlobalLoops);
+			std::shared_ptr<CM2_Part_Light> light = std::make_shared<CM2_Part_Light>(*m_M2, m_F, Lights[i], m_GlobalLoops);
 			miscellaneous->m_Lights.push_back(light);
 		}
 

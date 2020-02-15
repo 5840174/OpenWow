@@ -4,12 +4,16 @@
 
 class ZN_API CM2_Base_Instance 
 	: public SceneNode3D
+	, public CLoadableObject
 {
 public:
 	CM2_Base_Instance(const M2& M2Objec);
 	virtual ~CM2_Base_Instance();
 
 	void                                CreateInstances();
+
+	// CLoadableObject
+	bool                                Load() override;
 
 	// CM2_Base_Instance
 	const M2&                           getM2() const { return m_M2; }

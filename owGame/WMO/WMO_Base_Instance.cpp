@@ -5,6 +5,7 @@
 
 CWMO_Base_Instance::CWMO_Base_Instance(const CWMO& WMOObject)
     : m_WMOObject(WMOObject)
+	, CLoadableObject(&WMOObject)
 {
 	
 }
@@ -31,6 +32,18 @@ void CWMO_Base_Instance::CreateInstances()
 }
 
 
+
+//
+// CLoadableObject
+//
+bool CWMO_Base_Instance::Load()
+{
+	CreateInstances();
+
+	return true;
+}
+
+
 const CWMO& CWMO_Base_Instance::getWMO() const
 {
 	return m_WMOObject;
@@ -43,7 +56,7 @@ const CWMO& CWMO_Base_Instance::getWMO() const
 //
 void CWMO_Base_Instance::Initialize()
 {
-	CreateInstances();
+	//CreateInstances();
 }
 
 std::string CWMO_Base_Instance::GetName() const 
