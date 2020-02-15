@@ -94,12 +94,12 @@ bool CSkyParams::GetHighlightSky() const
 	return m_highlightSky;
 }
 
-void CSkyParams::SetSkybox(const std::shared_ptr<DBC_LightSkyboxRecord>& Value)
+void CSkyParams::SetSkybox(const DBC_LightSkyboxRecord* Value)
 {
 	m_SkyBox = Value;
 }
 
-std::shared_ptr<DBC_LightSkyboxRecord> CSkyParams::GetSkybox() const
+const DBC_LightSkyboxRecord* CSkyParams::GetSkybox() const
 {
 	return m_SkyBox;
 }

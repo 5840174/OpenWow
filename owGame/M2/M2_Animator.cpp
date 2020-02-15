@@ -14,10 +14,8 @@ CM2_Animator::CM2_Animator(const IBaseManager* BaseManager, const M2& M2Model) :
 	animtime(0.0),
 	m_CurrentTime(0)
 {
-	for (const auto& i : BaseManager->GetManager<CDBCStorage>()->DBC_AnimationData())
+	for (const auto& record : BaseManager->GetManager<CDBCStorage>()->DBC_AnimationData())
 	{
-		std::shared_ptr<DBC_AnimationDataRecord> record = i;
-
 		// Get animation with index (record->Get_ID() and variation index == 0)
 		int16 findedSeqIndex = -1;
 		for (uint16 j = 0; j < m_M2Model.m_Sequences.size(); j++)

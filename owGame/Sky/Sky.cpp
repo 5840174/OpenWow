@@ -12,7 +12,7 @@ Sky::Sky() :
 	m_LightRecord(nullptr)
 {}
 
-Sky::Sky(const CDBCStorage* DBCStorage, const std::shared_ptr<DBC_LightRecord>& LightData)
+Sky::Sky(const CDBCStorage* DBCStorage, const DBC_LightRecord* LightData)
 	: m_LightRecord(LightData)
 {
 	m_Position.x = m_LightRecord->Get_PositionX() / cSkyMultiplier;
@@ -60,7 +60,7 @@ void Sky::LoadParams(const CDBCStorage* DBCStorage, LightParamsNames _param)
 		m_FloatBand_Fogs[i].clear();
 	}
 
-	std::shared_ptr<const DBC_LightParamsRecord> paramRecord = DBCStorage->DBC_LightParams()[m_LightRecord->Get_LightParams(static_cast<uint8>(_param))];
+	const DBC_LightParamsRecord* paramRecord = DBCStorage->DBC_LightParams()[m_LightRecord->Get_LightParams(static_cast<uint8>(_param))];
 	_ASSERT(paramRecord != nullptr);
 	uint32 paramSet = paramRecord->Get_ID();
 
@@ -81,7 +81,7 @@ void Sky::LoadParams(const CDBCStorage* DBCStorage, LightParamsNames _param)
 	//-- Color params
 	for (uint32 i = 0; i < LightColors::COUNT; i++)
 	{
-		std::shared_ptr<const DBC_LightIntBandRecord> lightColorsRecord = DBCStorage->DBC_LightIntBand()[paramSet * LightColors::COUNT - (LightColors::COUNT - 1) + i];
+		const DBC_LightIntBandRecord* lightColorsRecord = DBCStorage->DBC_LightIntBand()[paramSet * LightColors::COUNT - (LightColors::COUNT - 1) + i];
 		_ASSERT(lightColorsRecord != nullptr);
 		for (uint32 l = 0; l < lightColorsRecord->Get_Count(); l++)
 		{
@@ -93,7 +93,7 @@ void Sky::LoadParams(const CDBCStorage* DBCStorage, LightParamsNames _param)
 	//-- Fog, Sun, Clouds param
 	for (uint32 i = 0; i < LightFogs::COUNT; i++)
 	{
-		std::shared_ptr<DBC_LightFloatBandRecord> lightFogRecord = DBCStorage->DBC_LightFloatBand()[paramSet * LightFogs::COUNT - (LightFogs::COUNT - 1) + i];
+		const DBC_LightFloatBandRecord* lightFogRecord = DBCStorage->DBC_LightFloatBand()[paramSet * LightFogs::COUNT - (LightFogs::COUNT - 1) + i];
 		_ASSERT(lightFogRecord != nullptr);
 		for (uint32 l = 0; l < lightFogRecord->Get_Count(); l++)
 		{

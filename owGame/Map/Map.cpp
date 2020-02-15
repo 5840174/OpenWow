@@ -34,7 +34,7 @@ CMap::~CMap()
 
 // --
 
-void CMap::MapPreLoad(std::shared_ptr<DBC_MapRecord> _map)
+void CMap::MapPreLoad(const DBC_MapRecord* _map)
 {
 	m_MapDBCRecord = _map;
 	m_MapFolderName = CMapShared::getMapFolder(m_MapDBCRecord);

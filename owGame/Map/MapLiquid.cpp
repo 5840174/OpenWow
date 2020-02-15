@@ -11,7 +11,7 @@ CADT_Liquid::~CADT_Liquid()
 {
 }
 
-std::shared_ptr<const DBC_LiquidTypeRecord> getLiquidType(const ADT_MCNK_Header& Header, const CDBCStorage* DBCStorage)
+const DBC_LiquidTypeRecord* getLiquidType(const ADT_MCNK_Header& Header, const CDBCStorage* DBCStorage)
 {
 	if (Header.flags.lq_river)
 	{

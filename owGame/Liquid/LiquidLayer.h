@@ -18,7 +18,7 @@ public:
 	bool Render(const RenderEventArgs& renderEventArgs) const override;
 
 public:
-	std::shared_ptr<const DBC_LiquidTypeRecord> LiquidType;
+	const DBC_LiquidTypeRecord* LiquidType;
 
 	float MinHeightLevel;
 	float MaxHeightLevel;

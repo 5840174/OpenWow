@@ -1,13 +1,9 @@
 #pragma once
 
 #include "DBC__Macros.h"
-// FORWARD BEGIN
-class ZN_API Record;
-// FORWARD END
 
 class ZN_API DBCStats
 {
-	friend Record;
 public:
 	virtual ~DBCStats() {};
 
@@ -15,14 +11,13 @@ public:
 	uint32_t getRecordCount() const { return recordCount; }
 	uint32_t getFieldCount() const { return fieldCount; }
 	uint32_t getStringSize() const { return stringSize; }
+	const uint8* GetStringsTable() const { return stringTable; };
 
 protected:
 	uint32_t recordSize;
 	uint32_t recordCount;
 	uint32_t fieldCount;
 	uint32_t stringSize;
-
-	// Strings
 	const uint8* stringTable;
 };
 
@@ -86,7 +81,7 @@ protected:
 		}
 
 		_ASSERT_EXPR(stringOffset < m_DBC_Stats->getStringSize(), std::to_string(stringOffset).c_str());
-		return reinterpret_cast<char*>(const_cast<uint8*>(m_DBC_Stats->stringTable) + stringOffset);
+		return reinterpret_cast<char*>(const_cast<uint8*>(m_DBC_Stats->GetStringsTable()) + stringOffset);
 	}
 
 	std::string getLocalizedString(uint32 field, int8 locale = -1) const
@@ -108,7 +103,7 @@ protected:
 		uint32 stringOffset = getValue<uint32>(field + static_cast<uint32>(loc));
 
 		_ASSERT_EXPR(stringOffset < m_DBC_Stats->getStringSize(), std::to_string(stringOffset).c_str());
-		return Resources::Utf8_to_cp1251(reinterpret_cast<char*>(const_cast<uint8*>(m_DBC_Stats->stringTable) + stringOffset));
+		return Resources::Utf8_to_cp1251(reinterpret_cast<char*>(const_cast<uint8*>(m_DBC_Stats->GetStringsTable()) + stringOffset));
 	}
 
 protected:
@@ -131,17 +126,17 @@ public:
 	virtual ~DBCFile();
 
 	// Get data by id
-	inline std::shared_ptr<RECORD_T> GetRecordByID(uint32 _id) const
+	inline const RECORD_T* GetRecordByID(uint32 _id) const
 	{
 		const auto& recordIt = m_Records.find(_id);
 		if (recordIt != m_Records.end())
 		{
-			return recordIt->second;
+			return &(recordIt->second);
 		}
 
 		return nullptr;
 	}
-	inline std::shared_ptr<RECORD_T> operator[](uint32 _id) const
+	inline const RECORD_T* operator[](uint32 _id) const
 	{
 		return GetRecordByID(_id);
 	}
@@ -153,27 +148,27 @@ public:
 	public:
 		Iterator(const DBCFile* file, const uint8* offset)  
         {
-            m_Record = std::make_shared<RECORD_T>(file, offset);
+            m_Record = RECORD_T(file, offset);
         }
 		Iterator(Iterator& _iterator)
         {
-            m_Record = std::make_shared<RECORD_T>(_iterator.m_Record);
+            m_Record = RECORD_T(_iterator.m_Record);
         }
 
 		inline Iterator& operator++()
 		{
-			m_Record->incOffset(m_Record->getDBCStats()->getRecordSize());
+			m_Record.incOffset(m_Record.getDBCStats()->getRecordSize());
 			return *this;
 		}
 
-		inline std::shared_ptr<RECORD_T> operator*() const { return m_Record; }
-		inline std::shared_ptr<RECORD_T> operator->() const { return m_Record; }
+		inline const RECORD_T* operator*() const { return &m_Record; }
+		inline const RECORD_T* operator->() const { return &m_Record; }
 
-		inline bool operator==(const Iterator &b) const { return m_Record->getOffset() == b.m_Record->getOffset(); }
-		inline bool operator!=(const Iterator &b) const { return m_Record->getOffset() != b.m_Record->getOffset(); }
+		inline bool operator==(const Iterator &b) const { return m_Record.getOffset() == b.m_Record.getOffset(); }
+		inline bool operator!=(const Iterator &b) const { return m_Record.getOffset() != b.m_Record.getOffset(); }
 
 	private:
-		std::shared_ptr<RECORD_T> m_Record;
+		RECORD_T m_Record;
 	};
 
 	inline Iterator begin() const
@@ -188,13 +183,13 @@ public:
 		return Iterator(this, stringTable);
 	}
 
-	inline const std::multimap<uint32, std::shared_ptr<RECORD_T>>& Records() const
+	inline const std::multimap<uint32, RECORD_T>& Records() const
 	{
 		return m_Records;
 	}
 
 protected:
-	std::multimap<uint32, std::shared_ptr<RECORD_T>> m_Records;
+	std::multimap<uint32, RECORD_T> m_Records;
 
 private:
 	std::shared_ptr<IFile> m_File;

@@ -61,7 +61,7 @@ CMapShared::~CMapShared()
 {
 }
 
-std::string CMapShared::getMapFolder(std::shared_ptr<DBC_MapRecord> _map)
+std::string CMapShared::getMapFolder(const DBC_MapRecord* _map)
 {
 	return "World\\Maps\\" + std::string(_map->Get_Directory()) + "\\" + std::string(_map->Get_Directory());
 }

@@ -54,26 +54,26 @@ const uint32/*std::shared_ptr<_dbc##Record>*/ CONCAT_GET(_name)(uint8 _index) co
 
 // Uses in common classes
 
-#define FOREIGN_KEY(_type, _dbc, _refFieldName, _dispName)                        \
-_type __##_dispName;                                                              \
-std::shared_ptr<CONCAT_RECORD(_dbc)> _dispName(const CDBCStorage* Storage) const  \
-{                                                                                 \
-	for (auto it : Storage->##_dbc())								              \
-	{                                                                             \
-		if (static_cast<_type>(it->CONCAT_GET(_refFieldName)()) == __##_dispName) \
-		{                                                                         \
-			return it;                                                            \
-		}                                                                         \
-	}                                                                             \
-                                                                                  \
-	return std::shared_ptr<CONCAT_RECORD(_dbc)>();                                \
+#define FOREIGN_KEY(_type, _dbc, _refFieldName, _dispName)                                                   \
+_type __##_dispName;                                                                                         \
+const CONCAT_RECORD(_dbc)* _dispName(const CDBCStorage* Storage) const                                       \
+{                                                                                                            \
+	for (const auto& it : Storage->##_dbc())								                                 \
+	{                                                                                                        \
+		if (static_cast<_type>(it->CONCAT_GET(_refFieldName)()) == __##_dispName)                            \
+		{                                                                                                    \
+			return it;                                                                                       \
+		}                                                                                                    \
+	}                                                                                                        \
+                                                                                                             \
+	return nullptr;                                                                                          \
 }
 
-#define FOREIGN_KEY_ID(_type, _dbc, _dispName)                                        \
-_type __##_dispName;                                                                  \
-const std::shared_ptr<_dbc##Record> _dispName(const CDBCStorage* Storage) const       \
-{                                                                                     \
-    return Storage->##_dbc().GetRecordByID(static_cast<uint32>(__##_dispName));   \
+#define FOREIGN_KEY_ID(_type, _dbc, _dispName)                                                               \
+_type __##_dispName;                                                                                         \
+const CONCAT_RECORD(_dbc)* _dispName(const CDBCStorage* Storage) const                                       \
+{                                                                                                            \
+    return Storage->##_dbc().GetRecordByID(static_cast<uint32>(__##_dispName));                              \
 }
 
 //------------------------------------------
@@ -91,12 +91,12 @@ public:                                                                         
 	CONCAT_RECORD(accessName)(const DBCFile<CONCAT_RECORD(accessName)>* file, const uint8* offset) :  \
 		Record(file, offset)                                                                          \
 	{}                                                                                                \
-	virtual ~##CONCAT_RECORD(accessName)##() {}                                                       \
-public:                                                                                               \
+	virtual ~##CONCAT_RECORD(accessName)##() {}                                                              \
+public:                                                                                                      \
 
 
 // Class end
-#define DBC_DEF_END                                                                                   \
+#define DBC_DEF_END                                                                                          \
 };
 
 
@@ -104,8 +104,8 @@ public:                                                                         
 #define DBC_LOAD(accessName, filesManagerObject, fileName) m_##accessName = std::make_unique<DBCFile<CONCAT_RECORD(accessName)>>(filesManagerObject, fileName);
 
 // Placed in *.h files
-#define DBC_DEFINE(accessName)                                                                        \
-public:                                                                                               \
-const DBCFile<CONCAT_RECORD(accessName)>& accessName() const { return *(m_##accessName.get()); }      \
-private:                                                                                              \
+#define DBC_DEFINE(accessName)                                                                              \
+public:                                                                                                     \
+const DBCFile<CONCAT_RECORD(accessName)>& accessName() const { return *(m_##accessName.get()); }            \
+private:                                                                                                    \
 std::unique_ptr<DBCFile<CONCAT_RECORD(accessName)>> m_##accessName;

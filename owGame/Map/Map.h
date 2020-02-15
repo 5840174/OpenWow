@@ -15,7 +15,7 @@ public:
 	CMap(IBaseManager* BaseManager, IRenderDevice& RenderDevice);
 	virtual ~CMap();
 
-	void                                            MapPreLoad(std::shared_ptr<DBC_MapRecord> _map);
+	void                                            MapPreLoad(const DBC_MapRecord* _map);
 	void                                            MapLoad();
 	void                                            MapPostLoad();
 	void                                            Unload();
@@ -55,7 +55,7 @@ public: // Getters
 
 private:
 	std::string                                     m_MapFolderName;
-	std::shared_ptr<DBC_MapRecord>                  m_MapDBCRecord;
+	const DBC_MapRecord*                            m_MapDBCRecord;
 
 
 	CMapTile*	                                    m_ADTCache[C_TilesCacheSize];

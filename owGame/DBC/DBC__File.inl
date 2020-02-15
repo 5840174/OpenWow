@@ -32,8 +32,8 @@ inline DBCFile<RECORD_T>::DBCFile(IFilesManager* FilesManager, const std::string
 	// Fill record table
 	for (uint64_t _offset = file->getPos(); _offset != stringTableOffset; _offset += recordSize)
 	{
-		std::shared_ptr<RECORD_T> record = std::make_shared<RECORD_T>(this, const_cast<uint8*>(file->getData() + _offset));
-		m_Records.insert(std::make_pair(record->Get_ID(), record));
+		RECORD_T record(this, const_cast<uint8*>(file->getData() + _offset));
+		m_Records.insert(std::make_pair(record.Get_ID(), record));
 	}
 
 	_ASSERT(recordCount == m_Records.size());

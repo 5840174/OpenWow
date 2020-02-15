@@ -22,8 +22,8 @@ public:
 	void                                            SetHighlightSky(bool Value);
 	bool                                            GetHighlightSky() const;
 
-	void                                            SetSkybox(const std::shared_ptr<DBC_LightSkyboxRecord>& Value);
-	std::shared_ptr<DBC_LightSkyboxRecord>          GetSkybox() const;
+	void                                            SetSkybox(const DBC_LightSkyboxRecord* Value);
+	const DBC_LightSkyboxRecord*          GetSkybox() const;
 
 	void                                            SetGlow(float GlowValue);
 	float                                           GetGlow() const;
@@ -37,7 +37,7 @@ private:
 	float                                           m_Fogs[LightFogs::COUNT];
 
 	bool					                        m_highlightSky;
-	std::shared_ptr<DBC_LightSkyboxRecord>          m_SkyBox;
+	const DBC_LightSkyboxRecord*                    m_SkyBox;
 	float                                           m_glow;
 	float                                           m_WaterAplha[LightWaterAlpha::COUNT];
 

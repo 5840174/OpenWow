@@ -34,7 +34,7 @@ public: // TYPES
 
 public:
 	Sky();
-	Sky(const CDBCStorage* DBCStorage, const std::shared_ptr<DBC_LightRecord>& LightData);
+	Sky(const CDBCStorage* DBCStorage, const DBC_LightRecord* LightData);
 	virtual ~Sky();
 
 	void                                            LoadParams(const CDBCStorage* DBCStorage, LightParamsNames _param);
@@ -42,7 +42,7 @@ public:
 	CSkyParams&                                      Interpolate(uint32 _time);
 
 private:
-	std::shared_ptr<DBC_LightRecord>                m_LightRecord;
+	const DBC_LightRecord*                          m_LightRecord;
 
 	vec3					                        m_Position;
 	CRange					                        m_Range;
