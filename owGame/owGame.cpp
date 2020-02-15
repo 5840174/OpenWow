@@ -4,7 +4,6 @@
 #include "owGame.h"
 
 // Additional
-#include "DBC/Core/DBC__Storage.h"
 #include "Settings/WoWSettingsGroup.h"
 #include "Formats/MPQFilesStorage.h"
 #include "Formats/ImageBLP.h"
@@ -49,7 +48,8 @@ public:
 		std::shared_ptr<IWMOManager> wmoManager = std::make_shared<WMOsManager>(m_BaseManager);
 		m_BaseManager->AddManager<IWMOManager>(wmoManager);
 
-		OpenDBs(m_BaseManager);
+		std::shared_ptr<CDBCStorage> dbcStorage = std::make_shared<CDBCStorage>(m_BaseManager);
+		m_BaseManager->AddManager<CDBCStorage>(dbcStorage);
 
 		return true;
 	}

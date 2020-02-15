@@ -6,7 +6,7 @@
 class CM2_Animator
 {
 public:
-	CM2_Animator(const M2& M2Model);
+	CM2_Animator(const IBaseManager* BaseManager, const M2& M2Model);
 	virtual ~CM2_Animator();
 
 	void PlayAnimation(int16 _id = -1, bool _loop = true);

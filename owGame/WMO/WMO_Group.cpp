@@ -9,6 +9,7 @@
 
 // Additional 
 #include "WoWChunkReader.h"
+#include "DBC/DBC__Storage.h"
 #include "WMO_Doodad_Instance.h"
 #include "WMO_Liquid_Instance.h"
 #include "WMO_Fixes.h"
@@ -309,7 +310,7 @@ void WMO_Group::Load()
 			}
 
 			m_WMOLiqiud = std::make_shared<CWMO_Liquid>(m_RenderDevice, m_LiquidHeader.A, m_LiquidHeader.B);
-			m_WMOLiqiud->CreateFromWMO(m_F, m_WMOModel.m_Materials[m_LiquidHeader.materialID], DBC_LiquidType[1], m_Header.flags.IS_INDOOR);
+			m_WMOLiqiud->CreateFromWMO(m_F, m_WMOModel.m_Materials[m_LiquidHeader.materialID], m_BaseManager->GetManager<CDBCStorage>()->DBC_LiquidType()[1], m_Header.flags.IS_INDOOR);
 
 		}
 		else

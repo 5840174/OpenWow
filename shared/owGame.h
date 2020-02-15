@@ -12,7 +12,7 @@
 #include "../owGame/WoWChunkReader.h"
 
 // DBC
-#include "../owGame/DBC/Core/DBC__Storage.h"
+#include "../owGame/DBC/DBC__Storage.h"
 
 // Client
 #include "../owGame/Client/Client.h"

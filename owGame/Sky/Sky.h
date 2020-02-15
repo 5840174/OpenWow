@@ -1,6 +1,6 @@
 #pragma once
 
-#include "DBC/Core/DBC__Storage.h"
+#include "DBC/DBC__Storage.h"
 
 enum class LightParamsNames : uint32
 {
@@ -34,10 +34,10 @@ public: // TYPES
 
 public:
 	Sky();
-	Sky(const std::shared_ptr<DBC_LightRecord>& LightData);
+	Sky(const CDBCStorage* DBCStorage, const std::shared_ptr<DBC_LightRecord>& LightData);
 	virtual ~Sky();
 
-	void                                            LoadParams(LightParamsNames _param);
+	void                                            LoadParams(const CDBCStorage* DBCStorage, LightParamsNames _param);
 
 	CSkyParams&                                      Interpolate(uint32 _time);
 

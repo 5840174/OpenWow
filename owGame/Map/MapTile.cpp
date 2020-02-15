@@ -15,7 +15,9 @@ CMapTile::CMapTile(IBaseManager* BaseManager, IRenderDevice& RenderDevice, const
 {}
 
 CMapTile::~CMapTile()
-{}
+{
+	Log::Warn("MapTile [%d, %d] unloaded.", m_IndexX, m_IndexZ);
+}
 
 
 const int CMapTile::getIndexX() const
@@ -245,8 +247,11 @@ bool CMapTile::Load()
 	{
 //#ifndef _DEBUG
 		std::shared_ptr<CWMO> wmo = m_BaseManager->GetManager<IWMOManager>()->Add(m_RenderDevice, m_WMOsNames[it.nameIndex]);
-		CMapWMOInstance* inst = CreateSceneNode<CMapWMOInstance>(*wmo, it);
-        m_WMOsInstances.push_back(inst);
+		if (wmo)
+		{
+			CMapWMOInstance* inst = CreateSceneNode<CMapWMOInstance>(*wmo, it);
+			m_WMOsInstances.push_back(inst);
+		}
 //#endif
 	}
 

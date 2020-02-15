@@ -1,6 +1,6 @@
 #pragma once
 
-#include "DBC/Core/DBC__Storage.h"
+#include "DBC/DBC__Storage.h"
 
 struct ADT_MHDR
 {
@@ -55,28 +55,6 @@ struct ADT_MCNK_Header
 		uint32 do_not_fix_alpha_map : 1;      // "fix" alpha maps in MCAL (4 bit alpha maps are 63*63 instead of 64*64). Note that this also means that it *has* to be 4 bit alpha maps, otherwise UnpackAlphaShadowBits will assert.
 		uint32 : 16;
 	} flags;
-
-	std::shared_ptr<const DBC_LiquidTypeRecord> getLiquidType()
-	{
-		if (flags.lq_river)
-		{
-			return DBC_LiquidType[1];
-		}
-		else if (flags.lq_ocean)
-		{
-			return DBC_LiquidType[2];
-		}
-		else if (flags.lq_magma)
-		{
-			return DBC_LiquidType[3];
-		}
-		else if (flags.lq_slime)
-		{
-			return DBC_LiquidType[4];
-		}
-
-		return nullptr;
-	}
 
 	uint32 indexX;
 	uint32 indexY;

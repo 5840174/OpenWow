@@ -112,7 +112,7 @@ void CSceneWoW::Load3D()
 
 	const float x = 40;
 	const float y = 31;
-	map->MapPreLoad(DBC_Map[1]);
+	map->MapPreLoad(GetBaseManager()->GetManager<CDBCStorage>()->DBC_Map()[1]);
 	map->MapLoad();
 	map->MapPostLoad();
 	map->EnterMap(x, y);

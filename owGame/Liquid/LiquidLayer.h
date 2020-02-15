@@ -2,7 +2,7 @@
 
 #include "LiquidMaterial.h"
 
-#include "DBC\\Core\DBC__Storage.h"
+#include "DBC/DBC__Storage.h"
 
 class ZN_API CLiquidLayer 
 	: public ModelProxie

@@ -12,7 +12,6 @@
       <Filter>Common</Filter>
     </ClCompile>
     <ClCompile Include="SceneWoW.cpp" />
-    <ClCompile Include="..\owGame\DBC\Core\DBC__Storage.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Common">

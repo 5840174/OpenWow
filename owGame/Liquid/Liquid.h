@@ -19,7 +19,7 @@ public:
 
 	float                                                               ydir;
 
-private:
+protected:
 	IRenderDevice& m_RenderDevice;
 
 private:

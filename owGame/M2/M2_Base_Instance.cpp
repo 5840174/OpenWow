@@ -162,7 +162,7 @@ void CM2_Base_Instance::InitAnimator()
 	// Create animator
 	if (m_M2.isAnimated())
 	{
-		m_Animator = std::make_shared<CM2_Animator>(m_M2);
+		m_Animator = std::make_shared<CM2_Animator>(GetBaseManager(), m_M2);
 	}
 }
 
