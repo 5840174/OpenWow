@@ -6,23 +6,31 @@
 // General
 #include "WMO.h"
 
-// Additional
-#include "WoWChunkReader.h"
-
-struct WMO_GroupInfoDef
-{
-	SWMOGroup_Flags	flags;
-	CAaBox			bounding_box;
-	int32			nameoffset;		// name in MOGN chunk (-1 for no name)
-};
-
 CWMO::CWMO(IBaseManager* BaseManager, IRenderDevice& RenderDevice, const std::string& Filename)
 	: m_FileName(Filename)
 	, m_TexturesNames(nullptr)
 	, m_DoodadsFilenames(nullptr)
 	, m_BaseManager(BaseManager)
 	, m_RenderDevice(RenderDevice)
-{}
+{
+	m_ChunkReader = std::make_unique<WoWChunkReader>(m_BaseManager, m_FileName);
+
+	// Version
+	{
+		auto buffer = m_ChunkReader->OpenChunk("MVER");
+		uint32 version;
+		buffer->readBytes(&version, 4);
+		_ASSERT(version == 17);
+	}
+
+	// Header
+	{
+		auto buffer = m_ChunkReader->OpenChunk("MOHD");
+		buffer->readBytes(&m_Header, sizeof(SWMO_HeaderDef));
+
+		m_Bounds = m_Header.bounding_box.Convert();
+	}
+}
 
 CWMO::~CWMO()
 {
@@ -57,33 +65,11 @@ void CWMO::CreateInsances(ISceneNode3D* _parent) const
 
 bool CWMO::Load()
 {
-	WoWChunkReader reader(m_BaseManager, m_FileName);
-
 	std::shared_ptr<IByteBuffer> buffer = nullptr;
-
-	// Version
-	{
-		buffer = reader.OpenChunk("MVER");
-		uint32 version;
-		buffer->readBytes(&version, 4);
-		_ASSERT(version == 17);
-	}
-
-	// Header
-	{
-		buffer = reader.OpenChunk("MOHD");
-		buffer->readBytes(&m_Header, sizeof(SWMO_HeaderDef));
-
-		glm::vec3 boundsMin = Fix_XZmY(m_Header.bounding_box.min);
-		glm::vec3 boundsMax = Fix_XZmY(m_Header.bounding_box.max);
-		std::swap(boundsMin.z, boundsMax.z);
-
-		m_Bounds.set(boundsMin, boundsMax);
-	}
 
 	// Textures
 	{
-		buffer = reader.OpenChunk("MOTX");
+		buffer = m_ChunkReader->OpenChunk("MOTX");
 		m_TexturesNames = std::unique_ptr<char[]>(new char[buffer->getSize() + 1]);
 		buffer->readBytes(m_TexturesNames.get(), buffer->getSize());
 		m_TexturesNames[buffer->getSize()] = 0x00;
@@ -92,7 +78,7 @@ bool CWMO::Load()
 	// Materials
 	size_t cntr = 0;
 	{
-		for (const auto& mat : reader.OpenChunkT<SWMO_MaterialDef>("MOMT"))
+		for (const auto& mat : m_ChunkReader->OpenChunkT<SWMO_MaterialDef>("MOMT"))
 		{
 			std::shared_ptr<WMO_Part_Material> material = std::make_shared<WMO_Part_Material>(m_RenderDevice, *this, mat);
 			material->SetName(m_FileName + "_Material_" + std::to_string(cntr++));
@@ -103,45 +89,27 @@ bool CWMO::Load()
 	}
 
 	// Group names
-	char* groupsNames = nullptr;
 	{
-		buffer = reader.OpenChunk("MOGN");
-		if (buffer)
-		{
-			groupsNames = new char[buffer->getSize() + 1];
-			buffer->readBytes(groupsNames, buffer->getSize());
-			groupsNames[buffer->getSize()] = 0x00;
-		}
+		buffer = m_ChunkReader->OpenChunk("MOGN");
+		m_GroupNames = std::unique_ptr<char[]>(new char[buffer->getSize() + 1]);
+		buffer->readBytes(m_GroupNames.get(), buffer->getSize());
+		m_GroupNames[buffer->getSize()] = 0x00;
 	}
 
 	// Group info
 	{
 		uint32 cntr = 0;
-		for (const auto& groupInfo : reader.OpenChunkT<WMO_GroupInfoDef>("MOGI"))
+		for (const auto& groupInfo : m_ChunkReader->OpenChunkT<SWMO_GroupInfoDef>("MOGI"))
 		{
-			char temp[256];
-			strcpy_s(temp, m_FileName.c_str());
-			temp[m_FileName.length() - 4] = 0;
-
-			char fname[256];
-			sprintf_s(fname, "%s_%03d.wmo", temp, cntr);
-			std::shared_ptr<IFile> groupFile = m_BaseManager->GetManager<IFilesManager>()->Open(fname); // It delete later
-
-			std::string groupName = groupFile->Name();
-			if (groupInfo.nameoffset > 0)
-				groupName = std::string(groupsNames + groupInfo.nameoffset);
-
-			std::shared_ptr<WMO_Group> group = std::make_shared<WMO_Group>(m_BaseManager, m_RenderDevice, *this, cntr, groupName, groupFile);
+			std::shared_ptr<WMO_Group> group = std::make_shared<WMO_Group>(m_BaseManager, m_RenderDevice, *this, cntr++, groupInfo);
 			m_Groups.push_back(group);
-
-			cntr++;
 		}
 	}
 
 	// Skybox
 	char* skyboxFilename = nullptr;
 	{
-		buffer = reader.OpenChunk("MOSB");
+		buffer = m_ChunkReader->OpenChunk("MOSB");
 		if (buffer->getSize() > 4)
 		{
 			skyboxFilename = new char[buffer->getSize() + 1];
@@ -153,7 +121,7 @@ bool CWMO::Load()
 
 	// Portal vertices
 	{
-		for (const auto& pv : reader.OpenChunkT<glm::vec3>("MOPV"))
+		for (const auto& pv : m_ChunkReader->OpenChunkT<glm::vec3>("MOPV"))
 		{
 			m_PortalVertices.push_back(Fix_XZmY(pv));
 		}
@@ -164,7 +132,7 @@ bool CWMO::Load()
 
 	// Portal defs
 	{
-		for (const auto& pt : reader.OpenChunkT<SWMO_PortalDef>("MOPT"))
+		for (const auto& pt : m_ChunkReader->OpenChunkT<SWMO_PortalDef>("MOPT"))
 		{
 			m_Portals.push_back(std::make_shared<CWMO_Part_Portal>(m_RenderDevice, *this, pt));
 		}
@@ -172,7 +140,7 @@ bool CWMO::Load()
 
 	// Portal references
 	{
-		for (const auto& pr : reader.OpenChunkT<SWMO_PortalReferencesDef>("MOPR"))
+		for (const auto& pr : m_ChunkReader->OpenChunkT<SWMO_PortalReferencesDef>("MOPR"))
 		{
 			m_PortalReferences.push_back(pr);
 		}
@@ -180,7 +148,7 @@ bool CWMO::Load()
 
 	// Visible vertices
 	{
-		for (const auto& vv : reader.OpenChunkT<vec3>("MOVV"))
+		for (const auto& vv : m_ChunkReader->OpenChunkT<vec3>("MOVV"))
 		{
 			m_VisibleBlockVertices.push_back(Fix_XZmY(vv));
 		}
@@ -188,7 +156,7 @@ bool CWMO::Load()
 
 	// Visible blocks
 	{
-		for (const auto& vb : reader.OpenChunkT<SWMO_VisibleBlockListDef>("MOVB"))
+		for (const auto& vb : m_ChunkReader->OpenChunkT<SWMO_VisibleBlockListDef>("MOVB"))
 		{
 			m_VisibleBlockList.push_back(vb);
 		}
@@ -196,7 +164,7 @@ bool CWMO::Load()
 
 	// Lights
 	{
-		for (const auto& lt : reader.OpenChunkT<SWMO_LightDef>("MOLT"))
+		for (const auto& lt : m_ChunkReader->OpenChunkT<SWMO_LightDef>("MOLT"))
 		{
 			m_Lights.push_back(std::make_shared<WMO_Part_Light>(lt));
 		}
@@ -205,7 +173,7 @@ bool CWMO::Load()
 
 	// Doodads set
 	{
-		for (const auto& ds : reader.OpenChunkT<SWMO_Doodad_SetInfo>("MODS"))
+		for (const auto& ds : m_ChunkReader->OpenChunkT<SWMO_Doodad_SetInfo>("MODS"))
 		{
 			m_DoodadsSetInfos.push_back(ds);
 		}
@@ -215,7 +183,7 @@ bool CWMO::Load()
 
 	// Doodads filenames
 	{
-		buffer = reader.OpenChunk("MODN");
+		buffer = m_ChunkReader->OpenChunk("MODN");
 		if (buffer)
 		{
 			m_DoodadsFilenames = new char[buffer->getSize() + 1];
@@ -226,7 +194,7 @@ bool CWMO::Load()
 
 	// Doodads placemnts
 	{
-		for (const auto& dd : reader.OpenChunkT<SWMO_Doodad_PlacementInfo>("MODD"))
+		for (const auto& dd : m_ChunkReader->OpenChunkT<SWMO_Doodad_PlacementInfo>("MODD"))
 		{
 			m_DoodadsPlacementInfos.push_back(dd);
 		}
@@ -237,14 +205,12 @@ bool CWMO::Load()
 
 	// Fog
 	{
-		for (const auto& fog : reader.OpenChunkT<SWMO_FogDef>("MFOG"))
+		for (const auto& fog : m_ChunkReader->OpenChunkT<SWMO_FogDef>("MFOG"))
 		{
 			m_Fogs.push_back(std::make_shared<WMO_Part_Fog>(fog));
 		}
 	}
 
-
-	if (groupsNames) delete[] groupsNames;
 	if (skyboxFilename) delete[] skyboxFilename;
 
 	// Create portal controller
@@ -260,6 +226,8 @@ bool CWMO::Load()
 }
 #endif
 	}
+
+	m_ChunkReader.reset();
 
 	// Init m_Groups
 	for (const auto& it : m_Groups)

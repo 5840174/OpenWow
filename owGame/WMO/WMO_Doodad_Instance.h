@@ -10,10 +10,8 @@ class ZN_API CWMO_Doodad_Instance
 	: public CM2_Base_Instance
 {
 public:
-	CWMO_Doodad_Instance(const M2& M2Object, const WMO_Group& WMOGroupObject, uint32 _index);
+	CWMO_Doodad_Instance(const M2& M2Object, const WMO_Group& WMOGroupObject, uint32 _index, const SWMO_Doodad_PlacementInfo& _placement);
 	virtual ~CWMO_Doodad_Instance();
-
-    void Initialize(const SWMO_Doodad_PlacementInfo& _placement);
 
 	void setPortalVisibility(bool _visibility) { m_PortalVis = _visibility; }
 		

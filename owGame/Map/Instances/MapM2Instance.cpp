@@ -42,6 +42,7 @@ void CMapM2Instance::Accept(IVisitor* visitor)
 	{
 		m_AlreadyDraw.insert(std::make_pair(m_UniqueId, this));
 	}
+
 	//CRenderPass_M2* passAsM2Pass = dynamic_cast<CRenderPass_M2*>(visitor);
     //if (passAsM2Pass == nullptr)
     //    return false;

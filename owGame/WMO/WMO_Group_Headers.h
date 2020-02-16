@@ -49,6 +49,13 @@ struct SWMOGroup_Flags
 
 //-----
 
+struct SWMO_GroupInfoDef
+{
+	SWMOGroup_Flags	flags;
+	CAaBox			bounding_box;
+	int32			nameoffset;		// name in MOGN chunk (-1 for no name)
+};
+
 struct SWMO_Group_HeaderDef
 {
 	uint32 groupName;				// offset into MOGN

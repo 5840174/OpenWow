@@ -1,5 +1,15 @@
 #pragma once
 
+static inline glm::vec3 Fix_XZY(cvec3 _vec)
+{
+	return glm::vec3(_vec.x, _vec.z, _vec.y);
+}
+
+static inline glm::vec3 Fix_XZmY(cvec3 _vec)
+{
+	return glm::vec3(_vec.x, _vec.z, -_vec.y);
+}
+
 #include __PACK_BEGIN
 
 struct C4Plane
@@ -26,6 +36,14 @@ struct CAaBox
 {
 	vec3 min;
 	vec3 max;
+
+	inline BoundingBox Convert() const
+	{
+		glm::vec3 boundsMin = Fix_XZmY(min);
+		glm::vec3 boundsMax = Fix_XZmY(max);
+		std::swap(boundsMin.z, boundsMax.z);
+		return BoundingBox(boundsMin, boundsMax);
+	}
 };
 
 struct CAaSphere

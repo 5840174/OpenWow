@@ -1,8 +1,12 @@
 ﻿#pragma once
 
+// OpenWoW
+#include "WoWChunkReader.h"
+
+// WMO
 #include "WMO_Headers.h"
 
-// Parts
+// WMO Parts
 #include "WMO_Group.h"
 #include "WMO_Part_Fog.h"
 #include "WMO_Part_Light.h"
@@ -38,7 +42,7 @@ public:
 	std::shared_ptr<M2> getSkybox() { return m_Skybox; }
 
 public:
-	const std::string                                                   m_FileName;
+	
 	SWMO_HeaderDef                                                      m_Header;				// MOHD chunk
 	BoundingBox                                                         m_Bounds;
 
@@ -48,7 +52,7 @@ public:
 	std::vector<std::shared_ptr<WMO_Part_Material>>						m_Materials;			// MOMT chunk
 
 	//-- Groups --//
-
+	std::unique_ptr<char[]>												m_GroupNames;		    // MOGN chunk
 	std::vector<std::shared_ptr<WMO_Group>>                             m_Groups;				// MOGI chunk
 	std::vector<std::shared_ptr<WMO_Group>>                             m_OutdoorGroups;
 
@@ -89,4 +93,6 @@ public:
 private:
 	IBaseManager* m_BaseManager;
 	IRenderDevice& m_RenderDevice;
+	const std::string m_FileName;
+	std::unique_ptr<WoWChunkReader> m_ChunkReader;
 };

@@ -40,6 +40,8 @@ struct SWMO_HeaderDef
 	}*/
 };
 
+
+
 struct SWMO_MaterialDef
 {
 	struct Flags

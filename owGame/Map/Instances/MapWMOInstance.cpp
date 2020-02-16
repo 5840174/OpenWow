@@ -6,7 +6,7 @@
 // Additional
 #include "WMO\\RenderPass_WMO.h"
 
-CMapWMOInstance::CMapWMOInstance(const CWMO& WMOObject, const ADT_MODF & _placementInfo)
+CMapWMOInstance::CMapWMOInstance(const CWMO& WMOObject, const ADT_MODF& _placementInfo)
 	: CWMO_Base_Instance(WMOObject)
 {
 	m_UniqueId = _placementInfo.uniqueId;
@@ -41,7 +41,7 @@ void CMapWMOInstance::Initialize()
 		std::shared_ptr<CColliderComponent3D> colliderComponent = GetComponent<CColliderComponent3D>();
 
 		// Bounds
-		colliderComponent->SetBounds(m_ThisBounds);
+		//colliderComponent->SetBounds(m_ThisBounds);
 	}
 
 	__super::Initialize();

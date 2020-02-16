@@ -34,12 +34,12 @@ CM2_Manager::~CM2_Manager()
 
 std::shared_ptr<M2> CM2_Manager::CreateAction(IRenderDevice& RenderDevice, const std::string& name)
 {
-	/*std::string newName = Utils::ToLower(name);
+	std::string newName = Utils::ToLower(name);
 	if (newName.find("orgrimmarsmokeemitter.mdx") != -1 ||
 		newName.find("orgrimmarfloatingembers.mdx") != -1)
 	{
 		return nullptr;
-	}*/
+	}
 
 	std::shared_ptr<M2> model = std::make_shared<M2>(m_BaseManager, RenderDevice, name);
 	m_BaseManager->GetManager<ILoader>()->AddToLoadQueue(model.get());

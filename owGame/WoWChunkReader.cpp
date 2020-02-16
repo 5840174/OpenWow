@@ -5,14 +5,20 @@
 
 WoWChunkReader::WoWChunkReader(IBaseManager* BaseManager, std::string _fileName)
 {
-	m_File = BaseManager->GetManager<IFilesManager>()->Open(_fileName);
-	_ASSERT(m_File != nullptr);
+	m_ByteBuffer = BaseManager->GetManager<IFilesManager>()->Open(_fileName);
+	_ASSERT(m_ByteBuffer != nullptr);
 
 	InitMaps();
 }
 
-WoWChunkReader::WoWChunkReader(IBaseManager* BaseManager, std::shared_ptr<IFile> file)
-	: m_File(file)
+WoWChunkReader::WoWChunkReader(IBaseManager* BaseManager, const std::shared_ptr<IByteBuffer>& ByteBuffer)
+	: m_ByteBuffer(ByteBuffer)
+{
+	InitMaps();
+}
+
+WoWChunkReader::WoWChunkReader(IBaseManager* BaseManager, const void* DataPtr, size_t DataSize)
+	: m_ByteBuffer(std::make_shared<CByteBuffer>(DataPtr, DataSize))
 {
 	InitMaps();
 }
@@ -23,7 +29,7 @@ WoWChunkReader::~WoWChunkReader()
 
 std::shared_ptr<IByteBuffer> WoWChunkReader::OpenChunk(const char * _name)
 {
-	_ASSERT(m_File != nullptr);
+	_ASSERT(m_ByteBuffer != nullptr);
 
 	auto chunkIterator = m_ChunksMap.find(_name);
 	if (chunkIterator == m_ChunksMap.end())
@@ -58,25 +64,25 @@ void WoWChunkReader::InitMaps()
 {
 	char fourcc[5];
 	uint32 size = 0;
-	while (!m_File->isEof())
+	while (!m_ByteBuffer->isEof())
 	{
 		memset(fourcc, 0x00, 4);
-		m_File->readBytes(fourcc, 4);
+		m_ByteBuffer->readBytes(fourcc, 4);
 		flipcc(fourcc);
 		fourcc[4] = 0;
 
 		size = 0;
-		m_File->readBytes(&size, 4);
+		m_ByteBuffer->readBytes(&size, 4);
 		if (size == 0)
 			continue;
 
-		uint32_t nextpos = m_File->getPos() + size;
+		uint32_t nextpos = m_ByteBuffer->getPos() + size;
 
-		_ASSERT(nextpos <= m_File->getSize());
-		_ASSERT(size <= m_File->getSize());
-		m_ChunksMap[fourcc].push_back(std::make_pair(m_File->getPos(), size));
+		_ASSERT(nextpos <= m_ByteBuffer->getSize());
+		_ASSERT(size <= m_ByteBuffer->getSize());
+		m_ChunksMap[fourcc].push_back(std::make_pair(m_ByteBuffer->getPos(), size));
 
-		m_File->seek(nextpos);
+		m_ByteBuffer->seek(nextpos);
 	}
 }
 
@@ -85,7 +91,7 @@ std::shared_ptr<IByteBuffer> WoWChunkReader::GetChunk(ChunkInfo chunks)
 	size_t offset = chunks.first;
 	size_t size = chunks.second;
 
-	m_File->seek(offset);
+	m_ByteBuffer->seek(offset);
 
-	return std::make_shared<CByteBufferOnlyPointer>(m_File->getDataFromCurrent(), size);
+	return std::make_shared<CByteBufferOnlyPointer>(m_ByteBuffer->getDataFromCurrent(), size);
 }

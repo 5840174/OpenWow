@@ -23,8 +23,8 @@ void CWMO_Group_Instance::Initialize()
 {
     BoundingBox bbox = m_WMOGroupObject.m_Bounds;
     bbox.calculateCenter();
-    bbox.transform(GetParentWorldTransform());
     GetComponent<IColliderComponent3D>()->SetBounds(bbox);
+	GetComponent<CColliderComponent3D>()->SetDebugDrawMode(true);
 }
 
 void CWMO_Group_Instance::SetPortalVisible(bool Value)

@@ -4,7 +4,8 @@ class ZN_API WoWChunkReader
 {
 public:
 	WoWChunkReader(IBaseManager* BaseManager, std::string _fileName);
-	WoWChunkReader(IBaseManager* BaseManager, std::shared_ptr<IFile> file);
+	WoWChunkReader(IBaseManager* BaseManager, const std::shared_ptr<IByteBuffer>& ByteBuffer);
+	WoWChunkReader(IBaseManager* BaseManager, const void* DataPtr, size_t DataSize);
 	virtual ~WoWChunkReader();
 
 	std::shared_ptr<IByteBuffer> OpenChunk(const char* _name);
@@ -22,7 +23,7 @@ protected:
 	std::shared_ptr<IByteBuffer> GetChunk(ChunkInfo chunks);
 
 private:
-	std::shared_ptr<IFile> m_File;
+	std::shared_ptr<IByteBuffer> m_ByteBuffer;
 	std::unordered_map<std::string, Chunks> m_ChunksMap; // seek and size
 };
 

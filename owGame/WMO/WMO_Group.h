@@ -16,10 +16,9 @@ class CWMO_Doodad_Instance;
 // FORWARD END
 
 class WMO_Group 
-	: public std::enable_shared_from_this<WMO_Group>
 {
 public:
-	WMO_Group(IBaseManager* BaseManager, IRenderDevice& RenderDevice, const CWMO& WMOModel, const uint32 m_GroupIndex, std::string _groupName, std::shared_ptr<IFile> _groupFile);
+	WMO_Group(IBaseManager* BaseManager, IRenderDevice& RenderDevice, const CWMO& WMOModel, const uint32 GroupIndex, const SWMO_GroupInfoDef& GroupProto);
 	virtual ~WMO_Group();
 
 	void CreateInsances(CWMO_Group_Instance* _parent) const;
@@ -31,10 +30,8 @@ public:
 	const CWMO& GetWMOModel() const { return m_WMOModel; }
 
 public:
-	const std::string                       m_GroupName;
-	const std::string                       m_GroupDescription;
-	const uint32							m_GroupIndex;
-	std::shared_ptr<IFile>					m_F;
+	std::string                             m_GroupName;
+	
 	SWMO_Group_HeaderDef					m_Header;
 	BoundingBox								m_Bounds;
 
@@ -75,4 +72,5 @@ private:
 	IBaseManager* m_BaseManager;
 	IRenderDevice& m_RenderDevice;
 	const CWMO& m_WMOModel;
+	const uint32 m_GroupIndex;
 };
