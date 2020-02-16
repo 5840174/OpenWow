@@ -1,11 +1,13 @@
 #include "stdafx.h"
 
+// Include
+#include "M2_Builder.h"
+#include "M2_Skin_Builder.h"
+
 // General
 #include "M2.h"
 
-// Additional
-#include "M2_Builder.h"
-#include "M2_Skin_Builder.h"
+
 
 M2::M2(IBaseManager* BaseManager, IRenderDevice& RenderDevice, const std::string& name) 
 	: m_FileName(name)
@@ -19,6 +21,8 @@ M2::M2(IBaseManager* BaseManager, IRenderDevice& RenderDevice, const std::string
 	, m_BaseManager(BaseManager)
 	, m_RenderDevice(RenderDevice)
 {
+	m_Builder = std::make_unique<CM2_Builder>(BaseManager, RenderDevice, this);
+	m_Builder->PreLoad();
 	//Log::Info("M2[%s]: Loading...", m_FileName.c_str());
 }
 
@@ -37,9 +41,10 @@ void M2::CreateInsances(ISceneNode3D* _parent) const
 
 bool M2::Load()
 {
-	CM2_Builder builder(m_BaseManager, m_RenderDevice, this);
-	if (! builder.Load())
+	if (! m_Builder->Load())
 		return false;
+
+	m_Builder.reset();
 
 	return true;
 }

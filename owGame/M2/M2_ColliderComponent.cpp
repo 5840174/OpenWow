@@ -27,7 +27,7 @@ const CM2_Base_Instance& CM2_ColliderComponent::GetOwnerNode()
 //
 void CM2_ColliderComponent::UpdateBounds()
 {
-    BoundingBox bbox = GetOwnerNode().getM2().GetBounds();
-    bbox.transform(GetOwnerNode().GetWorldTransfom());
-    GetComponent<CColliderComponent3D>()->SetBounds(bbox);
+    //BoundingBox bbox = GetOwnerNode().getM2().GetBounds();
+    //bbox.transform(GetOwnerNode().GetWorldTransfom());
+    //GetComponent<CColliderComponent3D>()->SetBounds(bbox);
 }

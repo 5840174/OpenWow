@@ -93,6 +93,7 @@ private:
 private:
 	IBaseManager* m_BaseManager;
 	IRenderDevice& m_RenderDevice;
+	std::unique_ptr<CM2_Builder> m_Builder;
 
 private: // Static and Consts
 	const uint8							C_TexturesMaxCount = 128;

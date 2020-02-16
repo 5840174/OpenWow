@@ -5,7 +5,7 @@
 
 inline void FixColorVertexAlpha(WMO_Group* _group)
 {
-	uint32 begin_second_fixup = 0;
+	/*uint32 begin_second_fixup = 0;
 	if (_group->m_Header.batchCounts[0])
 	{
 		begin_second_fixup = *((uint16*)&_group->moba[(uint16)_group->m_Header.batchCounts[0]] - 2) + 1;
@@ -72,7 +72,7 @@ inline void FixColorVertexAlpha(WMO_Group* _group)
 
 			_group->mocv[i].w = _group->m_Header.flags.IS_OUTDOOR ? 0xFF : 0x00;
 		}
-	}
+	}*/
 }
 
 /*void AttenTransVerts(WMO* mapObj, WMO_Group* mapObjGroup)

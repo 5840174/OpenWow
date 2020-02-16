@@ -51,7 +51,7 @@ void CMapTile::Initialize()
 	// CColliderComponent
 	if (false)
 	{
-		std::shared_ptr<CColliderComponent3D> colliderComponent = GetComponent<CColliderComponent3D>();
+		std::shared_ptr<IColliderComponent3D> colliderComponent = GetComponent<IColliderComponent3D>();
 		vec3 translate = GetTranslation();
 
 		BoundingBox bbox
@@ -270,7 +270,7 @@ bool CMapTile::Load()
 	}
 
 
-#if 0
+
 
 	//-- MDXs -------------------------------------------------------------------------
 #ifdef USE_M2_MODELS
@@ -289,6 +289,7 @@ bool CMapTile::Load()
 	//---------------------------------------------------------------------------------
 #endif
 
+#if 0
 #endif
 
 	Log::Green("CMapTile[%d, %d, %s]: Loaded!", m_IndexX, m_IndexZ, filename);

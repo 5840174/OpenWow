@@ -12,6 +12,9 @@ public:
 	CM2_Builder(IBaseManager* BaseManager, IRenderDevice& RenderDevice, M2* _model);
 	virtual ~CM2_Builder();
 
+
+
+	bool PreLoad();
 	bool Load();
 
 	// Loader

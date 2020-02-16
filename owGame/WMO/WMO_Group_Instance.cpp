@@ -9,7 +9,8 @@
 #include "WMO_Group_Instance.h"
 
 CWMO_Group_Instance::CWMO_Group_Instance(const WMO_Group& WMOGroupObject) 
-	: m_PortalsVis(true)
+	: CLoadableObject(&WMOGroupObject)
+	, m_PortalsVis(true)
 	, m_Calculated(false)
 	, m_WMOGroupObject(WMOGroupObject)
 {
@@ -24,8 +25,22 @@ void CWMO_Group_Instance::Initialize()
     BoundingBox bbox = m_WMOGroupObject.m_Bounds;
     bbox.calculateCenter();
     GetComponent<IColliderComponent3D>()->SetBounds(bbox);
-	GetComponent<CColliderComponent3D>()->SetDebugDrawMode(true);
+	GetComponent<CColliderComponent3D>()->SetDebugDrawMode(false);
 }
+
+
+
+//
+// CLoadableObject
+//
+bool CWMO_Group_Instance::Load()
+{
+	m_WMOGroupObject.CreateInsances(this);
+
+	return true;
+}
+
+
 
 void CWMO_Group_Instance::SetPortalVisible(bool Value)
 {

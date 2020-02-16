@@ -13,6 +13,7 @@ public:
 	WMO_Part_Material(IRenderDevice& RenderDevice, const CWMO& WMOModel, const SWMO_MaterialDef& WMOMaterialProto);
 	virtual ~WMO_Part_Material();
 	
+	const SWMO_MaterialDef& GetProto() const { return m_WMOMaterialProto; }
 	uint32 getBlendMode() const { return m_WMOMaterialProto.blendMode; }
 
     void UpdateConstantBuffer() const override;

@@ -25,31 +25,36 @@ CM2_Builder::CM2_Builder(IBaseManager* BaseManager, IRenderDevice& RenderDevice,
 		m_M2->m_FileName[m_M2->m_FileName.length() - 1] = '\0';
 		m_M2->m_FileName.resize(m_M2->m_FileName.length() - 1);
 	}
-
-	// Openfile
-	m_F = BaseManager->GetManager<IFilesManager>()->Open(m_M2->getFilename());
-	if (m_F == nullptr)
-	{
-		Log::Error("CM2_Builder[%s]: Unable to open file.", m_M2->getFilename().c_str());
-		return;
-	}
-
-	m_M2->m_FilePath = m_F->Path();
-	m_M2->m_FileNameWithoutExt = m_M2->m_FileName.substr(0, m_M2->m_FileName.length() - 3);
 }
 
 CM2_Builder::~CM2_Builder()
 {
 }
 
-bool CM2_Builder::Load()
+bool CM2_Builder::PreLoad()
 {
+	// Openfile
+	m_F = m_BaseManager->GetManager<IFilesManager>()->Open(m_M2->getFilename());
 	if (m_F == nullptr)
 	{
+		Log::Error("CM2_Builder[%s]: Unable to open file.", m_M2->getFilename().c_str());
 		return false;
 	}
 
+	m_M2->m_FilePath = m_F->Path();
+	m_M2->m_FileNameWithoutExt = m_M2->m_FileName.substr(0, m_M2->m_FileName.length() - 3);
+
 	Step1Header();
+
+	return true;
+}
+
+bool CM2_Builder::Load()
+{
+	if (m_F == nullptr)
+		return false;
+
+	
 	Step2GlobalLoops();
 	Step3Bones();
 	Step4Vertices();
@@ -89,13 +94,7 @@ void CM2_Builder::Step1Header()
 	}
 
 	// Bounds
-	glm::vec3 boundsMin = m_Header.bounding_box.min;
-	glm::vec3 boundsMax = m_Header.bounding_box.max;
-	boundsMin = Fix_XZmY(boundsMin);
-	boundsMax = Fix_XZmY(boundsMax);
-	std::swap(boundsMin.z, boundsMax.z);
-
-	m_M2->m_Bounds.set(boundsMin, boundsMax);
+	m_M2->m_Bounds = m_Header.bounding_box.Convert();
 }
 
 void CM2_Builder::Step2GlobalLoops()

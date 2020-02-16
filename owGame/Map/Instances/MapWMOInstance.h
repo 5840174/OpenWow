@@ -28,14 +28,10 @@ public:
 
 	// ISceneNode
 	void Initialize() override;
-
 	void Accept(IVisitor* visitor) override;
 
-	void DoUpdate(UpdateEventArgs& e) override;
-
 private:
-	uint32 m_UniqueId;
-	BoundingBox m_ThisBounds;
+	const ADT_MODF m_PlacementInfo;
 
 public:	// Static
 	static void reset();

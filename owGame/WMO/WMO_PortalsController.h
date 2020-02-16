@@ -1,6 +1,6 @@
 #pragma once
 
-#define WMO_DISABLE_PORTALS
+//#define WMO_DISABLE_PORTALS
 
 #include "WMO_Headers.h"
 

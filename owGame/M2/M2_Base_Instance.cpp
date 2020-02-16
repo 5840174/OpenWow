@@ -93,7 +93,8 @@ std::shared_ptr<ITexture> CM2_Base_Instance::getSpecialTexture(SM2_Texture::Type
 
 void CM2_Base_Instance::Initialize()
 {
-
+	GetComponent<CColliderComponent3D>()->SetBounds(getM2().GetBounds());
+	GetComponent<CColliderComponent3D>()->SetDebugDrawMode(true);
 }
 
 void CM2_Base_Instance::Accept(IVisitor* visitor)

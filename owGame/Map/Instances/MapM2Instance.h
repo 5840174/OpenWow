@@ -27,12 +27,11 @@ public:
 	virtual ~CMapM2Instance();
 
 	// ISceneNode
+	void Initialize() override;
 	void Accept(IVisitor* visitor) override;
 
-	void DoUpdate(UpdateEventArgs& e) override;
-
-public: 
-	uint32				m_UniqueId;
+private: 
+	const ADT_MDXDef m_PlacementInfo;
 
 public:	// Static
 	static void reset();

@@ -16,6 +16,11 @@ void CWMO_Liquid::CreateFromWMO(std::shared_ptr<IByteBuffer> f, std::shared_ptr<
 	ydir = -1.0f; // Magic for WMO
 	createLayers(_liquidType, f);
 
+	//SLiquidVertex* map = (SLiquidVertex*)(f->getDataFromCurrent());
+	//SLiquidFlag* flags = (SLiquidFlag*)(f->getDataFromCurrent() + ((m_TilesX + 1) * (m_TilesY + 1)) * sizeof(SLiquidVertex));
+
+	//Log::Green("LQQ type [%d]", flags[0].liquid & 3);
+
 	/*if (_indoor)
 	{
 		m_WaterColorLight = fromRGB(_material->GetDiffuseColor());

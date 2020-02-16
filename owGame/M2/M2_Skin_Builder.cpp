@@ -83,8 +83,6 @@ void CM2_Skin_Builder::Step1LoadProfile(const std::shared_ptr<CM2_Skin>& M2SkinO
 
 void CM2_Skin_Builder::Step2InitBatches(const std::shared_ptr<CM2_Skin>& M2SkinObject)
 {
-	const std::shared_ptr<const CM2_Comp_Materials> m2Materials = m_M2Model.getMaterials();
-
 	std::shared_ptr<IFile> F = m_F.lock();
 	_ASSERT(F != nullptr);
 

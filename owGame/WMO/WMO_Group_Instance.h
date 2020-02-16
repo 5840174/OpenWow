@@ -12,6 +12,7 @@ class CWMO_Liquid_Instance;
 
 class CWMO_Group_Instance 
 	: public SceneNode3D
+	, public CLoadableObject
 {
 public:
 #ifdef USE_M2_MODELS
@@ -23,7 +24,11 @@ public:
 	CWMO_Group_Instance(const WMO_Group& WMOGroupObject);
 	virtual ~CWMO_Group_Instance();
 
-    void Initialize();
+	// SceneNode3D
+    void Initialize() override;
+
+	// CLoadableObject
+	bool Load() override;
 
     const WMO_Group& getObject() const { return m_WMOGroupObject; }
 

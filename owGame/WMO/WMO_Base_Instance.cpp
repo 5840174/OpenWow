@@ -21,11 +21,11 @@ void CWMO_Base_Instance::CreateInstances()
 	m_WMOObject.CreateInsances(this);
 
 #ifndef WMO_DISABLE_PORTALS
-	if (m_WMO->m_PortalController != nullptr)
+	if (m_WMOObject.m_PortalController != nullptr)
 	{
-		for (auto& v : m_WMO->m_PortalVertices)
+		for (const auto& v : m_WMOObject.m_PortalVertices)
 		{
-			m_ConvertedVerts.push_back(GetWorldTransfom() * vec4(v, 1.0f));
+			m_ConvertedVerts.push_back(GetWorldTransfom() * glm::vec4(v, 1.0f));
 		}
 	}
 #endif
@@ -56,8 +56,8 @@ const CWMO& CWMO_Base_Instance::getWMO() const
 //
 void CWMO_Base_Instance::Initialize()
 {
-	GetComponent<CColliderComponent3D>()->SetBounds(getWMO().GetBounds());
-	GetComponent<CColliderComponent3D>()->SetDebugDrawMode(false);
+	GetComponent<IColliderComponent3D>()->SetBounds(getWMO().GetBounds());
+	GetComponent<IColliderComponent3D>()->SetDebugDrawMode(false);
 }
 
 std::string CWMO_Base_Instance::GetName() const 
@@ -68,9 +68,9 @@ std::string CWMO_Base_Instance::GetName() const
 void CWMO_Base_Instance::UpdateCamera(const ICameraComponent3D* camera)
 {
 #ifndef WMO_DISABLE_PORTALS
-	if (m_WMO && m_WMO->m_PortalController)
+	if (m_WMOObject.m_PortalController)
 	{
-		m_WMO->m_PortalController->Update(this, camera);
+		m_WMOObject.m_PortalController->Update(this, camera);
 	}
 #endif
 }

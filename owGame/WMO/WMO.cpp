@@ -49,12 +49,10 @@ void CWMO::CreateInsances(ISceneNode3D* _parent) const
 	{
 		CWMO_Group_Instance* groupInstance = _parent->CreateSceneNode<CWMO_Group_Instance>(*it);
 		parentAsWMOInstance->AddGroupInstance(groupInstance);
-		if (it->m_Header.flags.IS_OUTDOOR)
-		{
+		if (it->m_GroupHeader.flags.IS_OUTDOOR)
 			parentAsWMOInstance->AddOutdoorGroupInstance(groupInstance);
-		}
 
-		it->CreateInsances(groupInstance);
+		m_BaseManager->GetManager<ILoader>()->AddToLoadQueue(groupInstance);
 	}
 
 	for (auto& it : m_Lights)
@@ -102,7 +100,13 @@ bool CWMO::Load()
 		for (const auto& groupInfo : m_ChunkReader->OpenChunkT<SWMO_GroupInfoDef>("MOGI"))
 		{
 			std::shared_ptr<WMO_Group> group = std::make_shared<WMO_Group>(m_BaseManager, m_RenderDevice, *this, cntr++, groupInfo);
+			m_BaseManager->GetManager<ILoader>()->AddToLoadQueue(group.get());
 			m_Groups.push_back(group);
+
+			if (group->m_GroupHeader.flags.IS_OUTDOOR)
+			{
+				m_OutdoorGroups.push_back(group);
+			}
 		}
 	}
 
@@ -228,20 +232,6 @@ bool CWMO::Load()
 	}
 
 	m_ChunkReader.reset();
-
-	// Init m_Groups
-	for (const auto& it : m_Groups)
-	{
-		it->Load();
-
-		//_ASSERT(it->m_Header.flags.IS_OUTDOOR != it->m_Header.flags.IS_INDOOR);
-
-		// Add outdoor group
-		if (it->m_Header.flags.IS_OUTDOOR)
-		{
-			m_OutdoorGroups.push_back(it);
-		}
-	}
 
 	return true;
 }

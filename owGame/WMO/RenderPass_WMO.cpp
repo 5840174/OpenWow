@@ -57,15 +57,26 @@ std::shared_ptr<IRenderPassPipelined> CRenderPass_WMO::CreatePipeline(std::share
 //
 // IVisitor
 //
-bool CRenderPass_WMO::Visit(const ISceneNode3D* node)
+bool CRenderPass_WMO::Visit(const ISceneNode3D* SceneNode3D)
 {
-	const CWMO_Base_Instance* wmoInstance = dynamic_cast<const CWMO_Base_Instance*>(node);
-	const CWMO_Group_Instance* wmoGroupInstance = dynamic_cast<const CWMO_Group_Instance*>(node);
+	const CWMO_Base_Instance* wmoInstance = dynamic_cast<const CWMO_Base_Instance*>(SceneNode3D);
+	const CWMO_Group_Instance* wmoGroupInstance = dynamic_cast<const CWMO_Group_Instance*>(SceneNode3D);
 
 	if (!wmoInstance && !wmoGroupInstance)
 		return false;
 
-	return Base3DPass::Visit(node);
+	const std::shared_ptr<IColliderComponent3D>& collider = SceneNode3D->GetComponent<IColliderComponent3D>();
+
+	BoundingBox bbox = collider->GetBounds();
+	bbox.transform(SceneNode3D->GetWorldTransfom());
+
+	const ICameraComponent3D* camera = GetRenderEventArgs().Camera;
+	_ASSERT(camera != nullptr);
+
+	if (camera->GetFrustum().cullBox(bbox))
+		return false;
+
+	return Base3DPass::Visit(SceneNode3D);
 }
 
 

@@ -1,5 +1,9 @@
 ﻿#pragma once
 
+// OpenWoW
+#include "WoWChunkReader.h"
+
+// WMO Group
 #include "WMO_Group_Headers.h"
 
 // Parts
@@ -15,27 +19,30 @@ class CWMO_Group_Instance;
 class CWMO_Doodad_Instance;
 // FORWARD END
 
-class WMO_Group 
+class WMO_Group
+	: public ISceneNodeProvider
+	, public CLoadableObject
 {
 public:
 	WMO_Group(IBaseManager* BaseManager, IRenderDevice& RenderDevice, const CWMO& WMOModel, const uint32 GroupIndex, const SWMO_GroupInfoDef& GroupProto);
 	virtual ~WMO_Group();
 
-	void CreateInsances(CWMO_Group_Instance* _parent) const;
+	// WMO_Group
+	const uint32 GetGroupIndex() const;
+	
+	// ISceneNodeProvider
+	void CreateInsances(ISceneNode3D* _parent) const override;
 
-	uint32 to_wmo_liquid(int x);
-
-	void Load();
-
-	const CWMO& GetWMOModel() const { return m_WMOModel; }
+	// CLoadableObject
+	bool Load() override;
 
 public:
 	std::string                             m_GroupName;
 	
-	SWMO_Group_HeaderDef					m_Header;
+	SWMO_Group_HeaderDef					m_GroupHeader;
 	BoundingBox								m_Bounds;
 
-	std::vector< std::shared_ptr<CWMO_Part_Portal>>				m_Portals;
+	std::vector< std::shared_ptr<CWMO_Part_Portal>> m_Portals;
 
 public:
 	//-- Triangles --//
@@ -44,14 +51,10 @@ public:
 	bool									m_IsMOCVExists;
 
 	//-- Render bathes --//
-	std::vector<SWMO_Group_BatchDef>		m_WMOBatchs;
-	std::vector<std::shared_ptr<WMO_Group_Part_Batch>>		m_WMOBatchIndexes;
-	SWMO_Group_BatchDef*					moba;
+	std::vector<std::shared_ptr<WMO_Group_Part_Batch>> m_WMOBatchIndexes;
 
 	//-- Lights --//
 	std::vector<uint16>						m_WMOLightsIndexes;
-	C4Vec*									mocv;
-	uint32									mocv_count;
 
 	//-- Doodads references --//
 	std::vector<uint16>						m_DoodadsPlacementIndexes;
@@ -73,4 +76,5 @@ private:
 	IRenderDevice& m_RenderDevice;
 	const CWMO& m_WMOModel;
 	const uint32 m_GroupIndex;
+	std::unique_ptr<WoWChunkReader> m_ChunkReader;
 };

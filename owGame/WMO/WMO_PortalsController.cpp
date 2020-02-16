@@ -22,7 +22,7 @@ CWMO_PortalsController::CWMO_PortalsController(const CWMO& WMOObject)
 		std::shared_ptr<CWMO_Part_Portal> portal = m_WMOObject.m_Portals[it.portalIndex];
 		std::shared_ptr<WMO_Group> group = m_WMOObject.m_Groups[it.groupIndex];
 
-		if (it.groupIndex == group->m_GroupIndex)
+		if (it.groupIndex == group->GetGroupIndex())
 		{
 			group->m_Portals.push_back(portal);
 		}
@@ -96,12 +96,12 @@ void CWMO_PortalsController::Update(const CWMO_Base_Instance* _localContr, const
 				continue;
 			}
 
-			if (!group->getObject().m_Header.flags.HAS_COLLISION)
+			if (!group->getObject().m_GroupHeader.flags.HAS_COLLISION)
 			{
 				continue;
 			}
 
-			if (group->getObject().m_Header.flags.IS_OUTDOOR)
+			if (group->getObject().m_GroupHeader.flags.IS_OUTDOOR)
 			{
 				continue;
 			}
@@ -112,7 +112,7 @@ void CWMO_PortalsController::Update(const CWMO_Base_Instance* _localContr, const
 				continue;
 			}
 
-			if (group->getObject().m_Header.flags.IS_INDOOR)
+			if (group->getObject().m_GroupHeader.flags.IS_INDOOR)
 			{
 				insideIndoor = true;
 			}
