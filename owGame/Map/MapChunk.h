@@ -25,7 +25,6 @@ public:
 	void                                            Accept(IVisitor* visitor) override;
 
 	// ILoadable
-	bool                                            PreLoad() override;
 	bool                                            Load() override;
 	bool                                            Delete() override;
 	uint32                                          getPriority() const override { return 1; };

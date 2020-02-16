@@ -11,5 +11,5 @@ public:
 	virtual ~Liquid_Instance();
 
 	// ILiquidInstanceInitializaton
-    void LiquidInitialize(std::shared_ptr<CLiquid> LiquidObject, vec3 Position) override;
+    void LiquidInitialize(std::shared_ptr<CLiquid> LiquidObject, glm::vec3 Position) override;
 };

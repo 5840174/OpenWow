@@ -49,6 +49,7 @@ const CMap & CMapTile::GetMap() const
 void CMapTile::Initialize()
 {
 	// CColliderComponent
+	if (false)
 	{
 		std::shared_ptr<CColliderComponent3D> colliderComponent = GetComponent<CColliderComponent3D>();
 		vec3 translate = GetTranslation();
@@ -67,6 +68,11 @@ std::string CMapTile::GetName() const
 	return "MapTile " + std::to_string(m_IndexX) + " - " + std::to_string(m_IndexZ);
 }
 
+
+
+//
+// ILoadableObject
+//
 bool CMapTile::Load()
 {
 	char filename[256];
@@ -113,6 +119,14 @@ bool CMapTile::Load()
 
 		std::shared_ptr<ADT_TextureInfo> textureInfo = std::make_shared<ADT_TextureInfo>();
 		textureInfo->textureName = _string;
+
+		// PreLoad diffuse texture
+		textureInfo->diffuseTexture = m_RenderDevice.GetObjectsFactory().LoadTexture2D(_string);
+
+		// PreLoad specular texture
+		std::string specularTextureName = _string;
+		specularTextureName = specularTextureName.insert(specularTextureName.length() - 4, "_s");
+		textureInfo->specularTexture = m_RenderDevice.GetObjectsFactory().LoadTexture2D(specularTextureName);
 
 		m_Textures.push_back(textureInfo);
 
@@ -218,7 +232,7 @@ bool CMapTile::Load()
 
 	//-- Load Textures -------------------------------------------------------------------
 
-	for (auto& it : m_Textures)
+	/*for (auto& it : m_Textures)
 	{
 		// PreLoad diffuse texture
 		it->diffuseTexture = m_RenderDevice.GetObjectsFactory().LoadTexture2D(it->textureName);
@@ -227,7 +241,7 @@ bool CMapTile::Load()
 		std::string specularTextureName = it->textureName;
 		specularTextureName = specularTextureName.insert(specularTextureName.length() - 4, "_s");
 		it->specularTexture = m_RenderDevice.GetObjectsFactory().LoadTexture2D(specularTextureName);
-	}
+	}*/
 
 	//-- Load Chunks ---------------------------------------------------------------------
 
@@ -238,6 +252,7 @@ bool CMapTile::Load()
 		m_Chunks.push_back(chunk);
 	}
 
+#if 0
 
 	//-- WMOs --------------------------------------------------------------------------
 
@@ -270,6 +285,8 @@ bool CMapTile::Load()
 //#endif
 	}
 	//---------------------------------------------------------------------------------
+#endif
+
 #endif
 
 	Log::Green("CMapTile[%d, %d, %s]: Loaded!", m_IndexX, m_IndexZ, filename);

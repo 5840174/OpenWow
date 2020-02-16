@@ -61,7 +61,7 @@ void CMap::MapPostLoad()
 	Log::Print("Map[%s]: Id [%d]. Postloading...", m_MapDBCRecord->Get_Directory(), m_MapDBCRecord->Get_ID());
 
 	m_WDT->CreateInsances(this);
-	m_WDL->CreateInsances(this);
+	//m_WDL->CreateInsances(this);
 }
 
 void CMap::Unload()
@@ -205,7 +205,7 @@ CMapTile* CMap::LoadTile(int32 x, int32 z)
 
 	// Create new tile
 	m_ADTCache[firstnull] = CreateSceneNode<CMapTile>(m_BaseManager, m_RenderDevice, *this, x, z);
-	m_ADTCache[firstnull]->Load();
+	m_BaseManager->GetManager<ILoader>()->AddToLoadQueue(m_ADTCache[firstnull]);
 	return m_ADTCache[firstnull];
 }
 

@@ -115,6 +115,10 @@ void CM2_Skin_Batch::UpdateMaterialProps(const CM2_Base_Instance* m2Instance)
 	for (uint32 i = 0; i < m_Textures.size(); i++)
 	{
 		std::shared_ptr<const CM2_Part_Texture> m2Texture = m_Textures[i].lock();
+		if (m2Texture == nullptr)
+		{
+			continue;
+		}
 
 		SetTexture(i, m2Texture->GetResultTexture(m2Instance));
 

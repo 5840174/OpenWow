@@ -27,7 +27,6 @@ public:
 	// ILoadableObject
 	bool                                            Load() override;
 	bool                                            Delete() override;
-	uint32                                          getPriority() const override { return 0; };
 
 public:
 	ADT_MHDR                                        header;

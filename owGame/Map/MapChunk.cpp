@@ -13,7 +13,8 @@
 #include "MapChunkMaterial.h"
 
 CMapChunk::CMapChunk(IRenderDevice& RenderDevice, const CMap& Map, const CMapTile& MapTile, const std::shared_ptr<IByteBuffer>& Bytes)
-	: m_RenderDevice(RenderDevice)
+	: CLoadableObject(&MapTile)
+	, m_RenderDevice(RenderDevice)
 	, m_Map(Map)
 	, m_MapTile(MapTile)
 	, m_File(Bytes)
@@ -34,6 +35,41 @@ uint32 CMapChunk::GetAreaID() const
 //
 void CMapChunk::Initialize()
 {
+	//m_File->seek(m_MCIN.offset);
+
+// Chunk + size (8)
+	uint32_t offset;
+	m_File->read(&offset);
+
+	uint32_t size;
+	m_File->read(&size);
+
+	uint32_t startPos = m_File->getPos();
+
+	// Read header
+	m_File->readBytes(&header, sizeof(ADT_MCNK_Header));
+
+	m_AreaID = header.areaid;
+
+	// Scene node params
+	{
+		// Set translate
+		SetTranslate(glm::vec3(header.xpos * (-1.0f) + C_ZeroPoint, header.ypos, header.zpos * (-1.0f) + C_ZeroPoint));
+	}
+
+	{
+		glm::vec3 translate = GetTranslation();
+
+		// Bounds
+		BoundingBox bbox
+		(
+			glm::vec3(0.0f, Math::MaxFloat, 0.0f),
+			glm::vec3(0.0f + C_ChunkSize, Math::MinFloat, 0.0f + C_ChunkSize)
+		);
+
+		GetComponent<CColliderComponent3D>()->SetBounds(bbox);
+		GetComponent<CColliderComponent3D>()->SetDebugDrawMode(false);
+	}
 }
 
 std::string CMapChunk::GetName() const
@@ -54,46 +90,6 @@ void CMapChunk::Accept(IVisitor* visitor)
 	SceneNode3D::Accept(visitor);
 }
 
-
-bool CMapChunk::PreLoad()
-{
-	//m_File->seek(m_MCIN.offset);
-
-	// Chunk + size (8)
-	uint32_t offset;
-	m_File->read(&offset);
-
-	uint32_t size;
-	m_File->read(&size);
-
-	uint32_t startPos = m_File->getPos();
-
-	// Read header
-	m_File->readBytes(&header, sizeof(ADT_MCNK_Header));
-
-	m_AreaID = header.areaid;
-
-	// Scene node params
-    {
-        // Set translate
-        SetTranslate(glm::vec3(header.xpos * (-1.0f) + C_ZeroPoint, header.ypos, header.zpos * (-1.0f) + C_ZeroPoint));
-    }
-
-    {
-		glm::vec3 translate = GetTranslation();
-
-        // Bounds
-        BoundingBox bbox
-        (
-            glm::vec3(translate.x,               Math::MaxFloat, translate.z),
-			glm::vec3(translate.x + C_ChunkSize, Math::MinFloat, translate.z + C_ChunkSize)
-        );
-
-		GetComponent<CColliderComponent3D>()->SetBounds(bbox);
-	}
-
-	return true;
-}
 
 bool CMapChunk::Load()
 {
@@ -188,8 +184,8 @@ bool CMapChunk::Load()
 			}
 		}
 
-		bbox.setMinY(minHeight + header.ypos);
-		bbox.setMaxY(maxHeight + header.ypos);
+		bbox.setMinY(minHeight);
+		bbox.setMaxY(maxHeight);
 		bbox.calculateCenter();
         GetComponent<CColliderComponent3D>()->SetBounds(bbox);
 
@@ -320,12 +316,20 @@ bool CMapChunk::Load()
 		if (header.sizeLiquid > 8)
 		{
 			CRange height;
-			m_File->readBytes(&height, 8);
+			m_File->read(&height);
+
+			BoundingBox bbox = GetComponent<CColliderComponent3D>()->GetBounds();
+			float bboxMinHeight = std::min(bbox.getMin().y, (height.min - GetTranslation().y));
+			float bboxMaxHeight = std::max(bbox.getMax().y, (height.max - GetTranslation().y));
+			bbox.setMinY(bboxMinHeight);
+			bbox.setMaxY(bboxMaxHeight);
+			bbox.calculateCenter();
+			GetComponent<CColliderComponent3D>()->SetBounds(bbox);
 
 			std::shared_ptr<CADT_Liquid> m_Liquid = std::make_shared<CADT_Liquid>(m_RenderDevice, 8, 8);
 			m_Liquid->CreateFromMCLQ(m_File, header);
 
-            vec3 position = vec3(0.0f, - GetTranslation().y, 0.0f);
+            vec3 position = vec3(0.0f, (- GetTranslation().y), 0.0f);
 
 			Liquid_Instance* liq = CreateSceneNode<Liquid_Instance>();
 			liq->LiquidInitialize(m_Liquid, position);

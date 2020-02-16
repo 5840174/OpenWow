@@ -73,10 +73,23 @@ std::shared_ptr<IRenderPassPipelined> CRenderPass_ADT_MCNK::CreatePipeline(std::
 //
 // IVisitor
 //
-bool CRenderPass_ADT_MCNK::Visit(const ISceneNode3D* node)
+bool CRenderPass_ADT_MCNK::Visit(const ISceneNode3D* SceneNode3D)
 {
-    if (const CMapChunk* adtMCNKInstance = dynamic_cast<const CMapChunk*>(node))
-		return Base3DPass::Visit(node);
+	if (const CMapChunk* adtMCNKInstance = dynamic_cast<const CMapChunk*>(SceneNode3D))
+	{
+		const std::shared_ptr<IColliderComponent3D>& collider = SceneNode3D->GetComponent<IColliderComponent3D>();
+
+		BoundingBox bbox = collider->GetBounds();
+		bbox.transform(SceneNode3D->GetWorldTransfom());
+
+		const ICameraComponent3D* camera = GetRenderEventArgs().Camera;
+		_ASSERT(camera != nullptr);
+
+		if (camera->GetFrustum().cullBox(bbox))
+			return false;
+
+		return Base3DPass::Visit(SceneNode3D);
+	}
 
 	return false;
 }
