@@ -17,6 +17,7 @@ public:
 	virtual ~CWMO_Base_Instance();
 
 	void CreateInstances();
+	void RecalcVerts();
 
 	// CLoadableObject
 	bool Load() override;
@@ -35,7 +36,7 @@ public:
 	// SceneNode3D
 	virtual void Initialize() override;
 	std::string GetName() const override;
-	void UpdateCamera(const ICameraComponent3D* camera) override;
+	void Update(const UpdateEventArgs& e) override;
 	void Accept(IVisitor* visitor) override;
 
 protected:

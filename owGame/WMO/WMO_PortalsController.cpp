@@ -66,6 +66,9 @@ void CWMO_PortalsController::GetPolyFrustum(const vec3* poly, uint32 num_verts, 
 
 void CWMO_PortalsController::Update(const CWMO_Base_Instance* _localContr, const ICameraComponent3D* _camera)
 {
+	if (_localContr->GetState() != ILoadable::ELoadableState::Loaded)
+		return;
+
 	// Reset all flags
 	for (auto& group : _localContr->getGroupInstances())
 	{
@@ -83,7 +86,8 @@ void CWMO_PortalsController::Update(const CWMO_Base_Instance* _localContr, const
 #endif
 	}
 
-	vec3 _InvWorldCamera = _localContr->GetInverseWorldTransform() * vec4(_camera->GetTranslation(), 1.0f);
+
+	glm::vec3 _InvWorldCamera = _localContr->GetInverseWorldTransform() * glm::vec4(_camera->GetTranslation(), 1.0f);
 
 	bool insideIndoor = false;
 
@@ -91,7 +95,10 @@ void CWMO_PortalsController::Update(const CWMO_Base_Instance* _localContr, const
 	{
 		for (const auto& group : _localContr->getGroupInstances())
 		{
-			if (!(group->GetComponent<CColliderComponent3D>()->GetBounds().isPointInside(_camera->GetTranslation())))
+			BoundingBox bbox = group->GetComponent<CColliderComponent3D>()->GetBounds();
+			bbox.transform(group->GetWorldTransfom());
+
+			if (!(bbox.isPointInside(_camera->GetTranslation())))
 			{
 				continue;
 			}
@@ -122,7 +129,7 @@ void CWMO_PortalsController::Update(const CWMO_Base_Instance* _localContr, const
 	//_ASSERT(insideOneAtLeast || !(m_ParentWMO->m_OutdoorGroups.empty()));
 
 	// If we outside WMO, then get outdorr group
-	//if (!insideIndoor)
+	if (!insideIndoor)
 	{
 		for (auto& ogr : _localContr->getGroupOutdoorInstances())
 		{
@@ -138,7 +145,9 @@ bool CWMO_PortalsController::Recur(const CWMO_Base_Instance* _localContr, CWMO_G
 		return false;
 	}
 
-	if (_camera->GetFrustum().cullBox(_group->GetComponent<CColliderComponent3D>()->GetBounds()))
+	BoundingBox bbox = _group->GetComponent<CColliderComponent3D>()->GetBounds();
+	bbox.transform(_group->GetWorldTransfom());
+	if (_camera->GetFrustum().cullBox(bbox))
 	{
 		return false;
 	}
@@ -150,9 +159,15 @@ bool CWMO_PortalsController::Recur(const CWMO_Base_Instance* _localContr, CWMO_G
 #ifdef USE_M2_MODELS
 	for (const auto& doodad : _group->getDoodadsInstances())
 	{
-		if (doodad && (_isFirstIteration || !_frustum.cullBox(doodad->GetComponent<IColliderComponent3D>()->GetBounds())))
+		if (doodad)
 		{
-			doodad->setPortalVisibility(true);
+			BoundingBox bbox = doodad->GetComponent<IColliderComponent3D>()->GetBounds();
+			bbox.transform(doodad->GetWorldTransfom());
+
+			if (_isFirstIteration || !_frustum.cullBox(bbox))
+			{
+				doodad->setPortalVisibility(true);
+			}
 		}
 	}
 #endif

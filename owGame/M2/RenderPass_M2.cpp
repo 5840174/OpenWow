@@ -76,7 +76,7 @@ bool CRenderPass_M2::Visit(const ISceneNode3D* SceneNode3D)
 		BoundingBox bbox = collider->GetBounds();
 		bbox.transform(SceneNode3D->GetWorldTransfom());
 
-		const ICameraComponent3D* camera = GetRenderEventArgs().Camera;
+		const ICameraComponent3D* camera = GetRenderEventArgs().CameraForCulling;
 		_ASSERT(camera != nullptr);
 
 		if (camera->GetFrustum().cullBox(bbox))

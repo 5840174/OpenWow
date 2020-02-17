@@ -52,7 +52,6 @@ DefferedRenderPSOut PS_main(VertexShaderOutput IN) : SV_TARGET
 	resultColor += float4(1.0f, 1.0f, 1.0f, 1.0f) * alpha;
 
 	DefferedRenderPSOut OUT;
-	OUT.PositionWS = IN.positionWS;
 	OUT.Diffuse = resultColor;
 	OUT.Specular = float4(1.0f, 1.0f, 1.0f, 1.0f);
 	OUT.NormalWS = float4(0.0f, 1.0f, 0.0f, 1.0f);

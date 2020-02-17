@@ -7,6 +7,9 @@
 // General
 #include "MapWDL.h"
 
+// Additional
+#include "WoWChunkReader.h"
+
 CMapWDL::CMapWDL(IBaseManager* BaseManager, IRenderDevice& RenderDevice, const CMap& Map)
 	: m_Minimap(nullptr)
 	, m_BaseManager(BaseManager)
@@ -121,73 +124,44 @@ void CMapWDL::UpdateCamera(const ICameraComponent3D * camera)
 
 void CMapWDL::Load()
 {
-	std::string fileName = m_MapController.GetMapFolder() + ".wdl";
-
-	std::shared_ptr<IFile> f = m_BaseManager->GetManager<IFilesManager>()->Open(fileName);
-	if (f == nullptr)
-	{
-		Log::Info("World[%s]: WDL: Error opening.", fileName.c_str());
-		return;
-	}
-
 	// Offsets to MARE
 	memset(m_MAREOffsets, 0x00, C_TilesInMap * C_TilesInMap * sizeof(uint32));
 
-	char fourcc[5];
-	uint32 size;
+	std::shared_ptr<IByteBuffer> bytes = m_BaseManager->GetManager<IFilesManager>()->Open(m_MapController.GetMapFolder() + ".wdl");
 
-	while (!f->isEof())
+	WoWChunkReader reader(m_BaseManager, bytes);
+
+
+	if (auto buffer = reader.OpenChunk("MVER"))
 	{
-		memset(fourcc, 0, 4);
-		size = 0;
-		f->readBytes(fourcc, 4);
-		f->readBytes(&size, 4);
-		flipcc(fourcc);
-		fourcc[4] = 0;
-		if (size == 0) continue;
-		uint32_t nextpos = f->getPos() + size;
-
-		if (strcmp(fourcc, "MVER") == 0)
-		{
-			uint32 version;
-			f->readBytes(&version, 4);
-			_ASSERT_EXPR(version == 18, "Version mismatch != 18");
-		}
-		else if (strncmp(fourcc, "MWMO", 4) == 0) // Filenames for WMO that appear in the low resolution map. Zero terminated strings.
-		{
-			WOWCHUNK_READ_STRINGS_BEGIN
-				m_LowResolutionWMOsNames.push_back(_string);
-			WOWCHUNK_READ_STRINGS_END;
-		}
-		else if (strncmp(fourcc, "MWID", 4) == 0) // List of indexes into the MWMO chunk.
-		{
-		}
-		else if (strncmp(fourcc, "MODF", 4) == 0) // Placement information for the WMO. Appears to be the same 64 byte structure used in the WDT and ADT MODF chunks.
-		{
-			for (uint32 i = 0; i < size / sizeof(ADT_MODF); i++)
-			{
-				ADT_MODF placement;
-				f->readBytes(&placement, sizeof(ADT_MODF));
-				m_LowResolutionWMOsPlacementInfo.push_back(placement);
-			}
-		}
-		else if (strncmp(fourcc, "MAOF", 4) == 0) // Contains 64*64 = 4096 unsigned 32-bit integers, these are absolute offsets in the file to each map tile's MapAreaLow-array-entry. For unused tiles the value is 0.
-		{
-			f->readBytes(m_MAREOffsets, C_TilesInMap * C_TilesInMap * sizeof(uint32));
-		}
-		else if (strncmp(fourcc, "MARE", 4) == 0) // Heightmap for one map tile.
-		{
-			// Contains 17 * 17 + 16 * 16 = 545 signed 16-bit integers. So a 17 by 17 grid of height values is given, with additional height values in between grid points. Here, the "outer" 17x17 points are listed (in the usual row major order), followed by 16x16 "inner" points. The height values are on the same scale as those used in the regular height maps.
-		}
-		else if (strncmp(fourcc, "MAHO", 4) == 0)
-		{
-			// After each MARE chunk there follows a MAHO (MapAreaHOles) chunk. It may be left out if the data is supposed to be 0 all the time. Its an array of 16 shorts. Each short is a bitmask. If the bit is not set, there is a hole at this position.
-		}
-		else
-		{
-			Log::Fatal("Map[%s]: WDL: Chunks [%s], Size [%d] not implemented.", fileName.c_str(), fourcc, size);
-		}
-		f->seek(nextpos);
+		uint32 version;
+		buffer->readBytes(&version, 4);
+		_ASSERT_EXPR(version == 18, "Version mismatch != 18");
+	}
+	if (auto buffer = reader.OpenChunk("MWMO")) // Filenames for WMO that appear in the low resolution map. Zero terminated strings.
+	{
+		//WOWCHUNK_READ_STRINGS_BEGIN
+		//	m_LowResolutionWMOsNames.push_back(_string);
+		//WOWCHUNK_READ_STRINGS_END;
+	}
+	if (auto buffer = reader.OpenChunk("MWID")) // List of indexes into the MWMO chunk.
+	{
+	}
+	for (const auto& placement : reader.OpenChunkT<ADT_MODF>("MODF")) // Placement information for the WMO. Appears to be the same 64 byte structure used in the WDT and ADT MODF chunks.
+	{
+		m_LowResolutionWMOsPlacementInfo.push_back(placement);
+	}
+	if (auto buffer = reader.OpenChunk("MAOF")) // Contains 64*64 = 4096 unsigned 32-bit integers, these are absolute offsets in the file to each map tile's MapAreaLow-array-entry. For unused tiles the value is 0.
+	{
+		buffer->readBytes(m_MAREOffsets, C_TilesInMap * C_TilesInMap * sizeof(uint32));
+	}
+	//if (auto buffer = reader.OpenChunk("MARE")) // Heightmap for one map tile.
+	//{
+		// Contains 17 * 17 + 16 * 16 = 545 signed 16-bit integers. So a 17 by 17 grid of height values is given, with additional height values in between grid points. Here, the "outer" 17x17 points are listed (in the usual row major order), followed by 16x16 "inner" points. The height values are on the same scale as those used in the regular height maps.
+	//}
+	if (auto buffer = reader.OpenChunk("MAHO"))
+	{
+		// After each MARE chunk there follows a MAHO (MapAreaHOles) chunk. It may be left out if the data is supposed to be 0 all the time. Its an array of 16 shorts. Each short is a bitmask. If the bit is not set, there is a hole at this position.
 	}
 
 	// Minimap
@@ -204,10 +178,10 @@ void CMapWDL::Load()
 			if (m_MAREOffsets[j][i])
 			{
 				// Read data             
-				f->seek(m_MAREOffsets[j][i] + 4 + 4);
+				bytes->seek(m_MAREOffsets[j][i] + 4 + 4);
 
 				int16 tilebuf[17 * 17];
-				f->readBytes(tilebuf, 17 * 17 * 2);
+				bytes->readBytes(tilebuf, 17 * 17 * 2);
 
 				// make minimap
 				// for a 512x512 minimap texture, and 64x64 tiles, one tile is 8x8 pixels

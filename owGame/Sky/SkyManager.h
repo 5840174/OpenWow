@@ -14,7 +14,7 @@ public:
 	bool                                            Load(uint32 MapID);
 
 	// SceneNode3D
-	void                                            UpdateCamera(const ICameraComponent3D* camera) override;
+	void                                            Update(const UpdateEventArgs& e) override;
 
 	// ISkyManager
 	void                                            Calculate(const ICameraComponent3D* camera, uint32 _time) override;

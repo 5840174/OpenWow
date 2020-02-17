@@ -70,11 +70,13 @@ bool CRenderPass_WMO::Visit(const ISceneNode3D* SceneNode3D)
 	BoundingBox bbox = collider->GetBounds();
 	bbox.transform(SceneNode3D->GetWorldTransfom());
 
-	const ICameraComponent3D* camera = GetRenderEventArgs().Camera;
+	const ICameraComponent3D* camera = GetRenderEventArgs().CameraForCulling;
 	_ASSERT(camera != nullptr);
 
 	if (camera->GetFrustum().cullBox(bbox))
 		return false;
+
+	//const_cast<ISceneNode3D*>(SceneNode3D)->UpdateCamera(GetRenderEventArgs().Camera);
 
 	return Base3DPass::Visit(SceneNode3D);
 }

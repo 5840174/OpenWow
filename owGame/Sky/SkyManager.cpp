@@ -58,14 +58,13 @@ bool SkyManager::Load(uint32 MapID)
 //
 // SceneNode3D
 //
-void SkyManager::UpdateCamera(const ICameraComponent3D* camera)
+void SkyManager::Update(const UpdateEventArgs& e)
 {
 	if (skies.empty())
 		return;
 
-	Calculate(camera, 1440/*GetMapController()->getTime()->GetTime()*/);
-
-	SetTranslate(camera->GetTranslation());
+	Calculate(e.CameraForCulling, 1440/*GetMapController()->getTime()->GetTime()*/);
+	SetTranslate(e.CameraForCulling->GetTranslation());
 }
 
 

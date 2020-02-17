@@ -8,8 +8,8 @@ m_FileName="Creature\\Alexstrasza\\Alexstrasza.m2"
 
 */
 
-Creature::Creature() :
-	Creature_M2Instance()
+Creature::Creature() 
+	: Creature_M2Instance()
 {
 	for (uint32 i = 0; i < MeshIDType::Count; i++)
 	{
@@ -23,11 +23,11 @@ Creature::~Creature()
 
 void Creature::InitFromDisplayInfo(uint32 _id)
 {
-	std::shared_ptr<const DBC_CreatureDisplayInfoRecord> rec = DBC_CreatureDisplayInfo[_id];
+	const DBC_CreatureDisplayInfoRecord* rec = GetBaseManager()->GetManager<CDBCStorage>()->DBC_CreatureDisplayInfo()[_id];
     if (rec == nullptr)
         throw std::exception("Not found!");
 
-	std::shared_ptr<const DBC_CreatureDisplayInfoExtraRecord> humanoidRecExtra = rec->Get_HumanoidData();
+	const DBC_CreatureDisplayInfoExtraRecord* humanoidRecExtra = rec->Get_HumanoidData();
 	_ASSERT(humanoidRecExtra == nullptr);
 
 	// 1. Load model
@@ -39,17 +39,17 @@ void Creature::InitFromDisplayInfo(uint32 _id)
 	{
 		if (strlen(rec->Get_Texture1()) != 0)
 		{
-			setSpecialTexture(SM2_Texture::Type::MONSTER_1, getM2()->getFilePath() + rec->Get_Texture1() + ".blp");
+			setSpecialTexture(SM2_Texture::Type::MONSTER_1, getM2().getFilePath() + rec->Get_Texture1() + ".blp");
 		}
 
 		if (strlen(rec->Get_Texture2()) != 0)
 		{
-			setSpecialTexture(SM2_Texture::Type::MONSTER_2, getM2()->getFilePath() + rec->Get_Texture2() + ".blp");
+			setSpecialTexture(SM2_Texture::Type::MONSTER_2, getM2().getFilePath() + rec->Get_Texture2() + ".blp");
 		}
 
 		if (strlen(rec->Get_Texture3()) != 0)
 		{
-			setSpecialTexture(SM2_Texture::Type::MONSTER_3, getM2()->getFilePath() + rec->Get_Texture3() + ".blp");
+			setSpecialTexture(SM2_Texture::Type::MONSTER_3, getM2().getFilePath() + rec->Get_Texture3() + ".blp");
 		}
 	}
 }
@@ -96,9 +96,9 @@ bool Creature::isMeshEnabled(uint32 _index) const
 	return false;
 }
 
-void Creature::CreateCreatureModel(std::shared_ptr<const DBC_CreatureDisplayInfoRecord> _record)
+void Creature::CreateCreatureModel(const DBC_CreatureDisplayInfoRecord* CreatureDisplayInfo)
 {
-	std::shared_ptr<const DBC_CreatureModelDataRecord> modelRec = _record->Get_Model();
+	const DBC_CreatureModelDataRecord* modelRec = CreatureDisplayInfo->Get_Model();
 	_ASSERT(modelRec != nullptr);
 
 	std::string modelName = modelRec->Get_ModelPath();
@@ -107,7 +107,7 @@ void Creature::CreateCreatureModel(std::shared_ptr<const DBC_CreatureDisplayInfo
 
 	setM2(m2);
 
-	setAlpha(static_cast<float>(_record->Get_Opacity()) / 255.0f);
+	setAlpha(static_cast<float>(CreatureDisplayInfo->Get_Opacity()) / 255.0f);
 	//SetScale(_record.Get_Scale());
 }
 

@@ -146,17 +146,15 @@ void CM2_Base_Instance::Accept(IVisitor* visitor)
 //
 void CM2_Base_Instance::UpdateLocalTransform()
 {
-	std::shared_ptr<CM2_Part_Attachment> attachPoint = GetAttachPoint();
-
-	if (attachPoint)
+	if (std::shared_ptr<CM2_Part_Attachment> attachPoint = GetAttachPoint())
 	{
 		std::shared_ptr<const CM2_Part_Bone> bone = attachPoint->getBone().lock();
 		_ASSERT(bone != nullptr);
 
-		mat4 relMatrix;
+		glm::mat4 relMatrix;
 		relMatrix = glm::translate(relMatrix, bone->getPivot());
 
-		mat4 absMatrix;
+		glm::mat4 absMatrix;
 		absMatrix = GetParentWorldTransform() * bone->getTransformMatrix() * relMatrix;
 		SetWorldTransform(absMatrix);
 	}

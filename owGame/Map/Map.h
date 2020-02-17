@@ -33,7 +33,7 @@ public:
 		return "Map";
 	}
 
-	void                                            UpdateCamera(const ICameraComponent3D* camera) override;
+	void                                            Update(const UpdateEventArgs& e) override;
 
 public: // Getters
 	std::string                                     GetMapFolder() const { return m_MapFolderName; }

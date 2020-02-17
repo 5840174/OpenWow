@@ -99,7 +99,9 @@ void WMO_Group::CreateInsances(ISceneNode3D* _parent) const
 
 		CWMO_Liquid_Instance* liquid = _parent->CreateSceneNode<CWMO_Liquid_Instance>(*this);
 		liquid->LiquidInitialize(m_WMOLiqiud, realPos);
+		liquid->GetComponent<IColliderComponent3D>()->SetBounds(parentAsWMOGroupInstance->GetComponent<IColliderComponent3D>()->GetBounds());
 		parentAsWMOGroupInstance->addLiquidInstance(liquid);
+		
 	}
 
 #ifdef USE_M2_MODELS
@@ -234,8 +236,8 @@ bool WMO_Group::Load()
 		uint32 doodadsIndexesCount = buffer->getSize() / sizeof(uint16);
 		uint16* doodadsIndexes = (uint16*)buffer->getDataFromCurrent();
 
-		//for (uint32 i = 0; i < doodadsIndexesCount; i++)
-		//	m_DoodadsPlacementIndexes.push_back(doodadsIndexes[i]);
+		for (uint32 i = 0; i < doodadsIndexesCount; i++)
+			m_DoodadsPlacementIndexes.push_back(doodadsIndexes[i]);
 	}
 
 

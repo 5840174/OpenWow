@@ -27,7 +27,7 @@ void CSceneWoW::Initialize()
 	GetCameraController()->SetCamera(cameraNode->GetComponent<ICameraComponent3D>());
 	GetCameraController()->GetCamera()->SetPerspectiveProjection(ICameraComponent3D::EPerspectiveProjectionHand::Right, 45.0f, 1.0f/*GetRenderWindow()->GetWindowWidth() / GetRenderWindow()->GetWindowHeight()*/, 0.5f, 10000.0f);
 
-	GetBaseManager()->GetManager<ILoader>()->SetCamera(cameraNode->GetComponent<CCameraComponent3D>());
+	
 
 	Load3D();
 	LoadUI();
@@ -37,7 +37,7 @@ void CSceneWoW::Initialize()
 	//GetCameraController()->GetCamera()->SetPitch(-38);
 
 
-	GetBaseManager()->GetManager<ILoader>()->Start();
+	
 }
 
 void CSceneWoW::Finalize()
@@ -59,10 +59,6 @@ void CSceneWoW::OnRayIntersected(const glm::vec3& Point)
 //
 void CSceneWoW::OnPreRender(RenderEventArgs& e)
 {
-	//wmoInstance->UpdateCamera(GetCameraController()->GetCamera().get());
-	skyManager->UpdateCamera(GetCameraController()->GetCamera().get());
-	map->UpdateCamera(GetCameraController()->GetCamera().get());
-
 	CMapWMOInstance::reset();
 #ifdef USE_M2_MODELS
 	CMapM2Instance::reset();
@@ -94,16 +90,24 @@ void CSceneWoW::OnWindowKeyReleased(KeyEventArgs & e)
 //
 void CSceneWoW::Load3D()
 {
-	//auto wmo = GetBaseManager()->GetManager<IWMOManager>()->Add(GetRenderDevice(), "World\\wmo\\Azeroth\\Buildings\\Stormwind\\Stormwind.wmo");
-	//wmoInstance = GetRootNode3D()->CreateSceneNode<CWMO_Base_Instance>(*wmo);
+	/*
+	auto wmo = GetBaseManager()->GetManager<IWMOManager>()->Add(GetRenderDevice(), "World\\wmo\\Azeroth\\Buildings\\Stormwind\\Stormwind.wmo");
+	wmoInstance = GetRootNode3D()->CreateSceneNode<CWMO_Base_Instance>(*wmo);
+	wmoInstance->SetTranslate(glm::vec3(100, 100, 100));
+	wmoInstance->RecalcVerts();
+	GetBaseManager()->GetManager<ILoader>()->AddToLoadQueue(wmoInstance);
+
+
+	GetCameraController()->GetCamera()->SetTranslation(vec3(500, 500, 500));
+	GetCameraController()->GetCamera()->SetYaw(200);
+	GetCameraController()->GetCamera()->SetPitch(-27.8);
+	*/
 
 	//auto m2 = GetBaseManager()->GetManager<IM2Manager>()->Add(GetRenderDevice(), "Creature\\KelThuzad\\KelThuzad.m2");
 	//m2Instance = GetRootNode3D()->CreateSceneNode<CM2_Base_Instance>(*m2);
 
 	skyManager = GetRootNode3D()->CreateSceneNode<SkyManager>(GetRenderDevice());
 	skyManager->Load(0);
-
-	environmentManager = GetBaseManager()->AddManager<EnvironmentManager>(std::make_shared<EnvironmentManager>(GetBaseManager()));
 
 	map = GetRootNode3D()->CreateSceneNode<CMap>(GetBaseManager(), GetRenderDevice());
 
@@ -112,9 +116,9 @@ void CSceneWoW::Load3D()
 	m_GameTime.Set(now->tm_hour, now->tm_min);*/
 	wowGameTime.Set(11, 0);
 
-	const float x = 34;
-	const float y = 48;
-	map->MapPreLoad(GetBaseManager()->GetManager<CDBCStorage>()->DBC_Map()[0]);
+	const float x = 40;
+	const float y = 27;
+	map->MapPreLoad(GetBaseManager()->GetManager<CDBCStorage>()->DBC_Map()[1]);
 	map->MapLoad();
 	map->MapPostLoad();
 	map->EnterMap(x, y);
@@ -140,6 +144,7 @@ void CSceneWoW::Load3D()
 	m_Technique3D.AddPass(std::make_shared<CRenderPass_Liquid>(GetRenderDevice(), shared_from_this())->CreatePipeline(GetRenderWindow()->GetRenderTarget(), &GetRenderWindow()->GetViewport()));
 	//m_Technique3D.AddPass(std::make_shared<CDrawBoundingBoxPass>(GetRenderDevice(), shared_from_this())->CreatePipeline(GetRenderWindow()->GetRenderTarget(), &GetRenderWindow()->GetViewport()));
 }
+
 
 void CSceneWoW::LoadUI()
 {

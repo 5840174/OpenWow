@@ -88,8 +88,10 @@ void CMap::Unload()
 
 // --
 
-void CMap::UpdateCamera(const ICameraComponent3D* camera)
+void CMap::Update(const UpdateEventArgs& e)
 {
+	const ICameraComponent3D* camera = e.CameraForCulling;
+
 	bool loading = false;
 	int enteredTileX, enteredTileZ;
 	int midTile = static_cast<uint32>(C_RenderedTiles / 2);

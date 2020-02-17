@@ -20,9 +20,15 @@ void CWMO_Base_Instance::CreateInstances()
 {
 	m_WMOObject.CreateInsances(this);
 
+	RecalcVerts();
+}
+
+void CWMO_Base_Instance::RecalcVerts()
+{
 #ifndef WMO_DISABLE_PORTALS
 	if (m_WMOObject.m_PortalController != nullptr)
 	{
+		m_ConvertedVerts.clear();
 		for (const auto& v : m_WMOObject.m_PortalVertices)
 		{
 			m_ConvertedVerts.push_back(GetWorldTransfom() * glm::vec4(v, 1.0f));
@@ -65,12 +71,15 @@ std::string CWMO_Base_Instance::GetName() const
 	return "WMO '" + m_WMOObject.getFilename() + "'"; 
 }
 
-void CWMO_Base_Instance::UpdateCamera(const ICameraComponent3D* camera)
+void CWMO_Base_Instance::Update(const UpdateEventArgs& e)
 {
+	if (GetState() != ILoadable::ELoadableState::Loaded)
+		return;
+
 #ifndef WMO_DISABLE_PORTALS
 	if (m_WMOObject.m_PortalController)
 	{
-		m_WMOObject.m_PortalController->Update(this, camera);
+		m_WMOObject.m_PortalController->Update(this, e.CameraForCulling);
 	}
 #endif
 }

@@ -318,13 +318,18 @@ bool CMapChunk::Load()
 			CRange height;
 			m_File->read(&height);
 
-			BoundingBox bbox = GetComponent<IColliderComponent3D>()->GetBounds();
-			float bboxMinHeight = std::min(bbox.getMin().y, (height.min - GetTranslation().y));
-			float bboxMaxHeight = std::max(bbox.getMax().y, (height.max - GetTranslation().y));
-			bbox.setMinY(bboxMinHeight);
-			bbox.setMaxY(bboxMaxHeight);
-			bbox.calculateCenter();
-			GetComponent<IColliderComponent3D>()->SetBounds(bbox);
+
+			// Set this chunk BBOX
+			{
+				BoundingBox bbox = GetComponent<IColliderComponent3D>()->GetBounds();
+				float bboxMinHeight = std::min(bbox.getMin().y, (height.min - GetTranslation().y));
+				float bboxMaxHeight = std::max(bbox.getMax().y, (height.max - GetTranslation().y));
+				bbox.setMinY(bboxMinHeight);
+				bbox.setMaxY(bboxMaxHeight);
+				bbox.calculateCenter();
+				GetComponent<IColliderComponent3D>()->SetBounds(bbox);
+			}
+
 
 			std::shared_ptr<CADT_Liquid> m_Liquid = std::make_shared<CADT_Liquid>(m_RenderDevice, 8, 8);
 			m_Liquid->CreateFromMCLQ(m_File, header);
@@ -333,6 +338,15 @@ bool CMapChunk::Load()
 
 			Liquid_Instance* liq = CreateSceneNode<Liquid_Instance>();
 			liq->LiquidInitialize(m_Liquid, position);
+
+			// Set liquid bbox
+			{
+				BoundingBox bbox = GetComponent<IColliderComponent3D>()->GetBounds();
+				bbox.setMinY(height.min);
+				bbox.setMaxY(height.max);
+				bbox.calculateCenter();
+				liq->GetComponent<IColliderComponent3D>()->SetBounds(bbox);
+			}
 		}
 	}
 

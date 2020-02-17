@@ -51,11 +51,22 @@ std::shared_ptr<IRenderPassPipelined> CRenderPass_Liquid::CreatePipeline(std::sh
 //
 // IVisitor
 //
-bool CRenderPass_Liquid::Visit(const ISceneNode3D* node)
+bool CRenderPass_Liquid::Visit(const ISceneNode3D* SceneNode3D)
 {
-    if (const Liquid_Instance* liquidInstance = dynamic_cast<const Liquid_Instance*>(node))
+    if (const Liquid_Instance* liquidInstance = dynamic_cast<const Liquid_Instance*>(SceneNode3D))
     {
-        return Base3DPass::Visit(node);
+		const std::shared_ptr<IColliderComponent3D>& collider = SceneNode3D->GetComponent<IColliderComponent3D>();
+
+		BoundingBox bbox = collider->GetBounds();
+		bbox.transform(SceneNode3D->GetWorldTransfom());
+
+		const ICameraComponent3D* camera = GetRenderEventArgs().CameraForCulling;
+		_ASSERT(camera != nullptr);
+
+		if (camera->GetFrustum().cullBox(bbox))
+			return false;
+
+        return Base3DPass::Visit(SceneNode3D);
     }
 
     return false;

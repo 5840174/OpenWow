@@ -1,6 +1,7 @@
 #pragma once
 
-class Creature_M2Instance : public CM2_Base_Instance
+class Creature_M2Instance 
+	: public CM2_Base_Instance
 {
 public:
 	Creature_M2Instance();
