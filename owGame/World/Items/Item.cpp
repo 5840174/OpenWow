@@ -6,7 +6,7 @@
 Item::Item() 
 {}
 
-void Item::Init(ItemTemplate& _template)
+void Item::Init(CInet_ItemTemplate& _template)
 {
 	TemplateSet(_template);
 }

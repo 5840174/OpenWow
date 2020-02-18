@@ -9,7 +9,7 @@ class CM2_Base_Instance;
 class CM2_Part_Texture
 {
 public:
-	CM2_Part_Texture(IBaseManager* BaseManager, IRenderDevice& RenderDevice, std::shared_ptr<IFile> f, const SM2_Texture& _proto);
+	CM2_Part_Texture(IBaseManager& BaseManager, IRenderDevice& RenderDevice, std::shared_ptr<IFile> f, const SM2_Texture& _proto);
 	virtual ~CM2_Part_Texture();
 
 	ISamplerState::WrapMode GetTextureWrapX() const { return (m_WrapX ? ISamplerState::WrapMode::Clamp : ISamplerState::WrapMode::Repeat); }

@@ -4,7 +4,7 @@ class CSceneWoW
 	: public SceneBase
 {
 public:
-	CSceneWoW(IBaseManager * BaseManager);
+	CSceneWoW(IBaseManager& BaseManager);
 	virtual ~CSceneWoW();
 
 	// IGameState
@@ -21,13 +21,14 @@ public:
 
 private:
 	void Load3D();
+	void Load3D_M2s();
 	void LoadUI();
 
 private:
-	CWMO_Base_Instance* wmoInstance;
-	CM2_Base_Instance* m2Instance;
-	SkyManager* skyManager;
-	CMap* map;
+	std::shared_ptr<CWMO_Base_Instance> wmoInstance;
+	std::shared_ptr<CM2_Base_Instance> m2Instance;
+	std::shared_ptr<SkyManager> skyManager;
+	std::shared_ptr<CMap> map;
 	WowTime wowGameTime;
 
 private: // Advanced

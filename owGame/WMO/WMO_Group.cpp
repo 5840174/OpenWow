@@ -14,7 +14,7 @@
 #include "WMO_Liquid_Instance.h"
 #include "WMO_Fixes.h"
 
-WMO_Group::WMO_Group(IBaseManager* BaseManager, IRenderDevice& RenderDevice, const CWMO& WMOModel, const uint32 GroupIndex, const SWMO_GroupInfoDef& GroupProto)
+WMO_Group::WMO_Group(IBaseManager& BaseManager, IRenderDevice& RenderDevice, const CWMO& WMOModel, const uint32 GroupIndex, const SWMO_GroupInfoDef& GroupProto)
 	: CLoadableObject(&WMOModel)
 	, m_IsMOCVExists(false)
 	, m_BaseManager(BaseManager)
@@ -97,10 +97,10 @@ void WMO_Group::CreateInsances(ISceneNode3D* _parent) const
 		vec3 realPos = Fix_XZmY(m_LiquidHeader.pos);
 		realPos.y = 0.0f; // why they do this???
 
-		CWMO_Liquid_Instance* liquid = _parent->CreateSceneNode<CWMO_Liquid_Instance>(*this);
+		auto liquid = _parent->CreateSceneNode<CWMO_Liquid_Instance>(*this);
 		liquid->LiquidInitialize(m_WMOLiqiud, realPos);
 		liquid->GetComponent<IColliderComponent3D>()->SetBounds(parentAsWMOGroupInstance->GetComponent<IColliderComponent3D>()->GetBounds());
-		parentAsWMOGroupInstance->addLiquidInstance(liquid);
+		parentAsWMOGroupInstance->addLiquidInstance(liquid.get());
 		
 	}
 
@@ -111,12 +111,12 @@ void WMO_Group::CreateInsances(ISceneNode3D* _parent) const
 
 		std::string doodadFileName = m_WMOModel.m_DoodadsFilenames + placement.flags.nameIndex;
 
-		std::shared_ptr<M2> m2 = m_BaseManager->GetManager<IM2Manager>()->Add(m_RenderDevice, doodadFileName);
+		std::shared_ptr<M2> m2 = m_BaseManager.GetManager<IM2Manager>()->Add(m_RenderDevice, doodadFileName);
 		if (m2)
 		{
-			CWMO_Doodad_Instance* inst = _parent->CreateSceneNode<CWMO_Doodad_Instance>(*m2, *this, index, placement);
-			m_BaseManager->GetManager<ILoader>()->AddToLoadQueue(inst);
-			parentAsWMOGroupInstance->addDoodadInstance(inst);
+			auto inst = _parent->CreateSceneNode<CWMO_Doodad_Instance>(*m2, *this, index, placement);
+			m_BaseManager.GetManager<ILoader>()->AddToLoadQueue(inst.get());
+			parentAsWMOGroupInstance->addDoodadInstance(inst.get());
 		}
 	}
 #endif
@@ -328,7 +328,7 @@ bool WMO_Group::Load()
 		}
 
 		m_WMOLiqiud = std::make_shared<CWMO_Liquid>(m_RenderDevice, m_LiquidHeader.A, m_LiquidHeader.B);
-		m_WMOLiqiud->CreateFromWMO(buffer, m_WMOModel.m_Materials[m_LiquidHeader.materialID], m_BaseManager->GetManager<CDBCStorage>()->DBC_LiquidType()[1], m_GroupHeader.flags.IS_INDOOR);
+		m_WMOLiqiud->CreateFromWMO(buffer, m_WMOModel.m_Materials[m_LiquidHeader.materialID], m_BaseManager.GetManager<CDBCStorage>()->DBC_LiquidType()[1], m_GroupHeader.flags.IS_INDOOR);
 
 	}
 

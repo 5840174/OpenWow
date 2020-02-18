@@ -6,7 +6,7 @@
 // General
 #include "M2_Part_Texture.h"
 
-CM2_Part_Texture::CM2_Part_Texture(IBaseManager* BaseManager, IRenderDevice& RenderDevice, std::shared_ptr<IFile> f, const SM2_Texture& _proto)
+CM2_Part_Texture::CM2_Part_Texture(IBaseManager& BaseManager, IRenderDevice& RenderDevice, std::shared_ptr<IFile> f, const SM2_Texture& _proto)
 	: m_Texture(nullptr)
 {
 	m_WrapX = _proto.flags.WRAPX == 0;

@@ -39,11 +39,6 @@ bool CM2_Base_Instance::Load()
 	UpdateLocalTransform();
 	CreateInstances();
 
-	for (uint8 i = 0; i < SM2_Texture::Type::COUNT; i++)
-	{
-		m_SpecialTextures[i] = nullptr; // TODO: GetBaseManager()->GetManager<IRenderDevice>()->GetDefaultTexture();
-	}
-
 	return true;
 }
 
@@ -69,8 +64,8 @@ bool CM2_Base_Instance::isMeshEnabled(uint32 _index) const
 }
 void CM2_Base_Instance::setSpecialTexture(SM2_Texture::Type _type, const std::string& _textureName)
 {
-	_ASSERT(false);
-	//std::shared_ptr<ITexture> texture = GetBaseManager()->GetManager<IRenderDevice>()->CreateTexture2D(_textureName);
+	_ASSERT(FALSE);
+	//std::shared_ptr<ITexture> texture = GetRenderDevice()->GetObjectsFactory().LoadTexture2D(_textureName);
 	//setSpecialTexture(_type, texture);
 }
 void CM2_Base_Instance::setSpecialTexture(SM2_Texture::Type _type, std::shared_ptr<ITexture> _texture)

@@ -135,6 +135,15 @@
     <ClCompile Include="WMO\WMO_Part_Material.cpp" />
     <ClCompile Include="WMO\WMO_Part_Portal.cpp" />
     <ClCompile Include="WMO\WMO_PortalsController.cpp" />
+    <ClCompile Include="World\Character\Character.cpp" />
+    <ClCompile Include="World\Character\Character_SectionWrapper.cpp" />
+    <ClCompile Include="World\Character\Character_SkinTextureBaker.cpp" />
+    <ClCompile Include="World\Creature\Creature.cpp" />
+    <ClCompile Include="World\Creature\Creature_M2Instance.cpp" />
+    <ClCompile Include="World\Items\Item.cpp" />
+    <ClCompile Include="World\Items\Item_M2Instance.cpp" />
+    <ClCompile Include="World\Items\Item_VisualData.cpp" />
+    <ClCompile Include="World\WorldObjectsCreator.cpp" />
     <ClCompile Include="WoWChunkReader.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -189,7 +198,7 @@
     <ClInclude Include="DBC\Tables\DBC_CreatureDisplayInfoExtra.h" />
     <ClInclude Include="DBC\Tables\DBC_CreatureModelData.h" />
     <ClInclude Include="DBC\Tables\DBC_HelmetGeosetVisData.h" />
-    <ClInclude Include="DBC\Tables\DBC_Item_WotLK.h" />
+    <ClInclude Include="DBC\Tables\DBC_Item.h" />
     <ClInclude Include="DBC\Tables\DBC_ItemBagFamily.h" />
     <ClInclude Include="DBC\Tables\DBC_ItemClass.h" />
     <ClInclude Include="DBC\Tables\DBC_ItemDisplayInfo.h" />
@@ -302,6 +311,16 @@
     <ClInclude Include="WMO\WMO_Part_Material.h" />
     <ClInclude Include="WMO\WMO_Part_Portal.h" />
     <ClInclude Include="WMO\WMO_PortalsController.h" />
+    <ClInclude Include="World\Character\Character.h" />
+    <ClInclude Include="World\Character\Character_SectionWrapper.h" />
+    <ClInclude Include="World\Character\Character_SkinTextureBaker.h" />
+    <ClInclude Include="World\Creature\Creature.h" />
+    <ClInclude Include="World\Creature\Creature_M2Instance.h" />
+    <ClInclude Include="World\Items\Item.h" />
+    <ClInclude Include="World\Items\Item_M2Instance.h" />
+    <ClInclude Include="World\Items\Item_VisualData.h" />
+    <ClInclude Include="World\MeshIDEnums.h" />
+    <ClInclude Include="World\WorldObjectsCreator.h" />
     <ClInclude Include="WoWChunkReader.h" />
     <ClInclude Include="WowChunkUtils.h" />
     <ClInclude Include="WowConsts.h" />

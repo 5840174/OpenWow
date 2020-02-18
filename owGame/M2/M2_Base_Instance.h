@@ -7,7 +7,7 @@ class ZN_API CM2_Base_Instance
 	, public CLoadableObject
 {
 public:
-	CM2_Base_Instance(const M2& M2Objec);
+	CM2_Base_Instance(const M2& M2Object);
 	virtual ~CM2_Base_Instance();
 
 	void                                CreateInstances();

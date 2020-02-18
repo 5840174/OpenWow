@@ -7,7 +7,7 @@
 #include "M2.h"
 #include "M2_Builder.h"
 
-CM2_Manager::CM2_Manager(IBaseManager* BaseManager)
+CM2_Manager::CM2_Manager(IBaseManager& BaseManager)
 	: m_BaseManager(BaseManager)
 {
 	//m_DefaultModel = Add("World\\Scale\\50x50.m2");
@@ -42,7 +42,7 @@ std::shared_ptr<M2> CM2_Manager::CreateAction(IRenderDevice& RenderDevice, const
 	}
 
 	std::shared_ptr<M2> model = std::make_shared<M2>(m_BaseManager, RenderDevice, name);
-	m_BaseManager->GetManager<ILoader>()->AddToLoadQueue(model.get());
+	m_BaseManager.GetManager<ILoader>()->AddToLoadQueue(model.get());
 	return model;
 }
 bool CM2_Manager::DeleteAction(const std::string& name)

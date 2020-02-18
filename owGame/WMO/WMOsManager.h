@@ -7,7 +7,7 @@ class WMOsManager
 	, public CRefManager1Dim<CWMO>
 {
 public:
-	WMOsManager(IBaseManager* BaseManager);
+	WMOsManager(IBaseManager& BaseManager);
     virtual ~WMOsManager();
 
 	// IWMOManager
@@ -22,5 +22,5 @@ public:
 	void MakeContext();
 
 private:
-	IBaseManager* m_BaseManager;
+	IBaseManager& m_BaseManager;
 };

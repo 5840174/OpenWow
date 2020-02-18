@@ -3,7 +3,7 @@
 // General
 #include "Map.h"
 
-CMap::CMap(IBaseManager* BaseManager, IRenderDevice& RenderDevice)
+CMap::CMap(IBaseManager& BaseManager, IRenderDevice& RenderDevice)
 	: m_BaseManager(BaseManager)
 	, m_RenderDevice(RenderDevice)
 {
@@ -206,8 +206,8 @@ CMapTile* CMap::LoadTile(int32 x, int32 z)
 	}
 
 	// Create new tile
-	m_ADTCache[firstnull] = CreateSceneNode<CMapTile>(m_BaseManager, m_RenderDevice, *this, x, z);
-	m_BaseManager->GetManager<ILoader>()->AddToLoadQueue(m_ADTCache[firstnull]);
+	m_ADTCache[firstnull] = CreateSceneNode<CMapTile>(m_BaseManager, m_RenderDevice, *this, x, z).get();
+	m_BaseManager.GetManager<ILoader>()->AddToLoadQueue(m_ADTCache[firstnull]);
 	return m_ADTCache[firstnull];
 }
 

@@ -9,7 +9,7 @@
 
 
 
-M2::M2(IBaseManager* BaseManager, IRenderDevice& RenderDevice, const std::string& name) 
+M2::M2(IBaseManager& BaseManager, IRenderDevice& RenderDevice, const std::string& name) 
 	: m_FileName(name)
 	, m_UniqueName("")
 

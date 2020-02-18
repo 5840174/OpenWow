@@ -3,7 +3,7 @@
 // Gerenal
 #include "SceneWoW2.h"
 
-CSceneWoW2::CSceneWoW2(IBaseManager * BaseManager, const std::shared_ptr<ISceneNode3D>& Fake3DRootNode, const std::shared_ptr<ICameraComponent3D>& ExternalCamera)
+CSceneWoW2::CSceneWoW2(IBaseManager& BaseManager, const std::shared_ptr<ISceneNode3D>& Fake3DRootNode, const std::shared_ptr<ICameraComponent3D>& ExternalCamera)
 	: SceneBase(BaseManager)
 	, m_Fake3DRootNode(Fake3DRootNode)
 	, m_FakeCamera(ExternalCamera)
@@ -24,7 +24,7 @@ void CSceneWoW2::Initialize()
 
 	m_RootNode3D = m_Fake3DRootNode;
 
-	ISceneNode3D* cameraNode = GetRootNode3D()->CreateSceneNode<SceneNode3D>();
+	auto cameraNode = GetRootNode3D()->CreateSceneNode<SceneNode3D>();
 	cameraNode->AddComponent(std::make_shared<CCameraComponent3D>(*cameraNode));
 
 	SetCameraController(std::make_shared<CFreeCameraController>());
@@ -35,7 +35,7 @@ void CSceneWoW2::Initialize()
 	GetCameraController()->GetCamera()->SetYaw(200);
 	GetCameraController()->GetCamera()->SetPitch(-27.8);
 
-	GetBaseManager()->GetManager<ILoader>()->SetCamera(cameraNode->GetComponent<CCameraComponent3D>());
+	GetBaseManager().GetManager<ILoader>()->SetCamera(cameraNode->GetComponent<CCameraComponent3D>());
 
 	Load3D();
 }
@@ -101,7 +101,7 @@ void CSceneWoW2::Load3D()
 	std::shared_ptr<BuildRenderListPassTemplated<CWMO_Group_Instance>> wmoListPass = std::make_shared<BuildRenderListPassTemplated<CWMO_Group_Instance>>(GetRenderDevice(), shared_from_this());
 	std::shared_ptr<BuildRenderListPassTemplated<CM2_Base_Instance>> m2ListPass = std::make_shared<BuildRenderListPassTemplated<CM2_Base_Instance>>(GetRenderDevice(), shared_from_this());
 
-	m_Technique3D.AddPass(GetBaseManager()->GetManager<IRenderPassFactory>()->CreateRenderPass("ClearPass", GetRenderDevice(), GetRenderWindow()->GetRenderTarget(), &GetRenderWindow()->GetViewport(), shared_from_this()));
+	m_Technique3D.AddPass(GetBaseManager().GetManager<IRenderPassFactory>()->CreateRenderPass("ClearPass", GetRenderDevice(), GetRenderWindow()->GetRenderTarget(), &GetRenderWindow()->GetViewport(), shared_from_this()));
 	//m_Technique3D.AddPass(std::make_shared<CRenderPass_Sky>(GetRenderDevice(), shared_from_this())->CreatePipeline(GetRenderWindow()->GetRenderTarget(), &GetRenderWindow()->GetViewport()));
 	//m_Technique3D.AddPass(std::make_shared<CRenderPass_WDL>(GetRenderDevice(), shared_from_this())->CreatePipeline(GetRenderWindow()->GetRenderTarget(), &GetRenderWindow()->GetViewport()));
 	m_Technique3D.AddPass(std::make_shared<CRenderPass_ADT_MCNK>(GetRenderDevice(), shared_from_this())->CreatePipeline(GetRenderWindow()->GetRenderTarget(), &GetRenderWindow()->GetViewport()));

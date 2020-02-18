@@ -25,7 +25,7 @@ class ZN_API CWMO
 {
 	friend CWMO_Part_Portal;
 public:
-	CWMO(IBaseManager* BaseManager, IRenderDevice& RenderDevice, const std::string& FileName);
+	CWMO(IBaseManager& BaseManager, IRenderDevice& RenderDevice, const std::string& FileName);
 	virtual ~CWMO();
 
 	// ISceneNodeProvider
@@ -91,7 +91,7 @@ public:
 	// MCVP chunk (optional)	
 
 private:
-	IBaseManager* m_BaseManager;
+	IBaseManager& m_BaseManager;
 	IRenderDevice& m_RenderDevice;
 	const std::string m_FileName;
 	std::unique_ptr<WoWChunkReader> m_ChunkReader;

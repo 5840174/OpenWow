@@ -1,6 +1,6 @@
 #pragma once
 
-struct MeshIDType
+struct ZN_API MeshIDType
 {
 	enum List : uint8
 	{
@@ -30,7 +30,7 @@ struct MeshIDType
 };
 
 //07**
-struct EarsStyles
+struct ZN_API EarsStyles
 {
 	enum List : uint8
 	{
@@ -40,7 +40,7 @@ struct EarsStyles
 };
 
 //17**
-struct EyeglowsStyles
+struct ZN_API EyeglowsStyles
 {
 	enum List : uint8
 	{

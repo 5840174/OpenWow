@@ -12,7 +12,7 @@ class ZN_API CMap
 	: public SceneNode3D
 {
 public:
-	CMap(IBaseManager* BaseManager, IRenderDevice& RenderDevice);
+	CMap(IBaseManager& BaseManager, IRenderDevice& RenderDevice);
 	virtual ~CMap();
 
 	void                                            MapPreLoad(const DBC_MapRecord* _map);
@@ -71,7 +71,7 @@ private:
 	MinimapDir*				                        dir;
 
 private:
-	IBaseManager*									m_BaseManager;
+	IBaseManager&									m_BaseManager;
 	IRenderDevice&                                  m_RenderDevice;
 };
 

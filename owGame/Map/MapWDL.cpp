@@ -10,7 +10,7 @@
 // Additional
 #include "WoWChunkReader.h"
 
-CMapWDL::CMapWDL(IBaseManager* BaseManager, IRenderDevice& RenderDevice, const CMap& Map)
+CMapWDL::CMapWDL(IBaseManager& BaseManager, IRenderDevice& RenderDevice, const CMap& Map)
 	: m_Minimap(nullptr)
 	, m_BaseManager(BaseManager)
 	, m_RenderDevice(RenderDevice)
@@ -31,7 +31,7 @@ void CMapWDL::CreateInsances(ISceneNode3D* _parent) const
 	std::string fileName = m_MapController.GetMapFolder() + ".wdl";
 
 	// Low-resolution tiles
-	std::shared_ptr<IFile> f = m_BaseManager->GetManager<IFilesManager>()->Open(fileName);
+	std::shared_ptr<IFile> f = m_BaseManager.GetManager<IFilesManager>()->Open(fileName);
 	if (f == nullptr)
 	{
 		Log::Error("World[%s]: WDL: Error opening.", fileName.c_str());
@@ -127,7 +127,7 @@ void CMapWDL::Load()
 	// Offsets to MARE
 	memset(m_MAREOffsets, 0x00, C_TilesInMap * C_TilesInMap * sizeof(uint32));
 
-	std::shared_ptr<IByteBuffer> bytes = m_BaseManager->GetManager<IFilesManager>()->Open(m_MapController.GetMapFolder() + ".wdl");
+	std::shared_ptr<IByteBuffer> bytes = m_BaseManager.GetManager<IFilesManager>()->Open(m_MapController.GetMapFolder() + ".wdl");
 
 	WoWChunkReader reader(m_BaseManager, bytes);
 

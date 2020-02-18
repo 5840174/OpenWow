@@ -37,7 +37,7 @@ class CMapWDT
 	: public ISceneNodeProvider
 {
 public:
-	CMapWDT(IBaseManager* BaseManager, IRenderDevice& RenderDevice, const CMap& Map);
+	CMapWDT(IBaseManager& BaseManager, IRenderDevice& RenderDevice, const CMap& Map);
 	virtual ~CMapWDT();
 
 	// ISceneNodeProvider
@@ -63,7 +63,7 @@ private:
 	mutable CMapWMOInstance*	        m_GlobalWMO;
 
 private: 
-	IBaseManager* m_BaseManager;
+	IBaseManager& m_BaseManager;
 	IRenderDevice& m_RenderDevice;
 	const CMap&  m_Map;	
 };

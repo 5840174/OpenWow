@@ -1,24 +1,19 @@
 #pragma once
 
-#include "Creature_M2Instance.h"
+#include "World/Creature/Creature_M2Instance.h"
 
-#include "MeshIDEnums.h"
+#include "World/MeshIDEnums.h"
 
-class Creature : public Creature_M2Instance
+class ZN_API Creature 
+	: public Creature_M2Instance
 {
 public:
-	Creature();
+	Creature(const M2& M2Object);
     virtual ~Creature();
-
-	// Initialization
-	virtual void InitFromDisplayInfo(uint32 _id);
 
     // Mesh & textures provider
 	virtual void setMeshEnabled(MeshIDType::List _type, uint32 _value);
 	virtual bool isMeshEnabled(uint32 _index) const override;
-
-protected:
-	void CreateCreatureModel(const DBC_CreatureDisplayInfoRecord* CreatureDisplayInfo);
 
 private:
 	// Mesh provider

@@ -6,7 +6,7 @@
 // General
 #include "MapTile.h"
 
-CMapTile::CMapTile(IBaseManager* BaseManager, IRenderDevice& RenderDevice, const CMap& Map, uint32 IndexX, uint32 IndexZ)
+CMapTile::CMapTile(IBaseManager& BaseManager, IRenderDevice& RenderDevice, const CMap& Map, uint32 IndexX, uint32 IndexZ)
 	: m_BaseManager(BaseManager)
 	, m_RenderDevice(RenderDevice)
 	, m_Map(Map)
@@ -78,7 +78,7 @@ bool CMapTile::Load()
 	char filename[256];
 	sprintf_s(filename, "%s_%d_%d.adt", m_Map.GetMapFolder().c_str(), m_IndexX, m_IndexZ);
 
-	std::shared_ptr<IFile> f = GetBaseManager()->GetManager<IFilesManager>()->Open(filename);
+	std::shared_ptr<IFile> f = GetBaseManager().GetManager<IFilesManager>()->Open(filename);
 	uint32_t startPos = f->getPos() + 20;
 	
 	// MVER + size (8)
@@ -247,9 +247,9 @@ bool CMapTile::Load()
 
 	for (uint32_t i = 0; i < C_ChunksInTileGlobal; i++)
 	{
-		CMapChunk* chunk = CreateSceneNode<CMapChunk>(m_RenderDevice, m_Map, *this, std::make_shared<CByteBuffer>(f->getData() + chunks[i].offset, chunks[i].size));
-		GetBaseManager()->GetManager<ILoader>()->AddToLoadQueue(chunk);
-		m_Chunks.push_back(chunk);
+		auto chunk = CreateSceneNode<CMapChunk>(m_RenderDevice, m_Map, *this, std::make_shared<CByteBuffer>(f->getData() + chunks[i].offset, chunks[i].size));
+		GetBaseManager().GetManager<ILoader>()->AddToLoadQueue(chunk.get());
+		m_Chunks.push_back(chunk.get());
 	}
 
 
@@ -259,12 +259,12 @@ bool CMapTile::Load()
 	for (auto& it : m_WMOsPlacementInfo)
 	{
 //#ifndef _DEBUG
-		std::shared_ptr<CWMO> wmo = m_BaseManager->GetManager<IWMOManager>()->Add(m_RenderDevice, m_WMOsNames[it.nameIndex]);
+		std::shared_ptr<CWMO> wmo = m_BaseManager.GetManager<IWMOManager>()->Add(m_RenderDevice, m_WMOsNames[it.nameIndex]);
 		if (wmo)
 		{
-			CMapWMOInstance* inst = CreateSceneNode<CMapWMOInstance>(*wmo, it);
-			GetBaseManager()->GetManager<ILoader>()->AddToLoadQueue(inst);
-			m_WMOsInstances.push_back(inst);
+			auto inst = CreateSceneNode<CMapWMOInstance>(*wmo, it);
+			GetBaseManager().GetManager<ILoader>()->AddToLoadQueue(inst.get());
+			m_WMOsInstances.push_back(inst.get());
 		}
 //#endif
 	}
@@ -277,12 +277,12 @@ bool CMapTile::Load()
 	for (auto& it : m_MDXsPlacementInfo)
 	{
 //#ifndef _DEBUG
-		std::shared_ptr<M2> m2 = m_BaseManager->GetManager<IM2Manager>()->Add(m_RenderDevice, m_MDXsNames[it.nameIndex]);
+		std::shared_ptr<M2> m2 = m_BaseManager.GetManager<IM2Manager>()->Add(m_RenderDevice, m_MDXsNames[it.nameIndex]);
 		if (m2)
 		{
-			CMapM2Instance* inst = CreateSceneNode<CMapM2Instance>(*m2, it);
-			GetBaseManager()->GetManager<ILoader>()->AddToLoadQueue(inst);
-			m_MDXsInstances.push_back(inst);
+			auto inst = CreateSceneNode<CMapM2Instance>(*m2, it);
+			GetBaseManager().GetManager<ILoader>()->AddToLoadQueue(inst.get());
+			m_MDXsInstances.push_back(inst.get());
 		}
 //#endif
 	}

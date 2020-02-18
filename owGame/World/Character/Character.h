@@ -1,22 +1,24 @@
 #pragma once
 
-#include "Creature.h"
+#include "World/Creature/Creature.h"
+#include "World/Items/Item_VisualData.h"
 
-#include "CharacterTemplate.h"
+#include "Client/Templates/CharacterTemplate.h"
+#include "Character_SectionWrapper.h"
+#include "Character_SkinTextureBaker.h"
 
-#include "Item_VisualData.h"
-
-class Character : public Creature
+class Character 
+	: public Creature
 {
 public:
-    Character();
+    Character(const M2& M2Object);
     virtual ~Character();
 
-    const CharacterTemplate& GetTemplate() const { return m_Template; }
+    const CInet_CharacterTemplate& GetTemplate() const { return m_Template; }
 
 	// Initialization
-	void InitFromTemplate(const CharacterTemplate& b);
-	void InitFromDisplayInfo(uint32 _id) override;
+	void InitFromTemplate(const CInet_CharacterTemplate& b);
+	//void InitFromDisplayInfo(uint32 _id) override;
 	void InitFromDisplayInfoCreating(uint32 _id, Race::List _race, Gender::List _gender);
 
 	// Mesh provider
@@ -31,15 +33,12 @@ public:
 	// IRenderable
 	void Render3D();
 
-private:
-	void CreateCharacterModel();
-
 	// Refreshers
 	void RefreshItemVisualData();
-	void RefreshTextures(std::shared_ptr<ITexture> _skin = nullptr);
-	void RefreshMeshIDs();
+	void RefreshTextures(const Character_SectionWrapper& SectionWrapper, const Character_SkinTextureBaker& SkinTextureBaker, std::shared_ptr<ITexture>& _skin);
+	void RefreshMeshIDs(const Character_SectionWrapper& SectionWrapper);
 
 private:
-	CharacterTemplate			                    m_Template;
+	CInet_CharacterTemplate			                    m_Template;
 	std::vector<std::shared_ptr<CItem_VisualData>>  m_VisualItems;
 };

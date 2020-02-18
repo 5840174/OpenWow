@@ -6,7 +6,7 @@
 // Additional
 #include "M2_Skin_Builder.h"
 
-CM2_Builder::CM2_Builder(IBaseManager* BaseManager, IRenderDevice& RenderDevice, M2* _model) :
+CM2_Builder::CM2_Builder(IBaseManager& BaseManager, IRenderDevice& RenderDevice, M2* _model) :
 	m_M2(_model),
 	m_F(nullptr),
 	m_GlobalLoops(nullptr),
@@ -34,7 +34,7 @@ CM2_Builder::~CM2_Builder()
 bool CM2_Builder::PreLoad()
 {
 	// Openfile
-	m_F = m_BaseManager->GetManager<IFilesManager>()->Open(m_M2->getFilename());
+	m_F = m_BaseManager.GetManager<IFilesManager>()->Open(m_M2->getFilename());
 	if (m_F == nullptr)
 	{
 		Log::Error("CM2_Builder[%s]: Unable to open file.", m_M2->getFilename().c_str());

@@ -5,7 +5,7 @@
 class CM2_Manager : public IM2Manager, public CRefManager1Dim<M2>
 {
 public:
-	CM2_Manager(IBaseManager* BaseManager);
+	CM2_Manager(IBaseManager& BaseManager);
 	virtual ~CM2_Manager();
 
 	// IM2Manager
@@ -20,5 +20,5 @@ public:
 
 private:
 	std::shared_ptr<M2> m_DefaultModel;
-	IBaseManager* m_BaseManager;
+	IBaseManager& m_BaseManager;
 };

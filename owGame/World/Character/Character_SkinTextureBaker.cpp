@@ -14,16 +14,21 @@ const uint32                     SkinTextureWidth = 512;
 const uint32                     SkinTextureHeight = 512;
 const uint32                     SkinComponentWidth = SkinTextureWidth / 2;
 
-Character_SkinTextureBaker::Character_SkinTextureBaker()
+Character_SkinTextureBaker::Character_SkinTextureBaker(IBaseManager& BaseManager, IRenderDevice& RenderDevice)
+	: m_BaseManager(BaseManager)
+	, m_RenderDevice(RenderDevice)
 {
-	uint32 textureWidth = DBC_CharComponentTextureLayouts[SkinDefaultLayout]->Get_Width();
-	uint32 textureHeight = DBC_CharComponentTextureLayouts[SkinDefaultLayout]->Get_Height();
+	m_DBCs = m_BaseManager.GetManager<CDBCStorage>();
+
+	uint32 textureWidth = m_DBCs->DBC_CharComponentTextureLayouts()[SkinDefaultLayout]->Get_Width();
+	uint32 textureHeight = m_DBCs->DBC_CharComponentTextureLayouts()[SkinDefaultLayout]->Get_Height();
 	_ASSERT(textureWidth == SkinTextureWidth);
 	_ASSERT(textureHeight == SkinTextureHeight);
 
-	for (auto& it : DBC_CharComponentTextureSections)
+	for (const auto& it : m_DBCs->DBC_CharComponentTextureSections())
 	{
-		if (it->Get_Layout()->Get_ID() == SkinDefaultLayout)
+		const DBC_CharComponentTextureLayoutsRecord* layout = m_DBCs->DBC_CharComponentTextureLayouts()[it->Get_Layout()];
+		if (layout->Get_ID() == SkinDefaultLayout)
 		{
 			CharacterSkinRegion region;
 			region.X = it->Get_X();
@@ -35,33 +40,35 @@ Character_SkinTextureBaker::Character_SkinTextureBaker()
 	}
 }
 
-std::shared_ptr<ITexture> Character_SkinTextureBaker::createTexture(const Character* _character)
+std::shared_ptr<ITexture> Character_SkinTextureBaker::createTexture(const Character* _character) const
 {
-	std::shared_ptr<ITexture> bakedSkinTexture = _RenderDevice->CreateTexture();
+	std::shared_ptr<ITexture> bakedSkinTexture = m_RenderDevice.GetObjectsFactory().CreateEmptyTexture();
 
 	m_Pixels = new PixelData[SkinTextureWidth * SkinTextureHeight];
 	memset(m_Pixels, 0x00, sizeof(PixelData) * SkinTextureWidth * SkinTextureHeight);
 
+	Character_SectionWrapper sectionSrapper(m_BaseManager, m_RenderDevice);
+
 	// 1. Get skin texture as pattern
 	{
-		FillWithSkin(Character_SectionWrapper::getSkinTexture(_character));
+		FillWithSkin(sectionSrapper.getSkinTexture(_character));
 	}
 
 	// 2. Hide boobs :)
 	{
 		// Female
-		std::string nakedUpperTexture = Character_SectionWrapper::getNakedTorsoTexture(_character);
+		std::string nakedUpperTexture = sectionSrapper.getNakedTorsoTexture(_character);
 		if (nakedUpperTexture.length() > 0)
-			FillPixels(DBC_CharComponent_Sections::TORSO_UPPER, nakedUpperTexture);
+			FillPixels(DBC_CharComponent_Sections::TORSO_UPPER, m_RenderDevice.GetObjectsFactory().LoadTexture2D(nakedUpperTexture));
 
 		// Male + Female
-		std::string nakedLowerTexture = Character_SectionWrapper::getNakedPelvisTexture(_character);
+		std::string nakedLowerTexture = sectionSrapper.getNakedPelvisTexture(_character);
 		_ASSERT(nakedLowerTexture.length() > 0);
-		FillPixels(DBC_CharComponent_Sections::LEGS_UPPER, nakedLowerTexture);
+		FillPixels(DBC_CharComponent_Sections::LEGS_UPPER, m_RenderDevice.GetObjectsFactory().LoadTexture2D(nakedLowerTexture));
 	}
 
 	// 3. Apply items texture components
-	{
+	/*{
 		for (uint32 slot = 0; slot < INVENTORY_SLOT_BAG_END; slot++)
 		{
 			for (uint32 comp = 0; comp < DBC_CharComponent_Sections::ITEMS_COUNT; comp++)
@@ -73,7 +80,7 @@ std::shared_ptr<ITexture> Character_SkinTextureBaker::createTexture(const Charac
 				FillPixels((DBC_CharComponent_Sections::List) comp, itemComponentTexture);
 			}
 		}
-	}
+	}*/
 
 	// 4. Final
 	bakedSkinTexture->LoadTextureCustom(SkinTextureWidth, SkinTextureHeight, m_Pixels);
@@ -82,7 +89,7 @@ std::shared_ptr<ITexture> Character_SkinTextureBaker::createTexture(const Charac
 	return bakedSkinTexture;
 }
 
-void Character_SkinTextureBaker::FillWithSkin(std::shared_ptr<ITexture> _skinTexture)
+void Character_SkinTextureBaker::FillWithSkin(std::shared_ptr<ITexture> _skinTexture) const
 {
 	_ASSERT(_skinTexture != nullptr);
 	_ASSERT(_skinTexture->GetWidth() == (SkinTextureWidth / 2) || _skinTexture->GetWidth() == SkinTextureWidth);
@@ -102,17 +109,7 @@ void Character_SkinTextureBaker::FillWithSkin(std::shared_ptr<ITexture> _skinTex
 		}
 	}
 }
-
-void Character_SkinTextureBaker::FillPixels(DBC_CharComponent_Sections::List _type, std::string _name)
-{
-	std::shared_ptr<ITexture> texture = _RenderDevice->CreateTexture2D(_name);
-	if (texture == nullptr)
-		return;
-
-	FillPixels(_type, texture);
-}
-
-void Character_SkinTextureBaker::FillPixels(DBC_CharComponent_Sections::List _type, std::shared_ptr<ITexture> _compTexture)
+void Character_SkinTextureBaker::FillPixels(DBC_CharComponent_Sections::List _type, std::shared_ptr<ITexture> _compTexture) const
 {
 	if (_compTexture == nullptr)
 		return;
@@ -124,7 +121,7 @@ void Character_SkinTextureBaker::FillPixels(DBC_CharComponent_Sections::List _ty
 	_ASSERT(SkinComponentWidth >= _compTexture->GetWidth());
 	uint32 divSmall = SkinComponentWidth / _compTexture->GetWidth();
 
-	CharacterSkinRegion& region = m_Regions[_type];
+	const auto& region = m_Regions.at(_type);
 	for (uint32 x = 0; x < region.Width; x++)
 	{
 		for (uint32 y = 0; y < region.Height; y++)

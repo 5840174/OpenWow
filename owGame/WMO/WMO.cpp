@@ -6,7 +6,7 @@
 // General
 #include "WMO.h"
 
-CWMO::CWMO(IBaseManager* BaseManager, IRenderDevice& RenderDevice, const std::string& Filename)
+CWMO::CWMO(IBaseManager& BaseManager, IRenderDevice& RenderDevice, const std::string& Filename)
 	: m_FileName(Filename)
 	, m_TexturesNames(nullptr)
 	, m_DoodadsFilenames(nullptr)
@@ -47,12 +47,12 @@ void CWMO::CreateInsances(ISceneNode3D* _parent) const
 
 	for (const auto& it : m_Groups)
 	{
-		CWMO_Group_Instance* groupInstance = _parent->CreateSceneNode<CWMO_Group_Instance>(*it);
-		parentAsWMOInstance->AddGroupInstance(groupInstance);
+		auto groupInstance = _parent->CreateSceneNode<CWMO_Group_Instance>(*it);
+		parentAsWMOInstance->AddGroupInstance(groupInstance.get());
 		if (it->m_GroupHeader.flags.IS_OUTDOOR)
-			parentAsWMOInstance->AddOutdoorGroupInstance(groupInstance);
+			parentAsWMOInstance->AddOutdoorGroupInstance(groupInstance.get());
 
-		m_BaseManager->GetManager<ILoader>()->AddToLoadQueue(groupInstance);
+		m_BaseManager.GetManager<ILoader>()->AddToLoadQueue(groupInstance.get());
 	}
 
 	for (auto& it : m_Lights)
@@ -100,7 +100,7 @@ bool CWMO::Load()
 		for (const auto& groupInfo : m_ChunkReader->OpenChunkT<SWMO_GroupInfoDef>("MOGI"))
 		{
 			std::shared_ptr<WMO_Group> group = std::make_shared<WMO_Group>(m_BaseManager, m_RenderDevice, *this, cntr++, groupInfo);
-			m_BaseManager->GetManager<ILoader>()->AddToLoadQueue(group.get());
+			m_BaseManager.GetManager<ILoader>()->AddToLoadQueue(group.get());
 			m_Groups.push_back(group);
 
 			if (group->m_GroupHeader.flags.IS_OUTDOOR)

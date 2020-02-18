@@ -11,7 +11,7 @@ void main_internal(int argumentCount, char* arguments[])
 	BaseManager = InitializeEngine(ArgumentsToVector(argumentCount, arguments), "");
 
 	// 3. Create application
-	Application app(BaseManager, ::GetModuleHandle(NULL));
+	Application app(*BaseManager, ::GetModuleHandle(NULL));
 
 	CNativeWindowFactory nativeWindowFactory(&app);
 
@@ -29,7 +29,7 @@ void main_internal(int argumentCount, char* arguments[])
 
 	IRenderDevice& renderDevice = app.CreateRenderDevice(RenderDeviceType::RenderDeviceType_DirectX);
 
-	std::shared_ptr<IFontsManager> fontsManager = std::make_shared<FontsManager>(renderDevice, BaseManager);
+	std::shared_ptr<IFontsManager> fontsManager = std::make_shared<FontsManager>(renderDevice, *BaseManager);
 	BaseManager->AddManager<IFontsManager>(std::move(fontsManager));
 
 	const auto& firstRenderWindow = renderDevice.GetObjectsFactory().CreateRenderWindow(*nativeWindow, false);
@@ -38,16 +38,16 @@ void main_internal(int argumentCount, char* arguments[])
 	//const auto& secondRenderWindow = renderDevice.GetObjectsFactory().CreateRenderWindow(*nativeWindow2, false);
 	//app.AddRenderWindow(secondRenderWindow);
 
-	auto environmentManager = BaseManager->AddManager<EnvironmentManager>(std::make_shared<EnvironmentManager>(BaseManager));
+	auto environmentManager = BaseManager->AddManager<EnvironmentManager>(std::make_shared<EnvironmentManager>(*BaseManager));
 
 	BaseManager->GetManager<ILoader>()->SetCamera(nullptr);
 	BaseManager->GetManager<ILoader>()->Start();
 
-	std::shared_ptr<IScene> scene = std::make_shared<CSceneWoW>(BaseManager);//BaseManager->GetManager<IScenesFactory>()->CreateScene("SceneDefault");
+	std::shared_ptr<IScene> scene = std::make_shared<CSceneWoW>(*BaseManager);//BaseManager->GetManager<IScenesFactory>()->CreateScene("SceneDefault");
 	scene->ConnectEvents(std::dynamic_pointer_cast<IRenderWindowEvents>(firstRenderWindow));
 	scene->Initialize();
 
-	//std::shared_ptr<IScene> scene2 = std::make_shared<CSceneWoW2>(BaseManager, scene->GetRootNode3D(), scene->GetCameraController()->GetCamera());//BaseManager->GetManager<IScenesFactory>()->CreateScene("SceneDefault");
+	//std::shared_ptr<IScene> scene2 = std::make_shared<CSceneWoW2>(*BaseManager, scene->GetRootNode3D(), scene->GetCameraController()->GetCamera());//BaseManager->GetManager<IScenesFactory>()->CreateScene("SceneDefault");
 	//scene2->ConnectEvents(std::dynamic_pointer_cast<IRenderWindowEvents>(secondRenderWindow));
 	//scene2->Initialize();
 

@@ -1,14 +1,13 @@
 #pragma once
 
-#include "MeshIDEnums.h"
-#include "CharacterEnums.h"
+#include "World/MeshIDEnums.h"
+#include "Client/Templates/CharacterEnums.h"
+#include "Client/Templates/ItemTemplate.h"
 
-#include "ItemTemplate.h"
 #include "Item_M2Instance.h"
 
 // FORWARD BEGIN
 class Character;
-class Creature_M2Instance;
 // FORWARD END
 
 struct ObjectComponent
@@ -25,10 +24,12 @@ struct GeosetComponent
 	uint32 getMeshID() const { return 1 + value; }
 };
 
-class CItem_VisualData : public ItemTemplate
+class CItem_VisualData 
+	: public CInet_ItemTemplate
 {
 public:
-	CItem_VisualData(std::shared_ptr<Character> _owner);
+	CItem_VisualData(IBaseManager& BaseManager, IRenderDevice& RenderDevice, std::shared_ptr<Character> _owner);
+	virtual ~CItem_VisualData();
 
 	void Load();
 
@@ -57,6 +58,9 @@ private:
 	std::vector<GeosetComponent>  m_GeosetComponents;
 	std::shared_ptr<ITexture>      m_TextureComponents[DBC_CharComponent_Sections::ITEMS_COUNT];
 	
-private: // PARENT
-	std::weak_ptr<Character>      m_ParentCharacter;
+private: 
+	IBaseManager& m_BaseManager;
+	IRenderDevice& m_RenderDevice;
+	const CDBCStorage* m_DBCs;
+	std::weak_ptr<Character> m_ParentCharacter;
 };

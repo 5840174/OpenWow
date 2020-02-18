@@ -3,9 +3,9 @@
 // General
 #include "DayNightCycle.h"
 
-DayNightCycle::DayNightCycle(IBaseManager* BaseManager)
+DayNightCycle::DayNightCycle(IBaseManager& BaseManager)
 {
-	std::shared_ptr<IFile> f = BaseManager->GetManager<IFilesManager>()->Open("World\\dnc.db");
+	std::shared_ptr<IFile> f = BaseManager.GetManager<IFilesManager>()->Open("World\\dnc.db");
 	if (f == nullptr)
 	{
 		Log::Error("DayNightCycle[]: Can't init day-night cycle.");

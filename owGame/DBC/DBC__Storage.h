@@ -59,7 +59,7 @@ class ZN_API __declspec(uuid("1E65D52E-5137-4B9E-8B3A-9D111F398742")) CDBCStorag
 	: public IManager
 {
 public:
-	CDBCStorage(IBaseManager* BaseManager);
+	CDBCStorage(IBaseManager& BaseManager);
 	virtual ~CDBCStorage();
 
 public:
@@ -117,5 +117,5 @@ public:
 	DBC_DEFINE(DBC_LiquidType)
 
 private:
-	IBaseManager* m_BaseManager;
+	IBaseManager& m_BaseManager;
 };

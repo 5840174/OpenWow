@@ -23,11 +23,11 @@ SkyManager::~SkyManager()
 
 bool SkyManager::Load(uint32 MapID)
 {
-	for (const auto& it : m_RenderDevice.GetBaseManager()->GetManager<CDBCStorage>()->DBC_Light())
+	for (const auto& it : m_RenderDevice.GetBaseManager().GetManager<CDBCStorage>()->DBC_Light())
 	{
 		if (MapID == it->Get_MapID())
 		{
-			std::shared_ptr<Sky> sky = std::make_shared<Sky>(m_RenderDevice.GetBaseManager()->GetManager<CDBCStorage>(), it);
+			std::shared_ptr<Sky> sky = std::make_shared<Sky>(m_RenderDevice.GetBaseManager().GetManager<CDBCStorage>(), it);
 			skies.push_back(sky);
 		}
 	}

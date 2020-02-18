@@ -18,7 +18,7 @@ class CM2_Skin_Batch
 {
 	friend CM2_Skin_Builder;
 public:
-	CM2_Skin_Batch(IBaseManager* BaseManager, IRenderDevice& RenderDevice, const M2& M2Model, const SM2_SkinBatch& SkinBatchProto);
+	CM2_Skin_Batch(IBaseManager& BaseManager, IRenderDevice& RenderDevice, const M2& M2Model, const SM2_SkinBatch& SkinBatchProto);
 	virtual ~CM2_Skin_Batch();
 
 	void UpdateMaterialProps(const CM2_Base_Instance* M2Instance);
@@ -72,7 +72,7 @@ private:
 	ShaderM2BatchProperties* m_Properties;
 
 private:
-	IBaseManager* m_BaseManager;
+	IBaseManager& m_BaseManager;
 	IRenderDevice& m_RenderDevice;
 	const M2& m_M2Model;
 	const SM2_SkinBatch& m_SkinBatchProto;

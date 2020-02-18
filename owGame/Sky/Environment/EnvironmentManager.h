@@ -6,7 +6,7 @@ class __declspec(uuid("37A85804-F8D2-44BA-900B-102BDCAF655F")) ZN_API Environmen
 	: public IManager
 {
 public:
-	EnvironmentManager(IBaseManager* BaseManager);
+	EnvironmentManager(IBaseManager& BaseManager);
 	virtual ~EnvironmentManager();
 
 	void outdoorLighting();

@@ -10,7 +10,7 @@
 CRenderPass_WDL::CRenderPass_WDL(IRenderDevice& RenderDevice, std::shared_ptr<IScene> scene)
 	: Base3DPass(RenderDevice, scene)
 {
-	m_WoWSettings = RenderDevice.GetBaseManager()->GetManager<ISettings>()->GetGroup("WoWSettings");
+	m_WoWSettings = RenderDevice.GetBaseManager().GetManager<ISettings>()->GetGroup("WoWSettings");
 }
 
 CRenderPass_WDL::~CRenderPass_WDL()

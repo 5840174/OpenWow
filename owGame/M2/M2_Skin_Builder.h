@@ -11,7 +11,7 @@ class CM2_Builder;
 class CM2_Skin_Builder
 {
 public:
-	CM2_Skin_Builder(IBaseManager* BaseManager, IRenderDevice& RenderDevice, const CM2_Builder& _m2Builder, const M2& M2Model, const SM2_SkinProfile& SkinProfileProto, std::shared_ptr<IFile> _file);
+	CM2_Skin_Builder(IBaseManager& BaseManager, IRenderDevice& RenderDevice, const CM2_Builder& _m2Builder, const M2& M2Model, const SM2_SkinProfile& SkinProfileProto, std::shared_ptr<IFile> _file);
 	virtual ~CM2_Skin_Builder();
 
 	std::shared_ptr<CM2_Skin> Load();
@@ -24,7 +24,7 @@ private:
 	std::weak_ptr<IFile>		m_F;
 
 private:
-	IBaseManager*       m_BaseManager;
+	IBaseManager&       m_BaseManager;
 	IRenderDevice&      m_RenderDevice;
 	const CM2_Builder&  m_M2Builder;
 	const M2&			m_M2Model;

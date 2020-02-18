@@ -9,7 +9,7 @@
 // Additional
 #include "ShaderResolver.h"
 
-CM2_Skin_Builder::CM2_Skin_Builder(IBaseManager* BaseManager, IRenderDevice& RenderDevice, const CM2_Builder& M2Builder, const M2& M2Model, const SM2_SkinProfile& SkinProfileProto, std::shared_ptr<IFile> _file)
+CM2_Skin_Builder::CM2_Skin_Builder(IBaseManager& BaseManager, IRenderDevice& RenderDevice, const CM2_Builder& M2Builder, const M2& M2Model, const SM2_SkinProfile& SkinProfileProto, std::shared_ptr<IFile> _file)
 	: m_M2Builder(M2Builder)
 	, m_M2Model(M2Model)
     , m_SkinProfileProto(SkinProfileProto)

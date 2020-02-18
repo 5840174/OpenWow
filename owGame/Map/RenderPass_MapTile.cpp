@@ -10,7 +10,7 @@
 CRenderPass_MapTile::CRenderPass_MapTile(IRenderDevice& RenderDevice, std::shared_ptr<IScene> scene)
 	: ScenePass(RenderDevice, scene)
 {
-	m_WoWSettings = RenderDevice.GetBaseManager()->GetManager<ISettings>()->GetGroup("WoWSettings");
+	m_WoWSettings = RenderDevice.GetBaseManager().GetManager<ISettings>()->GetGroup("WoWSettings");
 }
 
 CRenderPass_MapTile::~CRenderPass_MapTile()

@@ -13,7 +13,7 @@ class CMapWDL
 	: public ISceneNodeProvider
 {
 public:
-	CMapWDL(IBaseManager* BaseManager, IRenderDevice& RenderDevice, const CMap& Map);
+	CMapWDL(IBaseManager& BaseManager, IRenderDevice& RenderDevice, const CMap& Map);
 	virtual ~CMapWDL();
 
 	// ISceneNodeProvider
@@ -34,7 +34,7 @@ private:
 	mutable std::vector<CMapWMOInstance*>	m_LowResolutionWMOs;
 
 private: // PARENT
-	IBaseManager* m_BaseManager;
+	IBaseManager& m_BaseManager;
 	IRenderDevice& m_RenderDevice;
 	const CMap& m_MapController;
 };

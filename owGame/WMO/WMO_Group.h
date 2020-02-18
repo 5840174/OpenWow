@@ -24,7 +24,7 @@ class WMO_Group
 	, public CLoadableObject
 {
 public:
-	WMO_Group(IBaseManager* BaseManager, IRenderDevice& RenderDevice, const CWMO& WMOModel, const uint32 GroupIndex, const SWMO_GroupInfoDef& GroupProto);
+	WMO_Group(IBaseManager& BaseManager, IRenderDevice& RenderDevice, const CWMO& WMOModel, const uint32 GroupIndex, const SWMO_GroupInfoDef& GroupProto);
 	virtual ~WMO_Group();
 
 	// WMO_Group
@@ -72,7 +72,7 @@ public:
 	
 
 private:
-	IBaseManager* m_BaseManager;
+	IBaseManager& m_BaseManager;
 	IRenderDevice& m_RenderDevice;
 	const CWMO& m_WMOModel;
 	const uint32 m_GroupIndex;

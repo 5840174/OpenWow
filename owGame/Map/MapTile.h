@@ -13,7 +13,7 @@ class ZN_API CMapTile
 	, public CLoadableObject
 {
 public:
-	CMapTile(IBaseManager* BaseManager, IRenderDevice& RenderDevice, const CMap& Map, uint32 IndexX, uint32 IndexZ);
+	CMapTile(IBaseManager& BaseManager, IRenderDevice& RenderDevice, const CMap& Map, uint32 IndexX, uint32 IndexZ);
 	virtual ~CMapTile();
 
 	const int                                       getIndexX() const;
@@ -40,7 +40,7 @@ public:
 	std::vector<CMapChunk*>			m_Chunks;
 
 private:
-	IBaseManager* m_BaseManager;
+	IBaseManager& m_BaseManager;
 	IRenderDevice& m_RenderDevice;
 	const CMap& m_Map;
 

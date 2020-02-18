@@ -3,10 +3,10 @@
 // General
 #include "DBC__Storage.h"
 
-CDBCStorage::CDBCStorage(IBaseManager * BaseManager)
+CDBCStorage::CDBCStorage(IBaseManager& BaseManager)
 	: m_BaseManager(BaseManager)
 {
-	IFilesManager* filesManager = m_BaseManager->GetManager<IFilesManager>();
+	IFilesManager* filesManager = m_BaseManager.GetManager<IFilesManager>();
 
 	// All
 	DBC_LOAD(DBC_AnimationData, filesManager, "AnimationData.dbc");

@@ -24,7 +24,7 @@ class M2
 	friend class CM2_Builder;
 	friend class CM2_Skin_Builder;
 public:
-	M2(IBaseManager* BaseManager, IRenderDevice& RenderDevice, const std::string& name);
+	M2(IBaseManager& BaseManager, IRenderDevice& RenderDevice, const std::string& name);
 	virtual ~M2();
 
 	// ISceneNodeProvider
@@ -91,7 +91,7 @@ private:
 	uint32								m_CollisionVetCnt;
 
 private:
-	IBaseManager* m_BaseManager;
+	IBaseManager& m_BaseManager;
 	IRenderDevice& m_RenderDevice;
 	std::unique_ptr<CM2_Builder> m_Builder;
 

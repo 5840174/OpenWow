@@ -6,7 +6,7 @@
 // Additiobal
 #include <ctime>
 
-EnvironmentManager::EnvironmentManager(IBaseManager* BaseManager)
+EnvironmentManager::EnvironmentManager(IBaseManager& BaseManager)
 {
 	dayNightCycle = std::make_shared<DayNightCycle>(BaseManager);
 

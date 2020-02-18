@@ -1,8 +1,7 @@
 #include "stdafx.h"
 
 // Include
-#include "Character.h"
-#include "Creature_M2Instance.h"
+#include "World/Character/Character.h"
 
 // General
 #include "Item_VisualData.h"
@@ -77,10 +76,18 @@ struct
 	{ DBC_CharComponent_Sections::FEET,			"FootTexture" }
 };
 
-CItem_VisualData::CItem_VisualData(std::shared_ptr<Character> _owner) :
-	ItemTemplate(),
-	m_ParentCharacter(_owner)
-{}
+CItem_VisualData::CItem_VisualData(IBaseManager& BaseManager, IRenderDevice& RenderDevice, std::shared_ptr<Character> _owner) 
+	: CInet_ItemTemplate()
+	, m_BaseManager(BaseManager)
+	, m_RenderDevice(RenderDevice)
+	, m_ParentCharacter(_owner)
+{
+	m_DBCs = m_BaseManager.GetManager<CDBCStorage>();
+}
+
+CItem_VisualData::~CItem_VisualData()
+{
+}
 
 /*CItem_VisualData::CItem_VisualData(uint32 _displayId, InventoryType::List _inventoryType, uint32 _enchantAuraID) :
 	ItemTemplate(_displayId, _inventoryType, _enchantAuraID)
@@ -113,7 +120,7 @@ void CItem_VisualData::Render3D()
 
 void CItem_VisualData::InitObjectComponents()
 {
-	std::shared_ptr<const DBC_ItemDisplayInfoRecord> displayInfo = DBC_ItemDisplayInfo[DisplayId];
+	const DBC_ItemDisplayInfoRecord* displayInfo = m_DBCs->DBC_ItemDisplayInfo()[DisplayId];
 	_ASSERT(displayInfo != nullptr);
 
 	for (uint32 i = 0; i < ItemObjectComponents[InventoryType].count; i++)
@@ -129,7 +136,7 @@ void CItem_VisualData::InitObjectComponents()
 		if (InventoryType == InventoryType::HEAD)
 		{
 			char modelPostfix[64];
-			sprintf_s(modelPostfix, "_%s%c", DBC_ChrRaces[m_ParentCharacter.lock()->GetTemplate().Race]->Get_ClientPrefix(), getGenderLetter(m_ParentCharacter.lock()->GetTemplate().Gender));
+			sprintf_s(modelPostfix, "_%s%c", m_DBCs->DBC_ChrRaces()[m_ParentCharacter.lock()->GetTemplate().Race]->Get_ClientPrefix(), getGenderLetter(m_ParentCharacter.lock()->GetTemplate().Gender));
 
 			int dotPosition = objectFileName.find_last_of('.');
 			_ASSERT(dotPosition != -1);
@@ -145,22 +152,23 @@ void CItem_VisualData::InitObjectComponents()
 		// Fill data
 		std::string modelName = GetObjectModelName(InventoryType, objectFileName);
 		std::shared_ptr<ITexture> itemObjectTexture = LoadObjectTexture(InventoryType, objectTextureName);
-		std::shared_ptr<CM2_Part_Attachment> itemObjectAttach = m_ParentCharacter.lock()->getM2()->getMiscellaneous()->getAttachment(ItemObjectComponents[InventoryType].attach[i]);
+		std::shared_ptr<CM2_Part_Attachment> itemObjectAttach = m_ParentCharacter.lock()->getM2().getMiscellaneous()->getAttachment(ItemObjectComponents[InventoryType].attach[i]);
 
 		// Create instance
-		std::shared_ptr<CItem_M2Instance> itemObjectInstance = m_ParentCharacter.lock()->CreateSceneNode<CItem_M2Instance>(modelName);
-		Application::Get().GetLoader()->AddToLoadQueue(itemObjectInstance);
+		std::shared_ptr<M2> m2Model = m_BaseManager.GetManager<IM2Manager>()->Add(m_RenderDevice, modelName);
+		std::shared_ptr<CItem_M2Instance> itemObjectInstance = m_ParentCharacter.lock()->CreateSceneNode<CItem_M2Instance>(*m2Model);
+		itemObjectInstance->Load();
 		itemObjectInstance->Attach(itemObjectAttach);
 		itemObjectInstance->setSpecialTexture(SM2_Texture::Type::OBJECT_SKIN, itemObjectTexture);
 
 
 		// Visual effect
-		std::shared_ptr<const DBC_ItemVisualsRecord> visuals = /*displayInfo->Get_ItemVisualID()*/DBC_ItemVisuals[EnchantAuraID];
+		const DBC_ItemVisualsRecord* visuals = /*displayInfo->Get_ItemVisualID()*/m_DBCs->DBC_ItemVisuals()[EnchantAuraID];
 		if (visuals != nullptr)
 		{
 			for (uint32 j = 0; j < DBC_ItemVisuals_VisualEffect_Count; j++)
 			{
-				std::shared_ptr<const DBC_ItemVisualEffectsRecord> visEffect = visuals->Get_VisualEffect(j);
+				const DBC_ItemVisualEffectsRecord* visEffect = m_DBCs->DBC_ItemVisualEffects()[visuals->Get_VisualEffect(j)];
 				if (visEffect == nullptr)
 				{
 					continue;
@@ -172,14 +180,15 @@ void CItem_VisualData::InitObjectComponents()
 					continue;
 				}
 
-				std::shared_ptr<CM2_Base_Instance> visInstance = itemObjectInstance->CreateSceneNode<CM2_Base_Instance>(visEffectModelName);
-				Application::Get().GetLoader()->AddToLoadQueue(visInstance);
+				std::shared_ptr<M2> m2Model = m_BaseManager.GetManager<IM2Manager>()->Add(m_RenderDevice, visEffectModelName);
+				std::shared_ptr<CM2_Base_Instance> visInstance = itemObjectInstance->CreateSceneNode<CM2_Base_Instance>(*m2Model);
+				visInstance->Load();
 
 				std::shared_ptr<CM2_Part_Attachment> visAttach = nullptr;
 
-				if (itemObjectInstance->getM2()->getMiscellaneous()->isAttachmentExists((M2_AttachmentType::List)j))
+				if (itemObjectInstance->getM2().getMiscellaneous()->isAttachmentExists((M2_AttachmentType::List)j))
 				{
-					visAttach = itemObjectInstance->getM2()->getMiscellaneous()->getAttachment((M2_AttachmentType::List)j);
+					visAttach = itemObjectInstance->getM2().getMiscellaneous()->getAttachment((M2_AttachmentType::List)j);
 				}
 				else
 				{
@@ -197,7 +206,7 @@ void CItem_VisualData::InitObjectComponents()
 
 void CItem_VisualData::InitGeosetComponents()
 {
-	std::shared_ptr<const DBC_ItemDisplayInfoRecord> displayInfo = DBC_ItemDisplayInfo[DisplayId];
+	const DBC_ItemDisplayInfoRecord* displayInfo = m_DBCs->DBC_ItemDisplayInfo()[DisplayId];
 	_ASSERT(displayInfo != nullptr);
 
 	for (uint32 j = 0; j < 3; j++)
@@ -214,7 +223,7 @@ void CItem_VisualData::InitGeosetComponents()
 
 void CItem_VisualData::InitTextureComponents()
 {
-	std::shared_ptr<DBC_ItemDisplayInfoRecord> displayInfo = DBC_ItemDisplayInfo[DisplayId];
+	const DBC_ItemDisplayInfoRecord* displayInfo = m_DBCs->DBC_ItemDisplayInfo()[DisplayId];
 	_ASSERT(displayInfo != nullptr);
 
 	for (uint32 i = 0; i < DBC_CharComponent_Sections::ITEMS_COUNT; i++)
@@ -242,7 +251,7 @@ std::string CItem_VisualData::GetObjectModelName(InventoryType::List _objectType
 
 std::shared_ptr<ITexture> CItem_VisualData::LoadObjectTexture(InventoryType::List _objectType, std::string _textureName)
 {
-	return _RenderDevice->CreateTexture2D("Item\\ObjectComponents\\" + ItemObjectComponents[_objectType].folder + "\\" + _textureName + ".blp");
+	return m_RenderDevice.GetObjectsFactory().LoadTexture2D("Item\\ObjectComponents\\" + ItemObjectComponents[_objectType].folder + "\\" + _textureName + ".blp");
 }
 
 std::shared_ptr<ITexture> CItem_VisualData::LoadSkinTexture(DBC_CharComponent_Sections::List _type, std::string _textureName)
@@ -251,19 +260,19 @@ std::shared_ptr<ITexture> CItem_VisualData::LoadSkinTexture(DBC_CharComponent_Se
 	std::string maleTexture = getTextureComponentName(_type, _textureName, Gender::Male);
 	std::string femaleTexture = getTextureComponentName(_type, _textureName, Gender::Female);
 
-	std::shared_ptr<IFilesManager> fManager = GetManager<IFilesManager>(_ApplicationInstance->GetBaseManager());
+	IFilesManager* fManager = m_BaseManager.GetManager<IFilesManager>();
 
 	if (fManager->IsFileExists(universalTexture))
 	{
-		return _RenderDevice->CreateTexture2D(universalTexture);
+		return m_RenderDevice.GetObjectsFactory().LoadTexture2D(universalTexture);
 	}
 	else if (fManager->IsFileExists(maleTexture))
 	{
-		return _RenderDevice->CreateTexture2D(maleTexture);
+		return m_RenderDevice.GetObjectsFactory().LoadTexture2D(maleTexture);
 	}
 	else if (fManager->IsFileExists(femaleTexture))
 	{
-		return _RenderDevice->CreateTexture2D(femaleTexture);
+		return m_RenderDevice.GetObjectsFactory().LoadTexture2D(femaleTexture);
 	}
 
 	return nullptr;

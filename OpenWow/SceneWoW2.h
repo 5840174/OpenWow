@@ -4,7 +4,7 @@ class CSceneWoW2
 	: public SceneBase
 {
 public:
-	CSceneWoW2(IBaseManager * BaseManager, const std::shared_ptr<ISceneNode3D>& Fake3DRootNode, const std::shared_ptr<ICameraComponent3D>& ExternalCamera);
+	CSceneWoW2(IBaseManager& BaseManager, const std::shared_ptr<ISceneNode3D>& Fake3DRootNode, const std::shared_ptr<ICameraComponent3D>& ExternalCamera);
 	virtual ~CSceneWoW2();
 
 	// IGameState

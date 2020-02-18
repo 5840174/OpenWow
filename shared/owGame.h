@@ -46,3 +46,6 @@
 #include "../owGame/Map/RenderPass_WDL.h"
 #include "../owGame/Map/RenderPass_ADT_MCNK.h"
 
+// World
+#include "../owGame/World/WorldObjectsCreator.h"
+

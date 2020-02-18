@@ -139,6 +139,21 @@
     <Filter Include="Map\Tile">
       <UniqueIdentifier>{8e09b810-06e3-4697-82ff-ea38a6b7c0a4}</UniqueIdentifier>
     </Filter>
+    <Filter Include="World">
+      <UniqueIdentifier>{702d545a-0041-44a4-a19b-b46d06027750}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="World\Creature">
+      <UniqueIdentifier>{dbe54ed6-f1bc-4bd3-81cc-c9cdb3656283}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="World\Character">
+      <UniqueIdentifier>{7ac9ccd3-d12d-4375-9593-c0cbc99de6b6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="World\Character\Helpers">
+      <UniqueIdentifier>{625afe58-75f5-4562-9010-23ee0acc6889}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="World\Item">
+      <UniqueIdentifier>{3f559d8e-cf39-443e-bdb7-aee627e19247}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -453,6 +468,33 @@
     <ClCompile Include="DBC\DBC__File.cpp">
       <Filter>DBC</Filter>
     </ClCompile>
+    <ClCompile Include="World\WorldObjectsCreator.cpp">
+      <Filter>World</Filter>
+    </ClCompile>
+    <ClCompile Include="World\Creature\Creature.cpp">
+      <Filter>World\Creature</Filter>
+    </ClCompile>
+    <ClCompile Include="World\Creature\Creature_M2Instance.cpp">
+      <Filter>World\Creature</Filter>
+    </ClCompile>
+    <ClCompile Include="World\Character\Character.cpp">
+      <Filter>World\Character</Filter>
+    </ClCompile>
+    <ClCompile Include="World\Character\Character_SectionWrapper.cpp">
+      <Filter>World\Character\Helpers</Filter>
+    </ClCompile>
+    <ClCompile Include="World\Character\Character_SkinTextureBaker.cpp">
+      <Filter>World\Character\Helpers</Filter>
+    </ClCompile>
+    <ClCompile Include="World\Items\Item.cpp">
+      <Filter>World\Item</Filter>
+    </ClCompile>
+    <ClCompile Include="World\Items\Item_M2Instance.cpp">
+      <Filter>World\Item</Filter>
+    </ClCompile>
+    <ClCompile Include="World\Items\Item_VisualData.cpp">
+      <Filter>World\Item</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="common.h">
@@ -556,9 +598,6 @@
     </ClInclude>
     <ClInclude Include="DBC\Tables\DBC_WMOAreaTable.h">
       <Filter>DBC\Tables</Filter>
-    </ClInclude>
-    <ClInclude Include="DBC\Tables\DBC_Item_WotLK.h">
-      <Filter>DBC\Tables\Item</Filter>
     </ClInclude>
     <ClInclude Include="DBC\Tables\DBC_Map_WotLK.h">
       <Filter>DBC\Tables</Filter>
@@ -961,6 +1000,39 @@
     </ClInclude>
     <ClInclude Include="DBC\DBC__Macros.h">
       <Filter>DBC</Filter>
+    </ClInclude>
+    <ClInclude Include="World\WorldObjectsCreator.h">
+      <Filter>World</Filter>
+    </ClInclude>
+    <ClInclude Include="World\Creature\Creature.h">
+      <Filter>World\Creature</Filter>
+    </ClInclude>
+    <ClInclude Include="World\Creature\Creature_M2Instance.h">
+      <Filter>World\Creature</Filter>
+    </ClInclude>
+    <ClInclude Include="World\MeshIDEnums.h">
+      <Filter>World</Filter>
+    </ClInclude>
+    <ClInclude Include="World\Character\Character.h">
+      <Filter>World\Character</Filter>
+    </ClInclude>
+    <ClInclude Include="World\Character\Character_SectionWrapper.h">
+      <Filter>World\Character\Helpers</Filter>
+    </ClInclude>
+    <ClInclude Include="World\Character\Character_SkinTextureBaker.h">
+      <Filter>World\Character\Helpers</Filter>
+    </ClInclude>
+    <ClInclude Include="World\Items\Item.h">
+      <Filter>World\Item</Filter>
+    </ClInclude>
+    <ClInclude Include="World\Items\Item_M2Instance.h">
+      <Filter>World\Item</Filter>
+    </ClInclude>
+    <ClInclude Include="World\Items\Item_VisualData.h">
+      <Filter>World\Item</Filter>
+    </ClInclude>
+    <ClInclude Include="DBC\Tables\DBC_Item.h">
+      <Filter>DBC\Tables\Item</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

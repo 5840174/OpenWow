@@ -1,9 +1,12 @@
 #pragma once
 
-class CItem_M2Instance : public CM2_Base_Instance
+#include "M2/M2_Base_Instance.h"
+
+class CItem_M2Instance 
+	: public CM2_Base_Instance
 {
 public:
-	CItem_M2Instance(std::string _model);
+	CItem_M2Instance(const M2& M2Object);
     virtual ~CItem_M2Instance();
 
 	void AddVisualEffect(std::shared_ptr<CM2_Base_Instance> _visualEffect);

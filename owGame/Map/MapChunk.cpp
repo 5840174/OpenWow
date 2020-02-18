@@ -336,7 +336,7 @@ bool CMapChunk::Load()
 
             vec3 position = vec3(0.0f, (- GetTranslation().y), 0.0f);
 
-			Liquid_Instance* liq = CreateSceneNode<Liquid_Instance>();
+			auto liq = CreateSceneNode<Liquid_Instance>();
 			liq->LiquidInitialize(m_Liquid, position);
 
 			// Set liquid bbox

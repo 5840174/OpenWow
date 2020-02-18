@@ -9,7 +9,7 @@ class CM2_Builder
 {
 	friend CM2_Skin_Builder;
 public:
-	CM2_Builder(IBaseManager* BaseManager, IRenderDevice& RenderDevice, M2* _model);
+	CM2_Builder(IBaseManager& BaseManager, IRenderDevice& RenderDevice, M2* _model);
 	virtual ~CM2_Builder();
 
 
@@ -55,6 +55,6 @@ private:
 	SM2_TextureTransform*	m_TexturesTransform;
 	
 private:
-	IBaseManager*           m_BaseManager;
+	IBaseManager&           m_BaseManager;
 	IRenderDevice&          m_RenderDevice;
 };

@@ -35,5 +35,5 @@ const DBC_LiquidTypeRecord* getLiquidType(const ADT_MCNK_Header& Header, const C
 
 void CADT_Liquid::CreateFromMCLQ(const std::shared_ptr<IByteBuffer>& Bytes, ADT_MCNK_Header header)
 {
-	createLayers(getLiquidType(header, m_RenderDevice.GetBaseManager()->GetManager<CDBCStorage>()), Bytes);
+	createLayers(getLiquidType(header, m_RenderDevice.GetBaseManager().GetManager<CDBCStorage>()), Bytes);
 }

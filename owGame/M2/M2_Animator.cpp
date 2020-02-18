@@ -6,7 +6,7 @@
 // General
 #include "M2_Animator.h"
 
-CM2_Animator::CM2_Animator(const IBaseManager* BaseManager, const M2& M2Model) :
+CM2_Animator::CM2_Animator(const IBaseManager& BaseManager, const M2& M2Model) :
 	m_M2Model(M2Model),
 	m_IsLoop(false),
 	m_IsPlayed(false),
@@ -14,7 +14,7 @@ CM2_Animator::CM2_Animator(const IBaseManager* BaseManager, const M2& M2Model) :
 	animtime(0.0),
 	m_CurrentTime(0)
 {
-	for (const auto& record : BaseManager->GetManager<CDBCStorage>()->DBC_AnimationData())
+	for (const auto& record : BaseManager.GetManager<CDBCStorage>()->DBC_AnimationData())
 	{
 		// Get animation with index (record->Get_ID() and variation index == 0)
 		int16 findedSeqIndex = -1;
