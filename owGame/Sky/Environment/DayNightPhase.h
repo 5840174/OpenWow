@@ -7,8 +7,6 @@ public:
 	DayNightPhase(std::shared_ptr<IFile> f);
 	DayNightPhase(DayNightPhase* a, DayNightPhase* b, float r);
 
-    void Render_DEBUG(cvec3 _playerPos);
-
 public:
 	float dayIntensity;
 	vec3 dayColor;

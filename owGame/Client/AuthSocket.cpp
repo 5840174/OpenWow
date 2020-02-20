@@ -6,11 +6,13 @@
 // General
 #include "AuthSocket.h"
 
-CAuthSocket::CAuthSocket(ISocketHandler& SocketHandler, std::shared_ptr<CWoWClient> WoWClient)
+CAuthSocket::CAuthSocket(ISocketHandler& SocketHandler, CWoWClient& WoWClient)
     : TcpSocket(SocketHandler)
     , m_WoWClient(WoWClient)
 {
-    InitHandlers();
+	m_Handlers[AUTH_LOGON_CHALLENGE] = &CAuthSocket::S_LoginChallenge;
+	m_Handlers[AUTH_LOGON_PROOF] = &CAuthSocket::S_LoginProof;
+	m_Handlers[REALM_LIST] = &CAuthSocket::S_Realmlist;
 }
 
 CAuthSocket::~CAuthSocket()
@@ -31,51 +33,23 @@ void CAuthSocket::SendData(const uint8* _data, uint32 _count)
 
 
 
-//
-// TcpSocket
-//
-void CAuthSocket::OnConnect()
-{
-    C_SendLogonChallenge();
-}
 
-void CAuthSocket::OnDisconnect()
-{
-}
-
-void CAuthSocket::OnRawData(const char * buf, size_t len)
-{
-    CByteBuffer bb;
-    bb.writeBytes(reinterpret_cast<const uint8*>(buf), len);
-
-    eAuthCmd currHandler;
-    bb.readBytes(&currHandler, sizeof(uint8));
-
-    ProcessHandler(currHandler, bb);
-}
 
 
 
 //
 // Handlers
 //
-void CAuthSocket::InitHandlers()
-{
-    m_Handlers[AUTH_LOGON_CHALLENGE] = &CAuthSocket::S_LoginChallenge;
-    m_Handlers[AUTH_LOGON_PROOF] = &CAuthSocket::S_LoginProof;
-    m_Handlers[REALM_LIST] = &CAuthSocket::S_Realmlist;
-}
-
 void CAuthSocket::ProcessHandler(eAuthCmd AuthCmd, CByteBuffer& _buffer)
 {
-    std::unordered_map<eAuthCmd, HandlerFunc>::iterator handler = m_Handlers.find(AuthCmd);
+    const std::unordered_map<eAuthCmd, HandlerFunc>::iterator& handler = m_Handlers.find(AuthCmd);
     if (handler != m_Handlers.end())
     {
-        (*this.*handler->second)(_buffer);
+        ((*this).*(handler->second))(_buffer);
     }
     else
     {
-        Log::Error("Handler [0x%X] not found!", AuthCmd);
+        _ASSERT(false, "Handler [0x%X] not found!", AuthCmd);
     }
 }
 
@@ -84,10 +58,7 @@ void CAuthSocket::ProcessHandler(eAuthCmd AuthCmd, CByteBuffer& _buffer)
 
 void CAuthSocket::C_SendLogonChallenge()
 {
-    std::shared_ptr<CWoWClient> WoWClient = m_WoWClient.lock();
-    _ASSERT(WoWClient);
-
-    AuthChallenge_C challenge(WoWClient->GetLogin(), TcpSocket::GetSockIP4());
+    AuthChallenge_C challenge(m_WoWClient.GetLogin(), TcpSocket::GetSockIP4());
     challenge.Send(this);
 }
 
@@ -97,10 +68,6 @@ void CAuthSocket::C_SendLogonChallenge()
 
 bool CAuthSocket::S_LoginChallenge(CByteBuffer& _buff)
 {
-    std::shared_ptr<CWoWClient> WoWClient = m_WoWClient.lock();
-    _ASSERT(WoWClient);
-
-
     _buff.seekRelative(sizeof(uint8));
 
     eAuthResults error;
@@ -156,7 +123,7 @@ bool CAuthSocket::S_LoginChallenge(CByteBuffer& _buff)
     SHA1Hash xSHA;
     xSHA.Initialize();
     xSHA.UpdateData(s.AsByteArray().get(), 32);
-    xSHA.UpdateData(WoWClient->GetLoginPasswordHash().GetDigest(), SHA_DIGEST_LENGTH);
+    xSHA.UpdateData(m_WoWClient.GetLoginPasswordHash().GetDigest(), SHA_DIGEST_LENGTH);
     xSHA.Finalize();
 
     BigNumber x;
@@ -241,7 +208,7 @@ bool CAuthSocket::S_LoginChallenge(CByteBuffer& _buff)
 
     // H(I)
     sha.Initialize();
-    sha.UpdateData((const uint8*)WoWClient->GetLogin().c_str(), WoWClient->GetLogin().size());
+    sha.UpdateData((const uint8*)m_WoWClient.GetLogin().c_str(), m_WoWClient.GetLogin().size());
     sha.Finalize();
 
     // M
@@ -256,10 +223,8 @@ bool CAuthSocket::S_LoginChallenge(CByteBuffer& _buff)
     //Log::Info("MC=%s", MClient.toString().c_str());
 #pragma endregion
 
-#pragma region Send proof
     AuthProof_C authProof(A.AsByteArray(32).get(), MClient.GetDigest());
     authProof.Send(this);
-#pragma endregion
 
     // Expected proof for server
     MServer.Initialize();
@@ -274,7 +239,7 @@ bool CAuthSocket::S_LoginChallenge(CByteBuffer& _buff)
 bool CAuthSocket::S_LoginProof(CByteBuffer& _buff)
 {
     uint8 error;
-    _buff.readBytes(&error, sizeof(uint8));
+    _buff.read(&error);
 
     if (error != eAuthResults::REALM_AUTH_SUCCESS)
     {
@@ -296,7 +261,7 @@ bool CAuthSocket::S_LoginProof(CByteBuffer& _buff)
     _buff.readBytes(M2, 20);
 
     uint32 AccountFlags;
-    _buff.readBytes(&AccountFlags, 4);
+    _buff.read(&AccountFlags);
 
     // Server M must be same with client M
     if (MServer != M2)
@@ -320,26 +285,48 @@ bool CAuthSocket::S_LoginProof(CByteBuffer& _buff)
 
 bool CAuthSocket::S_Realmlist(CByteBuffer& _buff)
 {
-    std::shared_ptr<CWoWClient> WoWClient = m_WoWClient.lock();
-    _ASSERT(WoWClient);
-
     uint16 bufferSize;
-    _buff.readBytes(&bufferSize, 2);
+    _buff.read(&bufferSize);
 
     uint32 realmlistBufferSize;
-    _buff.readBytes(&realmlistBufferSize, 4);
+    _buff.read(&realmlistBufferSize);
 
     uint8 count;
-    _buff.readBytes(&count, sizeof(uint8));
+    _buff.read(&count);
     Log::Green("S_Realmlist: Count [%d]", count);
 
     for (uint32 i = 0; i < count; i++)
     {
         RealmInfo rinfo(_buff);
-        WoWClient->AddRealm(rinfo);
+		m_WoWClient.AddRealm(rinfo);
     }
 
-    WoWClient->OnSuccessConnect(Key);
+	m_WoWClient.OnSuccessConnect(Key);
 
     return true;
+}
+
+
+
+//
+// TcpSocket
+//
+void CAuthSocket::OnConnect()
+{
+	C_SendLogonChallenge();
+}
+
+void CAuthSocket::OnDisconnect()
+{
+
+}
+
+void CAuthSocket::OnRawData(const char * buf, size_t len)
+{
+	CByteBuffer bb(buf, len);
+
+	eAuthCmd currHandler;
+	bb.readBytes(&currHandler, sizeof(uint8));
+
+	ProcessHandler(currHandler, bb);
 }

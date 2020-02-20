@@ -6,12 +6,12 @@
 
 #include __PACK_BEGIN
 
-struct CInet_CharacterTemplate
+struct ZN_API CInet_CharacterTemplate
 {
 	CInet_CharacterTemplate();
+	CInet_CharacterTemplate(CByteBuffer& b);
 
 	void TemplateSet(const CInet_CharacterTemplate& _o);
-	void TemplateFill(CByteBuffer& b);
 
 	void TemplatePrint();
 
@@ -44,7 +44,7 @@ struct CInet_CharacterTemplate
 	uint32						PetLevel;
 	uint32						PetFamilyId;
 	// Items
-	CInet_ItemTemplate				ItemsTemplates[INVENTORY_SLOT_BAG_END];
+	CInet_ItemTemplate			ItemsTemplates[INVENTORY_SLOT_BAG_END];
 };
 
 #include __PACK_END

@@ -1,6 +1,7 @@
 #pragma once
 
-#include "DayNightCycle.h"
+#include "DayNightPhase.h"
+#include "WowTime.h"
 
 class __declspec(uuid("37A85804-F8D2-44BA-900B-102BDCAF655F")) ZN_API EnvironmentManager
 	: public IManager
@@ -22,7 +23,15 @@ public:
 public:
 	bool m_HasSky;
 
+private:
+	void LoadDayNightPhases();
+	DayNightPhase GetDayNightPhase();
 
-	std::shared_ptr<DayNightCycle> dayNightCycle;
+private:
 	DayNightPhase dayNightPhase;
+	std::vector<DayNightPhase> m_DayNightPhases;
+	WowTime m_Time;
+
+private:
+	IBaseManager& m_BaseManager;
 };

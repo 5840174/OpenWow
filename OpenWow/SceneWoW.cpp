@@ -3,6 +3,9 @@
 // Gerenal
 #include "SceneWoW.h"
 
+// Additional
+#include "Client/Client.h"
+
 CSceneWoW::CSceneWoW(IBaseManager& BaseManager)
 	: SceneBase(BaseManager)
 {}
@@ -27,9 +30,18 @@ void CSceneWoW::Initialize()
 	GetCameraController()->SetCamera(cameraNode->GetComponent<ICameraComponent3D>());
 	GetCameraController()->GetCamera()->SetPerspectiveProjection(ICameraComponent3D::EPerspectiveProjectionHand::Right, 45.0f, 1.0f/*GetRenderWindow()->GetWindowWidth() / GetRenderWindow()->GetWindowHeight()*/, 0.5f, 10000.0f);
 
+	m_WoWClient = std::make_unique<CWoWClient>("127.0.0.1");
+	m_WoWClient->AddWorldHandler(SMSG_CHAR_ENUM, std::bind(&CSceneWoW::S_CharsEnum, this, std::placeholders::_1));
+	m_WoWClient->AddWorldHandler(SMSG_LOGIN_VERIFY_WORLD, std::bind(&CSceneWoW::S_Login_Verify_World, this, std::placeholders::_1));
+	m_WoWClient->AddWorldHandler(SMSG_MONSTER_MOVE, std::bind(&CSceneWoW::S_MonsterMove, this, std::placeholders::_1));
+	m_WoWClient->AddWorldHandler(SMSG_CREATURE_QUERY_RESPONSE, std::bind(&CSceneWoW::S_CREATURE_QUERY_RESPONSE, this, std::placeholders::_1));
 	
 
-	Load3D_M2s();
+	m_WoWClient->BeginConnect("admin", "admin");
+
+	//m_WoWClient->getWorldSocket()->AddHandler(SMSG_CHAR_ENUM, std::bind(&S_CharEnum, std::placeholders::_1));
+
+	Load3D();
 	LoadUI();
 
 	//cameraNode->SetTranslate(vec3(-50, 160, 170));
@@ -45,6 +57,160 @@ void CSceneWoW::Finalize()
 	// Insert code here
 
 	SceneBase::Finalize();
+}
+
+
+void CSceneWoW::S_CharsEnum(CServerPacket & _buff)
+{
+	uint8 charCnt;
+	_buff >> charCnt;
+
+	std::vector<CInet_CharacterTemplate> characters;
+	for (uint8 i = 0; i < charCnt; i++)
+	{
+		CInet_CharacterTemplate character(_buff);
+		characters.push_back(character);
+	}
+
+	if (characters.empty())
+		return;
+
+	CClientPacket p(CMSG_PLAYER_LOGIN);
+	p << characters[0].GUID;
+	m_WoWClient->SendPacket(p);
+}
+
+void CSceneWoW::S_Login_Verify_World(CServerPacket & Buffer)
+{
+	uint32 mapID;
+	Buffer >> mapID;
+
+	float positionX;
+	Buffer >> positionX;
+
+	float positionY;
+	Buffer >> positionY;
+
+	float positionZ;
+	Buffer >> positionZ;
+
+	float orientation;
+	Buffer >> orientation;
+
+	_ASSERT(Buffer.isEof());
+
+	glm::vec3 position = fromGameToReal(glm::vec3(positionX, positionY, positionZ));
+
+	const float x = 40;
+	const float y = 27;
+	map->MapPreLoad(GetBaseManager().GetManager<CDBCStorage>()->DBC_Map()[mapID]);
+	map->MapLoad();
+	map->MapPostLoad();
+	map->EnterMap(position);
+
+	GetCameraController()->GetCamera()->SetTranslation(position);
+	GetCameraController()->GetCamera()->SetYaw(48.8);
+	GetCameraController()->GetCamera()->SetPitch(-27.8);
+}
+
+void CSceneWoW::S_MonsterMove(CServerPacket & Buffer)
+{
+	uint64 guid;
+	Buffer.ReadPackedUInt64(guid);
+
+	Log::Green("GUID is '%s'", GetLogNameForGuid(guid));
+
+	float positionX;
+	Buffer >> positionX;
+	float positionY;
+	Buffer >> positionY;
+	float positionZ;
+	Buffer >> positionZ;
+
+	uint32 msTime;
+	Buffer >> msTime;
+
+	uint8 isStopped;
+	Buffer >> isStopped;
+
+	uint32 movementsFlags;
+	Buffer >> movementsFlags;
+
+	uint32 timeBetweenPoints;
+	Buffer >> timeBetweenPoints;
+
+	uint32 PointsCnt;
+	Buffer >> PointsCnt;
+
+	glm::vec3 NextPoint;
+	for (size_t i = 0; i < PointsCnt; i++)
+	{
+		float positionX1;
+		Buffer >> positionX1;
+		float positionY1;
+		Buffer >> positionY1;
+		float positionZ1;
+		Buffer >> positionZ1;
+
+		NextPoint = fromGameToReal(glm::vec3(positionX1, positionY1, positionZ1));
+	}
+
+
+	glm::vec3 position = fromGameToReal(glm::vec3(positionX, positionY, positionZ));
+
+	Log::Info("Monster move [%u] (%f, %f, %f) time [%d]", guid, position.x, position.y, position.z);
+
+	UpdateGUIDPos(guid, position);
+
+
+	CClientPacket queryInfo(CMSG_CREATURE_QUERY);
+	queryInfo << GUID_ENPART(guid);
+	queryInfo << guid;
+	m_WoWClient->SendPacket(queryInfo);
+}
+
+void CSceneWoW::S_CREATURE_QUERY_RESPONSE(CServerPacket & Buffer)
+{
+	uint32 entry;
+	Buffer >> (uint32)entry;                              // creature entry
+
+	std::string Name;
+	Buffer >> &Name;
+
+	Buffer.seekRelative(3);
+	//Buffer >> uint8(0) << uint8(0) << uint8(0);           // name2, name3, name4, always empty
+
+	std::string SubName;
+	Buffer >> &SubName;
+
+	Buffer.seekRelative(24);
+	//Buffer >> (uint32)ci->type_flags;                     // flags          wdbFeild7=wad flags1
+	//Buffer >> (uint32)ci->type;
+	//Buffer >> (uint32)ci->family;                         // family         wdbFeild9
+	//Buffer >> (uint32)ci->rank;                           // rank           wdbFeild10
+	//Buffer >> (uint32)0;                                  // unknown        wdbFeild11
+	//Buffer >> (uint32)ci->PetSpellDataId;                 // Id from CreatureSpellData.dbc    wdbField12
+	uint32 modelID_A1;
+	Buffer >> modelID_A1;                     // Modelid_A1
+	uint32 modelID_A2;
+	Buffer >> modelID_A2;                     // Modelid_A2
+	uint32 modelID_H1;
+	Buffer >> modelID_H1;                     // Modelid_H1
+	uint32 modelID_H2;
+	Buffer >> modelID_H2;                     // Modelid_H2
+
+	float unk0;
+	Buffer >> unk0;                                // unk
+	float unk1;
+	Buffer >> unk1;                                // unk
+
+	Buffer.seekRelative(1);
+	//Buffer >> (uint8)ci->RacialLeader;
+
+	QueryCreatures ent;
+	ent.name = Name;
+	ent.modelID = modelID_A1;
+	m_EntriesName.insert(std::make_pair(entry, ent));
 }
 
 void CSceneWoW::OnRayIntersected(const glm::vec3& Point)
@@ -90,42 +256,22 @@ void CSceneWoW::OnWindowKeyReleased(KeyEventArgs & e)
 //
 void CSceneWoW::Load3D()
 {
-	/*
-	auto wmo = GetBaseManager().GetManager<IWMOManager>()->Add(GetRenderDevice(), "World\\wmo\\Azeroth\\Buildings\\Stormwind\\Stormwind.wmo");
-	wmoInstance = GetRootNode3D()->CreateSceneNode<CWMO_Base_Instance>(*wmo);
-	wmoInstance->SetTranslate(glm::vec3(100, 100, 100));
-	wmoInstance->RecalcVerts();
-	GetBaseManager().GetManager<ILoader>()->AddToLoadQueue(wmoInstance);
-
-
-	GetCameraController()->GetCamera()->SetTranslation(vec3(500, 500, 500));
-	GetCameraController()->GetCamera()->SetYaw(200);
-	GetCameraController()->GetCamera()->SetPitch(-27.8);
-	*/
-
-	//auto m2 = GetBaseManager().GetManager<IM2Manager>()->Add(GetRenderDevice(), "Creature\\KelThuzad\\KelThuzad.m2");
-	//m2Instance = GetRootNode3D()->CreateSceneNode<CM2_Base_Instance>(*m2);
-
 	skyManager = GetRootNode3D()->CreateSceneNode<SkyManager>(GetRenderDevice());
 	skyManager->Load(0);
 
 	map = GetRootNode3D()->CreateSceneNode<CMap>(GetBaseManager(), GetRenderDevice());
-
-	/*time_t t = time(0);   // get time now
-	tm* now = localtime(&t);
-	m_GameTime.Set(now->tm_hour, now->tm_min);*/
-	wowGameTime.Set(11, 0);
-
+	
 	const float x = 40;
 	const float y = 27;
 	map->MapPreLoad(GetBaseManager().GetManager<CDBCStorage>()->DBC_Map()[1]);
 	map->MapLoad();
 	map->MapPostLoad();
-	map->EnterMap(x, y);
+	map->EnterMap(40, 27);
 
-	GetCameraController()->GetCamera()->SetTranslation(vec3(x * C_TileSize + C_TileSize / 2.0f, 300, y * C_TileSize + C_TileSize / 2.0f));
+	GetCameraController()->GetCamera()->SetTranslation(glm::vec3(x * C_TileSize + C_TileSize / 2.0f, 100.0f, y * C_TileSize + C_TileSize / 2.0f));
 	GetCameraController()->GetCamera()->SetYaw(48.8);
 	GetCameraController()->GetCamera()->SetPitch(-27.8);
+
 
 
 	std::shared_ptr<BuildRenderListPassTemplated<CWMO_Group_Instance>> wmoListPass = std::make_shared<BuildRenderListPassTemplated<CWMO_Group_Instance>>(GetRenderDevice(), shared_from_this());
@@ -150,9 +296,9 @@ void CSceneWoW::Load3D_M2s()
 	CWorldObjectCreator creator(GetBaseManager(), GetRenderDevice());
 
 	const auto& records = GetBaseManager().GetManager<CDBCStorage>()->DBC_CreatureDisplayInfo().Records();
-	for (size_t i = 0; i < 50; i++)
+	for (size_t i = 0; i < 3; i++)
 	{
-		for (size_t j = 0; j < 50; j++)
+		for (size_t j = 0; j < 3; j++)
 		{
 			size_t id = rand() % records.size();
 
@@ -167,9 +313,12 @@ void CSceneWoW::Load3D_M2s()
 				id = rand() % records.size();
 			}
 
-			auto creature = creator.BuildCreatureFromDisplayInfo(this, id);
-			creature->SetTranslate(glm::vec3(i * 5.0f, 0.0f, j * 5.0f));
-			creature->SetParent(GetRootNode3D().get());
+			auto creature = creator.BuildCreatureFromDisplayInfo(this, id, nullptr);
+			if (creature != nullptr)
+			{
+				creature->SetTranslate(glm::vec3(i * 2.5f, 0.0f, j * 2.5f));
+				GetRootNode3D()->AddChild(creature);
+			}
 		}
 	}
 
@@ -185,4 +334,47 @@ void CSceneWoW::Load3D_M2s()
 void CSceneWoW::LoadUI()
 {
 	m_TechniqueUI.AddPass(std::make_shared<CUIFontPass>(GetRenderDevice(), shared_from_this())->CreatePipeline(GetRenderWindow()->GetRenderTarget(), &GetRenderWindow()->GetViewport()));
+}
+
+void CSceneWoW::UpdateGUIDPos(uint64 GUID, const glm::vec3& Position, glm::vec3 Direction)
+{
+	const auto& it = m_Objects.find(GUID);
+	if (it == m_Objects.end())
+	{
+		CWorldObjectCreator creator(GetBaseManager(), GetRenderDevice());
+		auto creature = creator.BuildCreatureFromDisplayInfo(this, 6910, GetRootNode3D());
+		if (creature != nullptr)
+		{
+			creature->SetTranslate(Position);
+			//creature->SetRotation(Direction);
+			//creature->SetParent(GetRootNode3D().get());
+		}
+		m_Objects.insert(std::make_pair(GUID, creature));
+	}
+	else
+	{
+		// Recreate object if need
+		const auto& crEntryName = m_EntriesName.find(GUID_ENPART(GUID));
+		if (crEntryName != m_EntriesName.end())
+		{
+			if (it->second->GetName() != crEntryName->second.name)
+			{
+				it->second->GetParent().lock()->RemoveChild(it->second.get());
+
+				CWorldObjectCreator creator(GetBaseManager(), GetRenderDevice());
+				auto creature = creator.BuildCreatureFromDisplayInfo(this, crEntryName->second.modelID, it->second->GetParent().lock());
+				if (creature != nullptr)
+				{
+					creature->SetTranslate(Position);
+					//creature->SetRotation(Direction);
+					//creature->SetParent(GetRootNode3D().get());
+					m_Objects[GUID] = creature;
+
+					return;
+				}
+			}
+		}
+
+		it->second->SetTranslate(Position);
+	}
 }

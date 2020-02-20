@@ -8,9 +8,15 @@ CWoWClient::CWoWClient(const std::string& AuthServerHost, uint16 AuthServerPort)
 	m_Host = AuthServerHost;
 	m_Port = AuthServerPort;
 
-
+	
     m_SocketsHandler = std::make_shared<SocketHandler>();
-    m_SocketsHandler->RegStdLog(&m_SocketLog);  	
+	m_SocketsHandlerThread = std::make_shared<SocketHandlerThread>(*m_SocketsHandler);
+	m_SocketsHandlerThread->SetRelease(true);
+
+	while (&m_SocketsHandlerThread->Handler() == nullptr)
+		Sleep(1);
+
+	m_SocketsHandlerThread->Handler().RegStdLog(&m_SocketLog);
 }
 
 void CWoWClient::BeginConnect(const std::string& Username, const std::string& Password)
@@ -32,31 +38,53 @@ void CWoWClient::BeginConnect(const std::string& Username, const std::string& Pa
     loginPasswordUpperCaseString = "";
 #pragma endregion
 
-    m_AuthSocket = std::make_shared<CAuthSocket>(*m_SocketsHandler, shared_from_this());
+    m_AuthSocket = std::make_shared<CAuthSocket>(m_SocketsHandlerThread->Handler(), *this);
     m_AuthSocket->Open(getHost(), getPort());
 
-    m_SocketsHandler->Add(m_AuthSocket);
-    m_SocketsHandler->Select(1, 0);
+	m_SocketsHandlerThread->Handler().Add(m_AuthSocket);
 
-    while (m_SocketsHandler->GetCount())
-    {
-        m_SocketsHandler->Select(1, 0);
-    }
+
+    //while (m_SocketsHandler->GetCount())
+	//{
+	//    m_SocketsHandler->Select(1, 0);
+	//}
 }
 
 void CWoWClient::OnSuccessConnect(BigNumber Key)
 {
 	m_Key = Key;
 
-    m_AuthSocket->SetErasedByHandler();
+    m_AuthSocket->SetDeleteByHandler(true);
 
     RealmInfo* currRealm = &(m_Realms[0]);
 
-
-    m_WorldSocket = std::make_shared<CWorldSocket>(*m_SocketsHandler, shared_from_this());
+    m_WorldSocket = std::make_shared<CWorldSocket>(m_SocketsHandlerThread->Handler(), *this);
     m_WorldSocket->Open(currRealm->getIP(), currRealm->getPort());
 
-    m_SocketsHandler->Add(m_WorldSocket);
+	m_SocketsHandlerThread->Handler().Add(m_WorldSocket);
+}
+
+void CWoWClient::ProcessHandler(Opcodes Opcode, CServerPacket & BB)
+{
+	const auto& handler = m_Handlers.find(Opcode);
+	if (handler != m_Handlers.end())
+	{
+		if (handler->second != nullptr)
+		{
+			(handler->second).operator()(BB);
+		}
+	}
+}
+
+void CWoWClient::AddWorldHandler(Opcodes Opcode, std::function<void(CServerPacket&)> Handler)
+{
+	_ASSERT(Handler != nullptr);
+	m_Handlers.insert(std::make_pair(Opcode, Handler));
+}
+
+void CWoWClient::SendPacket(CClientPacket & Packet)
+{
+	m_WorldSocket->SendPacket(Packet);
 }
 
 void CWoWClient::AddRealm(RealmInfo& _realm)

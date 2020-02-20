@@ -15,6 +15,7 @@
 #include "../owGame/DBC/DBC__Storage.h"
 
 // Client
+#include "../owGame/Client/ObjectDefines.h"
 #include "../owGame/Client/Client.h"
 
 // Liquid
@@ -26,7 +27,6 @@
 #include "../owGame/M2/M2_Base_Instance.h"
 #include "../owGame/M2/M2_Manager.h"
 #include "../owGame/M2/RenderPass_M2.h"
-
 
 // WMO
 #include "../owGame/WMO/WMO_Base_Instance.h"

@@ -24,7 +24,7 @@ DBC_DEF_BEGIN(DBC_CharSections)
 __DBC_TVALUE(uint32,						Race,			    2);
 __DBC_TVALUE(uint32,						Gender,			    3);
 __DBC_TVALUE(DBC_CharSections_GeneralType,	GeneralType,	    4);
-__DBC_TVALUE(uint32,                        Variation,          5);
+__DBC_TVALUE(uint32,                        Type,               5);
 __DBC_TVALUE(uint32,                        Color,              6);
 
 __DBC_STRING(Texture1,										    7);

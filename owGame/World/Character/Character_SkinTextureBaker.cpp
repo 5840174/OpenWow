@@ -68,7 +68,7 @@ std::shared_ptr<ITexture> Character_SkinTextureBaker::createTexture(const Charac
 	}
 
 	// 3. Apply items texture components
-	/*{
+	{
 		for (uint32 slot = 0; slot < INVENTORY_SLOT_BAG_END; slot++)
 		{
 			for (uint32 comp = 0; comp < DBC_CharComponent_Sections::ITEMS_COUNT; comp++)
@@ -80,13 +80,13 @@ std::shared_ptr<ITexture> Character_SkinTextureBaker::createTexture(const Charac
 				FillPixels((DBC_CharComponent_Sections::List) comp, itemComponentTexture);
 			}
 		}
-	}*/
+	}
 
 	// 4. Final
 	bakedSkinTexture->LoadTextureCustom(SkinTextureWidth, SkinTextureHeight, m_Pixels);
 	SafeDeleteArray(m_Pixels);
 
-	return bakedSkinTexture;
+	return m_RenderDevice.GetDefaultTexture();
 }
 
 void Character_SkinTextureBaker::FillWithSkin(std::shared_ptr<ITexture> _skinTexture) const

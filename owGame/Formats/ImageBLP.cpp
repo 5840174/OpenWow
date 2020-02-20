@@ -126,9 +126,9 @@ bool CImageBLP::LoadBPL(const BLPFormat::BLPHeader& header, std::shared_ptr<IFil
 						return NULL;
 					}
 
-					m_Data[resultBufferCntr++] = ((color & 0x000000FF));
-					m_Data[resultBufferCntr++] = ((color & 0x0000FF00) >> 8);
 					m_Data[resultBufferCntr++] = ((color & 0x00FF0000) >> 16);
+					m_Data[resultBufferCntr++] = ((color & 0x0000FF00) >> 8);
+					m_Data[resultBufferCntr++] = ((color & 0x000000FF));
 					m_Data[resultBufferCntr++] = ((alpha & 0x000000FF));
 				}
 			}

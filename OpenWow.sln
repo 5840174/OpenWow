@@ -65,8 +65,6 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "OpenWow", "OpenWow\OpenWow.
 		{51252F60-B8DC-4090-BBA3-DD05942110F0} = {51252F60-B8DC-4090-BBA3-DD05942110F0}
 	EndProjectSection
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "owGameCharacters", "owGameCharacters\owGameCharacters.vcxproj", "{4723F94F-2ECA-40FB-A4FA-C491DFE3B3A5}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -152,12 +150,6 @@ Global
 		{24037B59-E2A0-4432-9A22-888691117323}.Mixed|x64.Build.0 = Release|x64
 		{24037B59-E2A0-4432-9A22-888691117323}.Release|x64.ActiveCfg = Release|x64
 		{24037B59-E2A0-4432-9A22-888691117323}.Release|x64.Build.0 = Release|x64
-		{4723F94F-2ECA-40FB-A4FA-C491DFE3B3A5}.Debug|x64.ActiveCfg = Debug|x64
-		{4723F94F-2ECA-40FB-A4FA-C491DFE3B3A5}.Debug|x64.Build.0 = Debug|x64
-		{4723F94F-2ECA-40FB-A4FA-C491DFE3B3A5}.Mixed|x64.ActiveCfg = Release|x64
-		{4723F94F-2ECA-40FB-A4FA-C491DFE3B3A5}.Mixed|x64.Build.0 = Release|x64
-		{4723F94F-2ECA-40FB-A4FA-C491DFE3B3A5}.Release|x64.ActiveCfg = Release|x64
-		{4723F94F-2ECA-40FB-A4FA-C491DFE3B3A5}.Release|x64.Build.0 = Release|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

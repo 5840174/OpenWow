@@ -53,8 +53,8 @@ static vec3 fromRealToGame(vec3 p)
 static vec3 fromGameToReal(vec3 p)
 {
 	return vec3(
-		-p.x + C_ZeroPoint,
+		-p.y + C_ZeroPoint,
 		p.z,
-		-p.y + C_ZeroPoint
+		-p.x + C_ZeroPoint
 	);
 }

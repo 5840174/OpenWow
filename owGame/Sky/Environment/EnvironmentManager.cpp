@@ -7,8 +7,10 @@
 #include <ctime>
 
 EnvironmentManager::EnvironmentManager(IBaseManager& BaseManager)
+	: m_BaseManager(BaseManager)
 {
-	dayNightCycle = std::make_shared<DayNightCycle>(BaseManager);
+	m_Time.Set(11, 0);
+	LoadDayNightPhases();
 
 	// Colors
     m_OutdoorAmbientColor = vec4();
@@ -86,3 +88,51 @@ void EnvironmentManager::SetFog()
 	}*/
 }
 
+void EnvironmentManager::LoadDayNightPhases()
+{
+	std::shared_ptr<IFile> f = m_BaseManager.GetManager<IFilesManager>()->Open("World\\dnc.db");
+	if (f == nullptr)
+	{
+		Log::Error("DayNightCycle[]: Can't init day-night cycle.");
+		return;
+	}
+
+	uint32 nFields1, nFields;
+
+	// Header
+	f->readBytes(&nFields, 4);
+	f->readBytes(&nFields1, 4);
+	_ASSERT(nFields == nFields1);
+	_ASSERT(nFields == 25);
+
+	// Field Descriptions
+	uint32 magic0x53;
+	f->readBytes(&magic0x53, 4);
+	_ASSERT(magic0x53 == 0x53);
+
+	// Final offset
+	uint32 d;
+	f->readBytes(&d, 4); // d is now the final offset
+
+	// Skip names
+	f->seek(8 + nFields * 8);
+
+	while (f->getPos() < d)
+	{
+		DayNightPhase ols(f);
+		m_DayNightPhases.push_back(ols);
+	}
+}
+
+DayNightPhase EnvironmentManager::GetDayNightPhase()
+{
+	uint32 hourA = m_Time.GetTime() / 120;
+	uint32 hourB = (hourA + 1) % 24;
+
+	DayNightPhase* a = &m_DayNightPhases[hourA];
+	DayNightPhase* b = &m_DayNightPhases[hourB];
+
+	float r = static_cast<float>(m_Time.GetTime() - (hourA * 120)) / 120.0f;
+
+	return DayNightPhase(a, b, r);
+}

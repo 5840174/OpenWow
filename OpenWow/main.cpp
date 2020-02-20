@@ -56,6 +56,7 @@ void main_internal(int argumentCount, char* arguments[])
 	app.Run();
 }
 
+#include <iostream>
 
 int main(int argumentCount, char* arguments[])
 {

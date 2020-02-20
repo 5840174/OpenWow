@@ -405,9 +405,6 @@
     <ClCompile Include="WMO\WMO_Group_Instance.cpp">
       <Filter>WMO\Instances</Filter>
     </ClCompile>
-    <ClCompile Include="Sky\Environment\DayNightCycle.cpp">
-      <Filter>Sky\Environment</Filter>
-    </ClCompile>
     <ClCompile Include="Sky\Environment\DayNightPhase.cpp">
       <Filter>Sky\Environment</Filter>
     </ClCompile>
@@ -932,9 +929,6 @@
     <ClInclude Include="WMO\WMO_Group_Instance.h">
       <Filter>WMO\Instances</Filter>
     </ClInclude>
-    <ClInclude Include="Sky\Environment\DayNightCycle.h">
-      <Filter>Sky\Environment</Filter>
-    </ClInclude>
     <ClInclude Include="Sky\Environment\DayNightPhase.h">
       <Filter>Sky\Environment</Filter>
     </ClInclude>
@@ -1033,6 +1027,9 @@
     </ClInclude>
     <ClInclude Include="DBC\Tables\DBC_Item.h">
       <Filter>DBC\Tables\Item</Filter>
+    </ClInclude>
+    <ClInclude Include="Client\ObjectDefines.h">
+      <Filter>Client</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

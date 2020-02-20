@@ -36,6 +36,45 @@ CInet_CharacterTemplate::CInet_CharacterTemplate() :
 	PetFamilyId(0)
 {}
 
+CInet_CharacterTemplate::CInet_CharacterTemplate(CByteBuffer& b)
+{
+	uint32 beginSize = b.getPos();
+
+	b.readBytes(&GUID, 8);
+	b.readString(&Name);
+	b.readBytes(&Race, 1);
+	b.readBytes(&Class, 1);
+	b.readBytes(&Gender, 1);
+
+	b.readBytes(&skin, 1);
+	b.readBytes(&face, 1);
+	b.readBytes(&hairStyle, 1);
+	b.readBytes(&hairColor, 1);
+	b.readBytes(&facialStyle, 1);
+
+	b.readBytes(&Level, 1);
+	b.readBytes(&ZoneId, 4);
+	b.readBytes(&MapId, 4);
+
+	b.readBytes(&X, 4);
+	b.readBytes(&Y, 4);
+	b.readBytes(&Z, 4);
+
+	b.readBytes(&GuildId, 4);
+
+	b.readBytes(&Flags, 4);
+	b.readBytes(&IsFirstLogin, 1);
+
+	b.readBytes(&PetInfoId, 4);
+	b.readBytes(&PetLevel, 4);
+	b.readBytes(&PetFamilyId, 4);
+
+	for (int i = 0; i < EQUIPMENT_SLOT_END; i++)
+	{
+		ItemsTemplates[i].TemplateSet(CInet_ItemTemplate(b));
+	}
+}
+
 void CInet_CharacterTemplate::TemplateSet(const CInet_CharacterTemplate & _o)
 {
 	// System
@@ -76,44 +115,6 @@ void CInet_CharacterTemplate::TemplateSet(const CInet_CharacterTemplate & _o)
 	}
 }
 
-void CInet_CharacterTemplate::TemplateFill(CByteBuffer& b)
-{
-	uint32 beginSize = b.getPos();
-
-	b.readBytes(&GUID, 8);
-	b.readString(&Name);
-	b.readBytes(&Race, 1);
-	b.readBytes(&Class, 1);
-	b.readBytes(&Gender, 1);
-
-	b.readBytes(&skin, 1);
-	b.readBytes(&face, 1);
-	b.readBytes(&hairStyle, 1);
-	b.readBytes(&hairColor, 1);
-	b.readBytes(&facialStyle, 1);
-
-	b.readBytes(&Level, 1);
-	b.readBytes(&ZoneId, 4);
-	b.readBytes(&MapId, 4);
-
-	b.readBytes(&X, 4);
-	b.readBytes(&Y, 4);
-	b.readBytes(&Z, 4);
-
-	b.readBytes(&GuildId, 4);
-
-	b.readBytes(&Flags, 4);
-	b.readBytes(&IsFirstLogin, 1);
-
-	b.readBytes(&PetInfoId, 4);
-	b.readBytes(&PetLevel, 4);
-	b.readBytes(&PetFamilyId, 4);
-
-	for (int i = 0; i < EQUIPMENT_SLOT_END; i++)
-	{
-		ItemsTemplates[i].TemplateFill(b);
-	}
-}
 
 void CInet_CharacterTemplate::TemplatePrint()
 {

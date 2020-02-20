@@ -2,7 +2,7 @@
 
 #include "Opcodes.h"
 
-class CClientPacket 
+class ZN_API CClientPacket 
 	: public CByteBuffer
 {
 public:

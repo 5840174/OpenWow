@@ -12,9 +12,7 @@ Creature::Creature(const M2& M2Object)
 	: Creature_M2Instance(M2Object)
 {
 	for (uint32 i = 0; i < MeshIDType::Count; i++)
-	{
 		m_MeshID[i] = 1;
-	}
 }
 
 Creature::~Creature()
@@ -43,6 +41,9 @@ bool Creature::isMeshEnabled(uint32 _index) const
 	_ASSERT(div100 != 6);
 	_ASSERT(div100 != 14);
 	_ASSERT(div100 != 16);
+
+	//if (div100 == 3)
+	//	return true;
 
 	for (uint32 i = 0; i < MeshIDType::Count; i++)
 	{

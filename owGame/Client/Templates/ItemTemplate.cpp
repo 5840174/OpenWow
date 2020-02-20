@@ -9,6 +9,13 @@ CInet_ItemTemplate::CInet_ItemTemplate() :
 	EnchantAuraID(0)
 {}
 
+CInet_ItemTemplate::CInet_ItemTemplate(CByteBuffer & b)
+{
+	b.readBytes(&DisplayId, 4);
+	b.readBytes(&InventoryType, 1);
+	//b.readBytes(&EnchantAuraID, 4);
+}
+
 CInet_ItemTemplate::CInet_ItemTemplate(uint32 _displayId, InventoryType::List _inventoryType, uint32 _enchantAuraID) :
 	DisplayId(_displayId),
 	InventoryType(_inventoryType),
@@ -35,13 +42,6 @@ void CInet_ItemTemplate::TemplateSet(const CInet_ItemTemplate & _o)
 	DisplayId = _o.DisplayId;
 	InventoryType = _o.InventoryType;
 	EnchantAuraID = _o.EnchantAuraID;
-}
-
-void CInet_ItemTemplate::TemplateFill(CByteBuffer& b)
-{
-	b.readBytes(&DisplayId, 4);
-	b.readBytes(&InventoryType, 1);
-	//b.readBytes(&EnchantAuraID, 4);
 }
 
 void CInet_ItemTemplate::TemplatePrint()

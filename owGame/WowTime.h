@@ -1,6 +1,10 @@
 #pragma once
 
-#include "WowConsts.h"
+const uint32 const C_Game_SecondsInMinute = 2;
+const uint32 const C_Game_MinutesInHour = 60;
+const uint32 const C_Game_HoursInDay = 24;
+const uint32 const C_Game_SecondsInHour = (C_Game_SecondsInMinute * C_Game_MinutesInHour);                    // 120
+const uint32 const C_Game_SecondsInDay = (C_Game_SecondsInMinute * C_Game_MinutesInHour * C_Game_HoursInDay); // 2880
 
 class ZN_API WowTime
 {

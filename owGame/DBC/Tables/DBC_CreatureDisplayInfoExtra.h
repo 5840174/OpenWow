@@ -7,11 +7,11 @@ DBC_DEF_BEGIN(DBC_CreatureDisplayInfoExtra)
 __DBC_REF_ID(DBC_ChrRaces,               Race,              2);
 __DBC_TVALUE(uint32,                     Gender,            3);
 
-__DBC_TVALUE(uint32,                     SkinColor,         4);
-__DBC_TVALUE(uint32,                     FaceType,          5);
-__DBC_TVALUE(uint32,                     HairType,          6);
-__DBC_TVALUE(uint32,                     HairStyleOrColor,  7);
-__DBC_TVALUE(uint32,                     BeardStyle,        8);
+__DBC_TVALUE(uint32,                     SkinID,            4);
+__DBC_TVALUE(uint32,                     FaceID,            5);
+__DBC_TVALUE(uint32,                     HairStyleID,       6);
+__DBC_TVALUE(uint32,                     HairColorID,       7);
+__DBC_TVALUE(uint32,                     FacialHairID,      8);
 
 __DBC_REF_ID(DBC_ItemDisplayInfo,        Helm,              9);
 __DBC_REF_ID(DBC_ItemDisplayInfo,        Shoulder,          10);

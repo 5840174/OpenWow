@@ -28,7 +28,7 @@ class CItem_VisualData
 	: public CInet_ItemTemplate
 {
 public:
-	CItem_VisualData(IBaseManager& BaseManager, IRenderDevice& RenderDevice, std::shared_ptr<Character> _owner);
+	CItem_VisualData(IBaseManager& BaseManager, IRenderDevice& RenderDevice, Character& Character);
 	virtual ~CItem_VisualData();
 
 	void Load();
@@ -62,5 +62,5 @@ private:
 	IBaseManager& m_BaseManager;
 	IRenderDevice& m_RenderDevice;
 	const CDBCStorage* m_DBCs;
-	std::weak_ptr<Character> m_ParentCharacter;
+	Character& m_ParentCharacter;
 };

@@ -6,7 +6,8 @@
 #include "SHA1.h"
 #include "RealmInfo.h"
 
-class CWoWClient : public std::enable_shared_from_this<CWoWClient>
+class ZN_API CWoWClient 
+	: public std::enable_shared_from_this<CWoWClient>
 {
 public:
 	CWoWClient(const std::string& AuthServerHost, uint16 AuthServerPort = 3724);
@@ -14,6 +15,10 @@ public:
     // CWoWClient
 	void BeginConnect(const std::string& Username, const std::string& Password);
 	void OnSuccessConnect(BigNumber Key);
+	
+	void ProcessHandler(Opcodes Opcode, CServerPacket& BB);
+	void AddWorldHandler(Opcodes Opcode, std::function<void(CServerPacket&)> Handler);
+	void SendPacket(CClientPacket& Packet);
 
     //
 	void AddRealm(RealmInfo& _realm);
@@ -49,9 +54,11 @@ private: // Used login data. Don't keep fucking password in string. This is secu
     // Sockets controller
     StdoutLog                       m_SocketLog;
     std::shared_ptr<SocketHandler>  m_SocketsHandler;
+	std::shared_ptr<SocketHandlerThread> m_SocketsHandlerThread;
 
     // Sockets
 	std::shared_ptr<CAuthSocket>    m_AuthSocket;
     std::shared_ptr<CWorldSocket>   m_WorldSocket;
 
+	std::unordered_map<Opcodes, std::function<void(CServerPacket&)>>	m_Handlers;
 };

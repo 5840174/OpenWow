@@ -33,7 +33,7 @@ const Opcodes IgnoredOpcodes[] =
 	Opcodes::SMSG_SPELL_GO
 };
 
-CWorldSocket::CWorldSocket(ISocketHandler& SocketHandler, std::shared_ptr<CWoWClient> WoWClient)
+CWorldSocket::CWorldSocket(ISocketHandler& SocketHandler, CWoWClient& WoWClient)
     : TcpSocket(SocketHandler)
 	, m_WoWClient(WoWClient)
     , m_CurrentPacket(nullptr)
@@ -64,9 +64,8 @@ void CWorldSocket::OnRawData(const char * buf, size_t len)
 {
     //Log::Info("CWorldSocket: Receive data with size=%d", len);
 
-    CByteBuffer bufferFromServer;
-	bufferFromServer.writeBytes(buf, len);
-
+    CByteBuffer bufferFromServer(buf, len);
+	
     // Append to current packet
     if (m_CurrentPacket != nullptr)
     {
@@ -198,10 +197,8 @@ void CWorldSocket::InitHandlers()
 {
 	m_Handlers[SMSG_AUTH_CHALLENGE] = std::bind(&CWorldSocket::S_AuthChallenge, this, std::placeholders::_1);
 	m_Handlers[SMSG_AUTH_RESPONSE] = std::bind(&CWorldSocket::S_AuthResponse, this, std::placeholders::_1);
-    m_Handlers[SMSG_CHAR_ENUM] = std::bind(&CWorldSocket::S_CharsEnum, this, std::placeholders::_1);
 
 
-    m_Handlers[SMSG_LOGIN_VERIFY_WORLD] = std::bind(&CWorldSocket::S_Login_Verify_World, this, std::placeholders::_1);
 
 	// Dummy
 	m_Handlers[SMSG_SET_PROFICIENCY] = nullptr;
@@ -215,7 +212,7 @@ void CWorldSocket::InitHandlers()
 	m_Handlers[SMSG_LOGIN_SETTIMESPEED] = nullptr;
 	m_Handlers[SMSG_SET_FORCED_REACTIONS] = nullptr;
 	m_Handlers[SMSG_COMPRESSED_UPDATE_OBJECT] = nullptr;
-	m_Handlers[SMSG_MONSTER_MOVE] = nullptr;
+	//m_Handlers[SMSG_MONSTER_MOVE] = nullptr;
 
 	m_Handlers[Opcodes::SMSG_EMOTE] = nullptr;
 	m_Handlers[Opcodes::SMSG_TIME_SYNC_REQ] = nullptr;
@@ -239,6 +236,10 @@ void CWorldSocket::ProcessPacket(CServerPacket ServerPacket)
 			(handler->second).operator()(ServerPacket);
 		}
 	}
+	else
+	{
+		m_WoWClient.ProcessHandler(ServerPacket.GetPacketOpcode(), ServerPacket);
+	}
 }
 
 
@@ -248,9 +249,6 @@ void CWorldSocket::ProcessPacket(CServerPacket ServerPacket)
 //
 void CWorldSocket::S_AuthChallenge(CByteBuffer& _buff)
 {
-    std::shared_ptr<CWoWClient> WoWClient = m_WoWClient.lock();
-    _ASSERT(WoWClient);
-
 	uint32 serverRandomSeed; 
 	_buff.readBytes(&serverRandomSeed, 4);
 	
@@ -261,18 +259,18 @@ void CWorldSocket::S_AuthChallenge(CByteBuffer& _buff)
 
 	SHA1Hash uSHA;
 	uSHA.Initialize();
-	uSHA.UpdateData((const uint8*)WoWClient->GetLogin().c_str(), WoWClient->GetLogin().size());
+	uSHA.UpdateData((const uint8*)m_WoWClient.GetLogin().c_str(), m_WoWClient.GetLogin().size());
 	uSHA.UpdateData(zeroBytes, 4);
     uSHA.UpdateBigNumbers(&clientRandomSeed, nullptr);
 	uSHA.UpdateData(&reinterpret_cast<uint8&>(serverRandomSeed), 4);
-	uSHA.UpdateBigNumbers(WoWClient->getKey(), nullptr);
+	uSHA.UpdateBigNumbers(m_WoWClient.getKey(), nullptr);
 	uSHA.Finalize();
 
 	// Send auth packet to server. 
     CClientPacket p(CMSG_AUTH_SESSION);
-    p << WoWClient->getClientBuild();
+    p << m_WoWClient.getClientBuild();
     p.writeDummy(4);
-    p << WoWClient->GetLogin();
+    p << m_WoWClient.GetLogin();
     p.writeBytes(clientRandomSeed.AsByteArray(4).get(), 4);
     p.writeBytes(uSHA.GetDigest(), SHA_DIGEST_LENGTH);
 
@@ -284,7 +282,7 @@ void CWorldSocket::S_AuthChallenge(CByteBuffer& _buff)
     SendPacket(p);
 
 	// Start encription from here
-    m_WoWCryptoUtils.SetKey(WoWClient->getKey()->AsByteArray().get(), 40);
+    m_WoWCryptoUtils.SetKey(m_WoWClient.getKey()->AsByteArray().get(), 40);
     m_WoWCryptoUtils.Init();
 }
 
@@ -338,52 +336,6 @@ void CWorldSocket::S_AuthResponse(CByteBuffer& _buff)
 }
 
 
-#include "Templates\\CharacterTemplate.h"
-
-void CWorldSocket::S_CharsEnum(CByteBuffer & _buff)
-{
-    uint8 charCnt;
-    _buff >> charCnt;
-
-    std::vector<CInet_CharacterTemplate> characters;
-    for (uint8 i = 0; i < charCnt; i++)
-    {
-        CInet_CharacterTemplate character;
-        character.TemplateFill(_buff);
-        characters.push_back(character);
-    }
-
-    if (characters.empty())
-        return;
-
-    CClientPacket p(CMSG_PLAYER_LOGIN);
-    p << characters[0].GUID;
-    SendPacket(p);
-}
-
-void CWorldSocket::S_Login_Verify_World(CByteBuffer & Buffer)
-{
-    uint32 mapID;
-    Buffer >> mapID;
-
-    float positionX;
-    Buffer >> positionX;
-
-    float positionY;
-    Buffer >> positionY;
-
-    float positionZ;
-    Buffer >> positionZ;
-
-    float orientation;
-    Buffer >> orientation;
-
-    _ASSERT(Buffer.isEof());
-}
-
-
-
-
 void CWorldSocket::S_AuthChallenge_CreateAddonsBuffer(CByteBuffer& AddonsBuffer)
 {
     // This is deafult for blizzard addons
@@ -414,6 +366,7 @@ void CWorldSocket::S_AuthChallenge_CreateAddonsBuffer(CByteBuffer& AddonsBuffer)
 
     AddonsBuffer << static_cast<uint32>(addonsBuffer.getSize());
     AddonsBuffer.writeDummy(addonsBuffer.getSize());
+	AddonsBuffer.seek(0);
 
     uLongf destLen = addonsBuffer.getSize();
     if (compress(AddonsBuffer.getDataFromCurrentEx() + sizeof(uint32), &destLen, addonsBuffer.getData(), addonsBuffer.getSize()) != Z_OK)
@@ -424,5 +377,4 @@ void CWorldSocket::S_AuthChallenge_CreateAddonsBuffer(CByteBuffer& AddonsBuffer)
 
     //                  addonsRealSize + compressedSize
     //AddonsBuffer.Resize(sizeof(uint32) + destLen);
-	_ASSERT(false);
 }

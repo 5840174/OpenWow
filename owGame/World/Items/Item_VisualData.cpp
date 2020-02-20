@@ -76,11 +76,11 @@ struct
 	{ DBC_CharComponent_Sections::FEET,			"FootTexture" }
 };
 
-CItem_VisualData::CItem_VisualData(IBaseManager& BaseManager, IRenderDevice& RenderDevice, std::shared_ptr<Character> _owner) 
+CItem_VisualData::CItem_VisualData(IBaseManager& BaseManager, IRenderDevice& RenderDevice, Character& Character)
 	: CInet_ItemTemplate()
 	, m_BaseManager(BaseManager)
 	, m_RenderDevice(RenderDevice)
-	, m_ParentCharacter(_owner)
+	, m_ParentCharacter(Character)
 {
 	m_DBCs = m_BaseManager.GetManager<CDBCStorage>();
 }
@@ -136,7 +136,7 @@ void CItem_VisualData::InitObjectComponents()
 		if (InventoryType == InventoryType::HEAD)
 		{
 			char modelPostfix[64];
-			sprintf_s(modelPostfix, "_%s%c", m_DBCs->DBC_ChrRaces()[m_ParentCharacter.lock()->GetTemplate().Race]->Get_ClientPrefix(), getGenderLetter(m_ParentCharacter.lock()->GetTemplate().Gender));
+			sprintf_s(modelPostfix, "_%s%c", m_DBCs->DBC_ChrRaces()[m_ParentCharacter.GetTemplate().Race]->Get_ClientPrefix(), getGenderLetter(m_ParentCharacter.GetTemplate().Gender));
 
 			int dotPosition = objectFileName.find_last_of('.');
 			_ASSERT(dotPosition != -1);
@@ -152,11 +152,11 @@ void CItem_VisualData::InitObjectComponents()
 		// Fill data
 		std::string modelName = GetObjectModelName(InventoryType, objectFileName);
 		std::shared_ptr<ITexture> itemObjectTexture = LoadObjectTexture(InventoryType, objectTextureName);
-		std::shared_ptr<CM2_Part_Attachment> itemObjectAttach = m_ParentCharacter.lock()->getM2().getMiscellaneous()->getAttachment(ItemObjectComponents[InventoryType].attach[i]);
+		std::shared_ptr<CM2_Part_Attachment> itemObjectAttach = m_ParentCharacter.getM2().getMiscellaneous()->getAttachment(ItemObjectComponents[InventoryType].attach[i]);
 
 		// Create instance
 		std::shared_ptr<M2> m2Model = m_BaseManager.GetManager<IM2Manager>()->Add(m_RenderDevice, modelName);
-		std::shared_ptr<CItem_M2Instance> itemObjectInstance = m_ParentCharacter.lock()->CreateSceneNode<CItem_M2Instance>(*m2Model);
+		std::shared_ptr<CItem_M2Instance> itemObjectInstance = m_ParentCharacter.CreateSceneNode<CItem_M2Instance>(*m2Model);
 		itemObjectInstance->Load();
 		itemObjectInstance->Attach(itemObjectAttach);
 		itemObjectInstance->setSpecialTexture(SM2_Texture::Type::OBJECT_SKIN, itemObjectTexture);

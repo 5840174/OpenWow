@@ -14,5 +14,5 @@ CItem_M2Instance::~CItem_M2Instance()
 
 void CItem_M2Instance::AddVisualEffect(std::shared_ptr<CM2_Base_Instance> _visualEffect)
 {
-	_visualEffect->SetParent(this);
+	AddChild(_visualEffect);
 }

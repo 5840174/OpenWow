@@ -26,13 +26,11 @@ struct ClientPktHeader
 
 class CWorldSocket : public TcpSocket
 {
-	typedef bool (CWorldSocket::* HandlerFunc)(CByteBuffer&);
-
 public:
     typedef std::function<void(CByteBuffer&)> HandlerFuncitonType;
 public:
-	CWorldSocket(ISocketHandler& SocketHandler, std::shared_ptr<CWoWClient> WoWClient);
-	~CWorldSocket();
+	CWorldSocket(ISocketHandler& SocketHandler, CWoWClient& WoWClient);
+	virtual ~CWorldSocket();
 
     // TcpSocket
     void OnConnect() override final;
@@ -53,19 +51,17 @@ public:
     // Handlers
 	void S_AuthChallenge(CByteBuffer& Buffer);
 	void S_AuthResponse(CByteBuffer& Buffer);
-    void S_CharsEnum(CByteBuffer& Buffer);
-
-    // After login
-    void S_Login_Verify_World(CByteBuffer& Buffer);
 
 private:
     void S_AuthChallenge_CreateAddonsBuffer(CByteBuffer& AddonsBuffer);
 
 private:
-    std::weak_ptr<CWoWClient>                           m_WoWClient;
 	AuthCrypt                                           m_WoWCryptoUtils;
 
     CServerPacket *                                     m_CurrentPacket;
 
-	std::unordered_map<Opcodes, HandlerFuncitonType>	m_Handlers;
+	std::unordered_map<Opcodes, std::function<void(CByteBuffer&)>>	m_Handlers;
+
+private:
+	CWoWClient& m_WoWClient;
 };

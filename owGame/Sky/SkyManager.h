@@ -33,9 +33,7 @@ private:
 
 private:
 	CSkyParams                                      m_Interpolated;
-
 	std::shared_ptr<IBuffer>                        colorsBuffer;
-
 	std::vector<std::shared_ptr<Sky>>               skies;
 
 private:

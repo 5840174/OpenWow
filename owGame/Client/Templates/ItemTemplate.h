@@ -5,10 +5,10 @@
 struct CInet_ItemTemplate
 {
 	CInet_ItemTemplate();
+	CInet_ItemTemplate(CByteBuffer& b);
 	CInet_ItemTemplate(uint32	_displayId, InventoryType::List _inventoryType, uint32 _enchantAuraID);
 	
 	void TemplateSet(const CInet_ItemTemplate& _o);
-	void TemplateFill(CByteBuffer& b);
 
 	void TemplatePrint();
 

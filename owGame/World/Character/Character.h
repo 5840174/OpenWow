@@ -14,18 +14,9 @@ public:
     Character(const M2& M2Object);
     virtual ~Character();
 
-    const CInet_CharacterTemplate& GetTemplate() const { return m_Template; }
-
-	// Initialization
-	void InitFromTemplate(const CInet_CharacterTemplate& b);
-	//void InitFromDisplayInfo(uint32 _id) override;
-	void InitFromDisplayInfoCreating(uint32 _id, Race::List _race, Gender::List _gender);
-
-	// Mesh provider
-	void setHairGeoset(uint32 _value) { setMeshEnabled(MeshIDType::SkinAndHair, _value); }
-	void setFacial1Geoset(uint32 _value) { setMeshEnabled(MeshIDType::Facial1, _value); }
-	void setFacial2Geoset(uint32 _value) { setMeshEnabled(MeshIDType::Facial2, _value); }
-	void setFacial3Geoset(uint32 _value) { setMeshEnabled(MeshIDType::Facial3, _value); }
+    CInet_CharacterTemplate& GetTemplate() { return m_Template; }
+	const CInet_CharacterTemplate& GetTemplate() const { return m_Template; }
+	std::vector<std::shared_ptr<CItem_VisualData>>& GetVisualItems() { return m_VisualItems;	}
 
 	// Texture components helper
 	std::shared_ptr<const CItem_VisualData> getItemTextureComponents(InventoryType::List _slot) const { return m_VisualItems[_slot]; }
@@ -35,7 +26,7 @@ public:
 
 	// Refreshers
 	void RefreshItemVisualData();
-	void RefreshTextures(const Character_SectionWrapper& SectionWrapper, const Character_SkinTextureBaker& SkinTextureBaker, std::shared_ptr<ITexture>& _skin);
+	void RefreshTextures(const Character_SectionWrapper& SectionWrapper, std::shared_ptr<ITexture> SkinTexture);
 	void RefreshMeshIDs(const Character_SectionWrapper& SectionWrapper);
 
 private:
