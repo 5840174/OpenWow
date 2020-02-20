@@ -26,7 +26,7 @@ CMapWDL::~CMapWDL()
 //
 // ISceneNodeProvider
 //
-void CMapWDL::CreateInsances(ISceneNode3D* _parent) const
+void CMapWDL::CreateInsances(const std::shared_ptr<ISceneNode3D>& Parent) const
 {
 	std::string fileName = m_MapController.GetMapFolder() + ".wdl";
 
@@ -101,7 +101,7 @@ void CMapWDL::CreateInsances(ISceneNode3D* _parent) const
 				
 				std::shared_ptr<CWDL_LowResTile> lowResTile = std::make_shared<CWDL_LowResTile>(m_RenderDevice, m_MapController, i, j);
 				lowResTile->AddConnection(m_LowResilutionTileMaterial, geometry);
-				_parent->GetComponent<CMeshComponent3D>()->AddMesh(lowResTile);
+				Parent->GetComponent<CMeshComponent3D>()->AddMesh(lowResTile);
 			}
 		}
 	}

@@ -423,9 +423,6 @@
     <ClCompile Include="Map\Map_Shared.cpp">
       <Filter>Map</Filter>
     </ClCompile>
-    <ClCompile Include="Map\MapLiquid.cpp">
-      <Filter>Map</Filter>
-    </ClCompile>
     <ClCompile Include="Map\MapWDT.cpp">
       <Filter>Map</Filter>
     </ClCompile>
@@ -491,6 +488,9 @@
     </ClCompile>
     <ClCompile Include="World\Items\Item_VisualData.cpp">
       <Filter>World\Item</Filter>
+    </ClCompile>
+    <ClCompile Include="Map\MapLiquid.cpp">
+      <Filter>Map\Tile</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -950,9 +950,6 @@
     <ClInclude Include="Map\Map_Shared.h">
       <Filter>Map</Filter>
     </ClInclude>
-    <ClInclude Include="Map\MapLiquid.h">
-      <Filter>Map</Filter>
-    </ClInclude>
     <ClInclude Include="Map\MapWDT.h">
       <Filter>Map</Filter>
     </ClInclude>
@@ -1030,6 +1027,9 @@
     </ClInclude>
     <ClInclude Include="Client\ObjectDefines.h">
       <Filter>Client</Filter>
+    </ClInclude>
+    <ClInclude Include="Map\MapLiquid.h">
+      <Filter>Map\Tile</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

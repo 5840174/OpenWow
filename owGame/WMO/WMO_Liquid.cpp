@@ -3,23 +3,16 @@
 // General
 #include "WMO_Liquid.h"
 
-CWMO_Liquid::CWMO_Liquid(IRenderDevice& RenderDevice, uint32 _x, uint32 _y) :
-	CLiquid(RenderDevice, _x, _y)
-{}
-
-CWMO_Liquid::~CWMO_Liquid()
-{
-}
-
-void CWMO_Liquid::CreateFromWMO(std::shared_ptr<IByteBuffer> f, std::shared_ptr<const WMO_Part_Material> _material, const DBC_LiquidTypeRecord* _liquidType, bool _indoor)
+CWMO_Liquid::CWMO_Liquid(IRenderDevice& RenderDevice, const CWMO& WMOObject, const WMO_Group& WMOGroupObject, const std::shared_ptr<IByteBuffer>& Bytes, const SWMO_Group_MLIQDef& LiquidHeader)
+	: CLiquid(RenderDevice, LiquidHeader.A, LiquidHeader.B)
+	, m_WMOObject(WMOObject)
+	, m_WMOGroupObject(WMOGroupObject)
+	, m_LiquidHeader(LiquidHeader)
 {
 	ydir = -1.0f; // Magic for WMO
-	createLayers(_liquidType, f);
+	createLayers(RenderDevice.GetBaseManager().GetManager<CDBCStorage>()->DBC_LiquidType()[1], Bytes);
 
-	//SLiquidVertex* map = (SLiquidVertex*)(f->getDataFromCurrent());
-	//SLiquidFlag* flags = (SLiquidFlag*)(f->getDataFromCurrent() + ((m_TilesX + 1) * (m_TilesY + 1)) * sizeof(SLiquidVertex));
-
-	//Log::Green("LQQ type [%d]", flags[0].liquid & 3);
+	// m_WMOLiqiud->CreateFromWMO(buffer, m_WMOModel.m_Materials[m_LiquidHeader.materialID], m_BaseManager.GetManager<CDBCStorage>()->DBC_LiquidType()[1], m_GroupHeader.flags.IS_INDOOR);
 
 	/*if (_indoor)
 	{
@@ -31,4 +24,9 @@ void CWMO_Liquid::CreateFromWMO(std::shared_ptr<IByteBuffer> f, std::shared_ptr<
 		m_WaterColorLight = _World->EnvM()->m_SkyManager->GetColor(LIGHT_COLOR_RIVER_LIGHT);
 		m_WaterColorDark = _World->EnvM()->m_SkyManager->GetColor(LIGHT_COLOR_RIVER_DARK);
 	}*/
+}
+
+CWMO_Liquid::~CWMO_Liquid()
+{
+
 }

@@ -17,6 +17,22 @@ CLiquid::~CLiquid()
 
 
 
+//
+// ISceneNodeProvider
+//
+void CLiquid::CreateInsances(const std::shared_ptr<ISceneNode3D>& Parent) const
+{
+	_ASSERT(Parent != nullptr);
+
+	std::shared_ptr<IMeshComponent3D> meshes = Parent->GetComponent<IMeshComponent3D>();
+	for (const auto& it : m_WaterLayers)
+	{
+		meshes->AddMesh(it);
+	}
+}
+
+
+
 void CLiquid::createLayers(const DBC_LiquidTypeRecord* _type, const std::shared_ptr<IByteBuffer>& Bytes)
 {
 	SLiquidVertex* map = (SLiquidVertex*)(Bytes->getDataFromCurrent());

@@ -31,7 +31,7 @@ public:
 	const uint32 GetGroupIndex() const;
 	
 	// ISceneNodeProvider
-	void CreateInsances(ISceneNode3D* _parent) const override;
+	void CreateInsances(const std::shared_ptr<ISceneNode3D>& Parent) const override;
 
 	// CLoadableObject
 	bool Load() override;
@@ -67,7 +67,6 @@ public:
 	std::vector<std::shared_ptr<CWMO_Group_Part_BSP_Node>>	m_CollisionNodes;
 
 	//-- Liquid --//
-	SWMO_Group_MLIQDef						m_LiquidHeader;
 	std::shared_ptr<CWMO_Liquid>            m_WMOLiqiud;
 	
 

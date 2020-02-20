@@ -28,7 +28,7 @@ public:
 	virtual ~M2();
 
 	// ISceneNodeProvider
-	void CreateInsances(ISceneNode3D* _parent) const override;
+	void CreateInsances(const std::shared_ptr<ISceneNode3D>& Parent) const override;
 
 	// CLoadableObject
 	bool Load() override;

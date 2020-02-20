@@ -330,22 +330,21 @@ bool CMapChunk::Load()
 				GetComponent<IColliderComponent3D>()->SetBounds(bbox);
 			}
 
+			CADT_Liquid liquidObject(m_RenderDevice, m_File, header);
 
-			std::shared_ptr<CADT_Liquid> m_Liquid = std::make_shared<CADT_Liquid>(m_RenderDevice, 8, 8);
-			m_Liquid->CreateFromMCLQ(m_File, header);
+			auto liquidInstance = CreateSceneNode<Liquid_Instance>();
+			liquidObject.CreateInsances(liquidInstance);
 
-            vec3 position = vec3(0.0f, (- GetTranslation().y), 0.0f);
+			// Transform
+			liquidInstance->SetTranslate(glm::vec3(0.0f, (-GetTranslation().y), 0.0f));
 
-			auto liq = CreateSceneNode<Liquid_Instance>();
-			liq->LiquidInitialize(m_Liquid, position);
-
-			// Set liquid bbox
+			// IColliderComponent3D
 			{
 				BoundingBox bbox = GetComponent<IColliderComponent3D>()->GetBounds();
 				bbox.setMinY(height.min);
 				bbox.setMaxY(height.max);
 				bbox.calculateCenter();
-				liq->GetComponent<IColliderComponent3D>()->SetBounds(bbox);
+				liquidInstance->GetComponent<IColliderComponent3D>()->SetBounds(bbox);
 			}
 		}
 	}

@@ -40,14 +40,14 @@ CWMO::~CWMO()
 //
 // ISceneNodeProvider
 //
-void CWMO::CreateInsances(ISceneNode3D* _parent) const
+void CWMO::CreateInsances(const std::shared_ptr<ISceneNode3D>& Parent) const
 {
-	CWMO_Base_Instance* parentAsWMOInstance = dynamic_cast<CWMO_Base_Instance*>(_parent);
+	auto parentAsWMOInstance = std::dynamic_pointer_cast<CWMO_Base_Instance>(Parent);
 	_ASSERT(parentAsWMOInstance != nullptr);
 
 	for (const auto& it : m_Groups)
 	{
-		auto groupInstance = _parent->CreateSceneNode<CWMO_Group_Instance>(*it);
+		auto groupInstance = Parent->CreateSceneNode<CWMO_Group_Instance>(*it);
 		parentAsWMOInstance->AddGroupInstance(groupInstance.get());
 		if (it->m_GroupHeader.flags.IS_OUTDOOR)
 			parentAsWMOInstance->AddOutdoorGroupInstance(groupInstance.get());

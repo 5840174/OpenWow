@@ -80,11 +80,11 @@ const uint32 WMO_Group::GetGroupIndex() const
 //
 // ISceneNodeProvider
 //
-void WMO_Group::CreateInsances(ISceneNode3D* _parent) const
+void WMO_Group::CreateInsances(const std::shared_ptr<ISceneNode3D>& Parent) const
 {
 	_ASSERT(GetState() == ILoadable::ELoadableState::Loaded);
 
-	CWMO_Group_Instance* parentAsWMOGroupInstance = dynamic_cast<CWMO_Group_Instance*>(_parent);
+	auto parentAsWMOGroupInstance = std::dynamic_pointer_cast<CWMO_Group_Instance>(Parent);
 	_ASSERT(parentAsWMOGroupInstance != nullptr);
 
 	for (const auto& batch : m_WMOBatchIndexes)
@@ -92,19 +92,32 @@ void WMO_Group::CreateInsances(ISceneNode3D* _parent) const
 		parentAsWMOGroupInstance->GetComponent<CMeshComponent3D>()->AddMesh(batch);
 	}
 
+	// WMO Group liquid
 	if (m_WMOLiqiud != nullptr)
 	{
-		vec3 realPos = Fix_XZmY(m_LiquidHeader.pos);
-		realPos.y = 0.0f; // why they do this???
+		glm::vec3 realPos = Fix_XZmY(m_WMOLiqiud->GetHeader().pos);
 
-		auto liquid = _parent->CreateSceneNode<CWMO_Liquid_Instance>(*this);
-		liquid->LiquidInitialize(m_WMOLiqiud, realPos);
-		liquid->GetComponent<IColliderComponent3D>()->SetBounds(parentAsWMOGroupInstance->GetComponent<IColliderComponent3D>()->GetBounds());
-		parentAsWMOGroupInstance->addLiquidInstance(liquid.get());
+		auto liquidInstance = Parent->CreateSceneNode<CWMO_Liquid_Instance>(*this);
+		m_WMOLiqiud->CreateInsances(liquidInstance);
+
+		// Transform
+		liquidInstance->SetTranslate(glm::vec3(realPos.x, realPos.y, realPos.z));
+
+		// IColliderComponent3D
+		{
+			BoundingBox bbox = parentAsWMOGroupInstance->GetComponent<IColliderComponent3D>()->GetBounds();
+			bbox.setMin(bbox.getMin() - realPos);
+			bbox.setMax(bbox.getMax() - realPos);
+			bbox.calculateCenter();
+			liquidInstance->GetComponent<IColliderComponent3D>()->SetBounds(bbox);
+		}
+
+		parentAsWMOGroupInstance->addLiquidInstance(liquidInstance.get());
 		
 	}
 
 #ifdef USE_M2_MODELS
+	// WMO Group M2s
 	for (const auto& index : m_DoodadsPlacementIndexes)
 	{
 		const SWMO_Doodad_PlacementInfo& placement = m_WMOModel.m_DoodadsPlacementInfos[index];
@@ -114,7 +127,7 @@ void WMO_Group::CreateInsances(ISceneNode3D* _parent) const
 		std::shared_ptr<M2> m2 = m_BaseManager.GetManager<IM2Manager>()->Add(m_RenderDevice, doodadFileName);
 		if (m2)
 		{
-			auto inst = _parent->CreateSceneNode<CWMO_Doodad_Instance>(*m2, *this, index, placement);
+			auto inst = Parent->CreateSceneNode<CWMO_Doodad_Instance>(*m2, *this, index, placement);
 			m_BaseManager.GetManager<ILoader>()->AddToLoadQueue(inst.get());
 			parentAsWMOGroupInstance->addDoodadInstance(inst.get());
 		}
@@ -291,7 +304,8 @@ bool WMO_Group::Load()
 
 	if (auto buffer = m_ChunkReader->OpenChunk("MLIQ"))
 	{
-		buffer->read(&m_LiquidHeader);
+		SWMO_Group_MLIQDef liquidHeader;
+		buffer->read(&liquidHeader);
 
 		Log::Green
 		(
@@ -299,8 +313,8 @@ bool WMO_Group::Load()
 			m_WMOModel.getFilename().c_str(),
 			m_GroupHeader.liquidType,
 			m_WMOModel.m_Header.flags.use_liquid_type_dbc_id, 
-			m_LiquidHeader.materialID,
-			m_WMOModel.m_Materials[m_LiquidHeader.materialID]->GetProto().shader
+			liquidHeader.materialID,
+			m_WMOModel.m_Materials[liquidHeader.materialID]->GetProto().shader
 		);
 
 		uint32 liquid_type;
@@ -327,9 +341,7 @@ bool WMO_Group::Load()
 			}
 		}
 
-		m_WMOLiqiud = std::make_shared<CWMO_Liquid>(m_RenderDevice, m_LiquidHeader.A, m_LiquidHeader.B);
-		m_WMOLiqiud->CreateFromWMO(buffer, m_WMOModel.m_Materials[m_LiquidHeader.materialID], m_BaseManager.GetManager<CDBCStorage>()->DBC_LiquidType()[1], m_GroupHeader.flags.IS_INDOOR);
-
+		m_WMOLiqiud = std::make_shared<CWMO_Liquid>(m_RenderDevice, m_WMOModel, *this, buffer, liquidHeader);
 	}
 
 	for (const auto& WMOGroupBatchProto : WMOBatchs)

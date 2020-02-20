@@ -30,11 +30,11 @@ M2::~M2()
 {
 }
 
-void M2::CreateInsances(ISceneNode3D* _parent) const
+void M2::CreateInsances(const std::shared_ptr<ISceneNode3D>& Parent) const
 {
 	for (auto& it : m_Skins)
 	{
-		_parent->GetComponent<IMeshComponent3D>()->AddMesh(it);
+		Parent->GetComponent<IMeshComponent3D>()->AddMesh(it);
 		break;
 	}
 }

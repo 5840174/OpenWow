@@ -46,18 +46,20 @@ struct SLiquidFlag
 #pragma endregion
 
 class ZN_API CLiquid
+	: public ISceneNodeProvider
 {
 public:
 	CLiquid(IRenderDevice& RenderDevice, uint32 x, uint32 y);
     virtual ~CLiquid();
+
+	// ISceneNodeProvider
+	void CreateInsances(const std::shared_ptr<ISceneNode3D>& Parent) const override;
 
 protected:
 	void createLayers(const DBC_LiquidTypeRecord* _type, const std::shared_ptr<IByteBuffer>& Bytes);
 	
 public:
 	uint32                                                              m_TilesX, m_TilesY;
-	BoundingBox                                                         m_Bounds;
-
 	std::vector<std::shared_ptr<CLiquidLayer>>							m_WaterLayers;
 
 	float                                                               ydir;

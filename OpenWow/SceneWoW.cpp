@@ -259,9 +259,15 @@ void CSceneWoW::Load3D()
 	skyManager = GetRootNode3D()->CreateSceneNode<SkyManager>(GetRenderDevice());
 	skyManager->Load(0);
 
+	auto wmo = GetBaseManager().GetManager<IWMOManager>()->Add(GetRenderDevice(), "World\\wmo\\Azeroth\\Buildings\\Stormwind\\Stormwind.wmo");
+	wmoInstance = GetRootNode3D()->CreateSceneNode<CWMO_Base_Instance>(*wmo);
+	wmoInstance->SetTranslate(glm::vec3(100, 500, 100));
+	wmoInstance->RecalcVerts();
+	GetBaseManager().GetManager<ILoader>()->AddToLoadQueue(wmoInstance.get());
+
 	map = GetRootNode3D()->CreateSceneNode<CMap>(GetBaseManager(), GetRenderDevice());
 	
-	const float x = 40;
+	/*const float x = 40;
 	const float y = 27;
 	map->MapPreLoad(GetBaseManager().GetManager<CDBCStorage>()->DBC_Map()[1]);
 	map->MapLoad();
@@ -270,8 +276,11 @@ void CSceneWoW::Load3D()
 
 	GetCameraController()->GetCamera()->SetTranslation(glm::vec3(x * C_TileSize + C_TileSize / 2.0f, 100.0f, y * C_TileSize + C_TileSize / 2.0f));
 	GetCameraController()->GetCamera()->SetYaw(48.8);
-	GetCameraController()->GetCamera()->SetPitch(-27.8);
+	GetCameraController()->GetCamera()->SetPitch(-27.8);*/
 
+	GetCameraController()->GetCamera()->SetTranslation(glm::vec3());
+	GetCameraController()->GetCamera()->SetYaw(48.8);
+	GetCameraController()->GetCamera()->SetPitch(-27.8);
 
 
 	std::shared_ptr<BuildRenderListPassTemplated<CWMO_Group_Instance>> wmoListPass = std::make_shared<BuildRenderListPassTemplated<CWMO_Group_Instance>>(GetRenderDevice(), shared_from_this());
@@ -288,7 +297,7 @@ void CSceneWoW::Load3D()
 	m_Technique3D.AddPass(std::make_shared<CRenderPass_M2>(GetRenderDevice(), shared_from_this())->CreatePipeline(GetRenderWindow()->GetRenderTarget(), &GetRenderWindow()->GetViewport()));
 	//m_Technique3D.AddPass(std::make_shared<CRenderPass_M2_Instanced>(GetRenderDevice(), m2ListPass, shared_from_this())->CreatePipeline(GetRenderWindow()->GetRenderTarget(), &GetRenderWindow()->GetViewport()));
 	m_Technique3D.AddPass(std::make_shared<CRenderPass_Liquid>(GetRenderDevice(), shared_from_this())->CreatePipeline(GetRenderWindow()->GetRenderTarget(), &GetRenderWindow()->GetViewport()));
-	//m_Technique3D.AddPass(std::make_shared<CDrawBoundingBoxPass>(GetRenderDevice(), shared_from_this())->CreatePipeline(GetRenderWindow()->GetRenderTarget(), &GetRenderWindow()->GetViewport()));
+	m_Technique3D.AddPass(std::make_shared<CDrawBoundingBoxPass>(GetRenderDevice(), shared_from_this())->CreatePipeline(GetRenderWindow()->GetRenderTarget(), &GetRenderWindow()->GetViewport()));
 }
 
 void CSceneWoW::Load3D_M2s()

@@ -18,7 +18,7 @@ CWMO_Base_Instance::~CWMO_Base_Instance()
 
 void CWMO_Base_Instance::CreateInstances()
 {
-	m_WMOObject.CreateInsances(this);
+	m_WMOObject.CreateInsances(shared_from_this());
 
 	RecalcVerts();
 }
@@ -31,7 +31,7 @@ void CWMO_Base_Instance::RecalcVerts()
 		m_ConvertedVerts.clear();
 		for (const auto& v : m_WMOObject.m_PortalVertices)
 		{
-			m_ConvertedVerts.push_back(GetWorldTransfom() * glm::vec4(v, 1.0f));
+			m_ConvertedVerts.push_back(/*GetWorldTransfom() * */glm::vec4(v, 1.0f));
 		}
 	}
 #endif

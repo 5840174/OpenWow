@@ -60,7 +60,7 @@ void CMap::MapPostLoad()
 {
 	Log::Print("Map[%s]: Id [%d]. Postloading...", m_MapDBCRecord->Get_Directory(), m_MapDBCRecord->Get_ID());
 
-	m_WDT->CreateInsances(this);
+	m_WDT->CreateInsances(shared_from_this());
 	//m_WDL->CreateInsances(this);
 }
 

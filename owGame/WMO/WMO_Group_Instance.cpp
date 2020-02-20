@@ -35,7 +35,7 @@ void CWMO_Group_Instance::Initialize()
 //
 bool CWMO_Group_Instance::Load()
 {
-	m_WMOGroupObject.CreateInsances(this);
+	m_WMOGroupObject.CreateInsances(shared_from_this());
 
 	return true;
 }

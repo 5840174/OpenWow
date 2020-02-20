@@ -30,7 +30,7 @@ CM2_Base_Instance::~CM2_Base_Instance()
 
 void CM2_Base_Instance::CreateInstances()
 {
-	m_M2.CreateInsances(this);
+	m_M2.CreateInsances(shared_from_this());
 }
 
 bool CM2_Base_Instance::Load()
@@ -89,7 +89,7 @@ std::shared_ptr<ITexture> CM2_Base_Instance::getSpecialTexture(SM2_Texture::Type
 void CM2_Base_Instance::Initialize()
 {
 	GetComponent<CColliderComponent3D>()->SetBounds(getM2().GetBounds());
-	GetComponent<CColliderComponent3D>()->SetDebugDrawMode(true);
+	GetComponent<CColliderComponent3D>()->SetDebugDrawMode(false);
 }
 
 void CM2_Base_Instance::Accept(IVisitor* visitor)
