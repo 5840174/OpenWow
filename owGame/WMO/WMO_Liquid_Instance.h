@@ -13,6 +13,7 @@ public:
 	virtual ~CWMO_Liquid_Instance();
 
 	// IPortalRoomObject
+	BoundingBox GetBoundingBox() const override final;
 	inline void SetVisibilityState(bool _visibility) override { m_PortalVisibilityState = _visibility; }
 
 	// SceneNode3D

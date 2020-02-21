@@ -29,8 +29,8 @@ public:
 
 	// WMO_Group
 	const uint32 GetGroupIndex() const;
-	void AddPortal(const std::shared_ptr<CWMO_Part_Portal>& WMOPartPortal);
-	const std::vector<std::shared_ptr<CWMO_Part_Portal>>& GetPortals() const;
+	void AddPortal(const CWMO_Part_Portal& WMOPartPortal);
+	const std::vector<CWMO_Part_Portal>& GetPortals() const;
 
 	// ISceneNodeProvider
 	void CreateInsances(const std::shared_ptr<ISceneNode3D>& Parent) const override;
@@ -71,7 +71,7 @@ public:
 	
 
 private:
-	std::vector<std::shared_ptr<CWMO_Part_Portal>> m_Portals;
+	std::vector<CWMO_Part_Portal> m_Portals;
 
 private:
 	IBaseManager& m_BaseManager;

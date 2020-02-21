@@ -58,6 +58,23 @@ const std::vector<std::weak_ptr<IPortalRoomObject>>& CWMO_Group_Instance::GetRoo
 	return m_PortalRoomObjects;
 }
 
+void CWMO_Group_Instance::Reset()
+{
+	SetVisibilityState(false);
+	SetCalculatedState(false);
+
+	for (const auto& roomObjectPtr : GetRoomObjects())
+		if (auto roomObject = roomObjectPtr.lock())
+			roomObject->SetVisibilityState(false);
+}
+
+BoundingBox CWMO_Group_Instance::GetBoundingBox() const
+{
+	BoundingBox bounds = GetComponent<IColliderComponent3D>()->GetBounds();
+	bounds.transform(GetWorldTransfom());
+	return bounds;
+}
+
 void CWMO_Group_Instance::SetVisibilityState(bool Value)
 {
 	m_PortalsVis = Value;
@@ -83,20 +100,35 @@ void CWMO_Group_Instance::CreatePortals(const std::shared_ptr<CWMO_Base_Instance
 	for (const auto& p : m_WMOGroupObject.GetPortals())
 	{
 		std::shared_ptr<CWMO_Group_Instance> roomInnerInstance = nullptr;
-		if (p->getGrInner() != -1)
+		if (p.getGrInner() != -1)
 		{
-			roomInnerInstance = BaseInstance->getGroupInstances()[p->getGrInner()].lock();
+			roomInnerInstance = BaseInstance->getGroupInstances()[p.getGrInner()].lock();
 			_ASSERT(roomInnerInstance != nullptr);
 		}
 
 		std::shared_ptr<CWMO_Group_Instance> roomOuterInstance = nullptr;
-		if (p->getGrOuter() != -1)
+		if (p.getGrOuter() != -1)
 		{
-			roomOuterInstance = BaseInstance->getGroupInstances()[p->getGrOuter()].lock();
+			roomOuterInstance = BaseInstance->getGroupInstances()[p.getGrOuter()].lock();
 			_ASSERT(roomOuterInstance != nullptr);
 		}
 
-		AddPortal(std::make_shared<CWMOPortalInstance>(roomInnerInstance, roomOuterInstance, p->GetVertices(), p->getPlane()));
+		std::vector<glm::vec3> portalsVertices = p.GetVertices();
+		for (auto& pv : portalsVertices)
+			pv = BaseInstance->GetWorldTransfom() * glm::vec4(pv, 1.0f);
+
+		glm::vec4 O = glm::vec4(p.getPlane().normal * p.getPlane().dist, 1.0f);
+		glm::vec4 N = glm::vec4(p.getPlane().normal, 0.0f);
+
+		O = BaseInstance->GetWorldTransfom() * O;
+		N = glm::transpose(glm::inverse(BaseInstance->GetWorldTransfom())) * N;
+
+		//Plane plane;
+		//plane.normal = N.xyz();
+		//plane.dist = glm::dot(O.xyz(), N.xyz());
+
+		Plane plane(portalsVertices[0], portalsVertices[1], portalsVertices[2]);
+		AddPortal(std::make_shared<CWMOPortalInstance>(roomInnerInstance, roomOuterInstance, portalsVertices, plane));
 	}
 }
 

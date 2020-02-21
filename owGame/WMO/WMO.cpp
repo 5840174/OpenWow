@@ -117,22 +117,20 @@ bool CWMO::Load()
 	}
 
 	// Portal vertices
+	std::vector<glm::vec3> portalVertices;
 	{
 		for (const auto& pv : m_ChunkReader->OpenChunkT<glm::vec3>("MOPV"))
 		{
-			m_PortalVertices.push_back(Fix_XZmY(pv));
+			portalVertices.push_back(Fix_XZmY(pv));
 		}
-
-		if (!m_PortalVertices.empty())
-			m_PortalVB = m_RenderDevice.GetObjectsFactory().CreateVertexBuffer(m_PortalVertices);
 	}
 
 	// Portal defs
-	std::vector<std::shared_ptr<CWMO_Part_Portal>> portals;
+	std::vector<CWMO_Part_Portal> portals;
 	{
 		for (const auto& pt : m_ChunkReader->OpenChunkT<SWMO_PortalDef>("MOPT"))
 		{
-			portals.push_back(std::make_shared<CWMO_Part_Portal>(m_RenderDevice, *this, pt));
+			portals.push_back(CWMO_Part_Portal(m_RenderDevice, portalVertices, pt));
 		}
 	}
 
@@ -141,10 +139,9 @@ bool CWMO::Load()
 	{
 		for (const auto& pr : m_ChunkReader->OpenChunkT<SWMO_PortalReferencesDef>("MOPR"))
 		{
-			auto portal = portals[pr.portalIndex];
-			_ASSERT(portal != nullptr);
-			portal->setGroup(pr.groupIndex, pr.side);
-
+			_ASSERT(pr.portalIndex >= 0 && pr.portalIndex < portals.size());
+			auto& portal = portals[pr.portalIndex];
+			portal.setGroup(pr.groupIndex, pr.side);
 			portalsReferences.push_back(pr);
 		}
 	}
@@ -251,7 +248,7 @@ bool CWMO::Load()
 	if (portals.size() > 0)
 	{
 #ifndef WMO_DISABLE_PORTALS
-		m_PortalController = std::make_shared<CWMO_PortalsController>(*this);
+		m_PortalController = std::make_shared<CWMO_PortalsController>();
 
 		for (const auto& it : portalsReferences)
 		{

@@ -41,6 +41,18 @@ CWMO_Doodad_Instance::~CWMO_Doodad_Instance()
 
 
 //
+// IPortalRoomObject
+//
+BoundingBox CWMO_Doodad_Instance::GetBoundingBox() const
+{
+	BoundingBox bounds = GetComponent<IColliderComponent3D>()->GetBounds();
+	bounds.transform(GetWorldTransfom());
+	return bounds;
+}
+
+
+
+//
 // SceneNode3D
 //
 void CWMO_Doodad_Instance::Initialize()

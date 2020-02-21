@@ -6,13 +6,13 @@
 // General
 #include "WMO_Part_Portal.h"
 
-CWMO_Part_Portal::CWMO_Part_Portal(IRenderDevice& RenderDevice, const CWMO& WMOModel, const SWMO_PortalDef& _proto)
+CWMO_Part_Portal::CWMO_Part_Portal(IRenderDevice& RenderDevice, const std::vector<glm::vec3>& PortalVertices, const SWMO_PortalDef& _proto)
 	: m_GrInner(-1)
 	, m_GrOuter(-1)
 {
 	_ASSERT(_proto.count < 20);
 
-	m_Vertices.assign(WMOModel.m_PortalVertices.data() + _proto.startVertex, WMOModel.m_PortalVertices.data() + _proto.startVertex + _proto.count);
+	m_Vertices.assign(PortalVertices.data() + _proto.startVertex, PortalVertices.data() + _proto.startVertex + _proto.count);
 	_ASSERT(m_Vertices.size() == _proto.count);
 
 	m_Plane.normal = Fix_XZmY(_proto.plane.normal);

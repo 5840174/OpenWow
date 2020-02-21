@@ -34,6 +34,8 @@ public:
 	const std::vector<std::shared_ptr<IPortal>>& GetPortals() const override final;
 	void AddRoomObject(const std::weak_ptr<IPortalRoomObject>& RoomObject) override final;
 	const std::vector<std::weak_ptr<IPortalRoomObject>>& GetRoomObjects() const override final;
+	void Reset() override final;
+	BoundingBox GetBoundingBox() const override final;
 	void SetVisibilityState(bool Value) override final;
 	void SetCalculatedState(bool Value) override final;
 	bool IsCalculated() const override final;

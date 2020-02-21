@@ -262,8 +262,8 @@ void CSceneWoW::Load3D()
 #if 1
 	auto wmo = GetBaseManager().GetManager<IWMOManager>()->Add(GetRenderDevice(), "World\\wmo\\Azeroth\\Buildings\\Stormwind\\Stormwind.wmo");
 	wmoInstance = GetRootNode3D()->CreateSceneNode<CWMO_Base_Instance>(*wmo);
-	//wmoInstance->SetTranslate(glm::vec3(100, 500, 100));
-	//wmoInstance->SetRotation(glm::vec3(0.0f, glm::pi<float>(), 0.0f));
+	wmoInstance->SetTranslate(glm::vec3(100, 500, 100));
+	wmoInstance->SetRotation(glm::vec3(0.0f, glm::pi<float>(), 0.0f));
 	GetBaseManager().GetManager<ILoader>()->AddToLoadQueue(wmoInstance.get());
 
 	GetCameraController()->GetCamera()->SetTranslation(glm::vec3());

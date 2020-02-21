@@ -75,12 +75,12 @@ const uint32 WMO_Group::GetGroupIndex() const
 	return m_GroupIndex;
 }
 
-void WMO_Group::AddPortal(const std::shared_ptr<CWMO_Part_Portal>& WMOPartPortal)
+void WMO_Group::AddPortal(const CWMO_Part_Portal& WMOPartPortal)
 {
 	m_Portals.push_back(WMOPartPortal);
 }
 
-const std::vector<std::shared_ptr<CWMO_Part_Portal>>& WMO_Group::GetPortals() const
+const std::vector<CWMO_Part_Portal>& WMO_Group::GetPortals() const
 {
 	return m_Portals;
 }
