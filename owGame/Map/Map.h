@@ -23,7 +23,7 @@ public:
 	//
 	void                                            EnterMap(vec3 _cameraPosition);
 	void                                            EnterMap(int32 x, int32 z);
-	CMapTile*                                       LoadTile(int32 x, int32 z);
+	std::shared_ptr<CMapTile>                       LoadTile(int32 x, int32 z);
 	void                                            ClearCache();
 	uint32                                          GetAreaID(const ICameraComponent3D* camera);
 
@@ -58,8 +58,8 @@ private:
 	const DBC_MapRecord*                            m_MapDBCRecord;
 
 
-	CMapTile*	                                    m_ADTCache[C_TilesCacheSize];
-	CMapTile*	                                    m_Current[C_RenderedTiles][C_RenderedTiles];
+	std::shared_ptr<CMapTile>	                    m_ADTCache[C_TilesCacheSize];
+	std::shared_ptr<CMapTile>	                    m_Current[C_RenderedTiles][C_RenderedTiles];
 	int32					                        m_CurrentTileX, m_CurrentTileZ;
 	bool					                        m_IsOnInvalidTile;
 

@@ -4,39 +4,27 @@
 
 // FORWARD BEGIN
 class CWMO;
-class WMO_Group;
-class CWMO_Base_Instance;
 // FORWARD END
 
 class CWMO_Part_Portal
 {
 public:
-	CWMO_Part_Portal(IRenderDevice& RenderDevice, const CWMO& WMOModel, const SWMO_PortalDef& _proto);
+	CWMO_Part_Portal(IRenderDevice& RenderDevice, const CWMO& WMOModel, const SWMO_PortalDef& Proto);
 	virtual ~CWMO_Part_Portal();
 
-	uint16 getStartVertex() const { return m_StartVertex; }
-	uint16 getCount() const { return m_Count; }
+	const std::vector<glm::vec3>& GetVertices() const { return m_Vertices; }
 	const Plane& getPlane() const { return m_Plane; }
 
 	void setGroup(int32 _group, int16 side);
-	int32 getGrInner() { return m_GrInner; }
-	int32 getGrOuter() { return m_GrOuter; }
-
-	bool IsVisible(const CWMO_Base_Instance* _localContr, const Plane* _planes, uint32 _planesCount) const;
-	bool IsPositive(cvec3 _InvWorldCamera) const;
+	int32 getGrInner() const { return m_GrInner; }
+	int32 getGrOuter() const { return m_GrOuter; }
 
 private:
-	BoundingBox				m_Bounds;
-
-	uint16					m_StartVertex;
-	uint16					m_Count;
+	uint16					m_PortalVertexesOffset;
+	uint16					m_PortalVertexesCount;
+	std::vector<glm::vec3>  m_Vertices;
 	Plane					m_Plane;
 
 	int32					m_GrInner;
 	int32					m_GrOuter;
-
-	std::shared_ptr<IGeometry> m_Geom;
-
-private:
-	const CWMO& m_WMOModel;
 };

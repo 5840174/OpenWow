@@ -61,9 +61,7 @@ public:
 
 	//-- Portals --//
 	std::vector<vec3>                                                   m_PortalVertices;		// MOPV chunk
-	std::shared_ptr<IBuffer>                                             m_PortalVB;
-	std::vector<std::shared_ptr<CWMO_Part_Portal>>                      m_Portals;
-	std::vector<SWMO_PortalReferencesDef>                               m_PortalReferences;		// MOPR chunk
+	std::shared_ptr<IBuffer>                                            m_PortalVB;
 #ifndef WMO_DISABLE_PORTALS
 	std::shared_ptr<CWMO_PortalsController>                             m_PortalController;
 #endif

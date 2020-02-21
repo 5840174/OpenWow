@@ -5,11 +5,10 @@
 // General
 #include "WMO_Doodad_Instance.h"
 
-CWMO_Doodad_Instance::CWMO_Doodad_Instance(const M2& M2Object, const WMO_Group& WMOGroupObject, uint32 _index, const SWMO_Doodad_PlacementInfo & _placement)
+CWMO_Doodad_Instance::CWMO_Doodad_Instance(const M2& M2Object, uint32 _index, const SWMO_Doodad_PlacementInfo & _placement)
 	: CM2_Base_Instance(M2Object)
-	, m_WMOGroupObject(WMOGroupObject)
 	, m_Index(_index)
-	, m_PortalVis(true)
+	, m_PortalVisibilityState(true)
 {
 	// CTransformComponent
 	{
@@ -39,6 +38,11 @@ CWMO_Doodad_Instance::CWMO_Doodad_Instance(const M2& M2Object, const WMO_Group& 
 CWMO_Doodad_Instance::~CWMO_Doodad_Instance()
 {}
 
+
+
+//
+// SceneNode3D
+//
 void CWMO_Doodad_Instance::Initialize()
 {
 	__super::Initialize();
@@ -46,7 +50,7 @@ void CWMO_Doodad_Instance::Initialize()
 
 void CWMO_Doodad_Instance::Accept(IVisitor* visitor)
 {
-	if (m_PortalVis)
+	if (m_PortalVisibilityState)
 	{
 		return CM2_Base_Instance::Accept(visitor);
 	}

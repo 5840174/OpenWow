@@ -42,6 +42,7 @@ public:
 
 	// SceneNode3D
 	void								Initialize() override;
+	virtual void                        Update(const UpdateEventArgs& e) override;
 	virtual void                        Accept(IVisitor* visitor) override;
 
 protected:

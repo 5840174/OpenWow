@@ -14,53 +14,10 @@
 
 CWMO_PortalsController::CWMO_PortalsController(const CWMO& WMOObject) 
 	: m_WMOObject(WMOObject)
-{
-	for (auto& it : m_WMOObject.m_PortalReferences)
-	{
-		std::shared_ptr<CWMO_Part_Portal> portal = m_WMOObject.m_Portals[it.portalIndex];
-		std::shared_ptr<WMO_Group> group = m_WMOObject.m_Groups[it.groupIndex];
-
-		if (it.groupIndex == group->GetGroupIndex())
-		{
-			group->m_Portals.push_back(portal);
-		}
-		else
-		{
-			_ASSERT(false);
-		}
-
-		portal->setGroup(it.groupIndex, it.side);
-	}
-}
+{}
 
 CWMO_PortalsController::~CWMO_PortalsController()
-{
-}
-
-void GetPolyFrustum(const vec3* poly, uint32 num_verts, Frustum* _frustum, vec3 eye, bool _isPositive)
-{
-	_ASSERT(_frustum != nullptr);
-
-	Plane _portalPlanes[15];
-	_ASSERT(num_verts < 15);
-
-	for (uint32 i = 0; i < num_verts; i++)
-	{
-		vec3 v1 = poly[i];
-		vec3 v2 = poly[(i + 1) % num_verts];
-
-		if (_isPositive)
-		{
-			_portalPlanes[i] = Plane(eye, v1, v2);
-		}
-		else
-		{
-			_portalPlanes[i] = Plane(eye, v2, v1);
-		}
-	}
-
-	_frustum->buildCustomFrustrum(_portalPlanes, num_verts);
-}
+{}
 
 void CWMO_PortalsController::Update(const CWMO_Base_Instance* SceneNodeInstance, const ICameraComponent3D* _camera)
 {
@@ -68,58 +25,66 @@ void CWMO_PortalsController::Update(const CWMO_Base_Instance* SceneNodeInstance,
 		return;
 
 	// Reset all flags
-	for (auto& group : SceneNodeInstance->getGroupInstances())
+	for (const auto& groupPtr : SceneNodeInstance->getGroupInstances())
 	{
-		group->SetPortalVisible(false);
-		group->SetPortalCalculated(false);
-
-#ifdef USE_M2_MODELS
-		for (auto& doodad : group->getDoodadsInstances())
+		if (auto group = groupPtr.lock())
 		{
-			if (doodad)
-			{
-				doodad->setPortalVisibility(false);
-			}
+			group->SetVisibilityState(false);
+			group->SetCalculatedState(false);
+
+			for (const auto& roomObjectPtr : group->GetRoomObjects())
+				if (auto roomObject = roomObjectPtr.lock())
+					roomObject->SetVisibilityState(false);
 		}
-#endif
 	}
 
+	glm::vec3 InvCameraTranslate = SceneNodeInstance->GetInverseWorldTransform() * glm::vec4(_camera->GetTranslation(), 1.0f);
+	glm::vec3 InvCameraDirection = SceneNodeInstance->GetInverseWorldTransform() * glm::vec4(_camera->GetDirection(), 0.0f);
+	glm::vec3 InvCameraUpDirection = SceneNodeInstance->GetInverseWorldTransform() * glm::vec4(_camera->GetCameraUpDirection(), 0.0f);
 
-	glm::vec3 _InvWorldCamera = SceneNodeInstance->GetInverseWorldTransform() * glm::vec4(_camera->GetTranslation(), 1.0f);
+	glm::mat4 IvnCameraViewMatrix = glm::lookAt(
+		InvCameraTranslate, 
+		InvCameraTranslate + InvCameraDirection, 
+		InvCameraUpDirection
+	);
+
+	Frustum cameraFrustum;
+	cameraFrustum.buildViewFrustum(IvnCameraViewMatrix, _camera->GetProjectionMatrix());
+
+
 
 	bool insideIndoor = false;
 
-	if (m_WMOObject.GetBounds().isPointInside(_InvWorldCamera))
+	if (m_WMOObject.GetBounds().isPointInside(InvCameraTranslate))
 	{
-		for (const auto& group : SceneNodeInstance->getGroupInstances())
+		for (const auto& groupPtr : SceneNodeInstance->getGroupInstances())
 		{
-			BoundingBox bbox = group->GetComponent<CColliderComponent3D>()->GetBounds();
-			bbox.transform(group->GetWorldTransfom());
-
-			if (!(bbox.isPointInside(_camera->GetTranslation())))
+			if (auto group = groupPtr.lock())
 			{
-				continue;
-			}
+				BoundingBox bbox = group->GetComponent<CColliderComponent3D>()->GetBounds();
+				bbox.transform(group->GetLocalTransform());
 
-			if (!group->getObject().m_GroupHeader.flags.HAS_COLLISION)
-			{
-				continue;
-			}
+				if (bbox.isPointInside(InvCameraTranslate) == false)
+					continue;
 
-			if (group->getObject().m_GroupHeader.flags.IS_OUTDOOR)
-			{
-				continue;
-			}
+				if (group->getObject().m_GroupHeader.flags.HAS_COLLISION == false)
+					continue;
 
-			bool recurResult = Recur(SceneNodeInstance, group, _camera, _InvWorldCamera, _camera->GetFrustum(), true);
-			if (!recurResult)
-			{
-				continue;
-			}
+				if (group->getObject().m_GroupHeader.flags.IS_OUTDOOR)
+				{
+					continue;
+				}
 
-			if (group->getObject().m_GroupHeader.flags.IS_INDOOR)
-			{
-				insideIndoor = true;
+				bool recurResult = Recur(SceneNodeInstance, group, cameraFrustum, InvCameraTranslate, cameraFrustum, true);
+				if (!recurResult)
+				{
+					continue;
+				}
+
+				if (group->getObject().m_GroupHeader.flags.IS_INDOOR)
+				{
+					insideIndoor = true;
+				}
 			}
 		}
 	}
@@ -129,87 +94,76 @@ void CWMO_PortalsController::Update(const CWMO_Base_Instance* SceneNodeInstance,
 	// If we outside WMO, then get outdorr group
 	if (!insideIndoor)
 	{
-		for (auto& ogr : SceneNodeInstance->getGroupOutdoorInstances())
+		for (const auto& groupPtr : SceneNodeInstance->getGroupOutdoorInstances())
 		{
-			Recur(SceneNodeInstance, ogr, _camera, _InvWorldCamera, _camera->GetFrustum(), true);
+			if (auto group = groupPtr.lock())
+			{
+				Recur(SceneNodeInstance, group, cameraFrustum, InvCameraTranslate, cameraFrustum, true);
+			}
+			else _ASSERT(false);
 		}
 	}
 }
 
-bool CWMO_PortalsController::Recur(const CWMO_Base_Instance* SceneNodeInstance, CWMO_Group_Instance* _group, const ICameraComponent3D* _camera, cvec3 _InvWorldCamera, const Frustum& _frustum, bool _isFirstIteration)
+bool CWMO_PortalsController::Recur(const CWMO_Base_Instance* SceneNodeInstance, const std::shared_ptr<IPortalRoom>& Room, const Frustum& CameraFrustum, cvec3 _InvWorldCamera, const Frustum& PortalFrustum, bool _isFirstIteration)
 {
-	if (_group == nullptr || _group->GetPortalCalculated())
+	if (Room == nullptr || Room->IsCalculated())
 	{
 		return false;
 	}
 
-	BoundingBox bbox = _group->GetComponent<CColliderComponent3D>()->GetBounds();
-	bbox.transform(_group->GetWorldTransfom());
-	if (_camera->GetFrustum().cullBox(bbox))
+	auto roomAsSceneNode = std::dynamic_pointer_cast<ISceneNode3D>(Room);
+	_ASSERT(roomAsSceneNode != nullptr);
+
+	BoundingBox bbox = roomAsSceneNode->GetComponent<CColliderComponent3D>()->GetBounds();
+	bbox.transform(roomAsSceneNode->GetLocalTransform());
+	if (CameraFrustum.cullBox(bbox))
 	{
-		return false;
+		//return false;
 	}
 
 	// Set visible for current
-	_group->SetPortalVisible(true);
-	_group->SetPortalCalculated(true);
+	Room->SetVisibilityState(true);
+	Room->SetCalculatedState(true);
 
-#ifdef USE_M2_MODELS
-	for (const auto& doodad : _group->getDoodadsInstances())
+	for (const auto& roomObjectPtr : Room->GetRoomObjects())
 	{
-		if (doodad)
+		if (auto roomObject = roomObjectPtr.lock())
 		{
-			BoundingBox bbox = doodad->GetComponent<IColliderComponent3D>()->GetBounds();
-			bbox.transform(doodad->GetWorldTransfom());
+			auto roomObjectAsSceneNode = std::dynamic_pointer_cast<ISceneNode3D>(roomObject);
+			_ASSERT(roomObjectAsSceneNode != nullptr);
 
-			if (_isFirstIteration || !_frustum.cullBox(bbox))
+			BoundingBox bbox = roomObjectAsSceneNode->GetComponent<IColliderComponent3D>()->GetBounds();
+			bbox.transform(roomObjectAsSceneNode->GetLocalTransform());
+
+			if (_isFirstIteration || !PortalFrustum.cullBox(bbox))
 			{
-				doodad->setPortalVisibility(true);
+				roomObject->SetVisibilityState(true);
 			}
 		}
 	}
-#endif
 
-	for (const auto& p : _group->getObject().m_Portals)
+	for (const auto& p : Room->GetPortals())
 	{
 		// If we don't see portal // TODO: Don't use it on first step
-		if (_camera->GetFrustum().cullPoly(SceneNodeInstance->getVerts() + p->getStartVertex(), p->getCount()))
-		{
+		if (p->IsVisible(CameraFrustum) == false)
 			continue;
-		}
 
 		// And we don't see portal from other portal
-		if (!p->IsVisible(SceneNodeInstance, _frustum.getPlanes(), _frustum.getPlanesCnt()))
-		{
+		if (p->IsVisible(PortalFrustum.getPlanes()) == false)
 			continue;
-		}
-
-		bool isPositive = p->IsPositive(_InvWorldCamera);
 
 		// Build camera-to-poratl frustum
-		Frustum portalFrustum;
-		GetPolyFrustum
-		(
-			SceneNodeInstance->getVerts() + p->getStartVertex(),
-			p->getCount(),
-			&portalFrustum,
-			_camera->GetTranslation(),
-			isPositive
-		);
+		Frustum portalFrustum = p->CreatePolyFrustum(_InvWorldCamera);
 
 		// Find attached to portal group
-		CWMO_Group_Instance* groupInstance = nullptr;
-		int32 groupIndex = isPositive ? p->getGrInner() : p->getGrOuter();
-		if (groupIndex >= 0 && groupIndex < SceneNodeInstance->getGroupInstances().size())
-		{
-			groupInstance = SceneNodeInstance->getGroupInstances()[groupIndex];
-		}
+		auto nextRoom = p->GetRoomObject(_InvWorldCamera);
 
 		Recur
 		(
 			SceneNodeInstance,
-			groupInstance,
-			_camera,
+			nextRoom,
+			CameraFrustum,
 			_InvWorldCamera,
 			portalFrustum,
 			false

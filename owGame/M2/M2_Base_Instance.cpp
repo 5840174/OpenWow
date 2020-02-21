@@ -92,31 +92,21 @@ void CM2_Base_Instance::Initialize()
 	GetComponent<CColliderComponent3D>()->SetDebugDrawMode(false);
 }
 
-void CM2_Base_Instance::Accept(IVisitor* visitor)
+void CM2_Base_Instance::Update(const UpdateEventArgs & e)
 {
-	//AbstractPass* visitorAsBasePass = dynamic_cast<AbstractPass*>(visitor);
-	//const ICamera* camera = visitorAsBasePass->GetRenderEventArgs()->Camera;
-
-	//float distToCamera2D = (camera->GetTranslation() - GetComponent<IColliderComponent3D>()->GetBounds().getCenter()).length() - GetComponent<IColliderComponent3D>()->GetBounds().getRadius();
-	//if (distToCamera2D > m_QualitySettings->ADT_MDX_Distance)
-	//{
-	//	return false;
-	//}
-
-	//if (!GetComponent<IColliderComponent3D>()->CheckFrustum(camera))
-	//{
-	//	return false;
-	//}
+	if (GetState() != ILoadable::ELoadableState::Loaded)
+		return;
 
 	if (m_Attached != nullptr)
 	{
-		// TODO:
-        //GetComponent<ITransformComponent3D>()->ForceRecalculateLocalTransform();
+		ForceRecalculateLocalTransform();
 	}
 
-	/*if (m_M2.isAnimated())
+	const_cast<M2&>(m_M2).update(e.TotalTime, e.DeltaTime);
+
+	if (m_M2.isAnimated())
 	{
-		m_Animator->Update(visitorAsBasePass->GetRenderEventArgs()->TotalTime, visitorAsBasePass->GetRenderEventArgs()->DeltaTime);
+		m_Animator->Update(e.TotalTime, e.DeltaTime);
 
 		//if (m_Object->isBillboard())
 		//{
@@ -125,14 +115,15 @@ void CM2_Base_Instance::Accept(IVisitor* visitor)
 		//else
 		//{
 		//if (!m_NeedRecalcAnimation)
-		//{
-		m_M2.calc(m_Animator->getSequenceIndex(), m_Animator->getCurrentTime(), static_cast<uint32>(visitorAsBasePass->GetRenderEventArgs()->TotalTime), camera->GetViewMatrix(), GetWorldTransfom());
-		//	m_NeedRecalcAnimation = true;
-		//}
-		//}
-	}*/
+		{
+			//const_cast<M2&>(m_M2).calc(m_Animator->getSequenceIndex(), m_Animator->getCurrentTime(), e.TotalTime, e.Camera->GetViewMatrix(), GetWorldTransfom());
+			//m_NeedRecalcAnimation = true;
+		}
+	}
+}
 
-	// SceneNode3D
+void CM2_Base_Instance::Accept(IVisitor* visitor)
+{
 	SceneNode3D::Accept(visitor);
 }
 

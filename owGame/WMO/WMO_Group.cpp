@@ -75,6 +75,16 @@ const uint32 WMO_Group::GetGroupIndex() const
 	return m_GroupIndex;
 }
 
+void WMO_Group::AddPortal(const std::shared_ptr<CWMO_Part_Portal>& WMOPartPortal)
+{
+	m_Portals.push_back(WMOPartPortal);
+}
+
+const std::vector<std::shared_ptr<CWMO_Part_Portal>>& WMO_Group::GetPortals() const
+{
+	return m_Portals;
+}
+
 
 
 //
@@ -97,11 +107,11 @@ void WMO_Group::CreateInsances(const std::shared_ptr<ISceneNode3D>& Parent) cons
 	{
 		glm::vec3 realPos = Fix_XZmY(m_WMOLiqiud->GetHeader().pos);
 
-		auto liquidInstance = Parent->CreateSceneNode<CWMO_Liquid_Instance>(*this);
+		auto liquidInstance = Parent->CreateSceneNode<CWMO_Liquid_Instance>();
 		m_WMOLiqiud->CreateInsances(liquidInstance);
 
 		// Transform
-		liquidInstance->SetTranslate(glm::vec3(realPos.x, realPos.y, realPos.z));
+		liquidInstance->SetTranslate(glm::vec3(realPos.x, 0, realPos.z));
 
 		// IColliderComponent3D
 		{
@@ -112,7 +122,7 @@ void WMO_Group::CreateInsances(const std::shared_ptr<ISceneNode3D>& Parent) cons
 			liquidInstance->GetComponent<IColliderComponent3D>()->SetBounds(bbox);
 		}
 
-		parentAsWMOGroupInstance->addLiquidInstance(liquidInstance.get());
+		parentAsWMOGroupInstance->AddRoomObject(liquidInstance);
 		
 	}
 
@@ -127,9 +137,9 @@ void WMO_Group::CreateInsances(const std::shared_ptr<ISceneNode3D>& Parent) cons
 		std::shared_ptr<M2> m2 = m_BaseManager.GetManager<IM2Manager>()->Add(m_RenderDevice, doodadFileName);
 		if (m2)
 		{
-			auto inst = Parent->CreateSceneNode<CWMO_Doodad_Instance>(*m2, *this, index, placement);
+			auto inst = Parent->CreateSceneNode<CWMO_Doodad_Instance>(*m2, index, placement);
 			m_BaseManager.GetManager<ILoader>()->AddToLoadQueue(inst.get());
-			parentAsWMOGroupInstance->addDoodadInstance(inst.get());
+			parentAsWMOGroupInstance->AddRoomObject(inst);
 		}
 	}
 #endif

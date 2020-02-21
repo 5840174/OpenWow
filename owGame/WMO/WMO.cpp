@@ -48,11 +48,20 @@ void CWMO::CreateInsances(const std::shared_ptr<ISceneNode3D>& Parent) const
 	for (const auto& it : m_Groups)
 	{
 		auto groupInstance = Parent->CreateSceneNode<CWMO_Group_Instance>(*it);
-		parentAsWMOInstance->AddGroupInstance(groupInstance.get());
+		parentAsWMOInstance->AddGroupInstance(groupInstance);
 		if (it->m_GroupHeader.flags.IS_OUTDOOR)
-			parentAsWMOInstance->AddOutdoorGroupInstance(groupInstance.get());
+			parentAsWMOInstance->AddOutdoorGroupInstance(groupInstance);
 
 		m_BaseManager.GetManager<ILoader>()->AddToLoadQueue(groupInstance.get());
+	}
+
+	for (const auto& groupPtr : parentAsWMOInstance->getGroupInstances())
+	{
+		if (auto group = groupPtr.lock())
+		{
+			group->CreatePortals(parentAsWMOInstance);
+		}
+		else _ASSERT(false);
 	}
 
 	for (auto& it : m_Lights)
@@ -94,22 +103,6 @@ bool CWMO::Load()
 		m_GroupNames[buffer->getSize()] = 0x00;
 	}
 
-	// Group info
-	{
-		uint32 cntr = 0;
-		for (const auto& groupInfo : m_ChunkReader->OpenChunkT<SWMO_GroupInfoDef>("MOGI"))
-		{
-			std::shared_ptr<WMO_Group> group = std::make_shared<WMO_Group>(m_BaseManager, m_RenderDevice, *this, cntr++, groupInfo);
-			m_BaseManager.GetManager<ILoader>()->AddToLoadQueue(group.get());
-			m_Groups.push_back(group);
-
-			if (group->m_GroupHeader.flags.IS_OUTDOOR)
-			{
-				m_OutdoorGroups.push_back(group);
-			}
-		}
-	}
-
 	// Skybox
 	char* skyboxFilename = nullptr;
 	{
@@ -135,18 +128,24 @@ bool CWMO::Load()
 	}
 
 	// Portal defs
+	std::vector<std::shared_ptr<CWMO_Part_Portal>> portals;
 	{
 		for (const auto& pt : m_ChunkReader->OpenChunkT<SWMO_PortalDef>("MOPT"))
 		{
-			m_Portals.push_back(std::make_shared<CWMO_Part_Portal>(m_RenderDevice, *this, pt));
+			portals.push_back(std::make_shared<CWMO_Part_Portal>(m_RenderDevice, *this, pt));
 		}
 	}
 
 	// Portal references
+	std::vector<SWMO_PortalReferencesDef> portalsReferences;
 	{
 		for (const auto& pr : m_ChunkReader->OpenChunkT<SWMO_PortalReferencesDef>("MOPR"))
 		{
-			m_PortalReferences.push_back(pr);
+			auto portal = portals[pr.portalIndex];
+			_ASSERT(portal != nullptr);
+			portal->setGroup(pr.groupIndex, pr.side);
+
+			portalsReferences.push_back(pr);
 		}
 	}
 
@@ -215,17 +214,48 @@ bool CWMO::Load()
 		}
 	}
 
+	// Group info
+	{
+		uint32 cntr = 0;
+		for (const auto& groupInfo : m_ChunkReader->OpenChunkT<SWMO_GroupInfoDef>("MOGI"))
+		{
+			std::shared_ptr<WMO_Group> group = std::make_shared<WMO_Group>(m_BaseManager, m_RenderDevice, *this, cntr++, groupInfo);
+			m_BaseManager.GetManager<ILoader>()->AddToLoadQueue(group.get());
+			m_Groups.push_back(group);
+
+			if (group->m_GroupHeader.flags.IS_OUTDOOR)
+			{
+				m_OutdoorGroups.push_back(group);
+			}
+		}
+	}
+
+	// Setup group portals
+	{
+		for (const auto& ref : portalsReferences)
+		{
+			auto portal = portals[ref.portalIndex];
+			auto group = m_Groups[ref.groupIndex];
+
+			if (ref.groupIndex == group->GetGroupIndex())
+			{
+				group->AddPortal(portal);
+			}
+			else _ASSERT(false);
+		}
+	}
+
 	if (skyboxFilename) delete[] skyboxFilename;
 
 	// Create portal controller
-	if (m_Portals.size() > 0)
+	if (portals.size() > 0)
 	{
 #ifndef WMO_DISABLE_PORTALS
 		m_PortalController = std::make_shared<CWMO_PortalsController>(*this);
 
-		for (auto& it : m_PortalReferences)
+		for (const auto& it : portalsReferences)
 		{
-			_ASSERT(it.portalIndex < m_Portals.size());
+			_ASSERT(it.portalIndex < portals.size());
 			_ASSERT(it.groupIndex < m_Groups.size());
 }
 #endif

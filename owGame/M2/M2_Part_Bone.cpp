@@ -32,9 +32,7 @@ void CM2_Part_Bone::setParentBone(std::shared_ptr<CM2_Comp_Skeleton> _skeleton)
 void CM2_Part_Bone::calcMatrix(uint16 anim, uint32 time, uint32 globalTime)
 {
 	if (m_IsCalculated)
-	{
 		return;
-	}
 
 	std::shared_ptr<CM2_Part_Bone> ParentBone = m_ParentBone.lock();
 	if (ParentBone != nullptr)

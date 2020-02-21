@@ -2,8 +2,6 @@
 
 // Include
 #include "WMO.h"
-#include "WMO_Group.h"
-#include "WMO_Base_Instance.h"
 
 // General
 #include "WMO_Part_Portal.h"
@@ -11,48 +9,15 @@
 CWMO_Part_Portal::CWMO_Part_Portal(IRenderDevice& RenderDevice, const CWMO& WMOModel, const SWMO_PortalDef& _proto)
 	: m_GrInner(-1)
 	, m_GrOuter(-1)
-	, m_WMOModel(WMOModel)
 {
-	m_StartVertex = _proto.startVertex;
-	m_Count = _proto.count;
-	_ASSERT(m_Count < 20);
+	_ASSERT(_proto.count < 20);
+
+	m_Vertices.assign(WMOModel.m_PortalVertices.data() + _proto.startVertex, WMOModel.m_PortalVertices.data() + _proto.startVertex + _proto.count);
+	_ASSERT(m_Vertices.size() == _proto.count);
 
 	m_Plane.normal = Fix_XZmY(_proto.plane.normal);
 	m_Plane.dist = _proto.plane.distance;
-
-	m_Geom = RenderDevice.GetObjectsFactory().CreateGeometry();
-	m_Geom->AddVertexBuffer(BufferBinding("POSITION", 0), m_WMOModel.m_PortalVB);
 }
-
-
-	/*_Render->r.setCullMode(R_CullMode::RS_CULL_BACK);
-	_Render->r.setFillMode(R_FillMode::RS_FILL_WIREFRAME);
-
-	_Render->getTechniquesMgr()->Debug_Pass->Bind();
-	{
-		_Render->getTechniquesMgr()->Debug_Pass->setWorld(_worldMatrix);
-
-		vec4 color;
-		if (m_Plane.distToPoint(glm::inverse(_worldMatrix) * vec4(_Render->getCamera()->Position, 0)) > 0.0f)
-			color = vec4(0.0f, 1.0f, 0.0f, 0.3f);
-		else
-			color = vec4(1.0f, 0.0f, 0.0f, 0.3f);
-
-		//if (IsVisible())
-		//	color = vec4(0.0f, 1.0f, 0.0f, 0.3f);
-		//else
-		//	color = vec4(1.0f, 0.0f, 0.0f, 0.3f);
-
-		_Render->getTechniquesMgr()->Debug_Pass->SetColor4(color);
-
-		_Render->r.setGeometry(m_Geom);
-		_Render->r.draw(m_StartVertex, m_Count);
-	}
-	_Render->getTechniquesMgr()->Debug_Pass->Unbind();
-
-	_Render->r.setFillMode(R_FillMode::RS_FILL_SOLID);
-	_Render->r.setCullMode(R_CullMode::RS_CULL_NONE);*/
-
 
 CWMO_Part_Portal::~CWMO_Part_Portal()
 {
@@ -68,27 +33,5 @@ void CWMO_Part_Portal::setGroup(int32 _group, int16 side)
 	{
 		m_GrOuter = _group;
 	}
-	else
-	{
-		_ASSERT(false);
-	}
-}
-
-bool CWMO_Part_Portal::IsVisible(const CWMO_Base_Instance* _localContr, const Plane* _planes, uint32 _planesCount) const
-{
-	if (_planes == nullptr || _planesCount == 0)
-		return false;
-
-	return !cullPolyByPlanes
-	(
-		_planes,
-		_planesCount,
-		_localContr->getVerts() + getStartVertex(),
-		getCount()
-	);
-}
-
-bool CWMO_Part_Portal::IsPositive(cvec3 _InvWorldCamera) const
-{
-	return m_Plane.distToPoint(_InvWorldCamera) > 0.0f;
+	else _ASSERT(false);
 }

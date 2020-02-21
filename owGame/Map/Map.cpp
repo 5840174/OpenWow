@@ -152,7 +152,7 @@ void CMap::EnterMap(int32 x, int32 z)
 	}
 }
 
-CMapTile* CMap::LoadTile(int32 x, int32 z)
+std::shared_ptr<CMapTile> CMap::LoadTile(int32 x, int32 z)
 {
 	if (IsBadTileIndex(x, z))
 	{
@@ -206,8 +206,8 @@ CMapTile* CMap::LoadTile(int32 x, int32 z)
 	}
 
 	// Create new tile
-	m_ADTCache[firstnull] = CreateSceneNode<CMapTile>(m_BaseManager, m_RenderDevice, *this, x, z).get();
-	m_BaseManager.GetManager<ILoader>()->AddToLoadQueue(m_ADTCache[firstnull]);
+	m_ADTCache[firstnull] = CreateSceneNode<CMapTile>(m_BaseManager, m_RenderDevice, *this, x, z);
+	m_BaseManager.GetManager<ILoader>()->AddToLoadQueue(m_ADTCache[firstnull].get());
 	return m_ADTCache[firstnull];
 }
 
@@ -248,7 +248,7 @@ uint32 CMap::GetAreaID(const ICameraComponent3D* camera)
 	int32 indexX = tileZ - m_CurrentTileZ + static_cast<int32>(C_RenderedTiles / 2);
 	int32 indexY = tileX - m_CurrentTileX + static_cast<int32>(C_RenderedTiles / 2);
 
-	CMapTile* curTile = m_Current[indexX][indexY];
+	auto curTile = m_Current[indexX][indexY];
 	if (curTile == nullptr)
 	{
 		return UINT32_MAX;
@@ -266,7 +266,7 @@ uint32 CMap::GetAreaID(const ICameraComponent3D* camera)
 bool CMap::getTileIsCurrent(int x, int z) const
 {
     int midTile = static_cast<uint32>(C_RenderedTiles / 2);
-    CMapTile* currentTile = m_Current[midTile][midTile];
+    auto currentTile = m_Current[midTile][midTile];
     if (currentTile == nullptr)
     {
         return false;
@@ -288,7 +288,7 @@ bool CMap::IsTileInCurrent(const CMapTile& _mapTile)
 	for (int i = 0; i < C_RenderedTiles; i++)
 		for (int j = 0; j < C_RenderedTiles; j++)
 			if (m_Current[i][j] != nullptr)
-				if (m_Current[i][j] == &_mapTile)
+				if (m_Current[i][j].get() == &_mapTile)
 					return true;
 	return false;
 }

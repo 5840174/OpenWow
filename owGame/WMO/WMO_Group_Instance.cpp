@@ -20,13 +20,6 @@ CWMO_Group_Instance::~CWMO_Group_Instance()
 {
 }
 
-void CWMO_Group_Instance::Initialize()
-{
-    BoundingBox bbox = m_WMOGroupObject.m_Bounds;
-    bbox.calculateCenter();
-    GetComponent<IColliderComponent3D>()->SetBounds(bbox);
-	GetComponent<CColliderComponent3D>()->SetDebugDrawMode(false);
-}
 
 
 
@@ -42,24 +35,89 @@ bool CWMO_Group_Instance::Load()
 
 
 
-void CWMO_Group_Instance::SetPortalVisible(bool Value)
+//
+// IPortalRoom
+//
+void CWMO_Group_Instance::AddPortal(const std::shared_ptr<IPortal>& Portal)
 {
-    m_PortalsVis = Value;
+	m_RoomPortals.push_back(Portal);
 }
 
-bool CWMO_Group_Instance::GetPortalVisible() const
+const std::vector<std::shared_ptr<IPortal>>& CWMO_Group_Instance::GetPortals() const
 {
-    return m_PortalsVis;
+	return m_RoomPortals;
 }
 
-void CWMO_Group_Instance::SetPortalCalculated(bool Value)
+void CWMO_Group_Instance::AddRoomObject(const std::weak_ptr<IPortalRoomObject>& RoomObject)
 {
-    m_Calculated = Value;
+	m_PortalRoomObjects.push_back(RoomObject);
 }
 
-bool CWMO_Group_Instance::GetPortalCalculated() const
+const std::vector<std::weak_ptr<IPortalRoomObject>>& CWMO_Group_Instance::GetRoomObjects() const
 {
-    return m_Calculated;
+	return m_PortalRoomObjects;
+}
+
+void CWMO_Group_Instance::SetVisibilityState(bool Value)
+{
+	m_PortalsVis = Value;
+}
+
+void CWMO_Group_Instance::SetCalculatedState(bool Value)
+{
+	m_Calculated = Value;
+}
+
+bool CWMO_Group_Instance::IsCalculated() const
+{
+	return m_Calculated;
+}
+
+
+
+//
+// CWMO_Group_Instance
+//
+void CWMO_Group_Instance::CreatePortals(const std::shared_ptr<CWMO_Base_Instance>& BaseInstance)
+{
+	for (const auto& p : m_WMOGroupObject.GetPortals())
+	{
+		std::shared_ptr<CWMO_Group_Instance> roomInnerInstance = nullptr;
+		if (p->getGrInner() != -1)
+		{
+			roomInnerInstance = BaseInstance->getGroupInstances()[p->getGrInner()].lock();
+			_ASSERT(roomInnerInstance != nullptr);
+		}
+
+		std::shared_ptr<CWMO_Group_Instance> roomOuterInstance = nullptr;
+		if (p->getGrOuter() != -1)
+		{
+			roomOuterInstance = BaseInstance->getGroupInstances()[p->getGrOuter()].lock();
+			_ASSERT(roomOuterInstance != nullptr);
+		}
+
+		AddPortal(std::make_shared<CWMOPortalInstance>(roomInnerInstance, roomOuterInstance, p->GetVertices(), p->getPlane()));
+	}
+}
+
+
+
+//
+// SceneNode3D
+//
+std::string CWMO_Group_Instance::GetName() const
+{
+	return "WMOGroup '" + m_WMOGroupObject.m_GroupName + "'";
+}
+
+void CWMO_Group_Instance::Initialize()
+{
+
+
+	BoundingBox bbox = m_WMOGroupObject.m_Bounds;
+	bbox.calculateCenter();
+	GetComponent<IColliderComponent3D>()->SetBounds(bbox);
+	GetComponent<CColliderComponent3D>()->SetDebugDrawMode(false);
 }
 
 void CWMO_Group_Instance::Accept(IVisitor* visitor)

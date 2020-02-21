@@ -492,6 +492,9 @@
     <ClCompile Include="Map\MapLiquid.cpp">
       <Filter>Map\Tile</Filter>
     </ClCompile>
+    <ClCompile Include="WMO\WMO_Portal_Instance.cpp">
+      <Filter>WMO\Instances</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="common.h">
@@ -1030,6 +1033,9 @@
     </ClInclude>
     <ClInclude Include="Map\MapLiquid.h">
       <Filter>Map\Tile</Filter>
+    </ClInclude>
+    <ClInclude Include="WMO\WMO_Portal_Instance.h">
+      <Filter>WMO\Instances</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

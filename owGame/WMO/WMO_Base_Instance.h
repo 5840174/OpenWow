@@ -10,14 +10,13 @@ class ZN_API CWMO_Base_Instance
 	, public CLoadableObject
 {
 public:
-	typedef std::vector<CWMO_Group_Instance*> GroupInstances;
+	typedef std::vector<std::weak_ptr<CWMO_Group_Instance>> GroupInstances;
 
 public:
 	CWMO_Base_Instance(const CWMO& WMOObject);
 	virtual ~CWMO_Base_Instance();
 
 	void CreateInstances();
-	void RecalcVerts();
 
 	// CLoadableObject
 	bool Load() override;
@@ -25,13 +24,11 @@ public:
 	// CWMO_Base_Instance
 	const CWMO& getWMO() const;
 
-	void AddGroupInstance(CWMO_Group_Instance* _group) { m_GroupInstances.push_back(_group); }
+	void AddGroupInstance(const std::weak_ptr<CWMO_Group_Instance>& _group) { m_GroupInstances.push_back(_group); }
 	const GroupInstances& getGroupInstances() const { return m_GroupInstances; }
 
-	void AddOutdoorGroupInstance(CWMO_Group_Instance* _group) { m_OutdoorGroupInstances.push_back(_group); }
+	void AddOutdoorGroupInstance(const std::weak_ptr<CWMO_Group_Instance>& _group) { m_OutdoorGroupInstances.push_back(_group); }
 	const GroupInstances& getGroupOutdoorInstances() const { return m_OutdoorGroupInstances; }
-
-	const vec3* getVerts() const { return m_ConvertedVerts.data(); }
 
 	// SceneNode3D
 	virtual void Initialize() override;
@@ -42,8 +39,6 @@ public:
 protected:
 	const CWMO&                           m_WMOObject;
 	//SWMO_Doodad_SetInfo                           m_DoodadSetInfo;
-
-	std::vector<vec3>                               m_ConvertedVerts;
 	
 	GroupInstances  m_GroupInstances;
 	GroupInstances  m_OutdoorGroupInstances;

@@ -48,11 +48,12 @@ std::shared_ptr<IFile> CMPQFilesStorage::OpenFile(std::string FileName, EFileAcc
 
 	libmpq__off_t size;
 	libmpq__file_size_unpacked(location.archive, location.fileNumber, &size);
+	_ASSERT(size < 1024 * 1024 * 500);
 
 	// Allocate space and set data
 	std::vector<uint8> buffer;
 	buffer.resize(size);
-	libmpq__file_read(location.archive, location.fileNumber, &buffer[0], buffer.size(), &size);
+	libmpq__file_read(location.archive, location.fileNumber, &buffer[0], size, &size);
 
 	byteBuffer = std::move(CByteBuffer(std::move(buffer)));
 
