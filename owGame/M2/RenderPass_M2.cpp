@@ -71,16 +71,13 @@ bool CRenderPass_M2::Visit(const ISceneNode3D* SceneNode3D)
 {
     if (const CM2_Base_Instance* m2Instance = dynamic_cast<const CM2_Base_Instance*>(SceneNode3D))
     {
-		/*const std::shared_ptr<IColliderComponent3D>& collider = SceneNode3D->GetComponent<IColliderComponent3D>();
-
-		BoundingBox bbox = collider->GetBounds();
-		bbox.transform(SceneNode3D->GetWorldTransfom());
+		const auto& collider = SceneNode3D->GetComponent<IColliderComponent3D>();
 
 		const ICameraComponent3D* camera = GetRenderEventArgs().CameraForCulling;
 		_ASSERT(camera != nullptr);
 
-		if (camera->GetFrustum().cullBox(bbox))
-			return false;*/
+		if (camera->GetFrustum().cullBox(collider->GetWorldBounds()))
+			return false;
 
 		m_CurrentM2Model = m2Instance;
         return Base3DPass::Visit(m2Instance);

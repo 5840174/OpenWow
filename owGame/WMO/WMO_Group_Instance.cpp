@@ -70,9 +70,7 @@ void CWMO_Group_Instance::Reset()
 
 BoundingBox CWMO_Group_Instance::GetBoundingBox() const
 {
-	BoundingBox bounds = GetComponent<IColliderComponent3D>()->GetBounds();
-	bounds.transform(GetWorldTransfom());
-	return bounds;
+	return GetComponent<IColliderComponent3D>()->GetWorldBounds();
 }
 
 void CWMO_Group_Instance::SetVisibilityState(bool Value)

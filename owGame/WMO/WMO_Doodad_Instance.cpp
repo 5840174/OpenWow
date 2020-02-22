@@ -45,9 +45,7 @@ CWMO_Doodad_Instance::~CWMO_Doodad_Instance()
 //
 BoundingBox CWMO_Doodad_Instance::GetBoundingBox() const
 {
-	BoundingBox bounds = GetComponent<IColliderComponent3D>()->GetBounds();
-	bounds.transform(GetWorldTransfom());
-	return bounds;
+	return GetComponent<IColliderComponent3D>()->GetWorldBounds();
 }
 
 

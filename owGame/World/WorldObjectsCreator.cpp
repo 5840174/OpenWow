@@ -39,7 +39,7 @@ std::shared_ptr<Creature> CWorldObjectCreator::BuildCreatureFromDisplayInfo(ISce
 	}
 
 	std::shared_ptr<Creature> newCreature = Scene->CreateSceneNode<Creature>(Parent, *m2Model);
-	m_BaseManager.GetManager<ILoader>()->AddToLoadQueue(newCreature.get());
+	m_BaseManager.GetManager<ILoader>()->AddToLoadQueue(newCreature);
 	newCreature->setAlpha(static_cast<float>(rec->Get_Opacity()) / 255.0f);
 	//newCreature->SetScale(rec->Get_Scale());
 
@@ -69,7 +69,7 @@ std::shared_ptr<Character> CWorldObjectCreator::BuildCharactedFromTemplate(IScen
 	std::shared_ptr<Character> newCharacter = Scene->CreateSceneNode<Character>(Parent, *m2Model);
 	for (uint32 slot = 0; slot < INVENTORY_SLOT_BAG_END; slot++) // TODO: Move to constuctor
 		newCharacter->GetVisualItems().push_back(std::make_shared<CItem_VisualData>(m_BaseManager, m_RenderDevice, *newCharacter));
-	m_BaseManager.GetManager<ILoader>()->AddToLoadQueue(newCharacter.get());
+	m_BaseManager.GetManager<ILoader>()->AddToLoadQueue(newCharacter);
 
 	// 2. Template
 	{
@@ -108,7 +108,7 @@ std::shared_ptr<Character> CWorldObjectCreator::BuildCharactedFromDisplayInfo(IS
 	std::shared_ptr<Character> newCharacter = Scene->CreateSceneNode<Character>(Parent, *m2Model);
 	for (uint32 slot = 0; slot < INVENTORY_SLOT_BAG_END; slot++) // TODO: Move to constuctor
 		newCharacter->GetVisualItems().push_back(std::make_shared<CItem_VisualData>(m_BaseManager, m_RenderDevice, *newCharacter));
-	m_BaseManager.GetManager<ILoader>()->AddToLoadQueue(newCharacter.get());
+	m_BaseManager.GetManager<ILoader>()->AddToLoadQueue(newCharacter);
 
 	// 2. Template
 	{

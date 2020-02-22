@@ -126,6 +126,7 @@ void WMO_Group::CreateInsances(const std::shared_ptr<ISceneNode3D>& Parent) cons
 		
 	}
 
+#if 0
 #ifdef USE_M2_MODELS
 	// WMO Group M2s
 	for (const auto& index : m_DoodadsPlacementIndexes)
@@ -138,10 +139,11 @@ void WMO_Group::CreateInsances(const std::shared_ptr<ISceneNode3D>& Parent) cons
 		if (m2)
 		{
 			auto inst = Parent->CreateSceneNode<CWMO_Doodad_Instance>(*m2, index, placement);
-			m_BaseManager.GetManager<ILoader>()->AddToLoadQueue(inst.get());
+			m_BaseManager.GetManager<ILoader>()->AddToLoadQueue(inst);
 			parentAsWMOGroupInstance->AddRoomObject(inst);
 		}
 	}
+#endif
 #endif
 }
 

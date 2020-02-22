@@ -68,7 +68,7 @@ void CMapChunk::Initialize()
 		);
 
 		GetComponent<CColliderComponent3D>()->SetBounds(bbox);
-		GetComponent<CColliderComponent3D>()->SetDebugDrawMode(false);
+		GetComponent<CColliderComponent3D>()->SetDebugDrawMode(true);
 	}
 }
 

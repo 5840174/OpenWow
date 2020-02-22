@@ -15,7 +15,7 @@ WMOsManager::~WMOsManager()
 std::shared_ptr<CWMO> WMOsManager::CreateAction(IRenderDevice& RenderDevice, const std::string& name)
 {
 	std::shared_ptr<CWMO> _wmo = std::make_shared<CWMO>(m_BaseManager, RenderDevice, name);
-	m_BaseManager.GetManager<ILoader>()->AddToLoadQueue(_wmo.get());
+	m_BaseManager.GetManager<ILoader>()->AddToLoadQueue(_wmo);
 	return _wmo;
 }
 

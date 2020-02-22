@@ -207,7 +207,7 @@ std::shared_ptr<CMapTile> CMap::LoadTile(int32 x, int32 z)
 
 	// Create new tile
 	m_ADTCache[firstnull] = CreateSceneNode<CMapTile>(m_BaseManager, m_RenderDevice, *this, x, z);
-	m_BaseManager.GetManager<ILoader>()->AddToLoadQueue(m_ADTCache[firstnull].get());
+	m_BaseManager.GetManager<ILoader>()->AddToLoadQueue(m_ADTCache[firstnull]);
 	return m_ADTCache[firstnull];
 }
 

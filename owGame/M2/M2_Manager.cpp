@@ -42,7 +42,7 @@ std::shared_ptr<M2> CM2_Manager::CreateAction(IRenderDevice& RenderDevice, const
 	}
 
 	std::shared_ptr<M2> model = std::make_shared<M2>(m_BaseManager, RenderDevice, name);
-	m_BaseManager.GetManager<ILoader>()->AddToLoadQueue(model.get());
+	m_BaseManager.GetManager<ILoader>()->AddToLoadQueue(model);
 	return model;
 }
 bool CM2_Manager::DeleteAction(const std::string& name)
