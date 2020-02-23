@@ -60,5 +60,5 @@ private: // Used login data. Don't keep fucking password in string. This is secu
 	std::shared_ptr<CAuthSocket>    m_AuthSocket;
     std::shared_ptr<CWorldSocket>   m_WorldSocket;
 
-	std::unordered_map<Opcodes, std::function<void(CServerPacket&)>>	m_Handlers;
+	std::unordered_map<Opcodes, std::function<void(CServerPacket&)>> m_Handlers;
 };

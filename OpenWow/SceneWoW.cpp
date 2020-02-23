@@ -30,16 +30,13 @@ void CSceneWoW::Initialize()
 	GetCameraController()->SetCamera(cameraNode->GetComponent<ICameraComponent3D>());
 	GetCameraController()->GetCamera()->SetPerspectiveProjection(ICameraComponent3D::EPerspectiveProjectionHand::Right, 45.0f, 1.0f/*GetRenderWindow()->GetWindowWidth() / GetRenderWindow()->GetWindowHeight()*/, 0.5f, 10000.0f);
 
-	m_WoWClient = std::make_unique<CWoWClient>("127.0.0.1");
+	/*m_WoWClient = std::make_unique<CWoWClient>("127.0.0.1");
 	m_WoWClient->AddWorldHandler(SMSG_CHAR_ENUM, std::bind(&CSceneWoW::S_CharsEnum, this, std::placeholders::_1));
 	m_WoWClient->AddWorldHandler(SMSG_LOGIN_VERIFY_WORLD, std::bind(&CSceneWoW::S_Login_Verify_World, this, std::placeholders::_1));
 	m_WoWClient->AddWorldHandler(SMSG_MONSTER_MOVE, std::bind(&CSceneWoW::S_MonsterMove, this, std::placeholders::_1));
 	m_WoWClient->AddWorldHandler(SMSG_CREATURE_QUERY_RESPONSE, std::bind(&CSceneWoW::S_CREATURE_QUERY_RESPONSE, this, std::placeholders::_1));
 	
-
-	m_WoWClient->BeginConnect("admin", "admin");
-
-	//m_WoWClient->getWorldSocket()->AddHandler(SMSG_CHAR_ENUM, std::bind(&S_CharEnum, std::placeholders::_1));
+	m_WoWClient->BeginConnect("admin", "admin");*/
 
 	Load3D();
 	LoadUI();
@@ -306,7 +303,7 @@ void CSceneWoW::Load3D()
 
 void CSceneWoW::Load3D_M2s()
 {
-	CWorldObjectCreator creator(GetBaseManager(), GetRenderDevice());
+	CWorldObjectCreator creator(GetBaseManager());
 
 	const auto& records = GetBaseManager().GetManager<CDBCStorage>()->DBC_CreatureDisplayInfo().Records();
 	for (size_t i = 0; i < 3; i++)
@@ -326,7 +323,7 @@ void CSceneWoW::Load3D_M2s()
 				id = rand() % records.size();
 			}
 
-			auto creature = creator.BuildCreatureFromDisplayInfo(this, id, nullptr);
+			auto creature = creator.BuildCreatureFromDisplayInfo(GetRenderDevice(), this, id, nullptr);
 			if (creature != nullptr)
 			{
 				creature->SetTranslate(glm::vec3(i * 2.5f, 0.0f, j * 2.5f));
@@ -354,8 +351,8 @@ void CSceneWoW::UpdateGUIDPos(uint64 GUID, const glm::vec3& Position, glm::vec3 
 	const auto& it = m_Objects.find(GUID);
 	if (it == m_Objects.end())
 	{
-		CWorldObjectCreator creator(GetBaseManager(), GetRenderDevice());
-		auto creature = creator.BuildCreatureFromDisplayInfo(this, 6910, GetRootNode3D());
+		CWorldObjectCreator creator(GetBaseManager());
+		auto creature = creator.BuildCreatureFromDisplayInfo(GetRenderDevice(), this, 6910, GetRootNode3D());
 		if (creature != nullptr)
 		{
 			creature->SetTranslate(Position);
@@ -372,10 +369,12 @@ void CSceneWoW::UpdateGUIDPos(uint64 GUID, const glm::vec3& Position, glm::vec3 
 		{
 			if (it->second->GetName() != crEntryName->second.name)
 			{
-				it->second->GetParent().lock()->RemoveChild(it->second);
+				auto parent = it->second->GetParent().lock();
+				if (parent)
+					parent->RemoveChild(it->second);
 
-				CWorldObjectCreator creator(GetBaseManager(), GetRenderDevice());
-				auto creature = creator.BuildCreatureFromDisplayInfo(this, crEntryName->second.modelID, it->second->GetParent().lock());
+				CWorldObjectCreator creator(GetBaseManager());
+				auto creature = creator.BuildCreatureFromDisplayInfo(GetRenderDevice(), this, crEntryName->second.modelID, it->second->GetParent().lock());
 				if (creature != nullptr)
 				{
 					creature->SetTranslate(Position);

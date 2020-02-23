@@ -11,7 +11,7 @@ class Character
 	: public Creature
 {
 public:
-    Character(const M2& M2Object);
+    Character(const std::shared_ptr<M2>& M2Object);
     virtual ~Character();
 
     CInet_CharacterTemplate& GetTemplate() { return m_Template; }

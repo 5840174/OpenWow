@@ -11,7 +11,7 @@ class ZN_API CWMO_Doodad_Instance
 	, public IPortalRoomObject
 {
 public:
-	CWMO_Doodad_Instance(const M2& M2Object, uint32 _index, const SWMO_Doodad_PlacementInfo& _placement);
+	CWMO_Doodad_Instance(const std::shared_ptr<M2>& M2Object, uint32 _index, const SWMO_Doodad_PlacementInfo& _placement);
 	virtual ~CWMO_Doodad_Instance();
 
 	// IPortalRoomObject

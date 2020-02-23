@@ -8,7 +8,7 @@ class ZN_API Creature
 	: public Creature_M2Instance
 {
 public:
-	Creature(const M2& M2Object);
+	Creature(const std::shared_ptr<M2>& M2Object);
     virtual ~Creature();
 
     // Mesh & textures provider

@@ -47,7 +47,7 @@ void CWMO::CreateInsances(const std::shared_ptr<ISceneNode3D>& Parent) const
 
 	for (const auto& it : m_Groups)
 	{
-		auto groupInstance = Parent->CreateSceneNode<CWMO_Group_Instance>(*it);
+		auto groupInstance = Parent->CreateSceneNode<CWMO_Group_Instance>(it);
 		parentAsWMOInstance->AddGroupInstance(groupInstance);
 		if (it->m_GroupHeader.flags.IS_OUTDOOR)
 			parentAsWMOInstance->AddOutdoorGroupInstance(groupInstance);
@@ -92,7 +92,7 @@ bool CWMO::Load()
 			m_Materials.push_back(material);
 		}
 		_ASSERT(m_Materials.size() == m_Header.nTextures);
-		Log::Info("WMO: Materials count = '%d'", m_Materials.size());
+		//Log::Info("WMO: Materials count = '%d'", m_Materials.size());
 	}
 
 	// Group names
@@ -168,7 +168,7 @@ bool CWMO::Load()
 		{
 			m_Lights.push_back(std::make_shared<WMO_Part_Light>(lt));
 		}
-		Log::Info("WMO: Lights count = '%d'", m_Lights.size());
+		//Log::Info("WMO: Lights count = '%d'", m_Lights.size());
 	}
 
 	// Doodads set
@@ -178,7 +178,7 @@ bool CWMO::Load()
 			m_DoodadsSetInfos.push_back(ds);
 		}
 
-		Log::Info("WMO: Doodads count = '%d'", m_DoodadsSetInfos.size());
+		//Log::Info("WMO: Doodads count = '%d'", m_DoodadsSetInfos.size());
 	}
 
 	// Doodads filenames
@@ -216,7 +216,7 @@ bool CWMO::Load()
 		uint32 cntr = 0;
 		for (const auto& groupInfo : m_ChunkReader->OpenChunkT<SWMO_GroupInfoDef>("MOGI"))
 		{
-			std::shared_ptr<WMO_Group> group = std::make_shared<WMO_Group>(m_BaseManager, m_RenderDevice, *this, cntr++, groupInfo);
+			std::shared_ptr<WMO_Group> group = std::make_shared<WMO_Group>(m_BaseManager, m_RenderDevice, std::dynamic_pointer_cast<CWMO>(shared_from_this()), cntr++, groupInfo);
 			m_BaseManager.GetManager<ILoader>()->AddToLoadQueue(group);
 			m_Groups.push_back(group);
 

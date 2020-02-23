@@ -12,11 +12,11 @@
 #include "Map_Shared.h"
 #include "MapChunkMaterial.h"
 
-CMapChunk::CMapChunk(IRenderDevice& RenderDevice, const CMap& Map, const CMapTile& MapTile, const std::shared_ptr<IByteBuffer>& Bytes)
-	: CLoadableObject(&MapTile)
+CMapChunk::CMapChunk(IRenderDevice& RenderDevice, const CMap& Map, const std::shared_ptr<CMapTile>& MapTile, const std::shared_ptr<IByteBuffer>& Bytes)
+	: CLoadableObject(MapTile)
 	, m_RenderDevice(RenderDevice)
 	, m_Map(Map)
-	, m_MapTile(MapTile)
+	, m_MapTile(*MapTile)
 	, m_File(Bytes)
 {}
 

@@ -23,7 +23,7 @@ class ZN_API CMapM2Instance
 	: public CM2_Base_Instance
 {
 public:
-	CMapM2Instance(const M2& M2Object, const ADT_MDXDef& _placementInfo);
+	CMapM2Instance(const std::shared_ptr<M2>& M2Object, const ADT_MDXDef& _placementInfo);
 	virtual ~CMapM2Instance();
 
 	// ISceneNode

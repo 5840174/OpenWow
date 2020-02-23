@@ -3,9 +3,9 @@
 // General
 #include "WMO_Base_Instance.h"
 
-CWMO_Base_Instance::CWMO_Base_Instance(const CWMO& WMOObject)
+CWMO_Base_Instance::CWMO_Base_Instance(const std::shared_ptr<CWMO>& WMOObject)
     : m_WMOObject(WMOObject)
-	, CLoadableObject(&WMOObject)
+	, CLoadableObject(WMOObject)
 {
 	
 }
@@ -18,7 +18,7 @@ CWMO_Base_Instance::~CWMO_Base_Instance()
 
 void CWMO_Base_Instance::CreateInstances()
 {
-	m_WMOObject.CreateInsances(shared_from_this());
+	m_WMOObject->CreateInsances(shared_from_this());
 }
 
 
@@ -36,7 +36,8 @@ bool CWMO_Base_Instance::Load()
 
 const CWMO& CWMO_Base_Instance::getWMO() const
 {
-	return m_WMOObject;
+	_ASSERT(m_WMOObject != nullptr);
+	return *m_WMOObject;
 }
 
 
@@ -52,7 +53,7 @@ void CWMO_Base_Instance::Initialize()
 
 std::string CWMO_Base_Instance::GetName() const 
 { 
-	return "WMO '" + m_WMOObject.getFilename() + "'"; 
+	return "WMO '" + m_WMOObject->getFilename() + "'"; 
 }
 
 void CWMO_Base_Instance::Update(const UpdateEventArgs& e)
@@ -61,9 +62,9 @@ void CWMO_Base_Instance::Update(const UpdateEventArgs& e)
 		return;
 
 #ifndef WMO_DISABLE_PORTALS
-	if (m_WMOObject.m_PortalController)
+	if (m_WMOObject->m_PortalController)
 	{
-		m_WMOObject.m_PortalController->Update(this, e.CameraForCulling);
+		m_WMOObject->m_PortalController->Update(this, e.CameraForCulling);
 	}
 #endif
 }

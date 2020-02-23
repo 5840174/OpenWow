@@ -76,7 +76,7 @@ bool CRenderPass_M2::Visit(const ISceneNode3D* SceneNode3D)
 		const ICameraComponent3D* camera = GetRenderEventArgs().CameraForCulling;
 		_ASSERT(camera != nullptr);
 
-		if (camera->GetFrustum().cullBox(collider->GetWorldBounds()))
+		if (collider->IsCulledByFrustum(camera))
 			return false;
 
 		m_CurrentM2Model = m2Instance;

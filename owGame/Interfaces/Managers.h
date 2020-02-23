@@ -5,16 +5,11 @@ class CWMO;
 class M2;
 // FORWARD END
 
-struct
-	__declspec(novtable, uuid("42D47100-B825-47F1-BE2F-6F7C78443884"))
-	IWMOManager : public IRefManager<CWMO>
+ZN_INTERFACE ZN_API __declspec(uuid("42D47100-B825-47F1-BE2F-6F7C78443884")) IWoWObjectsCreator
+	: public IManager
 {
-	virtual ~IWMOManager() {};
-};
+	virtual ~IWoWObjectsCreator() {};
 
-struct
-	__declspec(novtable, uuid("B14D922C-BE9E-44CA-9448-5400E3CB573A"))
-	IM2Manager : public IRefManager<M2>
-{
-	virtual ~IM2Manager() {};
+	virtual std::shared_ptr<M2>   LoadM2(IRenderDevice& RenderDevice, const std::string& Filename) = 0;
+	virtual std::shared_ptr<CWMO> LoadWMO(IRenderDevice& RenderDevice, const std::string& Filename) = 0;
 };

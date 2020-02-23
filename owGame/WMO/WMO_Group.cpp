@@ -14,18 +14,18 @@
 #include "WMO_Liquid_Instance.h"
 #include "WMO_Fixes.h"
 
-WMO_Group::WMO_Group(IBaseManager& BaseManager, IRenderDevice& RenderDevice, const CWMO& WMOModel, const uint32 GroupIndex, const SWMO_GroupInfoDef& GroupProto)
-	: CLoadableObject(&WMOModel)
+WMO_Group::WMO_Group(IBaseManager& BaseManager, IRenderDevice& RenderDevice, const std::shared_ptr<CWMO>& WMOModel, const uint32 GroupIndex, const SWMO_GroupInfoDef& GroupProto)
+	: CLoadableObject(WMOModel)
 	, m_IsMOCVExists(false)
 	, m_BaseManager(BaseManager)
 	, m_RenderDevice(RenderDevice)
-	, m_WMOModel(WMOModel)
+	, m_WMOModel(*WMOModel)
 	, m_GroupIndex(GroupIndex)
 {
 	if (GroupProto.nameoffset != -1)
-		m_GroupName = std::string(WMOModel.m_GroupNames.get() + GroupProto.nameoffset);
+		m_GroupName = std::string(m_WMOModel.m_GroupNames.get() + GroupProto.nameoffset);
 	else
-		m_GroupName = WMOModel.getFilename() + "_Group" + std::to_string(GroupIndex);
+		m_GroupName = m_WMOModel.getFilename() + "_Group" + std::to_string(GroupIndex);
 
 	m_Bounds = GroupProto.bounding_box.Convert();
 

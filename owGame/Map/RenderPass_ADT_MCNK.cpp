@@ -9,7 +9,7 @@
 CRenderPass_ADT_MCNK::CRenderPass_ADT_MCNK(IRenderDevice& RenderDevice, std::shared_ptr<IScene> scene)
 	: Base3DPass(RenderDevice, scene)
 {
-	m_WoWSettings = RenderDevice.GetBaseManager().GetManager<ISettings>()->GetGroup("WoWSettings");
+	m_ADT_MCNK_Distance = RenderDevice.GetBaseManager().GetManager<ISettings>()->GetGroup("WoWSettings")->GetSettingT<float>("ADT_MCNK_Distance");
 }
 
 CRenderPass_ADT_MCNK::~CRenderPass_ADT_MCNK()
@@ -82,7 +82,10 @@ bool CRenderPass_ADT_MCNK::Visit(const ISceneNode3D* SceneNode3D)
 		const ICameraComponent3D* camera = GetRenderEventArgs().CameraForCulling;
 		_ASSERT(camera != nullptr);
 
-		if (camera->GetFrustum().cullBox(collider->GetWorldBounds()))
+		if (collider->IsCulledByDistance2D(camera, m_ADT_MCNK_Distance->Get()))
+			return false;
+
+		if (collider->IsCulledByFrustum(camera))
 			return false;
 
 		return Base3DPass::Visit(SceneNode3D);

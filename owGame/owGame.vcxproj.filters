@@ -58,9 +58,6 @@
     <Filter Include="Client\World\Templates">
       <UniqueIdentifier>{0a1158d6-10b2-481d-8954-3d112309f968}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Settings">
-      <UniqueIdentifier>{55856cb7-3009-4fc6-a8a8-cdb3db98f332}</UniqueIdentifier>
-    </Filter>
     <Filter Include="M2">
       <UniqueIdentifier>{7bc7386a-273c-4b2d-ab6c-b6e6249d84b1}</UniqueIdentifier>
     </Filter>
@@ -201,16 +198,10 @@
     <ClCompile Include="Client\RealmInfo.cpp">
       <Filter>Client</Filter>
     </ClCompile>
-    <ClCompile Include="Settings\WoWSettingsGroup.cpp">
-      <Filter>Settings</Filter>
-    </ClCompile>
     <ClCompile Include="owGame.cpp">
       <Filter>Common</Filter>
     </ClCompile>
     <ClCompile Include="M2\M2.cpp">
-      <Filter>M2</Filter>
-    </ClCompile>
-    <ClCompile Include="M2\M2_Manager.cpp">
       <Filter>M2</Filter>
     </ClCompile>
     <ClCompile Include="M2\ShaderResolver.cpp">
@@ -301,9 +292,6 @@
       <Filter>WMO</Filter>
     </ClCompile>
     <ClCompile Include="WMO\WMO_PortalsController.cpp">
-      <Filter>WMO</Filter>
-    </ClCompile>
-    <ClCompile Include="WMO\WMOsManager.cpp">
       <Filter>WMO</Filter>
     </ClCompile>
     <ClCompile Include="WMO\WMO_Group.cpp">
@@ -495,6 +483,9 @@
     <ClCompile Include="WMO\WMO_Portal_Instance.cpp">
       <Filter>WMO\Instances</Filter>
     </ClCompile>
+    <ClCompile Include="Settings\WoWSettingsGroup.cpp">
+      <Filter>WoW Specific</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="common.h">
@@ -665,9 +656,6 @@
     <ClInclude Include="Client\RealmInfo.h">
       <Filter>Client</Filter>
     </ClInclude>
-    <ClInclude Include="Settings\WoWSettingsGroup.h">
-      <Filter>Settings</Filter>
-    </ClInclude>
     <ClInclude Include="Interfaces\Managers.h">
       <Filter>Interfaces</Filter>
     </ClInclude>
@@ -678,9 +666,6 @@
       <Filter>Interfaces</Filter>
     </ClInclude>
     <ClInclude Include="M2\M2.h">
-      <Filter>M2</Filter>
-    </ClInclude>
-    <ClInclude Include="M2\M2_Manager.h">
       <Filter>M2</Filter>
     </ClInclude>
     <ClInclude Include="M2\ShaderResolver.h">
@@ -795,9 +780,6 @@
       <Filter>WMO</Filter>
     </ClInclude>
     <ClInclude Include="WMO\WMO_PortalsController.h">
-      <Filter>WMO</Filter>
-    </ClInclude>
-    <ClInclude Include="WMO\WMOsManager.h">
       <Filter>WMO</Filter>
     </ClInclude>
     <ClInclude Include="WMO\WMO_Group.h">
@@ -1036,6 +1018,9 @@
     </ClInclude>
     <ClInclude Include="WMO\WMO_Portal_Instance.h">
       <Filter>WMO\Instances</Filter>
+    </ClInclude>
+    <ClInclude Include="Settings\WoWSettingsGroup.h">
+      <Filter>WoW Specific</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

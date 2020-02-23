@@ -24,7 +24,7 @@ class WMO_Group
 	, public CLoadableObject
 {
 public:
-	WMO_Group(IBaseManager& BaseManager, IRenderDevice& RenderDevice, const CWMO& WMOModel, const uint32 GroupIndex, const SWMO_GroupInfoDef& GroupProto);
+	WMO_Group(IBaseManager& BaseManager, IRenderDevice& RenderDevice, const std::shared_ptr<CWMO>& WMOModel, const uint32 GroupIndex, const SWMO_GroupInfoDef& GroupProto);
 	virtual ~WMO_Group();
 
 	// WMO_Group

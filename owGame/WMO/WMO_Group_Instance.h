@@ -23,7 +23,7 @@ public:
 	typedef std::vector<CWMO_Liquid_Instance*> LuqidInstances;
 
 public:
-	CWMO_Group_Instance(const WMO_Group& WMOGroupObject);
+	CWMO_Group_Instance(const std::shared_ptr<WMO_Group>& WMOGroupObject);
 	virtual ~CWMO_Group_Instance();
 
 	// CLoadableObject

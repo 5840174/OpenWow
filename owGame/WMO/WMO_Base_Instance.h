@@ -13,7 +13,7 @@ public:
 	typedef std::vector<std::weak_ptr<CWMO_Group_Instance>> GroupInstances;
 
 public:
-	CWMO_Base_Instance(const CWMO& WMOObject);
+	CWMO_Base_Instance(const std::shared_ptr<CWMO>& WMOObject);
 	virtual ~CWMO_Base_Instance();
 
 	void CreateInstances();
@@ -37,9 +37,7 @@ public:
 	void Accept(IVisitor* visitor) override;
 
 protected:
-	const CWMO&                           m_WMOObject;
-	//SWMO_Doodad_SetInfo                           m_DoodadSetInfo;
-	
+	std::shared_ptr<CWMO> m_WMOObject;	
 	GroupInstances  m_GroupInstances;
 	GroupInstances  m_OutdoorGroupInstances;
 };

@@ -6,7 +6,7 @@ class ZN_API Creature_M2Instance
 	: public CM2_Base_Instance
 {
 public:
-	Creature_M2Instance(const M2& M2Object);
+	Creature_M2Instance(const std::shared_ptr<M2>& M2Object);
 	virtual ~Creature_M2Instance();
 
 	// Mesh & textures provider

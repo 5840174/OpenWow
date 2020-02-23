@@ -8,11 +8,11 @@
 // General
 #include "WMO_Group_Instance.h"
 
-CWMO_Group_Instance::CWMO_Group_Instance(const WMO_Group& WMOGroupObject) 
-	: CLoadableObject(&WMOGroupObject)
+CWMO_Group_Instance::CWMO_Group_Instance(const std::shared_ptr<WMO_Group>& WMOGroupObject) 
+	: CLoadableObject(WMOGroupObject)
 	, m_PortalsVis(true)
 	, m_Calculated(false)
-	, m_WMOGroupObject(WMOGroupObject)
+	, m_WMOGroupObject(*WMOGroupObject)
 {
 }
 

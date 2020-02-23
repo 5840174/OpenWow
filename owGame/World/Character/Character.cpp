@@ -7,7 +7,7 @@
 #include "Character_SectionWrapper.h"
 #include "Character_SkinTextureBaker.h"
 
-Character::Character(const M2& M2Object)
+Character::Character(const std::shared_ptr<M2>& M2Object)
 	: Creature(M2Object)
 {
 	setMeshEnabled(MeshIDType::Ears, EarsStyles::Enabled);

@@ -12,7 +12,7 @@ class ZN_API CMapChunk
 	, public CLoadableObject
 {
 public:
-	CMapChunk(IRenderDevice& RenderDevice, const CMap& Map, const CMapTile& MapTile, const std::shared_ptr<IByteBuffer>& Bytes);
+	CMapChunk(IRenderDevice& RenderDevice, const CMap& Map, const std::shared_ptr<CMapTile>& MapTile, const std::shared_ptr<IByteBuffer>& Bytes);
 	virtual ~CMapChunk();
 
 
@@ -27,7 +27,6 @@ public:
 	// ILoadable
 	bool                                            Load() override;
 	bool                                            Delete() override;
-	uint32                                          getPriority() const override { return 1; };
 
 private:
 	ADT_MCNK_Header                                 header;

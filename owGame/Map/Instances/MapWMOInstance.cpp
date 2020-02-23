@@ -6,7 +6,7 @@
 // Additional
 #include "WMO\\RenderPass_WMO.h"
 
-CMapWMOInstance::CMapWMOInstance(const CWMO& WMOObject, const ADT_MODF& _placementInfo)
+CMapWMOInstance::CMapWMOInstance(const std::shared_ptr<CWMO>& WMOObject, const ADT_MODF& _placementInfo)
 	: CWMO_Base_Instance(WMOObject)
 	, m_PlacementInfo(_placementInfo)
 {
@@ -34,14 +34,6 @@ void CMapWMOInstance::Initialize()
 		rotate.x = -rotate.x;
 		rotate.y = rotate.y - glm::half_pi<float>();
 		SetRotation(vec3(rotate.z, rotate.y, rotate.x));
-	}
-
-	// CColliderComponent
-	{
-		std::shared_ptr<CColliderComponent3D> colliderComponent = GetComponent<CColliderComponent3D>();
-
-		// Bounds
-		//colliderComponent->SetBounds(m_ThisBounds);
 	}
 
 	__super::Initialize();

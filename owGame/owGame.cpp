@@ -7,9 +7,7 @@
 #include "Settings/WoWSettingsGroup.h"
 #include "Formats/MPQFilesStorage.h"
 #include "Formats/ImageBLP.h"
-#include "M2/M2_Manager.h"
-#include "WMO/WMOsManager.h"
-
+#include "World/WorldObjectsCreator.h"
 
 extern CLog* gLogInstance;
 
@@ -40,16 +38,11 @@ public:
 		// BLP
 		m_BaseManager.GetManager<IImagesFactory>()->AddImageLoader(std::make_shared<CImageLoaderT<CImageBLP>>());
 
-		// M2
-		std::shared_ptr<IM2Manager> m2Manager = std::make_shared<CM2_Manager>(m_BaseManager);
-		m_BaseManager.AddManager<IM2Manager>(m2Manager);
-
-		// WMO
-		std::shared_ptr<IWMOManager> wmoManager = std::make_shared<WMOsManager>(m_BaseManager);
-		m_BaseManager.AddManager<IWMOManager>(wmoManager);
-
 		std::shared_ptr<CDBCStorage> dbcStorage = std::make_shared<CDBCStorage>(m_BaseManager);
 		m_BaseManager.AddManager<CDBCStorage>(dbcStorage);
+
+		auto WoWObjectsCreator = std::make_shared<CWorldObjectCreator>(m_BaseManager);
+		m_BaseManager.AddManager<IWoWObjectsCreator>(WoWObjectsCreator);
 
 		return true;
 	}

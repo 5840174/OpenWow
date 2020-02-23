@@ -6,8 +6,8 @@
 // Additional
 #include "M2_ColliderComponent.h"
 
-CM2_Base_Instance::CM2_Base_Instance(const M2& M2Object) 
-	: CLoadableObject(&M2Object)
+CM2_Base_Instance::CM2_Base_Instance(const std::shared_ptr<M2>& M2Object) 
+	: CLoadableObject(M2Object)
 	, m_M2(M2Object)
 	, m_Attached(nullptr)
 	, m_Animator(nullptr)
@@ -20,7 +20,7 @@ CM2_Base_Instance::CM2_Base_Instance(const M2& M2Object)
 
 CM2_Base_Instance::~CM2_Base_Instance()
 {
-	if (m_M2.isAnimated())
+	if (getM2().isAnimated())
 	{
 		//_Bindings->UnregisterUpdatableObject(this);
 	}
@@ -30,7 +30,7 @@ CM2_Base_Instance::~CM2_Base_Instance()
 
 void CM2_Base_Instance::CreateInstances()
 {
-	m_M2.CreateInsances(shared_from_this());
+	getM2().CreateInsances(shared_from_this());
 }
 
 bool CM2_Base_Instance::Load()
@@ -40,6 +40,12 @@ bool CM2_Base_Instance::Load()
 	CreateInstances();
 
 	return true;
+}
+
+const M2 & CM2_Base_Instance::getM2() const
+{
+	_ASSERT(m_M2 != nullptr);
+	return *m_M2;
 }
 
 void CM2_Base_Instance::Attach(std::shared_ptr<CM2_Part_Attachment> _attachment)
@@ -102,9 +108,9 @@ void CM2_Base_Instance::Update(const UpdateEventArgs & e)
 		ForceRecalculateLocalTransform();
 	}
 
-	const_cast<M2&>(m_M2).update(e.TotalTime, e.DeltaTime);
+	const_cast<M2&>(getM2()).update(e.TotalTime, e.DeltaTime);
 
-	if (m_M2.isAnimated())
+	if (getM2().isAnimated())
 	{
 		m_Animator->Update(e.TotalTime, e.DeltaTime);
 
@@ -153,9 +159,9 @@ void CM2_Base_Instance::UpdateLocalTransform()
 void CM2_Base_Instance::InitAnimator()
 {
 	// Create animator
-	if (m_M2.isAnimated())
+	if (getM2().isAnimated())
 	{
-		m_Animator = std::make_shared<CM2_Animator>(GetBaseManager(), m_M2);
+		m_Animator = std::make_shared<CM2_Animator>(GetBaseManager(), getM2());
 	}
 }
 

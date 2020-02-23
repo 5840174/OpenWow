@@ -14,5 +14,5 @@ public:
     bool Visit(const ISceneNode3D* node) override final;
 
 private:
-	std::shared_ptr<ISettingGroup> m_WoWSettings;
+	std::shared_ptr<ISettingT<float>> m_ADT_MCNK_Distance;
 };

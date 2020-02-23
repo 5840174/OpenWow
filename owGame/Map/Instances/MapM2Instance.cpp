@@ -7,7 +7,7 @@
 
 // Additional
 
-CMapM2Instance::CMapM2Instance(const M2& M2Object, const ADT_MDXDef& _placementInfo) 
+CMapM2Instance::CMapM2Instance(const std::shared_ptr<M2>& M2Object, const ADT_MDXDef& _placementInfo) 
 	: CM2_Base_Instance(M2Object)
 	, m_PlacementInfo(_placementInfo)
 {}
