@@ -2,6 +2,7 @@
 
 #include "AuthSocket.h"
 #include "WorldSocket.h"
+#include "ClientCache.h"
 
 #include "SHA1.h"
 #include "RealmInfo.h"
@@ -16,27 +17,22 @@ public:
 	void BeginConnect(const std::string& Username, const std::string& Password);
 	void OnSuccessConnect(BigNumber Key);
 	
-	void ProcessHandler(Opcodes Opcode, CServerPacket& BB);
+	bool ProcessHandler(Opcodes Opcode, CServerPacket& BB) const;
 	void AddWorldHandler(Opcodes Opcode, std::function<void(CServerPacket&)> Handler);
-	void SendPacket(CClientPacket& Packet);
+	void SendPacket(CClientPacket& Packet) const;
 
     //
 	void AddRealm(RealmInfo& _realm);
 
 	// Getters
-    
-  
     const uint32 getClientBuild() const { return 5875; }
-
-
 	const std::string& getHost() const { return m_Host; }
     port_t getPort() const { return m_Port; }
-
-
 	const std::string& GetLogin() const { return m_Username; }
     const SHA1Hash&    GetLoginPasswordHash() const { return m_LoginPasswordHash; }
 
 	BigNumber* getKey() { return &m_Key; }
+	CWoWClientCache& getClientCache() const { return *m_ClientCache; }
 
 private:
 	std::string                     m_Host;
@@ -59,6 +55,8 @@ private: // Used login data. Don't keep fucking password in string. This is secu
     // Sockets
 	std::shared_ptr<CAuthSocket>    m_AuthSocket;
     std::shared_ptr<CWorldSocket>   m_WorldSocket;
-
 	std::unordered_map<Opcodes, std::function<void(CServerPacket&)>> m_Handlers;
+
+	// Cache
+	std::unique_ptr<CWoWClientCache> m_ClientCache;
 };

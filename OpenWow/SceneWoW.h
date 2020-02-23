@@ -16,9 +16,8 @@ public:
 	void S_Login_Verify_World(CServerPacket& Buffer);
 	void S_MonsterMove(CServerPacket & Buffer);
 
-	// Queries
-	void S_CREATURE_QUERY_RESPONSE(CServerPacket & Buffer);
-
+	void S_SMSG_COMPRESSED_UPDATE_OBJECT(CServerPacket& Buffer);
+	void S_SMSG_UPDATE_OBJECT(CServerPacket& Buffer);
 
 	virtual void OnRayIntersected(const glm::vec3& Point);
 

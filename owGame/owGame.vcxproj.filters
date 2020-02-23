@@ -486,6 +486,12 @@
     <ClCompile Include="Settings\WoWSettingsGroup.cpp">
       <Filter>WoW Specific</Filter>
     </ClCompile>
+    <ClCompile Include="Client\ClientCache.cpp">
+      <Filter>Client</Filter>
+    </ClCompile>
+    <ClCompile Include="Client\UpdateData.cpp">
+      <Filter>Client</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="common.h">
@@ -1021,6 +1027,12 @@
     </ClInclude>
     <ClInclude Include="Settings\WoWSettingsGroup.h">
       <Filter>WoW Specific</Filter>
+    </ClInclude>
+    <ClInclude Include="Client\ClientCache.h">
+      <Filter>Client</Filter>
+    </ClInclude>
+    <ClInclude Include="Client\UpdateData.h">
+      <Filter>Client</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

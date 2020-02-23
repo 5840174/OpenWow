@@ -124,7 +124,7 @@ void CWorldSocket::OnRawData(const char * buf, size_t len)
 
         // DEBUG
         _ASSERT(cmd < Opcodes::COUNT);
-        Log::Green("CWorldSocket: Command '%s' (0x%X) size=%d", OpcodesNames[cmd].c_str(), cmd, size);
+        //Log::Green("CWorldSocket: Command '%s' (0x%X) size=%d", OpcodesNames[cmd].c_str(), cmd, size);
 
         // Seek to data
         bufferFromServer.seekRelative(sizeBytes /*Size*/ + sizeof(uint16) /*Opcode*/);
@@ -161,7 +161,8 @@ void CWorldSocket::Packet1(uint16 Size, Opcodes Opcode)
 
 void CWorldSocket::Packet2(CByteBuffer& _buf)
 {
-    // Determinate how much we ALREADY readed
+	_ASSERT(m_CurrentPacket != nullptr);
+
     uint32 needToRead = m_CurrentPacket->GetPacketSize() - m_CurrentPacket->getSize();
     if (needToRead > 0)
     {
@@ -183,7 +184,8 @@ void CWorldSocket::Packet2(CByteBuffer& _buf)
     // Check if we read full packet
     if (m_CurrentPacket->IsComplete())
     {
-        ProcessPacket(*m_CurrentPacket);
+        if (! ProcessPacket(*m_CurrentPacket))
+			Log::Green("Opcode: '%s' (0x%X). Size: '%d'", OpcodesNames[m_CurrentPacket->GetPacketOpcode()].c_str(), m_CurrentPacket->GetPacketOpcode(), m_CurrentPacket->GetPacketSize());
 
         SafeDelete(m_CurrentPacket);
     }
@@ -198,8 +200,6 @@ void CWorldSocket::InitHandlers()
 	m_Handlers[SMSG_AUTH_CHALLENGE] = std::bind(&CWorldSocket::S_AuthChallenge, this, std::placeholders::_1);
 	m_Handlers[SMSG_AUTH_RESPONSE] = std::bind(&CWorldSocket::S_AuthResponse, this, std::placeholders::_1);
 
-
-
 	// Dummy
 	m_Handlers[SMSG_SET_PROFICIENCY] = nullptr;
 	m_Handlers[SMSG_ACCOUNT_DATA_TIMES] = nullptr;
@@ -211,8 +211,6 @@ void CWorldSocket::InitHandlers()
 	m_Handlers[SMSG_INITIALIZE_FACTIONS] = nullptr;
 	m_Handlers[SMSG_LOGIN_SETTIMESPEED] = nullptr;
 	m_Handlers[SMSG_SET_FORCED_REACTIONS] = nullptr;
-	m_Handlers[SMSG_COMPRESSED_UPDATE_OBJECT] = nullptr;
-	//m_Handlers[SMSG_MONSTER_MOVE] = nullptr;
 
 	m_Handlers[Opcodes::SMSG_EMOTE] = nullptr;
 	m_Handlers[Opcodes::SMSG_TIME_SYNC_REQ] = nullptr;
@@ -226,7 +224,7 @@ void CWorldSocket::AddHandler(Opcodes Opcode, HandlerFuncitonType Handler)
 	m_Handlers.insert(std::make_pair(Opcode, Handler));
 }
 
-void CWorldSocket::ProcessPacket(CServerPacket ServerPacket)
+bool CWorldSocket::ProcessPacket(CServerPacket ServerPacket)
 {
 	std::unordered_map<Opcodes, HandlerFuncitonType>::iterator handler = m_Handlers.find(ServerPacket.GetPacketOpcode());
     if (handler != m_Handlers.end())
@@ -234,12 +232,16 @@ void CWorldSocket::ProcessPacket(CServerPacket ServerPacket)
         if (handler->second != nullptr)
 		{
 			(handler->second).operator()(ServerPacket);
+			return true;
 		}
 	}
 	else
 	{
-		m_WoWClient.ProcessHandler(ServerPacket.GetPacketOpcode(), ServerPacket);
+		if (m_WoWClient.ProcessHandler(ServerPacket.GetPacketOpcode(), ServerPacket))
+			return true;
 	}
+
+	return false;
 }
 
 

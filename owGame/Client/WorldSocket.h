@@ -46,7 +46,7 @@ public:
 
 	void InitHandlers();
 	void AddHandler(Opcodes Opcode, HandlerFuncitonType Handler);
-	void ProcessPacket(CServerPacket ServerPacket);
+	bool ProcessPacket(CServerPacket ServerPacket);
 
     // Handlers
 	void S_AuthChallenge(CByteBuffer& Buffer);

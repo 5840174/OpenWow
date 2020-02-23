@@ -13,6 +13,7 @@ CWoWClient::CWoWClient(const std::string& AuthServerHost, uint16 AuthServerPort)
 	m_SocketsHandlerThread = std::make_shared<SocketHandlerThread>(*m_SocketsHandler);
 	m_SocketsHandlerThread->SetRelease(true);
 
+	// Wait for thread initialized
 	while (&m_SocketsHandlerThread->Handler() == nullptr)
 		Sleep(1);
 
@@ -42,12 +43,6 @@ void CWoWClient::BeginConnect(const std::string& Username, const std::string& Pa
     m_AuthSocket->Open(getHost(), getPort());
 
 	m_SocketsHandlerThread->Handler().Add(m_AuthSocket);
-
-
-    //while (m_SocketsHandler->GetCount())
-	//{
-	//    m_SocketsHandler->Select(1, 0);
-	//}
 }
 
 void CWoWClient::OnSuccessConnect(BigNumber Key)
@@ -62,18 +57,26 @@ void CWoWClient::OnSuccessConnect(BigNumber Key)
     m_WorldSocket->Open(currRealm->getIP(), currRealm->getPort());
 
 	m_SocketsHandlerThread->Handler().Add(m_WorldSocket);
+
+	m_ClientCache = std::make_unique<CWoWClientCache>(*this);
 }
 
-void CWoWClient::ProcessHandler(Opcodes Opcode, CServerPacket & BB)
+bool CWoWClient::ProcessHandler(Opcodes Opcode, CServerPacket & BB) const
 {
+	if (m_ClientCache->ProcessQueryResponse(Opcode, BB))
+		return true;
+
 	const auto& handler = m_Handlers.find(Opcode);
 	if (handler != m_Handlers.end())
 	{
 		if (handler->second != nullptr)
 		{
 			(handler->second).operator()(BB);
+			return true;
 		}
 	}
+
+	return false;
 }
 
 void CWoWClient::AddWorldHandler(Opcodes Opcode, std::function<void(CServerPacket&)> Handler)
@@ -82,7 +85,7 @@ void CWoWClient::AddWorldHandler(Opcodes Opcode, std::function<void(CServerPacke
 	m_Handlers.insert(std::make_pair(Opcode, Handler));
 }
 
-void CWoWClient::SendPacket(CClientPacket & Packet)
+void CWoWClient::SendPacket(CClientPacket & Packet) const
 {
 	m_WorldSocket->SendPacket(Packet);
 }

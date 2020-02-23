@@ -5,6 +5,8 @@
 
 // Additional
 #include "Client/Client.h"
+#include "zlib/zlib.h"
+#pragma comment(lib, "zlib.lib")
 
 CSceneWoW::CSceneWoW(IBaseManager& BaseManager)
 	: SceneBase(BaseManager)
@@ -30,23 +32,35 @@ void CSceneWoW::Initialize()
 	GetCameraController()->SetCamera(cameraNode->GetComponent<ICameraComponent3D>());
 	GetCameraController()->GetCamera()->SetPerspectiveProjection(ICameraComponent3D::EPerspectiveProjectionHand::Right, 45.0f, 1.0f/*GetRenderWindow()->GetWindowWidth() / GetRenderWindow()->GetWindowHeight()*/, 0.5f, 10000.0f);
 
-	/*m_WoWClient = std::make_unique<CWoWClient>("127.0.0.1");
+	m_WoWClient = std::make_unique<CWoWClient>("127.0.0.1");
 	m_WoWClient->AddWorldHandler(SMSG_CHAR_ENUM, std::bind(&CSceneWoW::S_CharsEnum, this, std::placeholders::_1));
 	m_WoWClient->AddWorldHandler(SMSG_LOGIN_VERIFY_WORLD, std::bind(&CSceneWoW::S_Login_Verify_World, this, std::placeholders::_1));
 	m_WoWClient->AddWorldHandler(SMSG_MONSTER_MOVE, std::bind(&CSceneWoW::S_MonsterMove, this, std::placeholders::_1));
-	m_WoWClient->AddWorldHandler(SMSG_CREATURE_QUERY_RESPONSE, std::bind(&CSceneWoW::S_CREATURE_QUERY_RESPONSE, this, std::placeholders::_1));
-	
-	m_WoWClient->BeginConnect("admin", "admin");*/
+	m_WoWClient->AddWorldHandler(SMSG_COMPRESSED_UPDATE_OBJECT, std::bind(&CSceneWoW::S_SMSG_COMPRESSED_UPDATE_OBJECT, this, std::placeholders::_1));
+	m_WoWClient->AddWorldHandler(SMSG_UPDATE_OBJECT, std::bind(&CSceneWoW::S_SMSG_UPDATE_OBJECT, this, std::placeholders::_1));
+	m_WoWClient->BeginConnect("admin", "admin");
 
-	Load3D();
+	map = GetRootNode3D()->CreateSceneNode<CMap>(GetBaseManager(), GetRenderDevice());
+
+	//Load3D();
 	LoadUI();
 
-	//cameraNode->SetTranslate(vec3(-50, 160, 170));
-	//GetCameraController()->GetCamera()->SetYaw(-51);
-	//GetCameraController()->GetCamera()->SetPitch(-38);
 
+	std::shared_ptr<BuildRenderListPassTemplated<CWMO_Group_Instance>> wmoListPass = std::make_shared<BuildRenderListPassTemplated<CWMO_Group_Instance>>(GetRenderDevice(), shared_from_this());
+	std::shared_ptr<BuildRenderListPassTemplated<CM2_Base_Instance>> m2ListPass = std::make_shared<BuildRenderListPassTemplated<CM2_Base_Instance>>(GetRenderDevice(), shared_from_this());
 
-	
+	m_Technique3D.AddPass(GetBaseManager().GetManager<IRenderPassFactory>()->CreateRenderPass("ClearPass", GetRenderDevice(), GetRenderWindow()->GetRenderTarget(), &GetRenderWindow()->GetViewport(), shared_from_this()));
+	m_Technique3D.AddPass(wmoListPass);
+	//m_Technique3D.AddPass(m2ListPass);
+	m_Technique3D.AddPass(std::make_shared<CRenderPass_Sky>(GetRenderDevice(), shared_from_this())->CreatePipeline(GetRenderWindow()->GetRenderTarget(), &GetRenderWindow()->GetViewport()));
+	//m_Technique3D.AddPass(std::make_shared<CRenderPass_WDL>(GetRenderDevice(), shared_from_this())->CreatePipeline(GetRenderWindow()->GetRenderTarget(), &GetRenderWindow()->GetViewport()));
+	m_Technique3D.AddPass(std::make_shared<CRenderPass_ADT_MCNK>(GetRenderDevice(), shared_from_this())->CreatePipeline(GetRenderWindow()->GetRenderTarget(), &GetRenderWindow()->GetViewport()));
+	m_Technique3D.AddPass(std::make_shared<CRenderPass_WMO>(GetRenderDevice(), shared_from_this())->CreatePipeline(GetRenderWindow()->GetRenderTarget(), &GetRenderWindow()->GetViewport()));
+	//m_Technique3D.AddPass(std::make_shared<CRenderPass_WMO2>(GetRenderDevice(), wmoListPass, shared_from_this())->CreatePipeline(GetRenderWindow()->GetRenderTarget(), &GetRenderWindow()->GetViewport()));
+	m_Technique3D.AddPass(std::make_shared<CRenderPass_M2>(GetRenderDevice(), shared_from_this())->CreatePipeline(GetRenderWindow()->GetRenderTarget(), &GetRenderWindow()->GetViewport()));
+	//m_Technique3D.AddPass(std::make_shared<CRenderPass_M2_Instanced>(GetRenderDevice(), m2ListPass, shared_from_this())->CreatePipeline(GetRenderWindow()->GetRenderTarget(), &GetRenderWindow()->GetViewport()));
+	m_Technique3D.AddPass(std::make_shared<CRenderPass_Liquid>(GetRenderDevice(), shared_from_this())->CreatePipeline(GetRenderWindow()->GetRenderTarget(), &GetRenderWindow()->GetViewport()));
+	//m_Technique3D.AddPass(std::make_shared<CDrawBoundingBoxPass>(GetRenderDevice(), shared_from_this())->CreatePipeline(GetRenderWindow()->GetRenderTarget(), &GetRenderWindow()->GetViewport()));
 }
 
 void CSceneWoW::Finalize()
@@ -115,7 +129,7 @@ void CSceneWoW::S_MonsterMove(CServerPacket & Buffer)
 	uint64 guid;
 	Buffer.ReadPackedUInt64(guid);
 
-	Log::Green("GUID is '%s'", GetLogNameForGuid(guid));
+	//Log::Green("GUID is '%s'", GetLogNameForGuid(guid));
 
 	float positionX;
 	Buffer >> positionX;
@@ -155,59 +169,38 @@ void CSceneWoW::S_MonsterMove(CServerPacket & Buffer)
 
 	glm::vec3 position = fromGameToReal(glm::vec3(positionX, positionY, positionZ));
 
-	Log::Info("Monster move [%u] (%f, %f, %f) time [%d]", guid, position.x, position.y, position.z);
+	//Log::Info("Monster move [%u] (%f, %f, %f) time [%d]", guid, position.x, position.y, position.z);
 
 	UpdateGUIDPos(guid, position);
 
-
-	CClientPacket queryInfo(CMSG_CREATURE_QUERY);
-	queryInfo << GUID_ENPART(guid);
-	queryInfo << guid;
-	m_WoWClient->SendPacket(queryInfo);
+	m_WoWClient->getClientCache().SendQueryResponce(guid);
 }
 
-void CSceneWoW::S_CREATURE_QUERY_RESPONSE(CServerPacket & Buffer)
+SUpdateData updData;
+
+void CSceneWoW::S_SMSG_COMPRESSED_UPDATE_OBJECT(CServerPacket & Buffer)
 {
-	uint32 entry;
-	Buffer >> (uint32)entry;                              // creature entry
+	uint32 dataSize;
+	Buffer >> dataSize;
 
-	std::string Name;
-	Buffer >> &Name;
+	CByteBuffer uncompressed;
+	uncompressed.writeDummy(dataSize);
 
-	Buffer.seekRelative(3);
-	//Buffer >> uint8(0) << uint8(0) << uint8(0);           // name2, name3, name4, always empty
+	uLongf uncompressedSize;
+	if (uncompress(uncompressed.getDataEx(), &uncompressedSize, Buffer.getDataFromCurrent(), Buffer.getSize() - 4) != Z_OK)
+	{
+		Log::Error("SMSG_COMPRESSED_UPDATE_OBJECT: Error while uncompress object.");
+		return;
+	}
+	_ASSERT(dataSize == uncompressedSize);
 
-	std::string SubName;
-	Buffer >> &SubName;
+	uncompressed.seek(0);
+	updData.Fill(uncompressed);
+}
 
-	Buffer.seekRelative(24);
-	//Buffer >> (uint32)ci->type_flags;                     // flags          wdbFeild7=wad flags1
-	//Buffer >> (uint32)ci->type;
-	//Buffer >> (uint32)ci->family;                         // family         wdbFeild9
-	//Buffer >> (uint32)ci->rank;                           // rank           wdbFeild10
-	//Buffer >> (uint32)0;                                  // unknown        wdbFeild11
-	//Buffer >> (uint32)ci->PetSpellDataId;                 // Id from CreatureSpellData.dbc    wdbField12
-	uint32 modelID_A1;
-	Buffer >> modelID_A1;                     // Modelid_A1
-	uint32 modelID_A2;
-	Buffer >> modelID_A2;                     // Modelid_A2
-	uint32 modelID_H1;
-	Buffer >> modelID_H1;                     // Modelid_H1
-	uint32 modelID_H2;
-	Buffer >> modelID_H2;                     // Modelid_H2
-
-	float unk0;
-	Buffer >> unk0;                                // unk
-	float unk1;
-	Buffer >> unk1;                                // unk
-
-	Buffer.seekRelative(1);
-	//Buffer >> (uint8)ci->RacialLeader;
-
-	QueryCreatures ent;
-	ent.name = Name;
-	ent.modelID = modelID_A1;
-	m_EntriesName.insert(std::make_pair(entry, ent));
+void CSceneWoW::S_SMSG_UPDATE_OBJECT(CServerPacket & Buffer)
+{
+	updData.Fill(Buffer);
 }
 
 void CSceneWoW::OnRayIntersected(const glm::vec3& Point)
@@ -269,7 +262,7 @@ void CSceneWoW::Load3D()
 #endif
 
 
-	map = GetRootNode3D()->CreateSceneNode<CMap>(GetBaseManager(), GetRenderDevice());
+	
 	
 #if 1
 	const float x = 40;
@@ -284,21 +277,7 @@ void CSceneWoW::Load3D()
 	GetCameraController()->GetCamera()->SetPitch(-27.8);
 #endif
 
-	std::shared_ptr<BuildRenderListPassTemplated<CWMO_Group_Instance>> wmoListPass = std::make_shared<BuildRenderListPassTemplated<CWMO_Group_Instance>>(GetRenderDevice(), shared_from_this());
-	std::shared_ptr<BuildRenderListPassTemplated<CM2_Base_Instance>> m2ListPass = std::make_shared<BuildRenderListPassTemplated<CM2_Base_Instance>>(GetRenderDevice(), shared_from_this());
 
-	m_Technique3D.AddPass(GetBaseManager().GetManager<IRenderPassFactory>()->CreateRenderPass("ClearPass", GetRenderDevice(), GetRenderWindow()->GetRenderTarget(), &GetRenderWindow()->GetViewport(), shared_from_this()));
-	m_Technique3D.AddPass(wmoListPass);
-	//m_Technique3D.AddPass(m2ListPass);
-	m_Technique3D.AddPass(std::make_shared<CRenderPass_Sky>(GetRenderDevice(), shared_from_this())->CreatePipeline(GetRenderWindow()->GetRenderTarget(), &GetRenderWindow()->GetViewport()));
-	//m_Technique3D.AddPass(std::make_shared<CRenderPass_WDL>(GetRenderDevice(), shared_from_this())->CreatePipeline(GetRenderWindow()->GetRenderTarget(), &GetRenderWindow()->GetViewport()));
-	m_Technique3D.AddPass(std::make_shared<CRenderPass_ADT_MCNK>(GetRenderDevice(), shared_from_this())->CreatePipeline(GetRenderWindow()->GetRenderTarget(), &GetRenderWindow()->GetViewport()));
-	m_Technique3D.AddPass(std::make_shared<CRenderPass_WMO>(GetRenderDevice(), shared_from_this())->CreatePipeline(GetRenderWindow()->GetRenderTarget(), &GetRenderWindow()->GetViewport()));
-	//m_Technique3D.AddPass(std::make_shared<CRenderPass_WMO2>(GetRenderDevice(), wmoListPass, shared_from_this())->CreatePipeline(GetRenderWindow()->GetRenderTarget(), &GetRenderWindow()->GetViewport()));
-	m_Technique3D.AddPass(std::make_shared<CRenderPass_M2>(GetRenderDevice(), shared_from_this())->CreatePipeline(GetRenderWindow()->GetRenderTarget(), &GetRenderWindow()->GetViewport()));
-	//m_Technique3D.AddPass(std::make_shared<CRenderPass_M2_Instanced>(GetRenderDevice(), m2ListPass, shared_from_this())->CreatePipeline(GetRenderWindow()->GetRenderTarget(), &GetRenderWindow()->GetViewport()));
-	m_Technique3D.AddPass(std::make_shared<CRenderPass_Liquid>(GetRenderDevice(), shared_from_this())->CreatePipeline(GetRenderWindow()->GetRenderTarget(), &GetRenderWindow()->GetViewport()));
-	//m_Technique3D.AddPass(std::make_shared<CDrawBoundingBoxPass>(GetRenderDevice(), shared_from_this())->CreatePipeline(GetRenderWindow()->GetRenderTarget(), &GetRenderWindow()->GetViewport()));
 }
 
 void CSceneWoW::Load3D_M2s()
@@ -348,6 +327,7 @@ void CSceneWoW::LoadUI()
 
 void CSceneWoW::UpdateGUIDPos(uint64 GUID, const glm::vec3& Position, glm::vec3 Direction)
 {
+	/*
 	const auto& it = m_Objects.find(GUID);
 	if (it == m_Objects.end())
 	{
@@ -389,4 +369,5 @@ void CSceneWoW::UpdateGUIDPos(uint64 GUID, const glm::vec3& Position, glm::vec3 
 
 		it->second->SetTranslate(Position);
 	}
+	*/
 }
