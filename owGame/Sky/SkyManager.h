@@ -5,6 +5,7 @@
 class ZN_API SkyManager
 	: public SceneNode3D
 	, public ISkyManager
+	, public CLoadableObject
 {
 public:
 	SkyManager(IRenderDevice& RenderDevice);

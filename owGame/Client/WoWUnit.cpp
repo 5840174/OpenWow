@@ -1,7 +1,7 @@
 #include "stdafx.h"
 
 // General
-#include "Unit.h"
+#include "WoWUnit.h"
 
 // Additional
 #include "World/WorldObjectsCreator.h"
@@ -18,10 +18,8 @@ void WoWUnit::UpdateMovementData(CByteBuffer & Bytes)
 {
 	Bytes >> (uint32)flags2;
 	Bytes.seekRelative(sizeof(uint32)); // (uint32)0xB5771D7F;
-	Bytes >> PositionX;
-	Bytes >> PositionY;
-	Bytes >> PositionZ;
-	Bytes >> Orientation;
+
+	UpdateMovementDataInternal(Bytes);
 
 	Bytes.seekRelative(sizeof(float)); //(float)0
 
@@ -44,14 +42,6 @@ void WoWUnit::UpdateMovementData(CByteBuffer & Bytes)
 		for (int i = 0; i < PosCount + 1; i++)
 			Bytes.seekRelative(3 * sizeof(float)); // (float)0;
 	}
-
-
-	if (m_HiddenNode)
-	{
-		glm::vec3 position = fromGameToReal(glm::vec3(PositionX, PositionY, PositionZ));
-		SetTranslate(position);
-		SetRotation(glm::vec3(0.0f, Orientation, 0.0f));
-	}
 }
 
 
@@ -63,9 +53,26 @@ std::shared_ptr<WoWUnit> WoWUnit::Create(IBaseManager& BaseManager, IRenderDevic
 {
 	std::shared_ptr<WoWUnit> thisObj = Scene->GetRootNode3D()->CreateSceneNode<WoWUnit>();
 	thisObj->InitInternal(guid, TYPEMASK_UNIT, ObjectTypeID::TYPEID_UNIT);
+	thisObj->m_valuesCount = UNIT_END;
 
-	CWorldObjectCreator creator(BaseManager);
-	thisObj->m_HiddenNode = creator.BuildCreatureFromDisplayInfo(RenderDevice, Scene, 6910, thisObj);
+	// For test only
+	BoundingBox bbox(glm::vec3(-2.0f), glm::vec3(2.0f));
+	bbox.calculateCenter();
+	//thisObj->GetComponent<IColliderComponent3D>()->SetBounds(bbox);
 
 	return thisObj;
+}
+
+void WoWUnit::AfterCreate(IBaseManager& BaseManager, IRenderDevice& RenderDevice, IScene * Scene)
+{
+	uint32 displayInfo = GetUInt32Value(UNIT_FIELD_DISPLAYID);
+	if (displayInfo != 0)
+	{
+		CWorldObjectCreator creator(BaseManager);
+		m_HiddenNode = creator.BuildCreatureFromDisplayInfo(RenderDevice, Scene, displayInfo, shared_from_this());
+	}
+	else
+	{
+		_ASSERT(false);
+	}
 }

@@ -151,6 +151,12 @@
     <Filter Include="Client\Objects">
       <UniqueIdentifier>{f1bc6419-bd1c-489f-96a6-08edae45f75f}</UniqueIdentifier>
     </Filter>
+    <Filter Include="DBC\Tables\GameObject">
+      <UniqueIdentifier>{c8891ee9-d1af-4d56-b44f-98c30a4c551f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="World\GameObject">
+      <UniqueIdentifier>{77fd2597-a1d4-46aa-b9ea-faa5222f03d0}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -486,25 +492,34 @@
     <ClCompile Include="Settings\WoWSettingsGroup.cpp">
       <Filter>WoW Specific</Filter>
     </ClCompile>
-    <ClCompile Include="Client\Object.cpp">
-      <Filter>Client\Objects</Filter>
-    </ClCompile>
-    <ClCompile Include="Client\Unit.cpp">
-      <Filter>Client\Objects</Filter>
-    </ClCompile>
     <ClCompile Include="Client\WorldLocation.cpp">
-      <Filter>Client\Objects</Filter>
-    </ClCompile>
-    <ClCompile Include="Client\WorldObject.cpp">
       <Filter>Client\Objects</Filter>
     </ClCompile>
     <ClCompile Include="Client\World.cpp">
       <Filter>Client\World</Filter>
     </ClCompile>
-    <ClCompile Include="Client\Player.cpp">
+    <ClCompile Include="World\GameObject\GameObject.cpp">
+      <Filter>World\GameObject</Filter>
+    </ClCompile>
+    <ClCompile Include="Client\WoWGameObject.cpp">
       <Filter>Client\Objects</Filter>
     </ClCompile>
-    <ClCompile Include="Client\GameObject.cpp">
+    <ClCompile Include="Client\WoWItem.cpp">
+      <Filter>Client\Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="Client\WoWPlayer.cpp">
+      <Filter>Client\Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="Client\WoWUnit.cpp">
+      <Filter>Client\Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="Client\WoWBag.cpp">
+      <Filter>Client\Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="Client\WoWObject.cpp">
+      <Filter>Client\Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="Client\WoWWorldObject.cpp">
       <Filter>Client\Objects</Filter>
     </ClCompile>
   </ItemGroup>
@@ -1040,25 +1055,43 @@
     <ClInclude Include="Client\ClientCache.h">
       <Filter>Client</Filter>
     </ClInclude>
-    <ClInclude Include="Client\Object.h">
-      <Filter>Client\Objects</Filter>
-    </ClInclude>
-    <ClInclude Include="Client\Unit.h">
-      <Filter>Client\Objects</Filter>
-    </ClInclude>
     <ClInclude Include="Client\WorldLocation.h">
-      <Filter>Client\Objects</Filter>
-    </ClInclude>
-    <ClInclude Include="Client\WorldObject.h">
       <Filter>Client\Objects</Filter>
     </ClInclude>
     <ClInclude Include="Client\World.h">
       <Filter>Client\World</Filter>
     </ClInclude>
-    <ClInclude Include="Client\Player.h">
+    <ClInclude Include="Client\UpdateFields.h">
       <Filter>Client\Objects</Filter>
     </ClInclude>
-    <ClInclude Include="Client\GameObject.h">
+    <ClInclude Include="Client\UpdateMask.h">
+      <Filter>Client\Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="DBC\Tables\DBC_GameObjectDisplayInfo.h">
+      <Filter>DBC\Tables\GameObject</Filter>
+    </ClInclude>
+    <ClInclude Include="World\GameObject\GameObject.h">
+      <Filter>World\GameObject</Filter>
+    </ClInclude>
+    <ClInclude Include="Client\WoWGameObject.h">
+      <Filter>Client\Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="Client\WoWItem.h">
+      <Filter>Client\Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="Client\WoWPlayer.h">
+      <Filter>Client\Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="Client\WoWUnit.h">
+      <Filter>Client\Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="Client\WoWBag.h">
+      <Filter>Client\Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="Client\WoWObject.h">
+      <Filter>Client\Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="Client\WoWWorldObject.h">
       <Filter>Client\Objects</Filter>
     </ClInclude>
   </ItemGroup>

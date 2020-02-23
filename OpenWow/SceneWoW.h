@@ -11,9 +11,6 @@ public:
 	void Initialize() override;
 	void Finalize() override;
 
-	// Client
-	void S_Login_Verify_World(CServerPacket& Buffer);
-
 	virtual void OnRayIntersected(const glm::vec3& Point);
 
 	virtual void OnPreRender(RenderEventArgs& e) override;
@@ -26,8 +23,6 @@ private:
 	void Load3D();
 	void Load3D_M2s();
 	void LoadUI();
-
-	void UpdateGUIDPos(uint64 GUID, const glm::vec3& Position, glm::vec3 Direction = glm::vec3(0.0f));
 
 private:
 	std::shared_ptr<CWMO_Base_Instance> wmoInstance;

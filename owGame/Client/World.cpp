@@ -7,9 +7,11 @@
 #include "Client/Templates/CharacterTemplate.h"
 
 // Types
-#include "GameObject.h"
-#include "Player.h"
-#include "Unit.h"
+#include "WoWBag.h"
+#include "WoWGameObject.h"
+#include "WoWItem.h"
+#include "WoWPlayer.h"
+#include "WoWUnit.h"
 
 // zlib
 #include "zlib/zlib.h"
@@ -23,6 +25,7 @@ WoWWorld::WoWWorld(IBaseManager& BaseManager, IRenderDevice& RenderDevice, IScen
 {
 	m_Socket->SetExternalHandler(std::bind(&WoWWorld::ProcessHandler, this, std::placeholders::_1, std::placeholders::_2));
 
+	skyManager = Scene->GetRootNode3D()->CreateSceneNode<SkyManager>(m_RenderDevice);
 	map = Scene->GetRootNode3D()->CreateSceneNode<CMap>(m_BaseManager, m_RenderDevice);
 
 	// Handlers
@@ -64,27 +67,26 @@ void WoWWorld::S_SMSG_LOGIN_VERIFY_WORLD(CServerPacket& Buffer)
 	uint32 mapID;
 	Buffer >> mapID;
 
-	float positionX;
+	float positionX, positionY, positionZ, orientation;
 	Buffer >> positionX;
-
-	float positionY;
 	Buffer >> positionY;
-
-	float positionZ;
 	Buffer >> positionZ;
-
-	float orientation;
 	Buffer >> orientation;
 
 	_ASSERT(Buffer.isEof());
 
 	glm::vec3 position = fromGameToReal(glm::vec3(positionX, positionY, positionZ));
 
+	// Skies
+	skyManager->Load(mapID);
+
+	// Map
 	map->MapPreLoad(m_BaseManager.GetManager<CDBCStorage>()->DBC_Map()[mapID]);
 	map->MapLoad();
 	map->MapPostLoad();
 	map->EnterMap(position);
 
+	// Camera
 	m_Scene->GetCameraController()->GetCamera()->SetTranslation(position);
 	m_Scene->GetCameraController()->GetCamera()->SetYaw(48.8);
 	m_Scene->GetCameraController()->GetCamera()->SetPitch(-27.8);
@@ -223,16 +225,6 @@ bool WoWWorld::ProcessHandler(Opcodes Opcode, CServerPacket& Bytes)
 
 namespace
 {
-	enum class ZN_API OBJECT_UPDATE_TYPE : uint8
-	{
-		UPDATETYPE_VALUES = 0,
-		UPDATETYPE_MOVEMENT = 1,
-		UPDATETYPE_CREATE_OBJECT = 2,
-		UPDATETYPE_CREATE_OBJECT2 = 3,
-		UPDATETYPE_OUT_OF_RANGE_OBJECTS = 4,
-		UPDATETYPE_NEAR_OBJECTS = 5
-	};
-
 	struct ZN_API Block_UPDATETYPE_OUT_OF_RANGE_OBJECTS
 	{
 		void Fill(CByteBuffer& ByteBuffer)
@@ -268,20 +260,21 @@ void WoWWorld::ProcessUpdatePacket(CByteBuffer& Bytes)
 		OBJECT_UPDATE_TYPE updateType;
 		Bytes.read(&updateType);
 
+		Log::Green("Process update type %d", updateType);
+
 		switch (updateType)
 		{
 		case OBJECT_UPDATE_TYPE::UPDATETYPE_VALUES:
 		{
-			Bytes.seekRelative(1); // 0xFF
+			uint8 unk;
+			Bytes.read(&unk); // 0xFF
+			_ASSERT(unk == 0xFF);
 
 			uint64 guid;
 			Bytes >> guid;
 
-			uint8 blocksCnt;
-			Bytes >> (uint8)blocksCnt;
-
-			// TODO: read data
-			Bytes.seekRelative((blocksCnt));
+			std::shared_ptr<WoWObject> object = GetWoWObject(guid);
+			object->UpdateValues(Bytes);
 		}
 		break;
 		case OBJECT_UPDATE_TYPE::UPDATETYPE_MOVEMENT:
@@ -289,50 +282,28 @@ void WoWWorld::ProcessUpdatePacket(CByteBuffer& Bytes)
 			uint64 guid;
 			Bytes >> guid;
 
-			const auto& objIterator = m_Objects.find(guid);
-			if (objIterator != m_Objects.end())
-			{
-				objIterator->second->UpdateMovement(Bytes);
-			}
-			else
-			{
-				// How we load this shit ???
-				/*std::shared_ptr<WoWObject> object = CreateObjectByType(guid, ObjectTypeID::TYPEID_OBJECT);
-				if (object != nullptr)
-				{
-					object->UpdateMovement(Bytes);
-					m_Objects[guid] = object;
-				}*/
-			}
+			std::shared_ptr<WoWObject> object = GetWoWObject(guid);
+			object->UpdateMovement(Bytes);
 			Log::Warn("UPDATETYPE_MOVEMENT");
 		}
 		break;
 		case OBJECT_UPDATE_TYPE::UPDATETYPE_CREATE_OBJECT:
 		case OBJECT_UPDATE_TYPE::UPDATETYPE_CREATE_OBJECT2:
 		{
-			Bytes.seekRelative(1); // 0xFF
+			uint8 unk;
+			Bytes.read(&unk); // 0xFF
+			_ASSERT(unk == 0xFF);
+
 			uint64 guid;
 			Bytes >> guid;
 
 			ObjectTypeID typeID;
 			Bytes.read(&typeID);
 
-			const auto& objIterator = m_Objects.find(guid);
-			if (objIterator != m_Objects.end())
-			{
-				Log::Info("Unexpected behavior: UPDATETYPE_CREATE_OBJECT, but object already exists.");
-				objIterator->second->UpdateMovement(Bytes);
-			}
-			else
-			{
-				std::shared_ptr<WoWObject> object = CreateObjectByType(guid, typeID);
-				if (object != nullptr)
-				{
-					object->UpdateMovement(Bytes);
-					m_Objects[guid] = object;
-				}
-			}
-			//std::shared_ptr<WoWUnit> unit = ;
+			std::shared_ptr<WoWObject> object = GetWoWObject(guid);
+			object->UpdateMovement(Bytes);
+			object->UpdateValues(Bytes);
+			object->AfterCreate(m_BaseManager, m_RenderDevice, m_Scene);
 
 			Log::Warn("UPDATETYPE_CREATE_OBJECT");
 		}
@@ -351,9 +322,11 @@ void WoWWorld::ProcessUpdatePacket(CByteBuffer& Bytes)
 		{
 			Block_UPDATETYPE_OUT_OF_RANGE_OBJECTS block;
 			block.Fill(Bytes);
-			//Log::Warn("UPDATETYPE_OUT_OF_RANGE_OBJECTS");
+			Log::Warn("UPDATETYPE_OUT_OF_RANGE_OBJECTS");
 		}
 		break;
+		default:
+			Log::Error("Unknown update type %d", updateType);
 		}
 	}
 }
@@ -368,10 +341,10 @@ std::shared_ptr<WoWObject> WoWWorld::CreateObjectByType(uint64 guid, ObjectTypeI
 		return WoWObject::Create(m_BaseManager, m_RenderDevice, m_Scene, guid);
 
 	case ObjectTypeID::TYPEID_ITEM:
-		return nullptr;
+		return WoWItem::Create(m_BaseManager, m_RenderDevice, m_Scene, guid);
 
 	case ObjectTypeID::TYPEID_CONTAINER:
-		return nullptr;
+		return WoWBag::Create(m_BaseManager, m_RenderDevice, m_Scene, guid);
 
 	case ObjectTypeID::TYPEID_UNIT:
 		return WoWUnit::Create(m_BaseManager, m_RenderDevice, m_Scene, guid);
@@ -383,18 +356,32 @@ std::shared_ptr<WoWObject> WoWWorld::CreateObjectByType(uint64 guid, ObjectTypeI
 		return WoWGameObject::Create(m_BaseManager, m_RenderDevice, m_Scene, guid);
 
 	case ObjectTypeID::TYPEID_DYNAMICOBJECT:
+		_ASSERT(false);
 		return nullptr;
 
 	case ObjectTypeID::TYPEID_CORPSE:
+		_ASSERT(false);
 		return nullptr;
 	}
 
+	_ASSERT(false);
 	return nullptr;
 }
 
 std::shared_ptr<WoWObject> WoWWorld::GetWoWObject(uint64 Guid)
 {
-	return std::shared_ptr<WoWObject>();
+	const auto& objIterator = m_Objects.find(Guid);
+	if (objIterator != m_Objects.end())
+		return objIterator->second;
+
+	uint32 highGuid = GUID_HIPART(Guid);
+	//const char* name = GetLogNameForGuid(Guid);
+	//Log::Info("WoWObject '%s' created.", name);
+	ObjectTypeID typeID = GuidHigh2TypeId(highGuid);
+	_ASSERT(typeID != ObjectTypeID::TYPEID_OBJECT);
+	std::shared_ptr<WoWObject> object = CreateObjectByType(Guid, typeID);
+	m_Objects[Guid] = object;
+	return object;
 }
 
 

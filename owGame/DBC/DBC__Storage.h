@@ -35,9 +35,7 @@
 
 // Item
 #include "Tables/DBC_HelmetGeosetVisData.h"
-//#if VERSION == VERSION_WotLK
 #include "Tables/DBC_Item.h"
-//#endif
 #include "Tables/DBC_ItemBagFamily.h"
 #include "Tables/DBC_ItemClass.h"
 #include "Tables/DBC_ItemDisplayInfo.h"
@@ -53,6 +51,9 @@
 
 // Liquid
 #include "Tables/DBC_LiquidType.h"
+
+// GameObject
+#include "Tables/DBC_GameObjectDisplayInfo.h"
 
 
 class ZN_API __declspec(uuid("1E65D52E-5137-4B9E-8B3A-9D111F398742")) CDBCStorage
@@ -115,6 +116,9 @@ public:
 
 	// Liquid
 	DBC_DEFINE(DBC_LiquidType)
+
+	// GameObject
+	DBC_DEFINE(DBC_GameObjectDisplayInfo)
 
 private:
 	IBaseManager& m_BaseManager;

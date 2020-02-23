@@ -68,39 +68,6 @@ void CSceneWoW::Finalize()
 	SceneBase::Finalize();
 }
 
-void CSceneWoW::S_Login_Verify_World(CServerPacket & Buffer)
-{
-	uint32 mapID;
-	Buffer >> mapID;
-
-	float positionX;
-	Buffer >> positionX;
-
-	float positionY;
-	Buffer >> positionY;
-
-	float positionZ;
-	Buffer >> positionZ;
-
-	float orientation;
-	Buffer >> orientation;
-
-	_ASSERT(Buffer.isEof());
-
-	glm::vec3 position = fromGameToReal(glm::vec3(positionX, positionY, positionZ));
-
-	/*const float x = 40;
-	const float y = 27;
-	map->MapPreLoad(GetBaseManager().GetManager<CDBCStorage>()->DBC_Map()[mapID]);
-	map->MapLoad();
-	map->MapPostLoad();
-	map->EnterMap(position);*/
-
-	GetCameraController()->GetCamera()->SetTranslation(position);
-	GetCameraController()->GetCamera()->SetYaw(48.8);
-	GetCameraController()->GetCamera()->SetPitch(-27.8);
-}
-
 
 void CSceneWoW::OnRayIntersected(const glm::vec3& Point)
 {
@@ -160,9 +127,6 @@ void CSceneWoW::Load3D()
 	GetCameraController()->GetCamera()->SetPitch(-27.8);
 #endif
 
-
-	
-	
 #if 1
 	const float x = 40;
 	const float y = 27;
@@ -224,49 +188,3 @@ void CSceneWoW::LoadUI()
 	m_TechniqueUI.AddPass(std::make_shared<CUIFontPass>(GetRenderDevice(), shared_from_this())->CreatePipeline(GetRenderWindow()->GetRenderTarget(), &GetRenderWindow()->GetViewport()));
 }
 
-void CSceneWoW::UpdateGUIDPos(uint64 GUID, const glm::vec3& Position, glm::vec3 Direction)
-{
-	/*
-	const auto& it = m_Objects.find(GUID);
-	if (it == m_Objects.end())
-	{
-		CWorldObjectCreator creator(GetBaseManager());
-		auto creature = creator.BuildCreatureFromDisplayInfo(GetRenderDevice(), this, 6910, GetRootNode3D());
-		if (creature != nullptr)
-		{
-			creature->SetTranslate(Position);
-			//creature->SetRotation(Direction);
-			//creature->SetParent(GetRootNode3D().get());
-		}
-		m_Objects.insert(std::make_pair(GUID, creature));
-	}
-	else
-	{
-		// Recreate object if need
-		const auto& crEntryName = m_EntriesName.find(GUID_ENPART(GUID));
-		if (crEntryName != m_EntriesName.end())
-		{
-			if (it->second->GetName() != crEntryName->second.name)
-			{
-				auto parent = it->second->GetParent().lock();
-				if (parent)
-					parent->RemoveChild(it->second);
-
-				CWorldObjectCreator creator(GetBaseManager());
-				auto creature = creator.BuildCreatureFromDisplayInfo(GetRenderDevice(), this, crEntryName->second.modelID, it->second->GetParent().lock());
-				if (creature != nullptr)
-				{
-					creature->SetTranslate(Position);
-					//creature->SetRotation(Direction);
-					//creature->SetParent(GetRootNode3D().get());
-					m_Objects[GUID] = creature;
-
-					return;
-				}
-			}
-		}
-
-		it->second->SetTranslate(Position);
-	}
-	*/
-}

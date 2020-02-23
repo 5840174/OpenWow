@@ -23,11 +23,11 @@ std::shared_ptr<Creature> CWorldObjectCreator::BuildCreatureFromDisplayInfo(IRen
 {
 	const DBC_CreatureDisplayInfoRecord* rec = m_DBCs->DBC_CreatureDisplayInfo()[_id];
 	if (rec == nullptr)
-		throw std::exception("Not found!");
+		return nullptr;
 
 	const DBC_CreatureDisplayInfoExtraRecord* humanoidRecExtra = m_DBCs->DBC_CreatureDisplayInfoExtra()[rec->Get_HumanoidData()];
 	if (humanoidRecExtra != 0)
-		return BuildCharactedFromDisplayInfo(RenderDevice, Scene, _id, nullptr);
+		return BuildCharactedFromDisplayInfo(RenderDevice, Scene, _id, Parent);
 
 	// 1. Load model
 	std::shared_ptr<M2> m2Model = nullptr;
@@ -38,7 +38,7 @@ std::shared_ptr<Creature> CWorldObjectCreator::BuildCreatureFromDisplayInfo(IRen
 	std::shared_ptr<Creature> newCreature = Scene->CreateSceneNode<Creature>(Parent, m2Model);
 	m_BaseManager.GetManager<ILoader>()->AddToLoadQueue(newCreature);
 	newCreature->setAlpha(static_cast<float>(rec->Get_Opacity()) / 255.0f);
-	//newCreature->SetScale(rec->Get_Scale());
+	newCreature->SetScale(glm::vec3(rec->Get_Scale()));
 
 	// 2. Creature textures
 	{
@@ -165,6 +165,18 @@ std::shared_ptr<Character> CWorldObjectCreator::BuildCharactedFromDisplayInfo(IR
 	return newCharacter;
 }
 
+std::shared_ptr<GameObject> CWorldObjectCreator::BuildGameObjectFromDisplayInfo(IRenderDevice & RenderDevice, IScene * Scene, uint32 _id, const std::shared_ptr<ISceneNode3D>& Parent)
+{
+	std::shared_ptr<M2> m2Model = nullptr;
+	{
+		m2Model = CreateGameObjectModel(RenderDevice, m_DBCs->DBC_GameObjectDisplayInfo()[_id]);
+	}
+
+	std::shared_ptr<GameObject> newGameObject = Scene->CreateSceneNode<GameObject>(Parent, m2Model);
+	m_BaseManager.GetManager<ILoader>()->AddToLoadQueue(newGameObject);
+	return newGameObject;
+}
+
 
 
 //
@@ -230,4 +242,11 @@ std::shared_ptr<M2> CWorldObjectCreator::CreateCharacterModel(IRenderDevice& Ren
 	std::string fullModelName = "Character\\" + modelClientFileString + "\\" + modelGender + "\\" + modelClientFileString + modelGender + ".M2";
 
 	return LoadM2(RenderDevice, fullModelName);
+}
+
+std::shared_ptr<M2> CWorldObjectCreator::CreateGameObjectModel(IRenderDevice & RenderDevice, const DBC_GameObjectDisplayInfoRecord * GameObjectDisplayInfoRecord)
+{
+	_ASSERT(GameObjectDisplayInfoRecord != nullptr);
+	std::string modelName = GameObjectDisplayInfoRecord->Get_ModelName();
+	return LoadM2(RenderDevice, modelName);
 }

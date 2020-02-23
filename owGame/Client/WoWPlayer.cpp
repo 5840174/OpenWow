@@ -1,7 +1,7 @@
 #include "stdafx.h"
 
 // General
-#include "Player.h"
+#include "WoWPlayer.h"
 
 WoWPlayer::WoWPlayer()
 {
@@ -18,10 +18,7 @@ void WoWPlayer::UpdateMovementData(CByteBuffer & Bytes)
 
 	if ((flags2 & 0x02000000) == 0) // GetTransport() == nullptr
 	{
-		Bytes >> PositionX;
-		Bytes >> PositionY;
-		Bytes >> PositionZ;
-		Bytes >> Orientation;
+		UpdateMovementDataInternal(Bytes);
 	}
 	else
 	{
@@ -31,10 +28,7 @@ void WoWPlayer::UpdateMovementData(CByteBuffer & Bytes)
 		Bytes >> transportO;
 		Bytes >> transportGUID;
 
-		Bytes >> PositionX;
-		Bytes >> PositionY;
-		Bytes >> PositionZ;
-		Bytes >> Orientation;
+		UpdateMovementDataInternal(Bytes);
 	}
 
 	Bytes.seekRelative(sizeof(float)); // (float)0;
@@ -65,5 +59,12 @@ std::shared_ptr<WoWPlayer> WoWPlayer::Create(IBaseManager& BaseManager, IRenderD
 {
 	std::shared_ptr<WoWPlayer> thisObj = Scene->GetRootNode3D()->CreateSceneNode<WoWPlayer>();
 	thisObj->InitInternal(guid, TYPEMASK_PLAYER, ObjectTypeID::TYPEID_PLAYER);
+	thisObj->m_valuesCount = PLAYER_END;
+
+	// For test only
+	BoundingBox bbox(glm::vec3(-2.0f), glm::vec3(2.0f));
+	bbox.calculateCenter();
+	//thisObj->GetComponent<IColliderComponent3D>()->SetBounds(bbox);
+
 	return thisObj;
 }

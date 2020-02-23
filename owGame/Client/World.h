@@ -3,7 +3,7 @@
 #include "ServerPacket.h"
 #include "WorldSocket.h"
 
-#include "Object.h"
+#include "WoWObject.h"
 
 // Cache
 #include "ClientCache.h"
@@ -58,6 +58,7 @@ private:
 	IBaseManager& m_BaseManager;
 	IRenderDevice& m_RenderDevice;
 	IScene* m_Scene;
+
 	std::shared_ptr<SkyManager> skyManager;
 	std::shared_ptr<CMap> map;
 };

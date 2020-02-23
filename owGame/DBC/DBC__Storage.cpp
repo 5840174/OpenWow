@@ -58,6 +58,9 @@ CDBCStorage::CDBCStorage(IBaseManager& BaseManager)
 
 	// Liquid
 	DBC_LOAD(DBC_LiquidType, filesManager, "LiquidType.dbc");
+
+	// GameObject
+	DBC_LOAD(DBC_GameObjectDisplayInfo, filesManager, "GameObjectDisplayInfo.dbc");
 }
 
 CDBCStorage::~CDBCStorage()

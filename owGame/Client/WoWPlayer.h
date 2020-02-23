@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Unit.h"
+#include "WoWUnit.h"
 
 class ZN_API WoWPlayer
 	: public WoWUnit

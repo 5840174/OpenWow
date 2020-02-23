@@ -2,6 +2,7 @@
 
 // General
 #include "Item.h"
+#include "..\..\Client\Item.h"
 
 Item::Item() 
 {}
