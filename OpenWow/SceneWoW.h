@@ -12,12 +12,7 @@ public:
 	void Finalize() override;
 
 	// Client
-	void S_CharsEnum(CServerPacket& Buffer);
 	void S_Login_Verify_World(CServerPacket& Buffer);
-	void S_MonsterMove(CServerPacket & Buffer);
-
-	void S_SMSG_COMPRESSED_UPDATE_OBJECT(CServerPacket& Buffer);
-	void S_SMSG_UPDATE_OBJECT(CServerPacket& Buffer);
 
 	virtual void OnRayIntersected(const glm::vec3& Point);
 

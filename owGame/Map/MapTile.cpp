@@ -253,7 +253,7 @@ bool CMapTile::Load()
 	}
 
 
-
+#if 0
 	//-- WMOs --------------------------------------------------------------------------
 
 	for (auto& it : m_WMOsPlacementInfo)
@@ -268,10 +268,10 @@ bool CMapTile::Load()
 		}
 //#endif
 	}
+#endif
 
 
-
-#if 1
+#if 0
 	//-- MDXs -------------------------------------------------------------------------
 #ifdef USE_M2_MODELS
 	for (auto& it : m_MDXsPlacementInfo)

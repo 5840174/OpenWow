@@ -1,5 +1,4 @@
-#ifndef _OPCODESNAMES_H
-#define _OPCODESNAMES_H
+#pragma once
 
 const std::string OpcodesNames[] =
 {
@@ -1010,9 +1009,5 @@ const std::string OpcodesNames[] =
     "SMSG_REFER_A_FRIEND_FAILURE", //0x420,
     "SMSG_SPLINE_MOVE_SET_FLYING", //0x421,
     "SMSG_SPLINE_MOVE_UNSET_FLYING", //0x422,
-    "SMSG_SUMMON_CANCEL", //0x423,
-
-    "COUNT" //0x424
+    "SMSG_SUMMON_CANCEL" //0x423,
 };
-
-#endif

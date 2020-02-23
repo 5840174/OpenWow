@@ -13,7 +13,7 @@ class CAuthSocket : public TcpSocket
 {
 	typedef bool (CAuthSocket::* HandlerFunc)(CByteBuffer&);
 public:
-	CAuthSocket(ISocketHandler& SocketHandler, CWoWClient& WoWClient);
+	CAuthSocket(ISocketHandler& SocketHandler, CWoWClient& WoWClient, const std::string& Login, const std::string& Password);
 	virtual ~CAuthSocket();
 
 	void SendData(const IByteBuffer& _bb);
@@ -42,4 +42,6 @@ private:
 
 private:
 	CWoWClient& m_WoWClient;
+	std::string m_Login;
+	SHA1Hash    m_LoginPasswordHash;
 };

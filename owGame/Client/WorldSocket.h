@@ -27,9 +27,7 @@ struct ClientPktHeader
 class CWorldSocket : public TcpSocket
 {
 public:
-    typedef std::function<void(CByteBuffer&)> HandlerFuncitonType;
-public:
-	CWorldSocket(ISocketHandler& SocketHandler, CWoWClient& WoWClient);
+	CWorldSocket(ISocketHandler& SocketHandler, const std::string& Login, BigNumber Key);
 	virtual ~CWorldSocket();
 
     // TcpSocket
@@ -39,29 +37,24 @@ public:
 
 	// CWorldSocket
     void SendPacket(CClientPacket& Packet);
-
-    // Packets contructor
-    void Packet1(uint16 Size, Opcodes Opcode);
-    void Packet2(CByteBuffer& _buf);
-
-	void InitHandlers();
-	void AddHandler(Opcodes Opcode, HandlerFuncitonType Handler);
+	void SetExternalHandler(std::function<bool(Opcodes, CServerPacket&)> Handler);
+	
+private: // Packets contructor
+	void Packet1(uint16 Size, Opcodes Opcode);
+	void Packet2(CByteBuffer& _buf);
 	bool ProcessPacket(CServerPacket ServerPacket);
 
-    // Handlers
+private: // Used while connect to world
 	void S_AuthChallenge(CByteBuffer& Buffer);
 	void S_AuthResponse(CByteBuffer& Buffer);
+    void CreateAddonsBuffer(CByteBuffer& AddonsBuffer);
 
 private:
-    void S_AuthChallenge_CreateAddonsBuffer(CByteBuffer& AddonsBuffer);
+	AuthCrypt m_WoWCryptoUtils;
+    std::unique_ptr<CServerPacket> m_CurrentPacket;
+	std::function<bool(Opcodes, CServerPacket&)> m_ExternalHandler;
 
 private:
-	AuthCrypt                                           m_WoWCryptoUtils;
-
-    CServerPacket *                                     m_CurrentPacket;
-
-	std::unordered_map<Opcodes, std::function<void(CByteBuffer&)>>	m_Handlers;
-
-private:
-	CWoWClient& m_WoWClient;
+	std::string m_Login;
+	BigNumber   m_Key;
 };

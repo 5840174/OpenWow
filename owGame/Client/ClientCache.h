@@ -2,7 +2,7 @@
 
 #pragma region GameObject
 
-enum GameObjectFlags
+enum ZN_API GameObjectFlags
 {
 	GO_FLAG_IN_USE = 0x00000001,                   //disables interaction while animated
 	GO_FLAG_LOCKED = 0x00000002,                   //require key, spell, event, etc to be opened. Makes "Locked" appear in tooltip
@@ -50,7 +50,7 @@ enum class ZN_API GameobjectTypes : uint32
 	GAMEOBJECT_TYPE_AURA_GENERATOR = 30,
 };
 
-struct SGameObjectQueryResult
+struct ZN_API SGameObjectQueryResult
 {
 	SGameObjectQueryResult()
 		: entryID(0)
@@ -371,7 +371,7 @@ struct SGameObjectQueryResult
 
 	void Print()
 	{
-		Log::Info("GameObject query: ID '%d', Type '%d', Name '%s'", entryID, type, Name);
+		Log::Info("GameObject query: ID '%d', Type '%d', Name '%s'", entryID, type, Name.c_str());
 	}
 };
 
@@ -440,7 +440,7 @@ enum class ZN_API CreatureFamily : uint32
 	CREATURE_FAMILY_SEA_LION = 36
 };
 
-struct SCreatureQueryResult
+struct ZN_API SCreatureQueryResult
 {
 	SCreatureQueryResult()
 		: entry(0)
@@ -491,31 +491,8 @@ struct SCreatureQueryResult
 
 	void Print()
 	{
-		Log::Info("Creature query: ID '%d', Name '%s', SubName '%s'", entry, Name, SubName);
+		Log::Info("Creature query: ID '%d', Name '%s', SubName '%s'", entry, Name.c_str(), SubName.c_str());
 	}
 };
 
 #pragma endregion
-
-#include "Client/Opcodes.h"
-
-// FORWARD BEGIN
-class CWoWClient;
-// FORWARD END
-
-class ZN_API CWoWClientCache
-{
-public:
-	CWoWClientCache(const CWoWClient& WoWClient);
-	virtual ~CWoWClientCache();
-
-	void SendQueryResponce(uint64 guid);
-	bool ProcessQueryResponse(Opcodes Opcode, CByteBuffer& Bytes);
-
-private:
-	std::unordered_map<uint32, SGameObjectQueryResult> m_GameObjects;
-	std::unordered_map<uint32, SCreatureQueryResult> m_Creatures;
-
-private:
-	const CWoWClient& m_WoWClient;
-};

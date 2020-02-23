@@ -6,10 +6,19 @@
 // General
 #include "AuthSocket.h"
 
-CAuthSocket::CAuthSocket(ISocketHandler& SocketHandler, CWoWClient& WoWClient)
+CAuthSocket::CAuthSocket(ISocketHandler& SocketHandler, CWoWClient& WoWClient, const std::string& Login, const std::string& Password)
     : TcpSocket(SocketHandler)
     , m_WoWClient(WoWClient)
+	, m_Login(Login)
 {
+	char loginPasswordUpperCase[256];
+	std::memset(loginPasswordUpperCase, 0x00, sizeof(loginPasswordUpperCase));
+	sprintf_s(loginPasswordUpperCase, "%s:%s", m_Login.c_str(), Password.c_str());
+
+	m_LoginPasswordHash.Initialize();
+	m_LoginPasswordHash.UpdateData((const uint8*)loginPasswordUpperCase, strlen(loginPasswordUpperCase));
+	m_LoginPasswordHash.Finalize();
+
 	m_Handlers[AUTH_LOGON_CHALLENGE] = &CAuthSocket::S_LoginChallenge;
 	m_Handlers[AUTH_LOGON_PROOF] = &CAuthSocket::S_LoginProof;
 	m_Handlers[REALM_LIST] = &CAuthSocket::S_Realmlist;
@@ -54,17 +63,87 @@ void CAuthSocket::ProcessHandler(eAuthCmd AuthCmd, CByteBuffer& _buffer)
 }
 
 //-- Client to server
-#include "AuthChallenge_C.h"
+
+namespace
+{
+	struct AuthChallenge_C : public ISendable
+	{
+		AuthChallenge_C(std::string Login, uint32 IPv4)
+			: Login(Login)
+			, IPv4(IPv4)
+		{}
+
+		void Send(TcpSocket* _socket) override
+		{
+			CByteBuffer bb;
+			bb << (uint8)AUTH_LOGON_CHALLENGE;
+			bb << (uint8)6;
+			bb << (uint8)(Login.size() + 30);
+			bb << (uint8)0;
+
+			bb.writeBytes(gamename, 4);
+			bb << version1;
+			bb << version2;
+			bb << version3;
+			bb << build;
+			bb.writeBytes((const uint8*)"68x", 4);   // x86
+			bb.writeBytes((const uint8*)"niW", 4);   // Win
+			bb.writeBytes((const uint8*)"SUne", 4);  // enUS
+			bb << (uint32)180;
+			bb << IPv4;
+			bb << (uint8)Login.size();
+			bb.writeString(Login);
+
+			_socket->SendBuf(reinterpret_cast<const char*>(bb.getData()), bb.getSize());
+		}
+
+		//--
+
+		uint8   gamename[4] = {};
+		const uint8 version1 = 1;
+		const uint8 version2 = 12;
+		const uint8 version3 = 1;
+		const uint16 build = 5875;
+		uint32 IPv4;
+		std::string	Login;
+	};
+}
 
 void CAuthSocket::C_SendLogonChallenge()
 {
-    AuthChallenge_C challenge(m_WoWClient.GetLogin(), TcpSocket::GetSockIP4());
+    AuthChallenge_C challenge(m_Login, TcpSocket::GetSockIP4());
     challenge.Send(this);
 }
 
 //-- Server to client
 
-#include "AuthProof_C.h"
+namespace
+{
+	struct AuthProof_C : public ISendable
+	{
+		AuthProof_C(uint8* _A, const uint8* _MClient)
+		{
+			std::memcpy(A, _A, 32);
+			std::memcpy(M1, _MClient, SHA_DIGEST_LENGTH);
+		}
+
+		void Send(TcpSocket* _socket) override
+		{
+			CByteBuffer bb;
+			bb << (uint8)AUTH_LOGON_PROOF;
+			bb.writeBytes(A, 32);
+			bb.writeBytes(M1, SHA_DIGEST_LENGTH);
+			bb.writeDummy(20);
+			bb << (uint8)0;
+			bb << (uint8)0;
+
+			_socket->SendBuf(reinterpret_cast<const char*>(bb.getData()), bb.getSize());
+		}
+
+		uint8 A[32];
+		uint8 M1[SHA_DIGEST_LENGTH];
+	};
+}
 
 bool CAuthSocket::S_LoginChallenge(CByteBuffer& _buff)
 {
@@ -123,7 +202,7 @@ bool CAuthSocket::S_LoginChallenge(CByteBuffer& _buff)
     SHA1Hash xSHA;
     xSHA.Initialize();
     xSHA.UpdateData(s.AsByteArray().get(), 32);
-    xSHA.UpdateData(m_WoWClient.GetLoginPasswordHash().GetDigest(), SHA_DIGEST_LENGTH);
+    xSHA.UpdateData(m_LoginPasswordHash.GetDigest(), SHA_DIGEST_LENGTH);
     xSHA.Finalize();
 
     BigNumber x;
@@ -208,7 +287,7 @@ bool CAuthSocket::S_LoginChallenge(CByteBuffer& _buff)
 
     // H(I)
     sha.Initialize();
-    sha.UpdateData((const uint8*)m_WoWClient.GetLogin().c_str(), m_WoWClient.GetLogin().size());
+    sha.UpdateData((const uint8*)m_Login.c_str(), m_Login.size());
     sha.Finalize();
 
     // M

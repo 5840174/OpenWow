@@ -5,8 +5,6 @@
 
 // Additional
 #include "Client/Client.h"
-#include "zlib/zlib.h"
-#pragma comment(lib, "zlib.lib")
 
 CSceneWoW::CSceneWoW(IBaseManager& BaseManager)
 	: SceneBase(BaseManager)
@@ -32,12 +30,12 @@ void CSceneWoW::Initialize()
 	GetCameraController()->SetCamera(cameraNode->GetComponent<ICameraComponent3D>());
 	GetCameraController()->GetCamera()->SetPerspectiveProjection(ICameraComponent3D::EPerspectiveProjectionHand::Right, 45.0f, 1.0f/*GetRenderWindow()->GetWindowWidth() / GetRenderWindow()->GetWindowHeight()*/, 0.5f, 10000.0f);
 
-	m_WoWClient = std::make_unique<CWoWClient>("127.0.0.1");
-	m_WoWClient->AddWorldHandler(SMSG_CHAR_ENUM, std::bind(&CSceneWoW::S_CharsEnum, this, std::placeholders::_1));
-	m_WoWClient->AddWorldHandler(SMSG_LOGIN_VERIFY_WORLD, std::bind(&CSceneWoW::S_Login_Verify_World, this, std::placeholders::_1));
-	m_WoWClient->AddWorldHandler(SMSG_MONSTER_MOVE, std::bind(&CSceneWoW::S_MonsterMove, this, std::placeholders::_1));
-	m_WoWClient->AddWorldHandler(SMSG_COMPRESSED_UPDATE_OBJECT, std::bind(&CSceneWoW::S_SMSG_COMPRESSED_UPDATE_OBJECT, this, std::placeholders::_1));
-	m_WoWClient->AddWorldHandler(SMSG_UPDATE_OBJECT, std::bind(&CSceneWoW::S_SMSG_UPDATE_OBJECT, this, std::placeholders::_1));
+	m_WoWClient = std::make_unique<CWoWClient>(GetBaseManager(), GetRenderDevice(), this, "127.0.0.1");
+	//m_WoWClient->GetWorld().AddHandler(SMSG_CHAR_ENUM, std::bind(&CSceneWoW::S_CharsEnum, this, std::placeholders::_1));
+	//m_WoWClient->GetWorld().AddHandler(SMSG_LOGIN_VERIFY_WORLD, std::bind(&CSceneWoW::S_Login_Verify_World, this, std::placeholders::_1));
+	//m_WoWClient->GetWorld().AddHandler(SMSG_MONSTER_MOVE, std::bind(&CSceneWoW::S_MonsterMove, this, std::placeholders::_1));
+	//m_WoWClient->GetWorld().AddHandler(SMSG_COMPRESSED_UPDATE_OBJECT, std::bind(&CSceneWoW::S_SMSG_COMPRESSED_UPDATE_OBJECT, this, std::placeholders::_1));
+	//m_WoWClient->GetWorld().AddHandler(SMSG_UPDATE_OBJECT, std::bind(&CSceneWoW::S_SMSG_UPDATE_OBJECT, this, std::placeholders::_1));
 	m_WoWClient->BeginConnect("admin", "admin");
 
 	map = GetRootNode3D()->CreateSceneNode<CMap>(GetBaseManager(), GetRenderDevice());
@@ -60,7 +58,7 @@ void CSceneWoW::Initialize()
 	m_Technique3D.AddPass(std::make_shared<CRenderPass_M2>(GetRenderDevice(), shared_from_this())->CreatePipeline(GetRenderWindow()->GetRenderTarget(), &GetRenderWindow()->GetViewport()));
 	//m_Technique3D.AddPass(std::make_shared<CRenderPass_M2_Instanced>(GetRenderDevice(), m2ListPass, shared_from_this())->CreatePipeline(GetRenderWindow()->GetRenderTarget(), &GetRenderWindow()->GetViewport()));
 	m_Technique3D.AddPass(std::make_shared<CRenderPass_Liquid>(GetRenderDevice(), shared_from_this())->CreatePipeline(GetRenderWindow()->GetRenderTarget(), &GetRenderWindow()->GetViewport()));
-	//m_Technique3D.AddPass(std::make_shared<CDrawBoundingBoxPass>(GetRenderDevice(), shared_from_this())->CreatePipeline(GetRenderWindow()->GetRenderTarget(), &GetRenderWindow()->GetViewport()));
+	m_Technique3D.AddPass(std::make_shared<CDrawBoundingBoxPass>(GetRenderDevice(), shared_from_this())->CreatePipeline(GetRenderWindow()->GetRenderTarget(), &GetRenderWindow()->GetViewport()));
 }
 
 void CSceneWoW::Finalize()
@@ -68,27 +66,6 @@ void CSceneWoW::Finalize()
 	// Insert code here
 
 	SceneBase::Finalize();
-}
-
-
-void CSceneWoW::S_CharsEnum(CServerPacket & _buff)
-{
-	uint8 charCnt;
-	_buff >> charCnt;
-
-	std::vector<CInet_CharacterTemplate> characters;
-	for (uint8 i = 0; i < charCnt; i++)
-	{
-		CInet_CharacterTemplate character(_buff);
-		characters.push_back(character);
-	}
-
-	if (characters.empty())
-		return;
-
-	CClientPacket p(CMSG_PLAYER_LOGIN);
-	p << characters[0].GUID;
-	m_WoWClient->SendPacket(p);
 }
 
 void CSceneWoW::S_Login_Verify_World(CServerPacket & Buffer)
@@ -112,96 +89,18 @@ void CSceneWoW::S_Login_Verify_World(CServerPacket & Buffer)
 
 	glm::vec3 position = fromGameToReal(glm::vec3(positionX, positionY, positionZ));
 
-	const float x = 40;
+	/*const float x = 40;
 	const float y = 27;
 	map->MapPreLoad(GetBaseManager().GetManager<CDBCStorage>()->DBC_Map()[mapID]);
 	map->MapLoad();
 	map->MapPostLoad();
-	map->EnterMap(position);
+	map->EnterMap(position);*/
 
 	GetCameraController()->GetCamera()->SetTranslation(position);
 	GetCameraController()->GetCamera()->SetYaw(48.8);
 	GetCameraController()->GetCamera()->SetPitch(-27.8);
 }
 
-void CSceneWoW::S_MonsterMove(CServerPacket & Buffer)
-{
-	uint64 guid;
-	Buffer.ReadPackedUInt64(guid);
-
-	//Log::Green("GUID is '%s'", GetLogNameForGuid(guid));
-
-	float positionX;
-	Buffer >> positionX;
-	float positionY;
-	Buffer >> positionY;
-	float positionZ;
-	Buffer >> positionZ;
-
-	uint32 msTime;
-	Buffer >> msTime;
-
-	uint8 isStopped;
-	Buffer >> isStopped;
-
-	uint32 movementsFlags;
-	Buffer >> movementsFlags;
-
-	uint32 timeBetweenPoints;
-	Buffer >> timeBetweenPoints;
-
-	uint32 PointsCnt;
-	Buffer >> PointsCnt;
-
-	glm::vec3 NextPoint;
-	for (size_t i = 0; i < PointsCnt; i++)
-	{
-		float positionX1;
-		Buffer >> positionX1;
-		float positionY1;
-		Buffer >> positionY1;
-		float positionZ1;
-		Buffer >> positionZ1;
-
-		NextPoint = fromGameToReal(glm::vec3(positionX1, positionY1, positionZ1));
-	}
-
-
-	glm::vec3 position = fromGameToReal(glm::vec3(positionX, positionY, positionZ));
-
-	//Log::Info("Monster move [%u] (%f, %f, %f) time [%d]", guid, position.x, position.y, position.z);
-
-	UpdateGUIDPos(guid, position);
-
-	m_WoWClient->getClientCache().SendQueryResponce(guid);
-}
-
-SUpdateData updData;
-
-void CSceneWoW::S_SMSG_COMPRESSED_UPDATE_OBJECT(CServerPacket & Buffer)
-{
-	uint32 dataSize;
-	Buffer >> dataSize;
-
-	CByteBuffer uncompressed;
-	uncompressed.writeDummy(dataSize);
-
-	uLongf uncompressedSize;
-	if (uncompress(uncompressed.getDataEx(), &uncompressedSize, Buffer.getDataFromCurrent(), Buffer.getSize() - 4) != Z_OK)
-	{
-		Log::Error("SMSG_COMPRESSED_UPDATE_OBJECT: Error while uncompress object.");
-		return;
-	}
-	_ASSERT(dataSize == uncompressedSize);
-
-	uncompressed.seek(0);
-	updData.Fill(uncompressed);
-}
-
-void CSceneWoW::S_SMSG_UPDATE_OBJECT(CServerPacket & Buffer)
-{
-	updData.Fill(Buffer);
-}
 
 void CSceneWoW::OnRayIntersected(const glm::vec3& Point)
 {

@@ -68,7 +68,7 @@ void CMapChunk::Initialize()
 		);
 
 		GetComponent<CColliderComponent3D>()->SetBounds(bbox);
-		GetComponent<CColliderComponent3D>()->SetDebugDrawMode(true);
+		GetComponent<CColliderComponent3D>()->SetDebugDrawMode(false);
 	}
 }
 
@@ -345,6 +345,7 @@ bool CMapChunk::Load()
 				bbox.setMaxY(height.max);
 				bbox.calculateCenter();
 				liquidInstance->GetComponent<IColliderComponent3D>()->SetBounds(bbox);
+				liquidInstance->GetComponent<IColliderComponent3D>()->SetDebugDrawMode(false);
 			}
 		}
 	}

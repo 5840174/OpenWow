@@ -17,7 +17,6 @@
 // Client
 #include "../owGame/Client/ObjectDefines.h"
 #include "../owGame/Client/Client.h"
-#include "../owGame/Client/UpdateData.h"
 
 // Liquid
 #include "../owGame/Liquid/Liquid.h"

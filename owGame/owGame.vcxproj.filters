@@ -49,9 +49,6 @@
     <Filter Include="Client\World">
       <UniqueIdentifier>{c6813846-4e1a-4355-9365-b1eedf62dc0e}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Client\Auth\Handlers">
-      <UniqueIdentifier>{b3d4eb05-ef9b-437f-ab22-dbe80d43f375}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Client\World\Packets">
       <UniqueIdentifier>{facb61e4-aa5c-42b6-9019-234bcfdb5726}</UniqueIdentifier>
     </Filter>
@@ -150,6 +147,9 @@
     </Filter>
     <Filter Include="World\Item">
       <UniqueIdentifier>{3f559d8e-cf39-443e-bdb7-aee627e19247}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Client\Objects">
+      <UniqueIdentifier>{f1bc6419-bd1c-489f-96a6-08edae45f75f}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -486,11 +486,26 @@
     <ClCompile Include="Settings\WoWSettingsGroup.cpp">
       <Filter>WoW Specific</Filter>
     </ClCompile>
-    <ClCompile Include="Client\ClientCache.cpp">
-      <Filter>Client</Filter>
+    <ClCompile Include="Client\Object.cpp">
+      <Filter>Client\Objects</Filter>
     </ClCompile>
-    <ClCompile Include="Client\UpdateData.cpp">
-      <Filter>Client</Filter>
+    <ClCompile Include="Client\Unit.cpp">
+      <Filter>Client\Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="Client\WorldLocation.cpp">
+      <Filter>Client\Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="Client\WorldObject.cpp">
+      <Filter>Client\Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="Client\World.cpp">
+      <Filter>Client\World</Filter>
+    </ClCompile>
+    <ClCompile Include="Client\Player.cpp">
+      <Filter>Client\Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="Client\GameObject.cpp">
+      <Filter>Client\Objects</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -616,12 +631,6 @@
     </ClInclude>
     <ClInclude Include="Client\SHA1.h">
       <Filter>Client\Cryptography</Filter>
-    </ClInclude>
-    <ClInclude Include="Client\AuthChallenge_C.h">
-      <Filter>Client\Auth\Handlers</Filter>
-    </ClInclude>
-    <ClInclude Include="Client\AuthProof_C.h">
-      <Filter>Client\Auth\Handlers</Filter>
     </ClInclude>
     <ClInclude Include="Client\AuthCodes.h">
       <Filter>Client\Auth</Filter>
@@ -1031,8 +1040,26 @@
     <ClInclude Include="Client\ClientCache.h">
       <Filter>Client</Filter>
     </ClInclude>
-    <ClInclude Include="Client\UpdateData.h">
-      <Filter>Client</Filter>
+    <ClInclude Include="Client\Object.h">
+      <Filter>Client\Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="Client\Unit.h">
+      <Filter>Client\Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="Client\WorldLocation.h">
+      <Filter>Client\Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="Client\WorldObject.h">
+      <Filter>Client\Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="Client\World.h">
+      <Filter>Client\World</Filter>
+    </ClInclude>
+    <ClInclude Include="Client\Player.h">
+      <Filter>Client\Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="Client\GameObject.h">
+      <Filter>Client\Objects</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -33,13 +33,12 @@ const Opcodes IgnoredOpcodes[] =
 	Opcodes::SMSG_SPELL_GO
 };
 
-CWorldSocket::CWorldSocket(ISocketHandler& SocketHandler, CWoWClient& WoWClient)
-    : TcpSocket(SocketHandler)
-	, m_WoWClient(WoWClient)
-    , m_CurrentPacket(nullptr)
-{
-    InitHandlers();
-}
+CWorldSocket::CWorldSocket(ISocketHandler& SocketHandler, const std::string& Login, BigNumber Key)
+	: TcpSocket(SocketHandler)
+	, m_CurrentPacket(nullptr)
+	, m_Login(Login)
+	, m_Key(Key)
+{}
 
 CWorldSocket::~CWorldSocket()
 {
@@ -139,7 +138,6 @@ void CWorldSocket::OnRawData(const char * buf, size_t len)
 //
 // CWorldSocket
 //
-
 void CWorldSocket::SendPacket(CClientPacket& Packet)
 {
     Packet.Complete();
@@ -149,6 +147,12 @@ void CWorldSocket::SendPacket(CClientPacket& Packet)
     SendBuf(reinterpret_cast<const char*>(Packet.getDataEx()), Packet.getSize());
 }
 
+void CWorldSocket::SetExternalHandler(std::function<bool(Opcodes, CServerPacket&)> Handler)
+{
+	_ASSERT(Handler != nullptr);
+	m_ExternalHandler = Handler;
+}
+
 
 
 //
@@ -156,7 +160,7 @@ void CWorldSocket::SendPacket(CClientPacket& Packet)
 //
 void CWorldSocket::Packet1(uint16 Size, Opcodes Opcode)
 {
-    m_CurrentPacket = new CServerPacket(Size, Opcode);
+    m_CurrentPacket = std::make_unique<CServerPacket>(Size, Opcode);
 }
 
 void CWorldSocket::Packet2(CByteBuffer& _buf)
@@ -187,7 +191,7 @@ void CWorldSocket::Packet2(CByteBuffer& _buf)
         if (! ProcessPacket(*m_CurrentPacket))
 			Log::Green("Opcode: '%s' (0x%X). Size: '%d'", OpcodesNames[m_CurrentPacket->GetPacketOpcode()].c_str(), m_CurrentPacket->GetPacketOpcode(), m_CurrentPacket->GetPacketSize());
 
-        SafeDelete(m_CurrentPacket);
+        m_CurrentPacket.reset();
     }
     else
     {
@@ -195,7 +199,7 @@ void CWorldSocket::Packet2(CByteBuffer& _buf)
     }
 }
 
-void CWorldSocket::InitHandlers()
+/*void CWorldSocket::InitHandlers()
 {
 	m_Handlers[SMSG_AUTH_CHALLENGE] = std::bind(&CWorldSocket::S_AuthChallenge, this, std::placeholders::_1);
 	m_Handlers[SMSG_AUTH_RESPONSE] = std::bind(&CWorldSocket::S_AuthResponse, this, std::placeholders::_1);
@@ -216,29 +220,23 @@ void CWorldSocket::InitHandlers()
 	m_Handlers[Opcodes::SMSG_TIME_SYNC_REQ] = nullptr;
 	m_Handlers[Opcodes::SMSG_SPELL_START] = nullptr;
 	m_Handlers[Opcodes::SMSG_SPELL_GO] = nullptr;
-}
-
-void CWorldSocket::AddHandler(Opcodes Opcode, HandlerFuncitonType Handler)
-{
-	_ASSERT(Handler != nullptr);
-	m_Handlers.insert(std::make_pair(Opcode, Handler));
-}
+}*/
 
 bool CWorldSocket::ProcessPacket(CServerPacket ServerPacket)
 {
-	std::unordered_map<Opcodes, HandlerFuncitonType>::iterator handler = m_Handlers.find(ServerPacket.GetPacketOpcode());
-    if (handler != m_Handlers.end())
-    {
-        if (handler->second != nullptr)
-		{
-			(handler->second).operator()(ServerPacket);
-			return true;
-		}
-	}
-	else
+	if (ServerPacket.GetPacketOpcode() == SMSG_AUTH_CHALLENGE)
 	{
-		if (m_WoWClient.ProcessHandler(ServerPacket.GetPacketOpcode(), ServerPacket))
-			return true;
+		S_AuthChallenge(ServerPacket);
+		return true;
+	}
+	else if (ServerPacket.GetPacketOpcode() == SMSG_AUTH_RESPONSE)
+	{
+		S_AuthResponse(ServerPacket);
+		return true;
+	}
+	else if (m_ExternalHandler.operator()(ServerPacket.GetPacketOpcode(), ServerPacket))
+	{
+		return true;
 	}
 
 	return false;
@@ -261,30 +259,30 @@ void CWorldSocket::S_AuthChallenge(CByteBuffer& _buff)
 
 	SHA1Hash uSHA;
 	uSHA.Initialize();
-	uSHA.UpdateData((const uint8*)m_WoWClient.GetLogin().c_str(), m_WoWClient.GetLogin().size());
+	uSHA.UpdateData((const uint8*)m_Login.c_str(), m_Login.size());
 	uSHA.UpdateData(zeroBytes, 4);
     uSHA.UpdateBigNumbers(&clientRandomSeed, nullptr);
 	uSHA.UpdateData(&reinterpret_cast<uint8&>(serverRandomSeed), 4);
-	uSHA.UpdateBigNumbers(m_WoWClient.getKey(), nullptr);
+	uSHA.UpdateBigNumbers(&m_Key, nullptr);
 	uSHA.Finalize();
 
 	// Send auth packet to server. 
     CClientPacket p(CMSG_AUTH_SESSION);
-    p << m_WoWClient.getClientBuild();
+    p << 5875;
     p.writeDummy(4);
-    p << m_WoWClient.GetLogin();
+    p << m_Login;
     p.writeBytes(clientRandomSeed.AsByteArray(4).get(), 4);
     p.writeBytes(uSHA.GetDigest(), SHA_DIGEST_LENGTH);
 
     // We must pass addons to connect to private servers
     CByteBuffer addonsBuffer;
-    S_AuthChallenge_CreateAddonsBuffer(addonsBuffer);
+	CreateAddonsBuffer(addonsBuffer);
     p.writeBytes(addonsBuffer.getData(), addonsBuffer.getSize());
 
     SendPacket(p);
 
 	// Start encription from here
-    m_WoWCryptoUtils.SetKey(m_WoWClient.getKey()->AsByteArray().get(), 40);
+    m_WoWCryptoUtils.SetKey(m_Key.AsByteArray().get(), 40);
     m_WoWCryptoUtils.Init();
 }
 
@@ -338,7 +336,7 @@ void CWorldSocket::S_AuthResponse(CByteBuffer& _buff)
 }
 
 
-void CWorldSocket::S_AuthChallenge_CreateAddonsBuffer(CByteBuffer& AddonsBuffer)
+void CWorldSocket::CreateAddonsBuffer(CByteBuffer& AddonsBuffer)
 {
     // This is deafult for blizzard addons
     uint32 blizzardCrc  = 0x1c776d01LL;

@@ -20,7 +20,7 @@ CClientPacket::~CClientPacket()
 //
 void CClientPacket::Complete()
 {
-    _ASSERT(m_IsCompleted == false);
+    _ASSERT(! m_IsCompleted);
 
     uint16 size0             = getSize() + sizeof(uint32) /* Opcode size */;
     uint16 sizeConverted     = static_cast<uint16>((&reinterpret_cast<uint8&>(size0))[0] << 8 | (&reinterpret_cast<uint8&>(size0))[1]);
