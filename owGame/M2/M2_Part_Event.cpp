@@ -6,11 +6,16 @@
 // General
 #include "M2_Part_Event.h"
 
-CM2_Part_Event::CM2_Part_Event(const M2& M2Model, std::shared_ptr<IFile> f, const SM2_Event& _proto, cGlobalLoopSeq global)
+CM2_Part_Event::CM2_Part_Event(const M2& M2Object, const std::shared_ptr<IFile>& File, const SM2_Event& M2Event)
+	: m_M2Object(M2Object)
 {
-	memcpy(m_ID, _proto.identifier, 4);
-	m_Data = _proto.data;
-	m_Bone = M2Model.getSkeleton()->getBoneLookup(_proto.bone);
-	m_Position = _proto.position;
-	//m_IsEnabled.init(_proto.enabled, f, global);
+	memcpy(m_ID, M2Event.identifier, 4);
+	m_Data = M2Event.data;
+	m_Bone = m_M2Object.getSkeleton()->getBoneLookup(M2Event.bone);
+	m_Position = M2Event.position;
+	//m_IsEnabled.Initialize(M2Event.enabled, f, global);
+}
+
+CM2_Part_Event::~CM2_Part_Event()
+{
 }

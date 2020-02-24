@@ -9,7 +9,8 @@ class M2;
 class CM2_Part_Light
 {
 public:
-	CM2_Part_Light(const M2& M2Model, std::shared_ptr<IFile> f, const SM2_Light& _proto, cGlobalLoopSeq global);
+	CM2_Part_Light(const M2& M2Object, const std::shared_ptr<IFile>& File, const SM2_Light& M2Light);
+	virtual ~CM2_Part_Light();
 
 	void setup(uint16 anim, uint32 time, uint32 globalTime);
 
@@ -39,4 +40,7 @@ private:
 
 private:
 	const vec3 direction = vec3(0.0f, 1.0f, 0.0f);
+
+private:
+	const M2& m_M2Object;
 };

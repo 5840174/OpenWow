@@ -6,53 +6,56 @@
 // General
 #include "M2_Part_Light.h"
 
-CM2_Part_Light::CM2_Part_Light(const M2& M2Model, std::shared_ptr<IFile> f, const SM2_Light& _proto, cGlobalLoopSeq global) :
-	ambColorValue(vec3(1.0f, 1.0f, 1.0f)),
-	ambIntensityValue(1.0f),
-	diffColorValue(vec3(1.0f, 1.0f, 1.0f)),
-	diffIntensityValue(1.0f),
-	attenuation_startValue(0.0f),
-	attenuation_endValue(1.0f),
-	visibilityValue(false)
+CM2_Part_Light::CM2_Part_Light(const M2& M2Object, const std::shared_ptr<IFile>& File, const SM2_Light& M2Light) 
+	: ambColorValue(vec3(1.0f, 1.0f, 1.0f))
+	, ambIntensityValue(1.0f)
+	, diffColorValue(vec3(1.0f, 1.0f, 1.0f))
+	, diffIntensityValue(1.0f)
+	, attenuation_startValue(0.0f)
+	, attenuation_endValue(1.0f)
+	, visibilityValue(false)
+	, m_M2Object(M2Object)
 {
-	type = _proto.type;
-	if (_proto.bone != -1)
-	{
-		m_Bone = M2Model.getSkeleton()->getBoneLookup(_proto.bone);
-	}
+	type = M2Light.type;
+	if (M2Light.bone != -1)
+		m_Bone = m_M2Object.getSkeleton()->getBoneLookup(M2Light.bone);
 
-	position = Fix_XZmY(_proto.position);
+	position = Fix_XZmY(M2Light.position);
 
-	ambColor.init(_proto.ambient_color, f, global);
-	ambIntensity.init(_proto.ambient_intensity, f, global);
+	ambColor.Initialize(M2Light.ambient_color, File);
+	ambIntensity.Initialize(M2Light.ambient_intensity, File);
 
-	diffColor.init(_proto.diffuse_color, f, global);
-	diffIntensity.init(_proto.diffuse_intensity, f, global);
+	diffColor.Initialize(M2Light.diffuse_color, File);
+	diffIntensity.Initialize(M2Light.diffuse_intensity, File);
 
-	attenuation_start.init(_proto.attenuation_start, f, global);
-	attenuation_end.init(_proto.attenuation_end, f, global);
+	attenuation_start.Initialize(M2Light.attenuation_start, File);
+	attenuation_end.Initialize(M2Light.attenuation_end, File);
 
-	visibility.init(_proto.visibility, f, global);
+	visibility.Initialize(M2Light.visibility, File);
+}
+
+CM2_Part_Light::~CM2_Part_Light()
+{
 }
 
 void CM2_Part_Light::setup(uint16 anim, uint32 time, uint32 globalTime)
 {
-	if (ambColor.uses(anim))
+	if (ambColor.IsUsesBySequence(anim))
 	{
-		ambColorValue = ambColor.getValue(0, time, globalTime);
+		ambColorValue = ambColor.GetValue(0, time, m_M2Object.getGlobalLoops(), globalTime);
 	}
-	if (ambIntensity.uses(anim))
+	if (ambIntensity.IsUsesBySequence(anim))
 	{
-		ambIntensityValue = ambIntensity.getValue(0, time, globalTime);
+		ambIntensityValue = ambIntensity.GetValue(0, time, m_M2Object.getGlobalLoops(), globalTime);
 	}
 
-	if (diffColor.uses(anim))
+	if (diffColor.IsUsesBySequence(anim))
 	{
-		diffColorValue = diffColor.getValue(0, time, globalTime);
+		diffColorValue = diffColor.GetValue(0, time, m_M2Object.getGlobalLoops(), globalTime);
 	}
-	if (diffIntensity.uses(anim))
+	if (diffIntensity.IsUsesBySequence(anim))
 	{
-		diffIntensityValue = diffIntensity.getValue(0, time, globalTime);
+		diffIntensityValue = diffIntensity.GetValue(0, time, m_M2Object.getGlobalLoops(), globalTime);
 	}
 
 	vec4 ambcol(ambColorValue * ambIntensityValue, 1.0f);

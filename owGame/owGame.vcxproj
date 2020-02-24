@@ -69,9 +69,9 @@
     <ClCompile Include="Liquid\RenderPass_Liquid.cpp" />
     <ClCompile Include="M2\M2.cpp" />
     <ClCompile Include="M2\M2_Animation.cpp" />
+    <ClCompile Include="M2\M2_AnimationSet.cpp" />
     <ClCompile Include="M2\M2_Animator.cpp" />
     <ClCompile Include="M2\M2_Base_Instance.cpp" />
-    <ClCompile Include="M2\M2_Builder.cpp" />
     <ClCompile Include="M2\M2_ColliderComponent.cpp" />
     <ClCompile Include="M2\M2_Comp_Materials.cpp" />
     <ClCompile Include="M2\M2_Comp_Miscellaneous.cpp" />
@@ -90,7 +90,6 @@
     <ClCompile Include="M2\M2_Skin.cpp" />
     <ClCompile Include="M2\M2_SkinSection.cpp" />
     <ClCompile Include="M2\M2_Skin_Batch.cpp" />
-    <ClCompile Include="M2\M2_Skin_Builder.cpp" />
     <ClCompile Include="M2\ParticleEmitters.cpp" />
     <ClCompile Include="M2\ParticleEmitter_Plane.cpp" />
     <ClCompile Include="M2\ParticleEmitter_Sphere.cpp" />
@@ -251,9 +250,9 @@
     <ClInclude Include="M2\M2_Animated.h" />
     <ClInclude Include="M2\M2_AnimatedConverters.h" />
     <ClInclude Include="M2\M2_Animation.h" />
+    <ClInclude Include="M2\M2_AnimationSet.h" />
     <ClInclude Include="M2\M2_Animator.h" />
     <ClInclude Include="M2\M2_Base_Instance.h" />
-    <ClInclude Include="M2\M2_Builder.h" />
     <ClInclude Include="M2\M2_ColliderComponent.h" />
     <ClInclude Include="M2\M2_CommonTypes.h" />
     <ClInclude Include="M2\M2_Comp_Materials.h" />
@@ -276,7 +275,6 @@
     <ClInclude Include="M2\M2_SkinSection.h" />
     <ClInclude Include="M2\M2_SkinTypes.h" />
     <ClInclude Include="M2\M2_Skin_Batch.h" />
-    <ClInclude Include="M2\M2_Skin_Builder.h" />
     <ClInclude Include="M2\M2_Types.h" />
     <ClInclude Include="M2\ParticleEmitters.h" />
     <ClInclude Include="M2\ParticleEmitter_Plane.h" />

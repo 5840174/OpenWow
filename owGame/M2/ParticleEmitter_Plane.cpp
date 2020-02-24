@@ -1,6 +1,7 @@
 #include "stdafx.h"
 
 // Include
+#include "M2.h"
 #include "ParticleSystem.h"
 
 // General
@@ -9,10 +10,7 @@
 
 Particle PlaneParticleEmitter::newParticle(int anim, int time, float w, float l, float spd, float var, float spr, float spr2, uint32 _globalTime)
 {
-	std::shared_ptr<CM2_ParticleSystem> ParticleSystem = m_ParticleSystem.lock();
-	_ASSERT(ParticleSystem != nullptr);
-
-	std::shared_ptr<const CM2_Part_Bone> ParticleSystem_ParentBone = ParticleSystem->m_ParentBone.lock();
+	std::shared_ptr<const CM2_Part_Bone> ParticleSystem_ParentBone = m_ParticleSystem.m_ParentBone.lock();
 	_ASSERT(ParticleSystem_ParentBone != nullptr);
 
     Random random;
@@ -64,13 +62,13 @@ Particle PlaneParticleEmitter::newParticle(int anim, int time, float w, float l,
 	mat4 SpreadMat = CalcSpreadMatrix(spr, spr, 1.0f, 1.0f);
 	mrot = ParticleSystem_ParentBone->getRotateMatrix() * SpreadMat;
 
-	if (ParticleSystem->flags == 1041)
+	if (m_ParticleSystem.flags == 1041)
 	{ // Trans Halo
-		p.pos = ParticleSystem_ParentBone->getTransformMatrix() * vec4((ParticleSystem->m_Position + vec3(random.Range(-l, l), 0, random.Range(-w, w))), 0);
+		p.pos = ParticleSystem_ParentBone->getTransformMatrix() * vec4((m_ParticleSystem.m_Position + vec3(random.Range(-l, l), 0, random.Range(-w, w))), 0);
 
 		const float t = random.Range(0.0f, glm::two_pi<float>());
 
-		p.pos = vec3(0.0f, ParticleSystem->m_Position.y + 0.15f, ParticleSystem->m_Position.z) + vec3(cos(t) / 8, 0.0f, sin(t) / 8); // Need to manually correct for the halo - why?
+		p.pos = vec3(0.0f, m_ParticleSystem.m_Position.y + 0.15f, m_ParticleSystem.m_Position.z) + vec3(cos(t) / 8, 0.0f, sin(t) / 8); // Need to manually correct for the halo - why?
 
 																								 // var isn't being used, which is set to 1.0f,  whats the importance of this?
 																								 // why does this set of values differ from other particles
@@ -80,18 +78,18 @@ Particle PlaneParticleEmitter::newParticle(int anim, int time, float w, float l,
 
 		p.speed = glm::normalize(dir) * spd * random.Range(0.0f, var);
 	}
-	else if (ParticleSystem->flags == 25 && ParticleSystem_ParentBone->getParentBoneID() < 1)
+	else if (m_ParticleSystem.flags == 25 && ParticleSystem_ParentBone->getParentBoneID() < 1)
 	{ // Weapon Flame
-		p.pos = ParticleSystem_ParentBone->getPivot() * (ParticleSystem->m_Position + vec3(random.Range(-l, l), random.Range(-l, l), random.Range(-w, w)));
+		p.pos = ParticleSystem_ParentBone->getPivot() * (m_ParticleSystem.m_Position + vec3(random.Range(-l, l), random.Range(-l, l), random.Range(-w, w)));
 		vec3 dir = mrot * vec4(0.0f, 1.0f, 0.0f, 0.0f);
 		p.dir = glm::normalize(dir);
 		//vec3 dir = sys->model->bones[sys->parent->parent].mrot * sys->parent->mrot * vec3(0.0f, 1.0f, 0.0f);
 		//p.speed = dir.Normalize() * spd;
 
 	}
-	else if (ParticleSystem->flags == 25 && ParticleSystem_ParentBone->getParentBoneID() > 0)
+	else if (m_ParticleSystem.flags == 25 && ParticleSystem_ParentBone->getParentBoneID() > 0)
 	{ // Weapon with built-in Flame (Avenger lightsaber!)
-		p.pos = ParticleSystem_ParentBone->getTransformMatrix() * vec4((ParticleSystem->m_Position + vec3(random.Range(-l, l), random.Range(-l, l), random.Range(-w, w))), 0);
+		p.pos = ParticleSystem_ParentBone->getTransformMatrix() * vec4((m_ParticleSystem.m_Position + vec3(random.Range(-l, l), random.Range(-l, l), random.Range(-w, w))), 0);
 		vec3 dir = vec3
 		(
 			ParticleSystem_ParentBone->getTransformMatrix()[1][0],
@@ -101,15 +99,15 @@ Particle PlaneParticleEmitter::newParticle(int anim, int time, float w, float l,
 		p.speed = glm::normalize(dir) * spd * random.Range(0.0f, var * 2);
 
 	}
-	else if (ParticleSystem->flags == 17 && ParticleSystem_ParentBone->getParentBoneID() < 1)
+	else if (m_ParticleSystem.flags == 17 && ParticleSystem_ParentBone->getParentBoneID() < 1)
 	{ // Weapon Glow
-		p.pos = ParticleSystem_ParentBone->getPivot() * (ParticleSystem->m_Position + vec3(random.Range(-l, l), random.Range(-l, l), random.Range(-w, w)));
+		p.pos = ParticleSystem_ParentBone->getPivot() * (m_ParticleSystem.m_Position + vec3(random.Range(-l, l), random.Range(-l, l), random.Range(-w, w)));
 		vec3 dir = mrot * vec4(0, 1, 0, 0);
 		p.dir = glm::normalize(dir);
 	}
 	else
 	{
-		p.pos = ParticleSystem->m_Position + vec3(random.Range(-l, l), 0, random.Range(-w, w));
+		p.pos = m_ParticleSystem.m_Position + vec3(random.Range(-l, l), 0, random.Range(-w, w));
 		p.pos = ParticleSystem_ParentBone->getTransformMatrix() * vec4(p.pos, 0);
 
 		//vec3 dir = mrot * vec3(0,1,0);
@@ -120,7 +118,7 @@ Particle PlaneParticleEmitter::newParticle(int anim, int time, float w, float l,
 		p.speed = glm::normalize(dir) * spd * (1.0f + random.Range(-var, var));
 	}
 
-	if (!ParticleSystem->billboard)
+	if (!m_ParticleSystem.billboard)
 	{
 		p.corners[0] = mrot * vec4(-1, 0, +1, 0);
 		p.corners[1] = mrot * vec4(+1, 0, +1, 0);
@@ -129,10 +127,10 @@ Particle PlaneParticleEmitter::newParticle(int anim, int time, float w, float l,
 	}
 
 	p.life = 0;
-	p.maxlife = ParticleSystem->lifespan.getValue(anim, time, _globalTime);
+	p.maxlife = m_ParticleSystem.lifespan.GetValue(anim, time, m_ParticleSystem.m_M2Object.getGlobalLoops(), _globalTime);
 
 	p.origin = p.pos;
 
-	p.m_TileExists = random.Range(0, ParticleSystem->rows * ParticleSystem->cols - 1);
+	p.m_TileExists = random.Range(0, m_ParticleSystem.rows * m_ParticleSystem.cols - 1);
 	return p;
 }

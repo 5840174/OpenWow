@@ -14,24 +14,22 @@ template <class T, class D = T, class Conv = NoConvert<T> >
 class M2_Animated
 {
 public:
-	void init(const M2Track<D>& b, std::shared_ptr<IFile> f, cGlobalLoopSeq _globalSec, T fixfunc(const T&) = NoFix)
+	M2_Animated()
+		: m_Type(Interpolations::INTERPOLATION_NONE)
+		, m_GlobalSecIndex(-1)
+	{}
+
+	void Initialize(const M2Track<D>& b, const std::shared_ptr<IFile>& File, T fixfunc(const T&) = NoFix)
 	{
 		m_Type = b.interpolation_type;
 		m_GlobalSecIndex = b.global_sequence;
-		m_GlobalSec = _globalSec;
 
-		// If hasn't index, then use global sec
-		if (m_GlobalSecIndex != -1)
-		{
-			_ASSERT(m_GlobalSec != nullptr);
-		}
-
-		_ASSERT((b.interpolation_ranges.size > 0) || (m_GlobalSecIndex != -1) || (m_Type == INTERPOLATION_NONE));
+		_ASSERT((b.interpolation_ranges.size > 0) || (m_GlobalSecIndex != -1) || (m_Type == Interpolations::INTERPOLATION_NONE));
 
 		// ranges
 		if (b.interpolation_ranges.size > 0)
 		{
-			uint32* ranges = (uint32*)(f->getData() + b.interpolation_ranges.offset);
+			uint32* ranges = (uint32*)(File->getData() + b.interpolation_ranges.offset);
 			for (uint32 i = 0; i < b.interpolation_ranges.size; i += 2)
 			{
 				m_Ranges.push_back(std::make_pair(ranges[i], ranges[i + 1]));
@@ -39,7 +37,7 @@ public:
 		}
 
 		// times
-		uint32* times = (uint32*)(f->getData() + b.timestamps.offset);
+		uint32* times = (uint32*)(File->getData() + b.timestamps.offset);
 		for (uint32 i = 0; i < b.timestamps.size; i++)
 		{
 			m_Times.push_back(times[i]);
@@ -48,16 +46,16 @@ public:
 		_ASSERT(b.timestamps.size == b.values.size);
 
 		// keyframes
-		D* values = (D*)(f->getData() + b.values.offset);
+		D* values = (D*)(File->getData() + b.values.offset);
 		for (uint32 i = 0; i < b.values.size; i++)
 		{
 			switch (m_Type)
 			{
-			case INTERPOLATION_LINEAR:
+			case Interpolations::INTERPOLATION_LINEAR:
 				m_Values.push_back(fixfunc(Conv::conv(values[i])));
 				break;
 
-			case INTERPOLATION_HERMITE:
+			case Interpolations::INTERPOLATION_HERMITE:
 				m_Values.push_back(fixfunc(Conv::conv(values[i * 3 + 0])));
 				m_ValuesHermiteIn.push_back(fixfunc(Conv::conv(values[i * 3 + 1])));
 				m_ValuesHermiteOut.push_back(fixfunc(Conv::conv(values[i * 3 + 2])));
@@ -67,38 +65,32 @@ public:
 
 	}
 
-	bool uses(uint16 anim) const
+	bool IsUsesBySequence(uint16 anim) const
 	{
-		if (m_Type == INTERPOLATION_NONE)
-		{
+		if (m_Type == Interpolations::INTERPOLATION_NONE)
 			return false;
-		}
 
 		if (m_GlobalSecIndex == -1 && m_Ranges.size() <= anim)
-		{
 			return false;
-		}
 
 		return true;
 	}
 
-	T getValue(uint16 anim, uint32 time, uint32 globalTime) const
+	T GetValue(uint16 anim, uint32 time, const std::vector<SM2_Loop>& GlobalLoop, const uint32 GlobalTime) const
 	{
-		_ASSERT(m_Type != INTERPOLATION_NONE);
+		_ASSERT(m_Type != Interpolations::INTERPOLATION_NONE);
 
         std::pair<uint32, uint32> range = std::make_pair(0, m_Values.size() - 1);
 
 		// obtain a time value and a values range
 		if (m_GlobalSecIndex != -1)
 		{
-			if (m_GlobalSec->at(m_GlobalSecIndex).timestamp == 0)
-			{
-				time = 0;
-			}
-			else
-			{
-				time = globalTime % m_GlobalSec->at(m_GlobalSecIndex).timestamp;
-			}
+			time = 0;
+
+			_ASSERT(m_GlobalSecIndex >= 0 && m_GlobalSecIndex < GlobalLoop.size());
+			uint32 globalLoopTimeStamp = GlobalLoop[m_GlobalSecIndex].timestamp;
+			if (globalLoopTimeStamp != 0)
+				time = GlobalTime % globalLoopTimeStamp;
 		}
 		else
 		{
@@ -106,13 +98,9 @@ public:
 			range = m_Ranges[anim];
 		}
 
-
-
 		// If simple frame
 		if (range.first == range.second)
-		{
 			return m_Values[range.first];
-		}
 
 		// Get pos by time
 		uint32 pos = UINT32_MAX;
@@ -130,31 +118,31 @@ public:
 		uint32 t2 = m_Times[pos + 1];
 		_ASSERT(t2 > t1);
 		_ASSERT(time >= t1 && time < t2);
-		float r = (float)(time - t1) / (float)(t2 - t1);
+		float r = static_cast<float>(time - t1) / static_cast<float>(t2 - t1);
 
 		switch (m_Type)
 		{
-		case INTERPOLATION_LINEAR:
-			return interpolate<T>(r, m_Values[pos], m_Values[pos + 1]);
-			break;
+			case Interpolations::INTERPOLATION_LINEAR:
+				return interpolate<T>(r, m_Values[pos], m_Values[pos + 1]);
 
-		case INTERPOLATION_HERMITE:
-			return interpolateHermite<T>(r, m_Values[pos], m_Values[pos + 1], m_ValuesHermiteIn[pos], m_ValuesHermiteOut[pos]);
-			break;
+			case Interpolations::INTERPOLATION_HERMITE:
+				return interpolateHermite<T>(r, m_Values[pos], m_Values[pos + 1], m_ValuesHermiteIn[pos], m_ValuesHermiteOut[pos]);
+
+			default:
+				_ASSERT(false);
 		}
 
 		return m_Values[0];
 	}
 
 private:
-	Interpolations				m_Type;
-	int16						m_GlobalSecIndex;
-	cGlobalLoopSeq				m_GlobalSec;
+	Interpolations m_Type;
+	int16 m_GlobalSecIndex;
 
 	std::vector<std::pair<uint32, uint32>>m_Ranges;
-    std::vector<int32>				m_Times;
+    std::vector<uint32> m_Times;
 
-    std::vector<T>					m_Values;
-    std::vector<T>					m_ValuesHermiteIn;
-    std::vector<T>					m_ValuesHermiteOut;
+    std::vector<T> m_Values;
+    std::vector<T> m_ValuesHermiteIn;
+    std::vector<T> m_ValuesHermiteOut;
 };

@@ -1,25 +1,46 @@
 #include "stdafx.h"
 
+// Include
+#include "M2.h"
+
 // General
 #include "M2_Part_Color.h"
 
-CM2_Part_Color::CM2_Part_Color(std::shared_ptr<IFile> f, const SM2_Color& _proto, cGlobalLoopSeq global) :
-	vColor(vec3(1.0f, 1.0f, 1.0f)),
-	vAlpha(1.0f)
+CM2_Part_Color::CM2_Part_Color(const M2& M2Object, const std::shared_ptr<IFile>& File, const SM2_Color& M2Color)
+	: m_M2Object(M2Object)
 {
-	color.init(_proto.color, f, global);
-	alpha.init(_proto.alpha, f, global);
+	m_ColorAnimated.Initialize(M2Color.color, File);
+	m_AlphaAnimated.Initialize(M2Color.alpha, File);
 }
 
-void CM2_Part_Color::calc(uint16 anim, uint32 time, uint32 globalTime)
+CM2_Part_Color::~CM2_Part_Color()
 {
-	if (color.uses(anim))
-	{
-		vColor = color.getValue(anim, time, globalTime);
-	}
+}
 
-	if (alpha.uses(anim))
-	{
-		vAlpha = alpha.getValue(anim, time, globalTime);
-	}
+glm::vec4 CM2_Part_Color::GetColorAndAlpha(uint16 Sequence, uint32 Time, uint32 GlobalTime) const
+{
+	glm::vec4 colorAndAlpha = glm::vec4(1.0f, 1.0f, 1.0f, 1.0f);
+	if (m_ColorAnimated.IsUsesBySequence(Sequence))
+		colorAndAlpha.xyz = m_ColorAnimated.GetValue(Sequence, Time, m_M2Object.getGlobalLoops(), GlobalTime);
+
+	if (m_AlphaAnimated.IsUsesBySequence(Sequence))
+		colorAndAlpha.a = m_AlphaAnimated.GetValue(Sequence, Time, m_M2Object.getGlobalLoops(), GlobalTime);
+
+	return colorAndAlpha;
+}
+
+glm::vec3 CM2_Part_Color::GetColor(uint16 Sequence, uint32 Time, uint32 GlobalTime) const
+{
+	glm::vec3 color = glm::vec3(1.0f, 1.0f, 1.0f);
+	if (m_ColorAnimated.IsUsesBySequence(Sequence))
+		color = m_ColorAnimated.GetValue(Sequence, Time, m_M2Object.getGlobalLoops(), GlobalTime);
+	return color;
+}
+
+float CM2_Part_Color::GetAlpha(uint16 Sequence, uint32 Time, uint32 GlobalTime) const
+{
+	float alpha = 1.0f;
+	if (m_AlphaAnimated.IsUsesBySequence(Sequence))
+		alpha = m_AlphaAnimated.GetValue(Sequence, Time, m_M2Object.getGlobalLoops(), GlobalTime);
+	return alpha;
 }

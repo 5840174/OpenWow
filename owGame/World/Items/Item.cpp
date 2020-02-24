@@ -2,7 +2,7 @@
 
 // General
 #include "Item.h"
-#include "..\..\Client\Item.h"
+#include "..\..\Client\WoWItem.h"
 
 Item::Item() 
 {}

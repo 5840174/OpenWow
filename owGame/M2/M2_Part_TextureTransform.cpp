@@ -1,42 +1,39 @@
 #include "stdafx.h"
 
+// Include
+#include "M2.h"
+
 // General
 #include "M2_Part_TextureTransform.h"
 
-CM2_Part_TextureTransform::CM2_Part_TextureTransform(std::shared_ptr<IFile> f, const SM2_TextureTransform& _proto, cGlobalLoopSeq global)
+CM2_Part_TextureTransform::CM2_Part_TextureTransform(const M2& M2Object, const std::shared_ptr<IFile>& File, const SM2_TextureTransform& M2TextureTransform)
+	: m_M2Object(M2Object)
 {
-	trans.init(_proto.translation, f, global);
-	roll.init(_proto.rotation, f, global);
-	scale.init(_proto.scaling, f, global);
+	m_TranslateAnimated.Initialize(M2TextureTransform.translation, File);
+	m_RotateAnimated.Initialize(M2TextureTransform.rotation, File);
+	m_ScaleAnimated.Initialize(M2TextureTransform.scaling, File);
 }
 
-void CM2_Part_TextureTransform::calc(uint16 anim, uint32 time, uint32 globalTime)
+CM2_Part_TextureTransform::~CM2_Part_TextureTransform()
 {
-	matrix = mat4(1.0f);
-	
-	vec3 transValue;
-	if (trans.uses(anim))
-	{
-		transValue = trans.getValue(anim, time, globalTime);
-		matrix = glm::translate(matrix, transValue);
-	}
-
-	quat rollValue;
-	if (roll.uses(anim))
-	{
-		matrix = glm::translate(matrix, glm::vec3(0.5f, 0.5f, 0.5f));
-
-		rollValue = roll.getValue(anim, time, globalTime);
-		matrix *= glm::toMat4(rollValue);
-
-		matrix = glm::translate(matrix, vec3(-0.5f, -0.5f, -0.5f));
-	}
-
-	vec3 scaleVal;
-	if (scale.uses(anim))
-	{
-		scaleVal = scale.getValue(anim, time, globalTime);
-		matrix = glm::scale(matrix, scaleVal);
-	}
 }
 
+glm::mat4 CM2_Part_TextureTransform::GetTransform(uint16 Sequence, uint32 Time, uint32 GlobalTime) const
+{
+	glm::mat4 matrix = glm::mat4(1.0f);
+
+	if (m_TranslateAnimated.IsUsesBySequence(Sequence))
+		matrix = glm::translate(matrix, m_TranslateAnimated.GetValue(Sequence, Time, m_M2Object.getGlobalLoops(), GlobalTime));
+
+	if (m_RotateAnimated.IsUsesBySequence(Sequence))
+	{
+		matrix = glm::translate(matrix, glm::vec3( 0.5f));
+		matrix *= glm::toMat4(m_RotateAnimated.GetValue(Sequence, Time, m_M2Object.getGlobalLoops(), GlobalTime));
+		matrix = glm::translate(matrix, glm::vec3(-0.5f));
+	}
+
+	if (m_ScaleAnimated.IsUsesBySequence(Sequence))
+		matrix = glm::scale(matrix, m_ScaleAnimated.GetValue(Sequence, Time, m_M2Object.getGlobalLoops(), GlobalTime));
+
+	return matrix;
+}

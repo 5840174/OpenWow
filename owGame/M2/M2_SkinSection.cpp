@@ -3,7 +3,6 @@
 // Include
 #include "M2.h"
 #include "M2_Base_Instance.h"
-#include "M2_Skin_Builder.h"
 
 // General
 #include "M2_SkinSection.h"
@@ -45,6 +44,8 @@ CM2_SkinSection::CM2_SkinSection(IRenderDevice& RenderDevice, const M2& M2Model,
 		{
 			m2_weights.weights[i] = static_cast<float>(it.bone_weights[i]) / 255.0f;
 			m2_indexes.indexes[i] = it.bone_indices[i];
+
+			_ASSERT(it.bone_indices[i] < m_SkinSectionProto.boneCount);
 		}
 
 		verts.push_back(it.pos);
@@ -79,10 +80,11 @@ void CM2_SkinSection::UpdateGeometryProps(const RenderEventArgs& RenderEventArgs
 {
 	M2Instance->getAnimator()->Update(RenderEventArgs.TotalTime, RenderEventArgs.DeltaTime);
 
-	/*bool isAnimated = m_M2Model.getSkeleton()->hasBones() && m_M2Model.m_IsAnimated;
+	bool isAnimated = m_M2Model.getSkeleton()->hasBones() && m_M2Model.m_IsAnimated;
 	m_Properties->gIsAnimated = isAnimated ? 1 : 0;
 	if (isAnimated)
 	{
+		m_Properties->gStartBoneIndex = m_SkinSectionProto.bonesStartIndex;
 		m_Properties->gBonesMaxInfluences = m_SkinSectionProto.boneInfluences;
 
 		for (uint16 i = 0; i < m_SkinSectionProto.boneCount; i++)
@@ -94,14 +96,19 @@ void CM2_SkinSection::UpdateGeometryProps(const RenderEventArgs& RenderEventArgs
 		//for (uint16 i = 0; i < m_SkinSectionProto.boneCount; i++)
 		//	m_M2Model.getSkeleton()->getBoneLookup(m_SkinSectionProto.bonesStartIndex + i)->calcBillboard(RenderEventArgs.Camera->GetViewMatrix(), M2Instance->GetWorldTransfom());
 
+		//glm::mat4 currMat(1.0f);
+		//auto RootBoone = m_M2Model.getSkeleton()->getGameBone(M2_GameBoneType::Root);
+		//if (RootBoone != nullptr)
+		//	currMat = RootBoone->getTransformMatrix() * currMat;
+
 		for (uint16 i = 0; i < m_SkinSectionProto.boneCount; i++)
 		{
 			_ASSERT(m_M2Model.getSkeleton()->isLookupBoneCorrect(m_SkinSectionProto.bonesStartIndex + i));
-			m_BonesList[i] = m_M2Model.getSkeleton()->getBoneLookup(m_SkinSectionProto.bonesStartIndex + i)->getTransformMatrix();
+			m_BonesList[i] = /*glm::inverse(currMat) **/ m_M2Model.getSkeleton()->getBoneLookup(m_SkinSectionProto.bonesStartIndex + i)->getTransformMatrix();
 		}
 
 		m_StructuredBuffer->Set(m_BonesList);
-	}*/
+	}
 
 	m_PropertiesBuffer->Set(m_Properties, sizeof(ShaderM2GeometryProperties));
 }

@@ -118,7 +118,7 @@ bool CRenderPass_M2::Visit(const IModel* Model)
 				{
 					const auto& mat = it2;
 
-					mat->UpdateMaterialProps(m_CurrentM2Model);
+					mat->UpdateMaterialProps(GetRenderEventArgs(), m_CurrentM2Model);
 					mat->Bind(shaders);
 					{
 						SGeometryDrawArgs geometryDrawArgs = { 0 };
@@ -175,7 +175,7 @@ bool CRenderPass_M2::VisitInstanced(const IModel* Model, size_t cnt)
 				{
 					const auto& mat = it2;
 
-					mat->UpdateMaterialProps(m_CurrentM2Model);
+					mat->UpdateMaterialProps(GetRenderEventArgs(), m_CurrentM2Model);
 					mat->Bind(shaders);
 					{
 						SGeometryDrawInstancedArgs GeometryDrawInstancedArgs;

@@ -2,29 +2,21 @@
 
 #include "M2_Headers.h"
 
-// COMPONENTS BEGIN
+// Components
 #include "M2_Animator.h"
 #include "M2_Comp_Materials.h"
 #include "M2_Comp_Miscellaneous.h"
 #include "M2_Comp_Skeleton.h"
-// COMPONETS END
 
 // Skins
 #include "M2_Skin.h"
-
-// FORWARD BEGIN
-class CM2_Builder;
-class CM2_Skin_Builder;
-// FORWARD END
 
 class M2 
 	: public ISceneNodeProvider
 	, public CLoadableObject
 {
-	friend class CM2_Builder;
-	friend class CM2_Skin_Builder;
 public:
-	M2(IBaseManager& BaseManager, IRenderDevice& RenderDevice, const std::string& name);
+	M2(IBaseManager& BaseManager, IRenderDevice& RenderDevice, const std::string& FileName);
 	virtual ~M2();
 
 	// ISceneNodeProvider
@@ -34,17 +26,23 @@ public:
 	bool Load() override;
 
 	void update(double _time, double _dTime);
-	void calc(uint16 _animationIndex, uint32 _time, uint32 globalTime, cmat4 _viewMatrix, cmat4 _worldMatrix);
+
+	IBaseManager& GetBaseManager() const { return m_BaseManager; }
+	IRenderDevice& GetRenderDevice() const { return m_RenderDevice; }
 
 public:
 	std::string getFilename() const { return m_FileName; }
 	std::string getFilenameWithoutExt() const { return m_FileNameWithoutExt; }
 	std::string getFilePath() const { return m_FilePath; }
 	std::string getUniqueName() const { return m_UniqueName; }
-	cbbox GetBounds() const { return m_Bounds; }
+	cbbox       GetBounds() const { return m_Bounds; }
 	
-#pragma region Loops & Sequences
-public:
+
+public: // Loops & Sequences
+	const std::vector<SM2_Loop>& getGlobalLoops() const
+	{
+		return m_GlobalLoops;
+	}
 	const SM2_Sequence& getSequence(uint32 _index) const
 	{
 		_ASSERT(_index < m_SequencesLookup.size());
@@ -54,11 +52,11 @@ public:
 	}
 	const bool isAnimated() const { return m_IsAnimated; }
 public:
-	GlobalLoopSeq						m_GlobalLoops;
-	std::vector<SM2_Sequence>				m_Sequences;
-	std::vector<int16>						m_SequencesLookup;
-	bool								m_IsAnimated;
-#pragma endregion
+	std::vector<SM2_Loop>      m_GlobalLoops;
+	std::vector<SM2_Sequence>  m_Sequences;
+	std::vector<int16>         m_SequencesLookup;
+	bool                       m_IsAnimated;
+
 
 public:
 	std::shared_ptr<CM2_Comp_Materials> getMaterials() const { return m_Materials; }
@@ -74,15 +72,15 @@ private:
 	std::string							m_FileName;
 	std::string							m_FileNameWithoutExt;
 	std::string							m_FilePath;
+	std::shared_ptr<IFile>              m_F;
 
+private:
+	SM2_Header				            m_Header;
 	std::string							m_UniqueName;
 	BoundingBox							m_Bounds;
 
-	// Vertices
-	bool								m_IsContainGeom;
-
 	// Skins
-	std::vector<std::shared_ptr<CM2_Skin>>				m_Skins;
+	std::vector<std::shared_ptr<CM2_Skin>> m_Skins;
 
 private:
 	// Buffers and geom
@@ -93,9 +91,4 @@ private:
 private:
 	IBaseManager& m_BaseManager;
 	IRenderDevice& m_RenderDevice;
-	std::unique_ptr<CM2_Builder> m_Builder;
-
-private: // Static and Consts
-	const uint8							C_TexturesMaxCount = 128;
-	const uint8							C_BonesInfluences = 4;
 };

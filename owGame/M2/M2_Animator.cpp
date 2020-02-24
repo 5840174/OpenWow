@@ -6,37 +6,28 @@
 // General
 #include "M2_Animator.h"
 
-CM2_Animator::CM2_Animator(const IBaseManager& BaseManager, const M2& M2Model) :
-	m_M2Model(M2Model),
-	m_IsLoop(false),
-	m_IsPlayed(false),
-	//m_OnAnimationEnded(nullptr),
-	animtime(0.0),
-	m_CurrentTime(0)
+CM2_Animator::CM2_Animator(const IBaseManager& BaseManager, const M2& M2Model) 
+	: m_M2Model(M2Model)
+	, m_IsLoop(false)
+	, m_IsStopped(false)
+	, animtime(0.0)
+	, m_CurrentTime(0)
 {
-	for (const auto& record : BaseManager.GetManager<CDBCStorage>()->DBC_AnimationData())
+	for (uint16 j = 0; j < m_M2Model.m_Sequences.size(); j++)
 	{
-		// Get animation with index (record->Get_ID() and variation index == 0)
-		int16 findedSeqIndex = -1;
-		for (uint16 j = 0; j < m_M2Model.m_Sequences.size(); j++)
+		const SM2_Sequence& sequence = m_M2Model.m_Sequences[j];
+
+		if (sequence.variationIndex == 0)
 		{
-			if (m_M2Model.m_Sequences[j].__animID == record->Get_ID() && m_M2Model.m_Sequences[j].variationIndex == 0)
-			{
-				findedSeqIndex = j;
-				break;
-			}
+			const DBC_AnimationDataRecord* dbcAnimationRecord = BaseManager.GetManager<CDBCStorage>()->DBC_AnimationData()[sequence.__animID];
+			_ASSERT(dbcAnimationRecord != nullptr);
+
+			m_Animations.insert(std::make_pair(sequence.__animID, std::make_shared<CM2_Animation>(m_M2Model, sequence, dbcAnimationRecord->Get_Name(), j)));
 		}
-
-		if (findedSeqIndex == -1) continue;
-
-
-		std::shared_ptr<CM2_Animation> animation = std::make_shared<CM2_Animation>(m_M2Model, record->Get_ID(), record->Get_Name(), findedSeqIndex, m_M2Model.m_Sequences[findedSeqIndex]);
-		m_Animations.insert(std::make_pair(record->Get_ID(), animation));
-		//Log::Warn("Animation [%d] '%s'", record->Get_ID(), record->Get_Name());
 	}
 
 	_ASSERT(m_Animations.size() > 0);
-	PlayAnimation();
+	PlayAnimation(0, true);
 }
 
 CM2_Animator::~CM2_Animator()
@@ -44,27 +35,23 @@ CM2_Animator::~CM2_Animator()
 	//ERASE_MAP(m_Animations);
 }
 
-void CM2_Animator::PlayAnimation(int16 _id, bool _loop)
+void CM2_Animator::PlayAnimation(uint16 AnimationId, bool Loop)
 {
-	m_IsLoop = _loop;
+	m_IsLoop = Loop;
 
-	if (_id == -1)
+	const auto& animIt = m_Animations.find(AnimationId);
+	if (animIt != m_Animations.end())
 	{
-		m_CurrentAnimation = m_Animations.begin()->second.operator->();
+		m_CurrentAnimation = animIt->second.get();
 	}
 	else
 	{
-		if ((m_Animations.find(_id) == m_Animations.end()))
-		{
-			Log::Error("ANIMATION [%d] not found!", _id);
-			return;
-		}
-
-		m_CurrentAnimation = (m_Animations[_id].operator->());
+		m_CurrentAnimation = m_Animations.begin()->second.get();
+		Log::Error("CM2_Animator: Animation '%d' not found. Playing first animation '%s' ('%d').", AnimationId, m_CurrentAnimation->getAnimationName().c_str(), m_CurrentAnimation->getAnimID());
 	}
 
 	m_CurrentTime = m_CurrentAnimation->getStart();
-	m_IsPlayed = false;
+	m_IsStopped = false;
 	animtime = 0.0;
 }
 
@@ -72,31 +59,26 @@ void CM2_Animator::PrintList()
 {
 	for (auto& it : m_Animations)
 	{
-		Log::Warn("[%d] is [%s]", it.first, it.second->getName().c_str());
+		Log::Warn("[%d] is [%s]", it.first, it.second->getAnimationName().c_str());
 	}
 }
 
 void CM2_Animator::Update(double _time, double _dTime)
 {
-	if (m_IsPlayed)
-	{
+	if (m_IsStopped)
 		return;
-	}
 
 	animtime += (_dTime * 1.0);
 	m_CurrentTime = static_cast<uint32>(m_CurrentAnimation->getStart() + animtime);
 
 	// Animation don't ended
 	if (m_CurrentTime < m_CurrentAnimation->getEnd())
-	{
 		return;
-	}
 
 	// Ended!
-	/*const CM2_Animation* nextAnim = m_CurrentAnimation->getNext();
-	if (m_CurrentAnimation->getNext() != nullptr)
+	/*if (m_CurrentAnimation->hasNextVatianton())
 	{
-		m_CurrentAnimation = nextAnim;
+		m_CurrentAnimation = m_CurrentAnimation->getNextVariation();
 		m_CurrentTime = m_CurrentAnimation->getStart();
 		m_IsPlayed = false;
 		animtime = 0;
@@ -104,26 +86,10 @@ void CM2_Animator::Update(double _time, double _dTime)
 	}*/
 
 	m_CurrentTime = m_CurrentAnimation->getEnd() - 1;
-	m_IsPlayed = true;
-
-	/*if (m_OnAnimationEnded != nullptr)
-	{
-		m_OnAnimationEnded->operator()();
-	}*/
+	m_IsStopped = true;
 
 	if (m_IsLoop)
 	{
-		PlayAnimation(m_CurrentAnimation->getAnimID());
+		PlayAnimation(m_CurrentAnimation->getAnimID(), true);
 	}
 }
-
-/*void CM2_Animator::setOnEndFunction(Function* _onEnd)
-{
-	if (m_OnAnimationEnded != nullptr)
-	{
-		delete m_OnAnimationEnded;
-	}
-
-	_ASSERT(_onEnd);
-	m_OnAnimationEnded = _onEnd;
-}*/

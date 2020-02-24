@@ -4,7 +4,7 @@ struct VertexShaderInput
 {
 	float3 position  : POSITION;
 	float4 boneWeight: BLENDWEIGHT0;
-	uint4   boneIndex : BLENDINDICES0;
+	uint4  boneIndex : BLENDINDICES0;
 	float3 normal    : NORMAL0;
 	float2 texCoord0 : TEXCOORD0;
 	float2 texCoord1 : TEXCOORD1;
@@ -39,6 +39,7 @@ cbuffer Material : register(b2)
 cbuffer M2Geometry : register(b7)
 {
 	uint gIsAnimated;
+	uint gStartBoneIndex;
 	uint gBonesMaxInfluences;
 	float2 __padding1;
 };
@@ -49,8 +50,8 @@ Texture2D DiffuseTexture1        : register(t1);
 sampler   DiffuseTexture0Sampler : register(s0);
 sampler   DiffuseTexture1Sampler : register(s1);
 
-StructuredBuffer<float4x4> Bones  : register(t2);
 StructuredBuffer<float4x4> Instances  : register(t3);
+StructuredBuffer<float4x4> Bones  : register(t4);
 
 float4 Test(VertexShaderOutput IN);
 
@@ -65,13 +66,13 @@ VertexShaderOutput DoPSRender(VertexShaderInput IN, float4x4 ModelMatrix)
 		{
 			if (IN.boneWeight[i] > 0.0f)
 			{
-				uint boneIndexes[4];
-				boneIndexes[0] = (IN.boneIndex & 0xFF000000u >> 24) & 0x000000FFu;
-				boneIndexes[1] = (IN.boneIndex & 0x00FF0000u >> 16) & 0x000000FFu;
-				boneIndexes[2] = (IN.boneIndex & 0x0000FF00u >>  8) & 0x000000FFu;
-				boneIndexes[3] = (IN.boneIndex & 0x000000FFu      ) & 0x000000FFu;
+				//uint boneIndexes[4];
+				//boneIndexes[0] = (IN.boneIndex & 0xFF000000u >> 24) & 0x000000FFu;
+				//boneIndexes[1] = (IN.boneIndex & 0x00FF0000u >> 16) & 0x000000FFu;
+				//boneIndexes[2] = (IN.boneIndex & 0x0000FF00u >>  8) & 0x000000FFu;
+				//boneIndexes[3] = (IN.boneIndex & 0x000000FFu      ) & 0x000000FFu;
 			
-				newVertex += mul(Bones[boneIndexes[i]], float4(IN.position, 1.0f) * IN.boneWeight[i]);
+				newVertex += mul(Bones[(IN.boneIndex[i] - gStartBoneIndex)], float4(IN.position, 1.0f) * IN.boneWeight[i]);
 			}
 		}
 	}

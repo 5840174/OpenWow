@@ -6,7 +6,6 @@
 // FORWARD BEGIN
 class M2;
 class CM2_Base_Instance;
-class CM2_Skin_Builder;
 // FORWARD END
 
 class CM2_SkinSection
@@ -36,11 +35,11 @@ private:
 		{}
 
 		uint32 gIsAnimated;
+		uint32 gStartBoneIndex;
 		uint32 gBonesMaxInfluences;
-		glm::vec2 __padding;
+		float __padding;
 	};
 	ShaderM2GeometryProperties* m_Properties;
-
 	std::shared_ptr<IConstantBuffer> m_PropertiesBuffer;
 
 	std::vector<glm::mat4> m_BonesList;

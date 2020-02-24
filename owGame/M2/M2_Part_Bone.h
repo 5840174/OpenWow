@@ -3,6 +3,7 @@
 #include "M2_Types.h"
 
 // FORWARD BEGIN
+class M2;
 class CM2_Comp_Skeleton;
 // FORWARD END
 
@@ -60,9 +61,9 @@ struct M2_GameBoneType
 class CM2_Part_Bone
 {
 public:
-	CM2_Part_Bone(std::shared_ptr<IFile> f, const SM2_Bone& _proto, cGlobalLoopSeq global);
+	CM2_Part_Bone(const M2& M2Object, const std::shared_ptr<IFile>& File, const SM2_Bone& M2Bone);
+	virtual ~CM2_Part_Bone();
 
-	void setParentBone(std::shared_ptr<CM2_Comp_Skeleton> _skeleton);
 	uint16 getSubmesh() const { return submesh; };
 
 	void calcMatrix(uint16 anim, uint32 time, uint32 globalTime);
@@ -70,7 +71,7 @@ public:
 
 	bool IsInterpolated(uint16 anim) const
 	{
-		return trans.uses(anim) || roll.uses(anim) || scale.uses(anim);
+		return trans.IsUsesBySequence(anim) || roll.IsUsesBySequence(anim) || scale.IsUsesBySequence(anim);
 	}
 	bool IsBillboard() const
 	{
@@ -92,6 +93,11 @@ public:
 	cvec3			getPivot() const { return pivot; }
 	cvec3			getTransPivot() const { return transPivot; }
 
+
+public: // Call this after initialization
+	void SetParentBoneInternal(const CM2_Comp_Skeleton& Skeleton);
+
+
 private:
 	int32           m_GameBoneId; // Bones lookup table
 	SM2_Bone::Flags m_Flags;
@@ -111,6 +117,9 @@ private:
 	M2_Animated<vec3> trans;
 	M2_Animated<quat> roll;
 	M2_Animated<vec3> scale;
+
+private:
+	const M2& m_M2Object;
 };
 
 

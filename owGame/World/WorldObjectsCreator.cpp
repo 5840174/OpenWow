@@ -170,6 +170,8 @@ std::shared_ptr<GameObject> CWorldObjectCreator::BuildGameObjectFromDisplayInfo(
 	std::shared_ptr<M2> m2Model = nullptr;
 	{
 		m2Model = CreateGameObjectModel(RenderDevice, m_DBCs->DBC_GameObjectDisplayInfo()[_id]);
+		if (m2Model == nullptr)
+			return nullptr;
 	}
 
 	std::shared_ptr<GameObject> newGameObject = Scene->CreateSceneNode<GameObject>(Parent, m2Model);
@@ -246,7 +248,9 @@ std::shared_ptr<M2> CWorldObjectCreator::CreateCharacterModel(IRenderDevice& Ren
 
 std::shared_ptr<M2> CWorldObjectCreator::CreateGameObjectModel(IRenderDevice & RenderDevice, const DBC_GameObjectDisplayInfoRecord * GameObjectDisplayInfoRecord)
 {
-	_ASSERT(GameObjectDisplayInfoRecord != nullptr);
+	if (GameObjectDisplayInfoRecord == nullptr)
+		return nullptr;
+
 	std::string modelName = GameObjectDisplayInfoRecord->Get_ModelName();
 	return LoadM2(RenderDevice, modelName);
 }

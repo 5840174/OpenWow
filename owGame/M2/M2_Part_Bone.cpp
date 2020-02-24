@@ -1,32 +1,34 @@
 #include "stdafx.h"
 
 // Include
+#include "M2.h"
 #include "M2_Comp_Skeleton.h"
 
 // General
 #include "M2_Part_Bone.h"
 
-CM2_Part_Bone::CM2_Part_Bone(std::shared_ptr<IFile> f, const SM2_Bone& _proto, cGlobalLoopSeq global)
+CM2_Part_Bone::CM2_Part_Bone(const M2& M2Object, const std::shared_ptr<IFile>& File, const SM2_Bone& M2Bone)
+	: m_IsCalculated(false)
+	, m_TransformMatrix(glm::mat4(1.0f))
+	, m_RotationMatrix(glm::mat4(1.0f))
+	, m_M2Object(M2Object)
 {
-	m_GameBoneId = _proto.key_bone_id;
-	m_Flags = _proto.flags;
+	m_GameBoneId = M2Bone.key_bone_id;
+	m_Flags = M2Bone.flags;
 
-	m_ParentBoneID = _proto.parent_bone;
-	submesh = _proto.submesh_id;
+	m_ParentBoneID = M2Bone.parent_bone;
+	submesh = M2Bone.submesh_id;
 
-	trans.init(_proto.translation, f, global, Fix_XZmY);
-	roll.init(_proto.rotation, f, global, Fix_XZmYW);
-	scale.init(_proto.scale, f, global, Fix_XZY);
+	trans.Initialize(M2Bone.translation, File, Fix_XZmY);
+	roll.Initialize(M2Bone.rotation, File, Fix_XZmYW);
+	scale.Initialize(M2Bone.scale, File, Fix_XZY);
 
-	pivot = Fix_XZmY(_proto.pivot);
+	pivot = Fix_XZmY(M2Bone.pivot);
 }
 
-void CM2_Part_Bone::setParentBone(std::shared_ptr<CM2_Comp_Skeleton> _skeleton)
+
+CM2_Part_Bone::~CM2_Part_Bone()
 {
-	if (m_ParentBoneID != -1)
-	{
-		m_ParentBone = _skeleton->getBoneDirect(m_ParentBoneID);
-	}
 }
 
 void CM2_Part_Bone::calcMatrix(uint16 anim, uint32 time, uint32 globalTime)
@@ -37,22 +39,22 @@ void CM2_Part_Bone::calcMatrix(uint16 anim, uint32 time, uint32 globalTime)
 	std::shared_ptr<CM2_Part_Bone> ParentBone = m_ParentBone.lock();
 	if (ParentBone != nullptr)
 	{
-		ParentBone->calcMatrix(anim, time, globalTime);
+		ParentBone->calcMatrix(anim, time,  globalTime);
 	}
 
-	mat4 m(1.0f);
+	glm::mat4 m(1.0f);
 	if (IsInterpolated(anim))
 	{
 		m = glm::translate(m, pivot);
 
-		if (trans.uses(anim))
+		if (trans.IsUsesBySequence(anim))
 		{
-			m = glm::translate(m, trans.getValue(anim, time, globalTime));
+			m = glm::translate(m, trans.GetValue(anim, time, m_M2Object.getGlobalLoops(), globalTime));
 		}
 
-		if (roll.uses(anim))
+		if (roll.IsUsesBySequence(anim))
 		{
-			quat q = roll.getValue(anim, time, globalTime);
+			quat q = roll.GetValue(anim, time, m_M2Object.getGlobalLoops(), globalTime);
 			m *= glm::toMat4(q);
 
 			if (ParentBone != nullptr)
@@ -66,9 +68,9 @@ void CM2_Part_Bone::calcMatrix(uint16 anim, uint32 time, uint32 globalTime)
 			}
 		}
 
-		if (scale.uses(anim))
+		if (scale.IsUsesBySequence(anim))
 		{
-			m = glm::scale(m, scale.getValue(anim, time, globalTime));
+			m = glm::scale(m, scale.GetValue(anim, time, m_M2Object.getGlobalLoops(), globalTime));
 		}
 
 		m = glm::translate(m, pivot * -1.0f);
@@ -131,5 +133,18 @@ void CM2_Part_Bone::calcBillboard(cmat4 _viewMatrix, cmat4 _worldMatrix)
 			m_TransformMatrix[2][2] = vRight.z;
 		}
 		m_TransformMatrix = glm::translate(m_TransformMatrix, pivot * -1.0f);
+	}
+}
+
+
+
+//
+// Call this after initialization
+//
+void CM2_Part_Bone::SetParentBoneInternal(const CM2_Comp_Skeleton& Skeleton)
+{
+	if (m_ParentBoneID != -1)
+	{
+		m_ParentBone = Skeleton.getBoneDirect(m_ParentBoneID);
 	}
 }

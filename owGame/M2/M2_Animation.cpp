@@ -6,27 +6,25 @@
 // General
 #include "M2_Animation.h"
 
-CM2_Animation::CM2_Animation(const M2& M2Model, uint16 _animID, std::string _name, uint16 indexIntoSeq, const SM2_Sequence& _sequence) :
-	m_AnimID(_animID),
-	m_Name(_name),
-	m_SequenceIndex(indexIntoSeq),
-	m_Next(nullptr)
+CM2_Animation::CM2_Animation(const M2& M2Model, const SM2_Sequence& Sequence, std::string AnimationName, uint16 IndexIntoSeq)
+	: m_AnimID(Sequence.__animID)
+	, m_AnimationName(AnimationName + "_" + std::to_string(IndexIntoSeq))
+	, m_SequenceIndex(IndexIntoSeq)
+	, m_StartTimeStamp(Sequence.start_timestamp)
+    , m_EndTimeStamp(Sequence.end_timestamp)
 {
-	int16 nextIndex = _sequence.variationNext;
-	if (nextIndex != -1)
+	if (Sequence.variationNext != -1)
 	{
-		m_Next = new CM2_Animation(M2Model, _animID, (_name + "" + std::to_string(nextIndex)), nextIndex, M2Model.m_Sequences[nextIndex]);
-	}
+		_ASSERT(Sequence.variationNext >= 0 && Sequence.variationNext < M2Model.m_Sequences.size());
+		const SM2_Sequence& variationNextSequence = M2Model.m_Sequences[Sequence.variationNext];
 
-	m_StartTimeStamp = _sequence.start_timestamp;
-	m_EndTimeStamp = _sequence.end_timestamp;
+		_ASSERT(variationNextSequence.__animID == m_AnimID);
+		//_ASSERT(variationNextSequence.variationIndex == Sequence.variationNext);
+		m_Next = std::make_unique<CM2_Animation>(M2Model, variationNextSequence, AnimationName, Sequence.variationNext);
+	}
 }
 
 CM2_Animation::~CM2_Animation()
 {
-	if (m_Next != nullptr)
-	{
-		delete m_Next;
-		m_Next = nullptr;
-	}
+
 }

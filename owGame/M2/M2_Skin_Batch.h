@@ -6,7 +6,6 @@
 // FORWARD BEGIN
 class M2;
 class CM2_Base_Instance;
-class CM2_Skin_Builder;
 // FORWARD END
 
 /**
@@ -16,12 +15,11 @@ class CM2_Skin_Builder;
 class CM2_Skin_Batch 
 	: public MaterialProxie
 {
-	friend CM2_Skin_Builder;
 public:
 	CM2_Skin_Batch(IBaseManager& BaseManager, IRenderDevice& RenderDevice, const M2& M2Model, const SM2_SkinBatch& SkinBatchProto);
 	virtual ~CM2_Skin_Batch();
 
-	void UpdateMaterialProps(const CM2_Base_Instance* M2Instance);
+	void UpdateMaterialProps(const RenderEventArgs& RenderEventArgs, const CM2_Base_Instance* M2Instance);
 
 	void UpdateConstantBuffer() const override;
 

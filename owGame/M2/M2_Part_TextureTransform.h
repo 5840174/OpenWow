@@ -2,19 +2,22 @@
 
 #include "M2_Types.h"
 
+// FORWARD BEGIN
+class M2;
+// FORWARD END
+
 class CM2_Part_TextureTransform
 {
 public:
-	CM2_Part_TextureTransform(std::shared_ptr<IFile> f, const SM2_TextureTransform& _proto, cGlobalLoopSeq global);
+	CM2_Part_TextureTransform(const M2& M2Object, const std::shared_ptr<IFile>& File, const SM2_TextureTransform& M2TextureTransform);
+	virtual ~CM2_Part_TextureTransform();
 
-	void calc(uint16 anim, uint32 time, uint32 globalTime);
-
-	cmat4 getValue() const { return matrix; }
+	glm::mat4 GetTransform(uint16 Sequence, uint32 Time, uint32 GlobalTime) const;
 
 private:
-	M2_Animated<glm::vec3> trans;
-	M2_Animated<glm::quat> roll;
-	M2_Animated<glm::vec3> scale;
+	M2_Animated<glm::vec3> m_TranslateAnimated;
+	M2_Animated<glm::quat> m_RotateAnimated;
+	M2_Animated<glm::vec3> m_ScaleAnimated;
 
-	glm::mat4					matrix;
+	const M2& m_M2Object;
 };

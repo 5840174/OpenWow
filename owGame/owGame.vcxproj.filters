@@ -61,9 +61,6 @@
     <Filter Include="M2\Animations">
       <UniqueIdentifier>{24d1f815-62cb-4320-a2ff-bc9199660f64}</UniqueIdentifier>
     </Filter>
-    <Filter Include="M2\Builders">
-      <UniqueIdentifier>{8f778e25-97a4-4250-8fca-f24fadc1a135}</UniqueIdentifier>
-    </Filter>
     <Filter Include="M2\Components">
       <UniqueIdentifier>{be8a504b-1117-41b6-b326-81b305908037}</UniqueIdentifier>
     </Filter>
@@ -227,12 +224,6 @@
     </ClCompile>
     <ClCompile Include="M2\M2_ColliderComponent.cpp">
       <Filter>M2\SceneNode &amp; Components</Filter>
-    </ClCompile>
-    <ClCompile Include="M2\M2_Builder.cpp">
-      <Filter>M2\Builders</Filter>
-    </ClCompile>
-    <ClCompile Include="M2\M2_Skin_Builder.cpp">
-      <Filter>M2\Builders</Filter>
     </ClCompile>
     <ClCompile Include="M2\M2_Comp_Materials.cpp">
       <Filter>M2\Components</Filter>
@@ -522,6 +513,9 @@
     <ClCompile Include="Client\WoWWorldObject.cpp">
       <Filter>Client\Objects</Filter>
     </ClCompile>
+    <ClCompile Include="M2\M2_AnimationSet.cpp">
+      <Filter>M2\Animations</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="common.h">
@@ -736,12 +730,6 @@
     </ClInclude>
     <ClInclude Include="M2\M2_ColliderComponent.h">
       <Filter>M2\SceneNode &amp; Components</Filter>
-    </ClInclude>
-    <ClInclude Include="M2\M2_Builder.h">
-      <Filter>M2\Builders</Filter>
-    </ClInclude>
-    <ClInclude Include="M2\M2_Skin_Builder.h">
-      <Filter>M2\Builders</Filter>
     </ClInclude>
     <ClInclude Include="M2\M2_Comp_Materials.h">
       <Filter>M2\Components</Filter>
@@ -1093,6 +1081,9 @@
     </ClInclude>
     <ClInclude Include="Client\WoWWorldObject.h">
       <Filter>Client\Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="M2\M2_AnimationSet.h">
+      <Filter>M2\Animations</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

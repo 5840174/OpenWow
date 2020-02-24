@@ -2,6 +2,7 @@
 
 // Include
 #include "M2.h"
+#include "M2_Part_Bone.h"
 
 // General
 #include "M2_RibbonEmitters.h"
@@ -17,37 +18,34 @@ struct RibbonVertex
 	vec2 tex;
 };
 
-CM2_RibbonEmitters::CM2_RibbonEmitters(const std::weak_ptr<M2> _model, std::shared_ptr<IFile> f, const SM2_RibbonEmitter& _proto, cGlobalLoopSeq globals) :
-	m_ParentM2(_model),
-	tcolor(vec4(1.0f))
+CM2_RibbonEmitters::CM2_RibbonEmitters(const M2& M2Object, const std::shared_ptr<IFile>& File, const SM2_RibbonEmitter& M2RibbonEmitter) 
+	: m_M2Object(M2Object)
+	, tcolor(vec4(1.0f))
 {
-	const std::shared_ptr<M2> ParentM2 = m_ParentM2.lock();
-	_ASSERT(ParentM2 != nullptr);
+	m_Bone = m_M2Object.getSkeleton()->getBoneDirect(M2RibbonEmitter.boneIndex);
+	posValue = pos = Fix_XZmY(M2RibbonEmitter.position);
 
-	m_Bone = (ParentM2->getSkeleton()->getBoneDirect(_proto.boneIndex));
-	posValue = pos = Fix_XZmY(_proto.position);
-
-	m_Color.init(_proto.colorTrack, f, globals);
-	m_Alpha.init(_proto.alphaTrack, f, globals);
-	m_HeightAbove.init(_proto.heightAboveTrack, f, globals);
-	m_HeightBelow.init(_proto.heightBelowTrack, f, globals);
+	m_Color.Initialize(M2RibbonEmitter.colorTrack, File);
+	m_Alpha.Initialize(M2RibbonEmitter.alphaTrack, File);
+	m_HeightAbove.Initialize(M2RibbonEmitter.heightAboveTrack, File);
+	m_HeightBelow.Initialize(M2RibbonEmitter.heightBelowTrack, File);
 
 	{
-		uint16_t* TexturesList = (uint16_t*)(f->getData() + _proto.textureIndices.offset);
+		uint16_t* TexturesList = (uint16_t*)(File->getData() + M2RibbonEmitter.textureIndices.offset);
 		// just use the first texture for now; most models I've checked only had one
-		_ASSERT(_proto.textureIndices.size > 0);
-		m_Texture = ParentM2->getMaterials()->m_Textures[TexturesList[0]]->getTexture();
+		_ASSERT(M2RibbonEmitter.textureIndices.size > 0);
+		m_Texture = m_M2Object.getMaterials()->GetTextureDirectInternal(TexturesList[0])->getTexture();
 
-		uint16_t* MaterialsList = (uint16_t*)(f->getData() + _proto.materialIndices.offset);
-		_ASSERT(_proto.materialIndices.size > 0);
-		m_Material = (ParentM2->getMaterials()->GetMaterial(MaterialsList[0]));
+		uint16_t* MaterialsList = (uint16_t*)(File->getData() + M2RibbonEmitter.materialIndices.offset);
+		_ASSERT(M2RibbonEmitter.materialIndices.size > 0);
+		m_Material = m_M2Object.getMaterials()->GetMaterial(MaterialsList[0]);
 	}
 
 	// TODO: figure out actual correct way to calculate length
 	// in BFD, res is 60 and len is 0.6, the trails are very short (too long here)
 	// in CoT, res and len are like 10 but the trails are supposed to be much longer (too short here)
-	m_EdgesPerSecond = (int)_proto.edgesPerSecond;
-	m_EdgesLifeTime = _proto.edgeLifetime;
+	m_EdgesPerSecond = (int)M2RibbonEmitter.edgesPerSecond;
+	m_EdgesLifeTime = M2RibbonEmitter.edgeLifetime;
 	length = (float)m_EdgesPerSecond * m_EdgesLifeTime;
 
 	// create first segment
@@ -55,9 +53,6 @@ CM2_RibbonEmitters::CM2_RibbonEmitters(const std::weak_ptr<M2> _model, std::shar
 	rs.pos = posValue;
 	rs.len = 0;
 	segs.push_back(rs);
-
-
-
 }
 
 void CM2_RibbonEmitters::setup(uint16 anim, uint32 time, uint32 _globalTime, cmat4 _worldMatrix)
@@ -115,19 +110,19 @@ void CM2_RibbonEmitters::setup(uint16 anim, uint32 time, uint32 _globalTime, cma
 	}
 
 	posValue = ntpos;
-	if (m_Color.uses(anim) && m_Alpha.uses(anim))
+	if (m_Color.IsUsesBySequence(anim) && m_Alpha.IsUsesBySequence(anim))
 	{
-		tcolor = vec4(m_Color.getValue(anim, time, _globalTime), m_Alpha.getValue(anim, time, _globalTime));
+		tcolor = glm::vec4(m_Color.GetValue(anim, time, m_M2Object.getGlobalLoops(), _globalTime), m_Alpha.GetValue(anim, time, m_M2Object.getGlobalLoops(), _globalTime));
 	}
 
-	if (m_HeightAbove.uses(anim))
+	if (m_HeightAbove.IsUsesBySequence(anim))
 	{
-		tabove = m_HeightAbove.getValue(anim, time, _globalTime);
+		tabove = m_HeightAbove.GetValue(anim, time, m_M2Object.getGlobalLoops(), _globalTime);
 	}
 
-	if (m_HeightBelow.uses(anim))
+	if (m_HeightBelow.IsUsesBySequence(anim))
 	{
-		tbelow = m_HeightBelow.getValue(anim, time, _globalTime);
+		tbelow = m_HeightBelow.GetValue(anim, time, m_M2Object.getGlobalLoops(), _globalTime);
 	}
 }
 

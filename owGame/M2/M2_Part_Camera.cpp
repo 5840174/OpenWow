@@ -1,38 +1,46 @@
 #include "stdafx.h"
 
+// Include
+#include "M2.h"
+
 // General
 #include "M2_Part_Camera.h"
 
-CM2_Part_Camera::CM2_Part_Camera(std::shared_ptr<IFile> f, const SM2_Camera& _proto, cGlobalLoopSeq global)
+CM2_Part_Camera::CM2_Part_Camera(const M2& M2Object, const std::shared_ptr<IFile>& File, const SM2_Camera& M2Camera)
+	: m_M2Object(M2Object)
 {
-	nearclip = _proto.near_clip;
-	farclip = _proto.far_clip;
+	nearclip = M2Camera.near_clip;
+	farclip = M2Camera.far_clip;
 
-	m_PositionBase = Fix_XZmY( _proto.position_base);
-	m_TargetBase = Fix_XZmY(_proto.target_position_base);
+	m_PositionBase = Fix_XZmY(M2Camera.position_base);
+	m_TargetBase = Fix_XZmY(M2Camera.target_position_base);
 
-	tPos.init(_proto.positions, f, global, Fix_XZmY);
-	tTarget.init(_proto.target_position, f, global, Fix_XZmY);
+	tPos.Initialize(M2Camera.positions, File, Fix_XZmY);
+	tTarget.Initialize(M2Camera.target_position, File, Fix_XZmY);
 
-	tRoll.init(_proto.roll, f, global);
-	//fov = _proto.fov / sqrtf(1.0f + powf(m_VideoSettings->aspectRatio, 2.0f));;
+	tRoll.Initialize(M2Camera.roll, File);
+	//fov = M2Camera.fov / sqrtf(1.0f + powf(m_VideoSettings->aspectRatio, 2.0f));;
+}
+
+CM2_Part_Camera::~CM2_Part_Camera()
+{
 }
 
 void CM2_Part_Camera::calc(uint32 time, uint32 globalTime)
 {
-	if (tPos.uses(0))
+	if (tPos.IsUsesBySequence(0))
 	{
-		pResult = tPos.getValue(0, time, globalTime);
+		pResult = tPos.GetValue(0, time, m_M2Object.getGlobalLoops(), globalTime);
 	}
 
-	if (tTarget.uses(0))
+	if (tTarget.IsUsesBySequence(0))
 	{
-		tResult = tTarget.getValue(0, time, globalTime);
+		tResult = tTarget.GetValue(0, time, m_M2Object.getGlobalLoops(), globalTime);
 	}
 
-	if (tRoll.uses(0))
+	if (tRoll.IsUsesBySequence(0))
 	{
-		rollResult = tRoll.getValue(0, time, globalTime) / (glm::pi<float>() * 180.0f);
+		rollResult = tRoll.GetValue(0, time, m_M2Object.getGlobalLoops(), globalTime) / (glm::pi<float>() * 180.0f);
 	}
 }
 

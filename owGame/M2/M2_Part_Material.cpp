@@ -19,16 +19,21 @@ struct
 	{ SM2_Material::M2BLEND_MOD2X,			5 }
 };
 
-CM2_Part_Material::CM2_Part_Material(const SM2_Material& _proto)
+CM2_Part_Material::CM2_Part_Material(const M2& M2Object, const SM2_Material& M2Material)
+	: m_M2Object(M2Object)
 {
-	m_IsLightingDisable = _proto.flags.UNLIT;
+	m_IsLightingDisable = M2Material.flags.UNLIT;
 
-	m_IsFogDisable = _proto.flags.UNFOGGED;
-	m_CullMode = (_proto.flags.TWOSIDED != 0) ? IRasterizerState::CullMode::None : IRasterizerState::CullMode::Back;
-	m_DepthTest = (_proto.flags.DEPTHTEST == 0);
-	m_DepthWrite = (_proto.flags.DEPTHWRITE == 0) ? IDepthStencilState::DepthWrite::Enable : IDepthStencilState::DepthWrite::Disable;
+	m_IsFogDisable = M2Material.flags.UNFOGGED;
+	m_CullMode = (M2Material.flags.TWOSIDED != 0) ? IRasterizerState::CullMode::None : IRasterizerState::CullMode::Back;
+	m_DepthTest = (M2Material.flags.DEPTHTEST == 0);
+	m_DepthWrite = (M2Material.flags.DEPTHWRITE == 0) ? IDepthStencilState::DepthWrite::Enable : IDepthStencilState::DepthWrite::Disable;
 
-	m_M2BlendMode = _proto.m_BlendMode;
+	m_M2BlendMode = M2Material.m_BlendMode;
+}
+
+CM2_Part_Material::~CM2_Part_Material()
+{
 }
 
 void CM2_Part_Material::Set() const

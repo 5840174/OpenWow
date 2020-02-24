@@ -1,6 +1,7 @@
 #pragma once
 
 // FORWARD BEGIN
+class M2;
 class CM2_Part_Bone;
 // FORWARD END
 
@@ -13,15 +14,13 @@ struct RibbonSegment
 class CM2_RibbonEmitters
 {
 public:
-	CM2_RibbonEmitters(const std::weak_ptr<M2> _model, std::shared_ptr<IFile> f, const SM2_RibbonEmitter& mta, cGlobalLoopSeq globals);
+	CM2_RibbonEmitters(const M2& M2Object, const std::shared_ptr<IFile>& File, const SM2_RibbonEmitter& M2RibbonEmitter);
 
 	void setup(uint16 anim, uint32 time, uint32 _globalTime, cmat4 _worldMatrix);
 
 	void Render(cmat4 _world);
 
 private:
-	const std::weak_ptr<M2>						m_ParentM2;
-
 	uint32										m_ID;
 	std::weak_ptr<const CM2_Part_Bone>			m_Bone;
 	vec3										pos;
@@ -29,9 +28,6 @@ private:
 
 	std::shared_ptr<ITexture>					m_Texture;
 	std::weak_ptr<const CM2_Part_Material>		m_Material;
-
-	//std::shared_ptr<IBuffer>								__vb;
-	//std::shared_ptr<Mesh>								__geom;
 
 	M2_Animated<vec3>							m_Color;
 	M2_Animated<float, short, ShortToFloat>		m_Alpha;
@@ -47,4 +43,7 @@ private:
 	int m_EdgesPerSecond;
 
 	std::list<RibbonSegment> segs;
+
+private:
+	const M2& m_M2Object;
 };

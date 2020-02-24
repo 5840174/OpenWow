@@ -24,3 +24,6 @@ const int32 C_MapBufferSize = 9 * 9 + 8 * 8;
 // World
 const float C_DetailSize = 8.0f;
 
+// M2 models
+const uint8	cM2Model_TexturesMaxCount = 128;
+const uint8	cM2Model_BonesInfluences = 4;

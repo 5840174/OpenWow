@@ -9,7 +9,7 @@ class CM2_Base_Instance;
 class CM2_Part_Texture
 {
 public:
-	CM2_Part_Texture(IBaseManager& BaseManager, IRenderDevice& RenderDevice, std::shared_ptr<IFile> f, const SM2_Texture& _proto);
+	CM2_Part_Texture(IBaseManager& BaseManager, IRenderDevice& RenderDevice, const M2& M2Object, const std::shared_ptr<IFile>& File, const SM2_Texture& M2Texture);
 	virtual ~CM2_Part_Texture();
 
 	ISamplerState::WrapMode GetTextureWrapX() const { return (m_WrapX ? ISamplerState::WrapMode::Clamp : ISamplerState::WrapMode::Repeat); }
@@ -20,6 +20,7 @@ public:
 
 	// Common texture
 	std::shared_ptr<ITexture> getTexture() const { return m_Texture; }
+
 	// Special texture
 	bool isTextureSpecial() const { return (m_SpecialType != SM2_Texture::Type::NONE); }
 	SM2_Texture::Type getSpecialTextureType() const { return m_SpecialType; }
@@ -30,4 +31,7 @@ private:
 
 	std::shared_ptr<ITexture>					m_Texture;
 	SM2_Texture::Type		m_SpecialType;
+
+private:
+	const M2& m_M2Object;
 };

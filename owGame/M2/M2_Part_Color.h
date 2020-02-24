@@ -2,22 +2,23 @@
 
 #include "M2_Types.h"
 
+// FORWARD BEGIN
+class M2;
+// FORWARD END
+
 class CM2_Part_Color
 {
 public:
-	CM2_Part_Color(std::shared_ptr<IFile> f, const SM2_Color& _proto, cGlobalLoopSeq global);
+	CM2_Part_Color(const M2& M2Object, const std::shared_ptr<IFile>& File, const SM2_Color& M2Color);
+	virtual ~CM2_Part_Color();
 
-	void calc(uint16 anim, uint32 time, uint32 globalTime);
-
-	vec4 getValue() const { return vec4(vColor, vAlpha); }
-
-	cvec3 getValueColor() const { return vColor; }
-	float getValueAlpha() const { return vAlpha; }
+	glm::vec4 GetColorAndAlpha(uint16 Sequence, uint32 Time, uint32 GlobalTime) const;
+	glm::vec3 GetColor(uint16 Sequence, uint32 Time, uint32 GlobalTime) const;
+	float     GetAlpha(uint16 Sequence, uint32 Time, uint32 GlobalTime) const;
 
 private:
-	M2_Animated<vec3> color;
-	M2_Animated<float, short, ShortToFloat> alpha;
+	M2_Animated<vec3> m_ColorAnimated;
+	M2_Animated<float, short, ShortToFloat> m_AlphaAnimated;
 
-	vec3 vColor;
-	float vAlpha;
+	const M2& m_M2Object;
 };

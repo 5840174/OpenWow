@@ -53,7 +53,6 @@ mat4 CalcSpreadMatrix(float Spread1, float Spread2, float w, float l)
 	return SpreadMat;
 }
 
-ParticleEmitter::ParticleEmitter(std::weak_ptr<CM2_ParticleSystem> sys)
-	: m_ParticleSystem(sys)
-{
-}
+ParticleEmitter::ParticleEmitter(CM2_ParticleSystem& ParticleSystem)
+	: m_ParticleSystem(ParticleSystem)
+{}

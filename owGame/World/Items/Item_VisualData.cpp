@@ -17,7 +17,7 @@ struct
 	std::string					folder = "";
 	MeshIDType::List			modifiers[MESHID_MAX_MODS] = MESHID_ALLUNK;
 	uint32						count = 0;
-	M2_AttachmentType::List		attach[ATTACHS_MAX] = { M2_AttachmentType::Count, M2_AttachmentType::Count };
+	M2_AttachmentType		    attach[ATTACHS_MAX] = { M2_AttachmentType::Count, M2_AttachmentType::Count };
 } ItemObjectComponents[InventoryType::COUNT] =
 {
 	{ InventoryType::NON_EQUIP, },
@@ -188,9 +188,9 @@ void CItem_VisualData::InitObjectComponents()
 
 				std::shared_ptr<CM2_Part_Attachment> visAttach = nullptr;
 
-				if (itemObjectInstance->getM2().getMiscellaneous()->isAttachmentExists((M2_AttachmentType::List)j))
+				if (itemObjectInstance->getM2().getMiscellaneous()->isAttachmentExists((M2_AttachmentType)j))
 				{
-					visAttach = itemObjectInstance->getM2().getMiscellaneous()->getAttachment((M2_AttachmentType::List)j);
+					visAttach = itemObjectInstance->getM2().getMiscellaneous()->getAttachment((M2_AttachmentType)j);
 				}
 				else
 				{

@@ -2,10 +2,15 @@
 
 #include "M2_Types.h"
 
+// FORWARD BEGIN
+class M2;
+// FORWARD END
+
 class CM2_Part_Camera
 {
 public:
-	CM2_Part_Camera(std::shared_ptr<IFile> f, const SM2_Camera& _proto, cGlobalLoopSeq global);
+	CM2_Part_Camera(const M2& M2Model, const std::shared_ptr<IFile>& File, const SM2_Camera& M2Camera);
+	virtual ~CM2_Part_Camera();
 
 	vec3 GetTranslation() const { return pResult; }
 	vec3 getTarget() const { return tResult; }
@@ -30,4 +35,7 @@ private:
 	float rollResult;
 
 	float fov;
+
+private:
+	const M2& m_M2Object;
 };

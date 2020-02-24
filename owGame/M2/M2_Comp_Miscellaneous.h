@@ -1,5 +1,8 @@
 #pragma once
 
+// M2
+#include "M2_Headers.h"
+
 // Misc
 #include "M2_Part_Attachment.h"
 #include "M2_Part_Event.h"
@@ -9,11 +12,19 @@
 #include "Particle.h"
 #include "ParticleSystem.h"
 
+// FORWARD BEGIN
+class M2;
+// FORWARD END
+
 class CM2_Comp_Miscellaneous
 {
-	friend class CM2_Builder;
 public:
-	CM2_Comp_Miscellaneous();
+	CM2_Comp_Miscellaneous(const M2& M2Object);
+	virtual ~CM2_Comp_Miscellaneous();
+
+	void Load(const SM2_Header& M2Header, const std::shared_ptr<IFile>& File);
+
+	bool IsAnimated() const { return m_HasMisc; }
 
 	void update(double _time, double _dTime);
 	void calc(uint16 anim, uint32 time, uint32 globalTime, cmat4 _worldMat);
@@ -26,25 +37,25 @@ public:
 		return (m_Attachments[_index]);
 	}
 
-	bool isAttachmentExists(M2_AttachmentType::List _index)
+	bool isAttachmentExists(M2_AttachmentType _index)
 	{
-		if (_index >= m_AttachmentsLookup.size())
+		if ((uint32)_index >= m_AttachmentsLookup.size())
 		{
 			return false;
 		}
-		int16 newIndex = m_AttachmentsLookup[_index];
+		int16 newIndex = m_AttachmentsLookup[(uint32)_index];
 
 		return (newIndex != -1) && (newIndex < static_cast<int16>(m_Attachments.size()));
 	}
 
-	std::shared_ptr<CM2_Part_Attachment> getAttachment(M2_AttachmentType::List _index) const
+	std::shared_ptr<CM2_Part_Attachment> getAttachment(M2_AttachmentType _index) const
 	{
-		if (_index >= m_AttachmentsLookup.size())
+		if ((uint32)_index >= m_AttachmentsLookup.size())
 		{
 			//Log::Warn("M2[%s]: getAttachment [%d] not found in Lookup[%d]", m_FileName.c_str(), _index, m_AttachmentsLookup.size());
 			return nullptr;
 		}
-		int16 newIndex = m_AttachmentsLookup[_index];
+		int16 newIndex = m_AttachmentsLookup[(uint32)_index];
 		_ASSERT(newIndex != -1);
 		_ASSERT(newIndex < static_cast<int16>(m_Attachments.size()));
 		return (m_Attachments[newIndex]);
@@ -95,4 +106,7 @@ private:
 	std::vector<std::shared_ptr<CM2_ParticleSystem>>	particleSystems;
 
 	bool								m_HasMisc;
+
+private:
+	const M2& m_M2Object;
 };

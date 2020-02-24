@@ -36,11 +36,11 @@ void CSceneWoW::Initialize()
 	//m_WoWClient->GetWorld().AddHandler(SMSG_MONSTER_MOVE, std::bind(&CSceneWoW::S_MonsterMove, this, std::placeholders::_1));
 	//m_WoWClient->GetWorld().AddHandler(SMSG_COMPRESSED_UPDATE_OBJECT, std::bind(&CSceneWoW::S_SMSG_COMPRESSED_UPDATE_OBJECT, this, std::placeholders::_1));
 	//m_WoWClient->GetWorld().AddHandler(SMSG_UPDATE_OBJECT, std::bind(&CSceneWoW::S_SMSG_UPDATE_OBJECT, this, std::placeholders::_1));
-	m_WoWClient->BeginConnect("admin", "admin");
+	//m_WoWClient->BeginConnect("admin", "admin");
 
 	map = GetRootNode3D()->CreateSceneNode<CMap>(GetBaseManager(), GetRenderDevice());
 
-	//Load3D();
+	Load3D_M2s();
 	LoadUI();
 
 
@@ -49,16 +49,16 @@ void CSceneWoW::Initialize()
 
 	m_Technique3D.AddPass(GetBaseManager().GetManager<IRenderPassFactory>()->CreateRenderPass("ClearPass", GetRenderDevice(), GetRenderWindow()->GetRenderTarget(), &GetRenderWindow()->GetViewport(), shared_from_this()));
 	m_Technique3D.AddPass(wmoListPass);
-	//m_Technique3D.AddPass(m2ListPass);
+	m_Technique3D.AddPass(m2ListPass);
 	m_Technique3D.AddPass(std::make_shared<CRenderPass_Sky>(GetRenderDevice(), shared_from_this())->CreatePipeline(GetRenderWindow()->GetRenderTarget(), &GetRenderWindow()->GetViewport()));
 	//m_Technique3D.AddPass(std::make_shared<CRenderPass_WDL>(GetRenderDevice(), shared_from_this())->CreatePipeline(GetRenderWindow()->GetRenderTarget(), &GetRenderWindow()->GetViewport()));
 	m_Technique3D.AddPass(std::make_shared<CRenderPass_ADT_MCNK>(GetRenderDevice(), shared_from_this())->CreatePipeline(GetRenderWindow()->GetRenderTarget(), &GetRenderWindow()->GetViewport()));
 	m_Technique3D.AddPass(std::make_shared<CRenderPass_WMO>(GetRenderDevice(), shared_from_this())->CreatePipeline(GetRenderWindow()->GetRenderTarget(), &GetRenderWindow()->GetViewport()));
 	//m_Technique3D.AddPass(std::make_shared<CRenderPass_WMO2>(GetRenderDevice(), wmoListPass, shared_from_this())->CreatePipeline(GetRenderWindow()->GetRenderTarget(), &GetRenderWindow()->GetViewport()));
-	m_Technique3D.AddPass(std::make_shared<CRenderPass_M2>(GetRenderDevice(), shared_from_this())->CreatePipeline(GetRenderWindow()->GetRenderTarget(), &GetRenderWindow()->GetViewport()));
-	//m_Technique3D.AddPass(std::make_shared<CRenderPass_M2_Instanced>(GetRenderDevice(), m2ListPass, shared_from_this())->CreatePipeline(GetRenderWindow()->GetRenderTarget(), &GetRenderWindow()->GetViewport()));
+	//m_Technique3D.AddPass(std::make_shared<CRenderPass_M2>(GetRenderDevice(), shared_from_this())->CreatePipeline(GetRenderWindow()->GetRenderTarget(), &GetRenderWindow()->GetViewport()));
+	m_Technique3D.AddPass(std::make_shared<CRenderPass_M2_Instanced>(GetRenderDevice(), m2ListPass, shared_from_this())->CreatePipeline(GetRenderWindow()->GetRenderTarget(), &GetRenderWindow()->GetViewport()));
 	m_Technique3D.AddPass(std::make_shared<CRenderPass_Liquid>(GetRenderDevice(), shared_from_this())->CreatePipeline(GetRenderWindow()->GetRenderTarget(), &GetRenderWindow()->GetViewport()));
-	m_Technique3D.AddPass(std::make_shared<CDrawBoundingBoxPass>(GetRenderDevice(), shared_from_this())->CreatePipeline(GetRenderWindow()->GetRenderTarget(), &GetRenderWindow()->GetViewport()));
+	//m_Technique3D.AddPass(std::make_shared<CDrawBoundingBoxPass>(GetRenderDevice(), shared_from_this())->CreatePipeline(GetRenderWindow()->GetRenderTarget(), &GetRenderWindow()->GetViewport()));
 }
 
 void CSceneWoW::Finalize()
@@ -145,12 +145,14 @@ void CSceneWoW::Load3D()
 
 void CSceneWoW::Load3D_M2s()
 {
+	Random r(time(0));
+
 	CWorldObjectCreator creator(GetBaseManager());
 
 	const auto& records = GetBaseManager().GetManager<CDBCStorage>()->DBC_CreatureDisplayInfo().Records();
-	for (size_t i = 0; i < 3; i++)
+	for (size_t i = 0; i < 15; i++)
 	{
-		for (size_t j = 0; j < 3; j++)
+		for (size_t j = 0; j < 15; j++)
 		{
 			size_t id = rand() % records.size();
 
@@ -162,21 +164,20 @@ void CSceneWoW::Load3D_M2s()
 					break;
 				}
 
-				id = rand() % records.size();
+				id = r.NextUInt() % records.size();
 			}
 
-			auto creature = creator.BuildCreatureFromDisplayInfo(GetRenderDevice(), this, id, nullptr);
+			auto creature = creator.BuildCreatureFromDisplayInfo(GetRenderDevice(), this, id, GetRootNode3D());
 			if (creature != nullptr)
 			{
-				creature->SetTranslate(glm::vec3(i * 2.5f, 0.0f, j * 2.5f));
-				GetRootNode3D()->AddChild(creature);
+				creature->SetTranslate(glm::vec3(i * 7.5f, 0.0f, j * 7.5f));
 			}
 		}
 	}
 
-	GetCameraController()->GetCamera()->SetTranslation(vec3(0, 0, 0));
-	GetCameraController()->GetCamera()->SetYaw(48.8);
-	GetCameraController()->GetCamera()->SetPitch(-27.8);
+	GetCameraController()->GetCamera()->SetTranslation(vec3(150, 150, 150));
+	GetCameraController()->GetCamera()->SetYaw(235);
+	GetCameraController()->GetCamera()->SetPitch(-45);
 
 	m_Technique3D.AddPass(GetBaseManager().GetManager<IRenderPassFactory>()->CreateRenderPass("ClearPass", GetRenderDevice(), GetRenderWindow()->GetRenderTarget(), &GetRenderWindow()->GetViewport(), shared_from_this()));
 	m_Technique3D.AddPass(std::make_shared<CRenderPass_M2>(GetRenderDevice(), shared_from_this())->CreatePipeline(GetRenderWindow()->GetRenderTarget(), &GetRenderWindow()->GetViewport()));

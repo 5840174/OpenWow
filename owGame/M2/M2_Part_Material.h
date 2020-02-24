@@ -5,7 +5,8 @@
 class CM2_Part_Material
 {
 public:
-	CM2_Part_Material(const SM2_Material& _proto);
+	CM2_Part_Material(const M2& M2Object, const SM2_Material& M2Material);
+	virtual ~CM2_Part_Material();
 
 	void Set() const;
 
@@ -24,4 +25,7 @@ private:
 	IDepthStencilState::DepthWrite m_DepthWrite;
 
 	SM2_Material::BlendModes m_M2BlendMode;
+
+private:
+	const M2& m_M2Object;
 };

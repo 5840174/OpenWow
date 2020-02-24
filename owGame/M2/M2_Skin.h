@@ -8,16 +8,16 @@
 // FORWARD BEGIN
 class M2;
 class CM2_Base_Instance;
-class CM2_Skin_Builder;
 // FORWARD END
 
 class CM2_Skin 
 	: public ModelProxie
 {
-	friend CM2_Skin_Builder;
 public:
-	CM2_Skin(IRenderDevice& RenderDevice, const M2& M2Model);
+	CM2_Skin(IBaseManager& BaseManager, IRenderDevice& RenderDevice, const M2& M2Model, const SM2_SkinProfile& M2SkinProfile);
 	virtual ~CM2_Skin();
+
+	void Load(const SM2_Header& M2Header, const std::shared_ptr<IFile>& File, const std::vector<SM2_Vertex>& Vertices);
 
 	const std::unordered_map<std::shared_ptr<CM2_SkinSection>, std::vector<std::shared_ptr<CM2_Skin_Batch>>>& GetTTT() const
 	{
@@ -33,7 +33,9 @@ private:
 
 	std::unordered_map<std::shared_ptr<CM2_SkinSection>, std::vector<std::shared_ptr<CM2_Skin_Batch>>> m_TTT;
 	
-private: // PARENT
+private:
+	IBaseManager& m_BaseManager;
 	IRenderDevice& m_RenderDevice;
 	const M2& m_M2Model;
+	const SM2_SkinProfile m_M2SkinProfile;
 };

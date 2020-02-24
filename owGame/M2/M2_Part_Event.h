@@ -10,7 +10,8 @@ class M2;
 class CM2_Part_Event
 {
 public:
-	CM2_Part_Event(const M2& M2Model, std::shared_ptr<IFile> f, const SM2_Event& _proto, cGlobalLoopSeq global);
+	CM2_Part_Event(const M2& M2Object, const std::shared_ptr<IFile>& File, const SM2_Event& M2Event);
+	virtual ~CM2_Part_Event();
 
 private:
 	char					m_ID[4];
@@ -19,4 +20,7 @@ private:
 	vec3					m_Position;
 
 	M2_Animated<bool>		m_IsEnabled;
+
+private:
+	const M2& m_M2Object;
 };

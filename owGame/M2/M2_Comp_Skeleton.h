@@ -1,22 +1,27 @@
 #pragma once
 
+// M2
+#include "M2_Headers.h"
+
+// M2 skeleton
 #include "M2_Part_Bone.h"
 
 // FORWARD BEGIN
-class CM2_Builder;
+class M2;
 // FORWARD END
 
 class CM2_Comp_Skeleton
 {
-	friend class CM2_Builder;
 public:
-	CM2_Comp_Skeleton();
+	CM2_Comp_Skeleton(const M2& M2Object);
+	virtual ~CM2_Comp_Skeleton();
 
-	void calc(uint16 anim, uint32 time, uint32 globalTime, cmat4 _viewMat, cmat4 _worldMat);
+	void Load(const SM2_Header& M2Header, const std::shared_ptr<IFile>& File);
 
 	const bool hasBones() const { return m_HasBones; }
 	const bool isAnimBones() const { return m_IsAnimBones; }
 	const bool isBillboard() const { return m_IsBillboard; }
+
 
 public:
 	std::shared_ptr<CM2_Part_Bone> getBoneDirect(uint32 _index) const
@@ -56,10 +61,14 @@ public:
 
 
 private:
-	std::vector<std::shared_ptr<CM2_Part_Bone>>			m_Bones;
-	std::vector<int16>					m_BonesLookup;
-	std::vector<int16>					m_GameBonesLookup;
-	bool								m_HasBones;
-	bool								m_IsAnimBones;
-	bool								m_IsBillboard;
+	std::vector<std::shared_ptr<CM2_Part_Bone>>  m_Bones;
+	std::vector<int16>                           m_BonesLookup;
+	std::vector<int16>                           m_GameBonesLookup;
+
+	bool                                         m_HasBones;
+	bool                                         m_IsAnimBones;
+	bool                                         m_IsBillboard;
+
+private:
+	const M2& m_M2Object;
 };

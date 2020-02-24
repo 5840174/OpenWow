@@ -10,8 +10,6 @@ struct SM2_Loop
 {
 	uint32 timestamp;
 };
-typedef std::vector<SM2_Loop> GlobalLoopSeq;
-typedef const std::vector<SM2_Loop>* cGlobalLoopSeq;
 
 struct SM2_Sequence
 {
@@ -73,7 +71,26 @@ struct SM2_Bone
 	M2Track<quat>	    rotation;
 	M2Track<vec3>       scale;
 
-	vec3                pivot;					// The pivot point of that bone.
+	glm::vec3           pivot;					// The pivot point of that bone.
+
+	inline bool IsAnimated() const
+	{
+		return translation.interpolation_type != Interpolations::INTERPOLATION_NONE ||
+			rotation.interpolation_type       != Interpolations::INTERPOLATION_NONE ||
+			scale.interpolation_type          != Interpolations::INTERPOLATION_NONE ||
+			flags.spherical_billboard                                               ||
+			flags.cylindrical_billboard_lock_x                                      ||
+			flags.cylindrical_billboard_lock_y                                      ||
+			flags.cylindrical_billboard_lock_z;
+	}
+
+	inline bool IsBillboard() const
+	{
+		return flags.spherical_billboard       ||
+			flags.cylindrical_billboard_lock_x ||
+			flags.cylindrical_billboard_lock_y ||
+			flags.cylindrical_billboard_lock_z;
+	}
 };
 
 struct SM2_Vertex
@@ -91,7 +108,7 @@ struct SM2_Vertex
 #include __PACK_BEGIN
 struct SM2_Color
 {
-	M2Track<vec3> color;     // vertex colors in rgb order
+	M2Track<glm::vec3> color;     // vertex colors in rgb order
 	M2Track<short> alpha;    // 0 - transparent, 0x7FFF - opaque
 };
 

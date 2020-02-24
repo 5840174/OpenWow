@@ -2,7 +2,7 @@
 
 #include __PACK_BEGIN
 
-enum Interpolations : uint16_t
+enum class Interpolations : uint16_t
 {
     INTERPOLATION_NONE = 0,
     INTERPOLATION_LINEAR,

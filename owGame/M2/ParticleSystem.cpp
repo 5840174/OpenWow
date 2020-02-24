@@ -10,46 +10,43 @@
 #include "ParticleEmitter_Plane.h"
 #include "ParticleEmitter_Sphere.h"
 
-CM2_ParticleSystem::CM2_ParticleSystem(const std::weak_ptr<M2> _parentM2, std::shared_ptr<IFile> f, const SM2_Particle& _proto, cGlobalLoopSeq globals) :
-	m_ParentM2(_parentM2),
-	m_Emitter(nullptr), 
-	mid(0), 
-	rem(0),
-	m_CurrentAnimation(0),
-	m_CurrentTime(0.0),
-	m_GlobalTime(0.0)
+CM2_ParticleSystem::CM2_ParticleSystem(const M2& M2Object, const std::shared_ptr<IFile>& File, const SM2_Particle& M2Particle)
+	: m_M2Object(M2Object)
+	, m_Emitter(nullptr)
+	, mid(0)
+	, rem(0)
+	, m_CurrentAnimation(0)
+	, m_CurrentTime(0.0)
+	, m_GlobalTime(0.0)
 {
-	std::shared_ptr<const M2> ParentM2 = m_ParentM2.lock();
-	_ASSERT(ParentM2 != nullptr);
+	m_Position = Fix_XZmY(M2Particle.Position);
+	m_ParentBone = m_M2Object.getSkeleton()->getBoneDirect(M2Particle.bone);
 
-	m_Position = Fix_XZmY(_proto.Position);
-	m_ParentBone = ParentM2->getSkeleton()->getBoneDirect(_proto.bone);
+	texture = m_M2Object.getMaterials()->GetTextureDirectInternal(M2Particle.texture)->getTexture();
 
-	texture = ParentM2->getMaterials()->m_Textures[_proto.texture]->getTexture();
-
-	blend = _proto.blendingType;
-	uint8 emitterType = _proto.emitterType;
-	type = _proto.particleColorIndex;
-	order = _proto.particleColorIndex > 0 ? -1 : 0; //order = _proto.s2;
+	blend = M2Particle.blendingType;
+	uint8 emitterType = M2Particle.emitterType;
+	type = M2Particle.particleColorIndex;
+	order = M2Particle.particleColorIndex > 0 ? -1 : 0; //order = M2Particle.s2;
 
 	// uint8 particleType;                       // Found below.
 	// uint8 headorTail;                         // 0 - Head, 1 - Tail, 2 - Both 
 
 	// int16 textureTileRotation
-	rows = _proto.textureDimensions_rows;
-	cols = _proto.textureDimensions_columns;
+	rows = M2Particle.textureDimensions_rows;
+	cols = M2Particle.textureDimensions_columns;
 
-	emissionSpeed.init(_proto.emissionSpeed, f, globals);
-	speedVariation.init(_proto.speedVariation, f, globals);
-	verticalRange.init(_proto.verticalRange, f, globals);
-	horizontalRange.init(_proto.horizontalRange, f, globals);
-	gravity.init(_proto.gravity, f, globals);
-	lifespan.init(_proto.lifespan, f, globals);
-	emissionRate.init(_proto.emissionRate, f, globals);
-	emissionAreaLength.init(_proto.emissionAreaLength, f, globals);
-	emissionAreaWidth.init(_proto.emissionAreaWidth, f, globals);
-	zSource.init(_proto.zSource, f, globals);
-	enabled.init(_proto.enabledIn, f, globals);
+	emissionSpeed.Initialize(M2Particle.emissionSpeed, File);
+	speedVariation.Initialize(M2Particle.speedVariation, File);
+	verticalRange.Initialize(M2Particle.verticalRange, File);
+	horizontalRange.Initialize(M2Particle.horizontalRange, File);
+	gravity.Initialize(M2Particle.gravity, File);
+	lifespan.Initialize(M2Particle.lifespan, File);
+	emissionRate.Initialize(M2Particle.emissionRate, File);
+	emissionAreaLength.Initialize(M2Particle.emissionAreaLength, File);
+	emissionAreaWidth.Initialize(M2Particle.emissionAreaWidth, File);
+	zSource.Initialize(M2Particle.zSource, File);
+	enabled.Initialize(M2Particle.enabledIn, File);
 
 	// Blend state
 	/*m_State.setBlendMode(true, R_BlendFunc::BS_BLEND_SRC_ALPHA, R_BlendFunc::BS_BLEND_ONE);
@@ -60,33 +57,33 @@ CM2_ParticleSystem::CM2_ParticleSystem(const std::weak_ptr<M2> _parentM2, std::s
 
 
 	vec3 colors2[3];
-	memcpy(colors2, f->getData() + _proto.colorTrack.values.offset, sizeof(vec3) * 3);
+	memcpy(colors2, File->getData() + M2Particle.colorTrack.values.offset, sizeof(vec3) * 3);
 
 	for (uint32 i = 0; i < 3; i++)
 	{
-		float opacity = *(short*)(f->getData() + _proto.alphaTrack.values.offset + i * 2);
+		float opacity = *(short*)(File->getData() + M2Particle.alphaTrack.values.offset + i * 2);
 
 		colors[i] = vec4(colors2[i].x / 255.0f, colors2[i].y / 255.0f, colors2[i].z / 255.0f, opacity / 32767.0f);
-		sizes[i] = (*(float*)(f->getData() + _proto.scaleTrack.values.offset + i * 4)) * _proto.scales[i];
+		sizes[i] = (*(float*)(File->getData() + M2Particle.scaleTrack.values.offset + i * 4)) * M2Particle.scales[i];
 	}
 
 	mid = 0.5;
-	slowdown = _proto.slowdown; // FIXME
-	rotation = _proto.rotation; // FIXME
+	slowdown = M2Particle.slowdown; // FIXME
+	rotation = M2Particle.rotation; // FIXME
 	
 	switch (emitterType)
 	{
 	case 1:
-		m_Emitter = std::make_shared<PlaneParticleEmitter>(shared_from_this());
+		m_Emitter = std::make_shared<PlaneParticleEmitter>(*this);
 		break;
 	case 2:
-		m_Emitter = std::make_shared<SphereParticleEmitter>(shared_from_this());
+		m_Emitter = std::make_shared<SphereParticleEmitter>(*this);
 		break;
 	case 3: // Spline? (can't be bothered to find one)
 		break;
 	}
 
-	//transform = _proto.flags & 1024;
+	//transform = M2Particle.flags & 1024;
 
 	// Type 2
 	// 3145 = water ele
@@ -98,7 +95,7 @@ CM2_ParticleSystem::CM2_ParticleSystem(const std::weak_ptr<M2> _parentM2, std::s
 	// 57 = Faith halo, ring?
 	// 9 = water elemental
 
-	billboard = !(_proto.flags.DONOTBILLBOARD);
+	billboard = !(M2Particle.flags.DONOTBILLBOARD);
 
 	// init tiles
 	for (int i = 0; i < rows*cols; i++)
@@ -113,14 +110,14 @@ void CM2_ParticleSystem::update(double _time, double _dTime)
 {
 	_dTime /= 1000.0;
 
-	float grav     = gravity.getValue(m_CurrentAnimation, m_CurrentTime, m_GlobalTime);
-	float deaccel  = zSource.getValue(m_CurrentAnimation, m_CurrentTime, m_GlobalTime);
+	float grav     = gravity.GetValue(m_CurrentAnimation, m_CurrentTime, m_M2Object.getGlobalLoops(), m_GlobalTime);
+	float deaccel  = zSource.GetValue(m_CurrentAnimation, m_CurrentTime, m_M2Object.getGlobalLoops(), m_GlobalTime);
 
 	// spawn new particles
 	if (m_Emitter)
 	{
-		float frate = emissionRate.getValue(m_CurrentAnimation, m_CurrentTime, m_GlobalTime);
-		float flife = lifespan.getValue(m_CurrentAnimation, m_CurrentTime, m_GlobalTime);
+		float frate = emissionRate.GetValue(m_CurrentAnimation, m_CurrentTime, m_M2Object.getGlobalLoops(), m_GlobalTime);
+		float flife = lifespan.GetValue(m_CurrentAnimation, m_CurrentTime, m_M2Object.getGlobalLoops(), m_GlobalTime);
 
 		float ftospawn = (_dTime * frate / flife) + rem;
 		if (ftospawn < 1.0f)
@@ -139,17 +136,17 @@ void CM2_ParticleSystem::update(double _time, double _dTime)
 			rem = ftospawn - (float)tospawn;
 
 
-			float emissionAreaLengthValue = emissionAreaLength.getValue(m_CurrentAnimation, m_CurrentTime, m_GlobalTime) * 0.5f;
-			float emissionAreaWidthValue = emissionAreaWidth.getValue(m_CurrentAnimation, m_CurrentTime, m_GlobalTime) * 0.5f;
-			float emissionSpeedValue = emissionSpeed.getValue(m_CurrentAnimation, m_CurrentTime, m_GlobalTime);
-			float speedVariationValue = speedVariation.getValue(m_CurrentAnimation, m_CurrentTime, m_GlobalTime);
-			float verticalRangeValue = verticalRange.getValue(m_CurrentAnimation, m_CurrentTime, m_GlobalTime);
-			float horizontalRangeValue = horizontalRange.getValue(m_CurrentAnimation, m_CurrentTime, m_GlobalTime);
+			float emissionAreaLengthValue = emissionAreaLength.GetValue(m_CurrentAnimation, m_CurrentTime, m_M2Object.getGlobalLoops(), m_GlobalTime) * 0.5f;
+			float emissionAreaWidthValue = emissionAreaWidth.GetValue(m_CurrentAnimation, m_CurrentTime, m_M2Object.getGlobalLoops(), m_GlobalTime) * 0.5f;
+			float emissionSpeedValue = emissionSpeed.GetValue(m_CurrentAnimation, m_CurrentTime, m_M2Object.getGlobalLoops(), m_GlobalTime);
+			float speedVariationValue = speedVariation.GetValue(m_CurrentAnimation, m_CurrentTime, m_M2Object.getGlobalLoops(), m_GlobalTime);
+			float verticalRangeValue = verticalRange.GetValue(m_CurrentAnimation, m_CurrentTime, m_M2Object.getGlobalLoops(), m_GlobalTime);
+			float horizontalRangeValue = horizontalRange.GetValue(m_CurrentAnimation, m_CurrentTime, m_M2Object.getGlobalLoops(), m_GlobalTime);
 			
 			bool enabledValue = true;
-			if (enabled.uses(m_CurrentAnimation))
+			if (enabled.IsUsesBySequence(m_CurrentAnimation))
 			{
-				enabledValue = enabled.getValue(m_CurrentAnimation, m_CurrentTime, m_GlobalTime) != 0;
+				enabledValue = enabled.GetValue(m_CurrentAnimation, m_CurrentTime, m_M2Object.getGlobalLoops(), m_GlobalTime) != 0;
 			}
 
 			if (enabledValue)

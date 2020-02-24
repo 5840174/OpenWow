@@ -3,7 +3,6 @@
 // Include
 #include "M2.h"
 #include "M2_Base_Instance.h"
-#include "M2_Skin_Builder.h"
 
 // General
 #include "M2_Skin_Batch.h"
@@ -78,7 +77,7 @@ CM2_Skin_Batch::~CM2_Skin_Batch()
 	_aligned_free(m_Properties);
 }
 
-void CM2_Skin_Batch::UpdateMaterialProps(const CM2_Base_Instance* m2Instance)
+void CM2_Skin_Batch::UpdateMaterialProps(const RenderEventArgs& RenderEventArgs, const CM2_Base_Instance* m2Instance)
 {
 	// Shader
 	m_Properties->gShader = /*newShader*/0;
@@ -91,7 +90,7 @@ void CM2_Skin_Batch::UpdateMaterialProps(const CM2_Base_Instance* m2Instance)
 	m_Properties->gColorEnable = isColorEnable;
 	if (isColorEnable)
 	{
-		m_Properties->gColor = m_Color->getValue();
+		m_Properties->gColor = m_Color->GetColorAndAlpha(m2Instance->getAnimator()->getSequenceIndex(), m2Instance->getAnimator()->getCurrentTime(), static_cast<uint32>(RenderEventArgs.TotalTime));
 	}
 
 	// Texture alpha
@@ -99,7 +98,7 @@ void CM2_Skin_Batch::UpdateMaterialProps(const CM2_Base_Instance* m2Instance)
 	m_Properties->gTextureWeightEnable = isTextureWeightEnable;
 	if (isTextureWeightEnable)
 	{
-		m_Properties->gTextureWeight = m_TextureWeight->getValue();
+		m_Properties->gTextureWeight = m_TextureWeight->GetWeight(m2Instance->getAnimator()->getSequenceIndex(), m2Instance->getAnimator()->getCurrentTime(), static_cast<uint32>(RenderEventArgs.TotalTime));
 	}
 
 	// Texture transform
@@ -107,7 +106,7 @@ void CM2_Skin_Batch::UpdateMaterialProps(const CM2_Base_Instance* m2Instance)
 	m_Properties->gTextureAnimEnable = isTextureTransformEnable;
 	if (isTextureTransformEnable)
 	{
-		m_Properties->gTextureAnimMatrix = m_TextureTransform->getValue();
+		m_Properties->gTextureAnimMatrix = m_TextureTransform->GetTransform(m2Instance->getAnimator()->getSequenceIndex(), m2Instance->getAnimator()->getCurrentTime(), static_cast<uint32>(RenderEventArgs.TotalTime));
 	}
 
 

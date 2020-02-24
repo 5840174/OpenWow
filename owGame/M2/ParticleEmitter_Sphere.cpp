@@ -1,6 +1,7 @@
 #include "stdafx.h"
 
 // Include
+#include "M2.h"
 #include "ParticleSystem.h"
 
 // General
@@ -8,10 +9,7 @@
 
 Particle SphereParticleEmitter::newParticle(int anim, int time, float w, float l, float spd, float var, float spr, float spr2, uint32 _globalTime)
 {
-	std::shared_ptr<const CM2_ParticleSystem> ParticleSystem = m_ParticleSystem.lock();
-	_ASSERT(ParticleSystem != nullptr);
-
-	std::shared_ptr<const CM2_Part_Bone> ParticleSystem_ParentBone = ParticleSystem->m_ParentBone.lock();
+	std::shared_ptr<const CM2_Part_Bone> ParticleSystem_ParentBone = m_ParticleSystem.m_ParentBone.lock();
 	_ASSERT(ParticleSystem_ParentBone != nullptr);
 
     Random random;
@@ -63,11 +61,11 @@ Particle SphereParticleEmitter::newParticle(int anim, int time, float w, float l
 	rotate(0,0, &bdir.z, &bdir.x, phi);
 	*/
 
-	if (ParticleSystem->flags == 57 || ParticleSystem->flags == 313)
+	if (m_ParticleSystem.flags == 57 || m_ParticleSystem.flags == 313)
 	{ // Faith Halo
 		vec3 bdir(w*cosf(t)*1.6, 0.0f, l*sinf(t)*1.6);
 
-		p.pos = ParticleSystem->m_Position + bdir;
+		p.pos = m_ParticleSystem.m_Position + bdir;
 		p.pos = ParticleSystem_ParentBone->getTransformMatrix() * vec4(p.pos, 0);
 
 		if (glm::length2(bdir) == 0)
@@ -89,21 +87,21 @@ Particle SphereParticleEmitter::newParticle(int anim, int time, float w, float l
 		bdir.z = bdir.y;
 		bdir.y = temp;
 
-		p.pos = ParticleSystem_ParentBone->getTransformMatrix() * vec4(ParticleSystem->m_Position + bdir, 0);
+		p.pos = ParticleSystem_ParentBone->getTransformMatrix() * vec4(m_ParticleSystem.m_Position + bdir, 0);
 
 
 		//p.pos = sys->pos + bdir;
 		//p.pos = sys->parent->mat * p.pos;
 
 
-		if ((glm::length2(bdir) == 0) && ((ParticleSystem->flags & 0x100) != 0x100))
+		if ((glm::length2(bdir) == 0) && ((m_ParticleSystem.flags & 0x100) != 0x100))
 		{
 			p.speed = vec3(0, 0, 0);
 			dir = ParticleSystem_ParentBone->getRotateMatrix() * vec4(0, 1, 0, 0);
 		}
 		else
 		{
-			if (ParticleSystem->flags & 0x100)
+			if (m_ParticleSystem.flags & 0x100)
 				dir = ParticleSystem_ParentBone->getRotateMatrix() * vec4(0, 1, 0, 0);
 			else
 				dir = glm::normalize(bdir);
@@ -116,10 +114,10 @@ Particle SphereParticleEmitter::newParticle(int anim, int time, float w, float l
 	p.down = vec3(0, -1.0f, 0);
 
 	p.life = 0;
-	p.maxlife = ParticleSystem->lifespan.getValue(anim, time, _globalTime);
+	p.maxlife = m_ParticleSystem.lifespan.GetValue(anim, time, m_ParticleSystem.m_M2Object.getGlobalLoops(), _globalTime);
 
 	p.origin = p.pos;
 
-	p.m_TileExists = random.Range(0, ParticleSystem->rows * ParticleSystem->cols - 1);
+	p.m_TileExists = random.Range(0, m_ParticleSystem.rows * m_ParticleSystem.cols - 1);
 	return p;
 }
