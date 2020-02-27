@@ -21,8 +21,14 @@ public:
 private:
 	__declspec(align(16)) struct MaterialProperties
 	{
-		uint32 m_BlendMode;
-		glm::vec3   m_Pad;
+		MaterialProperties()
+			: BlendMode(0)
+			, MOCVExists(0)
+		{}
+
+		uint32 BlendMode;
+		uint32 MOCVExists;
+		glm::vec2   m_Pad;
 		//-------------------------- ( 32 bytes )
 	};
 	MaterialProperties*            m_pProperties;

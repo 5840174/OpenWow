@@ -20,9 +20,9 @@ CM2_ParticleSystem::CM2_ParticleSystem(const M2& M2Object, const std::shared_ptr
 	, m_GlobalTime(0.0)
 {
 	m_Position = Fix_XZmY(M2Particle.Position);
-	m_ParentBone = m_M2Object.getSkeleton()->getBoneDirect(M2Particle.bone);
+	m_ParentBone = m_M2Object.getSkeleton().getBoneDirect(M2Particle.bone);
 
-	texture = m_M2Object.getMaterials()->GetTextureDirectInternal(M2Particle.texture)->getTexture();
+	texture = m_M2Object.getMaterials().GetTextureDirectInternal(M2Particle.texture)->GetTexture();
 
 	blend = M2Particle.blendingType;
 	uint8 emitterType = M2Particle.emitterType;
@@ -110,14 +110,14 @@ void CM2_ParticleSystem::update(double _time, double _dTime)
 {
 	_dTime /= 1000.0;
 
-	float grav     = gravity.GetValue(m_CurrentAnimation, m_CurrentTime, m_M2Object.getGlobalLoops(), m_GlobalTime);
-	float deaccel  = zSource.GetValue(m_CurrentAnimation, m_CurrentTime, m_M2Object.getGlobalLoops(), m_GlobalTime);
+	float grav     = gravity.GetValue(m_CurrentAnimation, m_CurrentTime, m_M2Object.getSkeleton().getGlobalLoops(), m_GlobalTime);
+	float deaccel  = zSource.GetValue(m_CurrentAnimation, m_CurrentTime, m_M2Object.getSkeleton().getGlobalLoops(), m_GlobalTime);
 
 	// spawn new particles
 	if (m_Emitter)
 	{
-		float frate = emissionRate.GetValue(m_CurrentAnimation, m_CurrentTime, m_M2Object.getGlobalLoops(), m_GlobalTime);
-		float flife = lifespan.GetValue(m_CurrentAnimation, m_CurrentTime, m_M2Object.getGlobalLoops(), m_GlobalTime);
+		float frate = emissionRate.GetValue(m_CurrentAnimation, m_CurrentTime, m_M2Object.getSkeleton().getGlobalLoops(), m_GlobalTime);
+		float flife = lifespan.GetValue(m_CurrentAnimation, m_CurrentTime, m_M2Object.getSkeleton().getGlobalLoops(), m_GlobalTime);
 
 		float ftospawn = (_dTime * frate / flife) + rem;
 		if (ftospawn < 1.0f)
@@ -136,17 +136,17 @@ void CM2_ParticleSystem::update(double _time, double _dTime)
 			rem = ftospawn - (float)tospawn;
 
 
-			float emissionAreaLengthValue = emissionAreaLength.GetValue(m_CurrentAnimation, m_CurrentTime, m_M2Object.getGlobalLoops(), m_GlobalTime) * 0.5f;
-			float emissionAreaWidthValue = emissionAreaWidth.GetValue(m_CurrentAnimation, m_CurrentTime, m_M2Object.getGlobalLoops(), m_GlobalTime) * 0.5f;
-			float emissionSpeedValue = emissionSpeed.GetValue(m_CurrentAnimation, m_CurrentTime, m_M2Object.getGlobalLoops(), m_GlobalTime);
-			float speedVariationValue = speedVariation.GetValue(m_CurrentAnimation, m_CurrentTime, m_M2Object.getGlobalLoops(), m_GlobalTime);
-			float verticalRangeValue = verticalRange.GetValue(m_CurrentAnimation, m_CurrentTime, m_M2Object.getGlobalLoops(), m_GlobalTime);
-			float horizontalRangeValue = horizontalRange.GetValue(m_CurrentAnimation, m_CurrentTime, m_M2Object.getGlobalLoops(), m_GlobalTime);
+			float emissionAreaLengthValue = emissionAreaLength.GetValue(m_CurrentAnimation, m_CurrentTime, m_M2Object.getSkeleton().getGlobalLoops(), m_GlobalTime) * 0.5f;
+			float emissionAreaWidthValue = emissionAreaWidth.GetValue(m_CurrentAnimation, m_CurrentTime, m_M2Object.getSkeleton().getGlobalLoops(), m_GlobalTime) * 0.5f;
+			float emissionSpeedValue = emissionSpeed.GetValue(m_CurrentAnimation, m_CurrentTime, m_M2Object.getSkeleton().getGlobalLoops(), m_GlobalTime);
+			float speedVariationValue = speedVariation.GetValue(m_CurrentAnimation, m_CurrentTime, m_M2Object.getSkeleton().getGlobalLoops(), m_GlobalTime);
+			float verticalRangeValue = verticalRange.GetValue(m_CurrentAnimation, m_CurrentTime, m_M2Object.getSkeleton().getGlobalLoops(), m_GlobalTime);
+			float horizontalRangeValue = horizontalRange.GetValue(m_CurrentAnimation, m_CurrentTime, m_M2Object.getSkeleton().getGlobalLoops(), m_GlobalTime);
 			
 			bool enabledValue = true;
 			if (enabled.IsUsesBySequence(m_CurrentAnimation))
 			{
-				enabledValue = enabled.GetValue(m_CurrentAnimation, m_CurrentTime, m_M2Object.getGlobalLoops(), m_GlobalTime) != 0;
+				enabledValue = enabled.GetValue(m_CurrentAnimation, m_CurrentTime, m_M2Object.getSkeleton().getGlobalLoops(), m_GlobalTime) != 0;
 			}
 
 			if (enabledValue)

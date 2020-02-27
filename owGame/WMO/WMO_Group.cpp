@@ -204,7 +204,11 @@ bool WMO_Group::Load()
 
 		// Buffer
 		geometry->AddVertexBuffer(BufferBinding("POSITION", 0), m_RenderDevice.GetObjectsFactory().CreateVertexBuffer(vertexes, vertexesCount));
-		geometry->AddVertexBuffer(BufferBinding("COLOR", 0), m_RenderDevice.GetObjectsFactory().CreateVertexBuffer(vertexes, vertexesCount));
+
+		std::vector<glm::vec4> colors;
+		colors.resize(vertexesCount);
+		std::fill(colors.begin(), colors.end(), glm::vec4(1.0f, 1.0f, 1.0f, 1.0f));
+		geometry->AddVertexBuffer(BufferBinding("COLOR", 0), m_RenderDevice.GetObjectsFactory().CreateVertexBuffer(colors));
 
 		dataFromMOVT = vertexes;
 	}
@@ -277,6 +281,9 @@ bool WMO_Group::Load()
 	{
 		uint32 indexesCnt = buffer->getSize() / sizeof(uint16);
 		uint16* indices = (uint16*)buffer->getDataFromCurrent();
+
+		// Buffer
+		//geometry->SetIndexBuffer(m_RenderDevice.GetObjectsFactory().CreateIndexBuffer((const uint16*)buffer->getData(), buffer->getSize() / sizeof(uint16)));
 
 		/*collisionIndexes.reserve(indexesCnt * 3);
 		for (uint32 i = 0; i < indexesCnt; i++)

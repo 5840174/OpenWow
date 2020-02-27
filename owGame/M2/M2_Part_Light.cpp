@@ -18,7 +18,7 @@ CM2_Part_Light::CM2_Part_Light(const M2& M2Object, const std::shared_ptr<IFile>&
 {
 	type = M2Light.type;
 	if (M2Light.bone != -1)
-		m_Bone = m_M2Object.getSkeleton()->getBoneLookup(M2Light.bone);
+		m_Bone = m_M2Object.getSkeleton().getBoneLookup(M2Light.bone);
 
 	position = Fix_XZmY(M2Light.position);
 
@@ -42,20 +42,20 @@ void CM2_Part_Light::setup(uint16 anim, uint32 time, uint32 globalTime)
 {
 	if (ambColor.IsUsesBySequence(anim))
 	{
-		ambColorValue = ambColor.GetValue(0, time, m_M2Object.getGlobalLoops(), globalTime);
+		ambColorValue = ambColor.GetValue(0, time, m_M2Object.getSkeleton().getGlobalLoops(), globalTime);
 	}
 	if (ambIntensity.IsUsesBySequence(anim))
 	{
-		ambIntensityValue = ambIntensity.GetValue(0, time, m_M2Object.getGlobalLoops(), globalTime);
+		ambIntensityValue = ambIntensity.GetValue(0, time, m_M2Object.getSkeleton().getGlobalLoops(), globalTime);
 	}
 
 	if (diffColor.IsUsesBySequence(anim))
 	{
-		diffColorValue = diffColor.GetValue(0, time, m_M2Object.getGlobalLoops(), globalTime);
+		diffColorValue = diffColor.GetValue(0, time, m_M2Object.getSkeleton().getGlobalLoops(), globalTime);
 	}
 	if (diffIntensity.IsUsesBySequence(anim))
 	{
-		diffIntensityValue = diffIntensity.GetValue(0, time, m_M2Object.getGlobalLoops(), globalTime);
+		diffIntensityValue = diffIntensity.GetValue(0, time, m_M2Object.getSkeleton().getGlobalLoops(), globalTime);
 	}
 
 	vec4 ambcol(ambColorValue * ambIntensityValue, 1.0f);

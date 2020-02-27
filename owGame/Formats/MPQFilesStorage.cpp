@@ -10,7 +10,7 @@ CMPQFilesStorage::CMPQFilesStorage(std::string _path, Priority _priority)
 	AddArchive("base.MPQ");
 	AddArchive("dbc.MPQ");
 	//AddArchive(std::string("fonts.MPQ"));
-	AddArchive(std::string("interface.MPQ"));
+	AddArchive("interface.MPQ");
 	AddArchive("misc.MPQ");
 	AddArchive("model.MPQ");
 	AddArchive("patch.MPQ");

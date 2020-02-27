@@ -21,10 +21,10 @@ glm::vec4 CM2_Part_Color::GetColorAndAlpha(uint16 Sequence, uint32 Time, uint32 
 {
 	glm::vec4 colorAndAlpha = glm::vec4(1.0f, 1.0f, 1.0f, 1.0f);
 	if (m_ColorAnimated.IsUsesBySequence(Sequence))
-		colorAndAlpha.xyz = m_ColorAnimated.GetValue(Sequence, Time, m_M2Object.getGlobalLoops(), GlobalTime);
+		colorAndAlpha.xyz = m_ColorAnimated.GetValue(Sequence, Time, m_M2Object.getSkeleton().getGlobalLoops(), GlobalTime);
 
 	if (m_AlphaAnimated.IsUsesBySequence(Sequence))
-		colorAndAlpha.a = m_AlphaAnimated.GetValue(Sequence, Time, m_M2Object.getGlobalLoops(), GlobalTime);
+		colorAndAlpha.a = m_AlphaAnimated.GetValue(Sequence, Time, m_M2Object.getSkeleton().getGlobalLoops(), GlobalTime);
 
 	return colorAndAlpha;
 }
@@ -33,7 +33,7 @@ glm::vec3 CM2_Part_Color::GetColor(uint16 Sequence, uint32 Time, uint32 GlobalTi
 {
 	glm::vec3 color = glm::vec3(1.0f, 1.0f, 1.0f);
 	if (m_ColorAnimated.IsUsesBySequence(Sequence))
-		color = m_ColorAnimated.GetValue(Sequence, Time, m_M2Object.getGlobalLoops(), GlobalTime);
+		color = m_ColorAnimated.GetValue(Sequence, Time, m_M2Object.getSkeleton().getGlobalLoops(), GlobalTime);
 	return color;
 }
 
@@ -41,6 +41,6 @@ float CM2_Part_Color::GetAlpha(uint16 Sequence, uint32 Time, uint32 GlobalTime) 
 {
 	float alpha = 1.0f;
 	if (m_AlphaAnimated.IsUsesBySequence(Sequence))
-		alpha = m_AlphaAnimated.GetValue(Sequence, Time, m_M2Object.getGlobalLoops(), GlobalTime);
+		alpha = m_AlphaAnimated.GetValue(Sequence, Time, m_M2Object.getSkeleton().getGlobalLoops(), GlobalTime);
 	return alpha;
 }

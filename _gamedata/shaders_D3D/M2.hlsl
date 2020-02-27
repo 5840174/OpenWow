@@ -89,8 +89,8 @@ VertexShaderOutput DoPSRender(VertexShaderInput IN, float4x4 ModelMatrix)
 	OUT.normal = mul(mvp, IN.normal);
 	if (gTextureAnimEnable)
 	{
-		OUT.texCoord0 = (mul(gTextureAnimMatrix, float4(IN.texCoord0, 1.0f, 1.0f))).xy;
-		OUT.texCoord1 = (mul(gTextureAnimMatrix, float4(IN.texCoord1, 1.0f, 1.0f))).xy;
+		OUT.texCoord0 = mul(gTextureAnimMatrix, float4(IN.texCoord0, 1.0f, 1.0f)).xy;
+		OUT.texCoord1 = mul(gTextureAnimMatrix, float4(IN.texCoord1, 1.0f, 1.0f)).xy;
 	}
 	else
 	{

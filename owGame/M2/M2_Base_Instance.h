@@ -18,9 +18,9 @@ public:
 	// CM2_Base_Instance
 	const M2&                           getM2() const;
 
-	void                                Attach(std::shared_ptr<CM2_Part_Attachment> _attachment);
+	void                                Attach(std::shared_ptr<const CM2_Part_Attachment> _attachment);
 	void                                Detach();
-    std::shared_ptr<CM2_Part_Attachment>GetAttachPoint() const;
+    std::shared_ptr<const CM2_Part_Attachment>GetAttachPoint() const;
 
 	// Color & Alpha
 	void                                setColor(vec4 _color) { m_Color = _color; }
@@ -65,5 +65,5 @@ private:
 
 private:
 	std::shared_ptr<const M2>           m_M2;
-	std::shared_ptr<CM2_Part_Attachment>m_Attached;
+	std::shared_ptr<const CM2_Part_Attachment>m_Attached;
 };

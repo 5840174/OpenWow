@@ -152,11 +152,12 @@ void CItem_VisualData::InitObjectComponents()
 		// Fill data
 		std::string modelName = GetObjectModelName(InventoryType, objectFileName);
 		std::shared_ptr<ITexture> itemObjectTexture = LoadObjectTexture(InventoryType, objectTextureName);
-		std::shared_ptr<CM2_Part_Attachment> itemObjectAttach = m_ParentCharacter.getM2().getMiscellaneous()->getAttachment(ItemObjectComponents[InventoryType].attach[i]);
+		auto itemObjectAttach = m_ParentCharacter.getM2().getMiscellaneous().getAttachment(ItemObjectComponents[InventoryType].attach[i]);
 
 		// Create instance
 		std::shared_ptr<M2> m2Model = m_BaseManager.GetManager<IWoWObjectsCreator>()->LoadM2(m_RenderDevice, modelName);
 		_ASSERT(m2Model != nullptr);
+
 		std::shared_ptr<CItem_M2Instance> itemObjectInstance = m_ParentCharacter.CreateSceneNode<CItem_M2Instance>(m2Model);
 		itemObjectInstance->Load();
 		itemObjectInstance->Attach(itemObjectAttach);
@@ -186,15 +187,10 @@ void CItem_VisualData::InitObjectComponents()
 				std::shared_ptr<CM2_Base_Instance> visInstance = itemObjectInstance->CreateSceneNode<CM2_Base_Instance>(m2Model);
 				visInstance->Load();
 
-				std::shared_ptr<CM2_Part_Attachment> visAttach = nullptr;
-
-				if (itemObjectInstance->getM2().getMiscellaneous()->isAttachmentExists((M2_AttachmentType)j))
+				std::shared_ptr<const CM2_Part_Attachment> visAttach = itemObjectAttach;
+				if (itemObjectInstance->getM2().getMiscellaneous().isAttachmentExists((M2_AttachmentType)j))
 				{
-					visAttach = itemObjectInstance->getM2().getMiscellaneous()->getAttachment((M2_AttachmentType)j);
-				}
-				else
-				{
-					visAttach = itemObjectAttach;
+					visAttach = itemObjectInstance->getM2().getMiscellaneous().getAttachment((M2_AttachmentType)j);
 				}
 
 				visInstance->Attach(visAttach);

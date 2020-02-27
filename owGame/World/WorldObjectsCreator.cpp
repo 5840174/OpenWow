@@ -186,6 +186,8 @@ std::shared_ptr<GameObject> CWorldObjectCreator::BuildGameObjectFromDisplayInfo(
 //
 std::shared_ptr<M2> CWorldObjectCreator::LoadM2(IRenderDevice& RenderDevice, const std::string& Filename)
 {
+	std::lock_guard<std::mutex> lock(m_M2Lock);
+
 	const auto& M2ObjectsWPtrsIt = m_M2ObjectsWPtrs.find(Filename);
 	
 	// Already exists
@@ -198,7 +200,16 @@ std::shared_ptr<M2> CWorldObjectCreator::LoadM2(IRenderDevice& RenderDevice, con
 	if (newName.find("orgrimmarsmokeemitter.mdx") != -1 || newName.find("orgrimmarfloatingembers.mdx") != -1)
 		return nullptr;
 
-	std::shared_ptr<M2> m2Object = std::make_shared<M2>(m_BaseManager, RenderDevice, Filename);
+	std::shared_ptr<M2> m2Object;
+	try
+	{
+		m2Object = std::make_shared<M2>(m_BaseManager, RenderDevice, Filename);
+	}
+	catch (const CException& e)
+	{
+		Log::Error("CWorldObjectCreator: Error while creating M2 model: '%s'.", e.Message().c_str());
+		return nullptr;
+	}
 	m_M2ObjectsWPtrs.insert(std::make_pair(Filename, m2Object));
 
 	m_BaseManager.GetManager<ILoader>()->AddToLoadQueue(m2Object);
@@ -208,6 +219,8 @@ std::shared_ptr<M2> CWorldObjectCreator::LoadM2(IRenderDevice& RenderDevice, con
 
 std::shared_ptr<CWMO> CWorldObjectCreator::LoadWMO(IRenderDevice& RenderDevice, const std::string& Filename)
 {
+	std::lock_guard<std::mutex> lock(m_WMOLock);
+
 	const auto& WMOObjectsWPtrsIt = m_WMOObjectsWPtrs.find(Filename);
 
 	// Already exists

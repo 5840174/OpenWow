@@ -3,7 +3,7 @@
 #include "M2_Types.h"
 #include "M2_Animation.h"
 
-class CM2_Animator
+class ZN_API CM2_Animator
 {
 public:
 	CM2_Animator(const IBaseManager& BaseManager, const M2& M2Model);

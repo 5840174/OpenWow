@@ -19,7 +19,7 @@ CM2_Part_TextureWeight::~CM2_Part_TextureWeight()
 float CM2_Part_TextureWeight::GetWeight(uint16 Sequence, uint32 Time, uint32 GlobalTime) const
 {
 	if (m_WeightAnimated.IsUsesBySequence(Sequence))
-		return m_WeightAnimated.GetValue(Sequence, Time, m_M2Object.getGlobalLoops(), GlobalTime);
+		return m_WeightAnimated.GetValue(Sequence, Time, m_M2Object.getSkeleton().getGlobalLoops(), GlobalTime);
 
 	return 1.0f;
 }

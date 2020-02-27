@@ -15,8 +15,10 @@ public:
     // IVisitor
     virtual bool Visit(const ISceneNode3D* node) override;
 	virtual bool Visit(const IModel* Model) override ;
-	bool VisitInstanced(const IModel* Model, size_t cnt);
+
 protected:
+	std::shared_ptr<ISettingT<float>> m_ADT_MDX_Distance;
+
 	const CM2_Base_Instance* m_CurrentM2Model;
 
 	IShaderParameter* m_ShaderM2GeometryParameter;
@@ -46,4 +48,5 @@ public:
 private:
 	const std::shared_ptr<BuildRenderListPassTemplated<CM2_Base_Instance>> m_RenderListPass;
 	IShaderParameter* m_ShaderInstancesBufferParameter;
+	std::shared_ptr<IStructuredBuffer> m_InstancesBuffer;
 };

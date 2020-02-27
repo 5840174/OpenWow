@@ -114,7 +114,7 @@ Particle SphereParticleEmitter::newParticle(int anim, int time, float w, float l
 	p.down = vec3(0, -1.0f, 0);
 
 	p.life = 0;
-	p.maxlife = m_ParticleSystem.lifespan.GetValue(anim, time, m_ParticleSystem.m_M2Object.getGlobalLoops(), _globalTime);
+	p.maxlife = m_ParticleSystem.lifespan.GetValue(anim, time, m_ParticleSystem.m_M2Object.getSkeleton().getGlobalLoops(), _globalTime);
 
 	p.origin = p.pos;
 

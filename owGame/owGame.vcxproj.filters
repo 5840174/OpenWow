@@ -516,6 +516,9 @@
     <ClCompile Include="M2\M2_AnimationSet.cpp">
       <Filter>M2\Animations</Filter>
     </ClCompile>
+    <ClCompile Include="M2\M2_InstanceSkeleton.cpp">
+      <Filter>M2\SceneNode &amp; Components</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="common.h">
@@ -1084,6 +1087,9 @@
     </ClInclude>
     <ClInclude Include="M2\M2_AnimationSet.h">
       <Filter>M2\Animations</Filter>
+    </ClInclude>
+    <ClInclude Include="M2\M2_InstanceSkeleton.h">
+      <Filter>M2\SceneNode &amp; Components</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

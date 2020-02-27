@@ -26,18 +26,14 @@ public:
 
 	bool IsAnimated() const { return m_HasMisc; }
 
-	void update(double _time, double _dTime);
-	void calc(uint16 anim, uint32 time, uint32 globalTime, cmat4 _worldMat);
-	void render(cmat4 _worldMat);
-
 public:
-	std::shared_ptr<CM2_Part_Attachment> getAttachmentDirect(uint32 _index) const
+	std::shared_ptr<const CM2_Part_Attachment> getAttachmentDirect(uint32 _index) const
 	{
 		_ASSERT(_index < static_cast<uint32>(m_Attachments.size()));
 		return (m_Attachments[_index]);
 	}
 
-	bool isAttachmentExists(M2_AttachmentType _index)
+	bool isAttachmentExists(M2_AttachmentType _index) const
 	{
 		if ((uint32)_index >= m_AttachmentsLookup.size())
 		{
@@ -48,7 +44,7 @@ public:
 		return (newIndex != -1) && (newIndex < static_cast<int16>(m_Attachments.size()));
 	}
 
-	std::shared_ptr<CM2_Part_Attachment> getAttachment(M2_AttachmentType _index) const
+	std::shared_ptr<const CM2_Part_Attachment> getAttachment(M2_AttachmentType _index) const
 	{
 		if ((uint32)_index >= m_AttachmentsLookup.size())
 		{
@@ -61,25 +57,25 @@ public:
 		return (m_Attachments[newIndex]);
 	}
 
-	std::shared_ptr<CM2_Part_Event> getEvents(uint32 _index) const
+	std::shared_ptr<const CM2_Part_Event> getEventDirect(uint32 _index) const
 	{
 		_ASSERT(_index < m_Events.size());
 		return (m_Events[_index]);
 	}
 
-	std::shared_ptr<CM2_Part_Light> getLight(uint32 _index) const
+	std::shared_ptr<const CM2_Part_Light> getLightDirect(uint32 _index) const
 	{
 		_ASSERT(_index < m_Lights.size());
 		return (m_Lights[_index]);
 	}
 
-	std::shared_ptr<CM2_Part_Camera> getCameraDirect(uint32 _index) const
+	std::shared_ptr<const CM2_Part_Camera> getCameraDirect(uint32 _index) const
 	{
 		_ASSERT(_index < static_cast<uint32>(m_Cameras.size()));
 		return (m_Cameras[_index]);
 	}
 
-	std::shared_ptr<CM2_Part_Camera> getCamera(uint32 _index) const
+	std::shared_ptr<const CM2_Part_Camera> getCamera(uint32 _index) const
 	{
 		if (_index >= m_CamerasLookup.size())
 		{

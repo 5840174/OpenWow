@@ -133,7 +133,7 @@ struct SWMO_Doodad_SetInfo
 	uint32 size;		// number of doodad instances in this set
 	uint32 unk0;		// always 0
 
-	bool InSet(uint32 _index) const
+	inline bool InSet(uint32 _index) const
 	{
 		return ((_index >= start) && (_index < (start + size)));
 	}
@@ -148,14 +148,14 @@ struct SWMO_Doodad_PlacementInfo
 		uint32 : 7;                     // unused as of 7.0.1.20994
 	} flags;
 
-	vec3 position;				// (X,Z,-Y)
+	glm::vec3 position;		    // (X,Z,-Y)
 	C4ImQuaternion orientation;	// (X, Y, Z, W)
 	float scale;				// scale factor
 	CBgra color;				// (B,G,R,A) diffuse lighting color, used in place of global diffuse from DBCs
 
-	vec4 getColor() const
+	inline glm::vec4 getColor() const
 	{
-		return vec4
+		return glm::vec4
 		(
 			static_cast<float>(color.r) / 255.0f,
 			static_cast<float>(color.g) / 255.0f,

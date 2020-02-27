@@ -227,6 +227,8 @@ bool CWMO::Load()
 		}
 	}
 
+	m_ChunkReader.reset();
+
 	// Setup group portals
 	{
 		for (const auto& ref : portalsReferences)
@@ -257,8 +259,6 @@ bool CWMO::Load()
 }
 #endif
 	}
-
-	m_ChunkReader.reset();
 
 	return true;
 }

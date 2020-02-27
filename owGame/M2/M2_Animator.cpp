@@ -13,9 +13,9 @@ CM2_Animator::CM2_Animator(const IBaseManager& BaseManager, const M2& M2Model)
 	, animtime(0.0)
 	, m_CurrentTime(0)
 {
-	for (uint16 j = 0; j < m_M2Model.m_Sequences.size(); j++)
+	for (uint16 j = 0; j < m_M2Model.getSkeleton().getSequencesCount(); j++)
 	{
-		const SM2_Sequence& sequence = m_M2Model.m_Sequences[j];
+		const SM2_Sequence& sequence = m_M2Model.getSkeleton().getSequenceDirect(j);
 
 		if (sequence.variationIndex == 0)
 		{
@@ -47,7 +47,7 @@ void CM2_Animator::PlayAnimation(uint16 AnimationId, bool Loop)
 	else
 	{
 		m_CurrentAnimation = m_Animations.begin()->second.get();
-		Log::Error("CM2_Animator: Animation '%d' not found. Playing first animation '%s' ('%d').", AnimationId, m_CurrentAnimation->getAnimationName().c_str(), m_CurrentAnimation->getAnimID());
+		//Log::Error("CM2_Animator: Animation '%d' not found. Playing first animation '%s' ('%d').", AnimationId, m_CurrentAnimation->getAnimationName().c_str(), m_CurrentAnimation->getAnimID());
 	}
 
 	m_CurrentTime = m_CurrentAnimation->getStart();

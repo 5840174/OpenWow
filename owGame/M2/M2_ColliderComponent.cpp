@@ -30,4 +30,5 @@ void CM2_ColliderComponent::UpdateBounds()
     //BoundingBox bbox = GetOwnerNode().getM2().GetBounds();
     //bbox.transform(GetOwnerNode().GetWorldTransfom());
     //GetComponent<CColliderComponent3D>()->SetBounds(bbox);
+	__super::UpdateBounds();
 }

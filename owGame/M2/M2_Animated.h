@@ -19,7 +19,7 @@ public:
 		, m_GlobalSecIndex(-1)
 	{}
 
-	void Initialize(const M2Track<D>& b, const std::shared_ptr<IFile>& File, T fixfunc(const T&) = NoFix)
+	inline void Initialize(const M2Track<D>& b, const std::shared_ptr<IFile>& File, T fixfunc(const T&) = NoFix)
 	{
 		m_Type = b.interpolation_type;
 		m_GlobalSecIndex = b.global_sequence;
@@ -29,7 +29,7 @@ public:
 		// ranges
 		if (b.interpolation_ranges.size > 0)
 		{
-			uint32* ranges = (uint32*)(File->getData() + b.interpolation_ranges.offset);
+			const uint32* ranges = (const uint32*)(File->getData() + b.interpolation_ranges.offset);
 			for (uint32 i = 0; i < b.interpolation_ranges.size; i += 2)
 			{
 				m_Ranges.push_back(std::make_pair(ranges[i], ranges[i + 1]));
@@ -37,46 +37,47 @@ public:
 		}
 
 		// times
-		uint32* times = (uint32*)(File->getData() + b.timestamps.offset);
+		const uint32* times = (const uint32*)(File->getData() + b.timestamps.offset);
 		for (uint32 i = 0; i < b.timestamps.size; i++)
-		{
 			m_Times.push_back(times[i]);
-		}
 
 		_ASSERT(b.timestamps.size == b.values.size);
 
 		// keyframes
-		D* values = (D*)(File->getData() + b.values.offset);
+		const D* values = (const D*)(File->getData() + b.values.offset);
 		for (uint32 i = 0; i < b.values.size; i++)
 		{
 			switch (m_Type)
 			{
-			case Interpolations::INTERPOLATION_LINEAR:
-				m_Values.push_back(fixfunc(Conv::conv(values[i])));
-				break;
+				case Interpolations::INTERPOLATION_LINEAR:
+					m_Values.push_back(fixfunc(Conv::conv(values[i])));
+					break;
 
-			case Interpolations::INTERPOLATION_HERMITE:
-				m_Values.push_back(fixfunc(Conv::conv(values[i * 3 + 0])));
-				m_ValuesHermiteIn.push_back(fixfunc(Conv::conv(values[i * 3 + 1])));
-				m_ValuesHermiteOut.push_back(fixfunc(Conv::conv(values[i * 3 + 2])));
-				break;
+				case Interpolations::INTERPOLATION_HERMITE:
+					m_Values.push_back(fixfunc(Conv::conv(values[i * 3 + 0])));
+					m_ValuesHermiteIn.push_back(fixfunc(Conv::conv(values[i * 3 + 1])));
+					m_ValuesHermiteOut.push_back(fixfunc(Conv::conv(values[i * 3 + 2])));
+					break;
+
+				//default:
+				//	_ASSERT_EXPR(false, "M2_Animated: Unknown interpolation type.");
 			}
 		}
 
 	}
 
-	bool IsUsesBySequence(uint16 anim) const
+	inline bool IsUsesBySequence(uint16 SequenceIndex) const
 	{
 		if (m_Type == Interpolations::INTERPOLATION_NONE)
 			return false;
 
-		if (m_GlobalSecIndex == -1 && m_Ranges.size() <= anim)
+		if (m_GlobalSecIndex == -1 && m_Ranges.size() <= SequenceIndex)
 			return false;
 
 		return true;
 	}
 
-	T GetValue(uint16 anim, uint32 time, const std::vector<SM2_Loop>& GlobalLoop, const uint32 GlobalTime) const
+	inline T GetValue(uint16 SequenceIndex, uint32 time, const std::vector<SM2_Loop>& GlobalLoop, const uint32 GlobalTime) const
 	{
 		_ASSERT(m_Type != Interpolations::INTERPOLATION_NONE);
 
@@ -95,41 +96,47 @@ public:
 		else
 		{
 			_ASSERT(time >= m_Times[0] && time < m_Times[m_Times.size() - 1]);
-			range = m_Ranges[anim];
+			range = m_Ranges[SequenceIndex];
 		}
 
 		// If simple frame
 		if (range.first == range.second)
 			return m_Values[range.first];
 
-		// Get pos by time
-		uint32 pos = UINT32_MAX;
-		for (uint32 i = range.first; i < range.second; i++)
-		{
-			if (time >= m_Times[i] && time < m_Times[i + 1])
-			{
-				pos = i;
-				break;
-			}
-		}
-		_ASSERT(pos != UINT32_MAX);
+		return GetInterpolatedValue(range, time);
+	}
 
-		uint32 t1 = m_Times[pos];
-		uint32 t2 = m_Times[pos + 1];
-		_ASSERT(t2 > t1);
-		_ASSERT(time >= t1 && time < t2);
-		float r = static_cast<float>(time - t1) / static_cast<float>(t2 - t1);
+private:
+	inline uint32 GetTimesIndex(const std::pair<uint32, uint32>& Range, uint32 Time) const
+	{
+		for (uint32 i = Range.first; i < Range.second; i++)
+			if (Time >= m_Times[i] && Time < m_Times[i + 1])
+				return i;
+
+		_ASSERT_EXPR(false, "Unexpected behaviour");
+		return UINT32_MAX;
+	}
+
+	inline T GetInterpolatedValue(const std::pair<uint32, uint32>& Range, uint32 Time) const
+	{
+		uint32 timeIndex = GetTimesIndex(Range, Time);
+
+		uint32 t1 = m_Times[timeIndex];
+		uint32 t2 = m_Times[timeIndex + 1];
+		_ASSERT((t2 > t1) && (Time >= t1) && (Time < t2));
+
+		float r = static_cast<float>(Time - t1) / static_cast<float>(t2 - t1);
 
 		switch (m_Type)
 		{
 			case Interpolations::INTERPOLATION_LINEAR:
-				return interpolate<T>(r, m_Values[pos], m_Values[pos + 1]);
+				return interpolate<T>(r, m_Values[timeIndex], m_Values[timeIndex + 1]);
 
 			case Interpolations::INTERPOLATION_HERMITE:
-				return interpolateHermite<T>(r, m_Values[pos], m_Values[pos + 1], m_ValuesHermiteIn[pos], m_ValuesHermiteOut[pos]);
+				return interpolateHermite<T>(r, m_Values[timeIndex], m_Values[timeIndex + 1], m_ValuesHermiteIn[timeIndex], m_ValuesHermiteOut[timeIndex]);
 
 			default:
-				_ASSERT(false);
+				_ASSERT_EXPR(false, "M2_Animated: Unknown interpolation type.");
 		}
 
 		return m_Values[0];

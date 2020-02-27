@@ -7,6 +7,8 @@
 // General
 #include "WMO_Group_Part_Batch.h"
 
+// Additional
+
 WMO_Group_Part_Batch::WMO_Group_Part_Batch(IRenderDevice& RenderDevice, const CWMO& WMOModel, const SWMO_Group_BatchDef& WMOGroupBatchProto)
 	: ModelProxie(RenderDevice.GetObjectsFactory().CreateModel())
 	, m_ParentWMO(WMOModel)

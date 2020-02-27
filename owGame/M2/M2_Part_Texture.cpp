@@ -26,14 +26,18 @@ CM2_Part_Texture::~CM2_Part_Texture()
 {
 }
 
-std::shared_ptr<ITexture> CM2_Part_Texture::GetResultTexture(const CM2_Base_Instance* _instance) const
+std::shared_ptr<ITexture> CM2_Part_Texture::GetTexture() const
+{
+	_ASSERT(m_SpecialType == SM2_Texture::Type::NONE);
+	return m_Texture;
+}
+
+std::shared_ptr<ITexture> CM2_Part_Texture::GetTexture(const CM2_Base_Instance* _instance) const
 {
 	if (isTextureSpecial())
-	{
 		return _instance->getSpecialTexture(m_SpecialType);
-	}
 
-	return getTexture();
+	return m_Texture;
 }
 
 

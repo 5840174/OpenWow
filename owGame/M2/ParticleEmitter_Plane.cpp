@@ -78,7 +78,7 @@ Particle PlaneParticleEmitter::newParticle(int anim, int time, float w, float l,
 
 		p.speed = glm::normalize(dir) * spd * random.Range(0.0f, var);
 	}
-	else if (m_ParticleSystem.flags == 25 && ParticleSystem_ParentBone->getParentBoneID() < 1)
+	else if (m_ParticleSystem.flags == 25 && ParticleSystem_ParentBone->getParentBoneID_DirectArray() < 1)
 	{ // Weapon Flame
 		p.pos = ParticleSystem_ParentBone->getPivot() * (m_ParticleSystem.m_Position + vec3(random.Range(-l, l), random.Range(-l, l), random.Range(-w, w)));
 		vec3 dir = mrot * vec4(0.0f, 1.0f, 0.0f, 0.0f);
@@ -87,7 +87,7 @@ Particle PlaneParticleEmitter::newParticle(int anim, int time, float w, float l,
 		//p.speed = dir.Normalize() * spd;
 
 	}
-	else if (m_ParticleSystem.flags == 25 && ParticleSystem_ParentBone->getParentBoneID() > 0)
+	else if (m_ParticleSystem.flags == 25 && ParticleSystem_ParentBone->getParentBoneID_DirectArray() > 0)
 	{ // Weapon with built-in Flame (Avenger lightsaber!)
 		p.pos = ParticleSystem_ParentBone->getTransformMatrix() * vec4((m_ParticleSystem.m_Position + vec3(random.Range(-l, l), random.Range(-l, l), random.Range(-w, w))), 0);
 		vec3 dir = vec3
@@ -99,7 +99,7 @@ Particle PlaneParticleEmitter::newParticle(int anim, int time, float w, float l,
 		p.speed = glm::normalize(dir) * spd * random.Range(0.0f, var * 2);
 
 	}
-	else if (m_ParticleSystem.flags == 17 && ParticleSystem_ParentBone->getParentBoneID() < 1)
+	else if (m_ParticleSystem.flags == 17 && ParticleSystem_ParentBone->getParentBoneID_DirectArray() < 1)
 	{ // Weapon Glow
 		p.pos = ParticleSystem_ParentBone->getPivot() * (m_ParticleSystem.m_Position + vec3(random.Range(-l, l), random.Range(-l, l), random.Range(-w, w)));
 		vec3 dir = mrot * vec4(0, 1, 0, 0);
@@ -127,7 +127,7 @@ Particle PlaneParticleEmitter::newParticle(int anim, int time, float w, float l,
 	}
 
 	p.life = 0;
-	p.maxlife = m_ParticleSystem.lifespan.GetValue(anim, time, m_ParticleSystem.m_M2Object.getGlobalLoops(), _globalTime);
+	p.maxlife = m_ParticleSystem.lifespan.GetValue(anim, time, m_ParticleSystem.m_M2Object.getSkeleton().getGlobalLoops(), _globalTime);
 
 	p.origin = p.pos;
 

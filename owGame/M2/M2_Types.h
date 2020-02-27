@@ -44,7 +44,7 @@ struct SM2_Sequence
 
 struct SM2_Bone
 {
-	int32			key_bone_id;			// Back-reference to the key bone lookup table. -1 if this is no key bone.
+	int32 key_bone_id;			// Back-reference to the key bone lookup table. -1 if this is no key bone.
 
 	struct Flags
 	{
@@ -62,7 +62,7 @@ struct SM2_Bone
 		uint32 unk5 : 1;
 		uint32 helmet_anim_scaled : 1;		// set blend_modificator to helmetAnimScalingRec.m_amount for this bone
 		uint32 : 19;
-	}				flags;
+	} flags;
 
 	int16			parent_bone;            // Parent bone ID or -1 if there is none.
 	uint16			submesh_id;				// Mesh part ID OR uDistToParent?

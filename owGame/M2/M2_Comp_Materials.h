@@ -43,12 +43,12 @@ private:
 
 
 public:
-	std::shared_ptr<CM2_Part_Texture> GetTextureDirectInternal(uint32 _index) const // Used in Emitters
+	std::shared_ptr<const CM2_Part_Texture> GetTextureDirectInternal(uint32 _index) const // Used in Emitters
 	{
 		_ASSERT(_index < static_cast<uint32>(m_Textures.size()));
 		return m_Textures[_index];
 	}
-	std::shared_ptr<CM2_Part_Texture> GetTexture(uint32 _index) const
+	std::shared_ptr<const CM2_Part_Texture> GetTexture(uint32 _index) const
 	{
 		_ASSERT(_index < m_TexturesLookup.size());
 		if (_index >= m_TexturesLookup.size())
@@ -61,7 +61,7 @@ public:
 		_ASSERT(newIndex < static_cast<int16>(m_Textures.size()));
 		return (m_Textures[newIndex]);
 	}
-	std::shared_ptr<CM2_Part_TextureWeight> GetTextureWeight(uint32 _index) const
+	std::shared_ptr<const CM2_Part_TextureWeight> GetTextureWeight(uint32 _index) const
 	{
 		if (_index >= m_TextureWeightsLookup.size())
 		{
@@ -73,7 +73,7 @@ public:
 		_ASSERT(newIndex < static_cast<int16>(m_TextureWeights.size()));
 		return (m_TextureWeights[newIndex]);
 	}
-	std::shared_ptr<CM2_Part_TextureTransform> GetTextureTransform(uint32 _index) const
+	std::shared_ptr<const CM2_Part_TextureTransform> GetTextureTransform(uint32 _index) const
 	{
 		if (_index >= m_TexturesTransformLookup.size())
 		{
@@ -85,7 +85,6 @@ public:
 		_ASSERT(newIndex < static_cast<int16>(m_TexturesTransform.size()));
 		return (m_TexturesTransform[newIndex]);
 	}
-
 
 
 private:

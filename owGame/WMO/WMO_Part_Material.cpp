@@ -14,7 +14,7 @@ WMO_Part_Material::WMO_Part_Material(IRenderDevice& RenderDevice, const CWMO& WM
 	// Constant buffer
 	m_pProperties = (MaterialProperties*)_aligned_malloc(sizeof(MaterialProperties), 16);
 	(*m_pProperties) = MaterialProperties();
-	(*m_pProperties).m_BlendMode = m_WMOMaterialProto.blendMode;
+	(*m_pProperties).BlendMode = m_WMOMaterialProto.blendMode;
 
 	// Create samplers
 	std::shared_ptr<ISamplerState> sampler = RenderDevice.GetObjectsFactory().CreateSamplerState();

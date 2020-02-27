@@ -33,6 +33,10 @@ private:
 private:
 	IBaseManager& m_BaseManager;
 	CDBCStorage* m_DBCs;
+
+	std::mutex m_M2Lock;
 	std::unordered_map<std::string, std::weak_ptr<M2>> m_M2ObjectsWPtrs;
+	
+	std::mutex m_WMOLock;
 	std::unordered_map<std::string, std::weak_ptr<CWMO>> m_WMOObjectsWPtrs;
 };

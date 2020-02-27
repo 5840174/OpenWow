@@ -19,7 +19,9 @@
 CRenderPass_M2::CRenderPass_M2(IRenderDevice& RenderDevice, std::shared_ptr<IScene> scene)
 	: Base3DPass(RenderDevice, scene)
 	, m_CurrentM2Model(nullptr)
-{}
+{
+	m_ADT_MDX_Distance = RenderDevice.GetBaseManager().GetManager<ISettings>()->GetGroup("WoWSettings")->GetSettingT<float>("ADT_MDX_Distance");
+}
 
 CRenderPass_M2::~CRenderPass_M2()
 {}
@@ -69,21 +71,24 @@ std::shared_ptr<IRenderPassPipelined> CRenderPass_M2::CreatePipeline(std::shared
 //
 bool CRenderPass_M2::Visit(const ISceneNode3D* SceneNode3D)
 {
-    if (const CM2_Base_Instance* m2Instance = dynamic_cast<const CM2_Base_Instance*>(SceneNode3D))
-    {
+	if (const CM2_Base_Instance* m2Instance = dynamic_cast<const CM2_Base_Instance*>(SceneNode3D))
+	{
 		const auto& collider = SceneNode3D->GetComponent<IColliderComponent3D>();
 
 		const ICameraComponent3D* camera = GetRenderEventArgs().CameraForCulling;
 		_ASSERT(camera != nullptr);
 
+		if (collider->IsCulledByDistance2D(camera, m_ADT_MDX_Distance->Get()))
+			return false;
+
 		if (collider->IsCulledByFrustum(camera))
 			return false;
 
 		m_CurrentM2Model = m2Instance;
-        return Base3DPass::Visit(m2Instance);
-    }
+		return Base3DPass::Visit(m2Instance);
+	}
 
-    return false;
+	return false;
 }
 
 bool CRenderPass_M2::Visit(const IModel* Model)
@@ -96,8 +101,7 @@ bool CRenderPass_M2::Visit(const IModel* Model)
 		for (const auto& it : m2Skin->GetTTT())
 		{
 			const auto& geom = it.first;
-			std::shared_ptr<IGeometryInternal> geomInternal = std::dynamic_pointer_cast<IGeometryInternal>(geom);
-
+			
 			uint32 meshPartID = geom->getProto().meshPartID;
 			if (!m_CurrentM2Model->isMeshEnabled(meshPartID))
 				continue;
@@ -108,9 +112,8 @@ bool CRenderPass_M2::Visit(const IModel* Model)
 
 			m_ShaderM2GeometryBonesParameter->SetStructuredBuffer(geom->GetGeometryBonesBuffer());
 			m_ShaderM2GeometryBonesParameter->Bind();
-
 			{
-				
+				std::shared_ptr<IGeometryInternal> geomInternal = std::dynamic_pointer_cast<IGeometryInternal>(geom);
 				geomInternal->Render_BindAllBuffers(GetRenderEventArgs(), vertexShader);
 
 
@@ -139,67 +142,8 @@ bool CRenderPass_M2::Visit(const IModel* Model)
 		return true;
 	}
 
-    return false;
-}
-
-
-bool CRenderPass_M2::VisitInstanced(const IModel* Model, size_t cnt)
-{
-	if (const CM2_Skin* m2Skin = dynamic_cast<const CM2_Skin*>(Model))
-	{
-		const ShaderMap& shaders = GetPipeline().GetShaders();
-		const IShader* vertexShader = shaders.at(EShaderType::VertexShader).get();
-
-		for (const auto& it : m2Skin->GetTTT())
-		{
-			const auto& geom = it.first;
-			std::shared_ptr<IGeometryInternal> geomInternal = std::dynamic_pointer_cast<IGeometryInternal>(geom);
-
-			uint32 meshPartID = geom->getProto().meshPartID;
-			if (!m_CurrentM2Model->isMeshEnabled(meshPartID))
-				continue;
-
-			geom->UpdateGeometryProps(GetRenderEventArgs(), m_CurrentM2Model);
-			m_ShaderM2GeometryParameter->SetConstantBuffer(geom->GetGeometryPropsBuffer());
-			m_ShaderM2GeometryParameter->Bind();
-
-			m_ShaderM2GeometryBonesParameter->SetStructuredBuffer(geom->GetGeometryBonesBuffer());
-			m_ShaderM2GeometryBonesParameter->Bind();
-
-			{
-
-				geomInternal->Render_BindAllBuffers(GetRenderEventArgs(), vertexShader);
-
-
-				for (const auto& it2 : it.second)
-				{
-					const auto& mat = it2;
-
-					mat->UpdateMaterialProps(GetRenderEventArgs(), m_CurrentM2Model);
-					mat->Bind(shaders);
-					{
-						SGeometryDrawInstancedArgs GeometryDrawInstancedArgs;
-						GeometryDrawInstancedArgs.IndexCnt = geom->getProto().indexCount;
-						GeometryDrawInstancedArgs.VertexCnt = geom->getProto().vertexCount;
-						GeometryDrawInstancedArgs.InstanceCnt = cnt;
-						geomInternal->Render_DrawInstanced(GeometryDrawInstancedArgs);
-					}
-					mat->Unbind(shaders);
-				}
-
-				geomInternal->Render_UnbindAllBuffers(GetRenderEventArgs(), vertexShader);
-			}
-			m_ShaderM2GeometryBonesParameter->Unbind();
-
-			m_ShaderM2GeometryParameter->Unbind();
-		}
-
-		return true;
-	}
-
 	return false;
 }
-
 
 
 //----------------------------------------------------------------------
@@ -210,6 +154,7 @@ CRenderPass_M2_Instanced::CRenderPass_M2_Instanced(IRenderDevice & RenderDevice,
 	: CRenderPass_M2(RenderDevice, scene)
 	, m_RenderListPass(List)
 {
+	m_InstancesBuffer = GetRenderDevice().GetObjectsFactory().CreateStructuredBuffer(nullptr, 50, sizeof(glm::mat4), CPUAccess::ReadWrite);
 }
 
 CRenderPass_M2_Instanced::~CRenderPass_M2_Instanced()
@@ -222,10 +167,21 @@ void CRenderPass_M2_Instanced::Render(RenderEventArgs & e)
 
 	for (const auto& it : m_RenderListPass->GetModelsList())
 	{
+		const auto& collider = it.Node->GetComponent<IColliderComponent3D>();
+
+		const ICameraComponent3D* camera = GetRenderEventArgs().CameraForCulling;
+		_ASSERT(camera != nullptr);
+
+		if (collider->IsCulledByDistance2D(camera, m_ADT_MDX_Distance->Get()))
+			continue;
+
+		if (collider->IsCulledByFrustum(camera))
+			continue;
+
 		auto& resultIter = modelPriorMap.find(it.Model);
 		if (resultIter == modelPriorMap.end())
 		{
-			modelPriorMap.insert(std::make_pair(it.Model, std::vector<const ISceneNode3D*>({it.Node})));
+			modelPriorMap.insert(std::make_pair(it.Model, std::vector<const ISceneNode3D*>({ it.Node })));
 		}
 		else
 		{
@@ -239,12 +195,17 @@ void CRenderPass_M2_Instanced::Render(RenderEventArgs & e)
 		std::vector<glm::mat4> instances;
 		std::for_each(it.second.begin(), it.second.end(), [&instances](const ISceneNode3D* sceneNode) {instances.push_back(sceneNode->GetWorldTransfom()); });
 
-		std::shared_ptr<IStructuredBuffer> sbBuffer = GetRenderDevice().GetObjectsFactory().CreateStructuredBuffer(instances);
-		m_ShaderInstancesBufferParameter->SetStructuredBuffer(sbBuffer);
+		if (instances.size() > m_InstancesBuffer->GetElementCount())
+			m_InstancesBuffer = GetRenderDevice().GetObjectsFactory().CreateStructuredBuffer(instances, CPUAccess::ReadWrite);
+		else
+			m_InstancesBuffer->Set(instances);
+
+		m_ShaderInstancesBufferParameter->SetStructuredBuffer(m_InstancesBuffer);
 		m_ShaderInstancesBufferParameter->Bind();
 
 		m_CurrentM2Model = dynamic_cast<const CM2_Base_Instance*>(*it.second.begin());
-		CRenderPass_M2::VisitInstanced(it.first, it.second.size());
+
+		CRenderPass_M2::Visit(it.first);
 
 		m_ShaderInstancesBufferParameter->Unbind();
 	}

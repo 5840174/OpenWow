@@ -48,7 +48,7 @@ const M2 & CM2_Base_Instance::getM2() const
 	return *m_M2;
 }
 
-void CM2_Base_Instance::Attach(std::shared_ptr<CM2_Part_Attachment> _attachment)
+void CM2_Base_Instance::Attach(std::shared_ptr<const CM2_Part_Attachment> _attachment)
 {
 	_ASSERT(_attachment != nullptr);
 	m_Attached = _attachment;
@@ -58,7 +58,7 @@ void CM2_Base_Instance::Detach()
 	m_Attached = nullptr;
 }
 
-std::shared_ptr<CM2_Part_Attachment> CM2_Base_Instance::GetAttachPoint() const
+std::shared_ptr<const CM2_Part_Attachment> CM2_Base_Instance::GetAttachPoint() const
 {
     return m_Attached;
 }
@@ -108,8 +108,6 @@ void CM2_Base_Instance::Update(const UpdateEventArgs & e)
 		ForceRecalculateLocalTransform();
 	}
 
-	const_cast<M2&>(getM2()).update(e.TotalTime, e.DeltaTime);
-
 	if (getM2().isAnimated())
 	{
 		m_Animator->Update(e.TotalTime, e.DeltaTime);
@@ -138,9 +136,9 @@ void CM2_Base_Instance::Accept(IVisitor* visitor)
 //
 void CM2_Base_Instance::UpdateLocalTransform()
 {
-	if (std::shared_ptr<CM2_Part_Attachment> attachPoint = GetAttachPoint())
+	if (auto attachPoint = GetAttachPoint())
 	{
-		std::shared_ptr<const CM2_Part_Bone> bone = attachPoint->getBone().lock();
+		auto bone = attachPoint->getBone().lock();
 		_ASSERT(bone != nullptr);
 
 		glm::mat4 relMatrix;

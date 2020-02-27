@@ -30,17 +30,17 @@ void CM2_Part_Camera::calc(uint32 time, uint32 globalTime)
 {
 	if (tPos.IsUsesBySequence(0))
 	{
-		pResult = tPos.GetValue(0, time, m_M2Object.getGlobalLoops(), globalTime);
+		pResult = tPos.GetValue(0, time, m_M2Object.getSkeleton().getGlobalLoops(), globalTime);
 	}
 
 	if (tTarget.IsUsesBySequence(0))
 	{
-		tResult = tTarget.GetValue(0, time, m_M2Object.getGlobalLoops(), globalTime);
+		tResult = tTarget.GetValue(0, time, m_M2Object.getSkeleton().getGlobalLoops(), globalTime);
 	}
 
 	if (tRoll.IsUsesBySequence(0))
 	{
-		rollResult = tRoll.GetValue(0, time, m_M2Object.getGlobalLoops(), globalTime) / (glm::pi<float>() * 180.0f);
+		rollResult = tRoll.GetValue(0, time, m_M2Object.getSkeleton().getGlobalLoops(), globalTime) / (glm::pi<float>() * 180.0f);
 	}
 }
 

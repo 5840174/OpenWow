@@ -25,8 +25,6 @@ public:
 	// CLoadableObject
 	bool Load() override;
 
-	void update(double _time, double _dTime);
-
 	IBaseManager& GetBaseManager() const { return m_BaseManager; }
 	IRenderDevice& GetRenderDevice() const { return m_RenderDevice; }
 
@@ -37,36 +35,21 @@ public:
 	std::string getUniqueName() const { return m_UniqueName; }
 	cbbox       GetBounds() const { return m_Bounds; }
 	
-
-public: // Loops & Sequences
-	const std::vector<SM2_Loop>& getGlobalLoops() const
-	{
-		return m_GlobalLoops;
-	}
-	const SM2_Sequence& getSequence(uint32 _index) const
-	{
-		_ASSERT(_index < m_SequencesLookup.size());
-		int16 newIndex = m_SequencesLookup[_index];
-		_ASSERT(newIndex < static_cast<int16>(m_Sequences.size()));
-		return m_Sequences[newIndex];
-	}
+public:
 	const bool isAnimated() const { return m_IsAnimated; }
-public:
-	std::vector<SM2_Loop>      m_GlobalLoops;
-	std::vector<SM2_Sequence>  m_Sequences;
-	std::vector<int16>         m_SequencesLookup;
-	bool                       m_IsAnimated;
+private:
+	bool m_IsAnimated;
 
 
 public:
-	std::shared_ptr<CM2_Comp_Materials> getMaterials() const { return m_Materials; }
-	std::shared_ptr<CM2_Comp_Materials> m_Materials;
+	const CM2_Comp_Materials& getMaterials() const { return *m_Materials; }
+	const CM2_Comp_Miscellaneous& getMiscellaneous() const { return *m_Miscellaneous; }
+	const CM2_Comp_Skeleton& getSkeleton() const { return *m_Skeleton; }
+private:
+	std::unique_ptr<CM2_Comp_Materials> m_Materials;
+	std::unique_ptr<CM2_Comp_Miscellaneous> m_Miscellaneous;
+	std::unique_ptr<CM2_Comp_Skeleton> m_Skeleton;
 
-	std::shared_ptr<CM2_Comp_Miscellaneous> getMiscellaneous() const { return m_Miscellaneous; }
-	std::shared_ptr<CM2_Comp_Miscellaneous> m_Miscellaneous;
-
-	std::shared_ptr<CM2_Comp_Skeleton> getSkeleton() const { return m_Skeleton; }
-	std::shared_ptr<CM2_Comp_Skeleton> m_Skeleton;
 
 private:
 	std::string							m_FileName;

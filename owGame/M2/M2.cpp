@@ -57,37 +57,23 @@ void M2::CreateInsances(const std::shared_ptr<ISceneNode3D>& Parent) const
 
 bool M2::Load()
 {
-	if (m_Header.global_loops.size > 0)
-	{
-		const SM2_Loop* GlobalLoops = (const SM2_Loop*)(m_F->getData() + m_Header.global_loops.offset);
-		for (uint32 i = 0; i < m_Header.global_loops.size; i++)
-			m_GlobalLoops.push_back(GlobalLoops[i]);
-	}
-
-	// Sequences
-	if (m_Header.sequences.size > 0)
-	{
-		const SM2_Sequence* Sequences = (const SM2_Sequence*)(m_F->getData() + m_Header.sequences.offset);
-		for (uint32 i = 0; i < m_Header.sequences.size; i++)
-			m_Sequences.push_back(Sequences[i]);
-	}
-
-	// Sequences Lookup
-	if (m_Header.sequencesLookup.size > 0)
-	{
-		const int16* SequencesLookup = (const int16*)(m_F->getData() + m_Header.sequencesLookup.offset);
-		for (uint32 i = 0; i < m_Header.sequencesLookup.size; i++)
-			m_SequencesLookup.push_back(SequencesLookup[i]);
-	}
-
 	// Skeleton
-	m_Skeleton = std::make_shared<CM2_Comp_Skeleton>(*this);
+	m_Skeleton = std::make_unique<CM2_Comp_Skeleton>(*this);
 	m_Skeleton->Load(m_Header, m_F);
 
-	// Vertices
-	std::vector<SM2_Vertex>	m2Vertexes;
+	// Colors, textures and etc...
+	m_Materials = std::make_unique<CM2_Comp_Materials>(*this);
+	m_Materials->Load(m_Header, m_F);
+
+	// Lights, cameras, attachments
+	m_Miscellaneous = std::make_unique<CM2_Comp_Miscellaneous>(*this);
+	m_Miscellaneous->Load(m_Header, m_F);
+
+	// Skins
 	if (m_Header.vertices.size > 0)
 	{
+		// Vertices
+		std::vector<SM2_Vertex>	m2Vertexes;
 		const SM2_Vertex* Vertexes = (const SM2_Vertex*)(m_F->getData() + m_Header.vertices.offset);
 		for (uint32 i = 0; i < m_Header.vertices.size; i++)
 			m2Vertexes.push_back(Vertexes[i]);
@@ -97,29 +83,14 @@ bool M2::Load()
 			m2Vertexes[i].pos = Fix_XZmY(m2Vertexes[i].pos);
 			m2Vertexes[i].normal = Fix_XZmY(m2Vertexes[i].normal);
 		}
-	}
 
-	// Colors, textures and etc...
-	m_Materials = std::make_shared<CM2_Comp_Materials>(*this);
-	m_Materials->Load(m_Header, m_F);
-
-	// Lights, cameras, attachments
-	m_Miscellaneous = std::make_shared<CM2_Comp_Miscellaneous>(*this);
-	m_Miscellaneous->Load(m_Header, m_F);
-
-	// Skins
-	if (! m2Vertexes.empty())
-	{
 		_ASSERT(m_Header.skin_profiles.size > 0);
-		if (m_Header.skin_profiles.size > 0)
+		const SM2_SkinProfile* m2Skins = (const SM2_SkinProfile*)(m_F->getData() + m_Header.skin_profiles.offset);
+		for (uint32 i = 0; i < m_Header.skin_profiles.size; i++)
 		{
-			const SM2_SkinProfile* m2Skins = (const SM2_SkinProfile*)(m_F->getData() + m_Header.skin_profiles.offset);
-			for (uint32 i = 0; i < m_Header.skin_profiles.size; i++)
-			{
-				std::shared_ptr<CM2_Skin> skin = std::make_shared<CM2_Skin>(m_BaseManager, m_RenderDevice, *this, m2Skins[i]);
-				skin->Load(m_Header, m_F, m2Vertexes);
-				m_Skins.push_back(skin);
-			}
+			std::shared_ptr<CM2_Skin> skin = std::make_shared<CM2_Skin>(m_BaseManager, m_RenderDevice, *this, m2Skins[i]);
+			skin->Load(m_Header, m_F, m2Vertexes);
+			m_Skins.push_back(skin);
 		}
 	}
 	else
@@ -176,16 +147,9 @@ bool M2::Load()
 	}
 #endif
 
-	m_IsAnimated = getSkeleton()->isAnimBones() || getSkeleton()->isBillboard() || getMaterials()->IsAnimTextures() || getMiscellaneous()->IsAnimated() /*|| true*/;
+	m_IsAnimated = getSkeleton().isAnimBones() || getSkeleton().isBillboard() || getMaterials().IsAnimTextures() || getMiscellaneous().IsAnimated() || true;
+	_ASSERT(m_F.use_count() == 1);
 	m_F.reset();
 
 	return true;
-}
-
-void M2::update(double _time, double _dTime)
-{
-	if (m_Miscellaneous)
-	{
-		m_Miscellaneous->update(_time, _dTime);
-	}
 }

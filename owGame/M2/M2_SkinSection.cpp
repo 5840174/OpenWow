@@ -80,18 +80,18 @@ void CM2_SkinSection::UpdateGeometryProps(const RenderEventArgs& RenderEventArgs
 {
 	M2Instance->getAnimator()->Update(RenderEventArgs.TotalTime, RenderEventArgs.DeltaTime);
 
-	bool isAnimated = m_M2Model.getSkeleton()->hasBones() && m_M2Model.m_IsAnimated;
+	bool isAnimated = m_M2Model.getSkeleton().hasBones() && m_M2Model.isAnimated();
 	m_Properties->gIsAnimated = isAnimated ? 1 : 0;
 	if (isAnimated)
 	{
 		m_Properties->gStartBoneIndex = m_SkinSectionProto.bonesStartIndex;
 		m_Properties->gBonesMaxInfluences = m_SkinSectionProto.boneInfluences;
 
-		for (uint16 i = 0; i < m_SkinSectionProto.boneCount; i++)
-			m_M2Model.getSkeleton()->getBoneLookup(m_SkinSectionProto.bonesStartIndex + i)->SetNeedCalculate();
+		//for (uint16 i = 0; i < m_SkinSectionProto.boneCount; i++)
+		//	m_M2Model.getSkeleton().getBoneLookup(m_SkinSectionProto.bonesStartIndex + i)->SetNeedCalculate();
 
-		for (uint16 i = 0; i < m_SkinSectionProto.boneCount; i++)
-			m_M2Model.getSkeleton()->getBoneLookup(m_SkinSectionProto.bonesStartIndex + i)->calcMatrix(M2Instance->getAnimator()->getSequenceIndex(), M2Instance->getAnimator()->getCurrentTime(), static_cast<uint32>(RenderEventArgs.TotalTime));
+		//for (uint16 i = 0; i < m_SkinSectionProto.boneCount; i++)
+		//	m_M2Model.getSkeleton().getBoneLookup(m_SkinSectionProto.bonesStartIndex + i)->calcMatrix(M2Instance->getAnimator()->getSequenceIndex(), M2Instance->getAnimator()->getCurrentTime(), static_cast<uint32>(RenderEventArgs.TotalTime));
 
 		//for (uint16 i = 0; i < m_SkinSectionProto.boneCount; i++)
 		//	m_M2Model.getSkeleton()->getBoneLookup(m_SkinSectionProto.bonesStartIndex + i)->calcBillboard(RenderEventArgs.Camera->GetViewMatrix(), M2Instance->GetWorldTransfom());
@@ -101,12 +101,14 @@ void CM2_SkinSection::UpdateGeometryProps(const RenderEventArgs& RenderEventArgs
 		//if (RootBoone != nullptr)
 		//	currMat = RootBoone->getTransformMatrix() * currMat;
 
-		for (uint16 i = 0; i < m_SkinSectionProto.boneCount; i++)
-		{
-			_ASSERT(m_M2Model.getSkeleton()->isLookupBoneCorrect(m_SkinSectionProto.bonesStartIndex + i));
-			m_BonesList[i] = /*glm::inverse(currMat) **/ m_M2Model.getSkeleton()->getBoneLookup(m_SkinSectionProto.bonesStartIndex + i)->getTransformMatrix();
-		}
+		//for (uint16 i = 0; i < m_SkinSectionProto.boneCount; i++)
+		//{
+		//	_ASSERT(m_M2Model.getSkeleton().isLookupBoneCorrect(m_SkinSectionProto.bonesStartIndex + i));
+		//	m_BonesList[i] = m_M2Model.getSkeleton().getBoneLookup(m_SkinSectionProto.bonesStartIndex + i)->getTransformMatrix();
+		//}
 
+		m_BonesList = m_M2Model.getSkeleton().CreatePose(m_SkinSectionProto.bonesStartIndex, m_SkinSectionProto.boneCount, M2Instance->getAnimator()->getSequenceIndex(), M2Instance->getAnimator()->getCurrentTime(), static_cast<uint32>(RenderEventArgs.TotalTime));
+		_ASSERT(m_BonesList.size() == m_SkinSectionProto.boneCount);
 		m_StructuredBuffer->Set(m_BonesList);
 	}
 

@@ -13,8 +13,8 @@ CWMO_Doodad_Instance::CWMO_Doodad_Instance(const std::shared_ptr<M2>& M2Object, 
 	// CTransformComponent
 	{
 		SetTranslate(Fix_XZmY(_placement.position));
-		SetRotationQuaternion(quat(_placement.orientation.w, -_placement.orientation.z, _placement.orientation.x, _placement.orientation.y));
-		SetScale(vec3(_placement.scale, -_placement.scale, -_placement.scale));
+		SetRotationQuaternion(glm::quat(_placement.orientation.w, -_placement.orientation.z, _placement.orientation.x, _placement.orientation.y));
+		SetScale(glm::vec3(_placement.scale, -_placement.scale, -_placement.scale));
 	}
 
 	/*if (_mdxObject->getFilename().find("LD_LIGHTSHAFT") != -1)

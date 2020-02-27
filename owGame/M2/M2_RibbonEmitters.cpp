@@ -22,7 +22,7 @@ CM2_RibbonEmitters::CM2_RibbonEmitters(const M2& M2Object, const std::shared_ptr
 	: m_M2Object(M2Object)
 	, tcolor(vec4(1.0f))
 {
-	m_Bone = m_M2Object.getSkeleton()->getBoneDirect(M2RibbonEmitter.boneIndex);
+	m_Bone = m_M2Object.getSkeleton().getBoneDirect(M2RibbonEmitter.boneIndex);
 	posValue = pos = Fix_XZmY(M2RibbonEmitter.position);
 
 	m_Color.Initialize(M2RibbonEmitter.colorTrack, File);
@@ -34,11 +34,11 @@ CM2_RibbonEmitters::CM2_RibbonEmitters(const M2& M2Object, const std::shared_ptr
 		uint16_t* TexturesList = (uint16_t*)(File->getData() + M2RibbonEmitter.textureIndices.offset);
 		// just use the first texture for now; most models I've checked only had one
 		_ASSERT(M2RibbonEmitter.textureIndices.size > 0);
-		m_Texture = m_M2Object.getMaterials()->GetTextureDirectInternal(TexturesList[0])->getTexture();
+		m_Texture = m_M2Object.getMaterials().GetTextureDirectInternal(TexturesList[0])->GetTexture();
 
 		uint16_t* MaterialsList = (uint16_t*)(File->getData() + M2RibbonEmitter.materialIndices.offset);
 		_ASSERT(M2RibbonEmitter.materialIndices.size > 0);
-		m_Material = m_M2Object.getMaterials()->GetMaterial(MaterialsList[0]);
+		m_Material = m_M2Object.getMaterials().GetMaterial(MaterialsList[0]);
 	}
 
 	// TODO: figure out actual correct way to calculate length
@@ -112,17 +112,17 @@ void CM2_RibbonEmitters::setup(uint16 anim, uint32 time, uint32 _globalTime, cma
 	posValue = ntpos;
 	if (m_Color.IsUsesBySequence(anim) && m_Alpha.IsUsesBySequence(anim))
 	{
-		tcolor = glm::vec4(m_Color.GetValue(anim, time, m_M2Object.getGlobalLoops(), _globalTime), m_Alpha.GetValue(anim, time, m_M2Object.getGlobalLoops(), _globalTime));
+		tcolor = glm::vec4(m_Color.GetValue(anim, time, m_M2Object.getSkeleton().getGlobalLoops(), _globalTime), m_Alpha.GetValue(anim, time, m_M2Object.getSkeleton().getGlobalLoops(), _globalTime));
 	}
 
 	if (m_HeightAbove.IsUsesBySequence(anim))
 	{
-		tabove = m_HeightAbove.GetValue(anim, time, m_M2Object.getGlobalLoops(), _globalTime);
+		tabove = m_HeightAbove.GetValue(anim, time, m_M2Object.getSkeleton().getGlobalLoops(), _globalTime);
 	}
 
 	if (m_HeightBelow.IsUsesBySequence(anim))
 	{
-		tbelow = m_HeightBelow.GetValue(anim, time, m_M2Object.getGlobalLoops(), _globalTime);
+		tbelow = m_HeightBelow.GetValue(anim, time, m_M2Object.getSkeleton().getGlobalLoops(), _globalTime);
 	}
 }
 

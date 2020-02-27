@@ -1,11 +1,5 @@
 #include "IDB_SHADER_COMMON_INCLUDE"
 
-struct WMO_Material
-{
-	uint   gBlendMode;
-    //-------------------------- ( 4 bytes )
-};
-
 struct VertexShaderInput
 {
 	float3 position  : POSITION;
@@ -29,7 +23,8 @@ struct VertexShaderOutput
 // Uniforms
 cbuffer Material2 : register(b2)
 {
-    WMO_Material Material2;
+    uint   gBlendMode;
+	uint   gMOCVExists;
 };
 
 // Textures and samples
@@ -55,11 +50,11 @@ DefferedRenderPSOut PS_main(VertexShaderOutput IN) : SV_TARGET
 {
 	float4 resultColor = DiffuseTexture.Sample(DiffuseTextureSampler, IN.texCoord0);
 	
-	if (Material2.gBlendMode == 0) // GxBlend_Opaque
+	if (gBlendMode == 0) // GxBlend_Opaque
 	{
 		resultColor.a = 1.0f;
 	}
-	else if (Material2.gBlendMode == 1) // GxBlend_AlphaKey
+	else if (gBlendMode == 1) // GxBlend_AlphaKey
 	{
 		if (resultColor.a < (224.0f / 255.0f)) discard;
 	}
@@ -70,6 +65,8 @@ DefferedRenderPSOut PS_main(VertexShaderOutput IN) : SV_TARGET
 	
 	DefferedRenderPSOut OUT;
 	OUT.Diffuse = resultColor;
+	//if (gMOCVExists)
+		OUT.Diffuse *= IN.color;
 	OUT.Specular = float4(1.0f, 1.0f, 1.0f, 1.0f);
 	OUT.NormalWS = float4(IN.normalVS, 1.0f);
 	return OUT;

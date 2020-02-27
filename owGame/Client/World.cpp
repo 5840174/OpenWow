@@ -100,7 +100,7 @@ void WoWWorld::S_SMSG_COMPRESSED_UPDATE_OBJECT(CServerPacket& Buffer)
 	CByteBuffer uncompressed;
 	uncompressed.writeDummy(dataSize);
 
-	uLongf uncompressedSize;
+	uLongf uncompressedSize = dataSize;
 	if (uncompress(uncompressed.getDataEx(), &uncompressedSize, Buffer.getDataFromCurrent(), Buffer.getSize() - 4) != Z_OK)
 	{
 		Log::Error("SMSG_COMPRESSED_UPDATE_OBJECT: Error while uncompress object.");
