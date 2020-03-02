@@ -124,11 +124,11 @@ DefferedRenderPSOut PS_main(VertexShaderOutput IN) : SV_TARGET
 	
 #endif
 
-	//if (ShadowMapExists)
-	//{
-	//	float alphaShadow = AlphaMap.Sample(AlphaMapSampler, IN.texCoordAlpha).a;
-	//	resultColor = lerp(resultColor,  float3(0.0, 0.0, 0.0), alphaShadow);
-	//}
+	if (ShadowMapExists)
+	{
+		float alphaShadow = AlphaMap.Sample(AlphaMapSampler, IN.texCoordAlpha).a;
+		resultColor = lerp(resultColor,  float3(0.0, 0.0, 0.0), alphaShadow);
+	}
 	
 	DefferedRenderPSOut OUT;
 	OUT.Diffuse = float4(resultColor, 1.0f);

@@ -67,8 +67,24 @@ struct SM2_Bone
 	int16			parent_bone;            // Parent bone ID or -1 if there is none.
 	uint16			submesh_id;				// Mesh part ID OR uDistToParent?
 
+#if defined(WOW_BC_2_4_3)
+	union 
+	{                         // only  BC?
+		struct 
+		{
+			uint16_t uDistToFurthDesc;
+			uint16_t uZRatioOfChain;
+		} CompressData;               // No model has ever had this part of the union used.
+		uint32_t boneNameCRC;         // these are for debugging only. their bone names match those in key bone lookup.
+	};
+#endif
+
 	M2Track<vec3>       translation;
+#if defined(WOW_CLASSIC_1_12_1)
 	M2Track<quat>	    rotation;
+#elif defined (WOW_BC_2_4_3)
+	M2Track<M2CompQuat>	rotation;
+#endif
 	M2Track<vec3>       scale;
 
 	glm::vec3           pivot;					// The pivot point of that bone.

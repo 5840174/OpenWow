@@ -9,11 +9,11 @@
 class CWoWClient;
 // FORWARD END
 
-class CAuthSocket : public TcpSocket
+class CAuthSocket : public sockets::TcpSocket
 {
 	typedef bool (CAuthSocket::* HandlerFunc)(CByteBuffer&);
 public:
-	CAuthSocket(ISocketHandler& SocketHandler, CWoWClient& WoWClient, const std::string& Login, const std::string& Password);
+	CAuthSocket(sockets::ISocketHandler& SocketHandler, CWoWClient& WoWClient, const std::string& Login, const std::string& Password);
 	virtual ~CAuthSocket();
 
 	void SendData(const IByteBuffer& _bb);

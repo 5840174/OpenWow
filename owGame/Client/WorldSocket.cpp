@@ -33,7 +33,7 @@ const Opcodes IgnoredOpcodes[] =
 	Opcodes::SMSG_SPELL_GO
 };
 
-CWorldSocket::CWorldSocket(ISocketHandler& SocketHandler, const std::string& Login, BigNumber Key)
+CWorldSocket::CWorldSocket(sockets::ISocketHandler& SocketHandler, const std::string& Login, BigNumber Key)
 	: TcpSocket(SocketHandler)
 	, m_CurrentPacket(nullptr)
 	, m_Login(Login)
@@ -189,7 +189,7 @@ void CWorldSocket::Packet2(CByteBuffer& _buf)
     if (m_CurrentPacket->IsComplete())
     {
         if (! ProcessPacket(*m_CurrentPacket))
-			Log::Green("Opcode: '%s' (0x%X). Size: '%d'", OpcodesNames[m_CurrentPacket->GetPacketOpcode()].c_str(), m_CurrentPacket->GetPacketOpcode(), m_CurrentPacket->GetPacketSize());
+			Log::Green("Opcode: '%s' (0x%X). Size: '%d'", OpcodesNames[m_CurrentPacket->GetPacketOpcode()], m_CurrentPacket->GetPacketOpcode(), m_CurrentPacket->GetPacketSize());
 
         m_CurrentPacket.reset();
     }

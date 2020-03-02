@@ -1,6 +1,6 @@
 #pragma once
 
-const std::string OpcodesNames[] =
+const char* const OpcodesNames[] =
 {
     "NULL_ACTION", //0x000,
     "CMSG_BOOTME", //0x001,

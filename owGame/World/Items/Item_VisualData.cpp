@@ -14,7 +14,7 @@
 struct
 {
 	InventoryType::List	        slot;
-	std::string					folder = "";
+	const char* const			folder = "";
 	MeshIDType::List			modifiers[MESHID_MAX_MODS] = MESHID_ALLUNK;
 	uint32						count = 0;
 	M2_AttachmentType		    attach[ATTACHS_MAX] = { M2_AttachmentType::Count, M2_AttachmentType::Count };
@@ -62,8 +62,8 @@ struct
 // Textures names
 struct
 {
-	DBC_CharComponent_Sections::List list;
-	std::string folder;
+	const DBC_CharComponent_Sections::List list;
+	const char* const folder;
 } ItemTextureComponents[DBC_CharComponent_Sections::ITEMS_COUNT] =
 {
 	{ DBC_CharComponent_Sections::ARMS_UPPER,	"ARMUPPERTEXTURE" },
@@ -239,7 +239,7 @@ void CItem_VisualData::InitTextureComponents()
 
 std::string CItem_VisualData::GetObjectModelName(InventoryType::List _objectType, std::string _modelName)
 {
-	return "Item\\ObjectComponents\\" + ItemObjectComponents[_objectType].folder + "\\" + _modelName;
+	return "Item\\ObjectComponents\\" + std::string(ItemObjectComponents[_objectType].folder) + "\\" + _modelName;
 }
 
 /*std::shared_ptr<M2> CItem_VisualData::LoadObjectModel(InventoryType::List _objectType, std::string _modelName)
@@ -249,7 +249,7 @@ std::string CItem_VisualData::GetObjectModelName(InventoryType::List _objectType
 
 std::shared_ptr<ITexture> CItem_VisualData::LoadObjectTexture(InventoryType::List _objectType, std::string _textureName)
 {
-	return m_RenderDevice.GetObjectsFactory().LoadTexture2D("Item\\ObjectComponents\\" + ItemObjectComponents[_objectType].folder + "\\" + _textureName + ".blp");
+	return m_RenderDevice.GetObjectsFactory().LoadTexture2D("Item\\ObjectComponents\\" + std::string(ItemObjectComponents[_objectType].folder) + "\\" + _textureName + ".blp");
 }
 
 std::shared_ptr<ITexture> CItem_VisualData::LoadSkinTexture(DBC_CharComponent_Sections::List _type, std::string _textureName)
@@ -285,7 +285,7 @@ std::string CItem_VisualData::getTextureComponentName(DBC_CharComponent_Sections
 
 
 	char maleTexture[256];
-	sprintf_s(maleTexture, "Item\\TEXTURECOMPONENTS\\%s\\%s_%c.blp", ItemTextureComponents[_type].folder.c_str(), _textureName.c_str(), getGenderLetter(_gender));
+	sprintf_s(maleTexture, "Item\\TEXTURECOMPONENTS\\%s\\%s_%c.blp", ItemTextureComponents[_type].folder, _textureName.c_str(), getGenderLetter(_gender));
 	return std::string(maleTexture);
 }
 

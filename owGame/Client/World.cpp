@@ -38,6 +38,11 @@ WoWWorld::WoWWorld(IBaseManager& BaseManager, IRenderDevice& RenderDevice, IScen
 
 WoWWorld::~WoWWorld()
 {
+	while (m_Socket->ErasedByHandler() == false)
+	{
+		Log::Info("Wait for close socket...");
+		Sleep(10);
+	}
 }
 
 

@@ -12,6 +12,9 @@ CSceneWoW::CSceneWoW(IBaseManager& BaseManager)
 
 CSceneWoW::~CSceneWoW()
 {
+	CMapWMOInstance::reset();
+	CMapM2Instance::reset();
+
 	OutputDebugStringW(L"Destroyed.");
 }
 
@@ -30,18 +33,10 @@ void CSceneWoW::Initialize()
 	GetCameraController()->SetCamera(cameraNode->GetComponent<ICameraComponent3D>());
 	GetCameraController()->GetCamera()->SetPerspectiveProjection(ICameraComponent3D::EPerspectiveProjectionHand::Right, 45.0f, 1.0f/*GetRenderWindow()->GetWindowWidth() / GetRenderWindow()->GetWindowHeight()*/, 0.5f, 10000.0f);
 
-	m_WoWClient = std::make_unique<CWoWClient>(GetBaseManager(), GetRenderDevice(), this, "127.0.0.1");
-	//m_WoWClient->GetWorld().AddHandler(SMSG_CHAR_ENUM, std::bind(&CSceneWoW::S_CharsEnum, this, std::placeholders::_1));
-	//m_WoWClient->GetWorld().AddHandler(SMSG_LOGIN_VERIFY_WORLD, std::bind(&CSceneWoW::S_Login_Verify_World, this, std::placeholders::_1));
-	//m_WoWClient->GetWorld().AddHandler(SMSG_MONSTER_MOVE, std::bind(&CSceneWoW::S_MonsterMove, this, std::placeholders::_1));
-	//m_WoWClient->GetWorld().AddHandler(SMSG_COMPRESSED_UPDATE_OBJECT, std::bind(&CSceneWoW::S_SMSG_COMPRESSED_UPDATE_OBJECT, this, std::placeholders::_1));
-	//m_WoWClient->GetWorld().AddHandler(SMSG_UPDATE_OBJECT, std::bind(&CSceneWoW::S_SMSG_UPDATE_OBJECT, this, std::placeholders::_1));
-	//m_WoWClient->BeginConnect("admin", "admin");
-
-	map = GetRootNode3D()->CreateSceneNode<CMap>(GetBaseManager(), GetRenderDevice());
-
+	
 	Load3D();
 	//Load3D_M2s();
+	TestCreateMap();
 	LoadUI();
 
 
@@ -50,14 +45,14 @@ void CSceneWoW::Initialize()
 
 	m_Technique3D.AddPass(GetBaseManager().GetManager<IRenderPassFactory>()->CreateRenderPass("ClearPass", GetRenderDevice(), GetRenderWindow()->GetRenderTarget(), &GetRenderWindow()->GetViewport(), shared_from_this()));
 	m_Technique3D.AddPass(wmoListPass);
-	//m_Technique3D.AddPass(m2ListPass);
+	m_Technique3D.AddPass(m2ListPass);
 	m_Technique3D.AddPass(std::make_shared<CRenderPass_Sky>(GetRenderDevice(), shared_from_this())->CreatePipeline(GetRenderWindow()->GetRenderTarget(), &GetRenderWindow()->GetViewport()));
 	//m_Technique3D.AddPass(std::make_shared<CRenderPass_WDL>(GetRenderDevice(), shared_from_this())->CreatePipeline(GetRenderWindow()->GetRenderTarget(), &GetRenderWindow()->GetViewport()));
 	m_Technique3D.AddPass(std::make_shared<CRenderPass_ADT_MCNK>(GetRenderDevice(), shared_from_this())->CreatePipeline(GetRenderWindow()->GetRenderTarget(), &GetRenderWindow()->GetViewport()));
 	m_Technique3D.AddPass(std::make_shared<CRenderPass_WMO>(GetRenderDevice(), shared_from_this())->CreatePipeline(GetRenderWindow()->GetRenderTarget(), &GetRenderWindow()->GetViewport()));
 	//m_Technique3D.AddPass(std::make_shared<CRenderPass_WMO2>(GetRenderDevice(), wmoListPass, shared_from_this())->CreatePipeline(GetRenderWindow()->GetRenderTarget(), &GetRenderWindow()->GetViewport()));
-	m_Technique3D.AddPass(std::make_shared<CRenderPass_M2>(GetRenderDevice(), shared_from_this())->CreatePipeline(GetRenderWindow()->GetRenderTarget(), &GetRenderWindow()->GetViewport()));
-	//m_Technique3D.AddPass(std::make_shared<CRenderPass_M2_Instanced>(GetRenderDevice(), m2ListPass, shared_from_this())->CreatePipeline(GetRenderWindow()->GetRenderTarget(), &GetRenderWindow()->GetViewport()));
+	//m_Technique3D.AddPass(std::make_shared<CRenderPass_M2>(GetRenderDevice(), shared_from_this())->CreatePipeline(GetRenderWindow()->GetRenderTarget(), &GetRenderWindow()->GetViewport()));
+	m_Technique3D.AddPass(std::make_shared<CRenderPass_M2_Instanced>(GetRenderDevice(), m2ListPass, shared_from_this())->CreatePipeline(GetRenderWindow()->GetRenderTarget(), &GetRenderWindow()->GetViewport()));
 	m_Technique3D.AddPass(std::make_shared<CRenderPass_Liquid>(GetRenderDevice(), shared_from_this())->CreatePipeline(GetRenderWindow()->GetRenderTarget(), &GetRenderWindow()->GetViewport()));
 	//m_Technique3D.AddPass(std::make_shared<CDrawBoundingBoxPass>(GetRenderDevice(), shared_from_this())->CreatePipeline(GetRenderWindow()->GetRenderTarget(), &GetRenderWindow()->GetViewport()));
 }
@@ -97,6 +92,16 @@ void CSceneWoW::OnPreRender(RenderEventArgs& e)
 //
 bool CSceneWoW::OnWindowKeyPressed(KeyEventArgs & e)
 {
+	if (e.Key == KeyCode::C)
+	{
+		TestCreateMap();
+		return true;
+	}
+	else if (e.Key == KeyCode::V)
+	{
+		TestDeleteMap();
+		return true;
+	}
 
 	return SceneBase::OnWindowKeyPressed(e);
 }
@@ -127,21 +132,6 @@ void CSceneWoW::Load3D()
 	GetCameraController()->GetCamera()->SetYaw(48.8);
 	GetCameraController()->GetCamera()->SetPitch(-27.8);
 #endif
-
-#if 1
-	const float x = 40;
-	const float y = 27;
-	map->MapPreLoad(GetBaseManager().GetManager<CDBCStorage>()->DBC_Map()[0]);
-	map->MapLoad();
-	map->MapPostLoad();
-	map->EnterMap(40, 27);
-
-	GetCameraController()->GetCamera()->SetTranslation(glm::vec3(x * C_TileSize + C_TileSize / 2.0f, 100.0f, y * C_TileSize + C_TileSize / 2.0f));
-	GetCameraController()->GetCamera()->SetYaw(48.8);
-	GetCameraController()->GetCamera()->SetPitch(-27.8);
-#endif
-
-
 }
 
 void CSceneWoW::Load3D_M2s()
@@ -189,5 +179,34 @@ void CSceneWoW::Load3D_M2s()
 void CSceneWoW::LoadUI()
 {
 	m_TechniqueUI.AddPass(std::make_shared<CUIFontPass>(GetRenderDevice(), shared_from_this())->CreatePipeline(GetRenderWindow()->GetRenderTarget(), &GetRenderWindow()->GetViewport()));
+}
+
+void CSceneWoW::TestCreateMap()
+{
+	const float x = 19;
+	const float y = 32;
+
+	if (map != nullptr)
+		TestDeleteMap();
+
+	skyManager->Load(530);
+
+	map = GetRootNode3D()->CreateSceneNode<CMap>(GetBaseManager(), GetRenderDevice());
+	map->MapPreLoad(GetBaseManager().GetManager<CDBCStorage>()->DBC_Map()[530]);
+	map->MapLoad();
+	map->MapPostLoad();
+	map->EnterMap(40, 27);
+
+	GetCameraController()->GetCamera()->SetTranslation(glm::vec3(x * C_TileSize + C_TileSize / 2.0f, 100.0f, y * C_TileSize + C_TileSize / 2.0f));
+	GetCameraController()->GetCamera()->SetYaw(48.8);
+	GetCameraController()->GetCamera()->SetPitch(-27.8);
+}
+
+void CSceneWoW::TestDeleteMap()
+{
+	GetRootNode3D()->RemoveChild(map);
+
+	_ASSERT(map.use_count() == 1);
+	map.reset();
 }
 

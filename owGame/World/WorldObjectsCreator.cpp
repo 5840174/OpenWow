@@ -184,6 +184,10 @@ std::shared_ptr<GameObject> CWorldObjectCreator::BuildGameObjectFromDisplayInfo(
 //
 // IWoWObjectsCreator
 //
+void CWorldObjectCreator::ClearCache()
+{
+}
+
 std::shared_ptr<M2> CWorldObjectCreator::LoadM2(IRenderDevice& RenderDevice, const std::string& Filename)
 {
 	std::lock_guard<std::mutex> lock(m_M2Lock);
@@ -192,8 +196,16 @@ std::shared_ptr<M2> CWorldObjectCreator::LoadM2(IRenderDevice& RenderDevice, con
 	
 	// Already exists
 	if (M2ObjectsWPtrsIt != m_M2ObjectsWPtrs.end())
+	{
 		if (auto M2ObjectsPtr = M2ObjectsWPtrsIt->second.lock())
+		{
 			return M2ObjectsPtr;
+		}
+		else
+		{
+			m_M2ObjectsWPtrs.erase(M2ObjectsWPtrsIt);
+		}
+	}
 
 	// Models blacklist
 	std::string newName = Utils::ToLower(Filename);
@@ -201,16 +213,17 @@ std::shared_ptr<M2> CWorldObjectCreator::LoadM2(IRenderDevice& RenderDevice, con
 		return nullptr;
 
 	std::shared_ptr<M2> m2Object;
-	try
-	{
+	//try
+	//{
 		m2Object = std::make_shared<M2>(m_BaseManager, RenderDevice, Filename);
-	}
-	catch (const CException& e)
-	{
-		Log::Error("CWorldObjectCreator: Error while creating M2 model: '%s'.", e.Message().c_str());
-		return nullptr;
-	}
-	m_M2ObjectsWPtrs.insert(std::make_pair(Filename, m2Object));
+	//}
+	//catch (const CException& e)
+	//{
+	//	Log::Error("CWorldObjectCreator: Error while creating M2 model: '%s'.", e.Message().c_str());
+	//	return nullptr;
+	//}
+
+	m_M2ObjectsWPtrs[Filename] = m2Object;
 
 	m_BaseManager.GetManager<ILoader>()->AddToLoadQueue(m2Object);
 
@@ -225,8 +238,16 @@ std::shared_ptr<CWMO> CWorldObjectCreator::LoadWMO(IRenderDevice& RenderDevice, 
 
 	// Already exists
 	if (WMOObjectsWPtrsIt != m_WMOObjectsWPtrs.end())
+	{
 		if (auto WMOObjectsPtr = WMOObjectsWPtrsIt->second.lock())
+		{
 			return WMOObjectsPtr;
+		}
+		else
+		{
+			m_WMOObjectsWPtrs.erase(WMOObjectsWPtrsIt);
+		}
+	}
 
 	std::shared_ptr<CWMO> wmoObject = std::make_shared<CWMO>(m_BaseManager, RenderDevice, Filename);
 	m_WMOObjectsWPtrs.insert(std::make_pair(Filename, wmoObject));

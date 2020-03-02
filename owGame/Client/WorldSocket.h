@@ -24,10 +24,10 @@ struct ClientPktHeader
 };
 
 
-class CWorldSocket : public TcpSocket
+class CWorldSocket : public sockets::TcpSocket
 {
 public:
-	CWorldSocket(ISocketHandler& SocketHandler, const std::string& Login, BigNumber Key);
+	CWorldSocket(sockets::ISocketHandler& SocketHandler, const std::string& Login, BigNumber Key);
 	virtual ~CWorldSocket();
 
     // TcpSocket

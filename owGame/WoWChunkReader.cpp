@@ -36,7 +36,7 @@ std::shared_ptr<IByteBuffer> WoWChunkReader::OpenChunk(const char * _name)
 		return std::shared_ptr<IByteBuffer>();
 
 	const auto& chunkInfos = chunkIterator->second;
-	_ASSERT(chunkInfos.size() == 1);
+	//_ASSERT(chunkInfos.size() == 1);
 	return GetChunk(chunkInfos[0]);
 }
 

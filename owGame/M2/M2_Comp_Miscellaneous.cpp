@@ -97,7 +97,7 @@ void CM2_Comp_Miscellaneous::Load(const SM2_Header& M2Header, const std::shared_
 	// Ribbons
 	if (M2Header.ribbon_emitters.size > 0)
 	{
-		SM2_RibbonEmitter* m2Ribbons = (SM2_RibbonEmitter*)(File->getData() + M2Header.ribbon_emitters.offset);
+		const SM2_RibbonEmitter* m2Ribbons = (const SM2_RibbonEmitter*)(File->getData() + M2Header.ribbon_emitters.offset);
 		for (uint32 i = 0; i < M2Header.ribbon_emitters.size; i++)
 		{
 			std::shared_ptr<CM2_RibbonEmitters> ribbon = std::make_shared<CM2_RibbonEmitters>(m_M2Object, File, m2Ribbons[i]);
@@ -111,14 +111,15 @@ void CM2_Comp_Miscellaneous::Load(const SM2_Header& M2Header, const std::shared_
 	// Particle systems
 	if (M2Header.particle_emitters.size > 0)
 	{
-		/*SM2_Particle* Particles = (SM2_Particle*)(File->getData() + M2Header.particle_emitters.offset);
+		const SM2_Particle* Particles = (const SM2_Particle*)(File->getData() + M2Header.particle_emitters.offset);
 		for (uint32 i = 0; i < M2Header.particle_emitters.size; i++)
 		{
-			CM2_ParticleSystem* particle = new CM2_ParticleSystem(m_M2, File, Particles[i], m_GlobalLoops);
-			miscellaneous->particleSystems.push_back(particle);
+			auto pa = Particles[i];
+			std::shared_ptr<CM2_ParticleSystem> particle = std::make_shared<CM2_ParticleSystem>(m_M2Object, File, Particles[i]);
+			particleSystems.push_back(particle);
 		}
 
 		// Animated
-		miscellaneous->m_HasMisc = true;*/
+		m_HasMisc = true;
 	}
 }

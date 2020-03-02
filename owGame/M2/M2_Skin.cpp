@@ -50,12 +50,16 @@ void CM2_Skin::Load(const SM2_Header& M2Header, const std::shared_ptr<IFile>& Fi
 		}
 
 		std::vector<uint16> indexes;
-		for (uint16 ind = sectionProto.indexStart; ind < sectionProto.indexStart + sectionProto.indexCount; ind++)
+		indexes.resize(sectionProto.indexCount);
+		for (uint16 i = 0; i < sectionProto.indexCount; i++)
 		{
-			uint16 index = t_indexesIndexes[ind];
+			size_t indexIntoIndexes = static_cast<size_t>(sectionProto.indexStart) + static_cast<size_t>(i);
+			_ASSERT(indexIntoIndexes < m_M2SkinProfile.indices.size);
+			uint16 index = t_indexesIndexes[indexIntoIndexes];
+
 			_ASSERT(index >= sectionProto.vertexStart);
 			_ASSERT(index < sectionProto.vertexStart + sectionProto.vertexCount);
-			indexes.push_back(index - sectionProto.vertexStart);
+			indexes[i] = index - sectionProto.vertexStart;
 		}
 
 		m_Sections.push_back(std::make_shared<CM2_SkinSection>(m_RenderDevice, m_M2Model, sectionIndex, sectionProto, vertexes, indexes));

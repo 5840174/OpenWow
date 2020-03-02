@@ -7,9 +7,7 @@ CMap::CMap(IBaseManager& BaseManager, IRenderDevice& RenderDevice)
 	: m_BaseManager(BaseManager)
 	, m_RenderDevice(RenderDevice)
 {
-	memset(m_ADTCache, 0, sizeof(m_ADTCache));
 	m_CurrentTileX = m_CurrentTileZ = -1;
-	memset(m_Current, 0, sizeof(m_Current));
 	m_IsOnInvalidTile = false;
 
 	if (_MapShared == nullptr)
@@ -41,11 +39,9 @@ void CMap::MapPreLoad(const DBC_MapRecord* _map)
 
 	Log::Print("Map[%s]: Id [%d]. Preloading...", m_MapDBCRecord->Get_Directory(), m_MapDBCRecord->Get_ID());
 
-	m_WDL.reset();
 	m_WDL = std::make_unique<CMapWDL>(m_BaseManager, m_RenderDevice, *this);
 	m_WDL->Load();
 
-	m_WDT.reset();
 	m_WDT = std::make_unique<CMapWDT>(m_BaseManager, m_RenderDevice, *this);
 }
 
@@ -202,6 +198,7 @@ std::shared_ptr<CMapTile> CMap::LoadTile(int32 x, int32 z)
 
 		// maxidx is the winner (loser)
 		RemoveChild(m_ADTCache[maxidx]);
+		m_BaseManager.GetManager<ILoader>()->AddToDeleteQueue(m_ADTCache[maxidx]);
 		firstnull = maxidx;
 	}
 

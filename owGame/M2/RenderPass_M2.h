@@ -9,12 +9,15 @@ public:
 	CRenderPass_M2(IRenderDevice& RenderDevice, std::shared_ptr<IScene> scene);
 	virtual ~CRenderPass_M2();
 
+	// CRenderPass_M2
+	void DoRenderM2Model(const CM2_Base_Instance* M2SceneNode, const CM2_Skin* M2Model, UINT InstancesCnt = UINT32_MAX);
+
 	// IRenderPassPipelined
 	virtual std::shared_ptr<IRenderPassPipelined> CreatePipeline(std::shared_ptr<IRenderTarget> RenderTarget, const Viewport* Viewport) override;
 
     // IVisitor
     virtual bool Visit(const ISceneNode3D* node) override;
-	virtual bool Visit(const IModel* Model) override ;
+	virtual bool Visit(const IModel* Model) override;
 
 protected:
 	std::shared_ptr<ISettingT<float>> m_ADT_MDX_Distance;

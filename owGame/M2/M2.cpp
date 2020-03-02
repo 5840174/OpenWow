@@ -33,9 +33,10 @@ M2::M2(IBaseManager& BaseManager, IRenderDevice& RenderDevice, const std::string
 	// 3. Read header and important data
 	m_F->read(&m_Header);
 
-	_ASSERT(std::strcmp(m_Header.magic, "MD20") == 0);
-	_ASSERT(m_Header.version == 256 || m_Header.version == 257);
-
+	//_ASSERT(std::strcmp(m_Header.magic, "MD20") == 0);
+	//_ASSERT(m_Header.version >= 256 && m_Header.version <= 257);
+	//_ASSERT(m_Header.version >= 260 && m_Header.version <= 263);
+	
 	if (m_Header.name.size > 0)
 		m_UniqueName = std::string((const char*)(m_F->getData() + m_Header.name.offset));
 
@@ -91,6 +92,7 @@ bool M2::Load()
 			std::shared_ptr<CM2_Skin> skin = std::make_shared<CM2_Skin>(m_BaseManager, m_RenderDevice, *this, m2Skins[i]);
 			skin->Load(m_Header, m_F, m2Vertexes);
 			m_Skins.push_back(skin);
+			break;
 		}
 	}
 	else

@@ -134,7 +134,11 @@ private:
 	uint16							    m_submesh;
 	glm::vec3                           m_PivotPoint;
 	M2_Animated<vec3>                   m_TranslateAnimated;
-	M2_Animated<quat>                   m_RotateAnimated;
+#if defined(WOW_CLASSIC_1_12_1)
+	M2_Animated<quat> m_RotateAnimated;
+#elif defined(WOW_BC_2_4_3)
+	M2_Animated<quat, M2CompQuat, Quat16ToQuat32> m_RotateAnimated;
+#endif
 	M2_Animated<vec3>                   m_ScaleAnimated;
 
 private:

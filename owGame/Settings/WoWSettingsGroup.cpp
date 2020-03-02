@@ -12,11 +12,11 @@ CWoWSettingsGroup::~CWoWSettingsGroup()
 void CWoWSettingsGroup::AddDefaultSettings()
 {
 	// Distances
-	AddSetting("ADT_MCNK_Distance", std::make_shared<CSettingBase<float>>(998.0f));
-	AddSetting("ADT_MCNK_HighRes_Distance", std::make_shared<CSettingBase<float>>(384.0f * 0.65f));
-	AddSetting("ADT_MDX_Distance", std::make_shared<CSettingBase<float>>(384.0f * 2.0f));
-	AddSetting("ADT_WMO_Distance", std::make_shared<CSettingBase<float>>(384.0f * 1.5f));
-	AddSetting("WMO_MODD_Distance", std::make_shared<CSettingBase<float>>(64.0f));
+	AddSetting("ADT_MCNK_Distance", std::make_shared<CSettingBase<float>>(998.0f * 2.0f));
+	AddSetting("ADT_MCNK_HighRes_Distance", std::make_shared<CSettingBase<float>>(384.0f * 0.65f * 2.0f));
+	AddSetting("ADT_MDX_Distance", std::make_shared<CSettingBase<float>>(384.0f * 2.0f * 2.0f));
+	AddSetting("ADT_WMO_Distance", std::make_shared<CSettingBase<float>>(384.0f * 1.5f * 2.0f));
+	AddSetting("WMO_MODD_Distance", std::make_shared<CSettingBase<float>>(64.0f * 2.0f));
 
 	// Drawing objects
 	AddSetting("draw_mcnk", std::make_shared<CSettingBase<bool>>(true));

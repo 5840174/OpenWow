@@ -25,6 +25,11 @@ struct SM2_SkinSection
 								// In 2.x this is the amount of of bones up the parent-chain affecting the submesh --NaK
 	uint16 centerBoneIndex;
 	vec3   centerPosition;      // Average position of all the vertices in the sub mesh.
+
+#if defined(WOW_BC_2_4_3)
+	glm::vec3 sortCenterPosition; // The center of the box when an axis aligned box is built around the vertices in the submesh.
+	float sortRadius;             // Distance of the vertex farthest from CenterBoundingBox.
+#endif
 };
 
 struct SM2_SkinBatch

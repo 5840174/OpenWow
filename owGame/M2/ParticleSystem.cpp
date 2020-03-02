@@ -19,6 +19,7 @@ CM2_ParticleSystem::CM2_ParticleSystem(const M2& M2Object, const std::shared_ptr
 	, m_CurrentTime(0.0)
 	, m_GlobalTime(0.0)
 {
+#if 0
 	m_Position = Fix_XZmY(M2Particle.Position);
 	m_ParentBone = m_M2Object.getSkeleton().getBoneDirect(M2Particle.bone);
 
@@ -104,6 +105,7 @@ CM2_ParticleSystem::CM2_ParticleSystem(const M2& M2Object, const std::shared_ptr
 		initTile(tc.tc, i);
 		m_Tiles.push_back(tc);
 	}
+#endif
 }
 
 void CM2_ParticleSystem::update(double _time, double _dTime)

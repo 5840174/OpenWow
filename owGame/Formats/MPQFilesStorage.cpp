@@ -7,6 +7,7 @@ CMPQFilesStorage::CMPQFilesStorage(std::string _path, Priority _priority)
 	: m_Path(_path)
 	, m_Priority(_priority)
 {
+	/*
 	AddArchive("base.MPQ");
 	AddArchive("dbc.MPQ");
 	//AddArchive(std::string("fonts.MPQ"));
@@ -19,7 +20,22 @@ CMPQFilesStorage::CMPQFilesStorage(std::string _path, Priority _priority)
 	//AddArchive(std::string("speech.MPQ"));
 	AddArchive("terrain.MPQ");
 	AddArchive("texture.MPQ");
-	AddArchive("wmo.MPQ");
+	AddArchive("wmo.MPQ");*/
+
+
+	AddArchive("common.MPQ");
+	AddArchive("expansion.MPQ");
+	AddArchive("patch.MPQ");
+	AddArchive("patch-2.MPQ");
+	AddArchive("enGB/backup-enGB.MPQ");
+	AddArchive("enGB/base-enGB.MPQ");
+	AddArchive("enGB/expansion-locale-enGB.MPQ");
+	AddArchive("enGB/expansion-speech-enGB.MPQ");
+	AddArchive("enGB/locale-enGB.MPQ");
+	AddArchive("enGB/patch-enGB.MPQ");
+	AddArchive("enGB/patch-enGB-2.MPQ");
+	AddArchive("enGB/speech-enGB.MPQ");
+
 }
 
 CMPQFilesStorage::~CMPQFilesStorage()

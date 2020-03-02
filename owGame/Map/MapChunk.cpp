@@ -212,27 +212,30 @@ bool CMapChunk::Load()
 	}
 
 	// Shadows
-	m_File->seek(startPos + header.ofsShadow);
+	if (header.flags.has_mcsh)
 	{
-		uint8 sbuf[64 * 64];
-		uint8* p;
-		uint8 c[8];
-		p = sbuf;
-		for (int j = 0; j < 64; j++)
+		m_File->seek(startPos + header.ofsShadow);
 		{
-			m_File->readBytes(c, 8);
-			for (int i = 0; i < 8; i++)
+			uint8 sbuf[64 * 64];
+			uint8* p;
+			uint8 c[8];
+			p = sbuf;
+			for (int j = 0; j < 64; j++)
 			{
-				for (int b = 0x01; b != 0x100; b <<= 1)
+				m_File->readBytes(c, 8);
+				for (int i = 0; i < 8; i++)
 				{
-					*p++ = (c[i] & b) ? 85 : 0;
+					for (int b = 0x01; b != 0x100; b <<= 1)
+					{
+						*p++ = (c[i] & b) ? 85 : 0;
+					}
 				}
 			}
-		}
 
-		for (int p = 0; p < 64 * 64; p++)
-		{
-			blendbuf[p * 4 + 3] = sbuf[p];
+			for (int p = 0; p < 64 * 64; p++)
+			{
+				blendbuf[p * 4 + 3] = sbuf[p];
+			}
 		}
 	}
 

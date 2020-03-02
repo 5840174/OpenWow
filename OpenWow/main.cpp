@@ -43,15 +43,19 @@ void main_internal(int argumentCount, char* arguments[])
 	BaseManager->GetManager<ILoader>()->SetCamera(nullptr);
 	BaseManager->GetManager<ILoader>()->Start();
 
+	std::shared_ptr<CWoWClient> WoWClient = std::make_unique<CWoWClient>(*BaseManager, renderDevice, "127.0.0.1");
+	
 	std::shared_ptr<IScene> scene = std::make_shared<CSceneWoW>(*BaseManager);//BaseManager->GetManager<IScenesFactory>()->CreateScene("SceneDefault");
+
+	//WoWClient->SetScene(scene);
+	//WoWClient->BeginConnect("admin", "admin");
+
 	scene->ConnectEvents(std::dynamic_pointer_cast<IRenderWindowEvents>(firstRenderWindow));
 	scene->Initialize();
 
 	/*std::shared_ptr<IScene> scene2 = std::make_shared<CSceneWoW2>(*BaseManager, scene->GetRootNode3D(), scene->GetCameraController()->GetCamera());//BaseManager->GetManager<IScenesFactory>()->CreateScene("SceneDefault");
 	scene2->ConnectEvents(std::dynamic_pointer_cast<IRenderWindowEvents>(secondRenderWindow));
 	scene2->Initialize();*/
-
-	
 
 	app.Run();
 }
@@ -60,16 +64,21 @@ void main_internal(int argumentCount, char* arguments[])
 
 int main(int argumentCount, char* arguments[])
 {
+#ifdef _DEBUG
 	_CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
 	_CrtSetReportMode(_CRT_ERROR, _CRTDBG_MODE_DEBUG);
 
-	//_CrtSetBreakAlloc(158);
+	_CrtMemState _ms;
+	_CrtMemCheckpoint(&_ms);
+#endif
+	new char[228];
+	main_internal(argumentCount, arguments);
 
-	main_internal(argumentCount, arguments);		
+	if (BaseManager)
+		delete BaseManager;
 
-	delete BaseManager;
-
-	_CrtMemDumpAllObjectsSince(NULL);
-
+#ifdef _DEBUG
+	_CrtMemDumpAllObjectsSince(&_ms);
+#endif
 	return 0;
 }

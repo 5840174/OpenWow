@@ -5,7 +5,11 @@
 #include <sockets\\SocketThread.h>
 #include <sockets\\SocketHandler.h>
 #include <sockets\\SocketHandlerThread.h>
-#pragma comment(lib, "sockets.lib")
+
+
+//#define WOW_CLASSIC_1_12_1
+#define WOW_BC_2_4_3
+
 
 /**
   * Enable or disable M2 models support

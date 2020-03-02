@@ -24,12 +24,15 @@ private:
 	void Load3D_M2s();
 	void LoadUI();
 
+	void TestCreateMap();
+	void TestDeleteMap();
+
 private:
 	std::shared_ptr<CWMO_Base_Instance> wmoInstance;
 	std::shared_ptr<CM2_Base_Instance> m2Instance;
 	std::shared_ptr<SkyManager> skyManager;
 	std::shared_ptr<CMap> map;
-	std::unique_ptr<CWoWClient> m_WoWClient;
+	
 
 private: // Advanced
 	struct QueryCreatures

@@ -6,8 +6,8 @@
 // General
 #include "AuthSocket.h"
 
-CAuthSocket::CAuthSocket(ISocketHandler& SocketHandler, CWoWClient& WoWClient, const std::string& Login, const std::string& Password)
-    : TcpSocket(SocketHandler)
+CAuthSocket::CAuthSocket(sockets::ISocketHandler& SocketHandler, CWoWClient& WoWClient, const std::string& Login, const std::string& Password)
+    : sockets::TcpSocket(SocketHandler)
     , m_WoWClient(WoWClient)
 	, m_Login(Login)
 {
@@ -66,14 +66,14 @@ void CAuthSocket::ProcessHandler(eAuthCmd AuthCmd, CByteBuffer& _buffer)
 
 namespace
 {
-	struct AuthChallenge_C : public ISendable
+	struct AuthChallenge_C
 	{
 		AuthChallenge_C(std::string Login, uint32 IPv4)
 			: Login(Login)
 			, IPv4(IPv4)
 		{}
 
-		void Send(TcpSocket* _socket) override
+		void Send(sockets::TcpSocket* _socket)
 		{
 			CByteBuffer bb;
 			bb << (uint8)AUTH_LOGON_CHALLENGE;
@@ -111,7 +111,7 @@ namespace
 
 void CAuthSocket::C_SendLogonChallenge()
 {
-    AuthChallenge_C challenge(m_Login, TcpSocket::GetSockIP4());
+    AuthChallenge_C challenge(m_Login, sockets::TcpSocket::GetSockIP4());
     challenge.Send(this);
 }
 
@@ -119,7 +119,7 @@ void CAuthSocket::C_SendLogonChallenge()
 
 namespace
 {
-	struct AuthProof_C : public ISendable
+	struct AuthProof_C
 	{
 		AuthProof_C(uint8* _A, const uint8* _MClient)
 		{
@@ -127,7 +127,7 @@ namespace
 			std::memcpy(M1, _MClient, SHA_DIGEST_LENGTH);
 		}
 
-		void Send(TcpSocket* _socket) override
+		void Send(sockets::TcpSocket* _socket)
 		{
 			CByteBuffer bb;
 			bb << (uint8)AUTH_LOGON_PROOF;

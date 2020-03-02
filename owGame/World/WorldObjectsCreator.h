@@ -22,6 +22,7 @@ public:
 	std::shared_ptr<GameObject> BuildGameObjectFromDisplayInfo(IRenderDevice& RenderDevice, IScene* Scene, uint32 _id, const std::shared_ptr<ISceneNode3D>& Parent);
 
 	// IWoWObjectsCreator
+	void ClearCache() override;
 	std::shared_ptr<M2> LoadM2(IRenderDevice& RenderDevice, const std::string& Filename) override final;
 	std::shared_ptr<CWMO> LoadWMO(IRenderDevice& RenderDevice, const std::string& Filename) override final;
 
