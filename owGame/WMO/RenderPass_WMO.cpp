@@ -7,8 +7,8 @@
 #include "WMO_Base_Instance.h"
 #include "WMO_Group_Instance.h"
 
-CRenderPass_WMO::CRenderPass_WMO(IRenderDevice& RenderDevice, std::shared_ptr<IScene> scene)
-	: Base3DPass(RenderDevice, scene)
+CRenderPass_WMO::CRenderPass_WMO(IRenderDevice& RenderDevice, const std::shared_ptr<CSceneNodeListPass>& SceneNodeListPass)
+	: CBaseList3DPass(RenderDevice, SceneNodeListPass, cWMOGroup_NodeType)
 {
 	m_WoWSettings = RenderDevice.GetBaseManager().GetManager<ISettings>()->GetGroup("WoWSettings");
 }
@@ -59,28 +59,24 @@ std::shared_ptr<IRenderPassPipelined> CRenderPass_WMO::CreatePipeline(std::share
 //
 bool CRenderPass_WMO::Visit(const ISceneNode3D* SceneNode3D)
 {
-	const CWMO_Base_Instance* wmoInstance = dynamic_cast<const CWMO_Base_Instance*>(SceneNode3D);
-	const CWMO_Group_Instance* wmoGroupInstance = dynamic_cast<const CWMO_Group_Instance*>(SceneNode3D);
+	if (SceneNode3D->Is(cWMO_NodeType) || SceneNode3D->Is(cWMOGroup_NodeType))
+	{
+		const auto& collider = SceneNode3D->GetComponent<IColliderComponent3D>();
 
-	if (!wmoInstance && !wmoGroupInstance)
-		return false;
+		const ICameraComponent3D* camera = GetRenderEventArgs().CameraForCulling;
+		_ASSERT(camera != nullptr);
 
-	const std::shared_ptr<IColliderComponent3D>& collider = SceneNode3D->GetComponent<IColliderComponent3D>();
+		if (camera->GetFrustum().cullBox(collider->GetWorldBounds()))
+			return false;
 
-	const ICameraComponent3D* camera = GetRenderEventArgs().CameraForCulling;
-	_ASSERT(camera != nullptr);
+		return CBaseList3DPass::Visit(SceneNode3D);
+	}
 
-	if (camera->GetFrustum().cullBox(collider->GetWorldBounds()))
-		return false;
-
-	//const_cast<ISceneNode3D*>(SceneNode3D)->UpdateCamera(GetRenderEventArgs().Camera);
-
-	return Base3DPass::Visit(SceneNode3D);
+	return false;
 }
 
 
-
-
+#if 0
 
 CRenderPass_WMO2::CRenderPass_WMO2(IRenderDevice & RenderDevice, const std::shared_ptr<BuildRenderListPassTemplated<CWMO_Group_Instance>>& List, std::shared_ptr<IScene> scene)
 	: Base3DPass(RenderDevice, scene)
@@ -182,3 +178,4 @@ std::shared_ptr<IRenderPassPipelined> CRenderPass_WMO2::CreatePipeline(std::shar
 	return SetPipeline(pipeline);
 }
 
+#endif

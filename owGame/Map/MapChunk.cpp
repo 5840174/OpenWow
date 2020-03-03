@@ -8,7 +8,7 @@
 #include "MapChunk.h"
 
 // Additional
-#include "MapLiquid.h"
+#include "MapChunkLiquid.h"
 #include "Map_Shared.h"
 #include "MapChunkMaterial.h"
 
@@ -18,7 +18,9 @@ CMapChunk::CMapChunk(IRenderDevice& RenderDevice, const CMap& Map, const std::sh
 	, m_Map(Map)
 	, m_MapTile(*MapTile)
 	, m_File(Bytes)
-{}
+{
+	SetType(cMapChunk_NodeType);
+}
 
 CMapChunk::~CMapChunk()
 {}
@@ -75,19 +77,6 @@ void CMapChunk::Initialize()
 std::string CMapChunk::GetName() const
 {
 	return "MapChunk " + 2/*std::to_string(m_MCIN.offset)*/;
-}
-
-void CMapChunk::Accept(IVisitor* visitor)
-{
-	//AbstractPass* visitorAsBasePass = dynamic_cast<AbstractPass*>(visitor);
-	//const ICamera* camera = visitorAsBasePass->GetRenderEventArgs()->Camera;
-
-    /*if (!GetComponent<CColliderComponent3D>()->CheckDistance(camera, m_QualitySettings->ADT_MCNK_Distance))
-    {
-        return false;
-    }*/
-
-	SceneNode3D::Accept(visitor);
 }
 
 
@@ -334,7 +323,7 @@ bool CMapChunk::Load()
 				GetComponent<IColliderComponent3D>()->SetBounds(bbox);
 			}
 
-			CADT_Liquid liquidObject(m_RenderDevice, m_File, header);
+			CMapChunkLiquid liquidObject(m_RenderDevice, m_File, header);
 
 			auto liquidInstance = CreateSceneNode<Liquid_Instance>();
 			liquidObject.CreateInsances(liquidInstance);

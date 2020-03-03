@@ -1,9 +1,10 @@
 #pragma once
 
-class ZN_API CRenderPass_Sky : public Base3DPass
+class ZN_API CRenderPass_Sky 
+	: public CBaseList3DPass
 {
 public:
-	CRenderPass_Sky(IRenderDevice& RenderDevice, std::shared_ptr<IScene> scene);
+	CRenderPass_Sky(IRenderDevice& RenderDevice, const std::shared_ptr<CSceneNodeListPass>& SceneNodeListPass);
 	virtual ~CRenderPass_Sky();
 
 	// IRenderPassPipelined

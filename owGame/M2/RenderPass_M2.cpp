@@ -16,8 +16,8 @@
 // Additional (meshes)
 #include "M2_Skin_Batch.h"
 
-CRenderPass_M2::CRenderPass_M2(IRenderDevice& RenderDevice, std::shared_ptr<IScene> scene, bool OpaqueDraw)
-	: Base3DPass(RenderDevice, scene)
+CRenderPass_M2::CRenderPass_M2(IRenderDevice& RenderDevice, const std::shared_ptr<CSceneNodeListPass>& SceneNodeListPass, bool OpaqueDraw)
+	: CBaseList3DPass(RenderDevice, SceneNodeListPass, cM2_NodeType)
 	, m_CurrentM2Model(nullptr)
 	, m_OpaqueDraw(OpaqueDraw)
 {
@@ -60,7 +60,7 @@ void CRenderPass_M2::DoRenderM2Model(const CM2_Base_Instance* M2SceneNode, const
 			{
 				const auto& mat = it2;
 
-				if (OpaqueDraw)
+				/*if (OpaqueDraw)
 				{
 					if (mat->GetM2Material()->getBlendMode() != 0 && mat->GetM2Material()->getBlendMode() != 1)
 						continue;
@@ -69,7 +69,7 @@ void CRenderPass_M2::DoRenderM2Model(const CM2_Base_Instance* M2SceneNode, const
 				{
 					if (mat->GetM2Material()->getBlendMode() == 0 || mat->GetM2Material()->getBlendMode() == 1)
 						continue;
-				}
+				}*/
 
 				mat->GetM2Material()->GetBlendState()->Bind();
 				//mat->GetM2Material()->GetDepthStencilState()->Bind();
@@ -148,21 +148,24 @@ std::shared_ptr<IRenderPassPipelined> CRenderPass_M2::CreatePipeline(std::shared
 //
 bool CRenderPass_M2::Visit(const ISceneNode3D* SceneNode3D)
 {
-	if (const CM2_Base_Instance* m2Instance = dynamic_cast<const CM2_Base_Instance*>(SceneNode3D))
+	if (SceneNode3D->Is(cM2_NodeType))
 	{
-		const auto& collider = SceneNode3D->GetComponent<IColliderComponent3D>();
+		if (const CM2_Base_Instance* m2Instance = static_cast<const CM2_Base_Instance*>(SceneNode3D))
+		{
+			const auto& collider = SceneNode3D->GetComponent<IColliderComponent3D>();
 
-		const ICameraComponent3D* camera = GetRenderEventArgs().CameraForCulling;
-		_ASSERT(camera != nullptr);
+			const ICameraComponent3D* camera = GetRenderEventArgs().CameraForCulling;
+			_ASSERT(camera != nullptr);
 
-		if (collider->IsCulledByDistance2D(camera, m_ADT_MDX_Distance->Get()))
-			return false;
+			if (collider->IsCulledByDistance2D(camera, m_ADT_MDX_Distance->Get()))
+				return false;
 
-		if (collider->IsCulledByFrustum(camera))
-			return false;
+			if (collider->IsCulledByFrustum(camera))
+				return false;
 
-		m_CurrentM2Model = m2Instance;
-		return Base3DPass::Visit(m2Instance);
+			m_CurrentM2Model = m2Instance;
+			return CBaseList3DPass::Visit(m2Instance);
+		}
 	}
 
 	return false;
@@ -170,7 +173,7 @@ bool CRenderPass_M2::Visit(const ISceneNode3D* SceneNode3D)
 
 bool CRenderPass_M2::Visit(const IModel* Model)
 {
-	if (const CM2_Skin* m2Skin = dynamic_cast<const CM2_Skin*>(Model))
+	if (const CM2_Skin* m2Skin = static_cast<const CM2_Skin*>(Model))
 	{
 		DoRenderM2Model(m_CurrentM2Model, m2Skin, m_OpaqueDraw);
 
@@ -183,10 +186,10 @@ bool CRenderPass_M2::Visit(const IModel* Model)
 
 //----------------------------------------------------------------------
 
+#if 0
 
-
-CRenderPass_M2_Instanced::CRenderPass_M2_Instanced(IRenderDevice & RenderDevice, const std::shared_ptr<BuildRenderListPassTemplated<CM2_Base_Instance>>& List, std::shared_ptr<IScene> scene, bool OpaqueDraw)
-	: CRenderPass_M2(RenderDevice, scene, OpaqueDraw)
+CRenderPass_M2_Instanced::CRenderPass_M2_Instanced(IRenderDevice & RenderDevice, const std::shared_ptr<BuildRenderListPassTemplated<CM2_Base_Instance>>& List, const std::shared_ptr<CSceneNodeListPass>& SceneNodeListPass bool OpaqueDraw)
+	: CRenderPass_M2(RenderDevice, SceneNodeListPass)
 	, m_RenderListPass(List)
 {
 	m_InstancesBuffer = GetRenderDevice().GetObjectsFactory().CreateStructuredBuffer(nullptr, 1000, sizeof(glm::mat4), CPUAccess::Write);
@@ -303,3 +306,5 @@ bool CRenderPass_M2_Instanced::Visit(const IModel * Model)
 	_ASSERT(false);
 	return false;
 }
+
+#endif

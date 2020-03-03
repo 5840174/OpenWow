@@ -52,29 +52,6 @@ void CMapWMOInstance::Accept(IVisitor* visitor)
 		m_AlreadyDraw.insert(std::make_pair(m_PlacementInfo.uniqueId, this));
 	}
 
-	//CRenderPass_WMO* passAsWMOPass = dynamic_cast<CRenderPass_WMO*>(visitor);
-	// (passAsWMOPass == nullptr)
-	//	return false;
-
-	//if (m_AlreadyDraw.find(m_UniqueId) != m_AlreadyDraw.end())
-	//{
-	//	return false;
-	//}
-
-	//AbstractPass* visitorAsBasePass = dynamic_cast<AbstractPass*>(visitor);
-	//const ICamera* camera = visitorAsBasePass->GetRenderEventArgs()->Camera;
-
-	//if (!GetComponent<CColliderComponent3D>()->CheckDistance2D(camera, GetGroupQuality()->ADT_WMO_Distance))
-	//{
-	//	return false;
-	//}
-
-	//if (!GetComponent<IColliderComponent3D>()->CheckFrustum(camera))
-	//{
-	//	return false;
-	//}
-
-	// ISceneNode
 	CWMO_Base_Instance::Accept(visitor);
 }
 

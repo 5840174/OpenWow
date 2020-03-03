@@ -6,8 +6,8 @@
 // Additional
 #include "Liquid/LiquidInstance.h"
 
-CRenderPass_Liquid::CRenderPass_Liquid(IRenderDevice& RenderDevice, std::shared_ptr<IScene> scene)
-	: Base3DPass(RenderDevice, scene)
+CRenderPass_Liquid::CRenderPass_Liquid(IRenderDevice& RenderDevice, const std::shared_ptr<CSceneNodeListPass>& SceneNodeListPass)
+	: CBaseList3DPass(RenderDevice, SceneNodeListPass, { cLiquid_NodeType, cLiquid_MapChnuk_NodeType, cLiquid_WMOGroup_NodeType } )
 {}
 
 CRenderPass_Liquid::~CRenderPass_Liquid()
@@ -53,8 +53,10 @@ std::shared_ptr<IRenderPassPipelined> CRenderPass_Liquid::CreatePipeline(std::sh
 //
 bool CRenderPass_Liquid::Visit(const ISceneNode3D* SceneNode3D)
 {
-    if (const Liquid_Instance* liquidInstance = dynamic_cast<const Liquid_Instance*>(SceneNode3D))
-    {
+	_ASSERT(SceneNode3D->Is(cLiquid_NodeType) || SceneNode3D->Is(cLiquid_MapChnuk_NodeType) || SceneNode3D->Is(cLiquid_WMOGroup_NodeType));
+	
+	if (const Liquid_Instance* liquidInstance = static_cast<const Liquid_Instance*>(SceneNode3D))
+	{
 		const std::shared_ptr<IColliderComponent3D>& collider = SceneNode3D->GetComponent<IColliderComponent3D>();
 
 		const ICameraComponent3D* camera = GetRenderEventArgs().CameraForCulling;
@@ -63,8 +65,9 @@ bool CRenderPass_Liquid::Visit(const ISceneNode3D* SceneNode3D)
 		if (camera->GetFrustum().cullBox(collider->GetWorldBounds()))
 			return false;
 
-        return Base3DPass::Visit(SceneNode3D);
-    }
+		return CBaseList3DPass::Visit(SceneNode3D);
+	}
 
+	_ASSERT(false);
     return false;
 }

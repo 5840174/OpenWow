@@ -16,7 +16,9 @@ const uint32 C_SkycolorsCount = 7;
 
 SkyManager::SkyManager(IRenderDevice& RenderDevice)
 	: m_RenderDevice(RenderDevice)
-{}
+{
+	SetType(cSky_NodeType);
+}
 
 SkyManager::~SkyManager()
 {}

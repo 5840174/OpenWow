@@ -1,10 +1,10 @@
 #pragma once
 
 class ZN_API CRenderPass_ADT_MCNK 
-	: public Base3DPass
+	: public CBaseList3DPass
 {
 public:
-	CRenderPass_ADT_MCNK(IRenderDevice& RenderDevice, std::shared_ptr<IScene> scene);
+	CRenderPass_ADT_MCNK(IRenderDevice& RenderDevice, const std::shared_ptr<CSceneNodeListPass>& SceneNodeListPass);
 	virtual ~CRenderPass_ADT_MCNK();
 
 	// IRenderPassPipelined

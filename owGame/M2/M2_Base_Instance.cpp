@@ -15,7 +15,7 @@ CM2_Base_Instance::CM2_Base_Instance(const std::shared_ptr<M2>& M2Object)
 	, m_Color(vec4(1.0f, 1.0f, 1.0f, 1.0f))
 	, m_Alpha(1.0f)
 {
-
+	SetType(cM2_NodeType);
 }
 
 CM2_Base_Instance::~CM2_Base_Instance()

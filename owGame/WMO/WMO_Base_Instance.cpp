@@ -7,7 +7,7 @@ CWMO_Base_Instance::CWMO_Base_Instance(const std::shared_ptr<CWMO>& WMOObject)
     : m_WMOObject(WMOObject)
 	, CLoadableObject(WMOObject)
 {
-	
+	SetType(cWMO_NodeType);
 }
 
 CWMO_Base_Instance::~CWMO_Base_Instance()

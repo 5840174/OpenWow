@@ -3,10 +3,10 @@
 #include "M2/M2_Base_Instance.h"
 
 class ZN_API CRenderPass_M2 
-	: public Base3DPass
+	: public CBaseList3DPass
 {
 public:
-	CRenderPass_M2(IRenderDevice& RenderDevice, std::shared_ptr<IScene> scene, bool OpaqueDraw);
+	CRenderPass_M2(IRenderDevice& RenderDevice, const std::shared_ptr<CSceneNodeListPass>& SceneNodeListPass, bool OpaqueDraw);
 	virtual ~CRenderPass_M2();
 
 	// CRenderPass_M2
@@ -30,8 +30,7 @@ protected:
 };
 
 
-//==========================================================================================
-
+#if 0
 
 class ZN_API CRenderPass_M2_Instanced
 	: public CRenderPass_M2
@@ -55,3 +54,5 @@ private:
 	std::shared_ptr<IStructuredBuffer> m_InstancesBuffer;
 	
 };
+
+#endif

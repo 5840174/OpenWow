@@ -2,10 +2,11 @@
 
 #include "WMO_Base_Instance.h"
 
-class ZN_API CRenderPass_WMO : public Base3DPass
+class ZN_API CRenderPass_WMO 
+	: public CBaseList3DPass
 {
 public:
-	CRenderPass_WMO(IRenderDevice& RenderDevice, std::shared_ptr<IScene> scene);
+	CRenderPass_WMO(IRenderDevice& RenderDevice, const std::shared_ptr<CSceneNodeListPass>& SceneNodeListPass);
 	virtual ~CRenderPass_WMO();
 
 	// IRenderPassPipelined
@@ -18,6 +19,7 @@ private:
 	std::shared_ptr<ISettingGroup> m_WoWSettings;
 };
 
+#if 0
 
 class ZN_API CRenderPass_WMO2 
 	: public Base3DPass
@@ -38,3 +40,5 @@ private:
 
 	std::shared_ptr<IStructuredBuffer> strBuffer;
 };
+
+#endif

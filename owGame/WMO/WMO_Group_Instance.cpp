@@ -14,6 +14,7 @@ CWMO_Group_Instance::CWMO_Group_Instance(const std::shared_ptr<WMO_Group>& WMOGr
 	, m_Calculated(false)
 	, m_WMOGroupObject(*WMOGroupObject)
 {
+	SetType(cWMOGroup_NodeType);
 }
 
 CWMO_Group_Instance::~CWMO_Group_Instance()

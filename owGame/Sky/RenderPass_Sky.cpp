@@ -6,8 +6,8 @@
 // Additional 
 #include "SkyManager.h"
 
-CRenderPass_Sky::CRenderPass_Sky(IRenderDevice& RenderDevice, std::shared_ptr<IScene> scene)
-	: Base3DPass(RenderDevice, scene)
+CRenderPass_Sky::CRenderPass_Sky(IRenderDevice& RenderDevice, const std::shared_ptr<CSceneNodeListPass>& SceneNodeListPass)
+	: CBaseList3DPass(RenderDevice, SceneNodeListPass, cSky_NodeType)
 {
 	m_WoWSettings = RenderDevice.GetBaseManager().GetManager<ISettings>()->GetGroup("WoWSettings");
 }
@@ -58,8 +58,9 @@ std::shared_ptr<IRenderPassPipelined> CRenderPass_Sky::CreatePipeline(std::share
 //
 bool CRenderPass_Sky::Visit(const ISceneNode3D * node)
 {
-	if (const SkyManager* skyManagerInstance = dynamic_cast<const SkyManager*>(node))
-		return Base3DPass::Visit(skyManagerInstance);
+	_ASSERT(node->Is(cSky_NodeType));
+	if (const SkyManager* skyManagerInstance = static_cast<const SkyManager*>(node))
+		return CBaseList3DPass::Visit(skyManagerInstance);
 
 	return false;
 }

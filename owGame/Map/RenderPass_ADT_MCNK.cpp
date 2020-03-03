@@ -6,8 +6,8 @@
 // Additional
 #include "MapChunk.h"
 
-CRenderPass_ADT_MCNK::CRenderPass_ADT_MCNK(IRenderDevice& RenderDevice, std::shared_ptr<IScene> scene)
-	: Base3DPass(RenderDevice, scene)
+CRenderPass_ADT_MCNK::CRenderPass_ADT_MCNK(IRenderDevice& RenderDevice, const std::shared_ptr<CSceneNodeListPass>& SceneNodeListPass)
+	: CBaseList3DPass(RenderDevice, SceneNodeListPass, cMapChunk_NodeType)
 {
 	m_ADT_MCNK_Distance = RenderDevice.GetBaseManager().GetManager<ISettings>()->GetGroup("WoWSettings")->GetSettingT<float>("ADT_MCNK_Distance");
 }
@@ -70,9 +70,11 @@ std::shared_ptr<IRenderPassPipelined> CRenderPass_ADT_MCNK::CreatePipeline(std::
 //
 bool CRenderPass_ADT_MCNK::Visit(const ISceneNode3D* SceneNode3D)
 {
-	if (const CMapChunk* adtMCNKInstance = dynamic_cast<const CMapChunk*>(SceneNode3D))
+	_ASSERT(SceneNode3D->Is(cMapChunk_NodeType));
+	
+	if (const CMapChunk* adtMCNKInstance = static_cast<const CMapChunk*>(SceneNode3D))
 	{
-		const std::shared_ptr<IColliderComponent3D>& collider = SceneNode3D->GetComponent<IColliderComponent3D>();
+		const auto& collider = SceneNode3D->GetComponent<IColliderComponent3D>();
 
 		const ICameraComponent3D* camera = GetRenderEventArgs().CameraForCulling;
 		_ASSERT(camera != nullptr);
@@ -83,8 +85,9 @@ bool CRenderPass_ADT_MCNK::Visit(const ISceneNode3D* SceneNode3D)
 		if (collider->IsCulledByFrustum(camera))
 			return false;
 
-		return Base3DPass::Visit(SceneNode3D);
+		return CBaseList3DPass::Visit(SceneNode3D);
 	}
 
+	_ASSERT(false);
 	return false;
 }

@@ -48,24 +48,6 @@ void CMapM2Instance::Accept(IVisitor* visitor)
 		m_AlreadyDraw.insert(std::make_pair(m_PlacementInfo.uniqueId, this));
 	}
 
-	//CRenderPass_M2* passAsM2Pass = dynamic_cast<CRenderPass_M2*>(visitor);
-    //if (passAsM2Pass == nullptr)
-    //    return false;
-
-	//if (m_AlreadyDraw.find(m_UniqueId) != m_AlreadyDraw.end())
-	//{
-	//	return false;
-	//}
-
-	//const ICameraComponent3D* camera = passAsM2Pass->GetRenderEventArgs()->Camera;
-
-	//float distToCamera2D = (camera->GetTranslation() - GetComponent<CColliderComponent3D>()->GetBounds().getCenter()).length() - GetComponent<CColliderComponent3D>()->GetBounds().getRadius();
-	//if (distToCamera2D > GetGroupQuality()->ADT_MCNK_Distance)
-	//{
-	//	return false;
-	//}
-
-	// ISceneNode
 	CM2_Base_Instance::Accept(visitor);
 }
 

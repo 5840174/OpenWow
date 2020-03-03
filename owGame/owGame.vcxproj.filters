@@ -474,9 +474,6 @@
     <ClCompile Include="World\Items\Item_VisualData.cpp">
       <Filter>World\Item</Filter>
     </ClCompile>
-    <ClCompile Include="Map\MapLiquid.cpp">
-      <Filter>Map\Tile</Filter>
-    </ClCompile>
     <ClCompile Include="WMO\WMO_Portal_Instance.cpp">
       <Filter>WMO\Instances</Filter>
     </ClCompile>
@@ -518,6 +515,9 @@
     </ClCompile>
     <ClCompile Include="M2\M2_InstanceSkeleton.cpp">
       <Filter>M2\SceneNode &amp; Components</Filter>
+    </ClCompile>
+    <ClCompile Include="Map\MapChunkLiquid.cpp">
+      <Filter>Map\Tile</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -1034,9 +1034,6 @@
     <ClInclude Include="Client\ObjectDefines.h">
       <Filter>Client</Filter>
     </ClInclude>
-    <ClInclude Include="Map\MapLiquid.h">
-      <Filter>Map\Tile</Filter>
-    </ClInclude>
     <ClInclude Include="WMO\WMO_Portal_Instance.h">
       <Filter>WMO\Instances</Filter>
     </ClInclude>
@@ -1090,6 +1087,9 @@
     </ClInclude>
     <ClInclude Include="M2\M2_InstanceSkeleton.h">
       <Filter>M2\SceneNode &amp; Components</Filter>
+    </ClInclude>
+    <ClInclude Include="Map\MapChunkLiquid.h">
+      <Filter>Map\Tile</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -12,7 +12,9 @@ CMapTile::CMapTile(IBaseManager& BaseManager, IRenderDevice& RenderDevice, const
 	, m_Map(Map)
 	, m_IndexX(IndexX)
 	, m_IndexZ(IndexZ)
-{}
+{
+	SetType(cMapTile_NodeType);
+}
 
 CMapTile::~CMapTile()
 {

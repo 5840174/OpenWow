@@ -23,12 +23,15 @@ CRenderPass_MapTile::~CRenderPass_MapTile()
 //
 bool CRenderPass_MapTile::Visit(const ISceneNode3D* node)
 {	
-	if (const CMapTile* map = dynamic_cast<const CMapTile*>(node))
+	if (node->Is(cMapTile_NodeType))
 	{
-		if (!map->GetMap().getTileIsCurrent(map->getIndexX(), map->getIndexZ()))
-			return false;
+		if (const CMapTile* map = static_cast<const CMapTile*>(node))
+		{
+			if (!map->GetMap().getTileIsCurrent(map->getIndexX(), map->getIndexZ()))
+				return false;
 
-		ScenePass::Visit(node);
+			ScenePass::Visit(node);
+		}
 	}
 
 	return false;

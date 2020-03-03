@@ -7,6 +7,8 @@ CMap::CMap(IBaseManager& BaseManager, IRenderDevice& RenderDevice)
 	: m_BaseManager(BaseManager)
 	, m_RenderDevice(RenderDevice)
 {
+	SetType(cMap_NodeType);
+
 	m_CurrentTileX = m_CurrentTileZ = -1;
 	m_IsOnInvalidTile = false;
 

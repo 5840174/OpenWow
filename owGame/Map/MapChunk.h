@@ -22,8 +22,6 @@ public:
 	void                                            Initialize() override;
 	std::string                                     GetName() const override;
 
-	void                                            Accept(IVisitor* visitor) override;
-
 	// ILoadable
 	bool                                            Load() override;
 	bool                                            Delete() override;
