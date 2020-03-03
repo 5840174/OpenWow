@@ -16,9 +16,10 @@
 // Additional (meshes)
 #include "M2_Skin_Batch.h"
 
-CRenderPass_M2::CRenderPass_M2(IRenderDevice& RenderDevice, std::shared_ptr<IScene> scene)
+CRenderPass_M2::CRenderPass_M2(IRenderDevice& RenderDevice, std::shared_ptr<IScene> scene, bool OpaqueDraw)
 	: Base3DPass(RenderDevice, scene)
 	, m_CurrentM2Model(nullptr)
+	, m_OpaqueDraw(OpaqueDraw)
 {
 	m_ADT_MDX_Distance = RenderDevice.GetBaseManager().GetManager<ISettings>()->GetGroup("WoWSettings")->GetSettingT<float>("ADT_MDX_Distance");
 }
@@ -31,7 +32,7 @@ CRenderPass_M2::~CRenderPass_M2()
 //
 // CRenderPass_M2
 //
-void CRenderPass_M2::DoRenderM2Model(const CM2_Base_Instance* M2SceneNode, const CM2_Skin* M2Model, UINT InstancesCnt)
+void CRenderPass_M2::DoRenderM2Model(const CM2_Base_Instance* M2SceneNode, const CM2_Skin* M2Model, bool OpaqueDraw, UINT InstancesCnt)
 {
 	const ShaderMap& shaders = GetPipeline().GetShaders();
 	const IShader* vertexShader = shaders.at(EShaderType::VertexShader).get();
@@ -59,11 +60,26 @@ void CRenderPass_M2::DoRenderM2Model(const CM2_Base_Instance* M2SceneNode, const
 			{
 				const auto& mat = it2;
 
+				if (OpaqueDraw)
+				{
+					if (mat->GetM2Material()->getBlendMode() != 0 && mat->GetM2Material()->getBlendMode() != 1)
+						continue;
+				}
+				else
+				{
+					if (mat->GetM2Material()->getBlendMode() == 0 || mat->GetM2Material()->getBlendMode() == 1)
+						continue;
+				}
+
+				mat->GetM2Material()->GetBlendState()->Bind();
+				//mat->GetM2Material()->GetDepthStencilState()->Bind();
+
 				mat->UpdateMaterialProps(GetRenderEventArgs(), M2SceneNode);
 				mat->Bind(shaders);
 				{
 					SGeometryDrawArgs geometryDrawArgs = { 0 };
 					geometryDrawArgs.IndexCnt = geom->getProto().indexCount;
+					//geometryDrawArgs.VertexStartLocation = geom->getProto().vertexStart;
 					geometryDrawArgs.VertexCnt = geom->getProto().vertexCount;
 					geometryDrawArgs.InstanceCnt = InstancesCnt;
 					geomInternal->Render_Draw(geometryDrawArgs);
@@ -88,7 +104,15 @@ std::shared_ptr<IRenderPassPipelined> CRenderPass_M2::CreatePipeline(std::shared
 {
 	// CreateShaders
 	std::shared_ptr<IShader> vertexShader = GetRenderDevice().GetObjectsFactory().CreateShader(EShaderType::VertexShader, "shaders_D3D/M2.hlsl", "VS_main");
-	vertexShader->LoadInputLayoutFromReflector();
+	//vertexShader->LoadInputLayoutFromReflector();
+	std::vector<SCustomVertexElement> elements;
+	elements.push_back({ 0, 0,  ECustomVertexElementType::FLOAT3, ECustomVertexElementUsage::POSITION, 0 });
+	elements.push_back({ 0, 12,  ECustomVertexElementType::FLOAT4, ECustomVertexElementUsage::BLENDWEIGHT, 0 });
+	elements.push_back({ 0, 28,  ECustomVertexElementType::FLOAT4, ECustomVertexElementUsage::BLENDINDICES, 0 });
+	elements.push_back({ 0, 44, ECustomVertexElementType::FLOAT3, ECustomVertexElementUsage::NORMAL, 0 });
+	elements.push_back({ 0, 56, ECustomVertexElementType::FLOAT2, ECustomVertexElementUsage::TEXCOORD, 0 });
+	elements.push_back({ 0, 68, ECustomVertexElementType::FLOAT2, ECustomVertexElementUsage::TEXCOORD, 1 });
+	vertexShader->LoadInputLayoutFromCustomElements(elements);
 
 	std::shared_ptr<IShader> pixelShader = GetRenderDevice().GetObjectsFactory().CreateShader(EShaderType::PixelShader, "shaders_D3D/M2.hlsl", "PS_main");
 
@@ -148,7 +172,7 @@ bool CRenderPass_M2::Visit(const IModel* Model)
 {
 	if (const CM2_Skin* m2Skin = dynamic_cast<const CM2_Skin*>(Model))
 	{
-		DoRenderM2Model(m_CurrentM2Model, m2Skin);
+		DoRenderM2Model(m_CurrentM2Model, m2Skin, m_OpaqueDraw);
 
 		return true;
 	}
@@ -161,8 +185,8 @@ bool CRenderPass_M2::Visit(const IModel* Model)
 
 
 
-CRenderPass_M2_Instanced::CRenderPass_M2_Instanced(IRenderDevice & RenderDevice, const std::shared_ptr<BuildRenderListPassTemplated<CM2_Base_Instance>>& List, std::shared_ptr<IScene> scene)
-	: CRenderPass_M2(RenderDevice, scene)
+CRenderPass_M2_Instanced::CRenderPass_M2_Instanced(IRenderDevice & RenderDevice, const std::shared_ptr<BuildRenderListPassTemplated<CM2_Base_Instance>>& List, std::shared_ptr<IScene> scene, bool OpaqueDraw)
+	: CRenderPass_M2(RenderDevice, scene, OpaqueDraw)
 	, m_RenderListPass(List)
 {
 	m_InstancesBuffer = GetRenderDevice().GetObjectsFactory().CreateStructuredBuffer(nullptr, 1000, sizeof(glm::mat4), CPUAccess::Write);
@@ -214,7 +238,7 @@ void CRenderPass_M2_Instanced::Render(RenderEventArgs & e)
 		m_ShaderInstancesBufferParameter->SetStructuredBuffer(m_InstancesBuffer);
 		m_ShaderInstancesBufferParameter->Bind();
 		{
-			DoRenderM2Model(static_cast<const CM2_Base_Instance*>(*it.second.begin()), static_cast<const CM2_Skin*>(it.first), instances.size());
+			DoRenderM2Model(static_cast<const CM2_Base_Instance*>(*it.second.begin()), static_cast<const CM2_Skin*>(it.first), m_OpaqueDraw, instances.size());
 		}
 		m_ShaderInstancesBufferParameter->Unbind();
 	}
@@ -228,7 +252,15 @@ std::shared_ptr<IRenderPassPipelined> CRenderPass_M2_Instanced::CreatePipeline(s
 {
 	// CreateShaders
 	std::shared_ptr<IShader> vertexShader = GetRenderDevice().GetObjectsFactory().CreateShader(EShaderType::VertexShader, "shaders_D3D/M2.hlsl", "VS_main_Inst");
-	vertexShader->LoadInputLayoutFromReflector();
+	//vertexShader->LoadInputLayoutFromReflector();
+	std::vector<SCustomVertexElement> elements;
+	elements.push_back({ 0, 0,  ECustomVertexElementType::FLOAT3, ECustomVertexElementUsage::POSITION, 0 });
+	elements.push_back({ 0, 12,  ECustomVertexElementType::FLOAT4, ECustomVertexElementUsage::BLENDWEIGHT, 0 });
+	elements.push_back({ 0, 28,  ECustomVertexElementType::FLOAT4, ECustomVertexElementUsage::BLENDINDICES, 0 });
+	elements.push_back({ 0, 44, ECustomVertexElementType::FLOAT3, ECustomVertexElementUsage::NORMAL, 0 });
+	elements.push_back({ 0, 56, ECustomVertexElementType::FLOAT2, ECustomVertexElementUsage::TEXCOORD, 0 });
+	elements.push_back({ 0, 68, ECustomVertexElementType::FLOAT2, ECustomVertexElementUsage::TEXCOORD, 1 });
+	vertexShader->LoadInputLayoutFromCustomElements(elements);
 
 	std::shared_ptr<IShader> pixelShader = GetRenderDevice().GetObjectsFactory().CreateShader(EShaderType::PixelShader, "shaders_D3D/M2.hlsl", "PS_main");
 

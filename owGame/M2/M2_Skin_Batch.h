@@ -19,8 +19,8 @@ public:
 	CM2_Skin_Batch(IBaseManager& BaseManager, IRenderDevice& RenderDevice, const M2& M2Model, const SM2_SkinBatch& SkinBatchProto);
 	virtual ~CM2_Skin_Batch();
 
+	const std::shared_ptr<const CM2_Part_Material>& GetM2Material() const {	return m_M2ModelMaterial; }
 	void UpdateMaterialProps(const RenderEventArgs& RenderEventArgs, const CM2_Base_Instance* M2Instance);
-
 	void UpdateConstantBuffer() const override;
 
 public:

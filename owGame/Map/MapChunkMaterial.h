@@ -21,11 +21,12 @@ private:
 	__declspec(align(16)) struct MaterialProperties
 	{
 		MaterialProperties()
-			: m_ShadowMapExists(0)
+			: LayersCnt(1)
+			, ShadowMapExists(0)
 		{}
-		uint32 m_LayersCnt;
-		uint32 m_ShadowMapExists;
-		vec2   m_Pad;
+		uint32 LayersCnt;
+		uint32 ShadowMapExists;
+		glm::vec2 Pad;
 		//-------------------------- ( 32 bytes )
 	};
 	MaterialProperties* m_pProperties;

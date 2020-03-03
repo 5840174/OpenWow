@@ -6,11 +6,11 @@ class ZN_API CRenderPass_M2
 	: public Base3DPass
 {
 public:
-	CRenderPass_M2(IRenderDevice& RenderDevice, std::shared_ptr<IScene> scene);
+	CRenderPass_M2(IRenderDevice& RenderDevice, std::shared_ptr<IScene> scene, bool OpaqueDraw);
 	virtual ~CRenderPass_M2();
 
 	// CRenderPass_M2
-	void DoRenderM2Model(const CM2_Base_Instance* M2SceneNode, const CM2_Skin* M2Model, UINT InstancesCnt = UINT32_MAX);
+	void DoRenderM2Model(const CM2_Base_Instance* M2SceneNode, const CM2_Skin* M2Model, bool OpaqueDraw, UINT InstancesCnt = UINT32_MAX);
 
 	// IRenderPassPipelined
 	virtual std::shared_ptr<IRenderPassPipelined> CreatePipeline(std::shared_ptr<IRenderTarget> RenderTarget, const Viewport* Viewport) override;
@@ -21,6 +21,7 @@ public:
 
 protected:
 	std::shared_ptr<ISettingT<float>> m_ADT_MDX_Distance;
+	bool m_OpaqueDraw;
 
 	const CM2_Base_Instance* m_CurrentM2Model;
 
@@ -36,7 +37,7 @@ class ZN_API CRenderPass_M2_Instanced
 	: public CRenderPass_M2
 {
 public:
-	CRenderPass_M2_Instanced(IRenderDevice& RenderDevice, const std::shared_ptr<BuildRenderListPassTemplated<CM2_Base_Instance>>& List, std::shared_ptr<IScene> scene);
+	CRenderPass_M2_Instanced(IRenderDevice& RenderDevice, const std::shared_ptr<BuildRenderListPassTemplated<CM2_Base_Instance>>& List, std::shared_ptr<IScene> scene, bool OpaqueDraw);
 	virtual ~CRenderPass_M2_Instanced();
 
 	void Render(RenderEventArgs& e) override;
@@ -52,4 +53,5 @@ private:
 	const std::shared_ptr<BuildRenderListPassTemplated<CM2_Base_Instance>> m_RenderListPass;
 	IShaderParameter* m_ShaderInstancesBufferParameter;
 	std::shared_ptr<IStructuredBuffer> m_InstancesBuffer;
+	
 };

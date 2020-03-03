@@ -246,6 +246,7 @@ bool CMapChunk::Load()
 		{
 			uint8 amap[64 * 64];
 			memset(amap, 0x00, 64 * 64);
+
 			const uint8* abuf = m_File->getDataFromCurrent() + mcly[i].offsetInMCAL;
 
 			if (mcly[i].flags.alpha_map_compressed) // Compressed: MPHD is only about bit depth!
@@ -275,7 +276,7 @@ bool CMapChunk::Load()
 			}
 			else if (m_Map.isUncompressedAlpha()) // Uncomressed (4096)
 			{
-				memcpy(amap, abuf, 64 * 64);
+				std::memcpy(amap, abuf, 64 * 64);
 			}
 			else
 			{
@@ -378,8 +379,7 @@ bool CMapChunk::Load()
 		std::shared_ptr<IGeometry> defaultGeometry = m_RenderDevice.GetObjectsFactory().CreateGeometry();
 		defaultGeometry->AddVertexBuffer(BufferBinding("POSITION", 0), verticesBuffer);
 		defaultGeometry->AddVertexBuffer(BufferBinding("NORMAL", 0), normalsBuffer);
-		defaultGeometry->AddVertexBuffer(BufferBinding("TEXCOORD", 0), _MapShared->BufferTextureCoordDetail);
-		defaultGeometry->AddVertexBuffer(BufferBinding("TEXCOORD", 1), _MapShared->BufferTextureCoordAlpha);
+		defaultGeometry->AddVertexBuffer(BufferBinding("TEXCOORD", 0), _MapShared->BufferTextureCoordDetailAndAlpha);
 		defaultGeometry->SetIndexBuffer(__ibHigh);
 
 		std::shared_ptr<IModel> model = m_RenderDevice.GetObjectsFactory().CreateModel();

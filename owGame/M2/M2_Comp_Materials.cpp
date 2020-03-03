@@ -40,7 +40,7 @@ void CM2_Comp_Materials::Load(const SM2_Header& M2Header, const std::shared_ptr<
 		SM2_Material* m2Materials = (SM2_Material*)(File->getData() + M2Header.materials.offset);
 		for (uint32 i = 0; i < M2Header.materials.size; i++)
 		{
-			std::shared_ptr<CM2_Part_Material> material = std::make_shared<CM2_Part_Material>(m_M2Object, m2Materials[i]);
+			std::shared_ptr<CM2_Part_Material> material = std::make_shared<CM2_Part_Material>(m_M2Object.GetBaseManager(), m_M2Object.GetRenderDevice(), m_M2Object, m2Materials[i]);
 			m_Materials.push_back(material);
 		}
 	}

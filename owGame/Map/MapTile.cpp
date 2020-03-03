@@ -256,7 +256,7 @@ bool CMapTile::Load()
 #if 1
 	//-- WMOs --------------------------------------------------------------------------
 
-	for (auto& it : m_WMOsPlacementInfo)
+	for (const auto& it : m_WMOsPlacementInfo)
 	{
 //#ifndef _DEBUG
 		std::shared_ptr<CWMO> wmo = m_BaseManager.GetManager<IWoWObjectsCreator>()->LoadWMO(m_RenderDevice, m_WMOsNames[it.nameIndex]);
@@ -274,7 +274,7 @@ bool CMapTile::Load()
 #if 1
 	//-- MDXs -------------------------------------------------------------------------
 #ifdef USE_M2_MODELS
-	for (auto& it : m_MDXsPlacementInfo)
+	for (const auto& it : m_MDXsPlacementInfo)
 	{
 //#ifndef _DEBUG
 		std::shared_ptr<M2> m2 = m_BaseManager.GetManager<IWoWObjectsCreator>()->LoadM2(m_RenderDevice, m_MDXsNames[it.nameIndex]);

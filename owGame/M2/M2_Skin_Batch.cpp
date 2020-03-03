@@ -21,17 +21,18 @@ CM2_Skin_Batch::CM2_Skin_Batch(IBaseManager& BaseManager, IRenderDevice& RenderD
 
 	// Shader ID
 	newShader = SkinBatchProto.shader_id;
+	//Log::Info("Shader = '%d'", newShader);
 
 	// Geometry data
 	m_PriorityPlan = SkinBatchProto.priorityPlane;
 
 	// Get classes
-	m_M2ModelMaterial = (m_M2Model.getMaterials().GetMaterial(SkinBatchProto.materialIndex));
+	m_M2ModelMaterial = (m_M2Model.getMaterials().GetMaterialDirect(SkinBatchProto.materialIndex));
 
 	// Color
 	if (SkinBatchProto.colorIndex != -1)
 	{
-		m_Color = (m_M2Model.getMaterials().GetColor(SkinBatchProto.colorIndex));
+		m_Color = (m_M2Model.getMaterials().GetColorDirect(SkinBatchProto.colorIndex));
 	}
 
 	// Textures
@@ -41,15 +42,15 @@ CM2_Skin_Batch::CM2_Skin_Batch(IBaseManager& BaseManager, IRenderDevice& RenderD
 	}
 
 	// Texture unit
-	if (SkinBatchProto.texture_CoordIndex != -1)
-	{
-		m_TextureUnit = m_M2Model.getMaterials().m_TexturesUnitLookup[SkinBatchProto.texture_CoordIndex];
-	}
+	//if (SkinBatchProto.texture_CoordIndex != -1)
+	//{
+	//	m_TextureUnit = m_M2Model.getMaterials().m_TexturesUnitLookup[SkinBatchProto.texture_CoordIndex];
+	//}
 
 	// Texture weight
 	if (SkinBatchProto.texture_WeightIndex != -1)
 	{
-		m_TextureWeight = (m_M2Model.getMaterials().m_TextureWeights[SkinBatchProto.texture_WeightIndex]);
+		m_TextureWeight = (m_M2Model.getMaterials().GetTextureWeight(SkinBatchProto.texture_WeightIndex));
 	}
 
 	// Texture transfowm
@@ -57,11 +58,7 @@ CM2_Skin_Batch::CM2_Skin_Batch(IBaseManager& BaseManager, IRenderDevice& RenderD
 	{
 		if (SkinBatchProto.texture_TransformIndex != -1)
 		{
-			int16 index = m_M2Model.getMaterials().m_TexturesTransformLookup[SkinBatchProto.texture_TransformIndex];
-			if (index != -1)
-			{
-				m_TextureTransform = (m_M2Model.getMaterials().GetTextureTransform(SkinBatchProto.texture_TransformIndex));
-			}
+			m_TextureTransform = m_M2Model.getMaterials().GetTextureTransform(SkinBatchProto.texture_TransformIndex);
 		}
 	}
 

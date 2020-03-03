@@ -29,7 +29,31 @@ CM2_SkinSection::CM2_SkinSection(IRenderDevice& RenderDevice, const M2& M2Model,
 
 	m_PropertiesBuffer = RenderDevice.GetObjectsFactory().CreateConstantBuffer(nullptr, sizeof(ShaderM2GeometryProperties));
 
-	std::vector<vec3> verts;
+
+	std::vector<SM2_Vertex_znEngine> zenonVertices;
+	zenonVertices.resize(Vertexes.size());
+	for (size_t i = 0; i < Vertexes.size(); i++)
+	{
+		const auto& m2Vertex = Vertexes[i];
+
+		SM2_Vertex_znEngine vertex;
+		vertex.pos = m2Vertex.pos;
+		vertex.normal = m2Vertex.normal;
+		vertex.tex_coords[0] = m2Vertex.tex_coords[0];
+		vertex.tex_coords[1] = m2Vertex.tex_coords[1];
+
+		for (size_t j = 0; j < 4; j++)
+		{
+			_ASSERT(m2Vertex.bone_indices[j] < m_SkinSectionProto.boneCount);
+
+			vertex.bone_weights.weights[j] = static_cast<float>(m2Vertex.bone_weights[j]) / 255.0f;
+			vertex.bone_indices.indexes[j] = m2Vertex.bone_indices[j];
+		}
+
+		zenonVertices[i] = vertex;
+	}
+
+	/*std::vector<vec3> verts;
 	std::vector<SM2_Vertex_BoneWeight> weights;
 	std::vector<SM2_Vertex_BoneIndex> indexes;
 	std::vector<vec3> normals;
@@ -54,14 +78,16 @@ CM2_SkinSection::CM2_SkinSection(IRenderDevice& RenderDevice, const M2& M2Model,
 		normals.push_back(it.normal);
 		tex0.push_back(it.tex_coords[0]);
 		tex1.push_back(it.tex_coords[1]);
-	}
+	}*/
 
-	AddVertexBuffer(BufferBinding("POSITION", 0), RenderDevice.GetObjectsFactory().CreateVoidVertexBuffer(verts.data(), verts.size(), 0, sizeof(vec3)));
+	SetVertexBuffer(RenderDevice.GetObjectsFactory().CreateVoidVertexBuffer(zenonVertices.data(), zenonVertices.size(), 0, sizeof(SM2_Vertex_znEngine)));
+
+	/*AddVertexBuffer(BufferBinding("POSITION", 0), RenderDevice.GetObjectsFactory().CreateVoidVertexBuffer(verts.data(), verts.size(), 0, sizeof(vec3)));
 	AddVertexBuffer(BufferBinding("BLENDWEIGHT", 0), RenderDevice.GetObjectsFactory().CreateVoidVertexBuffer(weights.data(), weights.size(), 0, sizeof(SM2_Vertex_BoneWeight)));
 	AddVertexBuffer(BufferBinding("BLENDINDICES", 0), RenderDevice.GetObjectsFactory().CreateVoidVertexBuffer(indexes.data(), indexes.size(), 0, sizeof(SM2_Vertex_BoneIndex)));
 	AddVertexBuffer(BufferBinding("NORMAL", 0), RenderDevice.GetObjectsFactory().CreateVoidVertexBuffer(normals.data(), normals.size(), 0, sizeof(vec3)));
 	AddVertexBuffer(BufferBinding("TEXCOORD", 0), RenderDevice.GetObjectsFactory().CreateVoidVertexBuffer(tex0.data(), tex0.size(), 0, sizeof(vec2)));
-	AddVertexBuffer(BufferBinding("TEXCOORD", 1), RenderDevice.GetObjectsFactory().CreateVoidVertexBuffer(tex1.data(), tex1.size(), 0, sizeof(vec2)));
+	AddVertexBuffer(BufferBinding("TEXCOORD", 1), RenderDevice.GetObjectsFactory().CreateVoidVertexBuffer(tex1.data(), tex1.size(), 0, sizeof(vec2)));*/
 	SetIndexBuffer(RenderDevice.GetObjectsFactory().CreateIndexBuffer(Indexes));
 
 	if (m_SkinSectionProto.boneCount > 0)

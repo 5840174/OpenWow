@@ -117,6 +117,22 @@ struct SM2_Vertex
 	glm::vec3	normal;				// 20-32
 	glm::vec2	tex_coords[2];		// 32-40, 40-48		// two DiffuseTextures, depending on shader used
 };
+
+struct SM2_Vertex_znEngine
+{
+	glm::vec3 pos;
+	struct
+	{
+		float weights[4];
+	} bone_weights;
+	struct
+	{
+		uint32 indexes[4];
+	} bone_indices;
+	glm::vec3 normal;
+	glm::vec2 tex_coords[2];
+};
+
 #include __PACK_END
 
 #include "M2_SkinTypes.h"

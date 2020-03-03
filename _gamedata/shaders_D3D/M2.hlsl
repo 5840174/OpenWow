@@ -26,9 +26,9 @@ cbuffer Material : register(b2)
 	uint      gShader;
 	float2    __padding0;
 	
-	uint      gColorEnable;
-	uint      gTextureWeightEnable;
-	uint      gTextureAnimEnable;
+	bool      gColorEnable;
+	bool      gTextureWeightEnable;
+	bool      gTextureAnimEnable;
 	float     gTextureWeight;
 	
 	float4    gColor;
@@ -115,22 +115,37 @@ DefferedRenderPSOut PS_main(VertexShaderOutput IN) : SV_TARGET
 {
 	//float4 resultColor = Test(IN);
 	float4 resultColor = DiffuseTexture0.Sample(DiffuseTexture0Sampler, IN.texCoord0);
+		
+	float alpha = 1.0f;
+	
+	if (gColorEnable)
+	{
+		resultColor.rgb *= (gColor.rgb * gColor.a);
+		alpha *= gColor.a;
+	}
+	
+	if (gTextureWeightEnable)
+	{
+		alpha *= gTextureWeight;
+	}
 	
 	if (gBlendMode == 0) // GxBlend_Opaque
 	{
-		resultColor.a = 1.0f;
+		alpha = 1.0f;
 	}
 	else if (gBlendMode == 1) // GxBlend_AlphaKey
 	{
-		if (resultColor.a <= (224.0f / 255.0f)) discard;
+		if (resultColor.a < ((224.0f / 255.0f) * alpha)) 
+			discard;
 	}
 	else 
 	{
-		if (resultColor.a <= (1.0f / 255.0f)) discard;
+		if (resultColor.a < ((1.0f / 255.0f) * alpha)) 
+			discard;
 	}
 	
 	DefferedRenderPSOut OUT;
-	OUT.Diffuse = resultColor;
+	OUT.Diffuse = float4(resultColor.rgb, resultColor.a * alpha);
 	OUT.Specular = float4(0.5f, 0.5f, 0.5f, 1.0f);
 	OUT.NormalWS = float4(IN.normal, 0.0f);
 	return OUT;

@@ -18,9 +18,11 @@ CMapShared::CMapShared(IRenderDevice& RenderDevice)
 	m_HighMapStrip = GenarateHighMapArray();
 	m_DefaultMapStrip = GenarateDefaultMapArray();
 
+
+	glm::vec4 detailAndAlphaTextureCoord[C_MapBufferSize];
+
 	// init texture coordinates for detail map:
-	glm::vec2 detailTextureCoord[C_MapBufferSize];
-	glm::vec2* dtc = detailTextureCoord;
+	glm::vec4* dtc = detailAndAlphaTextureCoord;
 	const float detail_half = 0.5f * C_DetailSize / 8.0f;
 	for (int j = 0; j < 17; j++)
 	{
@@ -32,14 +34,12 @@ CMapShared::CMapShared(IRenderDevice& RenderDevice)
 			{
 				tx += detail_half;
 			}
-			*dtc++ = glm::vec2(tx, ty);
+			(*dtc++).xy = glm::vec2(tx, ty);
 		}
 	}
-	BufferTextureCoordDetail = RenderDevice.GetObjectsFactory().CreateVertexBuffer(detailTextureCoord, C_MapBufferSize);
 
 	// init texture coordinates for alpha map:
-	glm::vec2 alphaTextureCoord[C_MapBufferSize];
-	glm::vec2* atc = alphaTextureCoord;
+	glm::vec4* atc = detailAndAlphaTextureCoord;
 	const float alpha_half = 0.5f * 1.0f / 8.0f;
 	for (int j = 0; j < 17; j++)
 	{
@@ -51,10 +51,10 @@ CMapShared::CMapShared(IRenderDevice& RenderDevice)
 			{
 				tx += alpha_half;
 			}
-			*atc++ = glm::vec2(tx, ty);
+			(*atc++).zw = glm::vec2(tx, ty);
 		}
 	}
-	BufferTextureCoordAlpha = RenderDevice.GetObjectsFactory().CreateVertexBuffer(alphaTextureCoord, C_MapBufferSize);
+	BufferTextureCoordDetailAndAlpha = RenderDevice.GetObjectsFactory().CreateVertexBuffer(detailAndAlphaTextureCoord, C_MapBufferSize);
 }
 
 CMapShared::~CMapShared()

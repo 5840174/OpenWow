@@ -8,8 +8,7 @@ public:
 	CMapShared(IRenderDevice& RenderDevice);
 	virtual ~CMapShared();
 
-	std::shared_ptr<IBuffer> BufferTextureCoordDetail;
-	std::shared_ptr<IBuffer> BufferTextureCoordAlpha;
+	std::shared_ptr<IBuffer> BufferTextureCoordDetailAndAlpha;
 
 	static std::string getMapFolder(const DBC_MapRecord* _map);
 

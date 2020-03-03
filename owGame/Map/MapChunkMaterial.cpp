@@ -26,13 +26,13 @@ ADT_MCNK_Material::~ADT_MCNK_Material()
 
 void ADT_MCNK_Material::SetLayersCnt(uint32 value)
 {
-	m_pProperties->m_LayersCnt = value;
+	m_pProperties->LayersCnt = value;
 	MarkConstantBufferDirty();
 }
 
 void ADT_MCNK_Material::SetShadowMapExists(uint32 value)
 {
-	m_pProperties->m_ShadowMapExists = value;
+	m_pProperties->ShadowMapExists = value;
 	MarkConstantBufferDirty();
 }
 

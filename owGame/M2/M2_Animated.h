@@ -81,6 +81,9 @@ public:
 	{
 		_ASSERT(m_Type != Interpolations::INTERPOLATION_NONE);
 
+		if (m_Values.empty())
+			return T();
+
         std::pair<uint32, uint32> range = std::make_pair(0, m_Values.size() - 1);
 
 		// obtain a time value and a values range

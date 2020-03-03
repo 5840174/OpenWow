@@ -27,12 +27,12 @@ public:
 	bool IsAnimTextures() const { return m_IsAnimTextures; }
 
 public:
-	std::shared_ptr<const CM2_Part_Color> GetColor(uint32 _index) const
+	std::shared_ptr<const CM2_Part_Color> GetColorDirect(uint32 _index) const
 	{
 		_ASSERT(_index < m_Colors.size());
 		return (m_Colors[_index]);
 	}
-	std::shared_ptr<const CM2_Part_Material> GetMaterial(uint32 _index) const
+	std::shared_ptr<const CM2_Part_Material> GetMaterialDirect(uint32 _index) const
 	{
 		_ASSERT(_index < m_Materials.size());
 		return (m_Materials[_index]);
@@ -51,37 +51,27 @@ public:
 	std::shared_ptr<const CM2_Part_Texture> GetTexture(uint32 _index) const
 	{
 		_ASSERT(_index < m_TexturesLookup.size());
-		if (_index >= m_TexturesLookup.size())
-		{
-			//Log::Warn("M2[%s]: GetTexture [%d] not found in Lookup[%d]", m_FileName.c_str(), _index, m_TexturesLookup.size());
-			return nullptr;
-		}
 		int16 newIndex = m_TexturesLookup[_index];
-		_ASSERT(newIndex != -1);
+		if (newIndex == -1)
+			return nullptr;
 		_ASSERT(newIndex < static_cast<int16>(m_Textures.size()));
 		return (m_Textures[newIndex]);
 	}
 	std::shared_ptr<const CM2_Part_TextureWeight> GetTextureWeight(uint32 _index) const
 	{
-		if (_index >= m_TextureWeightsLookup.size())
-		{
-			//Log::Warn("M2[%s]: GetTextureWeight [%d] not found in Lookup[%d]", m_FileName.c_str(), _index, m_TextureWeightsLookup.size());
-			return nullptr;
-		}
+		_ASSERT(_index < m_TextureWeightsLookup.size());
 		int16 newIndex = m_TextureWeightsLookup[_index];
-		_ASSERT(newIndex != -1);
+		if (newIndex == -1)
+			return nullptr;
 		_ASSERT(newIndex < static_cast<int16>(m_TextureWeights.size()));
 		return (m_TextureWeights[newIndex]);
 	}
 	std::shared_ptr<const CM2_Part_TextureTransform> GetTextureTransform(uint32 _index) const
 	{
-		if (_index >= m_TexturesTransformLookup.size())
-		{
-			//Log::Warn("M2[%s]: GetTextureTransform [%d] not found in Lookup[%d]", m_FileName.c_str(), _index, m_TexturesTransformLookup.size());
-			return nullptr;
-		}
+		_ASSERT(_index < m_TexturesTransformLookup.size());
 		int16 newIndex = m_TexturesTransformLookup[_index];
-		_ASSERT(newIndex != -1);
+		if (newIndex == -1)
+			return nullptr;
 		_ASSERT(newIndex < static_cast<int16>(m_TexturesTransform.size()));
 		return (m_TexturesTransform[newIndex]);
 	}

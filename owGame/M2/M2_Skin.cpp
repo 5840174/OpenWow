@@ -37,16 +37,24 @@ void CM2_Skin::Load(const SM2_Header& M2Header, const std::shared_ptr<IFile>& Fi
 		const SM2_SkinSection& sectionProto = t_sections[sectionIndex];
 
 		std::vector<SM2_Vertex> vertexes;
-		for (uint32 vert = sectionProto.vertexStart; vert < sectionProto.vertexStart + sectionProto.vertexCount; vert++)
+		vertexes.resize(sectionProto.vertexCount);
+		for (uint32 i = 0; i < sectionProto.vertexCount; i++)
 		{
-			SM2_Vertex newVertex = Vertices[t_verticesIndexes[vert]];
-			for (uint32 bone = 0; bone < sectionProto.boneInfluences; ++bone)
+			size_t indexIntoVertices = static_cast<size_t>(sectionProto.vertexStart) + static_cast<size_t>(i);
+
+			_ASSERT(indexIntoVertices < m_M2SkinProfile.vertices.size);
+			SM2_Vertex newVertex = Vertices[t_verticesIndexes[indexIntoVertices]];
+
+			_ASSERT(indexIntoVertices < m_M2SkinProfile.bones.size);
+			const SM2_SkinBones& newBones = t_bonesIndexes[indexIntoVertices];
+
+			for (uint16 bone = 0; bone < sectionProto.boneInfluences; bone++)
 			{
-				uint8 boneIndex = t_bonesIndexes[vert].index[bone];
-				newVertex.bone_indices[bone] = boneIndex;
-				_ASSERT(boneIndex < sectionProto.boneCount);
+				_ASSERT(newBones.index[bone] < sectionProto.boneCount);
+				newVertex.bone_indices[bone] = newBones.index[bone];
 			}
-			vertexes.push_back(newVertex);
+
+			vertexes[i] = newVertex;
 		}
 
 		std::vector<uint16> indexes;
@@ -81,6 +89,9 @@ void CM2_Skin::Load(const SM2_Header& M2Header, const std::shared_ptr<IFile>& Fi
 		std::shared_ptr<CM2_Skin_Batch> skinBatchObject = std::make_shared<CM2_Skin_Batch>(m_BaseManager, m_RenderDevice, m_M2Model, skinBatchesProtos[i]);
 		m_Batches.push_back(skinBatchObject);
 
+		//if (skinBatchObject->m_PriorityPlan != 0)
+		//	Log::Green("Test");
+
 		auto& ttIter = m_TTT.find(m_Sections[skinBatchesProtos[i].skinSectionIndex]);
 		if (ttIter == m_TTT.end())
 		{
@@ -96,10 +107,16 @@ void CM2_Skin::Load(const SM2_Header& M2Header, const std::shared_ptr<IFile>& Fi
 		//m_Models.push_back(model);
 	}
 
-	//std::sort(m_Batches.begin(), m_Batches.end(), [](const std::shared_ptr<CM2_Skin_Batch> left, const std::shared_ptr<CM2_Skin_Batch> right)
-	//{
-	//	return left->m_PriorityPlan < right->m_PriorityPlan;
-	//});
+	for (auto& it : m_TTT)
+	{
+		std::sort(it.second.begin(), it.second.end(), [](const std::shared_ptr<CM2_Skin_Batch> left, const std::shared_ptr<CM2_Skin_Batch> right)
+		{
+			return left->m_PriorityPlan < right->m_PriorityPlan;
+		});
+	}
+
+	//if (m_TTT.size() > 1)
+	//	Log::Error("SORTED!");
 }
 
 void CM2_Skin::Accept(IVisitor * visitor)

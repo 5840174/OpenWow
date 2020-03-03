@@ -38,7 +38,7 @@ CM2_RibbonEmitters::CM2_RibbonEmitters(const M2& M2Object, const std::shared_ptr
 
 		uint16_t* MaterialsList = (uint16_t*)(File->getData() + M2RibbonEmitter.materialIndices.offset);
 		_ASSERT(M2RibbonEmitter.materialIndices.size > 0);
-		m_Material = m_M2Object.getMaterials().GetMaterial(MaterialsList[0]);
+		m_Material = m_M2Object.getMaterials().GetMaterialDirect(MaterialsList[0]);
 	}
 
 	// TODO: figure out actual correct way to calculate length

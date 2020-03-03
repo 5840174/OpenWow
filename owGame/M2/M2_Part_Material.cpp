@@ -19,7 +19,7 @@ struct
 	{ SM2_Material::M2BLEND_MOD2X,			5 }
 };
 
-CM2_Part_Material::CM2_Part_Material(const M2& M2Object, const SM2_Material& M2Material)
+CM2_Part_Material::CM2_Part_Material(IBaseManager& BaseManager, IRenderDevice& RenderDevice, const M2& M2Object, const SM2_Material& M2Material)
 	: m_M2Object(M2Object)
 {
 	m_IsLightingDisable = M2Material.flags.UNLIT;
@@ -30,24 +30,26 @@ CM2_Part_Material::CM2_Part_Material(const M2& M2Object, const SM2_Material& M2M
 	m_DepthWrite = (M2Material.flags.DEPTHWRITE == 0) ? IDepthStencilState::DepthWrite::Enable : IDepthStencilState::DepthWrite::Disable;
 
 	m_M2BlendMode = M2Material.m_BlendMode;
+
+
+	m_DepthStencilState = RenderDevice.GetObjectsFactory().CreateDepthStencilState();
+	m_DepthStencilState->SetDepthMode(IDepthStencilState::DepthMode(m_DepthTest, m_DepthWrite));
+
+	m_BlendState = RenderDevice.GetObjectsFactory().CreateBlendState();
+	m_BlendState->SetBlendMode(GetBlendMode());
 }
 
 CM2_Part_Material::~CM2_Part_Material()
 {
 }
 
-void CM2_Part_Material::Set() const
+/*void CM2_Part_Material::Set() const
 {
-	/*_Render->r.setCullMode(m_IsTwoSided ? R_CullMode::RS_CULL_NONE : R_CullMode::RS_CULL_BACK);
+	_Render->r.setCullMode(m_IsTwoSided ? R_CullMode::RS_CULL_NONE : R_CullMode::RS_CULL_BACK);
 	_Render->r.setDepthTest(m_DepthTestEnabled);
 	_Render->r.setDepthMask(m_DepthMaskEnabled);
-	_Render->getRenderStorage()->SetEGxBlend(_Render->r.getState(), M2Blend_To_EGxBlend[m_M2BlendMode].EGxBLend);*/
-}
-
-IDepthStencilState::DepthMode CM2_Part_Material::GetDepthMode() const
-{
-	return IDepthStencilState::DepthMode(m_DepthTest, m_DepthWrite);
-}
+	_Render->getRenderStorage()->SetEGxBlend(_Render->r.getState(), M2Blend_To_EGxBlend[m_M2BlendMode].EGxBLend);
+}*/
 
 /*IBlendState::BlendMode CM2_Part_Material::GetBlendMode() const
 {
@@ -197,9 +199,4 @@ IBlendState::BlendMode CM2_Part_Material::GetBlendMode() const
 	default:
 		_ASSERT(false);
 	}
-}
-
-IRasterizerState::CullMode CM2_Part_Material::GetCullMode() const
-{
-	return m_CullMode;
 }

@@ -45,15 +45,16 @@ void CSceneWoW::Initialize()
 
 	m_Technique3D.AddPass(GetBaseManager().GetManager<IRenderPassFactory>()->CreateRenderPass("ClearPass", GetRenderDevice(), GetRenderWindow()->GetRenderTarget(), &GetRenderWindow()->GetViewport(), shared_from_this()));
 	m_Technique3D.AddPass(wmoListPass);
-	m_Technique3D.AddPass(m2ListPass);
+	//m_Technique3D.AddPass(m2ListPass);
 	m_Technique3D.AddPass(std::make_shared<CRenderPass_Sky>(GetRenderDevice(), shared_from_this())->CreatePipeline(GetRenderWindow()->GetRenderTarget(), &GetRenderWindow()->GetViewport()));
 	//m_Technique3D.AddPass(std::make_shared<CRenderPass_WDL>(GetRenderDevice(), shared_from_this())->CreatePipeline(GetRenderWindow()->GetRenderTarget(), &GetRenderWindow()->GetViewport()));
 	m_Technique3D.AddPass(std::make_shared<CRenderPass_ADT_MCNK>(GetRenderDevice(), shared_from_this())->CreatePipeline(GetRenderWindow()->GetRenderTarget(), &GetRenderWindow()->GetViewport()));
+	m_Technique3D.AddPass(std::make_shared<CRenderPass_Liquid>(GetRenderDevice(), shared_from_this())->CreatePipeline(GetRenderWindow()->GetRenderTarget(), &GetRenderWindow()->GetViewport()));
 	m_Technique3D.AddPass(std::make_shared<CRenderPass_WMO>(GetRenderDevice(), shared_from_this())->CreatePipeline(GetRenderWindow()->GetRenderTarget(), &GetRenderWindow()->GetViewport()));
 	//m_Technique3D.AddPass(std::make_shared<CRenderPass_WMO2>(GetRenderDevice(), wmoListPass, shared_from_this())->CreatePipeline(GetRenderWindow()->GetRenderTarget(), &GetRenderWindow()->GetViewport()));
-	//m_Technique3D.AddPass(std::make_shared<CRenderPass_M2>(GetRenderDevice(), shared_from_this())->CreatePipeline(GetRenderWindow()->GetRenderTarget(), &GetRenderWindow()->GetViewport()));
-	m_Technique3D.AddPass(std::make_shared<CRenderPass_M2_Instanced>(GetRenderDevice(), m2ListPass, shared_from_this())->CreatePipeline(GetRenderWindow()->GetRenderTarget(), &GetRenderWindow()->GetViewport()));
-	m_Technique3D.AddPass(std::make_shared<CRenderPass_Liquid>(GetRenderDevice(), shared_from_this())->CreatePipeline(GetRenderWindow()->GetRenderTarget(), &GetRenderWindow()->GetViewport()));
+	m_Technique3D.AddPass(std::make_shared<CRenderPass_M2>(GetRenderDevice(), shared_from_this(), true)->CreatePipeline(GetRenderWindow()->GetRenderTarget(), &GetRenderWindow()->GetViewport()));
+	m_Technique3D.AddPass(std::make_shared<CRenderPass_M2>(GetRenderDevice(), shared_from_this(), false)->CreatePipeline(GetRenderWindow()->GetRenderTarget(), &GetRenderWindow()->GetViewport()));
+	//m_Technique3D.AddPass(std::make_shared<CRenderPass_M2_Instanced>(GetRenderDevice(), m2ListPass, shared_from_this())->CreatePipeline(GetRenderWindow()->GetRenderTarget(), &GetRenderWindow()->GetViewport()));
 	//m_Technique3D.AddPass(std::make_shared<CDrawBoundingBoxPass>(GetRenderDevice(), shared_from_this())->CreatePipeline(GetRenderWindow()->GetRenderTarget(), &GetRenderWindow()->GetViewport()));
 }
 
@@ -118,6 +119,14 @@ void CSceneWoW::OnWindowKeyReleased(KeyEventArgs & e)
 //
 void CSceneWoW::Load3D()
 {
+	//auto wmo = GetBaseManager().GetManager<IWoWObjectsCreator>()->LoadWMO(GetRenderDevice(), "World\\wmo\\Outland\\DarkPortal\\DarkPortal_Temple.wmo");
+	//wmoInstance = GetRootNode3D()->CreateSceneNode<CWMO_Base_Instance>(wmo);
+	//GetBaseManager().GetManager<ILoader>()->AddToLoadQueue(wmoInstance);
+
+	auto m2 = GetBaseManager().GetManager<IWoWObjectsCreator>()->LoadM2(GetRenderDevice(), "CREATURE\\Illidan\\IllidanDark.M2");
+	m2Instance = GetRootNode3D()->CreateSceneNode<CM2_Base_Instance>(m2);
+	GetBaseManager().GetManager<ILoader>()->AddToLoadQueue(m2Instance);
+
 	skyManager = GetRootNode3D()->CreateSceneNode<SkyManager>(GetRenderDevice());
 	skyManager->Load(1);
 
@@ -127,11 +136,11 @@ void CSceneWoW::Load3D()
 	wmoInstance->SetTranslate(glm::vec3(100, 500, 100));
 	wmoInstance->SetRotation(glm::vec3(0.0f, glm::pi<float>(), 0.0f));
 	GetBaseManager().GetManager<ILoader>()->AddToLoadQueue(wmoInstance.get());
+#endif
 
 	GetCameraController()->GetCamera()->SetTranslation(glm::vec3());
 	GetCameraController()->GetCamera()->SetYaw(48.8);
 	GetCameraController()->GetCamera()->SetPitch(-27.8);
-#endif
 }
 
 void CSceneWoW::Load3D_M2s()
@@ -141,9 +150,9 @@ void CSceneWoW::Load3D_M2s()
 	CWorldObjectCreator creator(GetBaseManager());
 
 	const auto& records = GetBaseManager().GetManager<CDBCStorage>()->DBC_CreatureDisplayInfo().Records();
-	for (size_t i = 0; i < 5; i++)
+	for (size_t i = 0; i < 15; i++)
 	{
-		for (size_t j = 0; j < 5; j++)
+		for (size_t j = 0; j < 15; j++)
 		{
 			size_t id = r.NextUInt() % records.size();
 
@@ -172,7 +181,7 @@ void CSceneWoW::Load3D_M2s()
 	GetCameraController()->GetCamera()->SetPitch(-45);
 
 	m_Technique3D.AddPass(GetBaseManager().GetManager<IRenderPassFactory>()->CreateRenderPass("ClearPass", GetRenderDevice(), GetRenderWindow()->GetRenderTarget(), &GetRenderWindow()->GetViewport(), shared_from_this()));
-	m_Technique3D.AddPass(std::make_shared<CRenderPass_M2>(GetRenderDevice(), shared_from_this())->CreatePipeline(GetRenderWindow()->GetRenderTarget(), &GetRenderWindow()->GetViewport()));
+	m_Technique3D.AddPass(std::make_shared<CRenderPass_M2>(GetRenderDevice(), shared_from_this(), true)->CreatePipeline(GetRenderWindow()->GetRenderTarget(), &GetRenderWindow()->GetViewport()));
 }
 
 
@@ -183,8 +192,10 @@ void CSceneWoW::LoadUI()
 
 void CSceneWoW::TestCreateMap()
 {
-	const float x = 19;
-	const float y = 32;
+	//const int32 x = 40;
+	//const int32 y = 30;
+	const int32 x = 19; //FOR BC
+	const int32 y = 32;
 
 	if (map != nullptr)
 		TestDeleteMap();
@@ -195,7 +206,7 @@ void CSceneWoW::TestCreateMap()
 	map->MapPreLoad(GetBaseManager().GetManager<CDBCStorage>()->DBC_Map()[530]);
 	map->MapLoad();
 	map->MapPostLoad();
-	map->EnterMap(40, 27);
+	map->EnterMap(x, y);
 
 	GetCameraController()->GetCamera()->SetTranslation(glm::vec3(x * C_TileSize + C_TileSize / 2.0f, 100.0f, y * C_TileSize + C_TileSize / 2.0f));
 	GetCameraController()->GetCamera()->SetYaw(48.8);
