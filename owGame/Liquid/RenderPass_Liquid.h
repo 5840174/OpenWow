@@ -4,7 +4,7 @@ class ZN_API CRenderPass_Liquid
 	: public CBaseList3DPass
 {
 public:
-	CRenderPass_Liquid(IRenderDevice& RenderDevice, const std::shared_ptr<CSceneNodeListPass>& SceneNodeListPass);
+	CRenderPass_Liquid(IRenderDevice& RenderDevice, const std::shared_ptr<CSceneCreateTypedListsPass>& SceneNodeListPass);
 	virtual ~CRenderPass_Liquid();
 
 	// IRenderPassPipelined

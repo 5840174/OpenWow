@@ -6,7 +6,7 @@
 // Additional 
 #include "SkyManager.h"
 
-CRenderPass_Sky::CRenderPass_Sky(IRenderDevice& RenderDevice, const std::shared_ptr<CSceneNodeListPass>& SceneNodeListPass)
+CRenderPass_Sky::CRenderPass_Sky(IRenderDevice& RenderDevice, const std::shared_ptr<CSceneCreateTypedListsPass>& SceneNodeListPass)
 	: CBaseList3DPass(RenderDevice, SceneNodeListPass, cSky_NodeType)
 {
 	m_WoWSettings = RenderDevice.GetBaseManager().GetManager<ISettings>()->GetGroup("WoWSettings");

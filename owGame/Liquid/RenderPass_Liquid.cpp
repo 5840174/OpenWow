@@ -6,7 +6,7 @@
 // Additional
 #include "Liquid/LiquidInstance.h"
 
-CRenderPass_Liquid::CRenderPass_Liquid(IRenderDevice& RenderDevice, const std::shared_ptr<CSceneNodeListPass>& SceneNodeListPass)
+CRenderPass_Liquid::CRenderPass_Liquid(IRenderDevice& RenderDevice, const std::shared_ptr<CSceneCreateTypedListsPass>& SceneNodeListPass)
 	: CBaseList3DPass(RenderDevice, SceneNodeListPass, { cLiquid_NodeType, cLiquid_MapChnuk_NodeType, cLiquid_WMOGroup_NodeType } )
 {}
 

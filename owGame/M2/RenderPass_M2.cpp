@@ -16,7 +16,7 @@
 // Additional (meshes)
 #include "M2_Skin_Batch.h"
 
-CRenderPass_M2::CRenderPass_M2(IRenderDevice& RenderDevice, const std::shared_ptr<CSceneNodeListPass>& SceneNodeListPass, bool OpaqueDraw)
+CRenderPass_M2::CRenderPass_M2(IRenderDevice& RenderDevice, const std::shared_ptr<CSceneCreateTypedListsPass>& SceneNodeListPass, bool OpaqueDraw)
 	: CBaseList3DPass(RenderDevice, SceneNodeListPass, cM2_NodeType)
 	, m_CurrentM2Model(nullptr)
 	, m_OpaqueDraw(OpaqueDraw)
@@ -188,7 +188,7 @@ bool CRenderPass_M2::Visit(const IModel* Model)
 
 #if 0
 
-CRenderPass_M2_Instanced::CRenderPass_M2_Instanced(IRenderDevice & RenderDevice, const std::shared_ptr<BuildRenderListPassTemplated<CM2_Base_Instance>>& List, const std::shared_ptr<CSceneNodeListPass>& SceneNodeListPass bool OpaqueDraw)
+CRenderPass_M2_Instanced::CRenderPass_M2_Instanced(IRenderDevice & RenderDevice, const std::shared_ptr<BuildRenderListPassTemplated<CM2_Base_Instance>>& List, const std::shared_ptr<CSceneCreateTypedListsPass>& SceneNodeListPass bool OpaqueDraw)
 	: CRenderPass_M2(RenderDevice, SceneNodeListPass)
 	, m_RenderListPass(List)
 {

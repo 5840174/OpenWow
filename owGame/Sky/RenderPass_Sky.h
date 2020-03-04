@@ -4,7 +4,7 @@ class ZN_API CRenderPass_Sky
 	: public CBaseList3DPass
 {
 public:
-	CRenderPass_Sky(IRenderDevice& RenderDevice, const std::shared_ptr<CSceneNodeListPass>& SceneNodeListPass);
+	CRenderPass_Sky(IRenderDevice& RenderDevice, const std::shared_ptr<CSceneCreateTypedListsPass>& SceneNodeListPass);
 	virtual ~CRenderPass_Sky();
 
 	// IRenderPassPipelined

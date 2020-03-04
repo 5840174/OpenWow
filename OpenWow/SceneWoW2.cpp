@@ -98,8 +98,8 @@ void CSceneWoW2::OnWindowKeyReleased(KeyEventArgs & e)
 //
 void CSceneWoW2::Load3D()
 {
-	std::shared_ptr<BuildRenderListPassTemplated<CWMO_Group_Instance>> wmoListPass = std::make_shared<BuildRenderListPassTemplated<CWMO_Group_Instance>>(GetRenderDevice(), shared_from_this());
-	std::shared_ptr<BuildRenderListPassTemplated<CM2_Base_Instance>> m2ListPass = std::make_shared<BuildRenderListPassTemplated<CM2_Base_Instance>>(GetRenderDevice(), shared_from_this());
+	std::shared_ptr<CSceneCreateTypelessListPassTemplated<CWMO_Group_Instance>> wmoListPass = std::make_shared<CSceneCreateTypelessListPassTemplated<CWMO_Group_Instance>>(GetRenderDevice(), shared_from_this());
+	std::shared_ptr<CSceneCreateTypelessListPassTemplated<CM2_Base_Instance>> m2ListPass = std::make_shared<CSceneCreateTypelessListPassTemplated<CM2_Base_Instance>>(GetRenderDevice(), shared_from_this());
 
 	m_Technique3D.AddPass(GetBaseManager().GetManager<IRenderPassFactory>()->CreateRenderPass("ClearPass", GetRenderDevice(), GetRenderWindow()->GetRenderTarget(), &GetRenderWindow()->GetViewport(), shared_from_this()));
 	//m_Technique3D.AddPass(std::make_shared<CRenderPass_Sky>(GetRenderDevice(), shared_from_this())->CreatePipeline(GetRenderWindow()->GetRenderTarget(), &GetRenderWindow()->GetViewport()));

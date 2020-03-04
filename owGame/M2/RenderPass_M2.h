@@ -6,7 +6,7 @@ class ZN_API CRenderPass_M2
 	: public CBaseList3DPass
 {
 public:
-	CRenderPass_M2(IRenderDevice& RenderDevice, const std::shared_ptr<CSceneNodeListPass>& SceneNodeListPass, bool OpaqueDraw);
+	CRenderPass_M2(IRenderDevice& RenderDevice, const std::shared_ptr<CSceneCreateTypedListsPass>& SceneNodeListPass, bool OpaqueDraw);
 	virtual ~CRenderPass_M2();
 
 	// CRenderPass_M2

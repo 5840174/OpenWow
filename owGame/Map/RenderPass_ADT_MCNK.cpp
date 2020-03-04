@@ -6,7 +6,7 @@
 // Additional
 #include "MapChunk.h"
 
-CRenderPass_ADT_MCNK::CRenderPass_ADT_MCNK(IRenderDevice& RenderDevice, const std::shared_ptr<CSceneNodeListPass>& SceneNodeListPass)
+CRenderPass_ADT_MCNK::CRenderPass_ADT_MCNK(IRenderDevice& RenderDevice, const std::shared_ptr<CSceneCreateTypedListsPass>& SceneNodeListPass)
 	: CBaseList3DPass(RenderDevice, SceneNodeListPass, cMapChunk_NodeType)
 {
 	m_ADT_MCNK_Distance = RenderDevice.GetBaseManager().GetManager<ISettings>()->GetGroup("WoWSettings")->GetSettingT<float>("ADT_MCNK_Distance");

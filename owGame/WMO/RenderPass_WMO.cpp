@@ -7,7 +7,7 @@
 #include "WMO_Base_Instance.h"
 #include "WMO_Group_Instance.h"
 
-CRenderPass_WMO::CRenderPass_WMO(IRenderDevice& RenderDevice, const std::shared_ptr<CSceneNodeListPass>& SceneNodeListPass)
+CRenderPass_WMO::CRenderPass_WMO(IRenderDevice& RenderDevice, const std::shared_ptr<CSceneCreateTypedListsPass>& SceneNodeListPass)
 	: CBaseList3DPass(RenderDevice, SceneNodeListPass, cWMOGroup_NodeType)
 {
 	m_WoWSettings = RenderDevice.GetBaseManager().GetManager<ISettings>()->GetGroup("WoWSettings");

@@ -6,7 +6,7 @@ class ZN_API CRenderPass_WMO
 	: public CBaseList3DPass
 {
 public:
-	CRenderPass_WMO(IRenderDevice& RenderDevice, const std::shared_ptr<CSceneNodeListPass>& SceneNodeListPass);
+	CRenderPass_WMO(IRenderDevice& RenderDevice, const std::shared_ptr<CSceneCreateTypedListsPass>& SceneNodeListPass);
 	virtual ~CRenderPass_WMO();
 
 	// IRenderPassPipelined
