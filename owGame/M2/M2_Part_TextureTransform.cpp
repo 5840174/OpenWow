@@ -6,7 +6,7 @@
 // General
 #include "M2_Part_TextureTransform.h"
 
-CM2_Part_TextureTransform::CM2_Part_TextureTransform(const M2& M2Object, const std::shared_ptr<IFile>& File, const SM2_TextureTransform& M2TextureTransform)
+CM2_Part_TextureTransform::CM2_Part_TextureTransform(const CM2& M2Object, const std::shared_ptr<IFile>& File, const SM2_TextureTransform& M2TextureTransform)
 	: m_M2Object(M2Object)
 {
 	m_TranslateAnimated.Initialize(M2TextureTransform.translation, File);

@@ -6,7 +6,7 @@
 #include "M2_SkinSection.h"
 
 // FORWARD BEGIN
-class M2;
+class CM2;
 class CM2_Base_Instance;
 // FORWARD END
 
@@ -14,7 +14,7 @@ class CM2_Skin
 	: public ModelProxie
 {
 public:
-	CM2_Skin(IBaseManager& BaseManager, IRenderDevice& RenderDevice, const M2& M2Model, const SM2_SkinProfile& M2SkinProfile);
+	CM2_Skin(IBaseManager& BaseManager, IRenderDevice& RenderDevice, const CM2& M2Model, const SM2_SkinProfile& M2SkinProfile);
 	virtual ~CM2_Skin();
 
 	void Load(const SM2_Header& M2Header, const std::shared_ptr<IFile>& File, const std::vector<SM2_Vertex>& Vertices);
@@ -36,6 +36,6 @@ private:
 private:
 	IBaseManager& m_BaseManager;
 	IRenderDevice& m_RenderDevice;
-	const M2& m_M2Model;
+	const CM2& m_M2Model;
 	const SM2_SkinProfile m_M2SkinProfile;
 };

@@ -11,7 +11,7 @@
 #include "M2_Part_TextureWeight.h"
 
 // FORWARD BEGIN
-class M2;
+class CM2;
 class CM2_Skin_Batch;
 // FORWARD END
 
@@ -19,7 +19,7 @@ class CM2_Comp_Materials
 {
 	friend CM2_Skin_Batch;
 public:
-	CM2_Comp_Materials(const M2& M2Object);
+	CM2_Comp_Materials(const CM2& M2Object);
 	virtual ~CM2_Comp_Materials();
 
 	void Load(const SM2_Header& M2Header, const std::shared_ptr<IFile>& File);
@@ -94,5 +94,5 @@ private:
 	bool                                                     m_IsAnimTextures;
 
 private:
-	const M2& m_M2Object;
+	const CM2& m_M2Object;
 };

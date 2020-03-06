@@ -6,7 +6,7 @@
 // General
 #include "M2_Part_Attachment.h"
 
-CM2_Part_Attachment::CM2_Part_Attachment(const M2& M2Object, const std::shared_ptr<IFile>& File, const SM2_Attachment& M2Attachment)
+CM2_Part_Attachment::CM2_Part_Attachment(const CM2& M2Object, const std::shared_ptr<IFile>& File, const SM2_Attachment& M2Attachment)
 	: m_M2Object(M2Object)
 {
 	//_ASSERT(_proto.id < M2_AttachmentType::Count);

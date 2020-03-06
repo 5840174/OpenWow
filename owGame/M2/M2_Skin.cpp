@@ -10,7 +10,7 @@
 // Additional
 #include "M2_Part_Material.h"
 
-CM2_Skin::CM2_Skin(IBaseManager& BaseManager, IRenderDevice& RenderDevice, const M2& M2Model, const SM2_SkinProfile& M2SkinProfile)
+CM2_Skin::CM2_Skin(IBaseManager& BaseManager, IRenderDevice& RenderDevice, const CM2& M2Model, const SM2_SkinProfile& M2SkinProfile)
 	: ModelProxie(RenderDevice.GetObjectsFactory().CreateModel())
 	, m_BaseManager(BaseManager)
 	, m_RenderDevice(RenderDevice)

@@ -6,7 +6,7 @@
 // General
 #include "M2_Part_Camera.h"
 
-CM2_Part_Camera::CM2_Part_Camera(const M2& M2Object, const std::shared_ptr<IFile>& File, const SM2_Camera& M2Camera)
+CM2_Part_Camera::CM2_Part_Camera(const CM2& M2Object, const std::shared_ptr<IFile>& File, const SM2_Camera& M2Camera)
 	: m_M2Object(M2Object)
 {
 	nearclip = M2Camera.near_clip;

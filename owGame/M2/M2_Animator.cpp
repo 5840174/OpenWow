@@ -6,7 +6,7 @@
 // General
 #include "M2_Animator.h"
 
-CM2_Animator::CM2_Animator(const IBaseManager& BaseManager, const M2& M2Model) 
+CM2_Animator::CM2_Animator(const IBaseManager& BaseManager, const CM2& M2Model) 
 	: m_M2Model(M2Model)
 	, m_IsLoop(false)
 	, m_IsStopped(false)

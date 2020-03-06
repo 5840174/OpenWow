@@ -26,6 +26,7 @@
 // M2
 #include "../owGame/M2/M2_Base_Instance.h"
 #include "../owGame/M2/RenderPass_M2.h"
+#include "../owGame/M2/RenderPass_M2Instanced.h"
 
 // WMO
 #include "../owGame/WMO/WMO_Base_Instance.h"
@@ -42,7 +43,7 @@
 #include "../owGame/Map/Map.h"
 #include "../owGame/Map/RenderPass_MapTile.h"
 #include "../owGame/Map/RenderPass_WDL.h"
-#include "../owGame/Map/RenderPass_ADT_MCNK.h"
+#include "../owGame/Map/RenderPass_MapChunk.h"
 
 // World
 #include "../owGame/World/WorldObjectsCreator.h"

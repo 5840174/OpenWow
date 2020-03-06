@@ -40,7 +40,7 @@ public:
 	BoundingBox	GetBounds() const { return m_Bounds; }
 
 	bool useAmbColor() const { return !(m_Header.flags.skip_base_color); }
-	std::shared_ptr<M2> getSkybox() { return m_Skybox; }
+	std::shared_ptr<CM2> getSkybox() { return m_Skybox; }
 
 public:
 	
@@ -58,7 +58,7 @@ public:
 	std::vector<std::shared_ptr<WMO_Group>>                             m_OutdoorGroups;
 
 	//-- Skybox --//
-	std::shared_ptr<M2>                                                 m_Skybox;
+	std::shared_ptr<CM2>                                                 m_Skybox;
 
 	//-- Portals --//
 #ifndef WMO_DISABLE_PORTALS

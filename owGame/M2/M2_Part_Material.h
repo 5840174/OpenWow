@@ -5,7 +5,7 @@
 class CM2_Part_Material
 {
 public:
-	CM2_Part_Material(IBaseManager& BaseManager, IRenderDevice& RenderDevice, const M2& M2Object, const SM2_Material& M2Material);
+	CM2_Part_Material(IBaseManager& BaseManager, IRenderDevice& RenderDevice, const CM2& M2Object, const SM2_Material& M2Material);
 	virtual ~CM2_Part_Material();
 
 	SM2_Material::BlendModes getBlendMode() const { return m_M2BlendMode; }
@@ -29,5 +29,5 @@ private:
 	std::shared_ptr<IRasterizerState> m_RasterizerState;
 
 private:
-	const M2& m_M2Object;
+	const CM2& m_M2Object;
 };

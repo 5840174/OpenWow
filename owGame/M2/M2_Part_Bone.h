@@ -3,7 +3,7 @@
 #include "M2_Types.h"
 
 // FORWARD BEGIN
-class M2;
+class CM2;
 class CM2_Comp_Skeleton;
 // FORWARD END
 
@@ -85,7 +85,7 @@ class CM2_Part_Bone
 	: public std::enable_shared_from_this<CM2_Part_Bone>
 {
 public:
-	CM2_Part_Bone(const M2& M2Object, const std::shared_ptr<IFile>& File, int16 boneDirectIndex, const SM2_Bone& M2Bone);
+	CM2_Part_Bone(const CM2& M2Object, const std::shared_ptr<IFile>& File, int16 boneDirectIndex, const SM2_Bone& M2Bone);
 	virtual ~CM2_Part_Bone();
 
 	glm::mat4 calcMatrix(uint16 anim, uint32 time, uint32 globalTime) const;
@@ -142,7 +142,7 @@ private:
 	M2_Animated<vec3>                   m_ScaleAnimated;
 
 private:
-	const M2& m_M2Object;
+	const CM2& m_M2Object;
 };
 
 

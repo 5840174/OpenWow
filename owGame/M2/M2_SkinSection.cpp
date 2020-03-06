@@ -17,7 +17,7 @@ struct SM2_Vertex_BoneIndex
 	uint32 indexes[4];
 };
 
-CM2_SkinSection::CM2_SkinSection(IRenderDevice& RenderDevice, const M2& M2Model, const uint16 SkinSectionIndex, const SM2_SkinSection& SkinSectionProto, const std::vector<SM2_Vertex>& Vertexes, const std::vector<uint16>& Indexes)
+CM2_SkinSection::CM2_SkinSection(IRenderDevice& RenderDevice, const CM2& M2Model, const uint16 SkinSectionIndex, const SM2_SkinSection& SkinSectionProto, const std::vector<SM2_Vertex>& Vertexes, const std::vector<uint16>& Indexes)
 	: GeometryProxie(RenderDevice.GetObjectsFactory().CreateGeometry())
 	, m_SkinSectionIndex(SkinSectionIndex)
 	, m_SkinSectionProto(SkinSectionProto)

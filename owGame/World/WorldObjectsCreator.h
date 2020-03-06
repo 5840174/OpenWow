@@ -23,20 +23,20 @@ public:
 
 	// IWoWObjectsCreator
 	void ClearCache() override;
-	std::shared_ptr<M2> LoadM2(IRenderDevice& RenderDevice, const std::string& Filename) override final;
+	std::shared_ptr<CM2> LoadM2(IRenderDevice& RenderDevice, const std::string& Filename) override final;
 	std::shared_ptr<CWMO> LoadWMO(IRenderDevice& RenderDevice, const std::string& Filename) override final;
 
 private:
-	std::shared_ptr<M2> CreateCreatureModel(IRenderDevice& RenderDevice, const DBC_CreatureDisplayInfoRecord* CreatureDisplayInfo);
-	std::shared_ptr<M2> CreateCharacterModel(IRenderDevice& RenderDevice, const CInet_CharacterTemplate& CharacterTemplate);
-	std::shared_ptr<M2> CreateGameObjectModel(IRenderDevice& RenderDevice, const DBC_GameObjectDisplayInfoRecord* GameObjectDisplayInfoRecord);
+	std::shared_ptr<CM2> CreateCreatureModel(IRenderDevice& RenderDevice, const DBC_CreatureDisplayInfoRecord* CreatureDisplayInfo);
+	std::shared_ptr<CM2> CreateCharacterModel(IRenderDevice& RenderDevice, const CInet_CharacterTemplate& CharacterTemplate);
+	std::shared_ptr<CM2> CreateGameObjectModel(IRenderDevice& RenderDevice, const DBC_GameObjectDisplayInfoRecord* GameObjectDisplayInfoRecord);
 
 private:
 	IBaseManager& m_BaseManager;
 	CDBCStorage* m_DBCs;
 
 	std::mutex m_M2Lock;
-	std::unordered_map<std::string, std::weak_ptr<M2>> m_M2ObjectsWPtrs;
+	std::unordered_map<std::string, std::weak_ptr<CM2>> m_M2ObjectsWPtrs;
 	
 	std::mutex m_WMOLock;
 	std::unordered_map<std::string, std::weak_ptr<CWMO>> m_WMOObjectsWPtrs;

@@ -21,18 +21,18 @@ CRenderPass_MapTile::~CRenderPass_MapTile()
 //
 // IVisitor
 //
-bool CRenderPass_MapTile::Visit(const ISceneNode3D* node)
+EVisitResult CRenderPass_MapTile::Visit(const ISceneNode3D* node)
 {	
 	if (node->Is(cMapTile_NodeType))
 	{
 		if (const CMapTile* map = static_cast<const CMapTile*>(node))
 		{
 			if (!map->GetMap().getTileIsCurrent(map->getIndexX(), map->getIndexZ()))
-				return false;
+				return EVisitResult::Block;
 
 			ScenePass::Visit(node);
 		}
 	}
 
-	return false;
+	return EVisitResult::AllowAll;
 }

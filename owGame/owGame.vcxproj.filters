@@ -414,9 +414,6 @@
     <ClCompile Include="Map\MinimapProvider.cpp">
       <Filter>Map</Filter>
     </ClCompile>
-    <ClCompile Include="Map\RenderPass_ADT_MCNK.cpp">
-      <Filter>RenderStuff</Filter>
-    </ClCompile>
     <ClCompile Include="Map\RenderPass_MapTile.cpp">
       <Filter>RenderStuff</Filter>
     </ClCompile>
@@ -518,6 +515,12 @@
     </ClCompile>
     <ClCompile Include="Map\MapChunkLiquid.cpp">
       <Filter>Map\Tile</Filter>
+    </ClCompile>
+    <ClCompile Include="M2\RenderPass_M2Instanced.cpp">
+      <Filter>RenderStuff</Filter>
+    </ClCompile>
+    <ClCompile Include="Map\RenderPass_MapChunk.cpp">
+      <Filter>RenderStuff</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -962,9 +965,6 @@
     <ClInclude Include="Map\MinimapProvider.h">
       <Filter>Map</Filter>
     </ClInclude>
-    <ClInclude Include="Map\RenderPass_ADT_MCNK.h">
-      <Filter>RenderStuff</Filter>
-    </ClInclude>
     <ClInclude Include="Map\RenderPass_MapTile.h">
       <Filter>RenderStuff</Filter>
     </ClInclude>
@@ -1090,6 +1090,12 @@
     </ClInclude>
     <ClInclude Include="Map\MapChunkLiquid.h">
       <Filter>Map\Tile</Filter>
+    </ClInclude>
+    <ClInclude Include="M2\RenderPass_M2Instanced.h">
+      <Filter>RenderStuff</Filter>
+    </ClInclude>
+    <ClInclude Include="Map\RenderPass_MapChunk.h">
+      <Filter>RenderStuff</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

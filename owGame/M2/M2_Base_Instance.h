@@ -7,7 +7,7 @@ class ZN_API CM2_Base_Instance
 	, public CLoadableObject
 {
 public:
-	CM2_Base_Instance(const std::shared_ptr<M2>& M2Object);
+	CM2_Base_Instance(const std::shared_ptr<CM2>& M2Object);
 	virtual ~CM2_Base_Instance();
 
 	void                                CreateInstances();
@@ -16,7 +16,7 @@ public:
 	bool                                Load() override;
 
 	// CM2_Base_Instance
-	const M2&                           getM2() const;
+	const CM2&                           getM2() const;
 
 	void                                Attach(std::shared_ptr<const CM2_Part_Attachment> _attachment);
 	void                                Detach();
@@ -64,6 +64,6 @@ private:
 	bool                                m_NeedRecalcAnimation;
 
 private:
-	std::shared_ptr<const M2>           m_M2;
+	std::shared_ptr<const CM2>           m_M2;
 	std::shared_ptr<const CM2_Part_Attachment>m_Attached;
 };

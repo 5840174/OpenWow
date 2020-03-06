@@ -7,7 +7,7 @@
 
 // Additional
 
-CMapM2Instance::CMapM2Instance(const std::shared_ptr<M2>& M2Object, const ADT_MDXDef& _placementInfo) 
+CMapM2Instance::CMapM2Instance(const std::shared_ptr<CM2>& M2Object, const ADT_MDXDef& _placementInfo) 
 	: CM2_Base_Instance(M2Object)
 	, m_PlacementInfo(_placementInfo)
 {}
@@ -25,11 +25,11 @@ void CMapM2Instance::Initialize()
 	// CTransformComponent
 	{
 		SetTranslate(m_PlacementInfo.position);
-		vec3 rotate = glm::radians(m_PlacementInfo.rotation);
+		glm::vec3 rotate = glm::radians(m_PlacementInfo.rotation);
 		rotate.x = -rotate.x;
 		rotate.y = rotate.y - glm::half_pi<float>();
-		SetRotation(vec3(rotate.z, rotate.y, rotate.x));
-		SetScale(vec3(static_cast<float>(m_PlacementInfo.scale) / 1024.0f));
+		SetRotation(glm::vec3(rotate.z, rotate.y, rotate.x));
+		SetScale(glm::vec3(static_cast<float>(m_PlacementInfo.scale) / 1024.0f));
 	}
 
 	__super::Initialize();

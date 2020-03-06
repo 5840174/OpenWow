@@ -155,7 +155,7 @@ void CItem_VisualData::InitObjectComponents()
 		auto itemObjectAttach = m_ParentCharacter.getM2().getMiscellaneous().getAttachment(ItemObjectComponents[InventoryType].attach[i]);
 
 		// Create instance
-		std::shared_ptr<M2> m2Model = m_BaseManager.GetManager<IWoWObjectsCreator>()->LoadM2(m_RenderDevice, modelName);
+		std::shared_ptr<CM2> m2Model = m_BaseManager.GetManager<IWoWObjectsCreator>()->LoadM2(m_RenderDevice, modelName);
 		_ASSERT(m2Model != nullptr);
 
 		std::shared_ptr<CItem_M2Instance> itemObjectInstance = m_ParentCharacter.CreateSceneNode<CItem_M2Instance>(m2Model);
@@ -182,7 +182,7 @@ void CItem_VisualData::InitObjectComponents()
 					continue;
 				}
 
-				std::shared_ptr<M2> m2Model = m_BaseManager.GetManager<IWoWObjectsCreator>()->LoadM2(m_RenderDevice, visEffectModelName);
+				std::shared_ptr<CM2> m2Model = m_BaseManager.GetManager<IWoWObjectsCreator>()->LoadM2(m_RenderDevice, visEffectModelName);
 				_ASSERT(m2Model != nullptr);
 				std::shared_ptr<CM2_Base_Instance> visInstance = itemObjectInstance->CreateSceneNode<CM2_Base_Instance>(m2Model);
 				visInstance->Load();

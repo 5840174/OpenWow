@@ -7,13 +7,13 @@
 #include "M2_Part_Bone.h"
 
 // FORWARD BEGIN
-class M2;
+class CM2;
 // FORWARD END
 
 class CM2_Comp_Skeleton
 {
 public:
-	CM2_Comp_Skeleton(const M2& M2Object);
+	CM2_Comp_Skeleton(const CM2& M2Object);
 	virtual ~CM2_Comp_Skeleton();
 
 	void Load(const SM2_Header& M2Header, const std::shared_ptr<IFile>& File);
@@ -93,5 +93,5 @@ private:
 	bool                                         m_IsBillboard;
 
 private:
-	const M2& m_M2Object;
+	const CM2& m_M2Object;
 };

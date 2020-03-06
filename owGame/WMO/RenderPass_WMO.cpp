@@ -57,22 +57,14 @@ std::shared_ptr<IRenderPassPipelined> CRenderPass_WMO::CreatePipeline(std::share
 //
 // IVisitor
 //
-bool CRenderPass_WMO::Visit(const ISceneNode3D* SceneNode3D)
+EVisitResult CRenderPass_WMO::Visit(const ISceneNode3D* SceneNode3D)
 {
 	if (SceneNode3D->Is(cWMO_NodeType) || SceneNode3D->Is(cWMOGroup_NodeType))
 	{
-		const auto& collider = SceneNode3D->GetComponent<IColliderComponent3D>();
-
-		const ICameraComponent3D* camera = GetRenderEventArgs().CameraForCulling;
-		_ASSERT(camera != nullptr);
-
-		if (camera->GetFrustum().cullBox(collider->GetWorldBounds()))
-			return false;
-
 		return CBaseList3DPass::Visit(SceneNode3D);
 	}
 
-	return false;
+	return EVisitResult::Block;
 }
 
 

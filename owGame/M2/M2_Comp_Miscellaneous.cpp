@@ -6,7 +6,7 @@
 // General
 #include "M2_Comp_Miscellaneous.h"
 
-CM2_Comp_Miscellaneous::CM2_Comp_Miscellaneous(const M2& M2Object) 
+CM2_Comp_Miscellaneous::CM2_Comp_Miscellaneous(const CM2& M2Object) 
 	: m_HasMisc(false)
 	, m_M2Object(M2Object)
 {

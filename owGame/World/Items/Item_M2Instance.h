@@ -6,7 +6,7 @@ class CItem_M2Instance
 	: public CM2_Base_Instance
 {
 public:
-	CItem_M2Instance(const std::shared_ptr<M2>& M2Object);
+	CItem_M2Instance(const std::shared_ptr<CM2>& M2Object);
     virtual ~CItem_M2Instance();
 
 	void AddVisualEffect(std::shared_ptr<CM2_Base_Instance> _visualEffect);

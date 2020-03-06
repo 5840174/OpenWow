@@ -6,7 +6,7 @@
 // General
 #include "M2_Comp_Skeleton.h"
 
-CM2_Comp_Skeleton::CM2_Comp_Skeleton(const M2& M2Object)
+CM2_Comp_Skeleton::CM2_Comp_Skeleton(const CM2& M2Object)
 	: m_HasBones(false)
 	, m_IsAnimBones(false)
 	, m_IsBillboard(false)

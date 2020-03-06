@@ -64,7 +64,7 @@ std::shared_ptr<WoWPlayer> WoWPlayer::Create(IBaseManager& BaseManager, IRenderD
 	// For test only
 	BoundingBox bbox(glm::vec3(-2.0f), glm::vec3(2.0f));
 	bbox.calculateCenter();
-	//thisObj->GetComponent<IColliderComponent3D>()->SetBounds(bbox);
+	//thisObj->GetColliderComponent()->SetBounds(bbox);
 
 	return thisObj;
 }

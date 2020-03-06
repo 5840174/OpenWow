@@ -7,7 +7,7 @@
 // General
 #include "M2_Skin_Batch.h"
 
-CM2_Skin_Batch::CM2_Skin_Batch(IBaseManager& BaseManager, IRenderDevice& RenderDevice, const M2& M2Model, const SM2_SkinBatch& SkinBatchProto)
+CM2_Skin_Batch::CM2_Skin_Batch(IBaseManager& BaseManager, IRenderDevice& RenderDevice, const CM2& M2Model, const SM2_SkinBatch& SkinBatchProto)
 	: MaterialProxie(RenderDevice.GetObjectsFactory().CreateMaterial(sizeof(ShaderM2BatchProperties)))
 	, m_BaseManager(BaseManager)
 	, m_RenderDevice(RenderDevice)

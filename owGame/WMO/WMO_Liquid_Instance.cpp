@@ -15,7 +15,7 @@ CWMO_Liquid_Instance::~CWMO_Liquid_Instance()
 
 BoundingBox CWMO_Liquid_Instance::GetBoundingBox() const
 {
-	return GetComponent<IColliderComponent3D>()->GetWorldBounds();
+	return GetColliderComponent()->GetWorldBounds();
 }
 
 

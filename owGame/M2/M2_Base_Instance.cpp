@@ -6,7 +6,7 @@
 // Additional
 #include "M2_ColliderComponent.h"
 
-CM2_Base_Instance::CM2_Base_Instance(const std::shared_ptr<M2>& M2Object) 
+CM2_Base_Instance::CM2_Base_Instance(const std::shared_ptr<CM2>& M2Object) 
 	: CLoadableObject(M2Object)
 	, m_M2(M2Object)
 	, m_Attached(nullptr)
@@ -42,7 +42,7 @@ bool CM2_Base_Instance::Load()
 	return true;
 }
 
-const M2 & CM2_Base_Instance::getM2() const
+const CM2 & CM2_Base_Instance::getM2() const
 {
 	_ASSERT(m_M2 != nullptr);
 	return *m_M2;
@@ -94,12 +94,16 @@ std::shared_ptr<ITexture> CM2_Base_Instance::getSpecialTexture(SM2_Texture::Type
 
 void CM2_Base_Instance::Initialize()
 {
-	GetComponent<CColliderComponent3D>()->SetBounds(getM2().GetBounds());
-	GetComponent<CColliderComponent3D>()->SetDebugDrawMode(false);
+	GetColliderComponent()->SetCullDistance(GetBaseManager().GetManager<ISettings>()->GetGroup("WoWSettings")->GetSettingT<float>("ADT_MDX_Distance")->Get());
+	GetColliderComponent()->SetBounds(getM2().GetBounds());
+	GetColliderComponent()->SetDebugDrawMode(false);
 }
 
 void CM2_Base_Instance::Update(const UpdateEventArgs & e)
 {
+	return;
+
+
 	if (GetState() != ILoadable::ELoadableState::Loaded)
 		return;
 
@@ -111,18 +115,6 @@ void CM2_Base_Instance::Update(const UpdateEventArgs & e)
 	if (getM2().isAnimated())
 	{
 		m_Animator->Update(e.TotalTime, e.DeltaTime);
-
-		//if (m_Object->isBillboard())
-		//{
-		//m_Object->calc(m_Animator->getAnimID(), m_Animator->getCurrentTime(_time), _time);
-		//}
-		//else
-		//{
-		//if (!m_NeedRecalcAnimation)
-		{
-			//const_cast<M2&>(m_M2).calc(m_Animator->getSequenceIndex(), m_Animator->getCurrentTime(), e.TotalTime, e.Camera->GetViewMatrix(), GetWorldTransfom());
-			//m_NeedRecalcAnimation = true;
-		}
 	}
 }
 
@@ -165,6 +157,6 @@ void CM2_Base_Instance::InitAnimator()
 
 void CM2_Base_Instance::RegisterComponents()
 {
-	SetMeshComponent(AddComponent(std::make_shared<CMeshComponent3D>(*this)));
-    SetColliderComponent(AddComponent(std::make_shared<CM2_ColliderComponent>(*this)));
+	m_Components_Models = AddComponent(std::make_shared<CModelsComponent3D>(*this));
+    m_Components_Collider = AddComponent(std::make_shared<CM2_ColliderComponent>(*this));
 }

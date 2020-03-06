@@ -18,7 +18,7 @@ struct RibbonVertex
 	vec2 tex;
 };
 
-CM2_RibbonEmitters::CM2_RibbonEmitters(const M2& M2Object, const std::shared_ptr<IFile>& File, const SM2_RibbonEmitter& M2RibbonEmitter) 
+CM2_RibbonEmitters::CM2_RibbonEmitters(const CM2& M2Object, const std::shared_ptr<IFile>& File, const SM2_RibbonEmitter& M2RibbonEmitter) 
 	: m_M2Object(M2Object)
 	, tcolor(vec4(1.0f))
 {

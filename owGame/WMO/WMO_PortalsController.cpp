@@ -32,7 +32,7 @@ void CWMO_PortalsController::Update(const CWMO_Base_Instance* SceneNodeInstance,
 	Frustum cameraFrustum = _camera->GetFrustum();
 	bool insideIndoor = false;
 
-	BoundingBox wmoBaseInstanceBounds = const_cast<CWMO_Base_Instance*>(SceneNodeInstance)->GetComponent<CColliderComponent3D>()->GetBounds();
+	BoundingBox wmoBaseInstanceBounds = const_cast<CWMO_Base_Instance*>(SceneNodeInstance)->GetColliderComponent()->GetBounds();
 	wmoBaseInstanceBounds.transform(SceneNodeInstance->GetWorldTransfom());
 
 	if (wmoBaseInstanceBounds.isPointInside(cameraTranslate))

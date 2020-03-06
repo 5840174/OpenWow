@@ -6,7 +6,7 @@
 // General
 #include "M2_Part_Event.h"
 
-CM2_Part_Event::CM2_Part_Event(const M2& M2Object, const std::shared_ptr<IFile>& File, const SM2_Event& M2Event)
+CM2_Part_Event::CM2_Part_Event(const CM2& M2Object, const std::shared_ptr<IFile>& File, const SM2_Event& M2Event)
 	: m_M2Object(M2Object)
 {
 	memcpy(m_ID, M2Event.identifier, 4);

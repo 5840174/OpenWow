@@ -4,7 +4,7 @@
 #include "M2_Part_Bone.h"
 
 // FORWARD BEGIN
-class M2;
+class CM2;
 // FORWARD END
 
 enum class M2_AttachmentType : uint32
@@ -99,7 +99,7 @@ enum class M2_AttachmentType : uint32
 class CM2_Part_Attachment
 {
 public:
-	CM2_Part_Attachment(const M2& M2Object, const std::shared_ptr<IFile>& File, const SM2_Attachment& M2Attachment);
+	CM2_Part_Attachment(const CM2& M2Object, const std::shared_ptr<IFile>& File, const SM2_Attachment& M2Attachment);
 	virtual ~CM2_Part_Attachment();
 
 	const std::weak_ptr<const CM2_Part_Bone> getBone() const { return m_Bone; }
@@ -114,5 +114,5 @@ private:
 	M2_Animated<uint8>					m_IsAnimateAttached;
 
 private:
-	const M2& m_M2Object;
+	const CM2& m_M2Object;
 };

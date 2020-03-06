@@ -56,11 +56,13 @@ std::shared_ptr<IRenderPassPipelined> CRenderPass_Sky::CreatePipeline(std::share
 //
 // IVisitor
 //
-bool CRenderPass_Sky::Visit(const ISceneNode3D * node)
+EVisitResult CRenderPass_Sky::Visit(const ISceneNode3D * node)
 {
 	_ASSERT(node->Is(cSky_NodeType));
+
 	if (const SkyManager* skyManagerInstance = static_cast<const SkyManager*>(node))
 		return CBaseList3DPass::Visit(skyManagerInstance);
 
-	return false;
+	_ASSERT(false);
+	return EVisitResult::Block;
 }

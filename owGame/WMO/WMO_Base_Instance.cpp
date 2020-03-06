@@ -47,8 +47,8 @@ const CWMO& CWMO_Base_Instance::getWMO() const
 //
 void CWMO_Base_Instance::Initialize()
 {
-	GetComponent<IColliderComponent3D>()->SetBounds(getWMO().GetBounds());
-	GetComponent<IColliderComponent3D>()->SetDebugDrawMode(false);
+	GetColliderComponent()->SetBounds(getWMO().GetBounds());
+	GetColliderComponent()->SetDebugDrawMode(false);
 }
 
 std::string CWMO_Base_Instance::GetName() const 

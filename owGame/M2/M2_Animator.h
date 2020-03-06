@@ -6,7 +6,7 @@
 class ZN_API CM2_Animator
 {
 public:
-	CM2_Animator(const IBaseManager& BaseManager, const M2& M2Model);
+	CM2_Animator(const IBaseManager& BaseManager, const CM2& M2Model);
 	virtual ~CM2_Animator();
 
 	void PlayAnimation(uint16 AnimationId, bool Loop);
@@ -32,5 +32,5 @@ private:
 	uint32						m_CurrentTime;
 
 private:
-	const M2& m_M2Model;
+	const CM2& m_M2Model;
 };

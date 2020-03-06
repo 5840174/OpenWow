@@ -96,6 +96,7 @@
     <ClCompile Include="M2\ParticleEmitter_Sphere.cpp" />
     <ClCompile Include="M2\ParticleSystem.cpp" />
     <ClCompile Include="M2\RenderPass_M2.cpp" />
+    <ClCompile Include="M2\RenderPass_M2Instanced.cpp" />
     <ClCompile Include="M2\ShaderResolver.cpp" />
     <ClCompile Include="Map\Instances\MapM2Instance.cpp" />
     <ClCompile Include="Map\Instances\MapWMOInstance.cpp" />
@@ -108,7 +109,7 @@
     <ClCompile Include="Map\MapWDT.cpp" />
     <ClCompile Include="Map\Map_Shared.cpp" />
     <ClCompile Include="Map\MinimapProvider.cpp" />
-    <ClCompile Include="Map\RenderPass_ADT_MCNK.cpp" />
+    <ClCompile Include="Map\RenderPass_MapChunk.cpp" />
     <ClCompile Include="Map\RenderPass_MapTile.cpp" />
     <ClCompile Include="Map\RenderPass_WDL.cpp" />
     <ClCompile Include="Map\WDL_LowResTile.cpp" />
@@ -283,6 +284,7 @@
     <ClInclude Include="M2\ParticleEmitter_Sphere.h" />
     <ClInclude Include="M2\ParticleSystem.h" />
     <ClInclude Include="M2\RenderPass_M2.h" />
+    <ClInclude Include="M2\RenderPass_M2Instanced.h" />
     <ClInclude Include="M2\ShaderResolver.h" />
     <ClInclude Include="Map\Instances\MapM2Instance.h" />
     <ClInclude Include="Map\Instances\MapWMOInstance.h" />
@@ -296,7 +298,7 @@
     <ClInclude Include="Map\Map_Headers.h" />
     <ClInclude Include="Map\Map_Shared.h" />
     <ClInclude Include="Map\MinimapProvider.h" />
-    <ClInclude Include="Map\RenderPass_ADT_MCNK.h" />
+    <ClInclude Include="Map\RenderPass_MapChunk.h" />
     <ClInclude Include="Map\RenderPass_MapTile.h" />
     <ClInclude Include="Map\RenderPass_WDL.h" />
     <ClInclude Include="Map\WDL_LowResTile.h" />

@@ -13,13 +13,13 @@
 #include "ParticleSystem.h"
 
 // FORWARD BEGIN
-class M2;
+class CM2;
 // FORWARD END
 
 class CM2_Comp_Miscellaneous
 {
 public:
-	CM2_Comp_Miscellaneous(const M2& M2Object);
+	CM2_Comp_Miscellaneous(const CM2& M2Object);
 	virtual ~CM2_Comp_Miscellaneous();
 
 	void Load(const SM2_Header& M2Header, const std::shared_ptr<IFile>& File);
@@ -104,5 +104,5 @@ private:
 	bool								m_HasMisc;
 
 private:
-	const M2& m_M2Object;
+	const CM2& m_M2Object;
 };

@@ -7,7 +7,7 @@
 // General
 #include "M2_Part_Bone.h"
 
-CM2_Part_Bone::CM2_Part_Bone(const M2& M2Object, const std::shared_ptr<IFile>& File, int16 boneDirectIndex, const SM2_Bone& M2Bone)
+CM2_Part_Bone::CM2_Part_Bone(const CM2& M2Object, const std::shared_ptr<IFile>& File, int16 boneDirectIndex, const SM2_Bone& M2Bone)
 	: m_M2Object(M2Object)
 	, m_DirectIndex(boneDirectIndex)
 {

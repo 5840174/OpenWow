@@ -48,7 +48,7 @@ std::shared_ptr<IRenderPassPipelined> CRenderPass_WDL::CreatePipeline(std::share
 //
 // IVisitor
 //
-bool CRenderPass_WDL::Visit(const ISceneNode3D* SceneNode)
+EVisitResult CRenderPass_WDL::Visit(const ISceneNode3D* SceneNode)
 {
 	if (SceneNode->Is(cMap_NodeType))
 	{
@@ -59,14 +59,15 @@ bool CRenderPass_WDL::Visit(const ISceneNode3D* SceneNode)
 		return Base3DPass::Visit(SceneNode);
 	}
 
-	return false;
+	return EVisitResult::Block;
 }
 
-bool CRenderPass_WDL::Visit(const IModel* Model)
+EVisitResult CRenderPass_WDL::Visit(const IModel* Model)
 {
 	const CWDL_LowResTile* wdlMesh = static_cast<const CWDL_LowResTile*>(Model);
 	if (wdlMesh == nullptr)
-        return false;
+        return EVisitResult::Block;
 
-	return Model->Render(GetRenderEventArgs());
+	Model->Render(GetRenderEventArgs());
+	return EVisitResult::AllowAll;
 }

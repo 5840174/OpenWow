@@ -4,7 +4,7 @@
 #include "M2_SkinSection.h"
 
 // FORWARD BEGIN
-class M2;
+class CM2;
 class CM2_Base_Instance;
 // FORWARD END
 
@@ -16,7 +16,7 @@ class CM2_Skin_Batch
 	: public MaterialProxie
 {
 public:
-	CM2_Skin_Batch(IBaseManager& BaseManager, IRenderDevice& RenderDevice, const M2& M2Model, const SM2_SkinBatch& SkinBatchProto);
+	CM2_Skin_Batch(IBaseManager& BaseManager, IRenderDevice& RenderDevice, const CM2& M2Model, const SM2_SkinBatch& SkinBatchProto);
 	virtual ~CM2_Skin_Batch();
 
 	const std::shared_ptr<const CM2_Part_Material>& GetM2Material() const {	return m_M2ModelMaterial; }
@@ -72,6 +72,6 @@ private:
 private:
 	IBaseManager& m_BaseManager;
 	IRenderDevice& m_RenderDevice;
-	const M2& m_M2Model;
+	const CM2& m_M2Model;
 	const SM2_SkinBatch& m_SkinBatchProto;
 };

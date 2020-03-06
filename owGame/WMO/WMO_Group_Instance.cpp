@@ -71,7 +71,7 @@ void CWMO_Group_Instance::Reset()
 
 BoundingBox CWMO_Group_Instance::GetBoundingBox() const
 {
-	return GetComponent<IColliderComponent3D>()->GetWorldBounds();
+	return GetColliderComponent()->GetWorldBounds();
 }
 
 void CWMO_Group_Instance::SetVisibilityState(bool Value)
@@ -147,8 +147,8 @@ void CWMO_Group_Instance::Initialize()
 
 	BoundingBox bbox = m_WMOGroupObject.m_Bounds;
 	bbox.calculateCenter();
-	GetComponent<IColliderComponent3D>()->SetBounds(bbox);
-	GetComponent<CColliderComponent3D>()->SetDebugDrawMode(false);
+	GetColliderComponent()->SetBounds(bbox);
+	GetColliderComponent()->SetDebugDrawMode(false);
 }
 
 void CWMO_Group_Instance::Accept(IVisitor* visitor)

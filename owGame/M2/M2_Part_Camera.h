@@ -3,13 +3,13 @@
 #include "M2_Types.h"
 
 // FORWARD BEGIN
-class M2;
+class CM2;
 // FORWARD END
 
 class CM2_Part_Camera
 {
 public:
-	CM2_Part_Camera(const M2& M2Model, const std::shared_ptr<IFile>& File, const SM2_Camera& M2Camera);
+	CM2_Part_Camera(const CM2& M2Model, const std::shared_ptr<IFile>& File, const SM2_Camera& M2Camera);
 	virtual ~CM2_Part_Camera();
 
 	vec3 GetTranslation() const { return pResult; }
@@ -37,5 +37,5 @@ private:
 	float fov;
 
 private:
-	const M2& m_M2Object;
+	const CM2& m_M2Object;
 };

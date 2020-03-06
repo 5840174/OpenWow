@@ -5,7 +5,7 @@
 // General
 #include "WMO_Doodad_Instance.h"
 
-CWMO_Doodad_Instance::CWMO_Doodad_Instance(const std::shared_ptr<M2>& M2Object, uint32 _index, const SWMO_Doodad_PlacementInfo & _placement)
+CWMO_Doodad_Instance::CWMO_Doodad_Instance(const std::shared_ptr<CM2>& M2Object, uint32 _index, const SWMO_Doodad_PlacementInfo & _placement)
 	: CM2_Base_Instance(M2Object)
 	, m_Index(_index)
 	, m_PortalVisibilityState(true)
@@ -45,7 +45,7 @@ CWMO_Doodad_Instance::~CWMO_Doodad_Instance()
 //
 BoundingBox CWMO_Doodad_Instance::GetBoundingBox() const
 {
-	return GetComponent<IColliderComponent3D>()->GetWorldBounds();
+	return GetColliderComponent()->GetWorldBounds();
 }
 
 

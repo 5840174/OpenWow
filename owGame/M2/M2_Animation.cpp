@@ -6,7 +6,7 @@
 // General
 #include "M2_Animation.h"
 
-CM2_Animation::CM2_Animation(const M2& M2Model, const SM2_Sequence& Sequence, std::string AnimationName, uint16 IndexIntoSeq)
+CM2_Animation::CM2_Animation(const CM2& M2Model, const SM2_Sequence& Sequence, std::string AnimationName, uint16 IndexIntoSeq)
 	: m_AnimID(Sequence.__animID)
 	, m_AnimationName(AnimationName + "_" + std::to_string(IndexIntoSeq))
 	, m_SequenceIndex(IndexIntoSeq)

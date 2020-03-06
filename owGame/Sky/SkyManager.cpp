@@ -50,6 +50,8 @@ bool SkyManager::Load(uint32 MapID)
 		skies.back()->m_IsGlobalSky = true;
 	}
 
+	GetColliderComponent()->SetCullStrategy(IColliderComponent3D::ECullStrategy::None);
+
 	InitBuffer();
 
 	SetState(ILoadable::ELoadableState::Loaded);
@@ -160,7 +162,7 @@ void SkyManager::InitBuffer()
 	std::shared_ptr<IModel> model = m_RenderDevice.GetObjectsFactory().CreateModel();
 	model->AddConnection(material, geometry);
 
-	GetComponent<CMeshComponent3D>()->AddMesh(model);
+	GetComponent<IModelsComponent3D>()->AddModel(model);
 }
 
 void SkyManager::CalculateSkiesWeights(cvec3 pos)

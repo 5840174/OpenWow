@@ -1,7 +1,7 @@
 #pragma once
 
 // FORWARD BEGIN
-class M2;
+class CM2;
 class CM2_ParticleSystem;
 // FORWARD END
 

@@ -3,7 +3,7 @@
 // General
 #include "M2.h"
 
-M2::M2(IBaseManager& BaseManager, IRenderDevice& RenderDevice, const std::string& FileName)
+CM2::CM2(IBaseManager& BaseManager, IRenderDevice& RenderDevice, const std::string& FileName)
 	: m_FileName(FileName)
 	, m_UniqueName("")
 
@@ -43,20 +43,20 @@ M2::M2(IBaseManager& BaseManager, IRenderDevice& RenderDevice, const std::string
 	m_Bounds = m_Header.bounding_box.Convert();
 }
 
-M2::~M2()
+CM2::~CM2()
 {
 }
 
-void M2::CreateInsances(const std::shared_ptr<ISceneNode3D>& Parent) const
+void CM2::CreateInsances(const std::shared_ptr<ISceneNode3D>& Parent) const
 {
 	for (auto& it : m_Skins)
 	{
-		Parent->GetComponent<IMeshComponent3D>()->AddMesh(it);
+		Parent->GetComponent<IModelsComponent3D>()->AddModel(it);
 		break;
 	}
 }
 
-bool M2::Load()
+bool CM2::Load()
 {
 	// Skeleton
 	m_Skeleton = std::make_unique<CM2_Comp_Skeleton>(*this);

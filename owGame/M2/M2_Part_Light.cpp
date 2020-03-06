@@ -6,7 +6,7 @@
 // General
 #include "M2_Part_Light.h"
 
-CM2_Part_Light::CM2_Part_Light(const M2& M2Object, const std::shared_ptr<IFile>& File, const SM2_Light& M2Light) 
+CM2_Part_Light::CM2_Part_Light(const CM2& M2Object, const std::shared_ptr<IFile>& File, const SM2_Light& M2Light) 
 	: ambColorValue(vec3(1.0f, 1.0f, 1.0f))
 	, ambIntensityValue(1.0f)
 	, diffColorValue(vec3(1.0f, 1.0f, 1.0f))

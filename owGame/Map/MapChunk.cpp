@@ -69,8 +69,9 @@ void CMapChunk::Initialize()
 			glm::vec3(0.0f + C_ChunkSize, Math::MinFloat, 0.0f + C_ChunkSize)
 		);
 
-		GetComponent<CColliderComponent3D>()->SetBounds(bbox);
-		GetComponent<CColliderComponent3D>()->SetDebugDrawMode(false);
+		GetColliderComponent()->SetCullDistance(m_RenderDevice.GetBaseManager().GetManager<ISettings>()->GetGroup("WoWSettings")->GetSettingT<float>("ADT_MCNK_Distance")->Get());
+		GetColliderComponent()->SetBounds(bbox);
+		GetColliderComponent()->SetDebugDrawMode(false);
 	}
 }
 
@@ -82,6 +83,10 @@ std::string CMapChunk::GetName() const
 
 bool CMapChunk::Load()
 {
+	if (auto depend = GetDependense().lock())
+		if (depend->GetState() == ILoadable::ELoadableState::Deleted)
+			return false;
+
 	uint32_t startPos = m_File->getPos() - sizeof(ADT_MCNK_Header);
 
 	std::shared_ptr<IBuffer> verticesBuffer = nullptr;
@@ -145,7 +150,7 @@ bool CMapChunk::Load()
 		vec3 tempVertexes[C_MapBufferSize];
 		vec3* ttv = tempVertexes;
 
-		BoundingBox bbox = GetComponent<CColliderComponent3D>()->GetBounds();
+		BoundingBox bbox = GetColliderComponent()->GetBounds();
 
 
 		float minHeight = Math::MaxFloat;
@@ -176,7 +181,7 @@ bool CMapChunk::Load()
 		bbox.setMinY(minHeight);
 		bbox.setMaxY(maxHeight);
 		bbox.calculateCenter();
-        GetComponent<CColliderComponent3D>()->SetBounds(bbox);
+        GetColliderComponent()->SetBounds(bbox);
 
 		verticesBuffer = m_RenderDevice.GetObjectsFactory().CreateVertexBuffer(tempVertexes, C_MapBufferSize);
 	}
@@ -314,13 +319,13 @@ bool CMapChunk::Load()
 
 			// Set this chunk BBOX
 			{
-				BoundingBox bbox = GetComponent<IColliderComponent3D>()->GetBounds();
+				BoundingBox bbox = GetColliderComponent()->GetBounds();
 				float bboxMinHeight = std::min(bbox.getMin().y, (height.min - GetTranslation().y));
 				float bboxMaxHeight = std::max(bbox.getMax().y, (height.max - GetTranslation().y));
 				bbox.setMinY(bboxMinHeight);
 				bbox.setMaxY(bboxMaxHeight);
 				bbox.calculateCenter();
-				GetComponent<IColliderComponent3D>()->SetBounds(bbox);
+				GetColliderComponent()->SetBounds(bbox);
 			}
 
 			CMapChunkLiquid liquidObject(m_RenderDevice, m_File, header);
@@ -333,12 +338,12 @@ bool CMapChunk::Load()
 
 			// IColliderComponent3D
 			{
-				BoundingBox bbox = GetComponent<IColliderComponent3D>()->GetBounds();
+				BoundingBox bbox = GetColliderComponent()->GetBounds();
 				bbox.setMinY(height.min);
 				bbox.setMaxY(height.max);
 				bbox.calculateCenter();
-				liquidInstance->GetComponent<IColliderComponent3D>()->SetBounds(bbox);
-				liquidInstance->GetComponent<IColliderComponent3D>()->SetDebugDrawMode(false);
+				liquidInstance->GetColliderComponent()->SetBounds(bbox);
+				liquidInstance->GetColliderComponent()->SetDebugDrawMode(false);
 			}
 		}
 	}
@@ -374,7 +379,7 @@ bool CMapChunk::Load()
 		std::shared_ptr<IModel> model = m_RenderDevice.GetObjectsFactory().CreateModel();
 		model->AddConnection(mat, defaultGeometry);
 
-		GetComponent<CMeshComponent3D>()->AddMesh(model);
+		GetComponent<CModelsComponent3D>()->AddModel(model);
 	}
 
 

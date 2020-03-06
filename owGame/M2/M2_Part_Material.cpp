@@ -19,7 +19,7 @@ struct
 	{ SM2_Material::M2BLEND_MOD2X,			5 }
 };
 
-CM2_Part_Material::CM2_Part_Material(IBaseManager& BaseManager, IRenderDevice& RenderDevice, const M2& M2Object, const SM2_Material& M2Material)
+CM2_Part_Material::CM2_Part_Material(IBaseManager& BaseManager, IRenderDevice& RenderDevice, const CM2& M2Object, const SM2_Material& M2Material)
 	: m_M2Object(M2Object)
 {
 	m_IsLightingDisable = M2Material.flags.UNLIT;

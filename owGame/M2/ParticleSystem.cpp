@@ -10,7 +10,7 @@
 #include "ParticleEmitter_Plane.h"
 #include "ParticleEmitter_Sphere.h"
 
-CM2_ParticleSystem::CM2_ParticleSystem(const M2& M2Object, const std::shared_ptr<IFile>& File, const SM2_Particle& M2Particle)
+CM2_ParticleSystem::CM2_ParticleSystem(const CM2& M2Object, const std::shared_ptr<IFile>& File, const SM2_Particle& M2Particle)
 	: m_M2Object(M2Object)
 	, m_Emitter(nullptr)
 	, mid(0)

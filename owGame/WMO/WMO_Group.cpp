@@ -99,7 +99,7 @@ void WMO_Group::CreateInsances(const std::shared_ptr<ISceneNode3D>& Parent) cons
 
 	for (const auto& batch : m_WMOBatchIndexes)
 	{
-		parentAsWMOGroupInstance->GetComponent<CMeshComponent3D>()->AddMesh(batch);
+		parentAsWMOGroupInstance->GetComponent<IModelsComponent3D>()->AddModel(batch);
 	}
 
 	// WMO Group liquid
@@ -115,11 +115,11 @@ void WMO_Group::CreateInsances(const std::shared_ptr<ISceneNode3D>& Parent) cons
 
 		// IColliderComponent3D
 		{
-			BoundingBox bbox = parentAsWMOGroupInstance->GetComponent<IColliderComponent3D>()->GetBounds();
+			BoundingBox bbox = parentAsWMOGroupInstance->GetColliderComponent()->GetBounds();
 			bbox.setMin(bbox.getMin() - realPos);
 			bbox.setMax(bbox.getMax() - realPos);
 			bbox.calculateCenter();
-			liquidInstance->GetComponent<IColliderComponent3D>()->SetBounds(bbox);
+			liquidInstance->GetColliderComponent()->SetBounds(bbox);
 		}
 
 		parentAsWMOGroupInstance->AddRoomObject(liquidInstance);
@@ -135,7 +135,7 @@ void WMO_Group::CreateInsances(const std::shared_ptr<ISceneNode3D>& Parent) cons
 
 		std::string doodadFileName = m_WMOModel.m_DoodadsFilenames + placement.flags.nameIndex;
 
-		std::shared_ptr<M2> m2 = m_BaseManager.GetManager<IWoWObjectsCreator>()->LoadM2(m_RenderDevice, doodadFileName);
+		std::shared_ptr<CM2> m2 = m_BaseManager.GetManager<IWoWObjectsCreator>()->LoadM2(m_RenderDevice, doodadFileName);
 		if (m2)
 		{
 			auto inst = Parent->CreateSceneNode<CWMO_Doodad_Instance>(m2, index, placement);

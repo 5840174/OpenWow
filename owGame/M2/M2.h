@@ -11,13 +11,13 @@
 // Skins
 #include "M2_Skin.h"
 
-class M2 
+class ZN_API CM2 
 	: public ISceneNodeProvider
 	, public CLoadableObject
 {
 public:
-	M2(IBaseManager& BaseManager, IRenderDevice& RenderDevice, const std::string& FileName);
-	virtual ~M2();
+	CM2(IBaseManager& BaseManager, IRenderDevice& RenderDevice, const std::string& FileName);
+	virtual ~CM2();
 
 	// ISceneNodeProvider
 	void CreateInsances(const std::shared_ptr<ISceneNode3D>& Parent) const override;

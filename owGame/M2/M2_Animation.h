@@ -5,7 +5,7 @@
 class CM2_Animation
 {
 public:
-	CM2_Animation(const M2& M2Model, const SM2_Sequence& Sequence, std::string AnimationName, uint16 IndexIntoSeq);
+	CM2_Animation(const CM2& M2Model, const SM2_Sequence& Sequence, std::string AnimationName, uint16 IndexIntoSeq);
 	virtual ~CM2_Animation();
 
 	// Table data

@@ -6,7 +6,7 @@
 // General
 #include "M2_Comp_Materials.h"
 
-CM2_Comp_Materials::CM2_Comp_Materials(const M2& M2Object) 
+CM2_Comp_Materials::CM2_Comp_Materials(const CM2& M2Object) 
 	: m_IsAnimTextures(false)
 	, m_M2Object(M2Object)
 {}

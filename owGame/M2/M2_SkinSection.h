@@ -4,7 +4,7 @@
 #include "M2_SkinTypes.h"
 
 // FORWARD BEGIN
-class M2;
+class CM2;
 class CM2_Base_Instance;
 // FORWARD END
 
@@ -12,7 +12,7 @@ class CM2_SkinSection
 	: public GeometryProxie
 {
 public:
-	CM2_SkinSection(IRenderDevice& RenderDevice, const M2& M2Model, const uint16 SkinSectionIndex, const SM2_SkinSection& SkinSectionProto, const std::vector<SM2_Vertex>& Vertexes, const std::vector<uint16>& Indexes);
+	CM2_SkinSection(IRenderDevice& RenderDevice, const CM2& M2Model, const uint16 SkinSectionIndex, const SM2_SkinSection& SkinSectionProto, const std::vector<SM2_Vertex>& Vertexes, const std::vector<uint16>& Indexes);
 	virtual ~CM2_SkinSection();
 
 	void UpdateGeometryProps(const RenderEventArgs& RenderEventArgs, const CM2_Base_Instance* M2Instance);
@@ -47,5 +47,5 @@ private:
 
 private:
 	IRenderDevice&          m_RenderDevice;
-	const M2&               m_M2Model;
+	const CM2&               m_M2Model;
 };

@@ -53,7 +53,7 @@ void CMapTile::Initialize()
 	// CColliderComponent
 	if (false)
 	{
-		std::shared_ptr<IColliderComponent3D> colliderComponent = GetComponent<IColliderComponent3D>();
+		std::shared_ptr<IColliderComponent3D> colliderComponent = GetColliderComponent();
 		vec3 translate = GetTranslation();
 
 		BoundingBox bbox
@@ -279,7 +279,7 @@ bool CMapTile::Load()
 	for (const auto& it : m_MDXsPlacementInfo)
 	{
 //#ifndef _DEBUG
-		std::shared_ptr<M2> m2 = m_BaseManager.GetManager<IWoWObjectsCreator>()->LoadM2(m_RenderDevice, m_MDXsNames[it.nameIndex]);
+		std::shared_ptr<CM2> m2 = m_BaseManager.GetManager<IWoWObjectsCreator>()->LoadM2(m_RenderDevice, m_MDXsNames[it.nameIndex]);
 		if (m2)
 		{
 			auto inst = CreateSceneNode<CMapM2Instance>(m2, it);

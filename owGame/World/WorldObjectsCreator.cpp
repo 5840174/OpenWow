@@ -30,7 +30,7 @@ std::shared_ptr<Creature> CWorldObjectCreator::BuildCreatureFromDisplayInfo(IRen
 		return BuildCharactedFromDisplayInfo(RenderDevice, Scene, _id, Parent);
 
 	// 1. Load model
-	std::shared_ptr<M2> m2Model = nullptr;
+	std::shared_ptr<CM2> m2Model = nullptr;
 	{
 		m2Model = CreateCreatureModel(RenderDevice, rec);
 	}
@@ -58,7 +58,7 @@ std::shared_ptr<Creature> CWorldObjectCreator::BuildCreatureFromDisplayInfo(IRen
 std::shared_ptr<Character> CWorldObjectCreator::BuildCharactedFromTemplate(IRenderDevice& RenderDevice, IScene* Scene, const CInet_CharacterTemplate& b, const std::shared_ptr<ISceneNode3D>& Parent)
 {
 	// 1. Load model
-	std::shared_ptr<M2> m2Model = nullptr;
+	std::shared_ptr<CM2> m2Model = nullptr;
 	{
 		m2Model = CreateCharacterModel(RenderDevice, b);
 	}
@@ -96,7 +96,7 @@ std::shared_ptr<Character> CWorldObjectCreator::BuildCharactedFromDisplayInfo(IR
 	_ASSERT(humanoidRecExtra != nullptr);
 
 	// 1. Load model
-	std::shared_ptr<M2> m2Model = nullptr;
+	std::shared_ptr<CM2> m2Model = nullptr;
 	{
 		// We ???always??? can load model from (CreatureDisplayInfo->Model)
 		m2Model = CreateCreatureModel(RenderDevice, rec);
@@ -167,7 +167,7 @@ std::shared_ptr<Character> CWorldObjectCreator::BuildCharactedFromDisplayInfo(IR
 
 std::shared_ptr<GameObject> CWorldObjectCreator::BuildGameObjectFromDisplayInfo(IRenderDevice & RenderDevice, IScene * Scene, uint32 _id, const std::shared_ptr<ISceneNode3D>& Parent)
 {
-	std::shared_ptr<M2> m2Model = nullptr;
+	std::shared_ptr<CM2> m2Model = nullptr;
 	{
 		m2Model = CreateGameObjectModel(RenderDevice, m_DBCs->DBC_GameObjectDisplayInfo()[_id]);
 		if (m2Model == nullptr)
@@ -188,7 +188,7 @@ void CWorldObjectCreator::ClearCache()
 {
 }
 
-std::shared_ptr<M2> CWorldObjectCreator::LoadM2(IRenderDevice& RenderDevice, const std::string& Filename)
+std::shared_ptr<CM2> CWorldObjectCreator::LoadM2(IRenderDevice& RenderDevice, const std::string& Filename)
 {
 	std::lock_guard<std::mutex> lock(m_M2Lock);
 
@@ -212,10 +212,10 @@ std::shared_ptr<M2> CWorldObjectCreator::LoadM2(IRenderDevice& RenderDevice, con
 	if (newName.find("orgrimmarsmokeemitter.mdx") != -1 || newName.find("orgrimmarfloatingembers.mdx") != -1)
 		return nullptr;
 
-	std::shared_ptr<M2> m2Object;
+	std::shared_ptr<CM2> m2Object;
 	//try
 	//{
-		m2Object = std::make_shared<M2>(m_BaseManager, RenderDevice, Filename);
+		m2Object = std::make_shared<CM2>(m_BaseManager, RenderDevice, Filename);
 	//}
 	//catch (const CException& e)
 	//{
@@ -262,7 +262,7 @@ std::shared_ptr<CWMO> CWorldObjectCreator::LoadWMO(IRenderDevice& RenderDevice, 
 //
 // Private 
 //
-std::shared_ptr<M2> CWorldObjectCreator::CreateCreatureModel(IRenderDevice& RenderDevice, const DBC_CreatureDisplayInfoRecord* CreatureDisplayInfo)
+std::shared_ptr<CM2> CWorldObjectCreator::CreateCreatureModel(IRenderDevice& RenderDevice, const DBC_CreatureDisplayInfoRecord* CreatureDisplayInfo)
 {
 	const DBC_CreatureModelDataRecord* modelRec = m_DBCs->DBC_CreatureModelData()[CreatureDisplayInfo->Get_Model()];
 	_ASSERT(modelRec != nullptr);
@@ -271,7 +271,7 @@ std::shared_ptr<M2> CWorldObjectCreator::CreateCreatureModel(IRenderDevice& Rend
 	return LoadM2(RenderDevice, modelName);
 }
 
-std::shared_ptr<M2> CWorldObjectCreator::CreateCharacterModel(IRenderDevice& RenderDevice, const CInet_CharacterTemplate& CharacterTemplate)
+std::shared_ptr<CM2> CWorldObjectCreator::CreateCharacterModel(IRenderDevice& RenderDevice, const CInet_CharacterTemplate& CharacterTemplate)
 {
 	std::string modelClientFileString = m_DBCs->DBC_ChrRaces()[CharacterTemplate.Race]->Get_ClientFileString();
 	std::string modelGender = (CharacterTemplate.Gender == Gender::Male) ? "Male" : "Female";
@@ -280,7 +280,7 @@ std::shared_ptr<M2> CWorldObjectCreator::CreateCharacterModel(IRenderDevice& Ren
 	return LoadM2(RenderDevice, fullModelName);
 }
 
-std::shared_ptr<M2> CWorldObjectCreator::CreateGameObjectModel(IRenderDevice & RenderDevice, const DBC_GameObjectDisplayInfoRecord * GameObjectDisplayInfoRecord)
+std::shared_ptr<CM2> CWorldObjectCreator::CreateGameObjectModel(IRenderDevice & RenderDevice, const DBC_GameObjectDisplayInfoRecord * GameObjectDisplayInfoRecord)
 {
 	if (GameObjectDisplayInfoRecord == nullptr)
 		return nullptr;

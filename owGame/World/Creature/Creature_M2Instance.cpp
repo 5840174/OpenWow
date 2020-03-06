@@ -3,7 +3,7 @@
 // General
 #include "Creature_M2Instance.h"
 
-Creature_M2Instance::Creature_M2Instance(const std::shared_ptr<M2>& M2Object) 
+Creature_M2Instance::Creature_M2Instance(const std::shared_ptr<CM2>& M2Object) 
 	: CM2_Base_Instance(M2Object)
 {}
 
