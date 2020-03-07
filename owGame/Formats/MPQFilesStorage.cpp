@@ -7,22 +7,18 @@ CMPQFilesStorage::CMPQFilesStorage(std::string _path, Priority _priority)
 	: m_Path(_path)
 	, m_Priority(_priority)
 {
-	/*
+#if WOW_CLIENT_VERSION == WOW_CLASSIC_1_12_1
 	AddArchive("base.MPQ");
 	AddArchive("dbc.MPQ");
-	//AddArchive(std::string("fonts.MPQ"));
 	AddArchive("interface.MPQ");
 	AddArchive("misc.MPQ");
 	AddArchive("model.MPQ");
 	AddArchive("patch.MPQ");
 	AddArchive("patch-2.MPQ");
-	//AddArchive(std::string("sound.MPQ"));
-	//AddArchive(std::string("speech.MPQ"));
 	AddArchive("terrain.MPQ");
 	AddArchive("texture.MPQ");
-	AddArchive("wmo.MPQ");*/
-
-
+	AddArchive("wmo.MPQ");
+#elif WOW_CLIENT_VERSION == WOW_BC_2_4_3
 	AddArchive("common.MPQ");
 	AddArchive("expansion.MPQ");
 	AddArchive("patch.MPQ");
@@ -35,7 +31,7 @@ CMPQFilesStorage::CMPQFilesStorage(std::string _path, Priority _priority)
 	AddArchive("enGB/patch-enGB.MPQ");
 	AddArchive("enGB/patch-enGB-2.MPQ");
 	AddArchive("enGB/speech-enGB.MPQ");
-
+#endif
 }
 
 CMPQFilesStorage::~CMPQFilesStorage()

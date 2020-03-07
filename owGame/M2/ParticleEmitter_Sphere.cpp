@@ -9,7 +9,9 @@
 
 Particle SphereParticleEmitter::newParticle(int anim, int time, float w, float l, float spd, float var, float spr, float spr2, uint32 _globalTime)
 {
-	std::shared_ptr<const CM2_Part_Bone> ParticleSystem_ParentBone = m_ParticleSystem.m_ParentBone.lock();
+	return Particle();
+#if 0
+	std::shared_ptr<const SM2_Part_Bone_Wrapper> ParticleSystem_ParentBone = m_ParticleSystem.m_ParentBone.lock();
 	_ASSERT(ParticleSystem_ParentBone != nullptr);
 
     Random random;
@@ -120,4 +122,5 @@ Particle SphereParticleEmitter::newParticle(int anim, int time, float w, float l
 
 	p.m_TileExists = random.Range(0, m_ParticleSystem.rows * m_ParticleSystem.cols - 1);
 	return p;
+#endif
 }

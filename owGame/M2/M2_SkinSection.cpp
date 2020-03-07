@@ -133,7 +133,7 @@ void CM2_SkinSection::UpdateGeometryProps(const RenderEventArgs& RenderEventArgs
 		//	m_BonesList[i] = m_M2Model.getSkeleton().getBoneLookup(m_SkinSectionProto.bonesStartIndex + i)->getTransformMatrix();
 		//}
 
-		m_BonesList = m_M2Model.getSkeleton().CreatePose(m_SkinSectionProto.bonesStartIndex, m_SkinSectionProto.boneCount, M2Instance->getAnimator()->getSequenceIndex(), M2Instance->getAnimator()->getCurrentTime(), static_cast<uint32>(RenderEventArgs.TotalTime));
+		m_BonesList = M2Instance->getSkeletonComponent()->CreatePose(m_SkinSectionProto.bonesStartIndex, m_SkinSectionProto.boneCount);
 		_ASSERT(m_BonesList.size() == m_SkinSectionProto.boneCount);
 		m_StructuredBuffer->Set(m_BonesList);
 	}

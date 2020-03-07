@@ -102,15 +102,13 @@ public:
 	CM2_Part_Attachment(const CM2& M2Object, const std::shared_ptr<IFile>& File, const SM2_Attachment& M2Attachment);
 	virtual ~CM2_Part_Attachment();
 
-	const std::weak_ptr<const CM2_Part_Bone> getBone() const { return m_Bone; }
+	const uint16 getBone() const { return m_BoneIndex; }
 	const cvec3 getPosition() const { return m_Position; }
-
-	void render(cmat4 _worldMatrix);
 
 private:
 	M2_AttachmentType				    m_Type;
-	std::weak_ptr<const CM2_Part_Bone>	m_Bone;
-	vec3								m_Position;
+	uint16                              m_BoneIndex;
+	glm::vec3						    m_Position;
 	M2_Animated<uint8>					m_IsAnimateAttached;
 
 private:

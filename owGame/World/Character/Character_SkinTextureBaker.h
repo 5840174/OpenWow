@@ -22,7 +22,6 @@ public:
 
 private:
 	void FillWithSkin(std::shared_ptr<ITexture> _texture) const;
-	void FillPixels(DBC_CharComponent_Sections _type, std::string _name) const;
 	void FillPixels(DBC_CharComponent_Sections _type, std::shared_ptr<ITexture> _texture) const;
 
 private:

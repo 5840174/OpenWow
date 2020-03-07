@@ -184,9 +184,9 @@ struct SM2_TextureWeight
 
 struct SM2_TextureTransform
 {
-	M2Track<vec3> translation;
-	M2Track<quat> rotation;    // rotation center is texture center (0.5, 0.5)
-	M2Track<vec3> scaling;
+	M2Track<glm::vec3> translation;
+	M2Track<glm::quat> rotation;    // rotation center is texture center (0.5, 0.5)
+	M2Track<glm::vec3> scaling;
 };
 
 struct SM2_Material
@@ -221,17 +221,17 @@ struct SM2_Attachment
 	uint32 id;                        // Referenced in the lookup-block below.
 	uint16 bone;                      // attachment base
 	uint16 unk0;
-	vec3 position;                      // relative to bone; Often this value is the same as bone's pivot point 
+	glm::vec3 position;               // relative to bone; Often this value is the same as bone's pivot point 
 	M2Track<uint8> animate_attached;  // whether or not the attached model is animated when this model is. only a bool is used. default is true.
 };
 
 struct SM2_Event
 {
-	char identifier[4];  // mostly a 3 character name prefixed with '$'.
-	uint32 data;        // This data is passed when the event is fired. 
-	uint32 bone;        // Somewhere it has to be attached.
-	vec3 position;    // Relative to that bone of course, animated. Pivot without animating.
-	M2TrackBase enabled;  // This is a timestamp-only animation block. It is built up the same as a normal AnimationBlocks, but is missing values, as every timestamp is an implicit "fire now".
+	char identifier[4];    // mostly a 3 character name prefixed with '$'.
+	uint32 data;           // This data is passed when the event is fired. 
+	uint32 bone;           // Somewhere it has to be attached.
+	glm::vec3 position;    // Relative to that bone of course, animated. Pivot without animating.
+	M2TrackBase enabled;   // This is a timestamp-only animation block. It is built up the same as a normal AnimationBlocks, but is missing values, as every timestamp is an implicit "fire now".
 };
 
 struct SM2_Light
@@ -241,36 +241,36 @@ struct SM2_Light
 		Directional = 0,
 		Point
 	} type;
-	int16			bone;                       // -1 if not attached to a bone
-	vec3			position;					// relative to bone, if given
+	int16			    bone;                       // -1 if not attached to a bone
+	glm::vec3		    position;					// relative to bone, if given
 
-	M2Track<vec3>	ambient_color;
-	M2Track<float>	ambient_intensity;			// defaults to 1.0
+	M2Track<glm::vec3>	ambient_color;
+	M2Track<float>	    ambient_intensity;			// defaults to 1.0
 
-	M2Track<vec3>	diffuse_color;
-	M2Track<float>	diffuse_intensity;			// defaults to 1.0
+	M2Track<glm::vec3>	diffuse_color;
+	M2Track<float>	    diffuse_intensity;			// defaults to 1.0
 
-	M2Track<float>	attenuation_start;
-	M2Track<float>	attenuation_end;
+	M2Track<float>	    attenuation_start;
+	M2Track<float>	    attenuation_end;
 
-	M2Track<uint8>	visibility;					// enabled?
+	M2Track<uint8>	    visibility;					// enabled?
 };
 
 struct SM2_Camera // TODO Spline keys
 {
-	uint32 type; // 0: portrait, 1: characterinfo; -1: else (flyby etc.); referenced backwards in the lookup table.
+	uint32              type; // 0: portrait, 1: characterinfo; -1: else (flyby etc.); referenced backwards in the lookup table.
 
-	float fov;
-	float far_clip;
-	float near_clip;
+	float               fov;
+	float               far_clip;
+	float               near_clip;
 
-	M2Track<vec3> positions; // How the camera's position moves. Should be 3*3 floats.
-	vec3 position_base;
+	M2Track<glm::vec3>  positions; // How the camera's position moves. Should be 3*3 floats.
+	glm::vec3           position_base;
 
-	M2Track<vec3> target_position; // How the target moves. Should be 3*3 floats.
-	vec3 target_position_base;
+	M2Track<glm::vec3>  target_position; // How the target moves. Should be 3*3 floats.
+	glm::vec3           target_position_base;
 
-	M2Track<float> roll; // The camera can have some roll-effect. Its 0 to 2*Pi. 
+	M2Track<float>      roll; // The camera can have some roll-effect. Its 0 to 2*Pi. 
 };
 #include __PACK_END
 

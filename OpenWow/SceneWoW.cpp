@@ -35,8 +35,8 @@ void CSceneWoW::Initialize()
 
 	
 	Load3D();
-	Load3D_M2s();
-	//TestCreateMap();
+	//Load3D_M2s();
+	TestCreateMap();
 	LoadUI();
 
 
@@ -122,9 +122,9 @@ void CSceneWoW::Load3D()
 	//wmoInstance = GetRootNode3D()->CreateSceneNode<CWMO_Base_Instance>(wmo);
 	//GetBaseManager().GetManager<ILoader>()->AddToLoadQueue(wmoInstance);
 
-	auto m2 = GetBaseManager().GetManager<IWoWObjectsCreator>()->LoadM2(GetRenderDevice(), "CREATURE\\Illidan\\IllidanDark.M2");
-	m2Instance = GetRootNode3D()->CreateSceneNode<CM2_Base_Instance>(m2);
-	GetBaseManager().GetManager<ILoader>()->AddToLoadQueue(m2Instance);
+	//auto m2 = GetBaseManager().GetManager<IWoWObjectsCreator>()->LoadM2(GetRenderDevice(), "CREATURE\\Illidan\\IllidanDark.M2");
+	//m2Instance = GetRootNode3D()->CreateSceneNode<CM2_Base_Instance>(m2);
+	//GetBaseManager().GetManager<ILoader>()->AddToLoadQueue(m2Instance);
 
 	skyManager = GetRootNode3D()->CreateSceneNode<SkyManager>(GetRenderDevice());
 	skyManager->Load(1);
@@ -149,9 +149,9 @@ void CSceneWoW::Load3D_M2s()
 	CWorldObjectCreator creator(GetBaseManager());
 
 	const auto& records = GetBaseManager().GetManager<CDBCStorage>()->DBC_CreatureDisplayInfo().Records();
-	for (size_t i = 0; i < 25; i++)
+	for (size_t i = 0; i < 15; i++)
 	{
-		for (size_t j = 0; j < 25; j++)
+		for (size_t j = 0; j < 15; j++)
 		{
 			size_t id = r.NextUInt() % records.size();
 
@@ -192,14 +192,15 @@ void CSceneWoW::TestCreateMap()
 	//const int32 y = 30;
 	const int32 x = 19; //FOR BC
 	const int32 y = 32;
+	const uint32 mapID = 530;
 
 	if (map != nullptr)
 		TestDeleteMap();
 
-	skyManager->Load(530);
+	skyManager->Load(mapID);
 
 	map = GetRootNode3D()->CreateSceneNode<CMap>(GetBaseManager(), GetRenderDevice());
-	map->MapPreLoad(GetBaseManager().GetManager<CDBCStorage>()->DBC_Map()[530]);
+	map->MapPreLoad(GetBaseManager().GetManager<CDBCStorage>()->DBC_Map()[mapID]);
 	map->MapLoad();
 	map->MapPostLoad();
 	map->EnterMap(x, y);

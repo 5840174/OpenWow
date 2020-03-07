@@ -76,7 +76,8 @@
     <ClCompile Include="M2\M2_Comp_Materials.cpp" />
     <ClCompile Include="M2\M2_Comp_Miscellaneous.cpp" />
     <ClCompile Include="M2\M2_Comp_Skeleton.cpp" />
-    <ClCompile Include="M2\M2_InstanceSkeleton.cpp" />
+    <ClCompile Include="M2\M2_LightComponent.cpp" />
+    <ClCompile Include="M2\M2_Skeleton.cpp" />
     <ClCompile Include="M2\M2_Part_Attachment.cpp" />
     <ClCompile Include="M2\M2_Part_Bone.cpp" />
     <ClCompile Include="M2\M2_Part_Camera.cpp" />
@@ -259,7 +260,8 @@
     <ClInclude Include="M2\M2_Comp_Miscellaneous.h" />
     <ClInclude Include="M2\M2_Comp_Skeleton.h" />
     <ClInclude Include="M2\M2_Headers.h" />
-    <ClInclude Include="M2\M2_InstanceSkeleton.h" />
+    <ClInclude Include="M2\M2_LightComponent.h" />
+    <ClInclude Include="M2\M2_Skeleton.h" />
     <ClInclude Include="M2\M2_ParticlesTypes.h" />
     <ClInclude Include="M2\M2_Part_Attachment.h" />
     <ClInclude Include="M2\M2_Part_Bone.h" />

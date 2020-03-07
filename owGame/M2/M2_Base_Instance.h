@@ -2,6 +2,10 @@
 
 #include "M2.h"
 
+// Components
+#include "M2_Animator.h"
+#include "M2_Skeleton.h"
+
 class ZN_API CM2_Base_Instance 
 	: public SceneNode3D
 	, public CLoadableObject
@@ -20,7 +24,7 @@ public:
 
 	void                                Attach(std::shared_ptr<const CM2_Part_Attachment> _attachment);
 	void                                Detach();
-    std::shared_ptr<const CM2_Part_Attachment>GetAttachPoint() const;
+    std::shared_ptr<const CM2_Part_Attachment> GetAttachPoint() const;
 
 	// Color & Alpha
 	void                                setColor(vec4 _color) { m_Color = _color; }
@@ -30,12 +34,12 @@ public:
 
 	// Mesh & textures provider
 	virtual bool                        isMeshEnabled(uint32 _index) const;
-	void                                setSpecialTexture(SM2_Texture::Type _type, const std::string& _textureName);
-	void                                setSpecialTexture(SM2_Texture::Type _type, std::shared_ptr<ITexture> _texture);
-	std::shared_ptr<ITexture>           getSpecialTexture(SM2_Texture::Type _type) const;
+	void                                setSpecialTexture(SM2_Texture::Type _type, const std::shared_ptr<ITexture>& _texture);
+	const std::shared_ptr<ITexture>&    getSpecialTexture(SM2_Texture::Type _type) const;
 
 	// Animations
-	std::shared_ptr<CM2_Animator>       getAnimator() const { return m_Animator; }
+	const std::shared_ptr<CM2_Animator>&           getAnimator() const { return m_Animator; }
+	const std::shared_ptr<CM2SkeletonComponent3D>  getSkeletonComponent() const { return m_SkeletonComponent; }
 
     // Components
     virtual void                        RegisterComponents() override;
@@ -48,9 +52,6 @@ public:
 protected:
 	virtual void						UpdateLocalTransform();
 
-protected:
-	void                                InitAnimator();
-
 private:
 	// Color & Alpha
 	vec4                                m_Color;
@@ -61,7 +62,7 @@ private:
 
 	// Animtion
 	std::shared_ptr<CM2_Animator>       m_Animator;
-	bool                                m_NeedRecalcAnimation;
+	std::shared_ptr<CM2SkeletonComponent3D> m_SkeletonComponent;
 
 private:
 	std::shared_ptr<const CM2>           m_M2;

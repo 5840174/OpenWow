@@ -33,9 +33,12 @@ public:
 		m_BaseManager.GetManager<ISettings>()->AddGroup("WoWSettings", std::make_shared<CWoWSettingsGroup>());
 		
 		// MPQ
-		//m_BaseManager.GetManager<IFilesManager>()->AddFilesStorage("MPQStorage", std::make_shared<CMPQFilesStorage>("D:\\_games\\World of Warcraft 1.12.1\\Data\\", IFilesStorageEx::Priority::PRIOR_HIGH));
+#if WOW_CLIENT_VERSION == WOW_CLASSIC_1_12_1
+		m_BaseManager.GetManager<IFilesManager>()->AddFilesStorage("MPQStorage", std::make_shared<CMPQFilesStorage>("D:\\_games\\World of Warcraft 1.12.1\\Data\\", IFilesStorageEx::Priority::PRIOR_HIGH));
+#elif WOW_CLIENT_VERSION == WOW_BC_2_4_3
 		m_BaseManager.GetManager<IFilesManager>()->AddFilesStorage("MPQStorage", std::make_shared<CMPQFilesStorage>("c:\\_engine\\World of Warcraft 2.4.3\\Data\\", IFilesStorageEx::Priority::PRIOR_HIGH));
-		
+#endif
+
 		// BLP
 		m_BaseManager.GetManager<IImagesFactory>()->AddImageLoader(std::make_shared<CImageLoaderT<CImageBLP>>());
 

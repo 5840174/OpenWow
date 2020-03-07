@@ -2,26 +2,15 @@
 
 // Include
 #include "M2.h"
+#include "M2_Base_Instance.h"
 
 // General
 #include "M2_Part_Light.h"
 
-CM2_Part_Light::CM2_Part_Light(const CM2& M2Object, const std::shared_ptr<IFile>& File, const SM2_Light& M2Light) 
-	: ambColorValue(vec3(1.0f, 1.0f, 1.0f))
-	, ambIntensityValue(1.0f)
-	, diffColorValue(vec3(1.0f, 1.0f, 1.0f))
-	, diffIntensityValue(1.0f)
-	, attenuation_startValue(0.0f)
-	, attenuation_endValue(1.0f)
-	, visibilityValue(false)
-	, m_M2Object(M2Object)
+SM2_Part_Light_Wrapper::SM2_Part_Light_Wrapper(const CM2& M2Object, const std::shared_ptr<IFile>& File, const SM2_Light& M2Light) 
+	: m_M2Object(M2Object)
+	, m_M2Light(M2Light)
 {
-	type = M2Light.type;
-	if (M2Light.bone != -1)
-		m_Bone = m_M2Object.getSkeleton().getBoneLookup(M2Light.bone);
-
-	position = Fix_XZmY(M2Light.position);
-
 	ambColor.Initialize(M2Light.ambient_color, File);
 	ambIntensity.Initialize(M2Light.ambient_intensity, File);
 
@@ -34,49 +23,48 @@ CM2_Part_Light::CM2_Part_Light(const CM2& M2Object, const std::shared_ptr<IFile>
 	visibility.Initialize(M2Light.visibility, File);
 }
 
-CM2_Part_Light::~CM2_Part_Light()
+SM2_Part_Light_Wrapper::~SM2_Part_Light_Wrapper()
 {
 }
 
-void CM2_Part_Light::setup(uint16 anim, uint32 time, uint32 globalTime)
+SLight SM2_Part_Light_Wrapper::GetLight(const CM2_Base_Instance * M2Instance, uint32 globalTime) const
 {
-	if (ambColor.IsUsesBySequence(anim))
+	SLight lightStruct;
+	if (m_M2Light.type == SM2_Light::Type::Directional)
 	{
-		ambColorValue = ambColor.GetValue(0, time, m_M2Object.getSkeleton().getGlobalLoops(), globalTime);
+		// TODO: rotation used world pos of node + rotate_bone * pos
 	}
-	if (ambIntensity.IsUsesBySequence(anim))
+	else if (m_M2Light.type == SM2_Light::Type::Point)
 	{
-		ambIntensityValue = ambIntensity.GetValue(0, time, m_M2Object.getSkeleton().getGlobalLoops(), globalTime);
+		// TODO: position used world pos of node + transform_bone * pos
 	}
-
-	if (diffColor.IsUsesBySequence(anim))
+	else
 	{
-		diffColorValue = diffColor.GetValue(0, time, m_M2Object.getSkeleton().getGlobalLoops(), globalTime);
-	}
-	if (diffIntensity.IsUsesBySequence(anim))
-	{
-		diffIntensityValue = diffIntensity.GetValue(0, time, m_M2Object.getSkeleton().getGlobalLoops(), globalTime);
+		_ASSERT(false);
 	}
 
-	vec4 ambcol(ambColorValue * ambIntensityValue, 1.0f);
-	vec4 diffcol(diffColorValue * diffIntensityValue, 1.0f);
+	//glm::vec4 ambient = glm::vec4(1.0f, 1.0f, 1.0f, 1.0f);
+	glm::vec4 diffuse = glm::vec4(1.0f, 1.0f, 1.0f, 1.0f);
+	float attenStart = 1.0f, attenEnd = 150.0f;
 
-	std::shared_ptr<const CM2_Part_Bone> Bone = m_Bone.lock();
-	if (Bone != nullptr)
+	if (const auto& animator = M2Instance->getAnimator())
 	{
-		if (type == SM2_Light::Type::Directional)
-		{
-			positionValue = Bone->getTransformMatrix() * vec4(position, 0);
-		}
-		else if (type == SM2_Light::Type::Point)
-		{
-			directionValue = Bone->getRotateMatrix() * vec4(direction, 0);
-		}		
+		//if (ambColor.IsUsesBySequence(animator->getSequenceIndex()))
+		//	ambient.rgb = ambColor.GetValue(animator->getSequenceIndex(), animator->getCurrentTime(), m_M2Object.getSkeleton().getGlobalLoops(), globalTime);
+		//if (ambIntensity.IsUsesBySequence(animator->getSequenceIndex()))
+		//	ambient.a = ambIntensity.GetValue(animator->getSequenceIndex(), animator->getCurrentTime(), m_M2Object.getSkeleton().getGlobalLoops(), globalTime);
+		
+		if (diffColor.IsUsesBySequence(animator->getSequenceIndex()))
+			lightStruct.Color.rgb = diffColor.GetValue(animator->getSequenceIndex(), animator->getCurrentTime(), m_M2Object.getSkeleton().getGlobalLoops(), globalTime);
+		if (diffIntensity.IsUsesBySequence(animator->getSequenceIndex()))
+			lightStruct.Intensity = diffIntensity.GetValue(animator->getSequenceIndex(), animator->getCurrentTime(), m_M2Object.getSkeleton().getGlobalLoops(), globalTime);
+
+		if (attenuation_start.IsUsesBySequence(animator->getSequenceIndex()))
+			attenStart = attenuation_start.GetValue(animator->getSequenceIndex(), animator->getCurrentTime(), m_M2Object.getSkeleton().getGlobalLoops(), globalTime);
+		if (attenuation_end.IsUsesBySequence(animator->getSequenceIndex()))
+			attenEnd = attenuation_end.GetValue(animator->getSequenceIndex(), animator->getCurrentTime(), m_M2Object.getSkeleton().getGlobalLoops(), globalTime);
+		lightStruct.Range = attenEnd;
 	}
 
-	//Log::Info("Light %d (%f,%f,%f) (%f,%f,%f) [%f,%f,%f]", l-GL_LIGHT4, ambcol.x, ambcol.y, ambcol.z, diffcol.x, diffcol.y, diffcol.z, p.x, p.y, p.z);
-	//glLightfv(l, GL_POSITION, p);
-	//glLightfv(l, GL_DIFFUSE, diffcol);
-	//glLightfv(l, GL_AMBIENT, ambcol);
-	//glEnable(l);
+	return lightStruct;
 }

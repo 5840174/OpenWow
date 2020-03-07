@@ -3,7 +3,6 @@
 #include "M2_Headers.h"
 
 // Components
-#include "M2_Animator.h"
 #include "M2_Comp_Materials.h"
 #include "M2_Comp_Miscellaneous.h"
 #include "M2_Comp_Skeleton.h"

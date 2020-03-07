@@ -67,7 +67,7 @@ private:
 
 private:
 	const CM2& m_M2Object;
-	std::weak_ptr<const CM2_Part_Bone> m_ParentBone;
+	std::weak_ptr<const SM2_Part_Bone_Wrapper> m_ParentBone;
 };
 
 template<class T>

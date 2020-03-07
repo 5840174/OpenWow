@@ -15,10 +15,8 @@ public:
 	ISamplerState::WrapMode GetTextureWrapX() const { return (m_WrapX ? ISamplerState::WrapMode::Clamp : ISamplerState::WrapMode::Repeat); }
 	ISamplerState::WrapMode GetTextureWrapY() const { return (m_WrapY ? ISamplerState::WrapMode::Clamp : ISamplerState::WrapMode::Repeat); }
 
-	std::shared_ptr<ITexture> GetTexture() const;
-	std::shared_ptr<ITexture> GetTexture(const CM2_Base_Instance* _instance) const;
-	bool isTextureSpecial() const { return (m_SpecialType != SM2_Texture::Type::NONE); }
-	SM2_Texture::Type getSpecialTextureType() const { return m_SpecialType; }
+	const std::shared_ptr<ITexture>& GetTexture() const;
+	const std::shared_ptr<ITexture>& GetTexture(const CM2_Base_Instance* M2Instance) const;
 
 private:
 	bool                       m_WrapX;

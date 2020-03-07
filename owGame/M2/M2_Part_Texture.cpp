@@ -26,46 +26,15 @@ CM2_Part_Texture::~CM2_Part_Texture()
 {
 }
 
-std::shared_ptr<ITexture> CM2_Part_Texture::GetTexture() const
+const std::shared_ptr<ITexture>& CM2_Part_Texture::GetTexture() const
 {
 	_ASSERT(m_SpecialType == SM2_Texture::Type::NONE);
 	return m_Texture;
 }
 
-std::shared_ptr<ITexture> CM2_Part_Texture::GetTexture(const CM2_Base_Instance* _instance) const
+const std::shared_ptr<ITexture>& CM2_Part_Texture::GetTexture(const CM2_Base_Instance* M2Instance) const
 {
-	if (isTextureSpecial())
-		return _instance->getSpecialTexture(m_SpecialType);
-
+	if (m_SpecialType != SM2_Texture::Type::NONE)
+		return M2Instance->getSpecialTexture(m_SpecialType);
 	return m_Texture;
 }
-
-
-/*void CM2_Part_Texture::set(RenderState* _state, uint32 _slot, CM2_Base_Instance* _instance) const
-{
-	uint16 sampler = m_QualitySettings.Texture_Sampler;
-
-	if (m_WrapX)
-	{
-		sampler |= SS_ADDRU_WRAP;
-	}
-
-	if (m_WrapY)
-	{
-		sampler |= SS_ADDRV_WRAP;
-	}
-
-	if (isTextureSpecial())
-	{
-		std::shared_ptr<ITexture> texture = _instance->getSpecialTexture(m_SpecialType);
-		if (texture != nullptr)
-		{
-			_state->setTexture(_slot, texture, sampler, 0);
-		}
-
-		return;
-	}
-
-	_ASSERT(getTexture());
-	_state->setTexture(_slot, getTexture(), sampler, 0);
-}*/

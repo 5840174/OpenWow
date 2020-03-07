@@ -2,6 +2,7 @@
 
 // Include
 #include "M2.h"
+#include "M2_Base_Instance.h"
 
 // General
 #include "M2_Part_TextureTransform.h"
@@ -18,22 +19,28 @@ CM2_Part_TextureTransform::~CM2_Part_TextureTransform()
 {
 }
 
-glm::mat4 CM2_Part_TextureTransform::GetTransform(uint16 Sequence, uint32 Time, uint32 GlobalTime) const
+glm::mat4 CM2_Part_TextureTransform::GetTransform(const CM2_Base_Instance* M2Instance, uint32 GlobalTime) const
 {
-	glm::mat4 matrix = glm::mat4(1.0f);
-
-	if (m_TranslateAnimated.IsUsesBySequence(Sequence))
-		matrix = glm::translate(matrix, m_TranslateAnimated.GetValue(Sequence, Time, m_M2Object.getSkeleton().getGlobalLoops(), GlobalTime));
-
-	if (m_RotateAnimated.IsUsesBySequence(Sequence))
+	glm::mat4 matrix(1.0f);
+	if (const auto& animator = M2Instance->getAnimator())
 	{
-		matrix = glm::translate(matrix, glm::vec3( 0.5f));
-		matrix *= glm::toMat4(m_RotateAnimated.GetValue(Sequence, Time, m_M2Object.getSkeleton().getGlobalLoops(), GlobalTime));
-		matrix = glm::translate(matrix, glm::vec3(-0.5f));
-	}
+		if (m_TranslateAnimated.IsUsesBySequence(animator->getSequenceIndex()))
+		{
+			matrix = glm::translate(matrix, m_TranslateAnimated.GetValue(animator->getSequenceIndex(), animator->getCurrentTime(), m_M2Object.getSkeleton().getGlobalLoops(), GlobalTime));
+		}
 
-	if (m_ScaleAnimated.IsUsesBySequence(Sequence))
-		matrix = glm::scale(matrix, m_ScaleAnimated.GetValue(Sequence, Time, m_M2Object.getSkeleton().getGlobalLoops(), GlobalTime));
+		if (m_RotateAnimated.IsUsesBySequence(animator->getSequenceIndex()))
+		{
+			matrix = glm::translate(matrix, glm::vec3(0.5f)); // TODO: Maybe glm::vec2(0.5f, 0.5f, 0.0f) ?
+			matrix *= glm::toMat4(m_RotateAnimated.GetValue(animator->getSequenceIndex(), animator->getCurrentTime(), m_M2Object.getSkeleton().getGlobalLoops(), GlobalTime));
+			matrix = glm::translate(matrix, glm::vec3(-0.5f));
+		}
+
+		if (m_ScaleAnimated.IsUsesBySequence(animator->getSequenceIndex()))
+		{
+			matrix = glm::scale(matrix, m_ScaleAnimated.GetValue(animator->getSequenceIndex(), animator->getCurrentTime(), m_M2Object.getSkeleton().getGlobalLoops(), GlobalTime));
+		}
+	}
 
 	return matrix;
 }

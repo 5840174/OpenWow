@@ -16,11 +16,12 @@ public:
 private:
 	char					m_ID[4];
 	uint32					m_Data;
-	std::weak_ptr<const CM2_Part_Bone>	m_Bone;
+	std::weak_ptr<const SM2_Part_Bone_Wrapper>	m_Bone;
 	vec3					m_Position;
 
 	M2_Animated<bool>		m_IsEnabled;
 
 private:
 	const CM2& m_M2Object;
+	const SM2_Event& m_M2Event;
 };

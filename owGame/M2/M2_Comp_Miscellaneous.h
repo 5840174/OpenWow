@@ -63,7 +63,7 @@ public:
 		return (m_Events[_index]);
 	}
 
-	std::shared_ptr<const CM2_Part_Light> getLightDirect(uint32 _index) const
+	const SM2_Part_Light_Wrapper& getLightDirect(uint32 _index) const
 	{
 		_ASSERT(_index < m_Lights.size());
 		return (m_Lights[_index]);
@@ -93,7 +93,7 @@ private:
 	std::vector<std::shared_ptr<CM2_Part_Attachment>>	m_Attachments;
 	std::vector<int16>									m_AttachmentsLookup;
 	std::vector<std::shared_ptr<CM2_Part_Event>>		m_Events;
-	std::vector<std::shared_ptr<CM2_Part_Light>>		m_Lights;
+	std::vector<SM2_Part_Light_Wrapper>		            m_Lights;
 	std::vector<std::shared_ptr<CM2_Part_Camera>>		m_Cameras;
 	std::vector<int16>									m_CamerasLookup;
 

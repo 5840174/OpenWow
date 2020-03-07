@@ -15,8 +15,8 @@ CM2_Animation::CM2_Animation(const CM2& M2Model, const SM2_Sequence& Sequence, s
 {
 	if (Sequence.variationNext != -1)
 	{
-		_ASSERT(Sequence.variationNext >= 0 && Sequence.variationNext < M2Model.getSkeleton().getSequencesCount());
-		const SM2_Sequence& variationNextSequence = M2Model.getSkeleton().getSequenceDirect(Sequence.variationNext);
+		_ASSERT(Sequence.variationNext >= 0 && Sequence.variationNext < M2Model.getSkeleton().GetSequences().size());
+		const SM2_Sequence& variationNextSequence = M2Model.getSkeleton().GetSequences()[Sequence.variationNext];
 
 		_ASSERT(variationNextSequence.__animID == m_AnimID);
 		//_ASSERT(variationNextSequence.variationIndex == Sequence.variationNext);

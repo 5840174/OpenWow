@@ -22,7 +22,8 @@ CM2_RibbonEmitters::CM2_RibbonEmitters(const CM2& M2Object, const std::shared_pt
 	: m_M2Object(M2Object)
 	, tcolor(vec4(1.0f))
 {
-	m_Bone = m_M2Object.getSkeleton().getBoneDirect(M2RibbonEmitter.boneIndex);
+	_ASSERT_EXPR(false, L"TODO!");
+	// TODOm_Bone = m_M2Object.getSkeleton().GetBones()[M2RibbonEmitter.boneIndex];
 	posValue = pos = Fix_XZmY(M2RibbonEmitter.position);
 
 	m_Color.Initialize(M2RibbonEmitter.colorTrack, File);
@@ -57,11 +58,12 @@ CM2_RibbonEmitters::CM2_RibbonEmitters(const CM2& M2Object, const std::shared_pt
 
 void CM2_RibbonEmitters::setup(uint16 anim, uint32 time, uint32 _globalTime, cmat4 _worldMatrix)
 {
-	std::shared_ptr<const CM2_Part_Bone> Bone = m_Bone.lock();
+	std::shared_ptr<const SM2_Part_Bone_Wrapper> Bone = m_Bone.lock();
 	_ASSERT(Bone != nullptr);
 
-	vec3 ntpos = _worldMatrix * (Bone->getTransformMatrix() * vec4(pos, 0));
-	vec3 ntup = _worldMatrix * (Bone->getTransformMatrix() * vec4((pos + vec3(0, 0, 1.0f)), 0));
+	_ASSERT_EXPR(false, L"TODO!");
+	vec3 ntpos = _worldMatrix * (/*TODO: Bone->getTransformMatrix() **/ vec4(pos, 0));
+	vec3 ntup = _worldMatrix * (/*TODO: Bone->getTransformMatrix() **/ vec4((pos + vec3(0, 0, 1.0f)), 0));
 
 	ntup -= ntpos;
 	ntup = glm::normalize(ntup);

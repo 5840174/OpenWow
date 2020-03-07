@@ -11,7 +11,6 @@ CM2_Base_Instance::CM2_Base_Instance(const std::shared_ptr<CM2>& M2Object)
 	, m_M2(M2Object)
 	, m_Attached(nullptr)
 	, m_Animator(nullptr)
-	, m_NeedRecalcAnimation(true)
 	, m_Color(vec4(1.0f, 1.0f, 1.0f, 1.0f))
 	, m_Alpha(1.0f)
 {
@@ -35,7 +34,12 @@ void CM2_Base_Instance::CreateInstances()
 
 bool CM2_Base_Instance::Load()
 {
-	InitAnimator();
+	if (getM2().isAnimated())
+		m_Animator = std::make_shared<CM2_Animator>(GetBaseManager(), getM2());
+
+	if (getM2().getSkeleton().hasBones())
+		m_SkeletonComponent = std::make_shared<CM2SkeletonComponent3D>(*this, getM2());
+
 	UpdateLocalTransform();
 	CreateInstances();
 
@@ -68,20 +72,12 @@ bool CM2_Base_Instance::isMeshEnabled(uint32 _index) const
 {
 	return true;
 }
-void CM2_Base_Instance::setSpecialTexture(SM2_Texture::Type _type, const std::string& _textureName)
+void CM2_Base_Instance::setSpecialTexture(SM2_Texture::Type _type, const std::shared_ptr<ITexture>& _texture)
 {
-	_ASSERT(FALSE);
-	//std::shared_ptr<ITexture> texture = GetRenderDevice()->GetObjectsFactory().LoadTexture2D(_textureName);
-	//setSpecialTexture(_type, texture);
+	//_ASSERT(_texture != nullptr);
+	m_SpecialTextures[_type] = _texture;
 }
-void CM2_Base_Instance::setSpecialTexture(SM2_Texture::Type _type, std::shared_ptr<ITexture> _texture)
-{
-	if (_texture != nullptr)
-	{
-		m_SpecialTextures[_type] = _texture;
-	}
-}
-std::shared_ptr<ITexture> CM2_Base_Instance::getSpecialTexture(SM2_Texture::Type _type) const
+const std::shared_ptr<ITexture>& CM2_Base_Instance::getSpecialTexture(SM2_Texture::Type _type) const
 {
 	_ASSERT(_type < SM2_Texture::Type::COUNT);
 	return m_SpecialTextures[_type];
@@ -101,21 +97,19 @@ void CM2_Base_Instance::Initialize()
 
 void CM2_Base_Instance::Update(const UpdateEventArgs & e)
 {
-	return;
-
-
 	if (GetState() != ILoadable::ELoadableState::Loaded)
 		return;
-
-	if (m_Attached != nullptr)
-	{
-		ForceRecalculateLocalTransform();
-	}
 
 	if (getM2().isAnimated())
 	{
 		m_Animator->Update(e.TotalTime, e.DeltaTime);
 	}
+
+	if (getM2().getSkeleton().hasBones())
+		getSkeletonComponent()->Calculate(static_cast<uint32>(e.TotalTime));
+
+	if (m_Attached != nullptr)
+		ForceRecalculateLocalTransform();
 }
 
 void CM2_Base_Instance::Accept(IVisitor* visitor)
@@ -130,25 +124,21 @@ void CM2_Base_Instance::UpdateLocalTransform()
 {
 	if (auto attachPoint = GetAttachPoint())
 	{
-		auto bone = attachPoint->getBone().lock();
-		_ASSERT(bone != nullptr);
+		uint16 boneIndex = attachPoint->getBone();
 
-		glm::mat4 relMatrix = glm::translate(bone->getPivot());
-		glm::mat4 absMatrix = GetParentWorldTransform() * bone->getTransformMatrix() * relMatrix;
-		SetWorldTransform(absMatrix);
+		if (auto parent = GetParent().lock())
+		{
+			auto parentM2Instance = std::dynamic_pointer_cast<CM2_Base_Instance>(parent);
+			const auto& bone = parentM2Instance->getSkeletonComponent()->GetBone(boneIndex);
+
+			glm::mat4 relMatrix = glm::translate(bone->GetPivotPoint());
+			glm::mat4 absMatrix = GetParentWorldTransform() * bone->GetMatrix() * relMatrix;
+			SetWorldTransform(absMatrix);
+		}
 	}
 	else
 	{
 		SceneNode3D::UpdateLocalTransform();
-	}
-}
-
-void CM2_Base_Instance::InitAnimator()
-{
-	// Create animator
-	if (getM2().isAnimated())
-	{
-		m_Animator = std::make_shared<CM2_Animator>(GetBaseManager(), getM2());
 	}
 }
 

@@ -56,12 +56,8 @@ void CM2_Comp_Skeleton::Load(const SM2_Header& M2Header, const std::shared_ptr<I
 			if (m2Bone.IsBillboard())
 				m_IsBillboard = true;
 
-			std::shared_ptr<CM2_Part_Bone> bone = std::make_shared<CM2_Part_Bone>(m_M2Object, File, i, m2Bone);
-			m_Bones.push_back(bone);
+			m_Bones.push_back(SM2_Part_Bone_Wrapper(m_M2Object, File, m2Bone));
 		}
-
-		for (uint32 i = 0; i < M2Header.bones.size; i++)
-			m_Bones[i]->SetParentBoneInternal(*this);
 
 		m_HasBones = true;
 	}
@@ -79,81 +75,11 @@ void CM2_Comp_Skeleton::Load(const SM2_Header& M2Header, const std::shared_ptr<I
 	}
 
 	// Game Bones Lookup
+	_ASSERT(M2Header.gameBonesLookup.size < 28 /* TODO: HARDCODED */);
 	if (M2Header.gameBonesLookup.size > 0)
 	{
 		const int16* GameBonesLookup = (const int16*)(File->getData() + M2Header.gameBonesLookup.offset);
 		for (uint32 i = 0; i < M2Header.gameBonesLookup.size; i++)
 			m_GameBonesLookup.push_back(GameBonesLookup[i]);
-
-		_ASSERT(M2Header.gameBonesLookup.size < 28 /* TODO: HARDCODED */);
 	}
-}
-
-
-struct CBone
-{
-	CBone()
-		: isCalculated(false)
-	{}
-
-	int16 parentBoneIndex; // direct array
-	glm::mat4 matrix;      // Self bone matrix
-
-	bool isCalculated;
-	glm::mat4 resultMatrix; // All parents + self matrix
-};
-
-
-glm::mat4 CalculateBone(std::unordered_map<int16, CBone>& Bones, CBone& Bone)
-{
-	if (Bone.isCalculated)
-		return Bone.resultMatrix;
-
-	if (Bone.parentBoneIndex != -1)
-	{
-		auto& it = Bones[Bone.parentBoneIndex];
-		Bone.resultMatrix = CalculateBone(Bones, it) * Bone.matrix;
-	}
-	else
-	{
-		Bone.resultMatrix = Bone.matrix;
-	}
-
-	Bone.isCalculated = true;
-	return Bone.resultMatrix;
-}
-
-std::vector<glm::mat4> CM2_Comp_Skeleton::CreatePose(size_t BoneStartIndex, size_t BonesCount, uint16 anim, uint32 time, uint32 globalTime) const
-{
-	_ASSERT((BoneStartIndex < m_BonesLookup.size()) && ((BoneStartIndex + BonesCount) < m_BonesLookup.size()));
-
-	//auto rootBone = getGameBone(M2_GameBoneType::Root);
-	//if (rootBone == nullptr)
-	//	return std::vector<glm::mat4>({ glm::mat4(1.0f) });
-
-	std::unordered_map<int16, CBone> calculatedMatrices;
-	calculatedMatrices.reserve(m_Bones.size());
-
-	for (size_t i = 0; i < m_Bones.size(); i++)
-	{
-		auto b = m_Bones[i];
-		_ASSERT(b != nullptr);
-
-		CBone bone;
-		bone.parentBoneIndex = b->getParentBoneID_DirectArray();
-		bone.matrix = b->calcMatrix(anim, time, globalTime);
-		bone.resultMatrix = CalculateBone(calculatedMatrices, bone);
-
-		calculatedMatrices.insert(std::make_pair(i, bone));
-	}
-
-	std::vector<glm::mat4> result;
-	result.reserve(BonesCount);
-
-	for (size_t i = BoneStartIndex; i < BoneStartIndex + BonesCount; i++)
-	{
-		result.push_back(calculatedMatrices[m_BonesLookup[i]].resultMatrix);
-	}
-	
-	return result;
 }

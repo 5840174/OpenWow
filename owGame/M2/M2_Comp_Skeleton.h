@@ -22,75 +22,78 @@ public:
 	const bool isAnimBones() const { return m_IsAnimBones; }
 	const bool isBillboard() const { return m_IsBillboard; }
 
-	std::vector<glm::mat4> CreatePose(size_t BoneStartIndex, size_t BonesCount, uint16 anim, uint32 time, uint32 globalTime) const;
 
 public: // Loops & Sequences
 	const std::vector<SM2_Loop>& getGlobalLoops() const
 	{
 		return m_GlobalLoops;
 	}
-	const SM2_Sequence& getSequenceDirect(uint32 _index) const // TODO: Delete me!
+	const std::vector<SM2_Sequence>& GetSequences() const
 	{
-		_ASSERT(_index != -1 && _index < static_cast<uint32>(m_Sequences.size()));
-		return m_Sequences[_index];
+		return m_Sequences;
 	}
-	const size_t getSequencesCount() const // TODO: Delete me!
+	const SM2_Sequence& getSequenceLookup(size_t IndexIntoLookup) const
 	{
-		return m_Sequences.size();
-	}
-	const SM2_Sequence& getSequenceLookup(uint32 _index) const
-	{
-		_ASSERT(_index < m_SequencesLookup.size());
-		int16 newIndex = m_SequencesLookup[_index];
-		_ASSERT(newIndex != -1 && newIndex < static_cast<int16>(m_Sequences.size()));
-		return m_Sequences[newIndex];
+		_ASSERT(IndexIntoLookup < m_SequencesLookup.size());
+		int16 indexIntoDirect = m_SequencesLookup[IndexIntoLookup];
+		_ASSERT(indexIntoDirect != -1 && indexIntoDirect < static_cast<int16>(m_Sequences.size()));
+		return m_Sequences[indexIntoDirect];
 	}
 private:
 	std::vector<SM2_Loop>      m_GlobalLoops;
 	std::vector<SM2_Sequence>  m_Sequences;
 	std::vector<int16>         m_SequencesLookup;
 
+
 public:
-	std::shared_ptr<const CM2_Part_Bone> getBoneDirect(int16 _index) const
+	const std::vector<SM2_Part_Bone_Wrapper>& GetBones() const
 	{
-		_ASSERT(_index != -1 && _index < static_cast<int16>(m_Bones.size()));
-		return (m_Bones[_index]);
+		return m_Bones;
 	}
-	bool isLookupBoneCorrect(uint32 _index) const
+	// Lookup bones
+	bool isLookupBoneCorrect(uint32 IndexIntoLookup) const
 	{
-		int16 newIndex = m_BonesLookup[_index];
-		return (newIndex != -1) && (newIndex < static_cast<int16>(m_Bones.size()));
+		int16 indexIntoDirect = m_BonesLookup[IndexIntoLookup];
+		return (indexIntoDirect != -1) && (indexIntoDirect < static_cast<int16>(m_Bones.size()));
 	}
-	std::shared_ptr<CM2_Part_Bone> getBoneLookup(uint32 _index) const
+	int16 getBoneLookupIndex(uint32 IndexIntoLookup) const
 	{
-		if (_index >= static_cast<uint32>(m_BonesLookup.size()))
-		{
-			//Log::Warn("M2[%s]: getBone [%d] not found in Lookup[%d]", m_FileName.c_str(), _index, m_Header.bonesLookup.size);
-			return nullptr;
-		}
-		int16 newIndex = m_BonesLookup[_index];
-		_ASSERT(newIndex != -1 && newIndex < static_cast<int16>(m_Bones.size()));
-		return (m_Bones[newIndex]);
+		_ASSERT(static_cast<size_t>(IndexIntoLookup) < m_BonesLookup.size());
+		return m_BonesLookup[static_cast<size_t>(IndexIntoLookup)];
 	}
-	std::shared_ptr<const CM2_Part_Bone> getGameBone(M2_GameBoneType _type) const
+	const SM2_Part_Bone_Wrapper& getBoneLookup(uint32 IndexIntoLookup) const
 	{
-		if (static_cast<int16>(_type) >= static_cast<int16>(m_GameBonesLookup.size()))
-		{
-			//Log::Warn("M2[%s]: getGameBone [%d] not found in Lookup[%d]", m_ParentM2->getFilenameWithoutExt().c_str(), _type, m_GameBonesLookup.size());
-			return nullptr;
-		}
-		int16 newIndex = m_GameBonesLookup[static_cast<int16>(_type)];
-		_ASSERT(newIndex != -1 && newIndex < static_cast<int16>(m_Bones.size()));
-		return (m_Bones[newIndex]);
+		_ASSERT(IndexIntoLookup < static_cast<uint32>(m_BonesLookup.size()));
+		int16 indexIntoDirect = m_BonesLookup[IndexIntoLookup];
+		_ASSERT(indexIntoDirect != -1 && indexIntoDirect < static_cast<int16>(m_Bones.size()));
+		return m_Bones[indexIntoDirect];
+	}
+	// Game bones
+	bool IsGameBoneIndexCorrect(uint32 IndexIntoLookup) const
+	{
+		int16 indexIntoDirect = m_GameBonesLookup[IndexIntoLookup];
+		return (indexIntoDirect != -1) && (indexIntoDirect < static_cast<int16>(m_Bones.size()));
+	}
+	int16 GetGameBoneIndex(M2_GameBoneType _type) const
+	{
+		_ASSERT(static_cast<size_t>(_type) < m_GameBonesLookup.size());
+		return m_GameBonesLookup[static_cast<size_t>(_type)];
+	}
+	const SM2_Part_Bone_Wrapper& getGameBone(M2_GameBoneType _type) const
+	{
+		int16 indexIntoDirect = GetGameBoneIndex(_type);
+		_ASSERT(indexIntoDirect != -1 && indexIntoDirect < static_cast<int16>(m_Bones.size()));
+		return m_Bones[indexIntoDirect];
 	}
 private:
-	std::vector<std::shared_ptr<CM2_Part_Bone>>  m_Bones;
+	std::vector<SM2_Part_Bone_Wrapper>           m_Bones;
 	std::vector<int16>                           m_BonesLookup;
 	std::vector<int16>                           m_GameBonesLookup;
 
 	bool                                         m_HasBones;
 	bool                                         m_IsAnimBones;
 	bool                                         m_IsBillboard;
+
 
 private:
 	const CM2& m_M2Object;

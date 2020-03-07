@@ -87,7 +87,7 @@ void CM2_Skin_Batch::UpdateMaterialProps(const RenderEventArgs& RenderEventArgs,
 	m_Properties->gColorEnable = isColorEnable;
 	if (isColorEnable)
 	{
-		m_Properties->gColor = m_Color->GetColorAndAlpha(m2Instance->getAnimator()->getSequenceIndex(), m2Instance->getAnimator()->getCurrentTime(), static_cast<uint32>(RenderEventArgs.TotalTime));
+		m_Properties->gColor = m_Color->GetColorAndAlpha(m2Instance, static_cast<uint32>(RenderEventArgs.TotalTime));
 	}
 
 	// Texture alpha
@@ -95,7 +95,7 @@ void CM2_Skin_Batch::UpdateMaterialProps(const RenderEventArgs& RenderEventArgs,
 	m_Properties->gTextureWeightEnable = isTextureWeightEnable;
 	if (isTextureWeightEnable)
 	{
-		m_Properties->gTextureWeight = m_TextureWeight->GetWeight(m2Instance->getAnimator()->getSequenceIndex(), m2Instance->getAnimator()->getCurrentTime(), static_cast<uint32>(RenderEventArgs.TotalTime));
+		m_Properties->gTextureWeight = m_TextureWeight->GetWeight(m2Instance, static_cast<uint32>(RenderEventArgs.TotalTime));
 	}
 
 	// Texture transform
@@ -103,7 +103,7 @@ void CM2_Skin_Batch::UpdateMaterialProps(const RenderEventArgs& RenderEventArgs,
 	m_Properties->gTextureAnimEnable = isTextureTransformEnable;
 	if (isTextureTransformEnable)
 	{
-		m_Properties->gTextureAnimMatrix = m_TextureTransform->GetTransform(m2Instance->getAnimator()->getSequenceIndex(), m2Instance->getAnimator()->getCurrentTime(), static_cast<uint32>(RenderEventArgs.TotalTime));
+		m_Properties->gTextureAnimMatrix = m_TextureTransform->GetTransform(m2Instance, static_cast<uint32>(RenderEventArgs.TotalTime));
 	}
 
 

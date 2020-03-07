@@ -2,6 +2,7 @@
 
 // Include
 #include "M2.h"
+#include "M2_Base_Instance.h"
 
 // General
 #include "M2_Part_TextureWeight.h"
@@ -16,10 +17,10 @@ CM2_Part_TextureWeight::~CM2_Part_TextureWeight()
 {
 }
 
-float CM2_Part_TextureWeight::GetWeight(uint16 Sequence, uint32 Time, uint32 GlobalTime) const
+float CM2_Part_TextureWeight::GetWeight(const CM2_Base_Instance* M2Instance, uint32 GlobalTime) const
 {
-	if (m_WeightAnimated.IsUsesBySequence(Sequence))
-		return m_WeightAnimated.GetValue(Sequence, Time, m_M2Object.getSkeleton().getGlobalLoops(), GlobalTime);
-
+	if (const auto& animator = M2Instance->getAnimator())
+		if (m_WeightAnimated.IsUsesBySequence(animator->getSequenceIndex()))
+			return m_WeightAnimated.GetValue(animator->getSequenceIndex(), animator->getCurrentTime(), m_M2Object.getSkeleton().getGlobalLoops(), GlobalTime);
 	return 1.0f;
 }

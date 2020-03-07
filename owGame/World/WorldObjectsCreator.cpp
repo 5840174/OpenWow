@@ -30,10 +30,9 @@ std::shared_ptr<Creature> CWorldObjectCreator::BuildCreatureFromDisplayInfo(IRen
 		return BuildCharactedFromDisplayInfo(RenderDevice, Scene, _id, Parent);
 
 	// 1. Load model
-	std::shared_ptr<CM2> m2Model = nullptr;
-	{
-		m2Model = CreateCreatureModel(RenderDevice, rec);
-	}
+	std::shared_ptr<CM2> m2Model = CreateCreatureModel(RenderDevice, rec);
+	if (m2Model == nullptr)
+		return nullptr;
 
 	std::shared_ptr<Creature> newCreature = Scene->CreateSceneNode<Creature>(Parent, m2Model);
 	m_BaseManager.GetManager<ILoader>()->AddToLoadQueue(newCreature);
@@ -58,10 +57,9 @@ std::shared_ptr<Creature> CWorldObjectCreator::BuildCreatureFromDisplayInfo(IRen
 std::shared_ptr<Character> CWorldObjectCreator::BuildCharactedFromTemplate(IRenderDevice& RenderDevice, IScene* Scene, const CInet_CharacterTemplate& b, const std::shared_ptr<ISceneNode3D>& Parent)
 {
 	// 1. Load model
-	std::shared_ptr<CM2> m2Model = nullptr;
-	{
-		m2Model = CreateCharacterModel(RenderDevice, b);
-	}
+	std::shared_ptr<CM2> m2Model = CreateCharacterModel(RenderDevice, b);
+	if (m2Model == nullptr)
+		return nullptr;
 
 	std::shared_ptr<Character> newCharacter = Scene->CreateSceneNode<Character>(Parent, m2Model);
 	m_BaseManager.GetManager<ILoader>()->AddToLoadQueue(newCharacter);
@@ -94,11 +92,9 @@ std::shared_ptr<Character> CWorldObjectCreator::BuildCharactedFromDisplayInfo(IR
 	_ASSERT(humanoidRecExtra != nullptr);
 
 	// 1. Load model
-	std::shared_ptr<CM2> m2Model = nullptr;
-	{
-		// We ???always??? can load model from (CreatureDisplayInfo->Model)
-		m2Model = CreateCreatureModel(RenderDevice, rec);
-	}
+	std::shared_ptr<CM2> m2Model = CreateCreatureModel(RenderDevice, rec);
+	if (m2Model == nullptr)
+		return nullptr;
 
 	std::shared_ptr<Character> newCharacter = Scene->CreateSceneNode<Character>(Parent, m2Model);
 	m_BaseManager.GetManager<ILoader>()->AddToLoadQueue(newCharacter);

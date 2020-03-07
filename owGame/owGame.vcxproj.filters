@@ -154,6 +154,9 @@
     <Filter Include="World\GameObject">
       <UniqueIdentifier>{77fd2597-a1d4-46aa-b9ea-faa5222f03d0}</UniqueIdentifier>
     </Filter>
+    <Filter Include="M2\SceneNode &amp; Components\Components">
+      <UniqueIdentifier>{1ba03db0-1477-46e4-89fa-4f374e220f62}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -222,9 +225,6 @@
     <ClCompile Include="M2\M2_Base_Instance.cpp">
       <Filter>M2\SceneNode &amp; Components</Filter>
     </ClCompile>
-    <ClCompile Include="M2\M2_ColliderComponent.cpp">
-      <Filter>M2\SceneNode &amp; Components</Filter>
-    </ClCompile>
     <ClCompile Include="M2\M2_Comp_Materials.cpp">
       <Filter>M2\Components</Filter>
     </ClCompile>
@@ -265,9 +265,6 @@
       <Filter>M2\Components\Parts_Skeleton</Filter>
     </ClCompile>
     <ClCompile Include="M2\M2_Animation.cpp">
-      <Filter>M2\Animations</Filter>
-    </ClCompile>
-    <ClCompile Include="M2\M2_Animator.cpp">
       <Filter>M2\Animations</Filter>
     </ClCompile>
     <ClCompile Include="M2\ParticleEmitter_Plane.cpp">
@@ -504,9 +501,6 @@
     <ClCompile Include="M2\M2_AnimationSet.cpp">
       <Filter>M2\Animations</Filter>
     </ClCompile>
-    <ClCompile Include="M2\M2_InstanceSkeleton.cpp">
-      <Filter>M2\SceneNode &amp; Components</Filter>
-    </ClCompile>
     <ClCompile Include="Map\MapChunkLiquid.cpp">
       <Filter>Map\Tile</Filter>
     </ClCompile>
@@ -515,6 +509,18 @@
     </ClCompile>
     <ClCompile Include="Map\RenderPass_MapChunk.cpp">
       <Filter>RenderStuff</Filter>
+    </ClCompile>
+    <ClCompile Include="M2\M2_Animator.cpp">
+      <Filter>M2\SceneNode &amp; Components</Filter>
+    </ClCompile>
+    <ClCompile Include="M2\M2_ColliderComponent.cpp">
+      <Filter>M2\SceneNode &amp; Components\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="M2\M2_Skeleton.cpp">
+      <Filter>M2\SceneNode &amp; Components\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="M2\M2_LightComponent.cpp">
+      <Filter>M2\SceneNode &amp; Components\Components</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -728,9 +734,6 @@
     <ClInclude Include="M2\M2_Base_Instance.h">
       <Filter>M2\SceneNode &amp; Components</Filter>
     </ClInclude>
-    <ClInclude Include="M2\M2_ColliderComponent.h">
-      <Filter>M2\SceneNode &amp; Components</Filter>
-    </ClInclude>
     <ClInclude Include="M2\M2_Comp_Materials.h">
       <Filter>M2\Components</Filter>
     </ClInclude>
@@ -771,9 +774,6 @@
       <Filter>M2\Components\Parts_Skeleton</Filter>
     </ClInclude>
     <ClInclude Include="M2\M2_Animation.h">
-      <Filter>M2\Animations</Filter>
-    </ClInclude>
-    <ClInclude Include="M2\M2_Animator.h">
       <Filter>M2\Animations</Filter>
     </ClInclude>
     <ClInclude Include="M2\ParticleEmitter_Plane.h">
@@ -1073,9 +1073,6 @@
     <ClInclude Include="M2\M2_AnimationSet.h">
       <Filter>M2\Animations</Filter>
     </ClInclude>
-    <ClInclude Include="M2\M2_InstanceSkeleton.h">
-      <Filter>M2\SceneNode &amp; Components</Filter>
-    </ClInclude>
     <ClInclude Include="Map\MapChunkLiquid.h">
       <Filter>Map\Tile</Filter>
     </ClInclude>
@@ -1084,6 +1081,18 @@
     </ClInclude>
     <ClInclude Include="Map\RenderPass_MapChunk.h">
       <Filter>RenderStuff</Filter>
+    </ClInclude>
+    <ClInclude Include="M2\M2_Animator.h">
+      <Filter>M2\SceneNode &amp; Components</Filter>
+    </ClInclude>
+    <ClInclude Include="M2\M2_ColliderComponent.h">
+      <Filter>M2\SceneNode &amp; Components\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="M2\M2_Skeleton.h">
+      <Filter>M2\SceneNode &amp; Components\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="M2\M2_LightComponent.h">
+      <Filter>M2\SceneNode &amp; Components\Components</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

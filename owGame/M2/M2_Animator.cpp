@@ -13,10 +13,10 @@ CM2_Animator::CM2_Animator(const IBaseManager& BaseManager, const CM2& M2Model)
 	, animtime(0.0)
 	, m_CurrentTime(0)
 {
-	for (uint16 j = 0; j < m_M2Model.getSkeleton().getSequencesCount(); j++)
+	const auto& sequences = m_M2Model.getSkeleton().GetSequences();
+	for (uint16 j = 0; j < sequences.size(); j++)
 	{
-		const SM2_Sequence& sequence = m_M2Model.getSkeleton().getSequenceDirect(j);
-
+		const auto& sequence = sequences[j];
 		if (sequence.variationIndex == 0)
 		{
 			const DBC_AnimationDataRecord* dbcAnimationRecord = BaseManager.GetManager<CDBCStorage>()->DBC_AnimationData()[sequence.__animID];
@@ -68,7 +68,7 @@ void CM2_Animator::Update(double _time, double _dTime)
 	if (m_IsStopped)
 		return;
 
-	animtime += (_dTime * 1.0);
+	animtime += (_dTime);
 	m_CurrentTime = static_cast<uint32>(m_CurrentAnimation->getStart() + animtime);
 
 	// Animation don't ended

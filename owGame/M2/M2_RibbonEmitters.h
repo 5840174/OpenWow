@@ -2,7 +2,7 @@
 
 // FORWARD BEGIN
 class CM2;
-class CM2_Part_Bone;
+class SM2_Part_Bone_Wrapper;
 // FORWARD END
 
 struct RibbonSegment
@@ -22,7 +22,7 @@ public:
 
 private:
 	uint32										m_ID;
-	std::weak_ptr<const CM2_Part_Bone>			m_Bone;
+	std::weak_ptr<const SM2_Part_Bone_Wrapper>			m_Bone;
 	vec3										pos;
 	vec3										posValue;
 
