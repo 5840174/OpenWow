@@ -147,9 +147,7 @@
     <ClCompile Include="World\Character\Character_SectionWrapper.cpp" />
     <ClCompile Include="World\Character\Character_SkinTextureBaker.cpp" />
     <ClCompile Include="World\Creature\Creature.cpp" />
-    <ClCompile Include="World\Creature\Creature_M2Instance.cpp" />
     <ClCompile Include="World\GameObject\GameObject.cpp" />
-    <ClCompile Include="World\Items\Item.cpp" />
     <ClCompile Include="World\Items\Item_M2Instance.cpp" />
     <ClCompile Include="World\Items\Item_VisualData.cpp" />
     <ClCompile Include="World\WorldObjectsCreator.cpp" />
@@ -335,9 +333,7 @@
     <ClInclude Include="World\Character\Character_SectionWrapper.h" />
     <ClInclude Include="World\Character\Character_SkinTextureBaker.h" />
     <ClInclude Include="World\Creature\Creature.h" />
-    <ClInclude Include="World\Creature\Creature_M2Instance.h" />
     <ClInclude Include="World\GameObject\GameObject.h" />
-    <ClInclude Include="World\Items\Item.h" />
     <ClInclude Include="World\Items\Item_M2Instance.h" />
     <ClInclude Include="World\Items\Item_VisualData.h" />
     <ClInclude Include="World\MeshIDEnums.h" />

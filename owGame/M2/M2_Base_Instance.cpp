@@ -133,11 +133,8 @@ void CM2_Base_Instance::UpdateLocalTransform()
 		auto bone = attachPoint->getBone().lock();
 		_ASSERT(bone != nullptr);
 
-		glm::mat4 relMatrix;
-		relMatrix = glm::translate(relMatrix, bone->getPivot());
-
-		glm::mat4 absMatrix;
-		absMatrix = GetParentWorldTransform() * bone->getTransformMatrix() * relMatrix;
+		glm::mat4 relMatrix = glm::translate(bone->getPivot());
+		glm::mat4 absMatrix = GetParentWorldTransform() * bone->getTransformMatrix() * relMatrix;
 		SetWorldTransform(absMatrix);
 	}
 	else

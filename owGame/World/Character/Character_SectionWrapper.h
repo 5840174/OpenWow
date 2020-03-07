@@ -13,30 +13,30 @@ public:
 	virtual ~Character_SectionWrapper();
 
 	// Skin
-	std::shared_ptr<ITexture> getSkinTexture(const Character* _character) const;
-	std::shared_ptr<ITexture> getSkinExtraTexture(const Character* _character) const;
+	std::shared_ptr<ITexture> getSkinTexture(const Character* Character) const;
+	std::shared_ptr<ITexture> getSkinExtraTexture(const Character* Character) const;
 
 	// Face
-	std::shared_ptr<ITexture> getFaceLowerTexture(const Character* _character) const;
-	std::shared_ptr<ITexture> getFaceUpperTexture(const Character* _character) const;
+	std::shared_ptr<ITexture> getFaceLowerTexture(const Character* Character) const;
+	std::shared_ptr<ITexture> getFaceUpperTexture(const Character* Character) const;
 
 	// FacialHair
-	std::string getFacialHairLowerTexture(const Character* _character) const;
-	std::string getFacialHairUpperTexture(const Character* _character) const;
-	uint32 getFacial1Geoset(const Character* _character) const;
-	uint32 getFacial2Geoset(const Character* _character) const;
-	uint32 getFacial3Geoset(const Character* _character) const;
+	std::string getFacialHairLowerTexture(const Character* Character) const;
+	std::string getFacialHairUpperTexture(const Character* Character) const;
+	uint32 getFacial1Geoset(const Character* Character) const;
+	uint32 getFacial2Geoset(const Character* Character) const;
+	uint32 getFacial3Geoset(const Character* Character) const;
 
 	// Hair
-	uint32     getHairGeoset(const Character* _character) const;
-	uint32     getHairShowScalp(const Character* _character) const;
-	std::shared_ptr<ITexture> getHairTexture(const Character* _character) const;
-	std::shared_ptr<ITexture> getHairScalpLowerTexture(const Character* _character) const;
-	std::shared_ptr<ITexture> getHairScalpUpperTexture(const Character* _character) const;
+	uint32     getHairGeoset(const Character* Character) const;
+	uint32     getHairShowScalp(const Character* Character) const;
+	std::shared_ptr<ITexture> getHairTexture(const Character* Character) const;
+	std::shared_ptr<ITexture> getHairScalpLowerTexture(const Character* Character) const;
+	std::shared_ptr<ITexture> getHairScalpUpperTexture(const Character* Character) const;
 
 	// Naked
-	std::string getNakedPelvisTexture(const Character* _character) const;
-	std::string getNakedTorsoTexture(const Character* _character) const;
+	std::string getNakedPelvisTexture(const Character* Character) const;
+	std::string getNakedTorsoTexture(const Character* Character) const;
 
 private:
 	IBaseManager& m_BaseManager;

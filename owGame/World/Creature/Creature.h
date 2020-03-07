@@ -1,11 +1,10 @@
 #pragma once
 
-#include "World/Creature/Creature_M2Instance.h"
-
+#include "M2/M2_Base_Instance.h"
 #include "World/MeshIDEnums.h"
 
 class ZN_API Creature 
-	: public Creature_M2Instance
+	: public CM2_Base_Instance
 {
 public:
 	Creature(const std::shared_ptr<CM2>& M2Object);

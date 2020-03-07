@@ -16,7 +16,7 @@ public:
 	bool                                Load() override;
 
 	// CM2_Base_Instance
-	const CM2&                           getM2() const;
+	const CM2&                          getM2() const;
 
 	void                                Attach(std::shared_ptr<const CM2_Part_Attachment> _attachment);
 	void                                Detach();

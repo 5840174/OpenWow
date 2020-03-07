@@ -2,8 +2,6 @@
 
 #include "DBC/DBC__File.h"
 
-class CDBCStorage;
-
 DBC_DEF_BEGIN(DBC_AnimationData)
 
 __DBC_STRING(							Name,				2);

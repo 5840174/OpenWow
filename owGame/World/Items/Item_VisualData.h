@@ -26,37 +26,36 @@ struct GeosetComponent
 
 class CItem_VisualData 
 	: public CInet_ItemTemplate
+	, public CLoadableObject
 {
 public:
-	CItem_VisualData(IBaseManager& BaseManager, IRenderDevice& RenderDevice, Character& Character);
+	CItem_VisualData(IBaseManager& BaseManager, IRenderDevice& RenderDevice, const std::shared_ptr<Character>& Character);
 	virtual ~CItem_VisualData();
 
-	void Load();
+	bool Load();
 
 	const std::vector<ObjectComponent>&  getObjectComponents() const { return m_ObjectComponents; }
 	const std::vector<GeosetComponent>&  getGeosetComponents() const { return m_GeosetComponents; }
-	const std::shared_ptr<ITexture>&      getTextureComponent(DBC_CharComponent_Sections::List _type) const { return m_TextureComponents[_type]; }
-
-	void Render3D();
+	const std::shared_ptr<ITexture>&     getTextureComponent(DBC_CharComponent_Sections _type) const { return m_TextureComponents[static_cast<size_t>(_type)]; }
 
 private:
 	void InitObjectComponents();
 	void InitGeosetComponents();
 	void InitTextureComponents();
 
-	std::string				 GetObjectModelName(InventoryType::List _objectType, std::string _modelName);
-	//std::shared_ptr<M2>      LoadObjectModel   (InventoryType::List _objectType, std::string _modelName);
-	std::shared_ptr<ITexture> LoadObjectTexture (InventoryType::List _objectType, std::string _textureName);
-	std::shared_ptr<ITexture> LoadSkinTexture   (DBC_CharComponent_Sections::List _type, std::string _textureName);
+	std::string				 GetObjectModelName(EInventoryType _objectType, std::string _modelName);
+	//std::shared_ptr<M2>      LoadObjectModel   (EInventoryType::List _objectType, std::string _modelName);
+	std::shared_ptr<ITexture> LoadObjectTexture (EInventoryType _objectType, std::string _textureName);
+	std::shared_ptr<ITexture> LoadSkinTexture   (DBC_CharComponent_Sections _type, std::string _textureName);
 	
 	// Helpers
-	std::string getTextureComponentName(DBC_CharComponent_Sections::List _type, std::string _textureName, Gender::List _gender);
-	char getGenderLetter(Gender::List _gender);
+	std::string getTextureComponentName(DBC_CharComponent_Sections _type, std::string _textureName, Gender _gender);
+	char getGenderLetter(Gender _gender);
 
 private:
 	std::vector<ObjectComponent>  m_ObjectComponents;
 	std::vector<GeosetComponent>  m_GeosetComponents;
-	std::shared_ptr<ITexture>      m_TextureComponents[DBC_CharComponent_Sections::ITEMS_COUNT];
+	std::shared_ptr<ITexture>     m_TextureComponents[static_cast<size_t>(DBC_CharComponent_Sections::ITEMS_COUNT)];
 	
 private: 
 	IBaseManager& m_BaseManager;

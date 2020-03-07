@@ -67,7 +67,7 @@ struct SM2_Bone
 	int16			parent_bone;            // Parent bone ID or -1 if there is none.
 	uint16			submesh_id;				// Mesh part ID OR uDistToParent?
 
-#if defined(WOW_BC_2_4_3)
+#if WOW_CLIENT_VERSION == WOW_BC_2_4_3
 	union 
 	{                         // only  BC?
 		struct 
@@ -80,9 +80,9 @@ struct SM2_Bone
 #endif
 
 	M2Track<vec3>       translation;
-#if defined(WOW_CLASSIC_1_12_1)
+#if WOW_CLIENT_VERSION == WOW_CLASSIC_1_12_1
 	M2Track<quat>	    rotation;
-#elif defined (WOW_BC_2_4_3)
+#elif WOW_CLIENT_VERSION >= WOW_BC_2_4_3
 	M2Track<M2CompQuat>	rotation;
 #endif
 	M2Track<vec3>       scale;

@@ -26,7 +26,7 @@ struct SM2_SkinSection
 	uint16 centerBoneIndex;
 	vec3   centerPosition;      // Average position of all the vertices in the sub mesh.
 
-#if defined(WOW_BC_2_4_3)
+#if WOW_CLIENT_VERSION == WOW_BC_2_4_3
 	glm::vec3 sortCenterPosition; // The center of the box when an axis aligned box is built around the vertices in the submesh.
 	float sortRadius;             // Distance of the vertex farthest from CenterBoundingBox.
 #endif

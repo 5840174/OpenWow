@@ -450,9 +450,6 @@
     <ClCompile Include="World\Creature\Creature.cpp">
       <Filter>World\Creature</Filter>
     </ClCompile>
-    <ClCompile Include="World\Creature\Creature_M2Instance.cpp">
-      <Filter>World\Creature</Filter>
-    </ClCompile>
     <ClCompile Include="World\Character\Character.cpp">
       <Filter>World\Character</Filter>
     </ClCompile>
@@ -461,9 +458,6 @@
     </ClCompile>
     <ClCompile Include="World\Character\Character_SkinTextureBaker.cpp">
       <Filter>World\Character\Helpers</Filter>
-    </ClCompile>
-    <ClCompile Include="World\Items\Item.cpp">
-      <Filter>World\Item</Filter>
     </ClCompile>
     <ClCompile Include="World\Items\Item_M2Instance.cpp">
       <Filter>World\Item</Filter>
@@ -1004,9 +998,6 @@
     <ClInclude Include="World\Creature\Creature.h">
       <Filter>World\Creature</Filter>
     </ClInclude>
-    <ClInclude Include="World\Creature\Creature_M2Instance.h">
-      <Filter>World\Creature</Filter>
-    </ClInclude>
     <ClInclude Include="World\MeshIDEnums.h">
       <Filter>World</Filter>
     </ClInclude>
@@ -1018,9 +1009,6 @@
     </ClInclude>
     <ClInclude Include="World\Character\Character_SkinTextureBaker.h">
       <Filter>World\Character\Helpers</Filter>
-    </ClInclude>
-    <ClInclude Include="World\Items\Item.h">
-      <Filter>World\Item</Filter>
     </ClInclude>
     <ClInclude Include="World\Items\Item_M2Instance.h">
       <Filter>World\Item</Filter>

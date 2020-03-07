@@ -46,6 +46,8 @@ void CMapChunk::Initialize()
 	uint32_t size;
 	m_File->read(&size);
 
+	SetName("MapTile[" + std::to_string(m_MapTile.getIndexX()) + "," + std::to_string(m_MapTile.getIndexZ()) + "]_Chunk[" + std::to_string(offset) + "]");
+
 	uint32_t startPos = m_File->getPos();
 
 	// Read header

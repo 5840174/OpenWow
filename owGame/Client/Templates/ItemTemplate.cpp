@@ -4,27 +4,27 @@
 #include "ItemTemplate.h"
 
 CInet_ItemTemplate::CInet_ItemTemplate() :
-	DisplayId(0),
-	InventoryType(InventoryType::NON_EQUIP),
-	EnchantAuraID(0)
+	m_DisplayId(0),
+	m_InventoryType(EInventoryType::NON_EQUIP),
+	m_EnchantAuraID(0)
 {}
 
 CInet_ItemTemplate::CInet_ItemTemplate(CByteBuffer & b)
 {
-	b.readBytes(&DisplayId, 4);
-	b.readBytes(&InventoryType, 1);
+	b.readBytes(&m_DisplayId, 4);
+	b.readBytes(&m_InventoryType, 1);
 	//b.readBytes(&EnchantAuraID, 4);
 }
 
-CInet_ItemTemplate::CInet_ItemTemplate(uint32 _displayId, InventoryType::List _inventoryType, uint32 _enchantAuraID) :
-	DisplayId(_displayId),
-	InventoryType(_inventoryType),
-	EnchantAuraID(_enchantAuraID)
+CInet_ItemTemplate::CInet_ItemTemplate(uint32 _displayId, EInventoryType _inventoryType, uint32 _enchantAuraID) :
+	m_DisplayId(_displayId),
+	m_InventoryType(_inventoryType),
+	m_EnchantAuraID(_enchantAuraID)
 {}
 
-/*ItemTemplate::ItemTemplate(std::shared_ptr<const DBC_ItemDisplayInfoRecord> _display, InventoryType::List _inventoryType, uint32 _enchantAuraID) :
+/*ItemTemplate::ItemTemplate(std::shared_ptr<const DBC_ItemDisplayInfoRecord> _display, EInventoryType::List _inventoryType, uint32 _enchantAuraID) :
 	DisplayId(0),
-	InventoryType(InventoryType::NON_EQUIP),
+	EInventoryType(EInventoryType::NON_EQUIP),
 	EnchantAuraID(0)
 {
 	if (_display == nullptr)
@@ -33,18 +33,18 @@ CInet_ItemTemplate::CInet_ItemTemplate(uint32 _displayId, InventoryType::List _i
 	}
 
 	DisplayId = _display->Get_ID();
-	InventoryType = _inventoryType;
+	EInventoryType = _inventoryType;
 	EnchantAuraID = _enchantAuraID;
 }*/
 
 void CInet_ItemTemplate::TemplateSet(const CInet_ItemTemplate & _o)
 {
-	DisplayId = _o.DisplayId;
-	InventoryType = _o.InventoryType;
-	EnchantAuraID = _o.EnchantAuraID;
+	m_DisplayId = _o.m_DisplayId;
+	m_InventoryType = _o.m_InventoryType;
+	m_EnchantAuraID = _o.m_EnchantAuraID;
 }
 
 void CInet_ItemTemplate::TemplatePrint()
 {
-	Log::Print("Item(%d, (InventoryType::List) %d, %d);", DisplayId, InventoryType, EnchantAuraID);
+	Log::Print("Item(%d, (EInventoryType::List) %d, %d);", m_DisplayId, m_InventoryType, m_EnchantAuraID);
 }

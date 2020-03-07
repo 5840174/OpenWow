@@ -1,58 +1,57 @@
 #pragma once
 
-struct Race
+enum class Race : uint8
 {
-	enum List : uint8
-	{
-		Human = 1,
-		Orc = 2,
-		Dwarf = 3,
-		Nightelf = 4,
-		Undead = 5,
-		Tauren = 6,
-		Gnome = 7,
-		Troll = 8,
-		Goblin = 9,
-		Bloodelf = 10,
-		Draenei = 11,
-		FelOrc = 12,
-		Naga = 13,
-		Broken = 14,
-		Skeleton = 15,
-		Vrykul = 16,
-		Tuskarr = 17,
-		ForestTroll = 18,
-		Taunka = 19,
-		NorthrendSkeleton = 20,
-		IceTroll = 21
-	};
+	Human = 1,
+	Orc = 2,
+	Dwarf = 3,
+	Nightelf = 4,
+	Undead = 5,
+	Tauren = 6,
+	Gnome = 7,
+	Troll = 8,
+	Goblin = 9,
+#if WOW_CLIENT_VERSION >= WOW_BC_2_4_3
+	Bloodelf = 10,
+	Draenei = 11,
+	FelOrc = 12,
+	Naga = 13,
+	Broken = 14,
+	Skeleton = 15,
+#if WOW_CLIENT_VERSION >= WOW_WOTLK_3_3_5
+	Vrykul = 16,
+	Tuskarr = 17,
+#endif
+	ForestTroll = 18,
+#if WOW_CLIENT_VERSION >= WOW_WOTLK_3_3_5
+	Taunka = 19,
+	NorthrendSkeleton = 20,
+	IceTroll = 21
+#endif
+#endif
 };
 
-struct Class
+enum class Class : uint8
 {
-	enum List : uint8
-	{
-		Warrior = 1,
-		Paladin = 2,
-		Hunter = 3,
-		Rogue = 4,
-		Priest = 5,
-		DeathKnight = 6,
-		Shaman = 7,
-		Mage = 8,
-		Warlock = 9,
-		Druid = 11,
-	};
+	Warrior = 1,
+	Paladin = 2,
+	Hunter = 3,
+	Rogue = 4,
+	Priest = 5,
+#if WOW_CLIENT_VERSION >= WOW_WOTLK_3_3_5
+	DeathKnight = 6,
+#endif
+	Shaman = 7,
+	Mage = 8,
+	Warlock = 9,
+	Druid = 11,
 };
 
-struct Gender
+enum class Gender : uint8
 {
-	enum List : uint8
-	{
-		Male = 0,
-		Female = 1,
-		None = 2,
-	};
+	Male = 0,
+	Female = 1,
+	None = 2,
 };
 
 enum CharacterFlags : uint32

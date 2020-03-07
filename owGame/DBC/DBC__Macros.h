@@ -28,7 +28,7 @@ const char* CONCAT_GET(_name)() const                   \
 #define __DBC_STRARR(_name, _field, _size)                       \
 const char* CONCAT_GET(_name)(uint8 _index) const                \
 {                                                                \
-	_ASSERT(_index < _size);                                     \
+	_ASSERT(_index < static_cast<size_t>(_size));                                     \
 	return getString(static_cast<uint32>(_field - 1 + _index));  \
 }
 

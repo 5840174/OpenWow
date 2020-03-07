@@ -2,7 +2,7 @@
 
 #include "DBC/DBC__File.h"
 
-enum DBC_CharSections_GeneralType : uint32
+enum class DBC_CharSections_GeneralType : uint32
 {
 	Skin				= 0,
 	Face				= 1,
@@ -11,7 +11,7 @@ enum DBC_CharSections_GeneralType : uint32
 	Underwear			= 4
 };
 
-enum DBC_CharSections_Flags : uint32
+enum class DBC_CharSections_Flags : uint32
 {
 	Playable			= 0x01,
 	BarberShop			= 0x02,

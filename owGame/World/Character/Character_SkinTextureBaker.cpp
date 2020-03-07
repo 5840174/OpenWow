@@ -35,7 +35,7 @@ Character_SkinTextureBaker::Character_SkinTextureBaker(IBaseManager& BaseManager
 			region.Y = it->Get_Y();
 			region.Width = it->Get_Width();
 			region.Height = it->Get_Height();
-			m_Regions.insert(std::make_pair((DBC_CharComponent_Sections::List)it->Get_Section(), region));
+			m_Regions.insert(std::make_pair((DBC_CharComponent_Sections)it->Get_Section(), region));
 		}
 	}
 }
@@ -71,13 +71,13 @@ std::shared_ptr<ITexture> Character_SkinTextureBaker::createTexture(const Charac
 	{
 		for (uint32 slot = 0; slot < INVENTORY_SLOT_BAG_END; slot++)
 		{
-			for (uint32 comp = 0; comp < DBC_CharComponent_Sections::ITEMS_COUNT; comp++)
+			for (uint32 comp = 0; comp < static_cast<size_t>(DBC_CharComponent_Sections::ITEMS_COUNT); comp++)
 			{
-				std::shared_ptr<ITexture> itemComponentTexture = _character->getItemTextureComponents((InventoryType::List)slot)->getTextureComponent((DBC_CharComponent_Sections::List)comp);
+				std::shared_ptr<ITexture> itemComponentTexture = _character->getItemTextureComponents(static_cast<EInventoryType>(slot))->getTextureComponent((DBC_CharComponent_Sections)comp);
 				if (itemComponentTexture == nullptr)
 					continue;
 
-				FillPixels((DBC_CharComponent_Sections::List) comp, itemComponentTexture);
+				FillPixels((DBC_CharComponent_Sections) comp, itemComponentTexture);
 			}
 		}
 	}
@@ -109,7 +109,7 @@ void Character_SkinTextureBaker::FillWithSkin(std::shared_ptr<ITexture> _skinTex
 		}
 	}
 }
-void Character_SkinTextureBaker::FillPixels(DBC_CharComponent_Sections::List _type, std::shared_ptr<ITexture> _compTexture) const
+void Character_SkinTextureBaker::FillPixels(DBC_CharComponent_Sections _type, std::shared_ptr<ITexture> _compTexture) const
 {
 	if (_compTexture == nullptr)
 		return;

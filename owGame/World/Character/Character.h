@@ -7,7 +7,7 @@
 #include "Character_SectionWrapper.h"
 #include "Character_SkinTextureBaker.h"
 
-class Character 
+class ZN_API Character 
 	: public Creature
 {
 public:
@@ -16,20 +16,20 @@ public:
 
     CInet_CharacterTemplate& GetTemplate() { return m_Template; }
 	const CInet_CharacterTemplate& GetTemplate() const { return m_Template; }
-	std::vector<std::shared_ptr<CItem_VisualData>>& GetVisualItems() { return m_VisualItems;	}
+	const std::map<EInventoryType, std::shared_ptr<CItem_VisualData>>& GetVisualItems() { return m_VisualItems; }
 
 	// Texture components helper
-	std::shared_ptr<const CItem_VisualData> getItemTextureComponents(InventoryType::List _slot) const { return m_VisualItems[_slot]; }
-
-	// IRenderable
-	void Render3D();
+	std::shared_ptr<const CItem_VisualData> getItemTextureComponents(EInventoryType _slot) const { return m_VisualItems.at(_slot); }
 
 	// Refreshers
 	void RefreshItemVisualData();
 	void RefreshTextures(const Character_SectionWrapper& SectionWrapper, std::shared_ptr<ITexture> SkinTexture);
 	void RefreshMeshIDs(const Character_SectionWrapper& SectionWrapper);
 
+	// ISceneNode3D
+	void Initialize() override;
+
 private:
 	CInet_CharacterTemplate			                    m_Template;
-	std::vector<std::shared_ptr<CItem_VisualData>>  m_VisualItems;
+	std::map<EInventoryType, std::shared_ptr<CItem_VisualData>>  m_VisualItems;
 };

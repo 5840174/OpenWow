@@ -14,11 +14,12 @@ CMapTile::CMapTile(IBaseManager& BaseManager, IRenderDevice& RenderDevice, const
 	, m_IndexZ(IndexZ)
 {
 	SetType(cMapTile_NodeType);
+	SetName("MapTile[" + std::to_string(getIndexX()) + "," + std::to_string(getIndexZ()) + "]");
 }
 
 CMapTile::~CMapTile()
 {
-	Log::Warn("MapTile [%d, %d] unloaded.", m_IndexX, m_IndexZ);
+	Log::Warn("MapTile[%d, %d] unloaded.", m_IndexX, m_IndexZ);
 }
 
 

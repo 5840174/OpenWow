@@ -12,16 +12,15 @@ struct ZN_API CInet_CharacterTemplate
 	CInet_CharacterTemplate(CByteBuffer& b);
 
 	void TemplateSet(const CInet_CharacterTemplate& _o);
-
 	void TemplatePrint();
 
 	// System
 	uint64						GUID;
 	std::string					Name;
 	// Race
-	Race::List					Race;
-	Class::List					Class;
-	Gender::List				Gender;
+	Race					    Race;
+	Class					    Class;
+	Gender				        Gender;
 	// Style
 	uint8						skin;
 	uint8						face;

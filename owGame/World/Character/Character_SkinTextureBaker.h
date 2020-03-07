@@ -22,8 +22,8 @@ public:
 
 private:
 	void FillWithSkin(std::shared_ptr<ITexture> _texture) const;
-	void FillPixels(DBC_CharComponent_Sections::List _type, std::string _name) const;
-	void FillPixels(DBC_CharComponent_Sections::List _type, std::shared_ptr<ITexture> _texture) const;
+	void FillPixels(DBC_CharComponent_Sections _type, std::string _name) const;
+	void FillPixels(DBC_CharComponent_Sections _type, std::shared_ptr<ITexture> _texture) const;
 
 private:
 	struct PixelData
@@ -40,7 +40,7 @@ private:
 	};
 
 	mutable PixelData*	                                                              m_Pixels;
-	std::unordered_map<DBC_CharComponent_Sections::List, CharacterSkinRegion> m_Regions;
+	std::unordered_map<DBC_CharComponent_Sections, CharacterSkinRegion> m_Regions;
 
 private:
 	IBaseManager& m_BaseManager;

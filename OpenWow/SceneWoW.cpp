@@ -35,8 +35,8 @@ void CSceneWoW::Initialize()
 
 	
 	Load3D();
-	//Load3D_M2s();
-	TestCreateMap();
+	Load3D_M2s();
+	//TestCreateMap();
 	LoadUI();
 
 
@@ -149,9 +149,9 @@ void CSceneWoW::Load3D_M2s()
 	CWorldObjectCreator creator(GetBaseManager());
 
 	const auto& records = GetBaseManager().GetManager<CDBCStorage>()->DBC_CreatureDisplayInfo().Records();
-	for (size_t i = 0; i < 15; i++)
+	for (size_t i = 0; i < 25; i++)
 	{
-		for (size_t j = 0; j < 15; j++)
+		for (size_t j = 0; j < 25; j++)
 		{
 			size_t id = r.NextUInt() % records.size();
 
@@ -169,7 +169,7 @@ void CSceneWoW::Load3D_M2s()
 			auto creature = creator.BuildCreatureFromDisplayInfo(GetRenderDevice(), this, id, GetRootNode3D());
 			if (creature != nullptr)
 			{
-				creature->SetTranslate(glm::vec3(i * 7.5f, 0.0f, j * 7.5f));
+				creature->SetTranslate(glm::vec3(i * 17.5f, 0.0f, j * 17.5f));
 				//creature->getAnimator()->PlayAnimation(16, true);
 			}
 		}
@@ -178,9 +178,6 @@ void CSceneWoW::Load3D_M2s()
 	GetCameraController()->GetCamera()->SetTranslation(vec3(150, 150, 150));
 	GetCameraController()->GetCamera()->SetYaw(235);
 	GetCameraController()->GetCamera()->SetPitch(-45);
-
-	m_Technique3D.AddPass(GetBaseManager().GetManager<IRenderPassFactory>()->CreateRenderPass("ClearPass", GetRenderDevice(), GetRenderWindow()->GetRenderTarget(), &GetRenderWindow()->GetViewport(), shared_from_this()));
-	//m_Technique3D.AddPass(std::make_shared<CRenderPass_M2>(GetRenderDevice(), shared_from_this(), true)->CreatePipeline(GetRenderWindow()->GetRenderTarget(), &GetRenderWindow()->GetViewport()));
 }
 
 
