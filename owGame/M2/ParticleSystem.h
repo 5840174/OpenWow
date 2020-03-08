@@ -18,7 +18,8 @@ struct TexCoordSet
 
 #include "ParticleEmitters.h"
 
-class CM2_ParticleSystem : public std::enable_shared_from_this<CM2_ParticleSystem>
+class CM2_ParticleSystem 
+	: public std::enable_shared_from_this<CM2_ParticleSystem>
 {
 	friend class ParticleEmitter;
 	friend class PlaneParticleEmitter;
@@ -67,7 +68,7 @@ private:
 
 private:
 	const CM2& m_M2Object;
-	std::weak_ptr<const SM2_Part_Bone_Wrapper> m_ParentBone;
+	int16 m_ParentBone;
 };
 
 template<class T>

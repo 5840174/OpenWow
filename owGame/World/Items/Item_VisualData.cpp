@@ -144,7 +144,7 @@ void CItem_VisualData::InitObjectComponents()
 		else if (m_InventoryType == EInventoryType::CLOAK)
 		{
 			std::shared_ptr<ITexture> texture = LoadObjectTexture(m_InventoryType, objectTextureName);
-			m_ObjectComponents.push_back({ nullptr, texture, nullptr });
+			m_ObjectComponents.push_back({ nullptr, texture, M2_AttachmentType::NotAttached });
 			continue;
 		}
 
@@ -160,11 +160,13 @@ void CItem_VisualData::InitObjectComponents()
 		std::shared_ptr<CItem_M2Instance> itemObjectInstance = m_ParentCharacter.CreateSceneNode<CItem_M2Instance>(m2Model);
 		m_BaseManager.GetManager<ILoader>()->AddToLoadQueue(itemObjectInstance);
 		//itemObjectInstance->Load();
-		itemObjectInstance->Attach(itemObjectAttach);
+		itemObjectInstance->Attach(itemObjectAttach.GetAttachmentType());
 		itemObjectInstance->setSpecialTexture(SM2_Texture::Type::OBJECT_SKIN, itemObjectTexture);
 
 
+		//
 		// Visual effect
+		//
 		const DBC_ItemVisualsRecord* visuals = /*displayInfo->Get_ItemVisualID()*/m_DBCs->DBC_ItemVisuals()[m_EnchantAuraID];
 		if (visuals != nullptr)
 		{
@@ -172,34 +174,29 @@ void CItem_VisualData::InitObjectComponents()
 			{
 				const DBC_ItemVisualEffectsRecord* visEffect = m_DBCs->DBC_ItemVisualEffects()[visuals->Get_VisualEffect(j)];
 				if (visEffect == nullptr)
-				{
 					continue;
-				}
 
 				std::string visEffectModelName = visEffect->Get_Name();
 				if (visEffectModelName.empty())
-				{
 					continue;
-				}
 
-				std::shared_ptr<CM2> m2Model = m_BaseManager.GetManager<IWoWObjectsCreator>()->LoadM2(m_RenderDevice, visEffectModelName);
-				_ASSERT(m2Model != nullptr);
-				std::shared_ptr<CM2_Base_Instance> visInstance = itemObjectInstance->CreateSceneNode<CM2_Base_Instance>(m2Model);
-				//visInstance->Load();
-				m_BaseManager.GetManager<ILoader>()->AddToLoadQueue(visInstance);
+				// M2 model
+				std::shared_ptr<CM2> visualEffectM2Model = m_BaseManager.GetManager<IWoWObjectsCreator>()->LoadM2(m_RenderDevice, visEffectModelName);
+				_ASSERT(visualEffectM2Model != nullptr);
 
-				std::shared_ptr<const CM2_Part_Attachment> visAttach = itemObjectAttach;
+				// M2 instance
+				std::shared_ptr<CM2_Base_Instance> visualEffectInstance = itemObjectInstance->CreateSceneNode<CM2_Base_Instance>(visualEffectM2Model);
+				m_BaseManager.GetManager<ILoader>()->AddToLoadQueue(visualEffectInstance);
+
 				if (itemObjectInstance->getM2().getMiscellaneous().isAttachmentExists((M2_AttachmentType)j))
-				{
-					visAttach = itemObjectInstance->getM2().getMiscellaneous().getAttachment((M2_AttachmentType)j);
-				}
-
-				visInstance->Attach(visAttach);
-				itemObjectInstance->AddVisualEffect(visInstance);
+					visualEffectInstance->Attach(itemObjectInstance->getM2().getMiscellaneous().getAttachment((M2_AttachmentType)j).GetAttachmentType());
+				else
+					visualEffectInstance->Attach(itemObjectAttach.GetAttachmentType());
+				itemObjectInstance->AddVisualEffect(visualEffectInstance);
 			}
 		}
 
-		m_ObjectComponents.push_back({ itemObjectInstance, itemObjectTexture, itemObjectAttach });
+		m_ObjectComponents.push_back({ itemObjectInstance, itemObjectTexture, itemObjectAttach.GetAttachmentType() });
 	}
 }
 

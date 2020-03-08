@@ -4,6 +4,10 @@
 class CM2_Base_Instance;
 #include "M2/M2_Part_Bone.h"
 
+
+//
+// CM2SkeletonBone3D
+//
 class ZN_API CM2SkeletonBone3D
 	: public ISkeletonBone3D
 	, public std::enable_shared_from_this<CM2SkeletonBone3D>
@@ -35,6 +39,10 @@ private:
 };
 
 
+
+//
+// CM2SkeletonComponent3D
+//
 class ZN_API CM2SkeletonComponent3D
 	: public ISkeletonComponent3D
 	, public CComponentBase

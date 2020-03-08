@@ -188,11 +188,12 @@ void CSceneWoW::LoadUI()
 
 void CSceneWoW::TestCreateMap()
 {
-	//const int32 x = 40;
-	//const int32 y = 30;
-	const int32 x = 19; //FOR BC
-	const int32 y = 32;
-	const uint32 mapID = 530;
+	const int32 x = 40;
+	const int32 y = 30;
+	const uint32 mapID = 1;
+	//const int32 x = 19; //FOR BC
+	//const int32 y = 32;
+	//const uint32 mapID = 530;
 
 	if (map != nullptr)
 		TestDeleteMap();

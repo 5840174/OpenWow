@@ -27,10 +27,8 @@ enum class M2_AttachmentType : uint32
 
 	ShoulderRight = 5,
 	ShoulderLeft = 6,
-
 	KneeRight = 7,
 	KneeLeft = 8,
-
 	HipRight = 9,
 	HipLeft = 10,
 
@@ -39,7 +37,6 @@ enum class M2_AttachmentType : uint32
 
 	ShoulderFlapRight = 13,
 	ShoulderFlapLeft = 14,
-
 	ChestBloodFront = 15,
 	ChestBloodBack = 16,
 
@@ -74,6 +71,9 @@ enum class M2_AttachmentType : uint32
 	SpellHandOmni = 37,
 	SpellHandDirected = 38,
 
+#if (WOW_CLIENT_VERSION >= WOW_CLASSIC_1_12_1) && (WOW_CLIENT_VERSION <= WOW_BC_2_4_3)
+	Count = 39,
+#elif WOW_CLIENT_VERSION == WOW_WOTLK_3_3_5
 	VehicleSeat1 = 39,
 	VehicleSeat2 = 40,
 	VehicleSeat3 = 41,
@@ -92,18 +92,21 @@ enum class M2_AttachmentType : uint32
 	AlteredShoulderR = 51,
 	AlteredShoulderL = 52,
 
-	Count = 53
+	Count = 53,
+#endif
+	NotAttached = UINT32_MAX
 };
 
 
-class CM2_Part_Attachment
+class SM2_Part_Attachment_Wrapper
 {
 public:
-	CM2_Part_Attachment(const CM2& M2Object, const std::shared_ptr<IFile>& File, const SM2_Attachment& M2Attachment);
-	virtual ~CM2_Part_Attachment();
+	SM2_Part_Attachment_Wrapper(const CM2& M2Object, const std::shared_ptr<IFile>& File, const SM2_Attachment& M2Attachment);
+	virtual ~SM2_Part_Attachment_Wrapper();
 
-	const uint16 getBone() const { return m_BoneIndex; }
-	const cvec3 getPosition() const { return m_Position; }
+	M2_AttachmentType GetAttachmentType() const { return m_Type; }
+	uint16 GetBoneIndex() const { return m_BoneIndex; }
+	const glm::vec3& GetPosition() const { return m_Position; }
 
 private:
 	M2_AttachmentType				    m_Type;

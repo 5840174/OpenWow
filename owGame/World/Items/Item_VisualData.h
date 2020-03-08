@@ -12,9 +12,9 @@ class Character;
 
 struct ObjectComponent
 {
-	std::shared_ptr<CItem_M2Instance>   model;
-	std::shared_ptr<ITexture>            texture;
-	std::shared_ptr<const CM2_Part_Attachment>	attach;
+	std::shared_ptr<CItem_M2Instance> model;
+	std::shared_ptr<ITexture>         texture;
+	M2_AttachmentType	              attach;
 };
 
 struct GeosetComponent

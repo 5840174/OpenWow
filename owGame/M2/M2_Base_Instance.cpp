@@ -9,10 +9,10 @@
 CM2_Base_Instance::CM2_Base_Instance(const std::shared_ptr<CM2>& M2Object) 
 	: CLoadableObject(M2Object)
 	, m_M2(M2Object)
-	, m_Attached(nullptr)
-	, m_Animator(nullptr)
+	, m_AttachmentType(M2_AttachmentType::NotAttached)
 	, m_Color(vec4(1.0f, 1.0f, 1.0f, 1.0f))
 	, m_Alpha(1.0f)
+	, m_Animator(nullptr)
 {
 	SetType(cM2_NodeType);
 }
@@ -52,19 +52,13 @@ const CM2 & CM2_Base_Instance::getM2() const
 	return *m_M2;
 }
 
-void CM2_Base_Instance::Attach(std::shared_ptr<const CM2_Part_Attachment> _attachment)
+void CM2_Base_Instance::Attach(M2_AttachmentType AttachmentType)
 {
-	_ASSERT(_attachment != nullptr);
-	m_Attached = _attachment;
+	m_AttachmentType = AttachmentType;
 }
 void CM2_Base_Instance::Detach()
 {
-	m_Attached = nullptr;
-}
-
-std::shared_ptr<const CM2_Part_Attachment> CM2_Base_Instance::GetAttachPoint() const
-{
-    return m_Attached;
+	m_AttachmentType = M2_AttachmentType::NotAttached;
 }
 
 // Mesh & textures provider
@@ -100,15 +94,16 @@ void CM2_Base_Instance::Update(const UpdateEventArgs & e)
 	if (GetState() != ILoadable::ELoadableState::Loaded)
 		return;
 
-	if (getM2().isAnimated())
-	{
+	if (GetColliderComponent()->IsCulled(e.Camera))
+		return;
+
+	if (m_Animator)
 		m_Animator->Update(e.TotalTime, e.DeltaTime);
-	}
 
-	if (getM2().getSkeleton().hasBones())
-		getSkeletonComponent()->Calculate(static_cast<uint32>(e.TotalTime));
+	if (m_SkeletonComponent)
+		m_SkeletonComponent->Calculate(static_cast<uint32>(e.TotalTime));
 
-	if (m_Attached != nullptr)
+	if (m_AttachmentType != M2_AttachmentType::NotAttached)
 		ForceRecalculateLocalTransform();
 }
 
@@ -122,13 +117,15 @@ void CM2_Base_Instance::Accept(IVisitor* visitor)
 //
 void CM2_Base_Instance::UpdateLocalTransform()
 {
-	if (auto attachPoint = GetAttachPoint())
+	if (m_AttachmentType != M2_AttachmentType::NotAttached)
 	{
-		uint16 boneIndex = attachPoint->getBone();
-
 		if (auto parent = GetParent().lock())
 		{
 			auto parentM2Instance = std::dynamic_pointer_cast<CM2_Base_Instance>(parent);
+			_ASSERT(parentM2Instance != nullptr);
+
+			uint16 boneIndex = parentM2Instance->getM2().getMiscellaneous().getAttachment(m_AttachmentType).GetBoneIndex();
+
 			const auto& bone = parentM2Instance->getSkeletonComponent()->GetBone(boneIndex);
 
 			glm::mat4 relMatrix = glm::translate(bone->GetPivotPoint());

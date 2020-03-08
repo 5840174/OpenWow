@@ -69,12 +69,11 @@ void CM2SkeletonBone3D::Calculate(const CM2_Base_Instance * M2Instance, uint32 G
 	if (parentBone)
 		std::dynamic_pointer_cast<CM2SkeletonBone3D>(parentBone)->Calculate(M2Instance, GlobalTime);
 
-	glm::mat4 matrix = m_M2Bone.calcMatrix(M2Instance, GlobalTime);
+	m_Matrix = m_M2Bone.calcMatrix(M2Instance, GlobalTime);
 
 	if (parentBone)
-		matrix = parentBone->GetMatrix() * matrix;
+		m_Matrix = parentBone->GetMatrix() * m_Matrix;
 
-	m_Matrix = matrix;
 	m_IsCalculated = true;
 }
 

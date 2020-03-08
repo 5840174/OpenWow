@@ -18,14 +18,6 @@ struct C4Plane
 	float distance;
 };
 
-struct CImVector
-{
-	unsigned char b;
-	unsigned char g;
-	unsigned char r;
-	unsigned char a;
-};
-
 struct C4ImQuaternion
 {
 	float w;

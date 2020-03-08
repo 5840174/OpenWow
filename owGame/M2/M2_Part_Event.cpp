@@ -6,7 +6,7 @@
 // General
 #include "M2_Part_Event.h"
 
-CM2_Part_Event::CM2_Part_Event(const CM2& M2Object, const std::shared_ptr<IFile>& File, const SM2_Event& M2Event)
+SM2_Part_Event_Wrapper::SM2_Part_Event_Wrapper(const CM2& M2Object, const std::shared_ptr<IFile>& File, const SM2_Event& M2Event)
 	: m_M2Object(M2Object)
 	, m_M2Event(M2Event)
 {
@@ -17,6 +17,6 @@ CM2_Part_Event::CM2_Part_Event(const CM2& M2Object, const std::shared_ptr<IFile>
 	//m_IsEnabled.Initialize(M2Event.enabled, f, global);
 }
 
-CM2_Part_Event::~CM2_Part_Event()
+SM2_Part_Event_Wrapper::~SM2_Part_Event_Wrapper()
 {
 }

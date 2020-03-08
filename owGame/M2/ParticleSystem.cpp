@@ -19,9 +19,8 @@ CM2_ParticleSystem::CM2_ParticleSystem(const CM2& M2Object, const std::shared_pt
 	, m_CurrentTime(0.0)
 	, m_GlobalTime(0.0)
 {
-#if 0
 	m_Position = Fix_XZmY(M2Particle.Position);
-	m_ParentBone = m_M2Object.getSkeleton().getBoneDirect(M2Particle.bone);
+	m_ParentBone = M2Particle.bone;
 
 	texture = m_M2Object.getMaterials().GetTextureDirectInternal(M2Particle.texture)->GetTexture();
 
@@ -29,9 +28,6 @@ CM2_ParticleSystem::CM2_ParticleSystem(const CM2& M2Object, const std::shared_pt
 	uint8 emitterType = M2Particle.emitterType;
 	type = M2Particle.particleColorIndex;
 	order = M2Particle.particleColorIndex > 0 ? -1 : 0; //order = M2Particle.s2;
-
-	// uint8 particleType;                       // Found below.
-	// uint8 headorTail;                         // 0 - Head, 1 - Tail, 2 - Both 
 
 	// int16 textureTileRotation
 	rows = M2Particle.textureDimensions_rows;
@@ -105,7 +101,6 @@ CM2_ParticleSystem::CM2_ParticleSystem(const CM2& M2Object, const std::shared_pt
 		initTile(tc.tc, i);
 		m_Tiles.push_back(tc);
 	}
-#endif
 }
 
 void CM2_ParticleSystem::update(double _time, double _dTime)

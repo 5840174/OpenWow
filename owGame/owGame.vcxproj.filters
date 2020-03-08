@@ -61,18 +61,6 @@
     <Filter Include="M2\Animations">
       <UniqueIdentifier>{24d1f815-62cb-4320-a2ff-bc9199660f64}</UniqueIdentifier>
     </Filter>
-    <Filter Include="M2\Components">
-      <UniqueIdentifier>{be8a504b-1117-41b6-b326-81b305908037}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="M2\Components\Parts_Materials">
-      <UniqueIdentifier>{347f13e4-55e1-4604-86d8-2d0b391916d2}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="M2\Components\Parts_Miscellaneous">
-      <UniqueIdentifier>{0ab4b05e-5a14-468f-b9b1-475f39c6f2c6}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="M2\Components\Parts_Skeleton">
-      <UniqueIdentifier>{0bfa29b5-d676-4e47-a3b2-0c3dbaaa6e25}</UniqueIdentifier>
-    </Filter>
     <Filter Include="RenderStuff">
       <UniqueIdentifier>{1e13051f-c332-4b25-bbab-9946eb8efde1}</UniqueIdentifier>
     </Filter>
@@ -84,12 +72,6 @@
     </Filter>
     <Filter Include="M2\Types">
       <UniqueIdentifier>{2a17f9c0-30ce-4993-8f2c-3eb19951df3f}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="M2\Components\Parts_Miscellaneous\Particles">
-      <UniqueIdentifier>{f2e5601a-12b9-4f08-bd03-b1e8430bb1d0}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="M2\Components\Parts_Miscellaneous\Ribbons">
-      <UniqueIdentifier>{c3e88f44-ee8b-4d54-8c2c-ead2d8e3015b}</UniqueIdentifier>
     </Filter>
     <Filter Include="WMO">
       <UniqueIdentifier>{36110eac-fc5e-4ed0-bd41-d4e8f785e38e}</UniqueIdentifier>
@@ -156,6 +138,24 @@
     </Filter>
     <Filter Include="M2\SceneNode &amp; Components\Components">
       <UniqueIdentifier>{1ba03db0-1477-46e4-89fa-4f374e220f62}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="M2\Parts">
+      <UniqueIdentifier>{be8a504b-1117-41b6-b326-81b305908037}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="M2\Parts\Parts_Materials">
+      <UniqueIdentifier>{347f13e4-55e1-4604-86d8-2d0b391916d2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="M2\Parts\Parts_Miscellaneous">
+      <UniqueIdentifier>{0ab4b05e-5a14-468f-b9b1-475f39c6f2c6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="M2\Parts\Parts_Miscellaneous\Particles">
+      <UniqueIdentifier>{f2e5601a-12b9-4f08-bd03-b1e8430bb1d0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="M2\Parts\Parts_Miscellaneous\Ribbons">
+      <UniqueIdentifier>{c3e88f44-ee8b-4d54-8c2c-ead2d8e3015b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="M2\Parts\Parts_Skeleton">
+      <UniqueIdentifier>{0bfa29b5-d676-4e47-a3b2-0c3dbaaa6e25}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -226,61 +226,61 @@
       <Filter>M2\SceneNode &amp; Components</Filter>
     </ClCompile>
     <ClCompile Include="M2\M2_Comp_Materials.cpp">
-      <Filter>M2\Components</Filter>
+      <Filter>M2\Parts</Filter>
     </ClCompile>
     <ClCompile Include="M2\M2_Comp_Miscellaneous.cpp">
-      <Filter>M2\Components</Filter>
+      <Filter>M2\Parts</Filter>
     </ClCompile>
     <ClCompile Include="M2\M2_Comp_Skeleton.cpp">
-      <Filter>M2\Components</Filter>
+      <Filter>M2\Parts</Filter>
     </ClCompile>
     <ClCompile Include="M2\M2_Part_Color.cpp">
-      <Filter>M2\Components\Parts_Materials</Filter>
+      <Filter>M2\Parts\Parts_Materials</Filter>
     </ClCompile>
     <ClCompile Include="M2\M2_Part_Material.cpp">
-      <Filter>M2\Components\Parts_Materials</Filter>
+      <Filter>M2\Parts\Parts_Materials</Filter>
     </ClCompile>
     <ClCompile Include="M2\M2_Part_Texture.cpp">
-      <Filter>M2\Components\Parts_Materials</Filter>
+      <Filter>M2\Parts\Parts_Materials</Filter>
     </ClCompile>
     <ClCompile Include="M2\M2_Part_TextureTransform.cpp">
-      <Filter>M2\Components\Parts_Materials</Filter>
+      <Filter>M2\Parts\Parts_Materials</Filter>
     </ClCompile>
     <ClCompile Include="M2\M2_Part_TextureWeight.cpp">
-      <Filter>M2\Components\Parts_Materials</Filter>
+      <Filter>M2\Parts\Parts_Materials</Filter>
     </ClCompile>
     <ClCompile Include="M2\M2_Part_Attachment.cpp">
-      <Filter>M2\Components\Parts_Miscellaneous</Filter>
+      <Filter>M2\Parts\Parts_Miscellaneous</Filter>
     </ClCompile>
     <ClCompile Include="M2\M2_Part_Camera.cpp">
-      <Filter>M2\Components\Parts_Miscellaneous</Filter>
+      <Filter>M2\Parts\Parts_Miscellaneous</Filter>
     </ClCompile>
     <ClCompile Include="M2\M2_Part_Event.cpp">
-      <Filter>M2\Components\Parts_Miscellaneous</Filter>
+      <Filter>M2\Parts\Parts_Miscellaneous</Filter>
     </ClCompile>
     <ClCompile Include="M2\M2_Part_Light.cpp">
-      <Filter>M2\Components\Parts_Miscellaneous</Filter>
+      <Filter>M2\Parts\Parts_Miscellaneous</Filter>
     </ClCompile>
     <ClCompile Include="M2\M2_Part_Bone.cpp">
-      <Filter>M2\Components\Parts_Skeleton</Filter>
+      <Filter>M2\Parts\Parts_Skeleton</Filter>
     </ClCompile>
     <ClCompile Include="M2\M2_Animation.cpp">
       <Filter>M2\Animations</Filter>
     </ClCompile>
     <ClCompile Include="M2\ParticleEmitter_Plane.cpp">
-      <Filter>M2\Components\Parts_Miscellaneous\Particles</Filter>
+      <Filter>M2\Parts\Parts_Miscellaneous\Particles</Filter>
     </ClCompile>
     <ClCompile Include="M2\ParticleEmitter_Sphere.cpp">
-      <Filter>M2\Components\Parts_Miscellaneous\Particles</Filter>
+      <Filter>M2\Parts\Parts_Miscellaneous\Particles</Filter>
     </ClCompile>
     <ClCompile Include="M2\ParticleEmitters.cpp">
-      <Filter>M2\Components\Parts_Miscellaneous\Particles</Filter>
+      <Filter>M2\Parts\Parts_Miscellaneous\Particles</Filter>
     </ClCompile>
     <ClCompile Include="M2\ParticleSystem.cpp">
-      <Filter>M2\Components\Parts_Miscellaneous\Particles</Filter>
+      <Filter>M2\Parts\Parts_Miscellaneous\Particles</Filter>
     </ClCompile>
     <ClCompile Include="M2\M2_RibbonEmitters.cpp">
-      <Filter>M2\Components\Parts_Miscellaneous\Ribbons</Filter>
+      <Filter>M2\Parts\Parts_Miscellaneous\Ribbons</Filter>
     </ClCompile>
     <ClCompile Include="WMO\WMO.cpp">
       <Filter>WMO</Filter>
@@ -735,61 +735,61 @@
       <Filter>M2\SceneNode &amp; Components</Filter>
     </ClInclude>
     <ClInclude Include="M2\M2_Comp_Materials.h">
-      <Filter>M2\Components</Filter>
+      <Filter>M2\Parts</Filter>
     </ClInclude>
     <ClInclude Include="M2\M2_Comp_Miscellaneous.h">
-      <Filter>M2\Components</Filter>
+      <Filter>M2\Parts</Filter>
     </ClInclude>
     <ClInclude Include="M2\M2_Comp_Skeleton.h">
-      <Filter>M2\Components</Filter>
+      <Filter>M2\Parts</Filter>
     </ClInclude>
     <ClInclude Include="M2\M2_Part_Color.h">
-      <Filter>M2\Components\Parts_Materials</Filter>
+      <Filter>M2\Parts\Parts_Materials</Filter>
     </ClInclude>
     <ClInclude Include="M2\M2_Part_Material.h">
-      <Filter>M2\Components\Parts_Materials</Filter>
+      <Filter>M2\Parts\Parts_Materials</Filter>
     </ClInclude>
     <ClInclude Include="M2\M2_Part_Texture.h">
-      <Filter>M2\Components\Parts_Materials</Filter>
+      <Filter>M2\Parts\Parts_Materials</Filter>
     </ClInclude>
     <ClInclude Include="M2\M2_Part_TextureTransform.h">
-      <Filter>M2\Components\Parts_Materials</Filter>
+      <Filter>M2\Parts\Parts_Materials</Filter>
     </ClInclude>
     <ClInclude Include="M2\M2_Part_TextureWeight.h">
-      <Filter>M2\Components\Parts_Materials</Filter>
+      <Filter>M2\Parts\Parts_Materials</Filter>
     </ClInclude>
     <ClInclude Include="M2\M2_Part_Attachment.h">
-      <Filter>M2\Components\Parts_Miscellaneous</Filter>
+      <Filter>M2\Parts\Parts_Miscellaneous</Filter>
     </ClInclude>
     <ClInclude Include="M2\M2_Part_Camera.h">
-      <Filter>M2\Components\Parts_Miscellaneous</Filter>
+      <Filter>M2\Parts\Parts_Miscellaneous</Filter>
     </ClInclude>
     <ClInclude Include="M2\M2_Part_Event.h">
-      <Filter>M2\Components\Parts_Miscellaneous</Filter>
+      <Filter>M2\Parts\Parts_Miscellaneous</Filter>
     </ClInclude>
     <ClInclude Include="M2\M2_Part_Light.h">
-      <Filter>M2\Components\Parts_Miscellaneous</Filter>
+      <Filter>M2\Parts\Parts_Miscellaneous</Filter>
     </ClInclude>
     <ClInclude Include="M2\M2_Part_Bone.h">
-      <Filter>M2\Components\Parts_Skeleton</Filter>
+      <Filter>M2\Parts\Parts_Skeleton</Filter>
     </ClInclude>
     <ClInclude Include="M2\M2_Animation.h">
       <Filter>M2\Animations</Filter>
     </ClInclude>
     <ClInclude Include="M2\ParticleEmitter_Plane.h">
-      <Filter>M2\Components\Parts_Miscellaneous\Particles</Filter>
+      <Filter>M2\Parts\Parts_Miscellaneous\Particles</Filter>
     </ClInclude>
     <ClInclude Include="M2\ParticleEmitter_Sphere.h">
-      <Filter>M2\Components\Parts_Miscellaneous\Particles</Filter>
+      <Filter>M2\Parts\Parts_Miscellaneous\Particles</Filter>
     </ClInclude>
     <ClInclude Include="M2\ParticleEmitters.h">
-      <Filter>M2\Components\Parts_Miscellaneous\Particles</Filter>
+      <Filter>M2\Parts\Parts_Miscellaneous\Particles</Filter>
     </ClInclude>
     <ClInclude Include="M2\ParticleSystem.h">
-      <Filter>M2\Components\Parts_Miscellaneous\Particles</Filter>
+      <Filter>M2\Parts\Parts_Miscellaneous\Particles</Filter>
     </ClInclude>
     <ClInclude Include="M2\M2_RibbonEmitters.h">
-      <Filter>M2\Components\Parts_Miscellaneous\Ribbons</Filter>
+      <Filter>M2\Parts\Parts_Miscellaneous\Ribbons</Filter>
     </ClInclude>
     <ClInclude Include="WMO\WMO.h">
       <Filter>WMO</Filter>

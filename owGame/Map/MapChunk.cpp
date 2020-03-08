@@ -204,6 +204,8 @@ bool CMapChunk::Load()
 			//m_SpecularTextures[i] = parentADT->m_Textures.at(i)->specularTexture;
 			m_DiffuseTextures[i] = m_MapTile.m_Textures.at(mcly[i].textureIndex)->diffuseTexture;
 			m_SpecularTextures[i] = m_MapTile.m_Textures.at(mcly[i].textureIndex)->specularTexture;
+
+			//Log::Info("Size = %d:%d", m_DiffuseTextures[i]->GetWidth(), m_DiffuseTextures[i]->GetHeight());
 		}
 	}
 
@@ -306,6 +308,13 @@ bool CMapChunk::Load()
 			}
 		}
 	}
+
+
+	// Create chunk texture
+	{
+
+	}
+
 
 	m_BlendRBGShadowATexture = m_RenderDevice.GetObjectsFactory().CreateEmptyTexture();
 	m_BlendRBGShadowATexture->LoadTextureCustom(64, 64, blendbuf);

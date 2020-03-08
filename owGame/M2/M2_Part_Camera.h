@@ -6,11 +6,11 @@
 class CM2;
 // FORWARD END
 
-class CM2_Part_Camera
+class SM2_Part_Camera_Wrapper
 {
 public:
-	CM2_Part_Camera(const CM2& M2Model, const std::shared_ptr<IFile>& File, const SM2_Camera& M2Camera);
-	virtual ~CM2_Part_Camera();
+	SM2_Part_Camera_Wrapper(const CM2& M2Model, const std::shared_ptr<IFile>& File, const SM2_Camera& M2Camera);
+	virtual ~SM2_Part_Camera_Wrapper();
 
 	vec3 GetTranslation() const { return pResult; }
 	vec3 getTarget() const { return tResult; }

@@ -7,18 +7,17 @@
 class CM2;
 // FORWARD END
 
-class CM2_Part_Event
+class SM2_Part_Event_Wrapper
 {
 public:
-	CM2_Part_Event(const CM2& M2Object, const std::shared_ptr<IFile>& File, const SM2_Event& M2Event);
-	virtual ~CM2_Part_Event();
+	SM2_Part_Event_Wrapper(const CM2& M2Object, const std::shared_ptr<IFile>& File, const SM2_Event& M2Event);
+	virtual ~SM2_Part_Event_Wrapper();
 
 private:
 	char					m_ID[4];
 	uint32					m_Data;
 	std::weak_ptr<const SM2_Part_Bone_Wrapper>	m_Bone;
-	vec3					m_Position;
-
+	glm::vec3				m_Position;
 	M2_Animated<bool>		m_IsEnabled;
 
 private:

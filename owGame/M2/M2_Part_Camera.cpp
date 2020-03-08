@@ -6,7 +6,7 @@
 // General
 #include "M2_Part_Camera.h"
 
-CM2_Part_Camera::CM2_Part_Camera(const CM2& M2Object, const std::shared_ptr<IFile>& File, const SM2_Camera& M2Camera)
+SM2_Part_Camera_Wrapper::SM2_Part_Camera_Wrapper(const CM2& M2Object, const std::shared_ptr<IFile>& File, const SM2_Camera& M2Camera)
 	: m_M2Object(M2Object)
 {
 	nearclip = M2Camera.near_clip;
@@ -22,11 +22,11 @@ CM2_Part_Camera::CM2_Part_Camera(const CM2& M2Object, const std::shared_ptr<IFil
 	//fov = M2Camera.fov / sqrtf(1.0f + powf(m_VideoSettings->aspectRatio, 2.0f));;
 }
 
-CM2_Part_Camera::~CM2_Part_Camera()
+SM2_Part_Camera_Wrapper::~SM2_Part_Camera_Wrapper()
 {
 }
 
-void CM2_Part_Camera::calc(uint32 time, uint32 globalTime)
+void SM2_Part_Camera_Wrapper::calc(uint32 time, uint32 globalTime)
 {
 	if (tPos.IsUsesBySequence(0))
 	{
@@ -44,7 +44,7 @@ void CM2_Part_Camera::calc(uint32 time, uint32 globalTime)
 	}
 }
 
-void CM2_Part_Camera::setup(cvec3 _startPoint, float rotate)
+void SM2_Part_Camera_Wrapper::setup(cvec3 _startPoint, float rotate)
 {
 	vec3 u(0, 1, 0);
 
@@ -57,7 +57,7 @@ void CM2_Part_Camera::setup(cvec3 _startPoint, float rotate)
 	//_Render->getCamera()->setViewMatrix(glm::lookAt(pp, tt, u));
 }
 
-void CM2_Part_Camera::getParams(vec3* _position, vec3* _target, float* _fov, float* _nearPlane, float* _farPlane)
+void SM2_Part_Camera_Wrapper::getParams(vec3* _position, vec3* _target, float* _fov, float* _nearPlane, float* _farPlane)
 {
 	*_position = m_PositionBase + pResult;
 	*_target = m_TargetBase + tResult;

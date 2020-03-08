@@ -21,12 +21,9 @@ void CM2_Comp_Miscellaneous::Load(const SM2_Header& M2Header, const std::shared_
 	// Attachments
 	if (M2Header.attachments.size > 0)
 	{
-		SM2_Attachment* m2Attachments = (SM2_Attachment*)(File->getData() + M2Header.attachments.offset);
+		const SM2_Attachment* m2Attachments = (const SM2_Attachment*)(File->getData() + M2Header.attachments.offset);
 		for (uint32 i = 0; i < M2Header.attachments.size; i++)
-		{
-			std::shared_ptr<CM2_Part_Attachment> attachment = std::make_shared<CM2_Part_Attachment>(m_M2Object, File, m2Attachments[i]);
-			m_Attachments.push_back(attachment);
-		}
+			m_Attachments.push_back(SM2_Part_Attachment_Wrapper(m_M2Object, File, m2Attachments[i]));
 
 		// Animated
 		m_HasMisc = true;
@@ -47,10 +44,7 @@ void CM2_Comp_Miscellaneous::Load(const SM2_Header& M2Header, const std::shared_
 	{
 		const SM2_Event* m2Events = (const SM2_Event*)(File->getData() + M2Header.events.offset);
 		for (uint32 i = 0; i < M2Header.events.size; i++)
-		{
-			std::shared_ptr<CM2_Part_Event> event = std::make_shared<CM2_Part_Event>(m_M2Object, File, m2Events[i]);
-			m_Events.push_back(event);
-		}
+			m_Events.push_back(SM2_Part_Event_Wrapper(m_M2Object, File, m2Events[i]));
 
 		// Animated
 		m_HasMisc = true;
@@ -72,10 +66,7 @@ void CM2_Comp_Miscellaneous::Load(const SM2_Header& M2Header, const std::shared_
 	{
 		const SM2_Camera* m2Cameras = (const SM2_Camera*)(File->getData() + M2Header.cameras.offset);
 		for (uint32 i = 0; i < M2Header.cameras.size; i++)
-		{
-			std::shared_ptr<CM2_Part_Camera> camera = std::make_shared<CM2_Part_Camera>(m_M2Object, File, m2Cameras[i]);
-			m_Cameras.push_back(camera);
-		}
+			m_Cameras.push_back(SM2_Part_Camera_Wrapper(m_M2Object, File, m2Cameras[i]));
 
 		// Animated
 		m_HasMisc = true;
@@ -84,11 +75,9 @@ void CM2_Comp_Miscellaneous::Load(const SM2_Header& M2Header, const std::shared_
 	// Cameras Lookup
 	if (M2Header.camerasLookup.size > 0)
 	{
-		int16* m2CamerasLookup = (int16*)(File->getData() + M2Header.camerasLookup.offset);
+		const int16* m2CamerasLookup = (const int16*)(File->getData() + M2Header.camerasLookup.offset);
 		for (uint32 i = 0; i < M2Header.camerasLookup.size; i++)
-		{
 			m_CamerasLookup.push_back(m2CamerasLookup[i]);
-		}
 	}
 
 #if 0
