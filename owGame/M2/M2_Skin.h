@@ -19,7 +19,12 @@ public:
 
 	void Load(const SM2_Header& M2Header, const std::shared_ptr<IFile>& File, const std::vector<SM2_Vertex>& Vertices);
 
-	const std::unordered_map<std::shared_ptr<CM2_SkinSection>, std::vector<std::shared_ptr<CM2_Skin_Batch>>>& GetTTT() const
+	const std::vector<std::shared_ptr<CM2_SkinSection>>& GetSections() const
+	{
+		return m_Sections;
+	}
+
+	const std::map<size_t, std::vector<std::shared_ptr<CM2_Skin_Batch>>>& GetTTT() const
 	{
 		return m_TTT;
 	}
@@ -31,7 +36,7 @@ private:
 	std::vector<std::shared_ptr<CM2_SkinSection>> m_Sections; // 'Geometries'
 	std::vector<std::shared_ptr<CM2_Skin_Batch>> m_Batches;   // 'Materials'
 
-	std::unordered_map<std::shared_ptr<CM2_SkinSection>, std::vector<std::shared_ptr<CM2_Skin_Batch>>> m_TTT;
+	std::map<size_t, std::vector<std::shared_ptr<CM2_Skin_Batch>>> m_TTT;
 	
 private:
 	IBaseManager& m_BaseManager;

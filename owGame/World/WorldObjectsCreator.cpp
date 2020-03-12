@@ -180,7 +180,7 @@ void CWorldObjectCreator::ClearCache()
 {
 }
 
-std::shared_ptr<CM2> CWorldObjectCreator::LoadM2(IRenderDevice& RenderDevice, const std::string& Filename)
+std::shared_ptr<CM2> CWorldObjectCreator::LoadM2(IRenderDevice& RenderDevice, const std::string& Filename, bool ImmediateLoad)
 {
 	std::lock_guard<std::mutex> lock(m_M2Lock);
 
@@ -217,12 +217,20 @@ std::shared_ptr<CM2> CWorldObjectCreator::LoadM2(IRenderDevice& RenderDevice, co
 
 	m_M2ObjectsWPtrs[Filename] = m2Object;
 
-	m_BaseManager.GetManager<ILoader>()->AddToLoadQueue(m2Object);
+	if (ImmediateLoad)
+	{
+		m2Object->Load();
+		m2Object->SetState(ILoadable::ELoadableState::Loaded);
+	}
+	else
+	{
+		m_BaseManager.GetManager<ILoader>()->AddToLoadQueue(m2Object);
+	}
 
 	return m2Object;
 }
 
-std::shared_ptr<CWMO> CWorldObjectCreator::LoadWMO(IRenderDevice& RenderDevice, const std::string& Filename)
+std::shared_ptr<CWMO> CWorldObjectCreator::LoadWMO(IRenderDevice& RenderDevice, const std::string& Filename, bool ImmediateLoad)
 {
 	std::lock_guard<std::mutex> lock(m_WMOLock);
 
@@ -244,7 +252,15 @@ std::shared_ptr<CWMO> CWorldObjectCreator::LoadWMO(IRenderDevice& RenderDevice, 
 	std::shared_ptr<CWMO> wmoObject = std::make_shared<CWMO>(m_BaseManager, RenderDevice, Filename);
 	m_WMOObjectsWPtrs.insert(std::make_pair(Filename, wmoObject));
 	
-	m_BaseManager.GetManager<ILoader>()->AddToLoadQueue(wmoObject);
+	if (ImmediateLoad)
+	{
+		wmoObject->Load();
+		wmoObject->SetState(ILoadable::ELoadableState::Loaded);
+	}
+	else
+	{
+		m_BaseManager.GetManager<ILoader>()->AddToLoadQueue(wmoObject);
+	}
 
 	return wmoObject;
 }

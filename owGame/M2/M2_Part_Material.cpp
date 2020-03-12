@@ -31,7 +31,6 @@ CM2_Part_Material::CM2_Part_Material(IBaseManager& BaseManager, IRenderDevice& R
 
 	m_M2BlendMode = M2Material.m_BlendMode;
 
-
 	m_DepthStencilState = RenderDevice.GetObjectsFactory().CreateDepthStencilState();
 	m_DepthStencilState->SetDepthMode(IDepthStencilState::DepthMode(m_DepthTest, m_DepthWrite));
 

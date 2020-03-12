@@ -148,14 +148,14 @@
     <Filter Include="M2\Parts\Parts_Miscellaneous">
       <UniqueIdentifier>{0ab4b05e-5a14-468f-b9b1-475f39c6f2c6}</UniqueIdentifier>
     </Filter>
-    <Filter Include="M2\Parts\Parts_Miscellaneous\Particles">
-      <UniqueIdentifier>{f2e5601a-12b9-4f08-bd03-b1e8430bb1d0}</UniqueIdentifier>
-    </Filter>
     <Filter Include="M2\Parts\Parts_Miscellaneous\Ribbons">
       <UniqueIdentifier>{c3e88f44-ee8b-4d54-8c2c-ead2d8e3015b}</UniqueIdentifier>
     </Filter>
     <Filter Include="M2\Parts\Parts_Skeleton">
       <UniqueIdentifier>{0bfa29b5-d676-4e47-a3b2-0c3dbaaa6e25}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="M2\Parts\Parts_Miscellaneous\Particles">
+      <UniqueIdentifier>{f2e5601a-12b9-4f08-bd03-b1e8430bb1d0}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -266,18 +266,6 @@
     </ClCompile>
     <ClCompile Include="M2\M2_Animation.cpp">
       <Filter>M2\Animations</Filter>
-    </ClCompile>
-    <ClCompile Include="M2\ParticleEmitter_Plane.cpp">
-      <Filter>M2\Parts\Parts_Miscellaneous\Particles</Filter>
-    </ClCompile>
-    <ClCompile Include="M2\ParticleEmitter_Sphere.cpp">
-      <Filter>M2\Parts\Parts_Miscellaneous\Particles</Filter>
-    </ClCompile>
-    <ClCompile Include="M2\ParticleEmitters.cpp">
-      <Filter>M2\Parts\Parts_Miscellaneous\Particles</Filter>
-    </ClCompile>
-    <ClCompile Include="M2\ParticleSystem.cpp">
-      <Filter>M2\Parts\Parts_Miscellaneous\Particles</Filter>
     </ClCompile>
     <ClCompile Include="M2\M2_RibbonEmitters.cpp">
       <Filter>M2\Parts\Parts_Miscellaneous\Ribbons</Filter>
@@ -516,10 +504,16 @@
     <ClCompile Include="M2\M2_ColliderComponent.cpp">
       <Filter>M2\SceneNode &amp; Components\Components</Filter>
     </ClCompile>
-    <ClCompile Include="M2\M2_Skeleton.cpp">
+    <ClCompile Include="M2\M2_LightComponent.cpp">
       <Filter>M2\SceneNode &amp; Components\Components</Filter>
     </ClCompile>
-    <ClCompile Include="M2\M2_LightComponent.cpp">
+    <ClCompile Include="M2\M2_ParticleSystem.cpp">
+      <Filter>M2\Parts\Parts_Miscellaneous\Particles</Filter>
+    </ClCompile>
+    <ClCompile Include="M2\M2_SkeletonComponent.cpp">
+      <Filter>M2\SceneNode &amp; Components\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="M2\M2_ParticlesComponent.cpp">
       <Filter>M2\SceneNode &amp; Components\Components</Filter>
     </ClCompile>
   </ItemGroup>
@@ -713,9 +707,6 @@
     <ClInclude Include="M2\M2_Headers.h">
       <Filter>M2\Types</Filter>
     </ClInclude>
-    <ClInclude Include="M2\M2_ParticlesTypes.h">
-      <Filter>M2\Types</Filter>
-    </ClInclude>
     <ClInclude Include="M2\M2_SkinTypes.h">
       <Filter>M2\Types</Filter>
     </ClInclude>
@@ -775,18 +766,6 @@
     </ClInclude>
     <ClInclude Include="M2\M2_Animation.h">
       <Filter>M2\Animations</Filter>
-    </ClInclude>
-    <ClInclude Include="M2\ParticleEmitter_Plane.h">
-      <Filter>M2\Parts\Parts_Miscellaneous\Particles</Filter>
-    </ClInclude>
-    <ClInclude Include="M2\ParticleEmitter_Sphere.h">
-      <Filter>M2\Parts\Parts_Miscellaneous\Particles</Filter>
-    </ClInclude>
-    <ClInclude Include="M2\ParticleEmitters.h">
-      <Filter>M2\Parts\Parts_Miscellaneous\Particles</Filter>
-    </ClInclude>
-    <ClInclude Include="M2\ParticleSystem.h">
-      <Filter>M2\Parts\Parts_Miscellaneous\Particles</Filter>
     </ClInclude>
     <ClInclude Include="M2\M2_RibbonEmitters.h">
       <Filter>M2\Parts\Parts_Miscellaneous\Ribbons</Filter>
@@ -1088,10 +1067,19 @@
     <ClInclude Include="M2\M2_ColliderComponent.h">
       <Filter>M2\SceneNode &amp; Components\Components</Filter>
     </ClInclude>
-    <ClInclude Include="M2\M2_Skeleton.h">
+    <ClInclude Include="M2\M2_LightComponent.h">
       <Filter>M2\SceneNode &amp; Components\Components</Filter>
     </ClInclude>
-    <ClInclude Include="M2\M2_LightComponent.h">
+    <ClInclude Include="M2\M2_ParticleSystem.h">
+      <Filter>M2\Parts\Parts_Miscellaneous\Particles</Filter>
+    </ClInclude>
+    <ClInclude Include="M2\M2_Particle.h">
+      <Filter>M2\Parts\Parts_Miscellaneous\Particles</Filter>
+    </ClInclude>
+    <ClInclude Include="M2\M2_SkeletonComponent.h">
+      <Filter>M2\SceneNode &amp; Components\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="M2\M2_ParticlesComponent.h">
       <Filter>M2\SceneNode &amp; Components\Components</Filter>
     </ClInclude>
   </ItemGroup>

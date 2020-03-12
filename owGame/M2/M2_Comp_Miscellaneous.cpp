@@ -94,20 +94,19 @@ void CM2_Comp_Miscellaneous::Load(const SM2_Header& M2Header, const std::shared_
 		// Animated
 		m_HasMisc = true;
 	}
+#endif
 
 	// Particle systems
 	if (M2Header.particle_emitters.size > 0)
 	{
-		const SM2_Particle* Particles = (const SM2_Particle*)(File->getData() + M2Header.particle_emitters.offset);
+		const SM2_Particle* m2ParticleSystems = (const SM2_Particle*)(File->getData() + M2Header.particle_emitters.offset);
 		for (uint32 i = 0; i < M2Header.particle_emitters.size; i++)
 		{
-			auto pa = Particles[i];
-			std::shared_ptr<CM2_ParticleSystem> particle = std::make_shared<CM2_ParticleSystem>(m_M2Object, File, Particles[i]);
-			particleSystems.push_back(particle);
+			particleSystems.push_back(std::make_shared<SM2_ParticleSystem_Wrapper>(m_M2Object, File, m2ParticleSystems[i]));
 		}
 
 		// Animated
 		m_HasMisc = true;
 	}
-#endif
+
 }

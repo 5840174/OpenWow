@@ -138,11 +138,15 @@ struct SM2_Vertex_znEngine
 #include "M2_SkinTypes.h"
 
 #include __PACK_BEGIN
+
+
 struct SM2_Color
 {
 	M2Track<glm::vec3> color;     // vertex colors in rgb order
 	M2Track<short> alpha;    // 0 - transparent, 0x7FFF - opaque
 };
+
+
 
 struct SM2_Texture
 {
@@ -177,10 +181,14 @@ struct SM2_Texture
 	M2Array<char> filename; // for non-hardcoded textures (type != 0), this still points to a zero-sized std::string
 };
 
+
+
 struct SM2_TextureWeight
 {
 	M2Track<short> weight; // fixed 16
 };
+
+
 
 struct SM2_TextureTransform
 {
@@ -188,6 +196,8 @@ struct SM2_TextureTransform
 	M2Track<glm::quat> rotation;    // rotation center is texture center (0.5, 0.5)
 	M2Track<glm::vec3> scaling;
 };
+
+
 
 struct SM2_Material
 {
@@ -216,6 +226,8 @@ struct SM2_Material
 	BlendModes m_BlendMode;
 };
 
+
+
 struct SM2_Attachment
 {
 	uint32 id;                        // Referenced in the lookup-block below.
@@ -225,6 +237,8 @@ struct SM2_Attachment
 	M2Track<uint8> animate_attached;  // whether or not the attached model is animated when this model is. only a bool is used. default is true.
 };
 
+
+
 struct SM2_Event
 {
 	char identifier[4];    // mostly a 3 character name prefixed with '$'.
@@ -233,6 +247,8 @@ struct SM2_Event
 	glm::vec3 position;    // Relative to that bone of course, animated. Pivot without animating.
 	M2TrackBase enabled;   // This is a timestamp-only animation block. It is built up the same as a normal AnimationBlocks, but is missing values, as every timestamp is an implicit "fire now".
 };
+
+
 
 struct SM2_Light
 {
@@ -256,6 +272,8 @@ struct SM2_Light
 	M2Track<uint8>	    visibility;					// enabled?
 };
 
+
+
 struct SM2_Camera // TODO Spline keys
 {
 	uint32              type; // 0: portrait, 1: characterinfo; -1: else (flyby etc.); referenced backwards in the lookup table.
@@ -272,7 +290,143 @@ struct SM2_Camera // TODO Spline keys
 
 	M2Track<float>      roll; // The camera can have some roll-effect. Its 0 to 2*Pi. 
 };
+
+
+
+struct SM2_RibbonEmitter
+{
+	int32 ribbonId;					    // Always (as I have seen): -1.
+	int32 boneIndex;					// A bone to attach to.
+	vec3 position;						// And a position, relative to that bone.
+
+	M2Array<uint16> textureIndices;		// into Textures
+	M2Array<uint16> materialIndices;	// into materials
+
+	M2Track<vec3> colorTrack;
+	M2Track<short> alphaTrack;          // And an alpha value in a short, where: 0 - transparent, 0x7FFF - opaque.
+	M2Track<float> heightAboveTrack;
+	M2Track<float> heightBelowTrack;	// do not set to same!
+
+	float edgesPerSecond;				// this defines how smooth the ribbon is. A low value may produce a lot of edges.
+	float edgeLifetime;					// the length aka Lifespan. in seconds
+	float gravity;                      // use arcsin(val) to get the emission angle in degree
+
+	uint16 textureRows;					// tiles in texture
+	uint16 textureCols;
+
+	M2Track<uint16> texSlotTrack;
+	M2Track<uint8> visibilityTrack;
+};
+
+
+
+struct SM2_Particle
+{
+	int32 particleId;                      // Always (as I have seen): -1.
+	struct Flags
+	{
+		uint32 AFFECTEDBYLIGHTING : 1;
+		uint32 unk0 : 1;
+		uint32 unk1 : 1;
+		uint32 WORLDUP : 1;
+		uint32 DONOTTRAIL : 1;
+		uint32 INLIGHTING : 1;
+		uint32 unk2 : 6;
+		uint32 DONOTBILLBOARD : 1;
+		uint32 : 19;
+	} flags;
+
+	glm::vec3 Position;						  // The position. Relative to the following bone.
+	int16 bone;                               // The bone its attached to.
+
+	uint16 texture;                           // And the DiffuseTextures that are used. 
+
+	M2Array<char> geometry_model_filename;    // if given, this emitter spawns models
+	M2Array<char> recursion_model_filename;   // if given, this emitter is an alias for the (maximum 4) emitters of the given model
+
+#if (WOW_CLIENT_VERSION >= WOW_CLASSIC_1_12_1) && (WOW_CLIENT_VERSION < WOW_BC_2_4_3)
+	uint16 blendingType;                      // A blending type for the particle. See Below
+	uint16 emitterType;                       // 1 - Plane (rectangle), 2 - Sphere, 3 - Spline, 4 - Bone
+#else
+	uint8 blendingType;                       // A blending type for the particle. See Below
+	uint8 emitterType;                        // 1 - Plane (rectangle), 2 - Sphere, 3 - Spline, 4 - Bone
+	uint16 particleColorIndex;                // This one is used for ParticleColor.dbc. See below.
+#endif
+
+	uint8 particleType;                      // Found below.
+	uint8 headorTail;                        // 0 - Head, 1 - Tail, 2 - Both 
+
+	int16 textureTileRotation;                // Rotation for the texture tile. (Values: -1,0,1) -- priorityPlane
+	uint16 textureDimensions_rows;            // for tiled DiffuseTextures
+	uint16 textureDimensions_columns;
+
+	M2Track<float> emissionSpeed;             // Base velocity at which particles are emitted.
+	M2Track<float> speedVariation;            // Random variation in particle emission speed. (range: 0 to 1)
+	M2Track<float> verticalRange;             // Drifting away vertically. (range: 0 to pi) For plane generators, this is the maximum polar angle of the initial velocity; 
+											  // 0 makes the velocity straight up (+z). For sphere generators, this is the maximum elevation of the initial position; 
+											  // 0 makes the initial position entirely in the x-y plane (z=0).
+	M2Track<float> horizontalRange;           // They can do it horizontally too! (range: 0 to 2*pi) For plane generators, this is the maximum azimuth angle of the initial velocity; 
+											  // 0 makes the velocity have no sideways (y-axis) component. 
+											  // For sphere generators, this is the maximum azimuth angle of the initial position.
+	M2Track<float> gravity;                   // Not necessarily a float; see below.
+
+	M2Track<float> lifespan;
+#if WOW_CLIENT_VERSION >= WOW_WOTLK_3_3_5
+	float lifespanVary;                       // An individual particle's lifespan is added to by lifespanVary * random(-1, 1)
+#endif
+
+	M2Track<float> emissionRate;
+#if WOW_CLIENT_VERSION >= WOW_WOTLK_3_3_5
+	float emissionRateVary;                   // This adds to the base emissionRate value the same way as lifespanVary. The random value is different every update.
+#endif
+
+	M2Track<float> emissionAreaLength;        // For plane generators, this is the width of the plane in the x-axis.
+											  // For sphere generators, this is the minimum radius.
+
+	M2Track<float> emissionAreaWidth;         // For plane generators, this is the width of the plane in the y-axis.
+											  // For sphere generators, this is the maximum radius.
+
+	M2Track<float> zSource;                   // When greater than 0, the initial velocity of the particle is (particle.position - C3Vector(0, 0, zSource)).Normalize()
+
+#if WOW_CLIENT_VERSION >= WOW_CLASSIC_1_12_1 && WOW_CLIENT_VERSION <= WOW_BC_2_4_3
+	float midPoint;                           // middleTime; Middle point in lifespan (0 to 1).
+	CBgra colorValues[3];                     // start, middle, end
+	float scaleValues[3];
+	uint16 lifespanUVAnim[3];
+	uint16 decayUVAnim[3];
+	int16 tailUVAnim[2];                      // start, end
+	int16 tailDecayUVAnim[2];
+#elif WOW_CLIENT_VERSION >= WOW_WOTLK_3_3_5
+	M2TrackFake<vec3> colorTrack;             // Most likely they all have 3 timestamps for {start, middle, end}.
+	M2TrackFake<short> alphaTrack;            // FIXME FIXED16
+	M2TrackFake<vec2> scaleTrack;
+	vec2 scaleVary;                           // A percentage amount to randomly vary the scale of each particle
+	M2TrackFake<uint16> headCellTrack;        // Some kind of intensity values seen: 0,16,17,32 (if set to different it will have high intensity)
+	M2TrackFake<uint16> tailCellTrack;
+#endif
+
+	float tailLength;
+	float twinkleSpeed;                       // twinkleFPS; has something to do with the spread
+	float twinklePercent;                     // same mechanic as MDL twinkleOnOff but non-binary in 0.11.0
+	CRange twinkleScale;                     // min, max
+	float burstMultiplier;                    // ivelScale; requires (flags & 0x40)
+	float drag;                               // For a non-zero values, instead of travelling linearly the particles seem to slow down sooner. Speed is multiplied by exp( -drag * t ).
+
+	float spin;                               // 0.0 for none, 1.0 to rotate the particle 360 degrees throughout its lifetime.
+
+	M2Box tumble;
+	glm::vec3 WindVector;
+	float WindTime;
+
+	float followSpeed1;
+	float followScale1;
+	float followSpeed2;
+	float followScale2;
+
+	M2Array<glm::vec3> splinePoints;     // Set only for spline praticle emitter. Contains array of points for spline
+	M2Track<uint8> enabledIn;       // (boolean) Appears to be used sparely now, probably there's a flag that links particles to animation sets where they are enabled.
+};
+
 #include __PACK_END
 
 #include "M2_Animated.h"
-#include "M2_ParticlesTypes.h"

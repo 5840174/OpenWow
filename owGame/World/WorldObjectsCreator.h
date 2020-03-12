@@ -23,8 +23,8 @@ public:
 
 	// IWoWObjectsCreator
 	void ClearCache() override;
-	std::shared_ptr<CM2> LoadM2(IRenderDevice& RenderDevice, const std::string& Filename) override final;
-	std::shared_ptr<CWMO> LoadWMO(IRenderDevice& RenderDevice, const std::string& Filename) override final;
+	std::shared_ptr<CM2> LoadM2(IRenderDevice& RenderDevice, const std::string& Filename, bool ImmediateLoad = false) override final;
+	std::shared_ptr<CWMO> LoadWMO(IRenderDevice& RenderDevice, const std::string& Filename, bool ImmediateLoad = false) override final;
 
 private:
 	std::shared_ptr<CM2> CreateCreatureModel(IRenderDevice& RenderDevice, const DBC_CreatureDisplayInfoRecord* CreatureDisplayInfo);

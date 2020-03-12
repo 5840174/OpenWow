@@ -77,7 +77,8 @@
     <ClCompile Include="M2\M2_Comp_Miscellaneous.cpp" />
     <ClCompile Include="M2\M2_Comp_Skeleton.cpp" />
     <ClCompile Include="M2\M2_LightComponent.cpp" />
-    <ClCompile Include="M2\M2_Skeleton.cpp" />
+    <ClCompile Include="M2\M2_ParticlesComponent.cpp" />
+    <ClCompile Include="M2\M2_SkeletonComponent.cpp" />
     <ClCompile Include="M2\M2_Part_Attachment.cpp" />
     <ClCompile Include="M2\M2_Part_Bone.cpp" />
     <ClCompile Include="M2\M2_Part_Camera.cpp" />
@@ -92,10 +93,7 @@
     <ClCompile Include="M2\M2_Skin.cpp" />
     <ClCompile Include="M2\M2_SkinSection.cpp" />
     <ClCompile Include="M2\M2_Skin_Batch.cpp" />
-    <ClCompile Include="M2\ParticleEmitters.cpp" />
-    <ClCompile Include="M2\ParticleEmitter_Plane.cpp" />
-    <ClCompile Include="M2\ParticleEmitter_Sphere.cpp" />
-    <ClCompile Include="M2\ParticleSystem.cpp" />
+    <ClCompile Include="M2\M2_ParticleSystem.cpp" />
     <ClCompile Include="M2\RenderPass_M2.cpp" />
     <ClCompile Include="M2\RenderPass_M2Instanced.cpp" />
     <ClCompile Include="M2\ShaderResolver.cpp" />
@@ -261,8 +259,8 @@
     <ClInclude Include="M2\M2_Comp_Skeleton.h" />
     <ClInclude Include="M2\M2_Headers.h" />
     <ClInclude Include="M2\M2_LightComponent.h" />
-    <ClInclude Include="M2\M2_Skeleton.h" />
-    <ClInclude Include="M2\M2_ParticlesTypes.h" />
+    <ClInclude Include="M2\M2_ParticlesComponent.h" />
+    <ClInclude Include="M2\M2_SkeletonComponent.h" />
     <ClInclude Include="M2\M2_Part_Attachment.h" />
     <ClInclude Include="M2\M2_Part_Bone.h" />
     <ClInclude Include="M2\M2_Part_Camera.h" />
@@ -279,10 +277,8 @@
     <ClInclude Include="M2\M2_SkinTypes.h" />
     <ClInclude Include="M2\M2_Skin_Batch.h" />
     <ClInclude Include="M2\M2_Types.h" />
-    <ClInclude Include="M2\ParticleEmitters.h" />
-    <ClInclude Include="M2\ParticleEmitter_Plane.h" />
-    <ClInclude Include="M2\ParticleEmitter_Sphere.h" />
-    <ClInclude Include="M2\ParticleSystem.h" />
+    <ClInclude Include="M2\M2_Particle.h" />
+    <ClInclude Include="M2\M2_ParticleSystem.h" />
     <ClInclude Include="M2\RenderPass_M2.h" />
     <ClInclude Include="M2\RenderPass_M2Instanced.h" />
     <ClInclude Include="M2\ShaderResolver.h" />

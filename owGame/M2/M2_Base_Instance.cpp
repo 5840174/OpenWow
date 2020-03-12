@@ -38,7 +38,13 @@ bool CM2_Base_Instance::Load()
 		m_Animator = std::make_shared<CM2_Animator>(GetBaseManager(), getM2());
 
 	if (getM2().getSkeleton().hasBones())
-		m_SkeletonComponent = std::make_shared<CM2SkeletonComponent3D>(*this, getM2());
+	{
+		m_SkeletonComponent = std::make_shared<CM2SkeletonComponent3D>(*this);
+		AddComponent(m_SkeletonComponent);
+	}
+
+	m_ParticleComponent = std::make_shared<CM2ParticlesComponent3D>(*this);
+	AddComponent(m_ParticleComponent);
 
 	UpdateLocalTransform();
 	CreateInstances();
@@ -46,7 +52,7 @@ bool CM2_Base_Instance::Load()
 	return true;
 }
 
-const CM2 & CM2_Base_Instance::getM2() const
+const CM2& CM2_Base_Instance::getM2() const
 {
 	_ASSERT(m_M2 != nullptr);
 	return *m_M2;
@@ -59,6 +65,14 @@ void CM2_Base_Instance::Attach(M2_AttachmentType AttachmentType)
 void CM2_Base_Instance::Detach()
 {
 	m_AttachmentType = M2_AttachmentType::NotAttached;
+}
+
+void CM2_Base_Instance::UpdateAttachPositionAfterSkeletonUpdate()
+{
+	if (m_AttachmentType == M2_AttachmentType::NotAttached)
+		return;
+
+	UpdateLocalTransform();
 }
 
 // Mesh & textures provider
@@ -100,11 +114,10 @@ void CM2_Base_Instance::Update(const UpdateEventArgs & e)
 	if (m_Animator)
 		m_Animator->Update(e.TotalTime, e.DeltaTime);
 
-	if (m_SkeletonComponent)
-		m_SkeletonComponent->Calculate(static_cast<uint32>(e.TotalTime));
+	//if (m_ParticleComponent)
+	//	m_ParticleComponent->Update(e);
 
-	if (m_AttachmentType != M2_AttachmentType::NotAttached)
-		ForceRecalculateLocalTransform();
+
 }
 
 void CM2_Base_Instance::Accept(IVisitor* visitor)

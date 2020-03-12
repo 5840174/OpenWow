@@ -49,6 +49,7 @@ public:
 		{
 			switch (m_Type)
 			{
+				case Interpolations::INTERPOLATION_NONE:
 				case Interpolations::INTERPOLATION_LINEAR:
 					m_Values.push_back(fixfunc(Conv::conv(values[i])));
 					break;
@@ -69,7 +70,7 @@ public:
 	inline bool IsUsesBySequence(uint16 SequenceIndex) const
 	{
 		if (m_Type == Interpolations::INTERPOLATION_NONE)
-			return false;
+			return m_Values.size() == 1;
 
 		if (m_GlobalSecIndex == -1 && m_Ranges.size() <= SequenceIndex)
 			return false;
@@ -79,10 +80,9 @@ public:
 
 	inline T GetValue(uint16 SequenceIndex, uint32 time, const std::vector<SM2_Loop>& GlobalLoop, const uint32 GlobalTime) const
 	{
-		_ASSERT(m_Type != Interpolations::INTERPOLATION_NONE);
-
-		if (m_Values.empty())
-			return T();
+		_ASSERT(m_Values.empty() == false);
+		if (m_Values.size() == 1)
+			return m_Values[0];
 
         std::pair<uint32, uint32> range = std::make_pair(0, m_Values.size() - 1);
 
@@ -132,6 +132,9 @@ private:
 
 		switch (m_Type)
 		{
+			case Interpolations::INTERPOLATION_NONE:
+				return m_Values[timeIndex];
+
 			case Interpolations::INTERPOLATION_LINEAR:
 				return interpolate<T>(r, m_Values[timeIndex], m_Values[timeIndex + 1]);
 

@@ -135,11 +135,13 @@ void WMO_Group::CreateInsances(const std::shared_ptr<ISceneNode3D>& Parent) cons
 
 		std::string doodadFileName = m_WMOModel.m_DoodadsFilenames + placement.flags.nameIndex;
 
-		std::shared_ptr<CM2> m2 = m_BaseManager.GetManager<IWoWObjectsCreator>()->LoadM2(m_RenderDevice, doodadFileName);
+		std::shared_ptr<CM2> m2 = m_BaseManager.GetManager<IWoWObjectsCreator>()->LoadM2(m_RenderDevice, doodadFileName, true);
 		if (m2)
 		{
 			auto inst = Parent->CreateSceneNode<CWMO_Doodad_Instance>(m2, index, placement);
-			m_BaseManager.GetManager<ILoader>()->AddToLoadQueue(inst);
+			inst->Load();
+			inst->SetState(ELoadableState::Loaded);
+			//m_BaseManager.GetManager<ILoader>()->AddToLoadQueue(inst);
 			parentAsWMOGroupInstance->AddRoomObject(inst);
 		}
 	}

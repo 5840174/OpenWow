@@ -5,7 +5,7 @@
 #include "M2_Base_Instance.h"
 
 // General
-#include "M2_Skeleton.h"
+#include "M2_SkeletonComponent.h"
 
 CM2SkeletonBone3D::CM2SkeletonBone3D(const SM2_Part_Bone_Wrapper& M2Bone)
 	: m_M2Bone(M2Bone)
@@ -87,10 +87,10 @@ void CM2SkeletonBone3D::Reset()
 //
 // CM2SkeletonComponent3D
 //
-CM2SkeletonComponent3D::CM2SkeletonComponent3D(const ISceneNode3D& OwnerNode, const CM2& M2Model)
+CM2SkeletonComponent3D::CM2SkeletonComponent3D(const CM2_Base_Instance& OwnerNode)
 	: CComponentBase(OwnerNode)
 {
-	for (const auto& m2Bone : M2Model.getSkeleton().GetBones())
+	for (const auto& m2Bone : OwnerNode.getM2().getSkeleton().GetBones())
 		m_Bones.push_back(std::make_shared<CM2SkeletonBone3D>(m2Bone));
 
 	for (const auto& bone : m_Bones)
@@ -119,13 +119,16 @@ std::shared_ptr<ISkeletonBone3D> CM2SkeletonComponent3D::GetBone(size_t Index) c
 	return m_Bones.at(Index);
 }
 
-void CM2SkeletonComponent3D::Calculate(uint32 GlobalTime)
+void CM2SkeletonComponent3D::Update(const UpdateEventArgs & e)
 {
 	for (const auto& b : m_Bones)
 		b->Reset();
 
 	for (const auto& b : m_Bones)
-		b->Calculate(&GetM2OwnerNode(), GlobalTime);
+		b->Calculate(&GetM2OwnerNode(), static_cast<uint32>(e.TotalTime));
+
+	// TODO: Fix me
+	const_cast<CM2_Base_Instance&>(GetM2OwnerNode()).UpdateAttachPositionAfterSkeletonUpdate();
 }
 
 //

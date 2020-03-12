@@ -92,7 +92,8 @@ void CM2_Skin::Load(const SM2_Header& M2Header, const std::shared_ptr<IFile>& Fi
 		//if (skinBatchObject->m_PriorityPlan != 0)
 		//	Log::Green("Test");
 
-		auto& ttIter = m_TTT.find(m_Sections[skinBatchesProtos[i].skinSectionIndex]);
+		m_TTT[skinBatchesProtos[i].skinSectionIndex].push_back(skinBatchObject);
+		/*auto& ttIter = m_TTT.find(m_Sections[skinBatchesProtos[i].skinSectionIndex]);
 		if (ttIter == m_TTT.end())
 		{
 			m_TTT.insert(std::make_pair(m_Sections[skinBatchesProtos[i].skinSectionIndex], std::vector<std::shared_ptr<CM2_Skin_Batch>>({ skinBatchObject })));
@@ -100,23 +101,30 @@ void CM2_Skin::Load(const SM2_Header& M2Header, const std::shared_ptr<IFile>& Fi
 		else
 		{
 			ttIter->second.push_back(skinBatchObject);
-		}
+		}*/
 
 		//std::shared_ptr<IModel> model = m_RenderDevice.GetObjectsFactory().CreateModel();
 		//model->AddConnection(skinBatchObject, m_Sections[skinBatchesProtos[i].skinSectionIndex]);
 		//m_Models.push_back(model);
 	}
 
-	for (auto& it : m_TTT)
+	/*for (auto& it : m_TTT)
 	{
-		std::sort(it.second.begin(), it.second.end(), [](const std::shared_ptr<CM2_Skin_Batch> left, const std::shared_ptr<CM2_Skin_Batch> right)
+		auto& batches = it.second;
+		std::sort(batches.begin(), batches.end(), [](const std::shared_ptr<CM2_Skin_Batch>& left, const std::shared_ptr<CM2_Skin_Batch>& right)
 		{
 			return left->m_PriorityPlan < right->m_PriorityPlan;
 		});
-	}
+	}*/
 
-	//if (m_TTT.size() > 1)
-	//	Log::Error("SORTED!");
+
+	//std::sort(m_TTT.begin(), m_TTT.end(), [](const std::pair<std::shared_ptr<CM2_SkinSection>, std::vector<std::shared_ptr<CM2_Skin_Batch>>>& left, const std::pair<std::shared_ptr<CM2_SkinSection>, std::vector<std::shared_ptr<CM2_Skin_Batch>>>& right) -> bool
+	//{
+	//	return left.first->getIndex() < right.first->getIndex();
+	//});
+
+	if (m_TTT.size() > 1)
+		Log::Error("SORTED!");
 }
 
 void CM2_Skin::Accept(IVisitor * visitor)

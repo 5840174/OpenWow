@@ -22,6 +22,15 @@ public:
 	uint16                  getIndex() const { return m_SkinSectionIndex; }
 	const SM2_SkinSection&  getProto() const { return m_SkinSectionProto; }
 
+	bool operator<(const CM2_SkinSection& other) const
+	{
+		return getIndex() < other.getIndex();
+	}
+	bool operator<(const CM2_SkinSection* other) const
+	{
+		return getIndex() < other->getIndex();
+	}
+
 private:
 	const uint16            m_SkinSectionIndex;
 	const SM2_SkinSection   m_SkinSectionProto;

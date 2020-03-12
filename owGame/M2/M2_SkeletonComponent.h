@@ -1,6 +1,6 @@
 #pragma once
 
-#include "M2/M2.h"
+class CM2;
 class CM2_Base_Instance;
 #include "M2/M2_Part_Bone.h"
 
@@ -43,19 +43,21 @@ private:
 //
 // CM2SkeletonComponent3D
 //
-class ZN_API CM2SkeletonComponent3D
+class __declspec(UUID_SkeletonComponent) ZN_API CM2SkeletonComponent3D
 	: public ISkeletonComponent3D
 	, public CComponentBase
 {
 public:
-	CM2SkeletonComponent3D(const ISceneNode3D& OwnerNode, const CM2& M2Model);
+	CM2SkeletonComponent3D(const CM2_Base_Instance& OwnerNode);
 	virtual ~CM2SkeletonComponent3D();
 
 	std::vector<glm::mat4> CreatePose(size_t BoneStartIndex, size_t BonesCount) const;
 
 	// ISkeletonComponent3D
 	std::shared_ptr<ISkeletonBone3D> GetBone(size_t Index) const override;
-	void Calculate(uint32 GlobalTime) override;
+
+	// CComponentBase
+	void Update(const UpdateEventArgs& e) override;
 
 protected:
 	const CM2_Base_Instance& GetM2OwnerNode() const;

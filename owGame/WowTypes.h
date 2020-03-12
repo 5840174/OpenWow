@@ -10,6 +10,11 @@ static inline glm::vec3 Fix_XZmY(cvec3 _vec)
 	return glm::vec3(_vec.x, _vec.z, -_vec.y);
 }
 
+static inline glm::quat Fix_XZmYW(const quat& _quat)
+{
+	return glm::quat(_quat.w, _quat.x, _quat.z, -_quat.y);
+}
+
 #include __PACK_BEGIN
 
 struct C4Plane

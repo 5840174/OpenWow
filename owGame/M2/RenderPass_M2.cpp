@@ -39,7 +39,7 @@ void CRenderPass_M2::DoRenderM2Model(const CM2_Base_Instance* M2SceneNode, const
 
 	for (const auto& it : M2Model->GetTTT())
 	{
-		const auto& geom = it.first;
+		const auto& geom = M2Model->GetSections()[it.first];
 
 		uint32 meshPartID = geom->getProto().meshPartID;
 		if (!M2SceneNode->isMeshEnabled(meshPartID))
@@ -72,7 +72,7 @@ void CRenderPass_M2::DoRenderM2Model(const CM2_Base_Instance* M2SceneNode, const
 				}*/
 
 				mat->GetM2Material()->GetBlendState()->Bind();
-				//mat->GetM2Material()->GetDepthStencilState()->Bind();
+				mat->GetM2Material()->GetDepthStencilState()->Bind();
 
 				mat->UpdateMaterialProps(GetRenderEventArgs(), M2SceneNode);
 				mat->Bind(shaders);

@@ -8,7 +8,7 @@ static IBaseManager* BaseManager = nullptr;
 void main_internal(int argumentCount, char* arguments[])
 {
 	// 1. Initialize engine and some improtant managers
-	BaseManager = InitializeEngine(ArgumentsToVector(argumentCount, arguments), "");
+	BaseManager = InitializeEngine(Utils::ArgumentsToVector(argumentCount, arguments), "");
 
 	// 3. Create application
 	Application app(*BaseManager, ::GetModuleHandle(NULL));
@@ -40,7 +40,6 @@ void main_internal(int argumentCount, char* arguments[])
 
 	auto environmentManager = BaseManager->AddManager<EnvironmentManager>(std::make_shared<EnvironmentManager>(*BaseManager));
 
-	BaseManager->GetManager<ILoader>()->SetCamera(nullptr);
 	BaseManager->GetManager<ILoader>()->Start();
 
 	std::shared_ptr<CWoWClient> WoWClient = std::make_unique<CWoWClient>(*BaseManager, renderDevice, "127.0.0.1");

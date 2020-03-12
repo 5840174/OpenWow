@@ -4,7 +4,8 @@
 
 // Components
 #include "M2_Animator.h"
-#include "M2_Skeleton.h"
+#include "M2_SkeletonComponent.h"
+#include "M2_ParticlesComponent.h"
 
 class ZN_API CM2_Base_Instance 
 	: public SceneNode3D
@@ -24,6 +25,7 @@ public:
 
 	void                                Attach(M2_AttachmentType AttachmentType);
 	void                                Detach();
+	void                                UpdateAttachPositionAfterSkeletonUpdate();
 
 	// Color & Alpha
 	void                                setColor(vec4 _color) { m_Color = _color; }
@@ -39,6 +41,7 @@ public:
 	// Animations
 	const std::shared_ptr<CM2_Animator>&           getAnimator() const { return m_Animator; }
 	const std::shared_ptr<CM2SkeletonComponent3D>  getSkeletonComponent() const { return m_SkeletonComponent; }
+	const std::shared_ptr<CM2ParticlesComponent3D>   getParticleComponent() const { return m_ParticleComponent; }
 
     // Components
     virtual void                        RegisterComponents() override;
@@ -65,6 +68,7 @@ private:
 	// Animtion
 	std::shared_ptr<CM2_Animator>           m_Animator;
 	std::shared_ptr<CM2SkeletonComponent3D> m_SkeletonComponent;
+	std::shared_ptr<CM2ParticlesComponent3D>m_ParticleComponent;
 
 private:
 	std::shared_ptr<const CM2>           m_M2;

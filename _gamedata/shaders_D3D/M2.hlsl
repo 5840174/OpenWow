@@ -94,7 +94,7 @@ VertexShaderOutput DoPSRender(VertexShaderInput IN, float4x4 ModelMatrix)
 	}
 	else
 	{
-		OUT.texCoord0 = float2(IN.texCoord0.x, 1.0f - IN.texCoord0.y);
+		OUT.texCoord0 = IN.texCoord0;
 		OUT.texCoord1 = IN.texCoord1;
 	}
 	return OUT;
@@ -114,7 +114,7 @@ VertexShaderOutput VS_main_Inst(VertexShaderInput IN, uint InstanceID : SV_Insta
 DefferedRenderPSOut PS_main(VertexShaderOutput IN) : SV_TARGET
 {
 	//float4 resultColor = Test(IN);
-	float4 resultColor = DiffuseTexture0.Sample(DiffuseTexture0Sampler, IN.texCoord0);
+	float4 resultColor = DiffuseTexture0.Sample(DiffuseTexture0Sampler, float2(IN.texCoord0.x, 1.0f - IN.texCoord0.y));
 		
 	float alpha = 1.0f;
 	

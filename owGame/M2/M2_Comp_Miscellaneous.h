@@ -9,8 +9,7 @@
 #include "M2_Part_Light.h"
 #include "M2_Part_Camera.h"
 #include "M2_RibbonEmitters.h"
-#include "Particle.h"
-#include "ParticleSystem.h"
+#include "M2_ParticleSystem.h"
 
 // FORWARD BEGIN
 class CM2;
@@ -75,6 +74,11 @@ public:
 		return (m_Cameras[indexIntoDirect]);
 	}
 
+	const std::vector<std::shared_ptr<SM2_ParticleSystem_Wrapper>>& GetParticles() const
+	{
+		return particleSystems;
+	}
+
 private:
 	// Attachments, events, lights and cameras
 	std::vector<SM2_Part_Attachment_Wrapper>  m_Attachments;
@@ -86,7 +90,7 @@ private:
 
 	// Particles
 	std::vector<std::shared_ptr<CM2_RibbonEmitters>> m_RibbonEmitters;
-	std::vector<std::shared_ptr<CM2_ParticleSystem>> particleSystems;
+	std::vector< std::shared_ptr<SM2_ParticleSystem_Wrapper>> particleSystems;
 
 	bool                                 m_HasMisc;
 
