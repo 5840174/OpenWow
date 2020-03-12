@@ -98,8 +98,11 @@ public:
 		}
 		else
 		{
-			_ASSERT(time >= m_Times[0] && time < m_Times[m_Times.size() - 1]);
 			range = m_Ranges[SequenceIndex];
+
+			// Bug?
+			if (time < m_Times[0] || time >= m_Times[m_Times.size() - 1])
+				return m_Values[range.first];
 		}
 
 		// If simple frame

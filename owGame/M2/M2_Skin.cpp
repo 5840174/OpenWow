@@ -108,14 +108,14 @@ void CM2_Skin::Load(const SM2_Header& M2Header, const std::shared_ptr<IFile>& Fi
 		//m_Models.push_back(model);
 	}
 
-	/*for (auto& it : m_TTT)
+	for (auto& it : m_TTT)
 	{
 		auto& batches = it.second;
 		std::sort(batches.begin(), batches.end(), [](const std::shared_ptr<CM2_Skin_Batch>& left, const std::shared_ptr<CM2_Skin_Batch>& right)
 		{
 			return left->m_PriorityPlan < right->m_PriorityPlan;
 		});
-	}*/
+	}
 
 
 	//std::sort(m_TTT.begin(), m_TTT.end(), [](const std::pair<std::shared_ptr<CM2_SkinSection>, std::vector<std::shared_ptr<CM2_Skin_Batch>>>& left, const std::pair<std::shared_ptr<CM2_SkinSection>, std::vector<std::shared_ptr<CM2_Skin_Batch>>>& right) -> bool
@@ -123,8 +123,8 @@ void CM2_Skin::Load(const SM2_Header& M2Header, const std::shared_ptr<IFile>& Fi
 	//	return left.first->getIndex() < right.first->getIndex();
 	//});
 
-	if (m_TTT.size() > 1)
-		Log::Error("SORTED!");
+	//if (m_TTT.size() > 1)
+	//	Log::Error("SORTED!");
 }
 
 void CM2_Skin::Accept(IVisitor * visitor)

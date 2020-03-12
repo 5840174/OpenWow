@@ -192,8 +192,10 @@ void CSceneWoW::TestCreateMap()
 	//const int32 x = 40;
 	//const int32 y = 30;
 	//const uint32 mapID = 0;
-	const int32 x = 19; //FOR BC
-	const int32 y = 32;
+	//const int32 x = 19; //FOR BC
+	//const int32 y = 32;
+	const int32 x = 26; //FOR BC 2
+	const int32 y = 30;
 	const uint32 mapID = 530;
 
 	if (map != nullptr)
@@ -210,6 +212,8 @@ void CSceneWoW::TestCreateMap()
 	GetCameraController()->GetCamera()->SetTranslation(glm::vec3(x * C_TileSize + C_TileSize / 2.0f, 100.0f, y * C_TileSize + C_TileSize / 2.0f));
 	GetCameraController()->GetCamera()->SetYaw(48.8);
 	GetCameraController()->GetCamera()->SetPitch(-27.8);
+
+	GetCameraController()->GetCamera()->SetTranslation(glm::vec3(15000, 100.0f, 15000));
 }
 
 void CSceneWoW::TestDeleteMap()

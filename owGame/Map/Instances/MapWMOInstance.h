@@ -30,6 +30,9 @@ public:
 	void Initialize() override;
 	void Accept(IVisitor* visitor) override;
 
+protected:
+	virtual void UpdateLocalTransform() override;
+	
 private:
 	const ADT_MODF m_PlacementInfo;
 

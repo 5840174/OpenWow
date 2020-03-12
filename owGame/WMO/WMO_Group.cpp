@@ -126,7 +126,7 @@ void WMO_Group::CreateInsances(const std::shared_ptr<ISceneNode3D>& Parent) cons
 		
 	}
 
-#if 1
+#if 0
 #ifdef USE_M2_MODELS
 	// WMO Group M2s
 	for (const auto& index : m_DoodadsPlacementIndexes)

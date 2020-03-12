@@ -26,14 +26,8 @@ void CMapWMOInstance::Initialize()
 
 	// CTransformComponent
 	{
-		// Translate
 		SetTranslate(m_PlacementInfo.position);
-
-		// Rotate
-		vec3 rotate = glm::radians(m_PlacementInfo.rotation);
-		rotate.x = -rotate.x;
-		rotate.y = rotate.y - glm::half_pi<float>();
-		SetRotation(vec3(rotate.z, rotate.y, rotate.x));
+		SetRotation(m_PlacementInfo.rotation);
 	}
 
 	__super::Initialize();
@@ -55,6 +49,24 @@ void CMapWMOInstance::Accept(IVisitor* visitor)
 	CWMO_Base_Instance::Accept(visitor);
 }
 
+
+//
+// Protected
+//
+void CMapWMOInstance::UpdateLocalTransform()
+{
+	glm::mat4 localTransform = glm::mat4(1.0f);
+
+	localTransform = glm::translate(localTransform, GetTranslation());
+
+	localTransform = glm::rotate(localTransform, glm::radians(GetRotation().y - 90.0f), glm::vec3(0, 1, 0));
+	localTransform = glm::rotate(localTransform, glm::radians(-GetRotation().x), glm::vec3(0, 0, 1));
+	localTransform = glm::rotate(localTransform, glm::radians(GetRotation().z), glm::vec3(1, 0, 0));
+
+	SetLocalTransform(localTransform);
+
+	RaiseComponentMessage(nullptr, UUID_OnLocalTransformChanged);
+}
 
 //
 

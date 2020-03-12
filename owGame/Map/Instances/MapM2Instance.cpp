@@ -25,10 +25,7 @@ void CMapM2Instance::Initialize()
 	// CTransformComponent
 	{
 		SetTranslate(m_PlacementInfo.position);
-		glm::vec3 rotate = glm::radians(m_PlacementInfo.rotation);
-		rotate.x = -rotate.x;
-		rotate.y = rotate.y - glm::half_pi<float>();
-		SetRotation(glm::vec3(rotate.z, rotate.y, rotate.x));
+		SetRotation(m_PlacementInfo.rotation);
 		SetScale(glm::vec3(static_cast<float>(m_PlacementInfo.scale) / 1024.0f));
 	}
 
@@ -50,6 +47,27 @@ void CMapM2Instance::Accept(IVisitor* visitor)
 
 	CM2_Base_Instance::Accept(visitor);
 }
+
+//
+// Protected
+//
+void CMapM2Instance::UpdateLocalTransform()
+{
+	glm::mat4 localTransform = glm::mat4(1.0f);
+
+	localTransform = glm::translate(localTransform, GetTranslation());
+
+	localTransform = glm::rotate(localTransform, glm::radians(GetRotation().y - 90.0f), glm::vec3(0, 1, 0));
+	localTransform = glm::rotate(localTransform, glm::radians(-GetRotation().x)       , glm::vec3(0, 0, 1));
+	localTransform = glm::rotate(localTransform, glm::radians(GetRotation().z)        , glm::vec3(1, 0, 0));
+
+	localTransform = glm::scale(localTransform, GetScale());
+
+	SetLocalTransform(localTransform);
+
+	RaiseComponentMessage(nullptr, UUID_OnLocalTransformChanged);
+}
+
 
 void CMapM2Instance::reset()
 {
