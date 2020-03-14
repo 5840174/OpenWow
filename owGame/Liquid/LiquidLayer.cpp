@@ -6,7 +6,9 @@
 CLiquidLayer::CLiquidLayer(IRenderDevice& RenderDevice)
 	: ModelProxie(RenderDevice.GetObjectsFactory().CreateModel())
 	, m_RenderDevice(RenderDevice)
+	, m_SkyManager(nullptr)
 {
+	//m_SkyManager = m_RenderDevice.GetBaseManager().GetManager<ISkyManager>();
 	m_Material = std::make_shared<LiquidMaterial>(m_RenderDevice);
 }
 
@@ -125,17 +127,15 @@ std::shared_ptr<IMaterial> CLiquidLayer::GetMaterial() const
 //
 bool CLiquidLayer::Render(const RenderEventArgs& renderEventArgs) const
 {
-	uint32_t texidx = (uint32_t)(renderEventArgs.TotalTime * 1000.0f / 60.0f) % m_Textures.size();
+	uint32_t texidx = (uint32_t)(renderEventArgs.TotalTime / 60.0f) % m_Textures.size();
 	m_Material->SetTexture(0, m_Textures[texidx]);
 
-	std::shared_ptr<ISkyManager> SkyManager = nullptr; // m_SkyManager.lock();
-
-	if (SkyManager != nullptr)
+	if (m_SkyManager != nullptr)
 	{
-		m_Material->SetColorLight(SkyManager->GetColor(LightColors::LIGHT_COLOR_RIVER_LIGHT));
-		m_Material->SetColorDark(SkyManager->GetColor(LightColors::LIGHT_COLOR_RIVER_DARK));
-		m_Material->SetShallowAlpha(SkyManager->GetWaterShallowAlpha());
-		m_Material->SetDeepAlpha(SkyManager->GetWaterDarkAlpha());
+		m_Material->SetColorLight(m_SkyManager->GetColor(LightColors::LIGHT_COLOR_RIVER_LIGHT));
+		m_Material->SetColorDark(m_SkyManager->GetColor(LightColors::LIGHT_COLOR_RIVER_DARK));
+		m_Material->SetShallowAlpha(m_SkyManager->GetWaterShallowAlpha());
+		m_Material->SetDeepAlpha(m_SkyManager->GetWaterDarkAlpha());
 	}
 	else
 	{

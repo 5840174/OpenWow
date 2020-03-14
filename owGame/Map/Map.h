@@ -27,12 +27,7 @@ public:
 	void                                            ClearCache();
 	uint32                                          GetAreaID(const ICameraComponent3D* camera);
 
-	// Scene node
-	std::string										GetName() const override
-	{
-		return "Map";
-	}
-
+	// ISceneNode3D
 	void                                            Update(const UpdateEventArgs& e) override;
 
 public: // Getters
@@ -74,25 +69,3 @@ private:
 	IBaseManager&									m_BaseManager;
 	IRenderDevice&                                  m_RenderDevice;
 };
-
-inline static bool IsBadTileIndex(int i, int j)
-{
-	if (i < 0)
-		return true;
-
-	if (j < 0)
-		return true;
-
-	if (i >= C_TilesInMap)
-		return true;
-
-	if (j >= C_TilesInMap)
-		return true;
-
-	return false;
-}
-
-inline static bool IsGoodTileIndex(int i, int j)
-{
-	return (!IsBadTileIndex(i, j));
-}

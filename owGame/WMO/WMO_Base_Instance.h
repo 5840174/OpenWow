@@ -31,8 +31,7 @@ public:
 	const GroupInstances& getGroupOutdoorInstances() const { return m_OutdoorGroupInstances; }
 
 	// SceneNode3D
-	virtual void Initialize() override;
-	std::string GetName() const override;
+	void Initialize() override;
 	void Update(const UpdateEventArgs& e) override;
 	void Accept(IVisitor* visitor) override;
 

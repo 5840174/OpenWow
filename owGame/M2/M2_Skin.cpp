@@ -123,6 +123,7 @@ void CM2_Skin::Load(const SM2_Header& M2Header, const std::shared_ptr<IFile>& Fi
 	//	return left.first->getIndex() < right.first->getIndex();
 	//});
 
+
 	//if (m_TTT.size() > 1)
 	//	Log::Error("SORTED!");
 }

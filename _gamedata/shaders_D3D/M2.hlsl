@@ -126,7 +126,8 @@ DefferedRenderPSOut PS_main(VertexShaderOutput IN) : SV_TARGET
 	
 	if (gTextureWeightEnable)
 	{
-		alpha *= gTextureWeight;
+		resultColor.rgb *= gTextureWeight;
+		//alpha *= gTextureWeight;
 	}
 	
 	if (gBlendMode == 0) // GxBlend_Opaque

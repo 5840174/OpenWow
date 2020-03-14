@@ -16,13 +16,12 @@ public:
 	CMapTile(IBaseManager& BaseManager, IRenderDevice& RenderDevice, const CMap& Map, uint32 IndexX, uint32 IndexZ);
 	virtual ~CMapTile();
 
-	const int                                       getIndexX() const;
-	const int                                       getIndexZ() const;
+	int                                             getIndexX() const;
+	int                                             getIndexZ() const;
 	const CMapChunk*                                getChunk(int32 x, int32 z) const;
 	const CMap&                                     GetMap() const;
 	// SceneNode3D
 	void											Initialize() override;
-	std::string                                     GetName() const override;
 
 	// ILoadableObject
 	bool                                            Load() override;

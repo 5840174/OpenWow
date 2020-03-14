@@ -120,7 +120,7 @@ std::shared_ptr<IRenderPassPipelined> CRenderPass_M2::CreatePipeline(std::shared
 	std::shared_ptr<IPipelineState> pipeline = GetRenderDevice().GetObjectsFactory().CreatePipelineState();
 	pipeline->GetBlendState()->SetBlendMode(alphaBlending);
 	pipeline->GetDepthStencilState()->SetDepthMode(enableDepthWrites);
-	pipeline->GetRasterizerState()->SetCullMode(IRasterizerState::CullMode::None);
+	pipeline->GetRasterizerState()->SetCullMode(IRasterizerState::CullMode::Back);
 	pipeline->GetRasterizerState()->SetFillMode(IRasterizerState::FillMode::Solid);
 	pipeline->SetRenderTarget(RenderTarget);
 	pipeline->GetRasterizerState()->SetViewport(Viewport);

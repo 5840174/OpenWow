@@ -27,8 +27,13 @@ struct ADT_MHDR
 struct ADT_TextureInfo
 {
 	std::string                 textureName;
-	std::shared_ptr<ITexture>    diffuseTexture;
-	std::shared_ptr<ITexture>    specularTexture;
+#if 0
+	std::shared_ptr<IImage>    diffuseTexture;
+	std::shared_ptr<IImage>    specularTexture;
+#else
+	std::shared_ptr<ITexture> diffuseTexture;
+	std::shared_ptr<ITexture> specularTexture;
+#endif
 };
 
 struct ADT_MCIN

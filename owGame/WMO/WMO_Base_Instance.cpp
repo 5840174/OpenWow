@@ -51,11 +51,6 @@ void CWMO_Base_Instance::Initialize()
 	GetColliderComponent()->SetDebugDrawMode(false);
 }
 
-std::string CWMO_Base_Instance::GetName() const 
-{ 
-	return "WMO '" + m_WMOObject->getFilename() + "'"; 
-}
-
 void CWMO_Base_Instance::Update(const UpdateEventArgs& e)
 {
 	if (GetState() != ILoadable::ELoadableState::Loaded)

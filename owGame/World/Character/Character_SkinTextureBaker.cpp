@@ -83,7 +83,10 @@ std::shared_ptr<ITexture> Character_SkinTextureBaker::createTexture(const Charac
 	}
 
 	// 4. Final
-	bakedSkinTexture->LoadTextureCustom(cSkinTextureWidth, cSkinTextureHeight, m_Pixels);
+	std::shared_ptr<CImageBase> image = std::make_shared<CImageBase>(cSkinTextureWidth, cSkinTextureHeight, 32, true);
+	std::memmove(image->GetDataEx(), m_Pixels, image->GetHeight() * image->GetStride());
+
+	bakedSkinTexture->LoadTextureFromImage(image);
 	SafeDeleteArray(m_Pixels);
 
 	return bakedSkinTexture;

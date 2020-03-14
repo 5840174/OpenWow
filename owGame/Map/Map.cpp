@@ -3,6 +3,31 @@
 // General
 #include "Map.h"
 
+namespace
+{
+	bool IsBadTileIndex(int i, int j)
+	{
+		if (i < 0)
+			return true;
+
+		if (j < 0)
+			return true;
+
+		if (i >= C_TilesInMap)
+			return true;
+
+		if (j >= C_TilesInMap)
+			return true;
+
+		return false;
+	}
+
+	bool IsGoodTileIndex(int i, int j)
+	{
+		return (!IsBadTileIndex(i, j));
+	}
+}
+
 CMap::CMap(IBaseManager& BaseManager, IRenderDevice& RenderDevice)
 	: m_BaseManager(BaseManager)
 	, m_RenderDevice(RenderDevice)

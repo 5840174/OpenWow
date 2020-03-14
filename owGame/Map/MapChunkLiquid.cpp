@@ -38,5 +38,6 @@ const DBC_LiquidTypeRecord* getLiquidType(const ADT_MCNK_Header& Header, const C
 		return DBCStorage->DBC_LiquidType()[4];
 	}
 
+	_ASSERT(false);
 	return nullptr;
 }

@@ -75,6 +75,9 @@ public:
 		if (m_GlobalSecIndex == -1 && m_Ranges.size() <= SequenceIndex)
 			return false;
 
+		if (m_Values.empty())
+			return false; // ????
+
 		return true;
 	}
 

@@ -23,12 +23,12 @@ CMapTile::~CMapTile()
 }
 
 
-const int CMapTile::getIndexX() const
+int CMapTile::getIndexX() const
 {
 	return m_IndexX;
 }
 
-const int CMapTile::getIndexZ() const
+int CMapTile::getIndexZ() const
 {
 	return m_IndexZ;
 }
@@ -66,13 +66,6 @@ void CMapTile::Initialize()
 	}
 }
 
-std::string CMapTile::GetName() const
-{
-	return "MapTile " + std::to_string(m_IndexX) + " - " + std::to_string(m_IndexZ);
-}
-
-
-
 //
 // ILoadableObject
 //
@@ -99,7 +92,7 @@ bool CMapTile::Load()
 	}
 
 	// Chunks info
-	ADT_MCIN chunks[256];
+	ADT_MCIN chunks[C_ChunksInTileGlobal];
 	f->seek(startPos + header.MCIN);
 	{
 		f->seekRelative(4);
@@ -124,12 +117,27 @@ bool CMapTile::Load()
 		textureInfo->textureName = _string;
 
 		// PreLoad diffuse texture
+#if 0
+		textureInfo->diffuseTexture = GetBaseManager().GetManager<IImagesFactory>()->CreateImage(_string);
+#else
 		textureInfo->diffuseTexture = m_RenderDevice.GetObjectsFactory().LoadTexture2D(_string);
+#endif
 
 		// PreLoad specular texture
-		std::string specularTextureName = _string;
-		specularTextureName = specularTextureName.insert(specularTextureName.length() - 4, "_s");
-		textureInfo->specularTexture = m_RenderDevice.GetObjectsFactory().LoadTexture2D(specularTextureName);
+		try
+		{
+			std::string specularTextureName = _string;
+			specularTextureName = specularTextureName.insert(specularTextureName.length() - 4, "_s");
+#if 0
+			textureInfo->specularTexture = GetBaseManager().GetManager<IImagesFactory>()->CreateImage(specularTextureName);
+#else
+			textureInfo->specularTexture = m_RenderDevice.GetObjectsFactory().LoadTexture2D(specularTextureName);
+#endif
+		}
+		catch (const CException& e)
+		{
+		}
+
 
 		m_Textures.push_back(textureInfo);
 
@@ -233,24 +241,11 @@ bool CMapTile::Load()
 		}
 	}
 
-	//-- Load Textures -------------------------------------------------------------------
-
-	/*for (auto& it : m_Textures)
-	{
-		// PreLoad diffuse texture
-		it->diffuseTexture = m_RenderDevice.GetObjectsFactory().LoadTexture2D(it->textureName);
-
-		// PreLoad specular texture
-		std::string specularTextureName = it->textureName;
-		specularTextureName = specularTextureName.insert(specularTextureName.length() - 4, "_s");
-		it->specularTexture = m_RenderDevice.GetObjectsFactory().LoadTexture2D(specularTextureName);
-	}*/
-
 	//-- Load Chunks ---------------------------------------------------------------------
 
 	for (uint32_t i = 0; i < C_ChunksInTileGlobal; i++)
 	{
-		auto chunk = CreateSceneNode<CMapChunk>(m_RenderDevice, m_Map, std::dynamic_pointer_cast<CMapTile>(shared_from_this()), std::make_shared<CByteBuffer>(f->getData() + chunks[i].offset, chunks[i].size));
+		auto chunk = CreateSceneNode<CMapChunk>(m_RenderDevice, m_Map, std::dynamic_pointer_cast<CMapTile>(shared_from_this()), chunks[i], f);
 		GetBaseManager().GetManager<ILoader>()->AddToLoadQueue(chunk);
 		m_Chunks.push_back(chunk.get());
 	}
@@ -273,7 +268,6 @@ bool CMapTile::Load()
 	}
 #endif
 
-
 #if 1
 	//-- MDXs -------------------------------------------------------------------------
 #ifdef USE_M2_MODELS
@@ -293,7 +287,7 @@ bool CMapTile::Load()
 #endif
 #endif
 
-	Log::Green("CMapTile[%d, %d, %s]: Loaded!", m_IndexX, m_IndexZ, filename);
+	Log::Green("MapTile[%d, %d, %s]: Loaded!", m_IndexX, m_IndexZ, filename);
 
 	return true;
 }

@@ -12,14 +12,28 @@
 #include "Map_Shared.h"
 #include "MapChunkMaterial.h"
 
-CMapChunk::CMapChunk(IRenderDevice& RenderDevice, const CMap& Map, const std::shared_ptr<CMapTile>& MapTile, const std::shared_ptr<IByteBuffer>& Bytes)
+namespace
+{
+	inline uint8 lerpUInt8(uint8 a, uint8 b, uint8 f)
+	{
+		const float aF = static_cast<float>(a) / 255.0f;
+		const float bF = static_cast<float>(b) / 255.0f;
+		const float fF = static_cast<float>(f) / 255.0f;
+		const float resultF = (aF  * (1.0f - fF)) + (bF * fF);
+		return static_cast<uint8>(glm::round(resultF * 255.0f));
+	}
+}
+
+CMapChunk::CMapChunk(IRenderDevice& RenderDevice, const CMap& Map, const std::shared_ptr<CMapTile>& MapTile, const ADT_MCIN& Chunk, const std::shared_ptr<IByteBuffer>& Bytes)
 	: CLoadableObject(MapTile)
 	, m_RenderDevice(RenderDevice)
 	, m_Map(Map)
 	, m_MapTile(*MapTile)
-	, m_File(Bytes)
+	, m_Bytes(Bytes)
 {
+	m_Bytes = std::make_shared<CByteBuffer>(Bytes->getData() + Chunk.offset, Chunk.size);
 	SetType(cMapChunk_NodeType);
+	SetName("Chunk [" + std::to_string(Chunk.offset) + "]");
 }
 
 CMapChunk::~CMapChunk()
@@ -37,21 +51,21 @@ uint32 CMapChunk::GetAreaID() const
 //
 void CMapChunk::Initialize()
 {
-	//m_File->seek(m_MCIN.offset);
+	//m_Bytes->seek(m_MCIN.offset);
 
 // Chunk + size (8)
 	uint32_t offset;
-	m_File->read(&offset);
+	m_Bytes->read(&offset);
 
 	uint32_t size;
-	m_File->read(&size);
+	m_Bytes->read(&size);
 
 	SetName("MapTile[" + std::to_string(m_MapTile.getIndexX()) + "," + std::to_string(m_MapTile.getIndexZ()) + "]_Chunk[" + std::to_string(offset) + "]");
 
-	uint32_t startPos = m_File->getPos();
+	uint32_t startPos = m_Bytes->getPos();
 
 	// Read header
-	m_File->readBytes(&header, sizeof(ADT_MCNK_Header));
+	m_Bytes->readBytes(&header, sizeof(ADT_MCNK_Header));
 
 	m_AreaID = header.areaid;
 
@@ -77,28 +91,22 @@ void CMapChunk::Initialize()
 	}
 }
 
-std::string CMapChunk::GetName() const
-{
-	return "MapChunk " + 2/*std::to_string(m_MCIN.offset)*/;
-}
-
-
+//
+// ILoadable
+//
 bool CMapChunk::Load()
 {
 	if (auto depend = GetDependense().lock())
 		if (depend->GetState() == ILoadable::ELoadableState::Deleted)
 			return false;
 
-	uint32_t startPos = m_File->getPos() - sizeof(ADT_MCNK_Header);
+	uint32_t startPos = m_Bytes->getPos() - sizeof(ADT_MCNK_Header);
 
 	std::shared_ptr<IBuffer> verticesBuffer = nullptr;
 	std::shared_ptr<IBuffer> normalsBuffer = nullptr;
 
-	uint8 blendbuf[64 * 64 * 4];
-	memset(blendbuf, 0, 64 * 64 * 4);
-
 	// Normals
-	m_File->seek(startPos + header.ofsNormal);
+	m_Bytes->seek(startPos + header.ofsNormal);
 	{
 		struct int24
 		{
@@ -131,7 +139,7 @@ bool CMapChunk::Load()
 			for (uint32 i = 0; i < ((j % 2) ? 8 : 9); i++)
 			{
 				int24 nor;
-				m_File->readBytes(&nor, sizeof(int24));
+				m_Bytes->readBytes(&nor, sizeof(int24));
 
 				*ttn++ = vec3(-(float)nor.y / 127.0f, (float)nor.z / 127.0f, -(float)nor.x / 127.0f);
 				//*t_normals_INT24++ = nor;
@@ -144,7 +152,7 @@ bool CMapChunk::Load()
 	}
 
 	// Heights
-	m_File->seek(startPos + header.ofsHeight);
+	m_Bytes->seek(startPos + header.ofsHeight);
 	{
 		float heights[C_MapBufferSize];
 		float* t_heights = heights;
@@ -163,7 +171,7 @@ bool CMapChunk::Load()
 			for (uint32 i = 0; i < ((j % 2) ? 8 : 9); i++)
 			{
 				float h;
-				m_File->readBytes(&h, sizeof(float));
+				m_Bytes->readBytes(&h, sizeof(float));
 
 				float xpos = i * C_UnitSize;
 				float zpos = j * 0.5f * C_UnitSize;
@@ -188,31 +196,29 @@ bool CMapChunk::Load()
 		verticesBuffer = m_RenderDevice.GetObjectsFactory().CreateVertexBuffer(tempVertexes, C_MapBufferSize);
 	}
 
+	if (m_MapTile.GetState() != ILoadable::ELoadableState::Loaded)
+		return false;
+
 	// Textures
 	ADT_MCNK_MCLY mcly[4];
-	std::shared_ptr<ITexture> m_DiffuseTextures[4];
-	std::shared_ptr<ITexture> m_SpecularTextures[4];
-
-	std::shared_ptr<ITexture> m_BlendRBGShadowATexture;
-
-	m_File->seek(startPos + header.ofsLayer);
+	m_Bytes->seek(startPos + header.ofsLayer);
 	{
 		for (uint32 i = 0; i < header.nLayers; i++)
 		{
-			m_File->readBytes(&mcly[i], sizeof(ADT_MCNK_MCLY));
-			//m_DiffuseTextures[i] = parentADT->m_Textures.at(i)->diffuseTexture;
-			//m_SpecularTextures[i] = parentADT->m_Textures.at(i)->specularTexture;
-			m_DiffuseTextures[i] = m_MapTile.m_Textures.at(mcly[i].textureIndex)->diffuseTexture;
-			m_SpecularTextures[i] = m_MapTile.m_Textures.at(mcly[i].textureIndex)->specularTexture;
+			m_Bytes->readBytes(&mcly[i], sizeof(ADT_MCNK_MCLY));
 
-			//Log::Info("Size = %d:%d", m_DiffuseTextures[i]->GetWidth(), m_DiffuseTextures[i]->GetHeight());
+			//m_DiffuseTextures[i] = m_MapTile.m_Textures.at(mcly[i].textureIndex)->diffuseTexture;
+			//m_SpecularTextures[i] = m_MapTile.m_Textures.at(mcly[i].textureIndex)->specularTexture;
 		}
 	}
+
+	// R, G, B - alphas, A - shadow
+	std::shared_ptr<CImageBase> blendBuff = std::make_shared<CImageBase>(64, 64, 32, true);
 
 	// Shadows
 	if (header.flags.has_mcsh)
 	{
-		m_File->seek(startPos + header.ofsShadow);
+		m_Bytes->seek(startPos + header.ofsShadow);
 		{
 			uint8 sbuf[64 * 64];
 			uint8* p;
@@ -220,7 +226,7 @@ bool CMapChunk::Load()
 			p = sbuf;
 			for (int j = 0; j < 64; j++)
 			{
-				m_File->readBytes(c, 8);
+				m_Bytes->readBytes(c, 8);
 				for (int i = 0; i < 8; i++)
 				{
 					for (int b = 0x01; b != 0x100; b <<= 1)
@@ -232,20 +238,20 @@ bool CMapChunk::Load()
 
 			for (int p = 0; p < 64 * 64; p++)
 			{
-				blendbuf[p * 4 + 3] = sbuf[p];
+				blendBuff->GetDataEx()[p * 4 + 3] = sbuf[p];
 			}
 		}
 	}
 
 	// Alpha
-	m_File->seek(startPos + header.ofsAlpha);
+	m_Bytes->seek(startPos + header.ofsAlpha);
 	{
 		for (uint32 i = 1; i < header.nLayers; i++)
 		{
 			uint8 amap[64 * 64];
 			memset(amap, 0x00, 64 * 64);
 
-			const uint8* abuf = m_File->getDataFromCurrent() + mcly[i].offsetInMCAL;
+			const uint8* abuf = m_Bytes->getDataFromCurrent() + mcly[i].offsetInMCAL;
 
 			if (mcly[i].flags.alpha_map_compressed) // Compressed: MPHD is only about bit depth!
 			{
@@ -304,28 +310,18 @@ bool CMapChunk::Load()
 
 			for (int p = 0; p < 64 * 64; p++)
 			{
-				blendbuf[p * 4 + (i - 1)] = amap[p];
+				blendBuff->GetDataEx()[p * 4 + (i - 1)] = amap[p];
 			}
 		}
 	}
 
-
-	// Create chunk texture
-	{
-
-	}
-
-
-	m_BlendRBGShadowATexture = m_RenderDevice.GetObjectsFactory().CreateEmptyTexture();
-	m_BlendRBGShadowATexture->LoadTextureCustom(64, 64, blendbuf);
-
 	// Liquids
-	m_File->seek(startPos + header.ofsLiquid);
+	m_Bytes->seek(startPos + header.ofsLiquid);
 	{
 		if (header.sizeLiquid > 8)
 		{
 			CRange height;
-			m_File->read(&height);
+			m_Bytes->read(&height);
 
 
 			// Set this chunk BBOX
@@ -339,7 +335,7 @@ bool CMapChunk::Load()
 				GetColliderComponent()->SetBounds(bbox);
 			}
 
-			CMapChunkLiquid liquidObject(m_RenderDevice, m_File, header);
+			CMapChunkLiquid liquidObject(m_RenderDevice, m_Bytes, header);
 
 			auto liquidInstance = CreateSceneNode<Liquid_Instance>();
 			liquidObject.CreateInsances(liquidInstance);
@@ -359,7 +355,7 @@ bool CMapChunk::Load()
 		}
 	}
 
-	m_File.reset();
+	m_Bytes.reset();
 
 	// All chunk is holes
 	if (header.holes == UINT16_MAX)
@@ -368,13 +364,64 @@ bool CMapChunk::Load()
 	// Material
 	std::shared_ptr<ADT_MCNK_Material> mat = std::make_shared<ADT_MCNK_Material>(m_RenderDevice);
 
+#if 0
+	// Create chunk texture
+	{
+		// 1. Resize blend texture
+		blendBuff.Resize(256, 256);
+
+		// 2. Create result texture
+		CImageBase resultTexture(256, 256, 32, false);
+
+		if (m_MapTile.GetState() != ILoadable::ELoadableState::Loaded) return false;
+
+		auto image = m_MapTile.m_Textures.at(mcly[0].textureIndex)->diffuseTexture;
+		if (image->GetWidth() != 256 && image->GetHeight() != 256)
+			image->Resize(256, 256);
+
+
+		for (size_t t = 0; t < 256 * 256 * 4; t += 4)
+		{
+			resultTexture.GetDataEx()[t + 0] = image->GetData()[t + 0];
+			resultTexture.GetDataEx()[t + 1] = image->GetData()[t + 1];
+			resultTexture.GetDataEx()[t + 2] = image->GetData()[t + 2];
+			resultTexture.GetDataEx()[t + 3] = 255;
+		}
+
+		for (size_t l = 1; l < header.nLayers; l++)
+		{
+			if (m_MapTile.GetState() != ILoadable::ELoadableState::Loaded) return false;
+
+			auto image = m_MapTile.m_Textures.at(mcly[l].textureIndex)->diffuseTexture;
+			if (image->GetWidth() != 256 && image->GetHeight() != 256)
+				image->Resize(256, 256);
+
+			for (size_t t = 0; t < 256 * 256 * 4; t += 4)
+			{
+				resultTexture.GetDataEx()[t + 0] = lerpUInt8(resultTexture.GetData()[t + 0], image->GetData()[t + 0], blendBuff.GetData()[t + l - 1]);
+				resultTexture.GetDataEx()[t + 1] = lerpUInt8(resultTexture.GetData()[t + 1], image->GetData()[t + 1], blendBuff.GetData()[t + l - 1]);
+				resultTexture.GetDataEx()[t + 2] = lerpUInt8(resultTexture.GetData()[t + 2], image->GetData()[t + 2], blendBuff.GetData()[t + l - 1]);
+			}
+		}
+
+		std::shared_ptr<ITexture> diffuseTexture = m_RenderDevice.GetObjectsFactory().CreateEmptyTexture();
+		diffuseTexture->LoadTextureCustom(256, 256, resultTexture.GetDataEx());
+		mat->SetTexture(0, diffuseTexture);
+	}
+#else
 	for (uint32 i = 0; i < header.nLayers; i++)
 	{
-		mat->SetTexture(i, m_DiffuseTextures[i]); // DXT1
-		//mat->SetTexture(i + 5, m_SpecularTextures[i]); // DXT1
+		mat->SetTexture(i + 0, m_MapTile.m_Textures.at(mcly[i].textureIndex)->diffuseTexture);
+		//mat->SetTexture(i + 5, m_MapTile.m_Textures.at(mcly[i].textureIndex)->specularTexture);
 	}
-	mat->SetTexture(4, m_BlendRBGShadowATexture);
+
+	std::shared_ptr<ITexture> blendRBGShadowATexture = m_RenderDevice.GetObjectsFactory().CreateEmptyTexture();
+	blendRBGShadowATexture->LoadTextureFromImage(blendBuff);
+
+	mat->SetTexture(4, blendRBGShadowATexture);
 	mat->SetLayersCnt(header.nLayers);
+#endif
+
 	mat->SetShadowMapExists(header.flags.has_mcsh == 1);
 
 	{ // Geom High

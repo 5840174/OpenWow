@@ -165,8 +165,7 @@ void CMapWDL::Load()
 	}
 
 	// Minimap
-	uint32* texbuf = new uint32[512 * 512];
-	memset(texbuf, 0, 512 * 512 * 4);
+	std::shared_ptr<CImageBase> mimimapImage = std::make_shared<CImageBase>(512, 512, 32, false);
 
 	// Heightmap
 	vec3 lowres[17][17];
@@ -243,7 +242,7 @@ void CMapWDL::Load()
 							b = (uint8)(b2*t + b1 * (1.0f - t));
 						}
 
-						texbuf[(j * 8 + z) * 512 + i * 8 + x] = (r) | (g << 8) | (b << 16) | (255 << 24);
+						mimimapImage->GetPixel<uint32>(i * 8 + x, j * 8 + z) = (r) | (g << 8) | (b << 16) | (255 << 24);
 					}
 				}
 			}
@@ -252,6 +251,5 @@ void CMapWDL::Load()
 
 	// Finish minimap
 	m_Minimap = m_RenderDevice.GetObjectsFactory().CreateEmptyTexture();
-	m_Minimap->LoadTextureCustom(512, 512, texbuf);
-	delete[] texbuf;
+	m_Minimap->LoadTextureFromImage(mimimapImage);
 }

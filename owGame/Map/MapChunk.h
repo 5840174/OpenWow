@@ -12,22 +12,20 @@ class ZN_API CMapChunk
 	, public CLoadableObject
 {
 public:
-	CMapChunk(IRenderDevice& RenderDevice, const CMap& Map, const std::shared_ptr<CMapTile>& MapTile, const std::shared_ptr<IByteBuffer>& Bytes);
+	CMapChunk(IRenderDevice& RenderDevice, const CMap& Map, const std::shared_ptr<CMapTile>& MapTile, const ADT_MCIN& Chunk, const std::shared_ptr<IByteBuffer>& Bytes);
 	virtual ~CMapChunk();
 
-
-	uint32                                          GetAreaID() const;
+	uint32 GetAreaID() const;
 
 	// SceneNode3D
-	void                                            Initialize() override;
-	std::string                                     GetName() const override;
+	void Initialize() override;
 
 	// ILoadable
-	bool                                            Load() override;
-	bool                                            Delete() override;
+	bool Load() override;
+	bool Delete() override;
 
 private:
-	ADT_MCNK_Header                                 header;
+	ADT_MCNK_Header                 header;
 
 	uint32                          m_AreaID;
 
@@ -36,5 +34,5 @@ private:
 	const CMap&						m_Map;
 	const CMapTile&			        m_MapTile;
 
-	std::shared_ptr<IByteBuffer>    m_File;
+	std::shared_ptr<IByteBuffer>    m_Bytes;
 };

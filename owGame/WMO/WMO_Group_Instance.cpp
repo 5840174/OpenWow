@@ -136,15 +136,8 @@ void CWMO_Group_Instance::CreatePortals(const std::shared_ptr<CWMO_Base_Instance
 //
 // SceneNode3D
 //
-std::string CWMO_Group_Instance::GetName() const
-{
-	return "WMOGroup '" + m_WMOGroupObject.m_GroupName + "'";
-}
-
 void CWMO_Group_Instance::Initialize()
 {
-
-
 	BoundingBox bbox = m_WMOGroupObject.m_Bounds;
 	bbox.calculateCenter();
 	GetColliderComponent()->SetBounds(bbox);

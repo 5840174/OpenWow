@@ -45,7 +45,6 @@ public:
     const WMO_Group& getObject() const { return m_WMOGroupObject; }
 
 	// SceneNode3D
-	std::string GetName() const override;
 	void Initialize() override;
 	void Accept(IVisitor* visitor) override;
 
