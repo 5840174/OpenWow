@@ -123,7 +123,6 @@ std::shared_ptr<IRenderPassPipelined> CRenderPass_M2::CreatePipeline(std::shared
 	pipeline->GetRasterizerState()->SetCullMode(IRasterizerState::CullMode::Back);
 	pipeline->GetRasterizerState()->SetFillMode(IRasterizerState::FillMode::Solid);
 	pipeline->SetRenderTarget(RenderTarget);
-	pipeline->GetRasterizerState()->SetViewport(Viewport);
 	pipeline->SetShader(EShaderType::VertexShader, vertexShader);
 	pipeline->SetShader(EShaderType::PixelShader, pixelShader);
 

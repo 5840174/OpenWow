@@ -44,7 +44,6 @@ std::shared_ptr<IRenderPassPipelined> CRenderPass_ADT_MCNK::CreatePipeline(std::
 	pipeline->GetRasterizerState()->SetCullMode(IRasterizerState::CullMode::Back);
 	pipeline->GetRasterizerState()->SetFillMode(IRasterizerState::FillMode::Solid);
 	pipeline->SetRenderTarget(RenderTarget);
-	pipeline->GetRasterizerState()->SetViewport(Viewport);
 	pipeline->SetShader(EShaderType::VertexShader, vertexShader);
 	pipeline->SetShader(EShaderType::PixelShader, pixelShader);
 

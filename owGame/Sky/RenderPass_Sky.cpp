@@ -44,7 +44,6 @@ std::shared_ptr<IRenderPassPipelined> CRenderPass_Sky::CreatePipeline(std::share
 	pipeline->GetRasterizerState()->SetCullMode(IRasterizerState::CullMode::None);
 	pipeline->GetRasterizerState()->SetFillMode(IRasterizerState::FillMode::Solid);
 	pipeline->SetRenderTarget(RenderTarget);
-	pipeline->GetRasterizerState()->SetViewport(Viewport);
 	pipeline->SetShader(EShaderType::VertexShader, vertexShader);
 	pipeline->SetShader(EShaderType::PixelShader, pixelShader);
 

@@ -45,7 +45,6 @@ std::shared_ptr<IRenderPassPipelined> CRenderPass_WMO::CreatePipeline(std::share
 	pipeline->GetRasterizerState()->SetCullMode(IRasterizerState::CullMode::Back);
 	pipeline->GetRasterizerState()->SetFillMode(IRasterizerState::FillMode::Solid);
 	pipeline->SetRenderTarget(RenderTarget);
-	pipeline->GetRasterizerState()->SetViewport(Viewport);
 	pipeline->SetShader(EShaderType::VertexShader, g_pVertexShader);
 	pipeline->SetShader(EShaderType::PixelShader, g_pPixelShader);
 
