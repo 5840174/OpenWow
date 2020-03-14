@@ -36,7 +36,7 @@ void CSceneWoW::Initialize()
 	
 	Load3D();
 	//Load3D_M2s();
-	TestCreateMap();
+	//TestCreateMap(MapID);
 	LoadUI();
 
 
@@ -96,7 +96,7 @@ bool CSceneWoW::OnWindowKeyPressed(KeyEventArgs & e)
 {
 	if (e.Key == KeyCode::C)
 	{
-		TestCreateMap();
+		TestCreateMap(530);
 		return true;
 	}
 	else if (e.Key == KeyCode::V)
@@ -131,6 +131,8 @@ void CSceneWoW::Load3D()
 	skyManager = GetRootNode3D()->CreateSceneNode<SkyManager>(GetRenderDevice());
 	GetBaseManager().AddManager<ISkyManager>(skyManager);
 	skyManager->Load(0);
+
+	map = GetRootNode3D()->CreateSceneNode<CMap>(GetBaseManager(), GetRenderDevice());
 
 #if 0
 	auto wmo = GetBaseManager().GetManager<IWMOManager>()->Add(GetRenderDevice(), "World\\wmo\\Azeroth\\Buildings\\Stormwind\\Stormwind.wmo");
@@ -186,10 +188,35 @@ void CSceneWoW::Load3D_M2s()
 
 void CSceneWoW::LoadUI()
 {
+	rootForBtns = GetRootNodeUI()->CreateSceneNode<SceneNodeUI>();
+
+	size_t cntrX = 0;
+	size_t cntrY = 0;
+
+	auto dbcMap = GetBaseManager().GetManager<CDBCStorage>();
+	for (const auto& it : dbcMap->DBC_Map())
+	{
+		auto btn = rootForBtns->CreateSceneNode<CUIButtonNode>(GetRenderDevice());
+		btn->CreateDefault();
+		btn->SetText(it->Get_Name());
+
+		uint32 id = it->Get_ID();
+		btn->SetOnClickCallback([this, id] () { this->TestCreateMap(id); });
+		btn->SetTranslate(vec2(cntrX * 180, cntrY * 38));
+
+		cntrY++;
+		if (cntrY > 20)
+		{
+			cntrY = 0;
+			cntrX++;
+		}
+	}
+
+	m_TechniqueUI.AddPass(std::make_shared<CUIButtonPass>(GetRenderDevice(), shared_from_this())->CreatePipeline(GetRenderWindow()->GetRenderTarget(), &GetRenderWindow()->GetViewport()));
 	m_TechniqueUI.AddPass(std::make_shared<CUIFontPass>(GetRenderDevice(), shared_from_this())->CreatePipeline(GetRenderWindow()->GetRenderTarget(), &GetRenderWindow()->GetViewport()));
 }
 
-void CSceneWoW::TestCreateMap()
+void CSceneWoW::TestCreateMap(uint32 MapID)
 {
 	//const int32 x = 40;
 	//const int32 y = 30;
@@ -198,15 +225,14 @@ void CSceneWoW::TestCreateMap()
 	//const int32 y = 32;
 	const int32 x = 26; //FOR BC 2
 	const int32 y = 30;
-	const uint32 mapID = 530;
 
-	if (map != nullptr)
-		TestDeleteMap();
+	skyManager->Load(MapID);
 
-	skyManager->Load(mapID);
+	rootForBtns->GetParent().lock()->RemoveChild(rootForBtns);
+	map->Unload();
 
-	map = GetRootNode3D()->CreateSceneNode<CMap>(GetBaseManager(), GetRenderDevice());
-	map->MapPreLoad(GetBaseManager().GetManager<CDBCStorage>()->DBC_Map()[mapID]);
+
+	map->MapPreLoad(GetBaseManager().GetManager<CDBCStorage>()->DBC_Map()[MapID]);
 	map->MapLoad();
 	map->MapPostLoad();
 	map->EnterMap(x, y);
@@ -220,9 +246,6 @@ void CSceneWoW::TestCreateMap()
 
 void CSceneWoW::TestDeleteMap()
 {
-	GetRootNode3D()->RemoveChild(map);
-
-	_ASSERT(map.use_count() == 1);
-	map.reset();
+	map->Unload();
 }
 

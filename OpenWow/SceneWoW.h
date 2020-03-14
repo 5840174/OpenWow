@@ -24,7 +24,7 @@ private:
 	void Load3D_M2s();
 	void LoadUI();
 
-	void TestCreateMap();
+	void TestCreateMap(uint32 mapID);
 	void TestDeleteMap();
 
 private:
@@ -32,17 +32,6 @@ private:
 	std::shared_ptr<CM2_Base_Instance> m2Instance;
 	std::shared_ptr<SkyManager> skyManager;
 	std::shared_ptr<CMap> map;
-	
 
-private: // Advanced
-	struct QueryCreatures
-	{
-		std::string name;
-		uint32 modelID;
-	};
-	std::map<uint64, QueryCreatures> m_EntriesName;
-
-	std::map<uint64, std::shared_ptr<ISceneNode3D>> m_Objects;
-
-
+	std::shared_ptr<SceneNodeUI> rootForBtns;
 };
