@@ -19,6 +19,8 @@ CM2_Skin_Batch::CM2_Skin_Batch(IBaseManager& BaseManager, IRenderDevice& RenderD
 	// Shader ID
 	newShader = SkinBatchProto.shader_id;
 	//Log::Info("Shader = '%d'", newShader);
+	//if (newShader == -1)
+	//	_ASSERT(false);
 
 	// Geometry data
 	m_PriorityPlan = SkinBatchProto.priorityPlane;

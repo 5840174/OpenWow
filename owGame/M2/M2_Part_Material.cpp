@@ -25,9 +25,10 @@ CM2_Part_Material::CM2_Part_Material(IBaseManager& BaseManager, IRenderDevice& R
 	//m_IsLightingDisable = M2Material.flags.UNLIT;
 	//m_IsFogDisable = M2Material.flags.UNFOGGED;
 
-	m_M2BlendMode = M2Material.m_BlendMode;
+	m_M2BlendMode = M2Blend_To_EGxBlend[M2Material.BlendMode].EGxBLend;
+	Log::Green("Blend mode = %d (original %d)", M2Blend_To_EGxBlend[M2Material.BlendMode].EGxBLend, M2Material.BlendMode);
 
-	m_BlendState = BaseManager.GetManager<IWoWObjectsCreator>()->GetEGxBlend(M2Blend_To_EGxBlend[m_M2BlendMode].EGxBLend);
+	m_BlendState = BaseManager.GetManager<IWoWObjectsCreator>()->GetEGxBlend(M2Blend_To_EGxBlend[M2Material.BlendMode].EGxBLend);
 
 	m_DepthStencilState = RenderDevice.GetObjectsFactory().CreateDepthStencilState();
 	m_DepthStencilState->SetDepthMode(IDepthStencilState::DepthMode(M2Material.flags.DEPTHTEST == 0, (M2Material.flags.DEPTHWRITE == 0) ? IDepthStencilState::DepthWrite::Enable : IDepthStencilState::DepthWrite::Disable));

@@ -35,7 +35,7 @@ struct SM2_Header
     M2Array<SM2_Vertex>				vertices;
 
 	// Skin
-    M2Array<SM2_SkinSection> skin_profiles;
+    M2Array<SM2_SkinSection>        skin_profiles;
 
     // Materials
     M2Array<SM2_Color>				colors;							// Color and alpha animations definitions.

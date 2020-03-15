@@ -201,6 +201,16 @@ struct SM2_TextureTransform
 
 struct SM2_Material
 {
+	struct Flags
+	{
+		uint16 UNLIT : 1;
+		uint16 UNFOGGED : 1;
+		uint16 TWOSIDED : 1;
+		uint16 DEPTHTEST : 1;
+		uint16 DEPTHWRITE : 1;
+		uint16 : 11;
+	} flags;
+
 	enum BlendModes : uint16
 	{
 		M2BLEND_OPAQUE = 0,
@@ -212,18 +222,7 @@ struct SM2_Material
 		M2BLEND_MOD2X,
 
 		COUNT
-	};
-
-	struct Flags
-	{
-		uint16 UNLIT : 1;
-		uint16 UNFOGGED : 1;
-		uint16 TWOSIDED : 1;
-		uint16 DEPTHTEST : 1;
-		uint16 DEPTHWRITE : 1;
-		uint16 : 11;
-	} flags;
-	BlendModes m_BlendMode;
+	} BlendMode;
 };
 
 

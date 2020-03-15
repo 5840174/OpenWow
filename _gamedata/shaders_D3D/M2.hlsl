@@ -56,8 +56,7 @@ sampler   DiffuseTexture1Sampler : register(s1);
 StructuredBuffer<float4x4> Instances  : register(t3);
 StructuredBuffer<float4x4> Bones  : register(t4);
 
-float4 Test(VertexShaderOutput IN);
-
+float4 MixColorAndTexture(uint BlendMode, float4 _in, float4 tex0);
 
 VertexShaderOutput DoPSRender(VertexShaderInput IN, float4x4 ModelMatrix)
 {
@@ -133,19 +132,58 @@ DefferedRenderPSOut PS_main(VertexShaderOutput IN) : SV_TARGET
 			discard;
 	}
 	
-	resultColor.a = resultColor.a * gColor.a * gTextureWeight;
+	float4 colorAndAlpha = gColor;
 	
-	// It looks like in order to get correct picture the color from SMODoodadDef should be applied only to opaque submeshes of M2.
 	if (gBlendMode == 0 || gBlendMode == 1) 
-		resultColor.rgb *= gInstanceColor.rgb;
-		
-	resultColor.rgb *= gColor.rgb;
+		colorAndAlpha.rgb *= gInstanceColor.rgb; // It looks like in order to get correct picture the color from SMODoodadDef should be applied only to opaque submeshes of M2.
+	
+	colorAndAlpha.a *= gTextureWeight /*TODO: all M2 alpha*/;
+	
+
+	resultColor = MixColorAndTexture(gBlendMode, colorAndAlpha, resultColor);
 	
 	DefferedRenderPSOut OUT;
 	OUT.Diffuse = resultColor;
 	OUT.Specular = float4(0.5f, 0.5f, 0.5f, 1.0f);
 	OUT.NormalWS = float4(IN.normal, 0.0f);
 	return OUT;
+}
+
+
+float4 MixColorAndTexture(uint BlendMode, float4 _in, float4 tex0)
+{
+	return _in * tex0;
+	
+	if (BlendMode == 0) // M2BLEND_OPAQUE
+	{
+		return float4(_in.rgb * tex0.rgb, _in.a);
+	}
+	else if (BlendMode == 1) // M2BLEND_ALPHA_KEY
+	{
+		return float4(_in.rgb * tex0.rgb, _in.a);
+	}
+	else if (BlendMode == 2) // M2BLEND_ALPHA
+	{
+		return float4(lerp(tex0.rgb, _in.rgb, _in.a), _in.a);
+	}
+	else if (BlendMode == 3) // M2BLEND_ADD
+	{
+		return float4(_in.rgb + tex0.rgb, _in.a + tex0.a);
+	}
+	else if (BlendMode == 4) // M2BLEND_MOD
+	{
+		return float4(_in.rgb * tex0.rgb, _in.a * tex0.a);
+	}
+	else if (BlendMode == 5) // M2BLEND_MOD2X
+	{
+		return float4(_in.rgb * tex0.rgb * 2.0f, _in.a * tex0.a * 2.0f);
+	}
+	else if (BlendMode == 10) // M2BLEND_NO_ALPHA_ADD
+	{
+		return float4(_in.rgb + tex0.rgb, _in.a);
+	}
+	
+	return float4(1.0f, 0.0f, 0.0f, 1.0f);
 }
 
 float4 Test(VertexShaderOutput IN)
