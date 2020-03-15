@@ -3,9 +3,6 @@
 // General
 #include "SkyManager.h"
 
-// Additional
-#include "Sky_Material.h"
-
 const float C_SkyRadius = 400.0f;
 const uint32 C_SkySegmentsCount = 32;
 
@@ -70,6 +67,7 @@ void SkyManager::Update(const UpdateEventArgs& e)
 		return;
 
 	Calculate(e.CameraForCulling, 1440/*GetMapController()->getTime()->GetTime()*/);
+
 	SetTranslate(e.CameraForCulling->GetTranslation());
 }
 
@@ -87,7 +85,7 @@ void SkyManager::Calculate(const ICameraComponent3D* camera, uint32 _time)
 
 	// interpolation
 	m_Interpolated.Clear();
-	for (auto& it : skies)
+	for (const auto& it : skies)
 	{
 		if (it->m_Wight > 0.0f)
 		{
@@ -157,10 +155,8 @@ void SkyManager::InitBuffer()
 	geometry->AddVertexBuffer(BufferBinding("COLOR", 0), colorsBuffer);
 
 	// Material
-	std::shared_ptr<IMaterial> material = std::make_shared<Sky_Material>(m_RenderDevice);
-
 	std::shared_ptr<IModel> model = m_RenderDevice.GetObjectsFactory().CreateModel();
-	model->AddConnection(material, geometry);
+	model->AddConnection(nullptr, geometry);
 
 	GetComponent<IModelsComponent3D>()->AddModel(model);
 }

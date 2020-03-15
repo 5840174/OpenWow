@@ -120,9 +120,9 @@ void CSceneWoW::OnWindowKeyReleased(KeyEventArgs & e)
 //
 void CSceneWoW::Load3D()
 {
-	//auto wmo = GetBaseManager().GetManager<IWoWObjectsCreator>()->LoadWMO(GetRenderDevice(), "World\\wmo\\Outland\\DarkPortal\\DarkPortal_Temple.wmo");
-	//wmoInstance = GetRootNode3D()->CreateSceneNode<CWMO_Base_Instance>(wmo);
-	//GetBaseManager().GetManager<ILoader>()->AddToLoadQueue(wmoInstance);
+	auto wmo = GetBaseManager().GetManager<IWoWObjectsCreator>()->LoadWMO(GetRenderDevice(), /*"World\\wmo\\Lorderon\\Undercity\\Undercity.wmo"*/"World\\wmo\\Outland\\DarkPortal\\DarkPortal_Temple.wmo");
+	wmoInstance = GetRootNode3D()->CreateSceneNode<CWMO_Base_Instance>(wmo);
+	GetBaseManager().GetManager<ILoader>()->AddToLoadQueue(wmoInstance);
 
 	//auto m2 = GetBaseManager().GetManager<IWoWObjectsCreator>()->LoadM2(GetRenderDevice(), "World\\Expansion01\\Doodads\\Netherstorm\\BioDomes\\NS_BioDome_All_FX_South.M2");
 	//m2Instance = GetRootNode3D()->CreateSceneNode<CM2_Base_Instance>(m2);

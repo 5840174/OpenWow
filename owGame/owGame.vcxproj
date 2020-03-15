@@ -121,7 +121,6 @@
     <ClCompile Include="Sky\Sky.cpp" />
     <ClCompile Include="Sky\SkyManager.cpp" />
     <ClCompile Include="Sky\SkyParams.cpp" />
-    <ClCompile Include="Sky\Sky_Material.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
@@ -306,7 +305,6 @@
     <ClInclude Include="Sky\Sky.h" />
     <ClInclude Include="Sky\SkyManager.h" />
     <ClInclude Include="Sky\SkyParams.h" />
-    <ClInclude Include="Sky\Sky_Material.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="WMO\RenderPass_WMO.h" />
     <ClInclude Include="WMO\WMO.h" />

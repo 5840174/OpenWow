@@ -39,7 +39,7 @@ public:
 
 	void                                            LoadParams(const CDBCStorage* DBCStorage, LightParamsNames _param);
 
-	CSkyParams&                                      Interpolate(uint32 _time);
+	CSkyParams&                                     Interpolate(uint32 _time);
 
 private:
 	const DBC_LightRecord*                          m_LightRecord;

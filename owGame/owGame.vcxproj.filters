@@ -357,9 +357,6 @@
     <ClCompile Include="Sky\Sky.cpp">
       <Filter>Sky</Filter>
     </ClCompile>
-    <ClCompile Include="Sky\Sky_Material.cpp">
-      <Filter>Sky</Filter>
-    </ClCompile>
     <ClCompile Include="Sky\SkyManager.cpp">
       <Filter>Sky</Filter>
     </ClCompile>
@@ -891,9 +888,6 @@
       <Filter>Liquid</Filter>
     </ClInclude>
     <ClInclude Include="Sky\Sky.h">
-      <Filter>Sky</Filter>
-    </ClInclude>
-    <ClInclude Include="Sky\Sky_Material.h">
       <Filter>Sky</Filter>
     </ClInclude>
     <ClInclude Include="Sky\SkyManager.h">

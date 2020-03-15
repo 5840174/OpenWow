@@ -65,11 +65,10 @@ struct SWMO_Group_HeaderDef
 	uint16          portalCount; // Number of items used from the MOPR chunk
 
 	// Batches
-	uint16 batchCounts[4];
-	//uint16 transBatchCount;
-	//uint16 intBatchCount;
-	//uint16 extBatchCount;
-	//uint16 unk0;
+	uint16 transBatchCount;
+	uint16 intBatchCount;
+	uint16 extBatchCount;
+	uint16 unk0;
 
 	uint8           fogIds[4]; // Up to four indices into the WMO fog list
 	uint32          liquidType; // LiquidType related, see below in the MLIQ chunk.
@@ -93,6 +92,7 @@ struct SWMO_Group_MaterialDef
 		uint8 UNK_0x40     : 1;
 		uint8 COLLIDE_HIT  : 1;
 	} flags;
+
 	uint8 materialId; // 0xff for collision
 
 	bool isTransFace()  { return flags.UNK_0x01 && (flags.DETAIL || flags.RENDER); }

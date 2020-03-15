@@ -133,13 +133,16 @@ DefferedRenderPSOut PS_main(VertexShaderOutput IN) : SV_TARGET
 			discard;
 	}
 	
-	resultColor.a *= gTextureWeight;
-	resultColor.rgb *= gInstanceColor.rgb;
+	resultColor.a = resultColor.a * gColor.a * gTextureWeight;
+	
+	// It looks like in order to get correct picture the color from SMODoodadDef should be applied only to opaque submeshes of M2.
+	if (gBlendMode == 0 || gBlendMode == 1) 
+		resultColor.rgb *= gInstanceColor.rgb;
+		
 	resultColor.rgb *= gColor.rgb;
-	resultColor.a *= gColor.a;
 	
 	DefferedRenderPSOut OUT;
-	OUT.Diffuse = float4(resultColor.rgb, resultColor.a);
+	OUT.Diffuse = resultColor;
 	OUT.Specular = float4(0.5f, 0.5f, 0.5f, 1.0f);
 	OUT.NormalWS = float4(IN.normal, 0.0f);
 	return OUT;
