@@ -10,7 +10,7 @@
 // Additional
 #include "WMO_Group_Instance.h"
 
-#ifndef WMO_DISABLE_PORTALS
+#ifdef USE_WMO_PORTALS_CULLING
 
 CWMO_PortalsController::CWMO_PortalsController()
 {}

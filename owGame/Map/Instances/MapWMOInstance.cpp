@@ -10,15 +10,17 @@ CMapWMOInstance::CMapWMOInstance(const std::shared_ptr<CWMO>& WMOObject, const A
 	: CWMO_Base_Instance(WMOObject)
 	, m_PlacementInfo(_placementInfo)
 {
-
 }
 
 CMapWMOInstance::~CMapWMOInstance()
 {
-	//Log::Info("ADT_WMO Deleted");
 }
 
 
+
+//
+// ISceneNode
+//
 void CMapWMOInstance::Initialize()
 {
 	uint16 doodadSetIndex = m_PlacementInfo.doodadSetIndex;
@@ -56,9 +58,7 @@ void CMapWMOInstance::Accept(IVisitor* visitor)
 void CMapWMOInstance::UpdateLocalTransform()
 {
 	glm::mat4 localTransform = glm::mat4(1.0f);
-
 	localTransform = glm::translate(localTransform, GetTranslation());
-
 	localTransform = glm::rotate(localTransform, glm::radians(GetRotation().y - 90.0f), glm::vec3(0, 1, 0));
 	localTransform = glm::rotate(localTransform, glm::radians(-GetRotation().x), glm::vec3(0, 0, 1));
 	localTransform = glm::rotate(localTransform, glm::radians(GetRotation().z), glm::vec3(1, 0, 0));

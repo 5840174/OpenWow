@@ -138,10 +138,9 @@ void CWMO_Group_Instance::CreatePortals(const std::shared_ptr<CWMO_Base_Instance
 //
 void CWMO_Group_Instance::Initialize()
 {
-	BoundingBox bbox = m_WMOGroupObject.m_Bounds;
-	bbox.calculateCenter();
-	GetColliderComponent()->SetBounds(bbox);
-	GetColliderComponent()->SetDebugDrawMode(false);
+	GetColliderComponent()->SetCullStrategy(IColliderComponent3D::ECullStrategy::ByFrustrumAndDistance);
+	GetColliderComponent()->SetBounds(m_WMOGroupObject.m_Bounds);
+	GetColliderComponent()->SetDebugDrawMode(true);
 }
 
 void CWMO_Group_Instance::Accept(IVisitor* visitor)

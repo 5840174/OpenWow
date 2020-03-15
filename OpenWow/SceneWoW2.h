@@ -21,9 +21,6 @@ public:
 	virtual void OnWindowKeyReleased(KeyEventArgs& e) override;
 
 private:
-	void Load3D();
-
-private:
 	CWMO_Base_Instance* wmoInstance;
 	CM2_Base_Instance* m2Instance;
 	SkyManager* skyManager;

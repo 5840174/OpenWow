@@ -63,6 +63,7 @@ void CMapTile::Initialize()
 			glm::vec3(translate.x + C_TileSize, Math::MinFloat, translate.z + C_TileSize)
 		);
 		colliderComponent->SetBounds(bbox);
+		colliderComponent->SetCullStrategy(IColliderComponent3D::ECullStrategy::ByFrustrumAndDistance2D);
 	}
 }
 

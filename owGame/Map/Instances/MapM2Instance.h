@@ -6,11 +6,11 @@
 
 struct ADT_MDXDef
 {
-	uint32 nameIndex;
-	uint32 uniqueId;
+	uint32    nameIndex;
+	uint32    uniqueId;
 	glm::vec3 position;
 	glm::vec3 rotation;
-	uint16 scale;
+	uint16    scale;
     struct
     {
         uint16 Flag_Biodome : 1;

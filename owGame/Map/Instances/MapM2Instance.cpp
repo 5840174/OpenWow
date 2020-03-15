@@ -54,13 +54,10 @@ void CMapM2Instance::Accept(IVisitor* visitor)
 void CMapM2Instance::UpdateLocalTransform()
 {
 	glm::mat4 localTransform = glm::mat4(1.0f);
-
 	localTransform = glm::translate(localTransform, GetTranslation());
-
 	localTransform = glm::rotate(localTransform, glm::radians(GetRotation().y - 90.0f), glm::vec3(0, 1, 0));
 	localTransform = glm::rotate(localTransform, glm::radians(-GetRotation().x)       , glm::vec3(0, 0, 1));
 	localTransform = glm::rotate(localTransform, glm::radians(GetRotation().z)        , glm::vec3(1, 0, 0));
-
 	localTransform = glm::scale(localTransform, GetScale());
 
 	SetLocalTransform(localTransform);

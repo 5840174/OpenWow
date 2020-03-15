@@ -139,8 +139,13 @@ void WMO_Group::CreateInsances(const std::shared_ptr<ISceneNode3D>& Parent) cons
 		if (m2)
 		{
 			auto inst = Parent->CreateSceneNode<CWMO_Doodad_Instance>(m2, index, placement);
+
+			if (!m_GroupHeader.flags.DO_NOT_USE_LIGHTING_DIFFUSE)
+				inst->setColor(placement.getColor());
+
 			inst->Load();
 			inst->SetState(ELoadableState::Loaded);
+
 			//m_BaseManager.GetManager<ILoader>()->AddToLoadQueue(inst);
 			parentAsWMOGroupInstance->AddRoomObject(inst);
 		}

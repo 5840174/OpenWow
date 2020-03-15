@@ -39,12 +39,10 @@ bool CM2_Base_Instance::Load()
 
 	if (getM2().getSkeleton().hasBones())
 	{
-		m_SkeletonComponent = std::make_shared<CM2SkeletonComponent3D>(*this);
-		AddComponent(m_SkeletonComponent);
+		m_SkeletonComponent = AddComponent(std::make_shared<CM2SkeletonComponent3D>(*this));
 	}
 
-	//m_ParticleComponent = std::make_shared<CM2ParticlesComponent3D>(*this);
-	//AddComponent(m_ParticleComponent);
+	m_ParticleComponent = AddComponent(std::make_shared<CM2ParticlesComponent3D>(*this));
 
 	UpdateLocalTransform();
 	CreateInstances();
@@ -98,6 +96,7 @@ const std::shared_ptr<ITexture>& CM2_Base_Instance::getSpecialTexture(SM2_Textur
 
 void CM2_Base_Instance::Initialize()
 {
+	GetColliderComponent()->SetCullStrategy(IColliderComponent3D::ECullStrategy::ByFrustrumAndDistance);
 	GetColliderComponent()->SetCullDistance(GetBaseManager().GetManager<ISettings>()->GetGroup("WoWSettings")->GetSettingT<float>("ADT_MDX_Distance")->Get());
 	GetColliderComponent()->SetBounds(getM2().GetBounds());
 	GetColliderComponent()->SetDebugDrawMode(false);
@@ -114,8 +113,8 @@ void CM2_Base_Instance::Update(const UpdateEventArgs & e)
 	if (m_Animator)
 		m_Animator->Update(e.TotalTime, e.DeltaTime);
 
-	//if (m_ParticleComponent)
-	//	m_ParticleComponent->Update(e);
+	if (m_ParticleComponent)
+		m_ParticleComponent->Update(e);
 
 
 }

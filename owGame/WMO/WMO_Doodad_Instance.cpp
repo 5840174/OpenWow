@@ -16,23 +16,6 @@ CWMO_Doodad_Instance::CWMO_Doodad_Instance(const std::shared_ptr<CM2>& M2Object,
 		SetRotationQuaternion(glm::quat(_placement.orientation.w, -_placement.orientation.z, _placement.orientation.x, _placement.orientation.y));
 		SetScale(glm::vec3(_placement.scale, -_placement.scale, -_placement.scale));
 	}
-
-	/*if (_mdxObject->getFilename().find("LD_LIGHTSHAFT") != -1)
-	{
-		Log::Green("MODEL [%s] contains color [%f, %f, %f, %f]", _mdxObject->getFilename().c_str(), _placement.getColor().x, _placement.getColor().y, _placement.getColor().z, _placement.getColor().w);
-	}*/
-
-	//if (!m_ParentGroup->m_Header.flags.IS_OUTDOOR)
-	{
-		//m_DoodadColor = _placement.getColor();
-	}
-	//else
-	{
-		//m_DoodadColor = vec4(1.0f);
-	}
-	//m_Object->setDoodadColor(_placement.getColor());
-
-
 }
 
 CWMO_Doodad_Instance::~CWMO_Doodad_Instance()

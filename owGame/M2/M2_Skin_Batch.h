@@ -21,7 +21,6 @@ public:
 
 	const std::shared_ptr<const CM2_Part_Material>& GetM2Material() const {	return m_M2ModelMaterial; }
 	void UpdateMaterialProps(const RenderEventArgs& RenderEventArgs, const CM2_Base_Instance* M2Instance);
-	void UpdateConstantBuffer() const override;
 
 public:
 	int32												m_PriorityPlan;
@@ -42,32 +41,31 @@ private:
 		ShaderM2BatchProperties()
 			: gBlendMode(0)
 			, gShader(0)
-
-			, gColorEnable(false)
-			, gTextureWeightEnable(false)
 			, gTextureAnimEnable(false)
 			, gTextureWeight(1.0f)
 
 			, gColor(glm::vec4(1.0))
+
 			, gTextureAnimMatrix(glm::mat4(1.0f))
+
+			, gInstanceColor(glm::vec4(1.0))
 		{}
 
 		uint32     gBlendMode;
 		uint32     gShader;
-		glm::vec2   __padding;
-
-		uint32     gColorEnable;
-		uint32     gTextureWeightEnable;
 		uint32     gTextureAnimEnable;
 		float      gTextureWeight;
+		//--------------------------------------------------------------( 16 bytes )
 
 		glm::vec4  gColor;
+		//--------------------------------------------------------------( 16 bytes )
+
 		glm::mat4  gTextureAnimMatrix;
+		//--------------------------------------------------------------( 16 * 4 bytes )
 
-
-		//-------------------------- ( 32 bytes )
+		glm::vec4  gInstanceColor;
+		//--------------------------------------------------------------( 16 bytes )
 	};
-	ShaderM2BatchProperties* m_Properties;
 
 private:
 	IBaseManager& m_BaseManager;

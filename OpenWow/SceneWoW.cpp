@@ -55,7 +55,7 @@ void CSceneWoW::Initialize()
 	m_Technique3D.AddPass(std::make_shared<CRenderPass_M2>(GetRenderDevice(), sceneListPass, false)->CreatePipeline(GetRenderWindow()->GetRenderTarget(), &GetRenderWindow()->GetViewport()));
 	//m_Technique3D.AddPass(std::make_shared<CRenderPass_M2_Instanced>(GetRenderDevice(), sceneListPass, true)->CreatePipeline(GetRenderWindow()->GetRenderTarget(), &GetRenderWindow()->GetViewport()));
 	//m_Technique3D.AddPass(std::make_shared<CDrawBoundingBoxPass>(GetRenderDevice(), shared_from_this())->CreatePipeline(GetRenderWindow()->GetRenderTarget(), &GetRenderWindow()->GetViewport()));
-	//m_Technique3D.AddPass(std::make_shared<CMaterialParticlePass>(GetRenderDevice(), shared_from_this())->CreatePipeline(GetRenderWindow()->GetRenderTarget(), &GetRenderWindow()->GetViewport()));
+	m_Technique3D.AddPass(std::make_shared<CMaterialParticlePass>(GetRenderDevice(), shared_from_this())->CreatePipeline(GetRenderWindow()->GetRenderTarget(), &GetRenderWindow()->GetViewport()));
 
 }
 
@@ -202,11 +202,11 @@ void CSceneWoW::LoadUI()
 	{
 		auto btn = rootForBtns->CreateSceneNode<CUIButtonNode>(GetRenderDevice());
 		btn->CreateDefault();
-		btn->SetText(it->Get_Directory());
+		btn->SetText(it->Get_Name());
 
 		uint32 id = it->Get_ID();
 		btn->SetOnClickCallback([this, id] (const ISceneNodeUI* Node, glm::vec2 Point) { this->TestCreateMap(id); });
-		btn->SetTranslate(glm::vec2(cntrX * 180, cntrY * 38));
+		btn->SetTranslate(glm::vec2(cntrX * 280, cntrY * 38));
 
 		cntrY++;
 		if (cntrY > 20)

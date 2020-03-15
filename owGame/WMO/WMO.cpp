@@ -55,6 +55,7 @@ void CWMO::CreateInsances(const std::shared_ptr<ISceneNode3D>& Parent) const
 		m_BaseManager.GetManager<ILoader>()->AddToLoadQueue(groupInstance);
 	}
 
+#ifdef USE_WMO_PORTALS_CULLING
 	for (const auto& groupPtr : parentAsWMOInstance->getGroupInstances())
 	{
 		if (auto group = groupPtr.lock())
@@ -63,6 +64,7 @@ void CWMO::CreateInsances(const std::shared_ptr<ISceneNode3D>& Parent) const
 		}
 		else _ASSERT(false);
 	}
+#endif
 
 	for (auto& it : m_Lights)
 	{
@@ -244,12 +246,13 @@ bool CWMO::Load()
 		}
 	}
 
-	if (skyboxFilename) delete[] skyboxFilename;
+	if (skyboxFilename) 
+		delete[] skyboxFilename;
 
 	// Create portal controller
 	if (portals.size() > 0)
 	{
-#ifndef WMO_DISABLE_PORTALS
+#ifdef USE_WMO_PORTALS_CULLING
 		m_PortalController = std::make_shared<CWMO_PortalsController>();
 
 		for (const auto& it : portalsReferences)

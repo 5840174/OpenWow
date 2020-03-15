@@ -18,6 +18,11 @@
 */
 #define USE_M2_MODELS
 
+/**
+  * Enable or disable WMO culling by portals
+*/
+//#define USE_WMO_PORTALS_CULLING
+
 
 // Interfaces
 #include "Interfaces/ILiquid.h"

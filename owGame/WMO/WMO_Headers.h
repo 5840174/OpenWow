@@ -155,8 +155,7 @@ struct SWMO_Doodad_PlacementInfo
 
 	inline glm::vec4 getColor() const
 	{
-		return glm::vec4
-		(
+		return glm::vec4(
 			static_cast<float>(color.r) / 255.0f,
 			static_cast<float>(color.g) / 255.0f,
 			static_cast<float>(color.b) / 255.0f,

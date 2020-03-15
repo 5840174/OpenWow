@@ -24,15 +24,18 @@ cbuffer Material : register(b2)
 {
 	uint      gBlendMode;
 	uint      gShader;
-	float2    __padding0;
-	
-	bool      gColorEnable;
-	bool      gTextureWeightEnable;
 	bool      gTextureAnimEnable;
 	float     gTextureWeight;
-	
+	//--------------------------------------------------------------( 16 bytes )
+		
 	float4    gColor;
+	//--------------------------------------------------------------( 16 bytes )
+	
 	float4x4  gTextureAnimMatrix;
+	//--------------------------------------------------------------( 16 * 4 bytes )
+	
+	float4    gInstanceColor;
+	//--------------------------------------------------------------( 16 bytes )
 };
 
 // Uniforms
@@ -113,40 +116,32 @@ VertexShaderOutput VS_main_Inst(VertexShaderInput IN, uint InstanceID : SV_Insta
 
 DefferedRenderPSOut PS_main(VertexShaderOutput IN) : SV_TARGET
 {
-	//float4 resultColor = Test(IN);
 	float4 resultColor = DiffuseTexture0.Sample(DiffuseTexture0Sampler, float2(IN.texCoord0.x, 1.0f - IN.texCoord0.y));
-		
-	float alpha = 1.0f;
-	
-	if (gColorEnable)
-	{
-		resultColor.rgb *= (gColor.rgb * gColor.a);
-		alpha *= gColor.a;
-	}
-	
-	if (gTextureWeightEnable)
-	{
-		resultColor.rgb *= gTextureWeight;
-		//alpha *= gTextureWeight;
-	}
 	
 	if (gBlendMode == 0) // GxBlend_Opaque
 	{
-		alpha = 1.0f;
+		resultColor.a = 1.0f;
 	}
 	else if (gBlendMode == 1) // GxBlend_AlphaKey
 	{
-		if (resultColor.a < ((224.0f / 255.0f) * alpha)) 
+		if (resultColor.a < ((224.0f / 255.0f))) 
 			discard;
 	}
 	else 
 	{
-		if (resultColor.a < ((1.0f / 255.0f) * alpha)) 
+		if (resultColor.a < ((1.0f / 255.0f))) 
 			discard;
 	}
 	
+	resultColor.a *= 2.0f;
+	
+	resultColor.rgb *= gTextureWeight;
+	resultColor.rgb *= gInstanceColor.rgb;
+	resultColor.rgb *= gColor.rgb;
+	resultColor.a *= gColor.a;
+	
 	DefferedRenderPSOut OUT;
-	OUT.Diffuse = float4(resultColor.rgb, resultColor.a * alpha);
+	OUT.Diffuse = float4(resultColor.rgb, resultColor.a);
 	OUT.Specular = float4(0.5f, 0.5f, 0.5f, 1.0f);
 	OUT.NormalWS = float4(IN.normal, 0.0f);
 	return OUT;
@@ -162,18 +157,6 @@ float4 Test(VertexShaderOutput IN)
 	
 	_in = tex0;
 	
-	if (gColorEnable)
-	{
-		_in.rgb *= (gColor.rgb * gColor.a);
-	}
-
-	if (gTextureWeightEnable)
-	{
-		_in.a *= gTextureWeight;
-	}
-	
-	return _in;
-
 	if (gShader == 0)
 	{
 		//Combiners_Add	

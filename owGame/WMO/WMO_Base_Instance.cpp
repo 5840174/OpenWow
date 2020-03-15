@@ -47,8 +47,9 @@ const CWMO& CWMO_Base_Instance::getWMO() const
 //
 void CWMO_Base_Instance::Initialize()
 {
+	GetColliderComponent()->SetCullStrategy(IColliderComponent3D::ECullStrategy::ByFrustrumAndDistance);
 	GetColliderComponent()->SetBounds(getWMO().GetBounds());
-	GetColliderComponent()->SetDebugDrawMode(false);
+	GetColliderComponent()->SetDebugDrawMode(true);
 }
 
 void CWMO_Base_Instance::Update(const UpdateEventArgs& e)
@@ -56,7 +57,7 @@ void CWMO_Base_Instance::Update(const UpdateEventArgs& e)
 	if (GetState() != ILoadable::ELoadableState::Loaded)
 		return;
 
-#ifndef WMO_DISABLE_PORTALS
+#ifdef USE_WMO_PORTALS_CULLING
 	if (m_WMOObject->m_PortalController)
 	{
 		m_WMOObject->m_PortalController->Update(this, e.CameraForCulling);

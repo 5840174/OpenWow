@@ -14,9 +14,6 @@ CM2_Skin_Batch::CM2_Skin_Batch(IBaseManager& BaseManager, IRenderDevice& RenderD
 	, m_M2Model(M2Model)
 	, m_SkinBatchProto(SkinBatchProto)
 {
-	m_Properties = (ShaderM2BatchProperties*)_aligned_malloc(sizeof(ShaderM2BatchProperties), 16);
-	(*m_Properties) = ShaderM2BatchProperties();
-
 	SetWrapper(this);
 
 	// Shader ID
@@ -71,61 +68,44 @@ CM2_Skin_Batch::CM2_Skin_Batch(IBaseManager& BaseManager, IRenderDevice& RenderD
 
 CM2_Skin_Batch::~CM2_Skin_Batch()
 {
-	_aligned_free(m_Properties);
 }
 
 void CM2_Skin_Batch::UpdateMaterialProps(const RenderEventArgs& RenderEventArgs, const CM2_Base_Instance* m2Instance)
 {
+	ShaderM2BatchProperties props;
+
 	// Shader
-	m_Properties->gShader = /*newShader*/0;
+	props.gShader = /*newShader*/0;
 
 	// Blend mode
-	m_Properties->gBlendMode = m_M2ModelMaterial->getBlendMode();
+	props.gBlendMode = m_M2ModelMaterial->getBlendMode();
 
 	// Model color
-	bool isColorEnable = (m_Color != nullptr);
-	m_Properties->gColorEnable = isColorEnable;
-	if (isColorEnable)
-	{
-		m_Properties->gColor = m_Color->GetColorAndAlpha(m2Instance, static_cast<uint32>(RenderEventArgs.TotalTime));
-	}
+	if (m_Color != nullptr)
+		props.gColor = m_Color->GetColorAndAlpha(m2Instance, static_cast<uint32>(RenderEventArgs.TotalTime));
 
 	// Texture alpha
-	bool isTextureWeightEnable = (m_TextureWeight != nullptr);
-	m_Properties->gTextureWeightEnable = isTextureWeightEnable;
-	if (isTextureWeightEnable)
-	{
-		m_Properties->gTextureWeight = m_TextureWeight->GetWeight(m2Instance, static_cast<uint32>(RenderEventArgs.TotalTime));
-	}
+	if (m_TextureWeight != nullptr)
+		props.gTextureWeight = m_TextureWeight->GetWeight(m2Instance, static_cast<uint32>(RenderEventArgs.TotalTime));
 
 	// Texture transform
-	bool isTextureTransformEnable = (m_TextureTransform != nullptr);
-	m_Properties->gTextureAnimEnable = isTextureTransformEnable;
-	if (isTextureTransformEnable)
-	{
-		m_Properties->gTextureAnimMatrix = m_TextureTransform->GetTransform(m2Instance, static_cast<uint32>(RenderEventArgs.TotalTime));
-	}
+	props.gTextureAnimEnable = m_TextureTransform != nullptr;
+	if (m_TextureTransform != nullptr)
+		props.gTextureAnimMatrix = m_TextureTransform->GetTransform(m2Instance, static_cast<uint32>(RenderEventArgs.TotalTime));
 
+	// Instance color (for WMO doodads)
+	props.gInstanceColor = m2Instance->getColor();
 
 	// Textures
 	for (uint32 i = 0; i < m_Textures.size(); i++)
 	{
 		std::shared_ptr<const CM2_Part_Texture> m2Texture = m_Textures[i].lock();
 		if (m2Texture == nullptr)
-		{
 			continue;
-		}
 
 		SetTexture(i, m2Texture->GetTexture(m2Instance));
-
 		GetSampler(i)->SetWrapMode(m2Texture->GetTextureWrapX(), m2Texture->GetTextureWrapY());
 	}
 
-
-	MarkConstantBufferDirty();
-}
-
-void CM2_Skin_Batch::UpdateConstantBuffer() const
-{
-	MaterialProxie::UpdateConstantBuffer(m_Properties, sizeof(ShaderM2BatchProperties));
+	MaterialProxie::UpdateConstantBuffer(&props, sizeof(ShaderM2BatchProperties));
 }

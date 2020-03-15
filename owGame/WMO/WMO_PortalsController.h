@@ -1,14 +1,12 @@
 #pragma once
 
-#define WMO_DISABLE_PORTALS
-
 #include "WMO_Headers.h"
 
 // FORWARD BEGIN
 class CWMO_Base_Instance;
 // FORWARD END
 
-#ifndef WMO_DISABLE_PORTALS
+#ifdef USE_WMO_PORTALS_CULLING
 
 class CWMO_PortalsController
 {

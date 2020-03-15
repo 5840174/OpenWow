@@ -61,7 +61,7 @@ public:
 	std::shared_ptr<CM2>                                                 m_Skybox;
 
 	//-- Portals --//
-#ifndef WMO_DISABLE_PORTALS
+#ifdef USE_WMO_PORTALS_CULLING
 	std::shared_ptr<CWMO_PortalsController>                             m_PortalController;
 #endif
 	

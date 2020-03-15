@@ -85,6 +85,7 @@ void CMapChunk::Initialize()
 			glm::vec3(0.0f + C_ChunkSize, Math::MinFloat, 0.0f + C_ChunkSize)
 		);
 
+		GetColliderComponent()->SetCullStrategy(IColliderComponent3D::ECullStrategy::ByFrustrumAndDistance2D);
 		GetColliderComponent()->SetCullDistance(m_RenderDevice.GetBaseManager().GetManager<ISettings>()->GetGroup("WoWSettings")->GetSettingT<float>("ADT_MCNK_Distance")->Get());
 		GetColliderComponent()->SetBounds(bbox);
 		GetColliderComponent()->SetDebugDrawMode(false);
@@ -349,6 +350,7 @@ bool CMapChunk::Load()
 				bbox.setMinY(height.min);
 				bbox.setMaxY(height.max);
 				bbox.calculateCenter();
+				liquidInstance->GetColliderComponent()->SetCullStrategy(IColliderComponent3D::ECullStrategy::ByFrustrumAndDistance2D);
 				liquidInstance->GetColliderComponent()->SetBounds(bbox);
 				liquidInstance->GetColliderComponent()->SetDebugDrawMode(false);
 			}
@@ -411,6 +413,8 @@ bool CMapChunk::Load()
 #else
 	for (uint32 i = 0; i < header.nLayers; i++)
 	{
+		if (m_MapTile.GetState() != ILoadable::ELoadableState::Loaded) return false;
+
 		mat->SetTexture(i + 0, m_MapTile.m_Textures.at(mcly[i].textureIndex)->diffuseTexture);
 		//mat->SetTexture(i + 5, m_MapTile.m_Textures.at(mcly[i].textureIndex)->specularTexture);
 	}

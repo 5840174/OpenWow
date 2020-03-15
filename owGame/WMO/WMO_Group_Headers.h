@@ -47,8 +47,6 @@ struct SWMOGroup_Flags
 	uint32 UNK_0x80000000 : 1;
 };
 
-//-----
-
 struct SWMO_GroupInfoDef
 {
 	SWMOGroup_Flags	flags;
@@ -58,23 +56,23 @@ struct SWMO_GroupInfoDef
 
 struct SWMO_Group_HeaderDef
 {
-	uint32 groupName;				// offset into MOGN
-	uint32 descriptiveGroupName;	// offset into MOGN
+	uint32          groupName;				// offset into MOGN
+	uint32          descriptiveGroupName;	// offset into MOGN
 	SWMOGroup_Flags flags;
-	CAaBox boundingBox;
+	CAaBox          boundingBox;
 
-	uint16 portalStart; // Index into the MOPR chunk
-	uint16 portalCount; // Number of items used from the MOPR chunk
+	uint16          portalStart; // Index into the MOPR chunk
+	uint16          portalCount; // Number of items used from the MOPR chunk
 
-						// Batches
+	// Batches
 	uint16 batchCounts[4];
 	//uint16 transBatchCount;
 	//uint16 intBatchCount;
 	//uint16 extBatchCount;
 	//uint16 unk0;
 
-	uint8 fogIds[4]; // Up to four indices into the WMO fog list
-	uint32 liquidType; // LiquidType related, see below in the MLIQ chunk.
+	uint8           fogIds[4]; // Up to four indices into the WMO fog list
+	uint32          liquidType; // LiquidType related, see below in the MLIQ chunk.
 
 	FOREIGN_KEY(uint32, DBC_WMOAreaTable, WMOGroupID, wmoGroupId);
 
@@ -86,27 +84,27 @@ struct SWMO_Group_MaterialDef
 {
 	struct Flags
 	{
-		uint8 UNK_0x01 : 1;
+		uint8 UNK_0x01     : 1;
 		uint8 NOCAMCOLLIDE : 1;
-		uint8 DETAIL : 1;
-		uint8 COLLISION : 1; // Turns off rendering of water ripple effects. May also do more. Should be used for ghost material triangles.
-		uint8 HINT : 1;
-		uint8 RENDER : 1;
-		uint8 UNK_0x40 : 1;
-		uint8 COLLIDE_HIT : 1;
+		uint8 DETAIL       : 1;
+		uint8 COLLISION    : 1; // Turns off rendering of water ripple effects. May also do more. Should be used for ghost material triangles.
+		uint8 HINT         : 1;
+		uint8 RENDER       : 1;
+		uint8 UNK_0x40     : 1;
+		uint8 COLLIDE_HIT  : 1;
 	} flags;
 	uint8 materialId; // 0xff for collision
 
-	bool isTransFace() { return flags.UNK_0x01 && (flags.DETAIL || flags.RENDER); }
-	bool isColor() { return !flags.COLLISION; }
+	bool isTransFace()  { return flags.UNK_0x01 && (flags.DETAIL || flags.RENDER); }
+	bool isColor()      { return !flags.COLLISION; }
 	bool isRenderFace() { return flags.RENDER && !flags.DETAIL; }
 	bool isCollidable() { return flags.COLLISION || isRenderFace(); }
 };
 
 struct SWMO_Group_BatchDef
 {
-	int16 bx, by, bz;                      // a bounding box for culling, see "unknown_box" below
-	int16 tx, ty, tz;
+	int16  bx, by, bz;                      // a bounding box for culling, see "unknown_box" below
+	int16  tx, ty, tz;
 
 	uint32 indexStart;
 	uint16 indexCount;
@@ -114,13 +112,11 @@ struct SWMO_Group_BatchDef
 	uint16 vertexStart;
 	uint16 vertexEnd;
 
-	uint8 flags;
-	uint8 material_id; // index in MOMT
+	uint8  flags;
+	uint8  material_id; // index in MOMT
 
 	inline uint16 getVerticesCount() const { return vertexEnd - vertexStart; }
 };
-
-
 
 struct SWMO_Group_MOBNDef
 {
@@ -144,10 +140,10 @@ struct SWMO_Group_MOBNDef
 
 struct SWMO_Group_MLIQDef
 {
-	uint32 X, Y;
-	uint32 A, B;
+	uint32    X, Y;
+	uint32    A, B;
 	glm::vec3 pos;
-	uint16 materialID;
+	uint16    materialID;
 };
 
 #include __PACK_END
