@@ -139,8 +139,8 @@ bool CLiquidLayer::Render(const RenderEventArgs& renderEventArgs) const
 	}
 	else
 	{
-		m_Material->SetColorLight(vec3(0.0f, 0.0f, 1.0f));
-		m_Material->SetColorDark(vec3(0.0f, 0.0f, 1.0f));
+		m_Material->SetColorLight(glm::vec3(0.0f, 0.0f, 1.0f));
+		m_Material->SetColorDark(glm::vec3(0.0f, 0.0f, 1.0f));
 		m_Material->SetShallowAlpha(1.0f);
 		m_Material->SetDeepAlpha(1.0f);
 	}

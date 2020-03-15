@@ -28,8 +28,8 @@ public:
 	void                                UpdateAttachPositionAfterSkeletonUpdate();
 
 	// Color & Alpha
-	void                                setColor(vec4 _color) { m_Color = _color; }
-	cvec4                               getColor() const { return m_Color; }
+	void                                setColor(glm::vec4 _color) { m_Color = _color; }
+	const glm::vec4&                    getColor() const { return m_Color; }
 	void                                setAlpha(float _alpha) { m_Alpha = _alpha; }
 	float                               getAlpha() const { return m_Alpha; }
 
@@ -59,7 +59,7 @@ private:
 	M2_AttachmentType                   m_AttachmentType;
 
 	// Color & Alpha
-	vec4                                m_Color;
+	glm::vec4                           m_Color;
 	float                               m_Alpha;
 
 	// Mesh & Replaces textures

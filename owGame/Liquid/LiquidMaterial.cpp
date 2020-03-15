@@ -38,13 +38,13 @@ void LiquidMaterial::SetDeepAlpha(float value)
 	MarkConstantBufferDirty();
 }
 
-void LiquidMaterial::SetColorLight(vec3 value)
+void LiquidMaterial::SetColorLight(glm::vec3 value)
 {
 	m_pProperties->gColorLight = value;
 	MarkConstantBufferDirty();
 }
 
-void LiquidMaterial::SetColorDark(vec3 value)
+void LiquidMaterial::SetColorDark(glm::vec3 value)
 {
 	m_pProperties->gColorDark = value;
 	MarkConstantBufferDirty();

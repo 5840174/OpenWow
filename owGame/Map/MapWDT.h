@@ -50,7 +50,7 @@ public:
 
 	bool MapHasTiles() { return m_IsTileBased; }
 	bool MapHasGlobalWMO() { return !m_GlobalWMOName.empty(); }
-	const CMapWMOInstance* GetGlobalWMOInstance() const { return m_GlobalWMO; }
+	std::shared_ptr<CMapWMOInstance> GetGlobalWMOInstance() const { return m_GlobalWMO; }
 
 private:
 	WDT_MPHD						    m_MPHD;
@@ -60,7 +60,7 @@ private:
 private:
 	std::string							m_GlobalWMOName;
 	ADT_MODF							m_GlobalWMOPlacementInfo;
-	mutable CMapWMOInstance*	        m_GlobalWMO;
+	std::shared_ptr<CMapWMOInstance>	m_GlobalWMO;
 
 private: 
 	IBaseManager& m_BaseManager;

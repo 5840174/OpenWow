@@ -18,7 +18,7 @@ public:
 	float     GetAlpha(const CM2_Base_Instance* M2Instance, uint32 GlobalTime) const;
 
 private:
-	M2_Animated<vec3> m_ColorAnimated;
+	M2_Animated<glm::vec3> m_ColorAnimated;
 	M2_Animated<float, short, ShortToFloat> m_AlphaAnimated;
 
 	const CM2& m_M2Object;

@@ -10,8 +10,8 @@ public:
 	// LiquidMaterial
 	void SetShallowAlpha(float value);
 	void SetDeepAlpha(float value);
-	void SetColorLight(vec3 value);
-	void SetColorDark(vec3 value);
+	void SetColorLight(glm::vec3 value);
+	void SetColorDark(glm::vec3 value);
 
 protected:
 	void UpdateConstantBuffer() const override;
@@ -25,12 +25,12 @@ private:
 		{}
 		float gShallowAlpha;
 		float gDeepAlpha;
-		vec2 pad0;
+		glm::vec2 pad0;
 
-		vec3 gColorLight;
+		glm::vec3 gColorLight;
 		float pad1;
 
-		vec3 gColorDark;
+		glm::vec3 gColorDark;
 		float pad2;
 		//-------------------------- ( 32 bytes )
 	};

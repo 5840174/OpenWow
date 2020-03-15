@@ -146,7 +146,7 @@ struct SWMO_Group_MLIQDef
 {
 	uint32 X, Y;
 	uint32 A, B;
-	vec3 pos;
+	glm::vec3 pos;
 	uint16 materialID;
 };
 

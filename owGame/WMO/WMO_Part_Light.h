@@ -18,8 +18,8 @@ public:
 	void setup(uint32 light);
 
 public:
-	vec3 m_Position;
-	vec4 fcolor;
+	glm::vec3 m_Position;
+	glm::vec4 fcolor;
 
 private:
 	const SWMO_LightDef m_WMOLightProto;

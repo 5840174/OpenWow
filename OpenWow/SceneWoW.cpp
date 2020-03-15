@@ -180,7 +180,7 @@ void CSceneWoW::Load3D_M2s()
 		}
 	}
 
-	GetCameraController()->GetCamera()->SetTranslation(vec3(150, 150, 150));
+	GetCameraController()->GetCamera()->SetTranslation(glm::vec3(150, 150, 150));
 	GetCameraController()->GetCamera()->SetYaw(235);
 	GetCameraController()->GetCamera()->SetPitch(-45);
 }
@@ -190,6 +190,10 @@ void CSceneWoW::LoadUI()
 {
 	rootForBtns = GetRootNodeUI()->CreateSceneNode<SceneNodeUI>();
 
+	minimap = GetRootNodeUI()->CreateSceneNode<CUITextureNode>(GetRenderDevice(), glm::vec2(256, 256));
+	minimap->SetTranslate(glm::vec2(900, 300));
+	minimap->SetOnClickCallback([this](const ISceneNodeUI* Node, glm::vec2 Point) { this->GoToCoord(Node, Point); });
+
 	size_t cntrX = 0;
 	size_t cntrY = 0;
 
@@ -198,11 +202,11 @@ void CSceneWoW::LoadUI()
 	{
 		auto btn = rootForBtns->CreateSceneNode<CUIButtonNode>(GetRenderDevice());
 		btn->CreateDefault();
-		btn->SetText(it->Get_Name());
+		btn->SetText(it->Get_Directory());
 
 		uint32 id = it->Get_ID();
-		btn->SetOnClickCallback([this, id] () { this->TestCreateMap(id); });
-		btn->SetTranslate(vec2(cntrX * 180, cntrY * 38));
+		btn->SetOnClickCallback([this, id] (const ISceneNodeUI* Node, glm::vec2 Point) { this->TestCreateMap(id); });
+		btn->SetTranslate(glm::vec2(cntrX * 180, cntrY * 38));
 
 		cntrY++;
 		if (cntrY > 20)
@@ -212,8 +216,10 @@ void CSceneWoW::LoadUI()
 		}
 	}
 
+	
 	m_TechniqueUI.AddPass(std::make_shared<CUIButtonPass>(GetRenderDevice(), shared_from_this())->CreatePipeline(GetRenderWindow()->GetRenderTarget(), &GetRenderWindow()->GetViewport()));
 	m_TechniqueUI.AddPass(std::make_shared<CUIFontPass>(GetRenderDevice(), shared_from_this())->CreatePipeline(GetRenderWindow()->GetRenderTarget(), &GetRenderWindow()->GetViewport()));
+	m_TechniqueUI.AddPass(std::make_shared<CUITexturePass>(GetRenderDevice(), shared_from_this())->CreatePipeline(GetRenderWindow()->GetRenderTarget(), &GetRenderWindow()->GetViewport()));
 }
 
 void CSceneWoW::TestCreateMap(uint32 MapID)
@@ -237,11 +243,26 @@ void CSceneWoW::TestCreateMap(uint32 MapID)
 	map->MapPostLoad();
 	map->EnterMap(x, y);
 
+	minimap->SetTexture(map->getMinimap());
+
 	GetCameraController()->GetCamera()->SetTranslation(glm::vec3(x * C_TileSize + C_TileSize / 2.0f, 100.0f, y * C_TileSize + C_TileSize / 2.0f));
 	GetCameraController()->GetCamera()->SetYaw(48.8);
 	GetCameraController()->GetCamera()->SetPitch(-27.8);
 
-	GetCameraController()->GetCamera()->SetTranslation(glm::vec3(15000, 100.0f, 15000));
+	GetCameraController()->GetCamera()->SetTranslation(glm::vec3(0, 100.0f, 0));
+
+	if (map->getGlobalInstance())
+	{
+		GetCameraController()->GetCamera()->SetTranslation(map->getGlobalInstance()->GetTranslation());
+	}
+}
+
+void CSceneWoW::GoToCoord(const ISceneNodeUI* Node, const glm::vec2& Point)
+{
+	Log::Green("Coord %f %f", Point.x, Point.y);
+	glm::vec2 conv = (Point / Node->GetSize() * 512.0f) * (C_TileSize * 64.0f / 512.0f);
+
+	GetCameraController()->GetCamera()->SetTranslation(glm::vec3(conv.x, GetCameraController()->GetCamera()->GetTranslation().y, conv.y));
 }
 
 void CSceneWoW::TestDeleteMap()

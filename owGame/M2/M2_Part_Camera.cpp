@@ -44,12 +44,12 @@ void SM2_Part_Camera_Wrapper::calc(uint32 time, uint32 globalTime)
 	}
 }
 
-void SM2_Part_Camera_Wrapper::setup(cvec3 _startPoint, float rotate)
+void SM2_Part_Camera_Wrapper::setup(const glm::vec3& _startPoint, float rotate)
 {
-	vec3 u(0, 1, 0);
+	glm::vec3 u(0, 1, 0);
 
-	vec3 pp = m_PositionBase + pResult;
-	vec3 tt = m_TargetBase + tResult;
+	glm::vec3 pp = m_PositionBase + pResult;
+	glm::vec3 tt = m_TargetBase + tResult;
 
 	// TODO
 	//_Render->getCamera()->setupViewParams(fov, m_VideoSettings.aspectRatio, nearclip, farclip);
@@ -57,7 +57,7 @@ void SM2_Part_Camera_Wrapper::setup(cvec3 _startPoint, float rotate)
 	//_Render->getCamera()->setViewMatrix(glm::lookAt(pp, tt, u));
 }
 
-void SM2_Part_Camera_Wrapper::getParams(vec3* _position, vec3* _target, float* _fov, float* _nearPlane, float* _farPlane)
+void SM2_Part_Camera_Wrapper::getParams(glm::vec3* _position, glm::vec3* _target, float* _fov, float* _nearPlane, float* _farPlane)
 {
 	*_position = m_PositionBase + pResult;
 	*_target = m_TargetBase + tResult;

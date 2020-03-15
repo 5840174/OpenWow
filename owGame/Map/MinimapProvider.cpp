@@ -4,7 +4,7 @@
 #include "MinimapProvider.h"
 
 
-vec2 C_MinimapSize = vec2(600.0f, 600.0f);
+glm::vec2 C_MinimapSize = glm::vec2(600.0f, 600.0f);
 
 CMinimapProvider::CMinimapProvider(std::shared_ptr<IRenderDevice> RenderDevice)
 {
@@ -86,7 +86,7 @@ void MinimapDir::Load()
 	data.clear();*/
 }
 
-void MinimapDir::Render(cvec3 _pos)
+void MinimapDir::Render(const glm::vec3& _pos)
 {
 	/*int8 _x = _pos.x / C_TileSize;
 	int8 _z = _pos.z / C_TileSize;

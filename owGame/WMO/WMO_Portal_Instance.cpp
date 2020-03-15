@@ -56,7 +56,7 @@ bool CWMOPortalInstance::IsVisible(const std::vector<Plane>& Planes) const
 	return cullPolyByPlanes(Planes.data(), Planes.size(), m_Vertices) == false;
 }
 
-bool CWMOPortalInstance::IsPositive(cvec3 InvTranslateCamera) const
+bool CWMOPortalInstance::IsPositive(const glm::vec3& InvTranslateCamera) const
 {
 	return m_Plane.distToPoint(InvTranslateCamera) > 0.0f;
 }

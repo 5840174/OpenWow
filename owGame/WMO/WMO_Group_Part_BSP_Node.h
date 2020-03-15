@@ -12,11 +12,11 @@ public:
 	CWMO_Group_Part_BSP_Node(const WMO_Group& WMOGroup, const SWMO_Group_MOBNDef& _proto);
 	virtual ~CWMO_Group_Part_BSP_Node();
 
-	void Render(cmat4 _worldMatrix);
+	void Render(const glm::mat4& _worldMatrix);
 
 private:
 	const SWMO_Group_MOBNDef m_Proto;
 
 	std::shared_ptr<IModel> m_GEOM_Collision;
-	vec4 color;
+	glm::vec4 color;
 };

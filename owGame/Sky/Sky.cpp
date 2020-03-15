@@ -32,11 +32,11 @@ Sky::~Sky()
 {}
 
 
-class SkyParam_Color : public Sky::SkyParam<vec3>
+class SkyParam_Color : public Sky::SkyParam<glm::vec3>
 {
 public:
 	SkyParam_Color(uint32 _time, uint32 _color)
-		: SkyParam<vec3>(_time, fromRGB(_color))
+		: SkyParam<glm::vec3>(_time, fromRGB(_color))
 	{}
 };
 

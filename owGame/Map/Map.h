@@ -21,7 +21,7 @@ public:
 	void                                            Unload();
 
 	//
-	void                                            EnterMap(vec3 _cameraPosition);
+	void                                            EnterMap(glm::vec3 _cameraPosition);
 	void                                            EnterMap(int32 x, int32 z);
 	std::shared_ptr<CMapTile>                       LoadTile(int32 x, int32 z);
 	void                                            ClearCache();
@@ -35,7 +35,7 @@ public: // Getters
 
 	bool                                            isUncompressedAlpha() const { return m_WDT->getFlags().Flag_8bitMCAL; }
 	bool                                            isTileBased() const { return m_WDT->MapHasTiles(); }
-	const CMapWMOInstance*							getGlobalInstance() const { return m_WDT->GetGlobalWMOInstance(); }
+	std::shared_ptr<CMapWMOInstance>                getGlobalInstance() const { return m_WDT->GetGlobalWMOInstance(); }
 	int                                             GetCurrentX() const { return m_CurrentTileX; }
 	int                                             GetCurrentZ() const { return m_CurrentTileZ; }
 

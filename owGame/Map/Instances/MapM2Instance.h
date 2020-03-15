@@ -8,8 +8,8 @@ struct ADT_MDXDef
 {
 	uint32 nameIndex;
 	uint32 uniqueId;
-	vec3 position;
-	vec3 rotation;
+	glm::vec3 position;
+	glm::vec3 rotation;
 	uint16 scale;
     struct
     {

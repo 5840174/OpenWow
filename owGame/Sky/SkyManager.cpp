@@ -99,17 +99,17 @@ void SkyManager::Calculate(const ICameraComponent3D* camera, uint32 _time)
 	}
 
 	// Geometry
-	std::vector<vec4> colors;
+	std::vector<glm::vec4> colors;
 	for (uint32 h = 0; h < C_SkySegmentsCount; h++)
 	{
 		for (uint32 v = 0; v < C_SkycolorsCount - 1; v++)
 		{
-			colors.push_back(vec4(m_Interpolated.GetColor(C_Skycolors[v]), 0.0f));
-			colors.push_back(vec4(m_Interpolated.GetColor(C_Skycolors[v + 1]), 0.0f));
-			colors.push_back(vec4(m_Interpolated.GetColor(C_Skycolors[v + 1]), 0.0f));
-			colors.push_back(vec4(m_Interpolated.GetColor(C_Skycolors[v + 1]), 0.0f));
-			colors.push_back(vec4(m_Interpolated.GetColor(C_Skycolors[v]), 0.0f));
-			colors.push_back(vec4(m_Interpolated.GetColor(C_Skycolors[v]), 0.0f));
+			colors.push_back(glm::vec4(m_Interpolated.GetColor(C_Skycolors[v]), 0.0f));
+			colors.push_back(glm::vec4(m_Interpolated.GetColor(C_Skycolors[v + 1]), 0.0f));
+			colors.push_back(glm::vec4(m_Interpolated.GetColor(C_Skycolors[v + 1]), 0.0f));
+			colors.push_back(glm::vec4(m_Interpolated.GetColor(C_Skycolors[v + 1]), 0.0f));
+			colors.push_back(glm::vec4(m_Interpolated.GetColor(C_Skycolors[v]), 0.0f));
+			colors.push_back(glm::vec4(m_Interpolated.GetColor(C_Skycolors[v]), 0.0f));
 		}
 	}
 
@@ -119,16 +119,16 @@ void SkyManager::Calculate(const ICameraComponent3D* camera, uint32 _time)
 
 void SkyManager::InitBuffer()
 {
-	vec3 basepos1[C_SkycolorsCount];
-	vec3 basepos2[C_SkycolorsCount];
+	glm::vec3 basepos1[C_SkycolorsCount];
+	glm::vec3 basepos2[C_SkycolorsCount];
 
-	std::vector<vec3> vertices;
+	std::vector<glm::vec3> vertices;
 
 	for (uint32 h = 0; h < C_SkySegmentsCount; h++)
 	{
 		for (uint32 i = 0; i < C_SkycolorsCount; i++)
 		{
-			basepos1[i] = basepos2[i] = vec3(cosf(glm::radians(C_SkyAngles[i])), sinf(glm::radians(C_SkyAngles[i])), 0.0f) * C_SkyRadius;
+			basepos1[i] = basepos2[i] = glm::vec3(cosf(glm::radians(C_SkyAngles[i])), sinf(glm::radians(C_SkyAngles[i])), 0.0f) * C_SkyRadius;
 			rotate(0, 0, &basepos1[i].x, &basepos1[i].z, glm::two_pi<float>() / C_SkySegmentsCount * (h + 0));
 			rotate(0, 0, &basepos2[i].x, &basepos2[i].z, glm::two_pi<float>() / C_SkySegmentsCount * (h + 1));
 		}
@@ -149,7 +149,7 @@ void SkyManager::InitBuffer()
 	std::shared_ptr<IBuffer> vertexBuffer = m_RenderDevice.GetObjectsFactory().CreateVertexBuffer(vertices);
 
 	// Colors buffer
-	colorsBuffer = m_RenderDevice.GetObjectsFactory().CreateVoidVertexBuffer(vertices.data(), vertices.size(), 0, sizeof(vec4));
+	colorsBuffer = m_RenderDevice.GetObjectsFactory().CreateVoidVertexBuffer(vertices.data(), vertices.size(), 0, sizeof(glm::vec4));
 
 	// Geometry
 	std::shared_ptr<IGeometry> geometry = m_RenderDevice.GetObjectsFactory().CreateGeometry();
@@ -165,7 +165,7 @@ void SkyManager::InitBuffer()
 	GetComponent<IModelsComponent3D>()->AddModel(model);
 }
 
-void SkyManager::CalculateSkiesWeights(cvec3 pos)
+void SkyManager::CalculateSkiesWeights(const glm::vec3& pos)
 {
 	skies.back()->m_Wight = 1.0f;
 	_ASSERT(skies.back()->m_IsGlobalSky);

@@ -150,7 +150,7 @@ void CMap::Update(const UpdateEventArgs& e)
 
 //--
 
-void CMap::EnterMap(vec3 _cameraPosition)
+void CMap::EnterMap(glm::vec3 _cameraPosition)
 {
 	EnterMap(_cameraPosition.x / C_TileSize, _cameraPosition.z / C_TileSize);
 }

@@ -66,7 +66,7 @@ public:
 #endif
 	
 	//-- Visible block
-	std::vector<vec3>                                                   m_VisibleBlockVertices;	// MOVV chunk
+	std::vector<glm::vec3>                                              m_VisibleBlockVertices;	// MOVV chunk
 	std::vector<SWMO_VisibleBlockListDef>                               m_VisibleBlockList;		// MOVB chunk
 
 

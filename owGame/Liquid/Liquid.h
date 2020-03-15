@@ -68,5 +68,5 @@ protected:
 	IRenderDevice& m_RenderDevice;
 
 private:
-	const vec3 defaultNormal = vec3(0.0f, 1.0f, 0.0f);
+	const glm::vec3 defaultNormal = glm::vec3(0.0f, 1.0f, 0.0f);
 };

@@ -7,8 +7,8 @@ public:
 	WDL_Node_Material(IRenderDevice& RenderDevice);
 	virtual ~WDL_Node_Material();
 
-	cvec4 GetDiffuseColor() const;
-	void SetDiffuseColor(cvec4 diffuse);
+	const glm::vec4& GetDiffuseColor() const;
+	void SetDiffuseColor(const glm::vec4& diffuse);
 
 protected:
 	void UpdateConstantBuffer() const;

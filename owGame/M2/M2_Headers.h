@@ -61,8 +61,8 @@ struct SM2_Header
     CAaBox							collision_box;
     float							collision_sphere_radius;
     M2Array<uint16>					collisionTriangles;
-    M2Array<vec3>					collisionVertices;
-    M2Array<vec3>					collisionNormals;
+    M2Array<glm::vec3>				collisionVertices;
+    M2Array<glm::vec3>				collisionNormals;
 
     // Attachments
     M2Array<SM2_Attachment>			attachments;

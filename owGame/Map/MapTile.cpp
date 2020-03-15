@@ -55,12 +55,12 @@ void CMapTile::Initialize()
 	if (false)
 	{
 		std::shared_ptr<IColliderComponent3D> colliderComponent = GetColliderComponent();
-		vec3 translate = GetTranslation();
+		glm::vec3 translate = GetTranslation();
 
 		BoundingBox bbox
 		(
-			vec3(translate.x, Math::MaxFloat, translate.z),
-			vec3(translate.x + C_TileSize, Math::MinFloat, translate.z + C_TileSize)
+			glm::vec3(translate.x, Math::MaxFloat, translate.z),
+			glm::vec3(translate.x + C_TileSize, Math::MinFloat, translate.z + C_TileSize)
 		);
 		colliderComponent->SetBounds(bbox);
 	}

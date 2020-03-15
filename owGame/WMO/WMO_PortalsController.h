@@ -1,6 +1,6 @@
 #pragma once
 
-//#define WMO_DISABLE_PORTALS
+#define WMO_DISABLE_PORTALS
 
 #include "WMO_Headers.h"
 
@@ -17,7 +17,7 @@ public:
     virtual ~CWMO_PortalsController();
 	
 	void Update(const CWMO_Base_Instance* SceneNodeInstance, const ICameraComponent3D* _camera);
-	bool Recur(const CWMO_Base_Instance* SceneNodeInstance, const std::shared_ptr<IPortalRoom>& Room, const Frustum& CameraFrustum, cvec3 _InvWorldCamera, const Frustum& _frustum, bool _isFirstIteration);
+	bool Recur(const CWMO_Base_Instance* SceneNodeInstance, const std::shared_ptr<IPortalRoom>& Room, const Frustum& CameraFrustum, const glm::vec3& _InvWorldCamera, const Frustum& _frustum, bool _isFirstIteration);
 };
 
 #endif

@@ -27,9 +27,13 @@ void CMapWDT::CreateInsances(const std::shared_ptr<ISceneNode3D>& Parent) const
 	Log::Green("Map_GlobalWMOs[]: Global WMO exists [%s].", !m_GlobalWMOName.empty() ? "true" : "false");
 	if (!m_GlobalWMOName.empty())
 	{
-		_ASSERT(false);
-		//m_GlobalWMO = _parent->CreateSceneNode<CMapWMOInstance>(m_GlobalWMOName);
-		//m_GlobalWMO->Initialize(m_GlobalWMOPlacementInfo);
+		std::shared_ptr<CWMO> wmo = m_BaseManager.GetManager<IWoWObjectsCreator>()->LoadWMO(m_RenderDevice, m_GlobalWMOName);
+		if (wmo)
+		{
+			auto inst = Parent->CreateSceneNode<CMapWMOInstance>(wmo, m_GlobalWMOPlacementInfo);
+			m_BaseManager.GetManager<ILoader>()->AddToLoadQueue(inst);
+			std::const_pointer_cast<CMapWMOInstance>(m_GlobalWMO) = inst;
+		}
 	}
 }
 

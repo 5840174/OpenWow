@@ -49,7 +49,7 @@ const CSkyParams& CSkyParams::operator*=(float _weight)
 void CSkyParams::Clear()
 {
 	for (uint8 i = 0; i < LightColors::COUNT; i++)
-		m_Colors[i] = vec3(0.0f, 0.0f, 0.0f);
+		m_Colors[i] = glm::vec3(0.0f, 0.0f, 0.0f);
 	for (uint8 i = 0; i < LightFogs::COUNT; i++)
 		m_Fogs[i] = 0.0f;
 
@@ -60,13 +60,13 @@ void CSkyParams::Clear()
 	m_oceanDeepAlpha = 0.0f;
 }
 
-void CSkyParams::SetColor(uint32 ColorType, vec3 Value)
+void CSkyParams::SetColor(uint32 ColorType, glm::vec3 Value)
 {
 	_ASSERT(ColorType >= 0 && ColorType < LightColors::COUNT);
 	m_Colors[ColorType] = Value;
 }
 
-vec3 CSkyParams::GetColor(uint32 ColorType) const
+glm::vec3 CSkyParams::GetColor(uint32 ColorType) const
 {
 	_ASSERT(ColorType >= 0 && ColorType < LightColors::COUNT);
 	return m_Colors[ColorType];

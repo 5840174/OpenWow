@@ -10,7 +10,7 @@ public:
 	void setup();
 
 public:
-	vec4 color;
+	glm::vec4 color;
 
 private:
 	SWMO_FogDef m_WMOFogProto;

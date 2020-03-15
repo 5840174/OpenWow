@@ -14,8 +14,8 @@ WMO_Group_Part_Batch::WMO_Group_Part_Batch(IRenderDevice& RenderDevice, const CW
 	, m_ParentWMO(WMOModel)
 	, m_WMOGroupBatchProto(WMOGroupBatchProto)
 {
-	m_Bounds.setMin(vec3(m_WMOGroupBatchProto.bx, m_WMOGroupBatchProto.by, m_WMOGroupBatchProto.bz));
-	m_Bounds.setMax(vec3(m_WMOGroupBatchProto.tx, m_WMOGroupBatchProto.ty, m_WMOGroupBatchProto.tz));
+	m_Bounds.setMin(glm::vec3(m_WMOGroupBatchProto.bx, m_WMOGroupBatchProto.by, m_WMOGroupBatchProto.bz));
+	m_Bounds.setMax(glm::vec3(m_WMOGroupBatchProto.tx, m_WMOGroupBatchProto.ty, m_WMOGroupBatchProto.tz));
 	m_Bounds.calculateCenter();
 
 	SetBounds(m_Bounds);

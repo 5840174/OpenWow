@@ -14,7 +14,7 @@ struct MinimapDir
 	}
 
 	void Load();
-	void Render(cvec3 _pos);
+	void Render(const glm::vec3& _pos);
 
 	std::string						name;
 	std::vector<MinimapData_Map*>	data;

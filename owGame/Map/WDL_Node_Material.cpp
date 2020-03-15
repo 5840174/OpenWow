@@ -11,7 +11,7 @@ WDL_Node_Material::WDL_Node_Material(IRenderDevice& RenderDevice)
 
 
 	// Material
-	SetDiffuseColor(vec4(0, 0.2, 0.8, 1.0));
+	SetDiffuseColor(glm::vec4(0, 0.2, 0.8, 1.0));
 
 	SetWrapper(this);
 }
@@ -21,14 +21,14 @@ WDL_Node_Material::~WDL_Node_Material()
 	_aligned_free(m_pProperties);
 }
 
-cvec4 WDL_Node_Material::GetDiffuseColor() const
+const glm::vec4& WDL_Node_Material::GetDiffuseColor() const
 {
 	return m_pProperties->m_DiffuseColor;
 }
 
 //-----
 
-void WDL_Node_Material::SetDiffuseColor(cvec4 diffuse)
+void WDL_Node_Material::SetDiffuseColor(const glm::vec4& diffuse)
 {
 	m_pProperties->m_DiffuseColor = diffuse;
 	MarkConstantBufferDirty();

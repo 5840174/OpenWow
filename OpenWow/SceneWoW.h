@@ -25,6 +25,7 @@ private:
 	void LoadUI();
 
 	void TestCreateMap(uint32 mapID);
+	void GoToCoord(const ISceneNodeUI* Node, const glm::vec2& Point);
 	void TestDeleteMap();
 
 private:
@@ -34,4 +35,5 @@ private:
 	std::shared_ptr<CMap> map;
 
 	std::shared_ptr<SceneNodeUI> rootForBtns;
+	std::shared_ptr<CUITextureNode> minimap;
 };

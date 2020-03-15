@@ -24,7 +24,7 @@ struct SM2_SkinSection
 								// from <=BC documentation: Highest number of bones needed at one time in this Submesh --Tinyn (wowdev.org) 
 								// In 2.x this is the amount of of bones up the parent-chain affecting the submesh --NaK
 	uint16 centerBoneIndex;
-	vec3   centerPosition;      // Average position of all the vertices in the sub mesh.
+	glm::vec3 centerPosition;      // Average position of all the vertices in the sub mesh.
 
 #if WOW_CLIENT_VERSION == WOW_BC_2_4_3
 	glm::vec3 sortCenterPosition; // The center of the box when an axis aligned box is built around the vertices in the submesh.

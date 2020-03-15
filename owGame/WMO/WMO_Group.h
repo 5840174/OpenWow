@@ -46,7 +46,7 @@ public:
 
 public:
 	//-- Triangles --//
-	vec3 * dataFromMOVT;
+	glm::vec3 * dataFromMOVT;
 	std::vector<SWMO_Group_MaterialDef>		m_MaterialsInfo;
 	bool									m_IsMOCVExists;
 

@@ -11,7 +11,7 @@ public:
 	Frustum CreatePolyFrustum(glm::vec3 Eye) const override final;
 	bool IsVisible(const Frustum& Frustum) const override final;
 	bool IsVisible(const std::vector<Plane>& Planes) const override final;
-	bool IsPositive(cvec3 InvTranslateCamera) const override final;
+	bool IsPositive(const glm::vec3& InvTranslateCamera) const override final;
 	std::shared_ptr<IPortalRoom> GetRoomObject(glm::vec3 Eye) const override final;
 
 private:

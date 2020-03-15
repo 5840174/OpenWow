@@ -1,11 +1,5 @@
 #pragma once
 
-inline static void flipcc(char* fcc)
-{
-	std::swap(fcc[0], fcc[3]);
-	std::swap(fcc[1], fcc[2]);
-}
-
 #define WOWCHUNK_READ_STRINGS_BEGIN \
 char* __tbuf = new char[size + 1]; \
 f->readBytes(__tbuf, size); \
@@ -36,9 +30,9 @@ while (p < end) \
 f->seekRelative(size);
 
 
-static vec3 fromRealToGame(vec3 p)
+static glm::vec3 fromRealToGame(glm::vec3 p)
 {
-	return vec3(
+	return glm::vec3(
 		-p.x + C_ZeroPoint,
 		-p.z + C_ZeroPoint,
 		(p.y)
@@ -50,9 +44,9 @@ static vec3 fromRealToGame(vec3 p)
 // X			Y        Z
 //-4251.67, -618.518, 38.718, 0
 
-static vec3 fromGameToReal(vec3 p)
+static glm::vec3 fromGameToReal(glm::vec3 p)
 {
-	return vec3(
+	return glm::vec3(
 		-p.y + C_ZeroPoint,
 		p.z,
 		-p.x + C_ZeroPoint

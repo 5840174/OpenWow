@@ -68,7 +68,8 @@ void WoWChunkReader::InitMaps()
 	{
 		memset(fourcc, 0x00, 4);
 		m_ByteBuffer->readBytes(fourcc, 4);
-		flipcc(fourcc);
+		std::swap(fourcc[0], fourcc[3]);
+		std::swap(fourcc[1], fourcc[2]);
 		fourcc[4] = 0;
 
 		size = 0;

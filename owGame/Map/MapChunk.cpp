@@ -131,8 +131,8 @@ bool CMapChunk::Load()
 		memset(normals_INT24, 0x00, sizeof(int24) * C_MapBufferSize);
 		int24* t_normals_INT24 = normals_INT24;*/
 
-		vec3 tempNormals[C_MapBufferSize];
-		vec3* ttn = tempNormals;
+		glm::vec3 tempNormals[C_MapBufferSize];
+		glm::vec3* ttn = tempNormals;
 
 		for (int j = 0; j < 17; j++)
 		{
@@ -141,7 +141,7 @@ bool CMapChunk::Load()
 				int24 nor;
 				m_Bytes->readBytes(&nor, sizeof(int24));
 
-				*ttn++ = vec3(-(float)nor.y / 127.0f, (float)nor.z / 127.0f, -(float)nor.x / 127.0f);
+				*ttn++ = glm::vec3(-(float)nor.y / 127.0f, (float)nor.z / 127.0f, -(float)nor.x / 127.0f);
 				//*t_normals_INT24++ = nor;
 			}
 		}
@@ -157,8 +157,8 @@ bool CMapChunk::Load()
 		float heights[C_MapBufferSize];
 		float* t_heights = heights;
 
-		vec3 tempVertexes[C_MapBufferSize];
-		vec3* ttv = tempVertexes;
+		glm::vec3 tempVertexes[C_MapBufferSize];
+		glm::vec3* ttv = tempVertexes;
 
 		BoundingBox bbox = GetColliderComponent()->GetBounds();
 
@@ -180,7 +180,7 @@ bool CMapChunk::Load()
 					xpos += C_UnitSize * 0.5f;
 				}
 
-				vec3 v = vec3(xpos, h, zpos);
+				glm::vec3 v(xpos, h, zpos);
 				*ttv++ = v;
 
 				minHeight = std::min(h, minHeight);

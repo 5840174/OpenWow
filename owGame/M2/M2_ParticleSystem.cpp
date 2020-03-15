@@ -296,7 +296,7 @@ CM2_ParticleObject SM2_ParticleSystem_Wrapper::PlaneGenerator_New(const CM2_Base
 
 	p.pos = GetPosition() + glm::vec3(m_Random.Range(-l, l), 0, m_Random.Range(-w, w));
 	if (bone)
-		p.pos = bone->GetMatrix() * vec4(p.pos, 0.0f);
+		p.pos = bone->GetMatrix() * glm::vec4(p.pos, 0.0f);
 
 	p.dir = glm::vec3(0.0f, 1.0f, 0.0f);
 	if (bone)
@@ -361,13 +361,13 @@ CM2_ParticleObject SM2_ParticleSystem_Wrapper::SphereGenerator_New(const CM2_Bas
 	}*/
 
 	if (bone)
-		dir = bone->GetRotateMatrix() * vec4(0.0f, 1.0f, 0.0f, 0.0f);
+		dir = bone->GetRotateMatrix() * glm::vec4(0.0f, 1.0f, 0.0f, 0.0f);
 	else
 		dir = glm::normalize(bdir);
 
 	p.speed = glm::normalize(dir) * spd * (1.0f + m_Random.Range(-var, var));   // ?
 	p.dir = glm::normalize(dir);//mrot * vec3(0, 1.0f,0);
-	p.down = vec3(0, -1.0f, 0);
+	p.down = glm::vec3(0, -1.0f, 0);
 	p.life = 0;
 	p.maxlife = lifespan;
 	p.origin = p.pos;
@@ -378,7 +378,7 @@ CM2_ParticleObject SM2_ParticleSystem_Wrapper::SphereGenerator_New(const CM2_Bas
 
 #if 0
 
-void SM2_ParticleSystem_Wrapper::Render3D(cmat4 _worldMatrix)
+void SM2_ParticleSystem_Wrapper::Render3D(const glm::mat4& _worldMatrix)
 {
 	/*switch (m_BlendType)
 	{

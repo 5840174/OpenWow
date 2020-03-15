@@ -9,17 +9,17 @@ public:
 
 public:
 	float dayIntensity;
-	vec3 dayColor;
-	vec3 dayDir;
+	glm::vec3 dayColor;
+	glm::vec3 dayDir;
 
 	float nightIntensity;
-	vec3 nightColor;
-	vec3 nightDir;
+	glm::vec3 nightColor;
+	glm::vec3 nightDir;
 		
 	float ambientIntensity;
-	vec3 ambientColor;
+	glm::vec3 ambientColor;
 
 	float fogDepth;
 	float fogIntensity;
-	vec3 fogColor;
+	glm::vec3 fogColor;
 };

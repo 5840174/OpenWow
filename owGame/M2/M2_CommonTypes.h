@@ -52,8 +52,8 @@ struct M2Bounds
 
 struct M2Box
 {
-    vec3 ModelRotationSpeedMin;
-    vec3 ModelRotationSpeedMax;
+    glm::vec3 ModelRotationSpeedMin;
+	glm::vec3 ModelRotationSpeedMax;
 };
 
 struct M2Range

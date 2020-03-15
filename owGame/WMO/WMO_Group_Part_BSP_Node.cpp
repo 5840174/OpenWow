@@ -9,7 +9,7 @@
 CWMO_Group_Part_BSP_Node::CWMO_Group_Part_BSP_Node(const WMO_Group& WMOGroup, const SWMO_Group_MOBNDef& _proto) :
 	m_Proto(_proto)
 {
-	std::vector<vec3> collisionVertices;
+	std::vector<glm::vec3> collisionVertices;
 	collisionVertices.reserve(m_Proto.nFaces * 3);
 	/*for (uint32 i = m_Proto.faceStart; i < m_Proto.faceStart + m_Proto.nFaces; i++)
 	{
@@ -24,14 +24,14 @@ CWMO_Group_Part_BSP_Node::CWMO_Group_Part_BSP_Node(const WMO_Group& WMOGroup, co
 	m_GEOM_Collision->setGeomVertexParams(vb, R_DataType::T_FLOAT, 0, sizeof(vec3));
 	m_GEOM_Collision->finishCreatingGeometry();*/
 
-	color = vec4(0.0f, 1.0f, 0.0f, 1.0f);
+	color = glm::vec4(0.0f, 1.0f, 0.0f, 1.0f);
 }
 
 CWMO_Group_Part_BSP_Node::~CWMO_Group_Part_BSP_Node()
 {
 }
 
-void CWMO_Group_Part_BSP_Node::Render(cmat4 _worldMatrix)
+void CWMO_Group_Part_BSP_Node::Render(const glm::mat4& _worldMatrix)
 {
 	//_Render->r.setFillMode(R_FillMode::RS_FILL_WIREFRAME);
 	/*_Render->r.setCullMode(R_CullMode::RS_CULL_NONE);

@@ -197,7 +197,7 @@ bool WMO_Group::Load()
 	// Vertices chunk.
 	if (auto buffer = m_ChunkReader->OpenChunk("MOVT"))
 	{
-		uint32 vertexesCount = buffer->getSize() / sizeof(vec3);
+		uint32 vertexesCount = buffer->getSize() / sizeof(glm::vec3);
 		glm::vec3* vertexes = (glm::vec3*)buffer->getData();
 
 		// Convert
@@ -306,11 +306,10 @@ bool WMO_Group::Load()
 		CBgra* vertexColors = (CBgra*)buffer->getDataFromCurrent();
 
 		// Convert
-		std::vector<vec4> vertexColorsConverted;
+		std::vector<glm::vec4> vertexColorsConverted;
 		for (uint32 i = 0; i < vertexColorsCount; i++)
 		{
-			vertexColorsConverted.push_back(vec4
-			(
+			vertexColorsConverted.push_back(glm::vec4(
 				static_cast<float>(vertexColors[i].r) / 255.0f,
 				static_cast<float>(vertexColors[i].g) / 255.0f,
 				static_cast<float>(vertexColors[i].b) / 255.0f,
@@ -318,7 +317,7 @@ bool WMO_Group::Load()
 			));
 		}
 
-		geometry->AddVertexBuffer(BufferBinding("COLOR", 0), m_RenderDevice.GetObjectsFactory().CreateVoidVertexBuffer(vertexColorsConverted.data(), vertexColorsConverted.size(), 0, sizeof(vec4)));
+		geometry->AddVertexBuffer(BufferBinding("COLOR", 0), m_RenderDevice.GetObjectsFactory().CreateVoidVertexBuffer(vertexColorsConverted.data(), vertexColorsConverted.size(), 0, sizeof(glm::vec4)));
 		m_IsMOCVExists = vertexColorsCount > 0;
 	}
 

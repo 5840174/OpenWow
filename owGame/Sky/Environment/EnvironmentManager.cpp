@@ -13,10 +13,10 @@ EnvironmentManager::EnvironmentManager(IBaseManager& BaseManager)
 	LoadDayNightPhases();
 
 	// Colors
-    m_OutdoorAmbientColor = vec4();
-	m_OutdoorDayDiffuseColor = vec4();
-	m_OutdoorNightDiffuseColor = vec4();
-	m_OutdoorSpecularColor = vec4();
+    m_OutdoorAmbientColor = glm::vec4(1.0f);
+	m_OutdoorDayDiffuseColor = glm::vec4(1.0f);
+	m_OutdoorNightDiffuseColor = glm::vec4(1.0f);
+	m_OutdoorSpecularColor = glm::vec4(1.0f);
 }
 
 EnvironmentManager::~EnvironmentManager()
@@ -59,7 +59,7 @@ void EnvironmentManager::SetAmbientLights(bool on)
 	}
 	else
 	{
-		vec4 ambient(0, 0, 0, 1);
+		glm::vec4 ambient(0, 0, 0, 1);
 		//glLightModelfv(GL_LIGHT_MODEL_AMBIENT, ambient);
 		//glDisable(GL_LIGHT0);
 		//glDisable(GL_LIGHT1);

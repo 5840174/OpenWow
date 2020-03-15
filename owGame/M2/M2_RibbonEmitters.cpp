@@ -9,18 +9,18 @@
 
 struct RibbonVertex
 {
-	RibbonVertex(vec3 _pos, vec2 _tex) :
+	RibbonVertex(glm::vec3 _pos, glm::vec2 _tex) :
 		pos(_pos),
 		tex(_tex)
 	{}
 
-	vec3 pos;
-	vec2 tex;
+	glm::vec3 pos;
+	glm::vec2 tex;
 };
 
 CM2_RibbonEmitters::CM2_RibbonEmitters(const CM2& M2Object, const std::shared_ptr<IFile>& File, const SM2_RibbonEmitter& M2RibbonEmitter) 
 	: m_M2Object(M2Object)
-	, tcolor(vec4(1.0f))
+	, tcolor(glm::vec4(1.0f))
 {
 	_ASSERT_EXPR(false, L"TODO!");
 	// TODOm_Bone = m_M2Object.getSkeleton().GetBones()[M2RibbonEmitter.boneIndex];
@@ -56,14 +56,14 @@ CM2_RibbonEmitters::CM2_RibbonEmitters(const CM2& M2Object, const std::shared_pt
 	segs.push_back(rs);
 }
 
-void CM2_RibbonEmitters::setup(uint16 anim, uint32 time, uint32 _globalTime, cmat4 _worldMatrix)
+void CM2_RibbonEmitters::setup(uint16 anim, uint32 time, uint32 _globalTime, const glm::mat4& _worldMatrix)
 {
 	std::shared_ptr<const SM2_Part_Bone_Wrapper> Bone = m_Bone.lock();
 	_ASSERT(Bone != nullptr);
 
 	_ASSERT_EXPR(false, L"TODO!");
-	vec3 ntpos = _worldMatrix * (/*TODO: Bone->getTransformMatrix() **/ vec4(pos, 0));
-	vec3 ntup = _worldMatrix * (/*TODO: Bone->getTransformMatrix() **/ vec4((pos + vec3(0, 0, 1.0f)), 0));
+	glm::vec3 ntpos = _worldMatrix * (/*TODO: Bone->getTransformMatrix() **/ glm::vec4(pos, 0));
+	glm::vec3 ntup = _worldMatrix * (/*TODO: Bone->getTransformMatrix() **/ glm::vec4((pos + glm::vec3(0, 0, 1.0f)), 0));
 
 	ntup -= ntpos;
 	ntup = glm::normalize(ntup);
@@ -128,7 +128,7 @@ void CM2_RibbonEmitters::setup(uint16 anim, uint32 time, uint32 _globalTime, cma
 	}
 }
 
-void CM2_RibbonEmitters::Render(cmat4 _world)
+void CM2_RibbonEmitters::Render(const glm::mat4& _world)
 {
 	std::vector<RibbonVertex> vertices;
 
@@ -138,8 +138,8 @@ void CM2_RibbonEmitters::Render(cmat4 _world)
 	{
 		float u = l / length;
 
-		vertices.push_back(RibbonVertex(it->pos + it->up * tabove, vec2(u, 0)));
-		vertices.push_back(RibbonVertex(it->pos - it->up * tbelow, vec2(u, 1)));
+		vertices.push_back(RibbonVertex(it->pos + it->up * tabove, glm::vec2(u, 0)));
+		vertices.push_back(RibbonVertex(it->pos - it->up * tbelow, glm::vec2(u, 1)));
 
 		l += it->len;
 	}
@@ -148,8 +148,8 @@ void CM2_RibbonEmitters::Render(cmat4 _world)
 	{
 		// last segment...?
 		--it;
-		vertices.push_back(RibbonVertex(it->pos + it->up * tabove + it->back*(it->len / it->len0), vec2(1, 0)));
-		vertices.push_back(RibbonVertex(it->pos - it->up * tbelow + it->back*(it->len / it->len0), vec2(1, 1)));
+		vertices.push_back(RibbonVertex(it->pos + it->up * tabove + it->back*(it->len / it->len0), glm::vec2(1, 0)));
+		vertices.push_back(RibbonVertex(it->pos - it->up * tbelow + it->back*(it->len / it->len0), glm::vec2(1, 1)));
 	}
 
 

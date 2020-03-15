@@ -10,7 +10,7 @@ CM2_Base_Instance::CM2_Base_Instance(const std::shared_ptr<CM2>& M2Object)
 	: CLoadableObject(M2Object)
 	, m_M2(M2Object)
 	, m_AttachmentType(M2_AttachmentType::NotAttached)
-	, m_Color(vec4(1.0f, 1.0f, 1.0f, 1.0f))
+	, m_Color(glm::vec4(1.0f, 1.0f, 1.0f, 1.0f))
 	, m_Alpha(1.0f)
 	, m_Animator(nullptr)
 {

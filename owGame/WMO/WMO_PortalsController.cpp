@@ -82,7 +82,7 @@ void CWMO_PortalsController::Update(const CWMO_Base_Instance* SceneNodeInstance,
 	}
 }
 
-bool CWMO_PortalsController::Recur(const CWMO_Base_Instance* SceneNodeInstance, const std::shared_ptr<IPortalRoom>& Room, const Frustum& CameraFrustum, cvec3 _InvWorldCamera, const Frustum& PortalFrustum, bool _isFirstIteration)
+bool CWMO_PortalsController::Recur(const CWMO_Base_Instance* SceneNodeInstance, const std::shared_ptr<IPortalRoom>& Room, const Frustum& CameraFrustum, const glm::vec3& _InvWorldCamera, const Frustum& PortalFrustum, bool _isFirstIteration)
 {
 	if (Room == nullptr || Room->IsCalculated())
 	{

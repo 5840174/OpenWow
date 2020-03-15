@@ -6,8 +6,8 @@ struct ADT_MODF
 {
 	uint32 nameIndex;		// Ref to MWID
 	uint32 uniqueId;		// this ID should be unique for all ADTs currently loaded. Best, they are unique for the whole map.
-	vec3 position;		
-	vec3 rotation;
+	glm::vec3 position;
+	glm::vec3 rotation;
 	CAaBox boundingBox;		// position plus the transformed wmo bounding box. used for defining if they are rendered as well as collision.
 	struct Flags
 	{

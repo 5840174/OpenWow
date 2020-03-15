@@ -148,7 +148,7 @@ bool CWMO::Load()
 
 	// Visible vertices
 	{
-		for (const auto& vv : m_ChunkReader->OpenChunkT<vec3>("MOVV"))
+		for (const auto& vv : m_ChunkReader->OpenChunkT<glm::vec3>("MOVV"))
 		{
 			m_VisibleBlockVertices.push_back(Fix_XZmY(vv));
 		}

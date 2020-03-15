@@ -13,8 +13,8 @@ public:
 
 	void                                            Clear();
 
-	void                                            SetColor(uint32 ColorType, vec3 Value);
-	vec3                                            GetColor(uint32 ColorType) const;
+	void                                            SetColor(uint32 ColorType, glm::vec3 Value);
+	glm::vec3                                       GetColor(uint32 ColorType) const;
 
 	void                                            SetFog(uint32 FogType, float Value);
 	float                                           GetFog(uint32 FogType) const;
@@ -23,7 +23,7 @@ public:
 	bool                                            GetHighlightSky() const;
 
 	void                                            SetSkybox(const DBC_LightSkyboxRecord* Value);
-	const DBC_LightSkyboxRecord*          GetSkybox() const;
+	const DBC_LightSkyboxRecord*                    GetSkybox() const;
 
 	void                                            SetGlow(float GlowValue);
 	float                                           GetGlow() const;
@@ -33,7 +33,7 @@ public:
 
 
 private:
-	vec3                                            m_Colors[LightColors::COUNT];
+	glm::vec3                                       m_Colors[LightColors::COUNT];
 	float                                           m_Fogs[LightFogs::COUNT];
 
 	bool					                        m_highlightSky;

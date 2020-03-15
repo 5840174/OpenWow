@@ -30,7 +30,7 @@ public:
 
 private:
 	void                                            InitBuffer();
-	void                                            CalculateSkiesWeights(cvec3 pos);
+	void                                            CalculateSkiesWeights(const glm::vec3& pos);
 
 private:
 	CSkyParams                                      m_Interpolated;

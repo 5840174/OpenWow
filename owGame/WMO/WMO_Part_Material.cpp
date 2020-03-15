@@ -37,7 +37,7 @@ WMO_Part_Material::WMO_Part_Material(IRenderDevice& RenderDevice, const CWMO& WM
 
 	//Log::Warn("Shader = [%d], Blend mode [%d]", m_WMOMaterialProto.shader, m_WMOMaterialProto.blendMode);
 
-	vec4 color = fromARGB(m_WMOMaterialProto.diffColor);
+	glm::vec4 color = fromARGB(m_WMOMaterialProto.diffColor);
 
 	SetWrapper(this);
 }

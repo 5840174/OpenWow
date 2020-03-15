@@ -111,7 +111,7 @@ struct SWMO_LightDef
 	uint8 useAtten;
 	uint8 unk0[2];
 	uint32 color;
-	vec3 pos;
+	glm::vec3 pos;
 	float intensity;
 	float attenStart;
 	float attenEnd;

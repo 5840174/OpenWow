@@ -44,14 +44,14 @@ public:
 private:
 	const DBC_LightRecord*                          m_LightRecord;
 
-	vec3					                        m_Position;
+	glm::vec3					                    m_Position;
 	CRange					                        m_Range;
 
 	float					                        m_Wight;
 	bool					                        m_IsGlobalSky;
 
 	CSkyParams				                        m_Params;
-	std::vector<SkyParam<vec3>>                     m_IntBand_Colors[LightColors::COUNT];
+	std::vector<SkyParam<glm::vec3>>                m_IntBand_Colors[LightColors::COUNT];
 	std::vector<SkyParam<float>>                    m_FloatBand_Fogs[LightFogs::COUNT];
 };
 

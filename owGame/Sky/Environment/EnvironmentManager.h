@@ -15,10 +15,10 @@ public:
 	void SetFog();
 
 public:
-	vec4 m_OutdoorAmbientColor;
-	vec4 m_OutdoorDayDiffuseColor;
-	vec4 m_OutdoorNightDiffuseColor;
-	vec4 m_OutdoorSpecularColor;
+	glm::vec4 m_OutdoorAmbientColor;
+	glm::vec4 m_OutdoorDayDiffuseColor;
+	glm::vec4 m_OutdoorNightDiffuseColor;
+	glm::vec4 m_OutdoorSpecularColor;
 	
 public:
 	bool m_HasSky;

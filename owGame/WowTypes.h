@@ -1,16 +1,16 @@
 #pragma once
 
-static inline glm::vec3 Fix_XZY(cvec3 _vec)
+static inline glm::vec3 Fix_XZY(const glm::vec3& _vec)
 {
 	return glm::vec3(_vec.x, _vec.z, _vec.y);
 }
 
-static inline glm::vec3 Fix_XZmY(cvec3 _vec)
+static inline glm::vec3 Fix_XZmY(const glm::vec3& _vec)
 {
 	return glm::vec3(_vec.x, _vec.z, -_vec.y);
 }
 
-static inline glm::quat Fix_XZmYW(const quat& _quat)
+static inline glm::quat Fix_XZmYW(const glm::quat& _quat)
 {
 	return glm::quat(_quat.w, _quat.x, _quat.z, -_quat.y);
 }
@@ -19,7 +19,7 @@ static inline glm::quat Fix_XZmYW(const quat& _quat)
 
 struct C4Plane
 {
-	vec3 normal;
+	glm::vec3 normal;
 	float distance;
 };
 
@@ -39,8 +39,8 @@ struct CRange
 
 struct CAaBox
 {
-	vec3 min;
-	vec3 max;
+	glm::vec3 min;
+	glm::vec3 max;
 
 	inline BoundingBox Convert() const
 	{
@@ -53,7 +53,7 @@ struct CAaBox
 
 struct CAaSphere
 {
-	vec3 position;
+	glm::vec3 position;
 	float radius;
 };
 
@@ -96,20 +96,20 @@ struct C4Vec
 
 struct C3Segment
 {
-	vec3 start;
-	vec3 end;
+	glm::vec3 start;
+	glm::vec3 end;
 };
 
 struct CFacet
 {
 	C4Plane plane;
-	vec3 vertices[3];
+	glm::vec3 vertices[3];
 };
 
 struct C3Ray
 {
-	vec3 origin;
-	vec3 dir;
+	glm::vec3 origin;
+	glm::vec3 dir;
 };
 
 #include __PACK_END

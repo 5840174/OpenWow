@@ -8,7 +8,7 @@
 WMO_Part_Light::WMO_Part_Light(const SWMO_LightDef& WMOLightProto)
 	: m_WMOLightProto(WMOLightProto)
 {
-	m_Position = vec3(m_WMOLightProto.pos.x, m_WMOLightProto.pos.z, -m_WMOLightProto.pos.y);
+	m_Position = glm::vec3(m_WMOLightProto.pos.x, m_WMOLightProto.pos.z, -m_WMOLightProto.pos.y);
 
 	fcolor = fromARGB(m_WMOLightProto.color);
 	//fcolor *= m_WMOLightProto.intensity;

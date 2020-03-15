@@ -42,8 +42,8 @@ void CMapWDL::CreateInsances(const std::shared_ptr<ISceneNode3D>& Parent) const
 	m_LowResilutionTileMaterial = std::make_shared<WDL_Node_Material>(m_RenderDevice);
 
 	// Heightmap
-	vec3 lowres[17][17];
-	vec3 lowsub[16][16];
+	glm::vec3 lowres[17][17];
+	glm::vec3 lowsub[16][16];
 
 	for (uint8 j = 0; j < C_TilesInMap; j++)
 	{
@@ -62,14 +62,14 @@ void CMapWDL::CreateInsances(const std::shared_ptr<ISceneNode3D>& Parent) const
 
 				for (int y = 0; y < 17; y++)
 					for (int x = 0; x < 17; x++)
-						lowres[y][x] = vec3(C_TileSize*(i + x / 16.0f), tilebuf[y * 17 + x], C_TileSize*(j + y / 16.0f));
+						lowres[y][x] = glm::vec3(C_TileSize*(i + x / 16.0f), tilebuf[y * 17 + x], C_TileSize*(j + y / 16.0f));
 
 				for (int y = 0; y < 16; y++)
 					for (int x = 0; x < 16; x++)
-						lowsub[y][x] = vec3(C_TileSize*(i + (x + 0.5f) / 16.0f), tilebuf2[y * 16 + x], C_TileSize*(j + (y + 0.5f) / 16.0f));
+						lowsub[y][x] = glm::vec3(C_TileSize*(i + (x + 0.5f) / 16.0f), tilebuf2[y * 16 + x], C_TileSize*(j + (y + 0.5f) / 16.0f));
 
 
-				std::vector<vec3> vecrtices;
+				std::vector<glm::vec3> vecrtices;
 
 				for (int y = 0; y < 16; y++)
 				{
@@ -168,7 +168,7 @@ void CMapWDL::Load()
 	std::shared_ptr<CImageBase> mimimapImage = std::make_shared<CImageBase>(512, 512, 32, false);
 
 	// Heightmap
-	vec3 lowres[17][17];
+	glm::vec3 lowres[17][17];
 
 	for (uint8 j = 0; j < C_TilesInMap; j++)
 	{
@@ -183,7 +183,6 @@ void CMapWDL::Load()
 				bytes->readBytes(tilebuf, 17 * 17 * 2);
 
 				// make minimap
-				// for a 512x512 minimap texture, and 64x64 tiles, one tile is 8x8 pixels
 				for (int z = 0; z < 8; z++)
 				{
 					for (int x = 0; x < 8; x++)
@@ -193,7 +192,8 @@ void CMapWDL::Load()
 						if (hval < 0)
 						{
 							// water = blue
-							if (hval < -511) hval = -511;
+							if (hval < -511) 
+								hval = -511;
 							hval /= -2;
 							r = g = 0;
 							b = 255 - hval;

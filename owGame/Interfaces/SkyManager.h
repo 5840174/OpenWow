@@ -66,7 +66,7 @@ ZN_INTERFACE __declspec(uuid("8D86DF19-0FB3-47F3-B0BC-215788EA5500")) ISkyManage
 	virtual void Calculate(const ICameraComponent3D* camera, uint32 _time) = 0;
 	virtual bool HasSkies() const = 0;
 
-	virtual vec3 GetColor(LightColors::List _color) const = 0;
+	virtual glm::vec3 GetColor(LightColors::List _color) const = 0;
 	virtual float GetFog(LightFogs::List _fog) const = 0;
 	virtual float GetGlow() const = 0;
 	virtual float GetWaterShallowAlpha() const = 0;

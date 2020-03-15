@@ -79,13 +79,13 @@ struct SM2_Bone
 	};
 #endif
 
-	M2Track<vec3>       translation;
+	M2Track<glm::vec3>       translation;
 #if WOW_CLIENT_VERSION == WOW_CLASSIC_1_12_1
-	M2Track<quat>	    rotation;
+	M2Track<glm::quat>	    rotation;
 #elif WOW_CLIENT_VERSION >= WOW_BC_2_4_3
 	M2Track<M2CompQuat>	rotation;
 #endif
-	M2Track<vec3>       scale;
+	M2Track<glm::vec3>       scale;
 
 	glm::vec3           pivot;					// The pivot point of that bone.
 
@@ -297,12 +297,12 @@ struct SM2_RibbonEmitter
 {
 	int32 ribbonId;					    // Always (as I have seen): -1.
 	int32 boneIndex;					// A bone to attach to.
-	vec3 position;						// And a position, relative to that bone.
+	glm::vec3 position;						// And a position, relative to that bone.
 
 	M2Array<uint16> textureIndices;		// into Textures
 	M2Array<uint16> materialIndices;	// into materials
 
-	M2Track<vec3> colorTrack;
+	M2Track<glm::vec3> colorTrack;
 	M2Track<short> alphaTrack;          // And an alpha value in a short, where: 0 - transparent, 0x7FFF - opaque.
 	M2Track<float> heightAboveTrack;
 	M2Track<float> heightBelowTrack;	// do not set to same!
