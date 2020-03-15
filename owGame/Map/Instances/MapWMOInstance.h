@@ -31,7 +31,7 @@ public:
 	void Accept(IVisitor* visitor) override;
 
 protected:
-	virtual void UpdateLocalTransform() override;
+	virtual glm::mat4 CalculateLocalTransform() const override;
 	
 private:
 	const ADT_MODF m_PlacementInfo;

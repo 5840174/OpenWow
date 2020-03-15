@@ -9,19 +9,12 @@ public:
 	virtual ~CM2_Part_Material();
 
 	SM2_Material::BlendModes getBlendMode() const { return m_M2BlendMode; }
-	IBlendState::BlendMode CM2_Part_Material::GetBlendMode() const;
 
 	const std::shared_ptr<IDepthStencilState>& GetDepthStencilState() const { return m_DepthStencilState; }
 	const std::shared_ptr<IBlendState>& GetBlendState() const { return m_BlendState; };
+	const std::shared_ptr<IRasterizerState>& GetRasterizerState() const { return m_RasterizerState; };
 
 private:
-	bool m_IsLightingDisable;
-	bool m_IsFogDisable;
-	IRasterizerState::CullMode m_CullMode;
-
-	bool m_DepthTest;
-	IDepthStencilState::DepthWrite m_DepthWrite;
-
 	SM2_Material::BlendModes m_M2BlendMode;
 
 	std::shared_ptr<IDepthStencilState> m_DepthStencilState;

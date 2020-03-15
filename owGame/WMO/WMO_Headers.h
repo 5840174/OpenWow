@@ -44,7 +44,7 @@ struct SWMO_HeaderDef
 
 struct SWMO_MaterialDef
 {
-	struct Flags
+	struct
 	{
 		uint32 DisableLighting : 1;            // disable lighting logic in shader (but can still use vertex colors)
 		uint32 DisableFog : 1;                 // disable fog shading (rarely used)

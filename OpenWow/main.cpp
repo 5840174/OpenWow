@@ -39,6 +39,7 @@ void main_internal(int argumentCount, char* arguments[])
 	//app.AddRenderWindow(secondRenderWindow);
 
 	auto environmentManager = BaseManager->AddManager<EnvironmentManager>(std::make_shared<EnvironmentManager>(*BaseManager));
+	BaseManager->GetManager<IWoWObjectsCreator>()->InitEGxBlend(renderDevice);
 
 	BaseManager->GetManager<ILoader>()->Start();
 

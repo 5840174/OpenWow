@@ -124,10 +124,12 @@ void CM2_Base_Instance::Accept(IVisitor* visitor)
 	SceneNode3D::Accept(visitor);
 }
 
+
+
 //
-// CTransformComponent
+// Protected
 //
-void CM2_Base_Instance::UpdateLocalTransform()
+glm::mat4 CM2_Base_Instance::CalculateLocalTransform() const
 {
 	if (m_AttachmentType != M2_AttachmentType::NotAttached)
 	{
@@ -139,15 +141,14 @@ void CM2_Base_Instance::UpdateLocalTransform()
 			uint16 boneIndex = parentM2Instance->getM2().getMiscellaneous().getAttachment(m_AttachmentType).GetBoneIndex();
 
 			const auto& bone = parentM2Instance->getSkeletonComponent()->GetBone(boneIndex);
-
 			glm::mat4 relMatrix = glm::translate(bone->GetPivotPoint());
-			glm::mat4 absMatrix = GetParentWorldTransform() * bone->GetMatrix() * relMatrix;
-			SetWorldTransform(absMatrix);
+
+			return bone->GetMatrix() * relMatrix;
 		}
 	}
 	else
 	{
-		SceneNode3D::UpdateLocalTransform();
+		return __super::CalculateLocalTransform();
 	}
 }
 

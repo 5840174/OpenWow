@@ -140,7 +140,7 @@ void WMO_Group::CreateInsances(const std::shared_ptr<ISceneNode3D>& Parent) cons
 		{
 			auto inst = Parent->CreateSceneNode<CWMO_Doodad_Instance>(m2, index, placement);
 
-			if (!m_GroupHeader.flags.DO_NOT_USE_LIGHTING_DIFFUSE)
+			if (!m_GroupHeader.flags.DO_NOT_USE_LIGHTING_DIFFUSE && !m_GroupHeader.flags.IS_OUTDOOR)
 				inst->setColor(placement.getColor());
 
 			inst->Load();
@@ -338,8 +338,7 @@ bool WMO_Group::Load()
 			m_WMOModel.getFilename().c_str(),
 			m_GroupHeader.liquidType,
 			m_WMOModel.m_Header.flags.use_liquid_type_dbc_id, 
-			liquidHeader.materialID,
-			m_WMOModel.m_Materials[liquidHeader.materialID]->GetProto().shader
+			liquidHeader.materialID
 		);
 
 		uint32 liquid_type;

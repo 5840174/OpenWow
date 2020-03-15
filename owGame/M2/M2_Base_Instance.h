@@ -52,7 +52,7 @@ public:
 	virtual void                        Accept(IVisitor* visitor) override;
 
 protected:
-	virtual void						UpdateLocalTransform();
+	virtual glm::mat4                   CalculateLocalTransform() const override;
 
 private:
 	// This M2Instance attached to parent

@@ -6,6 +6,7 @@
 // Additional
 #include "WMO_Base_Instance.h"
 #include "WMO_Group_Instance.h"
+#include "WMO/WMO_Part_Material.h"
 
 CRenderPass_WMO::CRenderPass_WMO(IRenderDevice& RenderDevice, const std::shared_ptr<CSceneCreateTypedListsPass>& SceneNodeListPass)
 	: CBaseList3DPass(RenderDevice, SceneNodeListPass, cWMOGroup_NodeType)
@@ -40,10 +41,7 @@ std::shared_ptr<IRenderPassPipelined> CRenderPass_WMO::CreatePipeline(std::share
 
 	// PIPELINES
 	std::shared_ptr<IPipelineState> pipeline = GetRenderDevice().GetObjectsFactory().CreatePipelineState();
-	pipeline->GetBlendState()->SetBlendMode(disableBlending);
 	pipeline->GetDepthStencilState()->SetDepthMode(enableDepthWrites);
-	pipeline->GetRasterizerState()->SetCullMode(IRasterizerState::CullMode::Back);
-	pipeline->GetRasterizerState()->SetFillMode(IRasterizerState::FillMode::Solid);
 	pipeline->SetRenderTarget(RenderTarget);
 	pipeline->SetShader(EShaderType::VertexShader, g_pVertexShader);
 	pipeline->SetShader(EShaderType::PixelShader, g_pPixelShader);
@@ -64,6 +62,16 @@ EVisitResult CRenderPass_WMO::Visit(const ISceneNode3D* SceneNode3D)
 	}
 
 	return EVisitResult::Block;
+}
+
+EVisitResult CRenderPass_WMO::Visit(const IGeometry * Geometry, const IMaterial * Material, SGeometryDrawArgs GeometryDrawArgs)
+{
+	auto wmoMaterial = static_cast<const WMO_Part_Material*>(Material);
+
+	wmoMaterial->GetBlendState()->Bind();
+	wmoMaterial->GetRasterizerState()->Bind();
+	
+	return CBaseList3DPass::Visit(Geometry, Material, GeometryDrawArgs);
 }
 
 

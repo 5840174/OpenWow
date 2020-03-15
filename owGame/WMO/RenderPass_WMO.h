@@ -14,6 +14,7 @@ public:
 
     // IVisitor
     EVisitResult Visit(const ISceneNode3D* node) override final;
+	EVisitResult Visit(const IGeometry* Geometry, const IMaterial* Material, SGeometryDrawArgs GeometryDrawArgs = SGeometryDrawArgs()) override final;
 
 private:
 	std::shared_ptr<ISettingGroup> m_WoWSettings;

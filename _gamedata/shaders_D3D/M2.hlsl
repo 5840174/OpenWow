@@ -133,9 +133,7 @@ DefferedRenderPSOut PS_main(VertexShaderOutput IN) : SV_TARGET
 			discard;
 	}
 	
-	resultColor.a *= 2.0f;
-	
-	resultColor.rgb *= gTextureWeight;
+	resultColor.a *= gTextureWeight;
 	resultColor.rgb *= gInstanceColor.rgb;
 	resultColor.rgb *= gColor.rgb;
 	resultColor.a *= gColor.a;

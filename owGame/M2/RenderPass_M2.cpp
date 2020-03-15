@@ -73,6 +73,7 @@ void CRenderPass_M2::DoRenderM2Model(const CM2_Base_Instance* M2SceneNode, const
 
 				mat->GetM2Material()->GetBlendState()->Bind();
 				mat->GetM2Material()->GetDepthStencilState()->Bind();
+				mat->GetM2Material()->GetRasterizerState()->Bind();
 
 				mat->UpdateMaterialProps(GetRenderEventArgs(), M2SceneNode);
 				mat->Bind(shaders);
@@ -118,10 +119,6 @@ std::shared_ptr<IRenderPassPipelined> CRenderPass_M2::CreatePipeline(std::shared
 
 	// PIPELINES
 	std::shared_ptr<IPipelineState> pipeline = GetRenderDevice().GetObjectsFactory().CreatePipelineState();
-	pipeline->GetBlendState()->SetBlendMode(alphaBlending);
-	pipeline->GetDepthStencilState()->SetDepthMode(enableDepthWrites);
-	pipeline->GetRasterizerState()->SetCullMode(IRasterizerState::CullMode::Back);
-	pipeline->GetRasterizerState()->SetFillMode(IRasterizerState::FillMode::Solid);
 	pipeline->SetRenderTarget(RenderTarget);
 	pipeline->SetShader(EShaderType::VertexShader, vertexShader);
 	pipeline->SetShader(EShaderType::PixelShader, pixelShader);

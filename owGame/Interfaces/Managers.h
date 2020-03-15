@@ -12,6 +12,9 @@ ZN_INTERFACE ZN_API __declspec(uuid("42D47100-B825-47F1-BE2F-6F7C78443884")) IWo
 
 	virtual void                  ClearCache() = 0;
 
-	virtual std::shared_ptr<CM2>   LoadM2(IRenderDevice& RenderDevice, const std::string& Filename, bool ImmediateLoad = false) = 0;
+	virtual std::shared_ptr<CM2>  LoadM2(IRenderDevice& RenderDevice, const std::string& Filename, bool ImmediateLoad = false) = 0;
 	virtual std::shared_ptr<CWMO> LoadWMO(IRenderDevice& RenderDevice, const std::string& Filename, bool ImmediateLoad = false) = 0;
+
+	virtual void                         InitEGxBlend(IRenderDevice& RenderDevice) = 0;
+	virtual std::shared_ptr<IBlendState> GetEGxBlend(uint32 Index) const = 0;
 };

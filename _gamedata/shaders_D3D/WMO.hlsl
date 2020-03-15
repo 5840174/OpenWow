@@ -21,7 +21,7 @@ struct VertexShaderOutput
 
 
 // Uniforms
-cbuffer Material2 : register(b2)
+cbuffer Material : register(b2)
 {
     uint   gBlendMode;
 	uint   gMOCVExists;

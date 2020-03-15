@@ -9,24 +9,25 @@
 WMO_Part_Material::WMO_Part_Material(IRenderDevice& RenderDevice, const CWMO& WMOModel, const SWMO_MaterialDef& WMOMaterialProto)
 	: MaterialProxie(RenderDevice.GetObjectsFactory().CreateMaterial(sizeof(MaterialProperties)))
 	, m_WMOModel(WMOModel)
-	, m_WMOMaterialProto(WMOMaterialProto)
 {
+	SetWrapper(this);
+
 	// Constant buffer
 	m_pProperties = (MaterialProperties*)_aligned_malloc(sizeof(MaterialProperties), 16);
 	(*m_pProperties) = MaterialProperties();
-	(*m_pProperties).BlendMode = m_WMOMaterialProto.blendMode;
+	(*m_pProperties).BlendMode = WMOMaterialProto.blendMode;
 
 	// Create samplers
 	std::shared_ptr<ISamplerState> sampler = RenderDevice.GetObjectsFactory().CreateSamplerState();
 	sampler->SetFilter(ISamplerState::MinFilter::MinLinear, ISamplerState::MagFilter::MagLinear, ISamplerState::MipFilter::MipLinear);
 	sampler->SetWrapMode(
-		m_WMOMaterialProto.flags.TextureClampS ? ISamplerState::WrapMode::Clamp : ISamplerState::WrapMode::Repeat, 
-		m_WMOMaterialProto.flags.TextureClampT ? ISamplerState::WrapMode::Clamp : ISamplerState::WrapMode::Repeat
+		WMOMaterialProto.flags.TextureClampS ? ISamplerState::WrapMode::Clamp : ISamplerState::WrapMode::Repeat,
+		WMOMaterialProto.flags.TextureClampT ? ISamplerState::WrapMode::Clamp : ISamplerState::WrapMode::Repeat
 	);
     SetSampler(0, sampler);
 
 	// This
-	std::string textureName = m_WMOModel.m_TexturesNames.get() + m_WMOMaterialProto.diffuseNameIndex;
+	std::string textureName = m_WMOModel.m_TexturesNames.get() + WMOMaterialProto.diffuseNameIndex;
 	std::shared_ptr<ITexture> texture = RenderDevice.GetObjectsFactory().LoadTexture2D(textureName);
 	SetTexture(0, texture);
 
@@ -37,9 +38,12 @@ WMO_Part_Material::WMO_Part_Material(IRenderDevice& RenderDevice, const CWMO& WM
 
 	//Log::Warn("Shader = [%d], Blend mode [%d]", m_WMOMaterialProto.shader, m_WMOMaterialProto.blendMode);
 
-	glm::vec4 color = fromARGB(m_WMOMaterialProto.diffColor);
+	glm::vec4 color = fromARGB(WMOMaterialProto.diffColor);
 
-	SetWrapper(this);
+	m_BlendState = RenderDevice.GetBaseManager().GetManager<IWoWObjectsCreator>()->GetEGxBlend(WMOMaterialProto.blendMode);
+
+	m_RasterizerState = RenderDevice.GetObjectsFactory().CreateRasterizerState();
+	m_RasterizerState->SetCullMode((WMOMaterialProto.flags.IsTwoSided != 0) ? IRasterizerState::CullMode::None : IRasterizerState::CullMode::Back);
 }
 
 WMO_Part_Material::~WMO_Part_Material()
