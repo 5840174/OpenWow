@@ -49,12 +49,12 @@ namespace
 	}
 
 	template<class T>
-	inline T lifeRamp(float life, float mid, const T& a, const T& b, const T& c)
+	inline T lifeRamp(float currentTime, float mid, const T& a, const T& b, const T& c)
 	{
-		if (life <= mid)
-			return interpolate<T>(life / mid, a, b);
+		if (currentTime <= mid)
+			return interpolate<T>(currentTime / mid, a, b);
 		else
-			return interpolate<T>((life - mid) / (1.0f - mid), b, c);
+			return interpolate<T>((currentTime - mid) / (1.0f - mid), b, c);
 	}
 }
 
@@ -103,18 +103,18 @@ SM2_ParticleSystem_Wrapper::SM2_ParticleSystem_Wrapper(const CM2& M2Object, cons
 #endif
 
 	m_Slowdown = M2Particle.drag;
-	
-	//transform = M2Particle.flags & 1024;
 
 	billboard = !(M2Particle.flags.DONOTBILLBOARD);
 
 	// init tiles
-	/*for (int i = 0; i < rows*cols; i++)
+	for (int i = 0; i < rows*cols; i++)
 	{
 		TexCoordSet tc;
 		initTile(tc.tc, i);
-		m_Tiles.push_back(tc);
-	}*/
+		tiles.push_back(tc);
+	}
+
+	printf("Hello!");
 }
 
 SM2_ParticleSystem_Wrapper::~SM2_ParticleSystem_Wrapper()
@@ -134,21 +134,20 @@ void SM2_ParticleSystem_Wrapper::update(const CM2_Base_Instance* M2Instance, con
 
 	CreateAndDeleteParticles(M2Instance, e, rem, Particles);
 
-
 	for (auto& it = Particles.begin(); it != Particles.end(); )
 	{
 		CM2_ParticleObject& p = *it;
 		p.speed += (p.down * float(grav * deltaTime)) - (p.dir * float(deaccel * deltaTime));
 
 		float mspeed = 1.0f;
-		if (m_Slowdown > 0)
+		if (m_Slowdown > 0.0f)
 		{
-			mspeed = glm::exp((-1.0f * m_Slowdown) * p.life);
+			mspeed = glm::exp((-1.0f * m_Slowdown) * p.currentTime);
 		}
 		p.pos += (p.speed * float(mspeed * deltaTime));
 
-		p.life += deltaTime;
-		float rlife = p.life / p.maxlife;
+		p.currentTime += deltaTime;
+		float rlife = p.currentTime / p.maxTime;
 
 		// calculate size and color based on lifetime
 		p.size = lifeRamp<float>(rlife, m_MiddleTime, m_Scales[0], m_Scales[1], m_Scales[2]);
@@ -160,6 +159,58 @@ void SM2_ParticleSystem_Wrapper::update(const CM2_Base_Instance* M2Instance, con
 		else
 			it++;
 	}
+}
+
+const IBlendState::BlendMode SM2_ParticleSystem_Wrapper::GetBlendMode() const
+{
+	switch (m_BlendType)
+	{
+		case 0:
+		{
+			return IBlendState::BlendMode(false);
+		}
+		break;
+		case 1:
+		{
+			return IBlendState::BlendMode(true, false, 
+				IBlendState::BlendFactor::SrcColor, IBlendState::BlendFactor::One, 
+				IBlendState::BlendOperation::Add, 
+				IBlendState::BlendFactor::SrcAlpha, IBlendState::BlendFactor::One
+			);
+		}
+		break;
+		case 2:
+		{
+			return IBlendState::BlendMode(true, false, 
+				IBlendState::BlendFactor::SrcAlpha, IBlendState::BlendFactor::OneMinusSrcAlpha, 
+				IBlendState::BlendOperation::Add, 
+				IBlendState::BlendFactor::SrcAlpha, IBlendState::BlendFactor::OneMinusSrcAlpha
+			);
+		}
+		break;
+		case 3:
+		{
+			return IBlendState::BlendMode(false);
+		}
+		break;
+		case 4:
+		{
+			return IBlendState::BlendMode(true, false,
+				IBlendState::BlendFactor::SrcAlpha, IBlendState::BlendFactor::One,
+				IBlendState::BlendOperation::Add,
+				IBlendState::BlendFactor::SrcAlpha, IBlendState::BlendFactor::One
+			);
+		}
+		break;
+	}
+
+	_ASSERT(false);
+	return IBlendState::BlendMode();
+}
+
+const std::vector<TexCoordSet>& SM2_ParticleSystem_Wrapper::GetTiles() const
+{
+	return tiles;
 }
 
 void SM2_ParticleSystem_Wrapper::CreateAndDeleteParticles(const CM2_Base_Instance * M2Instance, const UpdateEventArgs & e, float & rem, std::vector<CM2_ParticleObject>& Particles) const
@@ -270,10 +321,10 @@ CM2_ParticleObject SM2_ParticleSystem_Wrapper::DefaultGenerator_New(const CM2_Ba
 		p.corners[3] = mrot * vec4(-1, 0, -1, 0);
 	}*/
 
-	p.life = 0;
-	p.maxlife = lifespan;
+	p.currentTime = 0;
+	p.maxTime = lifespan;
 	p.origin = p.pos;
-	//p.m_TileExists = random.Range(0, m_ParticleSystem->rows * m_ParticleSystem->cols - 1);
+	p.tile = m_Random.Range(0, rows * cols - 1);
 	return p;
 }
 
@@ -307,10 +358,10 @@ CM2_ParticleObject SM2_ParticleSystem_Wrapper::PlaneGenerator_New(const CM2_Base
 		p.corners[3] = mrot * vec4(-1, 0, -1, 0);
 	}*/
 
-	p.life = 0;
-	p.maxlife = lifespan;
+	p.currentTime = 0;
+	p.maxTime = lifespan;
 	p.origin = p.pos;
-	//p.m_TileExists = random.Range(0, m_ParticleSystem->rows * m_ParticleSystem->cols - 1);
+	p.tile = m_Random.Range(0, rows * cols - 1);
 	return p;
 }
 
@@ -362,11 +413,10 @@ CM2_ParticleObject SM2_ParticleSystem_Wrapper::SphereGenerator_New(const CM2_Bas
 	p.speed = glm::normalize(dir) * spd * (1.0f + m_Random.Range(-var, var));   // ?
 	p.dir = glm::normalize(dir);//mrot * vec3(0, 1.0f,0);
 	p.down = glm::vec3(0, -1.0f, 0);
-	p.life = 0;
-	p.maxlife = lifespan;
+	p.currentTime = 0;
+	p.maxTime = lifespan;
 	p.origin = p.pos;
-
-	//p.m_TileExists = random.Range(0, m_ParticleSystem->rows * m_ParticleSystem->cols - 1);
+	p.tile = m_Random.Range(0, rows * cols - 1);
 	return p;
 }
 
@@ -508,9 +558,11 @@ void SM2_ParticleSystem_Wrapper::Render3D(const glm::mat4& _worldMatrix)
 	}
 }
 
-void SM2_ParticleSystem_Wrapper::initTile(vec2 *tc, int num)
+#endif
+
+void SM2_ParticleSystem_Wrapper::initTile(glm::vec2 * tc, int num)
 {
-	vec2 a, b;
+	glm::vec2 a, b;
 	int x = num % cols;
 	int y = num / cols;
 
@@ -520,7 +572,7 @@ void SM2_ParticleSystem_Wrapper::initTile(vec2 *tc, int num)
 	b.x = (x + 1) * (1.0f / cols);
 	b.y = (y + 1) * (1.0f / rows);
 
-	vec2 otc[4];
+	glm::vec2 otc[4];
 	otc[0] = a;
 	otc[1].x = b.x;
 	otc[1].y = a.y;
@@ -534,4 +586,4 @@ void SM2_ParticleSystem_Wrapper::initTile(vec2 *tc, int num)
 	}
 }
 
-#endif
+

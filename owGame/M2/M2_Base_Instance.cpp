@@ -145,6 +145,8 @@ glm::mat4 CM2_Base_Instance::CalculateLocalTransform() const
 
 			return bone->GetMatrix() * relMatrix;
 		}
+
+		return __super::CalculateLocalTransform();
 	}
 	else
 	{

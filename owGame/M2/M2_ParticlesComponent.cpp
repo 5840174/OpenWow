@@ -19,6 +19,9 @@ CM2ParticleSystem::CM2ParticleSystem(IRenderDevice& RenderDevice, const std::sha
 		m_Material = std::make_shared<MaterialParticle>(RenderDevice);
 		m_Material->SetTexture(0, m_M2ParticleSystem->GetTexture());
 	}
+
+	m_BlendState = RenderDevice.GetObjectsFactory().CreateBlendState();
+	m_BlendState->SetBlendMode(m_M2ParticleSystem->GetBlendMode());
 }
 
 CM2ParticleSystem::~CM2ParticleSystem()
@@ -38,6 +41,9 @@ void CM2ParticleSystem::Update(const CM2_Base_Instance * M2Instance, const Updat
 		const auto& m2P = m_M2ParticleObjects[i];
 		SParticle particle;
 		particle.Position = m2P.pos;
+		_ASSERT(m2P.tile < m_M2ParticleSystem->GetTiles().size());
+		particle.TexCoordBegin = m_M2ParticleSystem->GetTiles()[m2P.tile].tc[1];
+		particle.TexCoordEnd = m_M2ParticleSystem->GetTiles()[m2P.tile].tc[3];
 		particle.Color = m2P.color;
 		particle.Size = glm::vec2(m2P.size) * 1.0f;
 		m_ParticleObjects[i] = particle;
@@ -70,6 +76,11 @@ void CM2ParticleSystem::SetMaterial(const std::shared_ptr<IMaterial>& Material)
 std::shared_ptr<IMaterial> CM2ParticleSystem::GetMaterial() const
 {
 	return m_Material;
+}
+
+std::shared_ptr<IBlendState> CM2ParticleSystem::GetBlendState() const
+{
+	return m_BlendState;
 }
 
 //

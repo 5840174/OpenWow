@@ -8,7 +8,8 @@ struct CM2_ParticleObject
 	glm::vec3 origin;
 	glm::vec3 dir;
 
-	float size, life, maxlife;
+	float size, currentTime, maxTime;
 
 	glm::vec4 color;
+	int tile;
 };

@@ -189,10 +189,11 @@ void CSceneWoW::Load3D_M2s()
 
 void CSceneWoW::LoadUI()
 {
+	//return;
 	rootForBtns = GetRootNodeUI()->CreateSceneNode<SceneNodeUI>();
 
 	minimap = GetRootNodeUI()->CreateSceneNode<CUITextureNode>(GetRenderDevice(), glm::vec2(256, 256));
-	minimap->SetTranslate(glm::vec2(900, 900));
+	minimap->SetTranslate(glm::vec2(900, 800));
 	minimap->SetOnClickCallback([this](const ISceneNodeUI* Node, glm::vec2 Point) { this->GoToCoord(Node, Point); });
 
 	size_t cntrX = 0;

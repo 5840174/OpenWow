@@ -13,6 +13,11 @@ class CM2_Base_Instance;
 
 #include "M2_Particle.h"
 
+struct TexCoordSet 
+{
+	glm::vec2 tc[4];
+};
+
 class SM2_ParticleSystem_Wrapper
 {
 public:
@@ -21,17 +26,19 @@ public:
 
 	void update(const CM2_Base_Instance* M2Instance, const UpdateEventArgs& e, float& rem, std::vector<CM2_ParticleObject>& Particles) const;
 
-	SM2_Particle::Flags GetFlags() const { return m_Flags; }
-	const glm::vec3&    GetPosition() const { return m_Position; }
-	int16               GetBone() const { return m_Bone; }
-	const std::shared_ptr<ITexture>& GetTexture() const { return m_Texture; }
-
+	SM2_Particle::Flags               GetFlags() const { return m_Flags; }
+	const glm::vec3&                  GetPosition() const { return m_Position; }
+	int16                             GetBone() const { return m_Bone; }
+	const std::shared_ptr<ITexture>&  GetTexture() const { return m_Texture; }
+	const IBlendState::BlendMode      GetBlendMode() const;
+	const std::vector<TexCoordSet>&   GetTiles() const;
 
 protected:
 	void               CreateAndDeleteParticles(const CM2_Base_Instance* M2Instance, const UpdateEventArgs& e, float& rem, std::vector<CM2_ParticleObject>& Particles) const;
 	CM2_ParticleObject DefaultGenerator_New(const CM2_Base_Instance* M2Instance, float w, float l, float spd, float var, float lifespan, float spr, float spr2) const;
 	CM2_ParticleObject PlaneGenerator_New(const CM2_Base_Instance* M2Instance, float w, float l, float spd, float var, float lifespan, float spr, float spr2) const;
 	CM2_ParticleObject SphereGenerator_New(const CM2_Base_Instance* M2Instance, float w, float l, float spd, float var, float lifespan, float spr, float spr2) const;
+	void               initTile(glm::vec2 *tc, int num);
 
 private:
 	SM2_Particle::Flags       m_Flags;
@@ -62,11 +69,12 @@ private:
 	float                     m_Slowdown;
 
 private:
-	M2_Animated<uint8> enabled;
-	int order;
+	M2_Animated<uint8>        enabled;
+	int                       order;
 
 	int rows, cols;
 	bool billboard;
+	std::vector<TexCoordSet> tiles;
 
 private:
 	const CM2& m_M2Object;

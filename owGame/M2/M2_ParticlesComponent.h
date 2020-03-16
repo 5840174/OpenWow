@@ -23,10 +23,12 @@ public:
 	const std::vector<SParticle>& GetParticles() const override;
 	void SetMaterial(const std::shared_ptr<IMaterial>& Material) override;
 	std::shared_ptr<IMaterial> GetMaterial() const override;
+	std::shared_ptr<IBlendState> GetBlendState() const override;
 
 private:
 	std::vector<SParticle> m_ParticleObjects;
 	std::shared_ptr<IMaterial> m_Material;
+	std::shared_ptr<IBlendState> m_BlendState;
 
 private:
 	float rem;
