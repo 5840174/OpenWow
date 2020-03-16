@@ -25,8 +25,8 @@ CM2_Part_Material::CM2_Part_Material(IBaseManager& BaseManager, IRenderDevice& R
 	//m_IsLightingDisable = M2Material.flags.UNLIT;
 	//m_IsFogDisable = M2Material.flags.UNFOGGED;
 
-	m_M2BlendMode = M2Blend_To_EGxBlend[M2Material.BlendMode].EGxBLend;
-	Log::Green("Blend mode = %d (original %d)", M2Blend_To_EGxBlend[M2Material.BlendMode].EGxBLend, M2Material.BlendMode);
+	m_M2BlendMode = /*M2Blend_To_EGxBlend[*/M2Material.BlendMode/*].EGxBLend*/;
+	//Log::Green("Blend mode = %d (original %d)", M2Blend_To_EGxBlend[M2Material.BlendMode].EGxBLend, M2Material.BlendMode);
 
 	m_BlendState = BaseManager.GetManager<IWoWObjectsCreator>()->GetEGxBlend(M2Blend_To_EGxBlend[M2Material.BlendMode].EGxBLend);
 

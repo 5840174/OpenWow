@@ -23,14 +23,43 @@ CMPQFilesStorage::CMPQFilesStorage(std::string _path, Priority _priority)
 	AddArchive("expansion.MPQ");
 	AddArchive("patch.MPQ");
 	AddArchive("patch-2.MPQ");
+
 	AddArchive("enGB/backup-enGB.MPQ");
 	AddArchive("enGB/base-enGB.MPQ");
+
 	AddArchive("enGB/expansion-locale-enGB.MPQ");
 	AddArchive("enGB/expansion-speech-enGB.MPQ");
+
 	AddArchive("enGB/locale-enGB.MPQ");
+	AddArchive("enGB/speech-enGB.MPQ");
+
 	AddArchive("enGB/patch-enGB.MPQ");
 	AddArchive("enGB/patch-enGB-2.MPQ");
-	AddArchive("enGB/speech-enGB.MPQ");
+
+#elif WOW_CLIENT_VERSION == WOW_WOTLK_3_3_5
+	AddArchive("common.MPQ");
+	AddArchive("common-2.MPQ");
+	AddArchive("expansion.MPQ");
+	AddArchive("lichking.MPQ");
+	AddArchive("patch.MPQ");
+	AddArchive("patch-2.MPQ");
+	AddArchive("patch-3.MPQ");
+
+	AddArchive("ruRU/backup-ruRU.MPQ");
+	AddArchive("ruRU/base-ruRU.MPQ");
+
+	AddArchive("ruRU/expansion-locale-ruRU.MPQ");
+	AddArchive("ruRU/expansion-speech-ruRU.MPQ");
+
+	AddArchive("ruRU/lichking-locale-ruRU.MPQ");
+	AddArchive("ruRU/lichking-speech-ruRU.MPQ");
+
+	AddArchive("ruRU/locale-ruRU.MPQ");
+	AddArchive("ruRU/speech-ruRU.MPQ");
+
+	AddArchive("ruRU/patch-ruRU.MPQ");
+	AddArchive("ruRU/patch-ruRU-2.MPQ");
+	AddArchive("ruRU/patch-ruRU-3.MPQ");
 #endif
 }
 

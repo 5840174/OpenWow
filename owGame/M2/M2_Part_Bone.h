@@ -115,7 +115,7 @@ private:
 	M2_Animated<glm::vec3>              m_TranslateAnimated;
 #if WOW_CLIENT_VERSION == WOW_CLASSIC_1_12_1
 	M2_Animated<glm::quat>              m_RotateAnimated;
-#elif WOW_CLIENT_VERSION == WOW_BC_2_4_3
+#elif WOW_CLIENT_VERSION >= WOW_BC_2_4_3
 	M2_Animated<glm::quat, M2CompQuat, Quat16ToQuat32> m_RotateAnimated;
 #endif
 	M2_Animated<glm::vec3>              m_ScaleAnimated;

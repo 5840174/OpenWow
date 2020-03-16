@@ -38,6 +38,10 @@ public:
 	// CLoadableObject
 	bool Load() override;
 
+
+private:
+	void FixColors(CBgra* mocv, uint32 mocv_count, const SWMO_Group_BatchDef* moba);
+
 public:
 	std::string                             m_GroupName;
 	

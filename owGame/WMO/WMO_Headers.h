@@ -13,7 +13,7 @@ struct SWMO_HeaderDef
 	uint32 nDoodadNames;
 	uint32 nDoodadDefs;
 	uint32 nDoodadSets;
-	uint32 ambColor; // CArgb
+	CArgb ambColor;
 	FOREIGN_KEY(uint32, DBC_WMOAreaTable, WMOID, wmoID);
 	CAaBox bounding_box;
 	struct Flags

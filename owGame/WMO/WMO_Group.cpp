@@ -310,6 +310,8 @@ bool WMO_Group::Load()
 		uint32 vertexColorsCount = buffer->getSize() / sizeof(CBgra);
 		CBgra* vertexColors = (CBgra*)buffer->getDataFromCurrent();
 
+		//FixColors(vertexColors, vertexColorsCount, WMOBatchs.data());
+
 		// Convert
 		std::vector<glm::vec4> vertexColorsConverted;
 		for (uint32 i = 0; i < vertexColorsCount; i++)
@@ -383,4 +385,72 @@ bool WMO_Group::Load()
 	m_ChunkReader.reset();
 
 	return true;
+}
+
+void WMO_Group::FixColors(CBgra* mocv, uint32 mocv_count, const SWMO_Group_BatchDef* moba)
+{
+	uint32 begin_second_fixup = 0;
+	if (m_GroupHeader.transBatchCount)
+	{
+		begin_second_fixup = moba[(uint16)m_GroupHeader.transBatchCount].vertexStart + 1;
+	}
+
+	if (m_WMOModel.m_Header.flags.lighten_interiors)
+	{
+		for (uint32 i = begin_second_fixup; i < mocv_count; ++i)
+		{
+			mocv[i].a = m_GroupHeader.flags.IS_OUTDOOR ? 255 : 0;
+		}
+	}
+	else
+	{
+		uint8 r = 0, g = 0, b = 0;
+
+		if (m_WMOModel.m_Header.flags.skip_base_color == 0)
+		{
+			r = m_WMOModel.m_Header.ambColor.r;
+			g = m_WMOModel.m_Header.ambColor.g;
+			b = m_WMOModel.m_Header.ambColor.b;
+		}
+
+		for (uint32 mocv_index = 0; mocv_index < begin_second_fixup; ++mocv_index)
+		{
+			mocv[mocv_index].b -= b;
+			mocv[mocv_index].g -= g;
+			mocv[mocv_index].r -= r;
+
+			float v38 = (float)mocv[mocv_index].a / 255.0f;
+
+			float v11 = (float)mocv[mocv_index].b - v38 * (float)mocv[mocv_index].b;
+			_ASSERT(v11 > -0.5f);
+			_ASSERT(v11 < 255.5f);
+			mocv[mocv_index].b = v11 / 2;
+
+			float v13 = (float)mocv[mocv_index].g - v38 * (float)mocv[mocv_index].g;
+			_ASSERT(v13 > -0.5f);
+			_ASSERT(v13 < 255.5f);
+			mocv[mocv_index].g = v13 / 2;
+
+			float v14 = (float)mocv[mocv_index].r - v38 * (float)mocv[mocv_index].r;
+			_ASSERT(v14 > -0.5f);
+			_ASSERT(v14 < 255.5f);
+			mocv[mocv_index].r = v14 / 2;
+		}
+
+		for (uint32 i = begin_second_fixup; i < mocv_count; ++i)
+		{
+			int32 v19 = (mocv[i].b * mocv[i].a) / 64 + mocv[i].b - b;
+			mocv[i].b = std::min(255, std::max(v19 / 2, 0));
+
+			int32 v30 = (mocv[i].g * mocv[i].a) / 64 + mocv[i].g - g;
+			mocv[i].g = std::min(255, std::max(v30 / 2, 0));
+
+			int32 v33 = (mocv[i].a * mocv[i].r) / 64 + mocv[i].r - r;
+			mocv[i].r = std::min(255, std::max(v33 / 2, 0));
+
+			mocv[i].a = m_GroupHeader.flags.IS_OUTDOOR ? 0xFF : 0x00;
+		}
+	}
+
+
 }

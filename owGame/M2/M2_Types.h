@@ -396,10 +396,10 @@ struct SM2_Particle
 	int16 tailUVAnim[2];                      // start, end
 	int16 tailDecayUVAnim[2];
 #elif WOW_CLIENT_VERSION >= WOW_WOTLK_3_3_5
-	M2TrackFake<vec3> colorTrack;             // Most likely they all have 3 timestamps for {start, middle, end}.
+	M2TrackFake<glm::vec3> colorTrack;             // Most likely they all have 3 timestamps for {start, middle, end}.
 	M2TrackFake<short> alphaTrack;            // FIXME FIXED16
-	M2TrackFake<vec2> scaleTrack;
-	vec2 scaleVary;                           // A percentage amount to randomly vary the scale of each particle
+	M2TrackFake<glm::vec2> scaleTrack;
+	glm::vec2 scaleVary;                           // A percentage amount to randomly vary the scale of each particle
 	M2TrackFake<uint16> headCellTrack;        // Some kind of intensity values seen: 0,16,17,32 (if set to different it will have high intensity)
 	M2TrackFake<uint16> tailCellTrack;
 #endif

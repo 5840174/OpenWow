@@ -323,8 +323,7 @@ IBlendState::BlendMode CWorldObjectCreator::GetEGxBlendMode(uint32 Index)
 	{
 	case 0: // Opaque
 		return IBlendState::BlendMode(false, false,
-			IBlendState::BlendFactor::One,
-			IBlendState::BlendFactor::Zero);
+			IBlendState::BlendFactor::One, IBlendState::BlendFactor::Zero);
 		break;
 
 	case 1: // AlphaKey

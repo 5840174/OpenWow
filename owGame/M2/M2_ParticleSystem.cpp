@@ -91,12 +91,16 @@ SM2_ParticleSystem_Wrapper::SM2_ParticleSystem_Wrapper(const CM2& M2Object, cons
 	zSource.Initialize(M2Particle.zSource, File);
 	enabled.Initialize(M2Particle.enabledIn, File);
 
+#if WOW_CLIENT_VERSION < WOW_CLASSIC_3_3_5
 	m_MiddleTime = M2Particle.midPoint;
 	for (size_t i = 0; i < 3; i++)
 	{
 		m_Colors[i] = glm::vec4(M2Particle.colorValues[i].r, M2Particle.colorValues[i].g, M2Particle.colorValues[i].b, M2Particle.colorValues[i].a) / 255.0f;
 		m_Scales[i]  = M2Particle.scaleValues[i];
 	}
+#else
+	m_MiddleTime = 0.5f;
+#endif
 
 	m_Slowdown = M2Particle.drag;
 	

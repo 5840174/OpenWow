@@ -37,6 +37,8 @@ public:
 		m_BaseManager.GetManager<IFilesManager>()->AddFilesStorage("MPQStorage", std::make_shared<CMPQFilesStorage>("D:\\_games\\World of Warcraft 1.12.1\\Data\\", IFilesStorageEx::Priority::PRIOR_HIGH));
 #elif WOW_CLIENT_VERSION == WOW_BC_2_4_3
 		m_BaseManager.GetManager<IFilesManager>()->AddFilesStorage("MPQStorage", std::make_shared<CMPQFilesStorage>("c:\\_engine\\World of Warcraft 2.4.3\\Data\\", IFilesStorageEx::Priority::PRIOR_HIGH));
+#elif WOW_CLIENT_VERSION == WOW_WOTLK_3_3_5
+		m_BaseManager.GetManager<IFilesManager>()->AddFilesStorage("MPQStorage", std::make_shared<CMPQFilesStorage>("c:\\_engine\\World of Warcraft 3.3.5a\\Data\\", IFilesStorageEx::Priority::PRIOR_HIGH));
 #endif
 
 		// BLP

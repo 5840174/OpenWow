@@ -7,6 +7,8 @@ static IBaseManager* BaseManager = nullptr;
 
 void main_internal(int argumentCount, char* arguments[])
 {
+	setlocale(LC_ALL, "Russian");
+
 	// 1. Initialize engine and some improtant managers
 	BaseManager = InitializeEngine(Utils::ArgumentsToVector(argumentCount, arguments), "");
 

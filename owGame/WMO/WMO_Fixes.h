@@ -3,77 +3,7 @@
 #include "WMO.h"
 #include "WMO_Group.h"
 
-inline void FixColorVertexAlpha(WMO_Group* _group)
-{
-	/*uint32 begin_second_fixup = 0;
-	if (_group->m_Header.batchCounts[0])
-	{
-		begin_second_fixup = *((uint16*)&_group->moba[(uint16)_group->m_Header.batchCounts[0]] - 2) + 1;
-	}
 
-	if (_group->GetWMOModel().m_Header.flags.lighten_interiors)
-	{
-		for (uint32 i = begin_second_fixup; i < _group->mocv_count; ++i)
-		{
-			_group->mocv[i].w = _group->m_Header.flags.IS_OUTDOOR ? 0xFF : 0x00;
-		}
-	}
-	else
-	{
-		uint8 v35, v36, v37;
-
-		if (_group->GetWMOModel().m_Header.flags.skip_base_color)
-		{
-			v35 = 0;
-			v36 = 0;
-			v37 = 0;
-		}
-		else
-		{
-			v35 = (_group->GetWMOModel().m_Header.ambColor >> 0) & 0xff;
-			v37 = (_group->GetWMOModel().m_Header.ambColor >> 8) & 0xff;
-			v36 = (_group->GetWMOModel().m_Header.ambColor >> 16) & 0xff;
-		}
-
-		for (uint32 mocv_index = 0; mocv_index < begin_second_fixup; ++mocv_index)
-		{
-			_group->mocv[mocv_index].x -= v36;
-			_group->mocv[mocv_index].y -= v37;
-			_group->mocv[mocv_index].z -= v35;
-
-			float v38 = (float)_group->mocv[mocv_index].w / 255.0f;
-
-			float v11 = (float)_group->mocv[mocv_index].x - v38 * (float)_group->mocv[mocv_index].x;
-			_ASSERT(v11 > -0.5f);
-			_ASSERT(v11 < 255.5f);
-			_group->mocv[mocv_index].x = v11 / 2;
-
-			float v13 = (float)_group->mocv[mocv_index].y - v38 * (float)_group->mocv[mocv_index].y;
-			_ASSERT(v13 > -0.5f);
-			_ASSERT(v13 < 255.5f);
-			_group->mocv[mocv_index].y = v13 / 2;
-
-			float v14 = (float)_group->mocv[mocv_index].z - v38 * (float)_group->mocv[mocv_index].z;
-			_ASSERT(v14 > -0.5f);
-			_ASSERT(v14 < 255.5f);
-			_group->mocv[mocv_index++].z = v14 / 2;
-		}
-
-		for (uint32 i = begin_second_fixup; i < _group->mocv_count; ++i)
-		{
-			int32 v19 = (_group->mocv[i].x * _group->mocv[i].w) / 64 + _group->mocv[i].x - v36;
-			_group->mocv[i].x = std::min(255, std::max(v19 / 2, 0));
-
-			int32 v30 = (_group->mocv[i].y * _group->mocv[i].w) / 64 + _group->mocv[i].y - v37;
-			_group->mocv[i].y = std::min(255, std::max(v30 / 2, 0));
-
-			int32 v33 = (_group->mocv[i].w * _group->mocv[i].z) / 64 + _group->mocv[i].z - v35;
-			_group->mocv[i].z = std::min(255, std::max(v33 / 2, 0));
-
-			_group->mocv[i].w = _group->m_Header.flags.IS_OUTDOOR ? 0xFF : 0x00;
-		}
-	}*/
-}
 
 /*void AttenTransVerts(WMO* mapObj, WMO_Group* mapObjGroup)
 {

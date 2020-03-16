@@ -13,7 +13,9 @@ CSceneWoW::CSceneWoW(IBaseManager& BaseManager)
 CSceneWoW::~CSceneWoW()
 {
 	CMapWMOInstance::reset();
+#ifdef USE_M2_MODELS
 	CMapM2Instance::reset();
+#endif
 
 	OutputDebugStringW(L"Destroyed.");
 }
@@ -120,9 +122,9 @@ void CSceneWoW::OnWindowKeyReleased(KeyEventArgs & e)
 //
 void CSceneWoW::Load3D()
 {
-	auto wmo = GetBaseManager().GetManager<IWoWObjectsCreator>()->LoadWMO(GetRenderDevice(), /*"World\\wmo\\Lorderon\\Undercity\\Undercity.wmo"*/"World\\wmo\\Outland\\DarkPortal\\DarkPortal_Temple.wmo");
-	wmoInstance = GetRootNode3D()->CreateSceneNode<CWMO_Base_Instance>(wmo);
-	GetBaseManager().GetManager<ILoader>()->AddToLoadQueue(wmoInstance);
+	//auto wmo = GetBaseManager().GetManager<IWoWObjectsCreator>()->LoadWMO(GetRenderDevice(), /*"World\\wmo\\Lorderon\\Undercity\\Undercity.wmo"*/"World\\wmo\\Outland\\DarkPortal\\DarkPortal_Temple.wmo");
+	//wmoInstance = GetRootNode3D()->CreateSceneNode<CWMO_Base_Instance>(wmo);
+	//GetBaseManager().GetManager<ILoader>()->AddToLoadQueue(wmoInstance);
 
 	//auto m2 = GetBaseManager().GetManager<IWoWObjectsCreator>()->LoadM2(GetRenderDevice(), "World\\Expansion01\\Doodads\\Netherstorm\\BioDomes\\NS_BioDome_All_FX_South.M2");
 	//m2Instance = GetRootNode3D()->CreateSceneNode<CM2_Base_Instance>(m2);
@@ -191,7 +193,7 @@ void CSceneWoW::LoadUI()
 	rootForBtns = GetRootNodeUI()->CreateSceneNode<SceneNodeUI>();
 
 	minimap = GetRootNodeUI()->CreateSceneNode<CUITextureNode>(GetRenderDevice(), glm::vec2(256, 256));
-	minimap->SetTranslate(glm::vec2(900, 300));
+	minimap->SetTranslate(glm::vec2(900, 900));
 	minimap->SetOnClickCallback([this](const ISceneNodeUI* Node, glm::vec2 Point) { this->GoToCoord(Node, Point); });
 
 	size_t cntrX = 0;
@@ -202,11 +204,11 @@ void CSceneWoW::LoadUI()
 	{
 		auto btn = rootForBtns->CreateSceneNode<CUIButtonNode>(GetRenderDevice());
 		btn->CreateDefault();
-		btn->SetText(it->Get_Name());
+		btn->SetText(it->Get_Directory());
 
 		uint32 id = it->Get_ID();
 		btn->SetOnClickCallback([this, id] (const ISceneNodeUI* Node, glm::vec2 Point) { this->TestCreateMap(id); });
-		btn->SetTranslate(glm::vec2(cntrX * 280, cntrY * 38));
+		btn->SetTranslate(glm::vec2(cntrX * 180, cntrY * 38));
 
 		cntrY++;
 		if (cntrY > 20)
@@ -245,11 +247,11 @@ void CSceneWoW::TestCreateMap(uint32 MapID)
 
 	minimap->SetTexture(map->getMinimap());
 
-	GetCameraController()->GetCamera()->SetTranslation(glm::vec3(x * C_TileSize + C_TileSize / 2.0f, 100.0f, y * C_TileSize + C_TileSize / 2.0f));
-	GetCameraController()->GetCamera()->SetYaw(48.8);
-	GetCameraController()->GetCamera()->SetPitch(-27.8);
+	//GetCameraController()->GetCamera()->SetTranslation(glm::vec3(x * C_TileSize + C_TileSize / 2.0f, 100.0f, y * C_TileSize + C_TileSize / 2.0f));
+	//GetCameraController()->GetCamera()->SetYaw(48.8);
+	//GetCameraController()->GetCamera()->SetPitch(-27.8);
 
-	GetCameraController()->GetCamera()->SetTranslation(glm::vec3(0, 100.0f, 0));
+	//GetCameraController()->GetCamera()->SetTranslation(glm::vec3(0, 100.0f, 0));
 
 	if (map->getGlobalInstance())
 	{
