@@ -219,9 +219,7 @@ struct SM2_Material
 		M2BLEND_NO_ALPHA_ADD,
 		M2BLEND_ADD,
 		M2BLEND_MOD,
-		M2BLEND_MOD2X,
-
-		COUNT
+		M2BLEND_MOD2X
 	} BlendMode;
 };
 

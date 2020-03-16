@@ -88,6 +88,7 @@ public:
 	virtual ~SM2_Part_Bone_Wrapper();
 
 	glm::mat4 calcMatrix(const CM2_Base_Instance* M2Instance, uint32 globalTime) const;
+	glm::mat4 calcRotationMatrix(const CM2_Base_Instance* M2Instance, uint32 globalTime) const;
 	glm::mat4 calcBillboardMatrix(const glm::mat4& _viewMatrix, const glm::mat4& _worldMatrix) const;
 
 	bool IsInterpolated(uint16 anim) const

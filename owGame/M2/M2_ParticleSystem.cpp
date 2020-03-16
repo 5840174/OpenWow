@@ -91,7 +91,7 @@ SM2_ParticleSystem_Wrapper::SM2_ParticleSystem_Wrapper(const CM2& M2Object, cons
 	zSource.Initialize(M2Particle.zSource, File);
 	enabled.Initialize(M2Particle.enabledIn, File);
 
-#if WOW_CLIENT_VERSION < WOW_CLASSIC_3_3_5
+#if WOW_CLIENT_VERSION < WOW_WOTLK_3_3_5
 	m_MiddleTime = M2Particle.midPoint;
 	for (size_t i = 0; i < 3; i++)
 	{
@@ -105,16 +105,6 @@ SM2_ParticleSystem_Wrapper::SM2_ParticleSystem_Wrapper(const CM2& M2Object, cons
 	m_Slowdown = M2Particle.drag;
 	
 	//transform = M2Particle.flags & 1024;
-
-	// Type 2
-	// 3145 = water ele
-	// 1305 = water ele
-	// 1049 = water elemental
-	// 1033 = water elemental
-	// 281 = water ele
-	// 256 = Water elemental
-	// 57 = Faith halo, ring?
-	// 9 = water elemental
 
 	billboard = !(M2Particle.flags.DONOTBILLBOARD);
 
@@ -300,7 +290,7 @@ CM2_ParticleObject SM2_ParticleSystem_Wrapper::PlaneGenerator_New(const CM2_Base
 
 	p.pos = GetPosition() + glm::vec3(m_Random.Range(-l, l), 0, m_Random.Range(-w, w));
 	if (bone)
-		p.pos = bone->GetMatrix() * glm::vec4(p.pos, 0.0f);
+		p.pos = bone->GetMatrix() * glm::vec4(p.pos, 1.0f);
 
 	p.dir = glm::vec3(0.0f, 1.0f, 0.0f);
 	if (bone)
@@ -346,7 +336,7 @@ CM2_ParticleObject SM2_ParticleSystem_Wrapper::SphereGenerator_New(const CM2_Bas
 
 	p.pos = GetPosition() + bdir;
 	if (bone)
-		p.pos = bone->GetMatrix() * glm::vec4(p.pos, 1.0f);
+		p.pos = bone->GetMatrix() * glm::vec4(p.pos, 0.0f);
 
 
 	/*if ((glm::length2(bdir) == 0) && ((m_ParticleSystem->flags & 0x100) != 0x100))

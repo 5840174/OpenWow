@@ -8,7 +8,7 @@ struct
 {
 	SM2_Material::BlendModes	M2Blend;
 	uint8						EGxBLend;
-} M2Blend_To_EGxBlend[SM2_Material::COUNT] =
+} M2Blend_To_EGxBlend[SM2_Material::M2BLEND_MOD2X + 1] =
 {
 	{ SM2_Material::M2BLEND_OPAQUE,			0 },
 	{ SM2_Material::M2BLEND_ALPHA_KEY,		1 },

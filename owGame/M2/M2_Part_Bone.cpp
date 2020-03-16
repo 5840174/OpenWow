@@ -37,20 +37,7 @@ glm::mat4 SM2_Part_Bone_Wrapper::calcMatrix(const CM2_Base_Instance* M2Instance,
 
 			if (m_RotateAnimated.IsUsesBySequence(animator->getSequenceIndex()))
 			{
-				glm::quat q = m_RotateAnimated.GetValue(animator->getSequenceIndex(), animator->getCurrentTime(), m_M2Object.getSkeleton().getGlobalLoops(), globalTime);
-				m *= glm::toMat4(q);
-
-				/*
-				if (ParentBone != nullptr)
-				{
-					_ASSERT(ParentBone->IsCalculated());
-					m_RotationMatrix = ParentBone->m_RotationMatrix * glm::toMat4(q);
-				}
-				else
-				{
-					m_RotationMatrix = glm::toMat4(q);
-				}
-				*/
+				m *= glm::toMat4(m_RotateAnimated.GetValue(animator->getSequenceIndex(), animator->getCurrentTime(), m_M2Object.getSkeleton().getGlobalLoops(), globalTime));
 			}
 
 			if (m_ScaleAnimated.IsUsesBySequence(animator->getSequenceIndex()))
@@ -63,6 +50,19 @@ glm::mat4 SM2_Part_Bone_Wrapper::calcMatrix(const CM2_Base_Instance* M2Instance,
 	}
 
 	return m;
+}
+
+glm::mat4 SM2_Part_Bone_Wrapper::calcRotationMatrix(const CM2_Base_Instance * M2Instance, uint32 globalTime) const
+{
+	if (const auto& animator = M2Instance->getAnimator())
+	{
+		if (m_RotateAnimated.IsUsesBySequence(animator->getSequenceIndex()))
+		{
+			return glm::toMat4(m_RotateAnimated.GetValue(animator->getSequenceIndex(), animator->getCurrentTime(), m_M2Object.getSkeleton().getGlobalLoops(), globalTime));
+		}
+	}
+
+	return glm::mat4(1.0f);
 }
 
 glm::mat4 SM2_Part_Bone_Wrapper::calcBillboardMatrix(const glm::mat4& _viewMatrix, const glm::mat4& _worldMatrix) const

@@ -70,9 +70,13 @@ void CM2SkeletonBone3D::Calculate(const CM2_Base_Instance * M2Instance, uint32 G
 		std::dynamic_pointer_cast<CM2SkeletonBone3D>(parentBone)->Calculate(M2Instance, GlobalTime);
 
 	m_Matrix = m_M2Bone.calcMatrix(M2Instance, GlobalTime);
+	m_RotateMatrix = m_M2Bone.calcRotationMatrix(M2Instance, GlobalTime);
 
 	if (parentBone)
+	{
 		m_Matrix = parentBone->GetMatrix() * m_Matrix;
+		m_RotateMatrix = parentBone->GetRotateMatrix() * m_RotateMatrix;
+	}
 
 	m_IsCalculated = true;
 }
