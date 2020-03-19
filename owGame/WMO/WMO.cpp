@@ -52,7 +52,9 @@ void CWMO::CreateInsances(const std::shared_ptr<ISceneNode3D>& Parent) const
 		if (it->m_GroupHeader.flags.IS_OUTDOOR)
 			parentAsWMOInstance->AddOutdoorGroupInstance(groupInstance);
 
-		m_BaseManager.GetManager<ILoader>()->AddToLoadQueue(groupInstance);
+		groupInstance->Load();
+		groupInstance->SetState(ILoadable::ELoadableState::Loaded);
+		//m_BaseManager.GetManager<ILoader>()->AddToLoadQueue(groupInstance);
 	}
 
 #ifdef USE_WMO_PORTALS_CULLING
@@ -219,7 +221,9 @@ bool CWMO::Load()
 		for (const auto& groupInfo : m_ChunkReader->OpenChunkT<SWMO_GroupInfoDef>("MOGI"))
 		{
 			std::shared_ptr<WMO_Group> group = std::make_shared<WMO_Group>(m_BaseManager, m_RenderDevice, std::dynamic_pointer_cast<CWMO>(shared_from_this()), cntr++, groupInfo);
-			m_BaseManager.GetManager<ILoader>()->AddToLoadQueue(group);
+			group->Load();
+			group->SetState(ELoadableState::Loaded);
+			//m_BaseManager.GetManager<ILoader>()->AddToLoadQueue(group);
 			m_Groups.push_back(group);
 
 			if (group->m_GroupHeader.flags.IS_OUTDOOR)

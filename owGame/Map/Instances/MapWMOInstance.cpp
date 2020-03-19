@@ -16,7 +16,13 @@ CMapWMOInstance::~CMapWMOInstance()
 {
 }
 
-
+//
+// CWMO_Base_Instance
+//
+uint16 CMapWMOInstance::GetDoodadSetIndex() const
+{
+	return m_PlacementInfo.doodadSetIndex;
+}
 
 //
 // ISceneNode

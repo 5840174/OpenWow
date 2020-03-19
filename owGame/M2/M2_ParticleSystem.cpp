@@ -298,10 +298,6 @@ CM2_ParticleObject SM2_ParticleSystem_Wrapper::DefaultGenerator_New(const CM2_Ba
 		bone = M2Instance->getSkeletonComponent()->GetBone(GetBone());
 
 	CM2_ParticleObject p;
-
-	//glm::mat4 SpreadMat = CalcSpreadMatrix(spr, spr, 1.0f, 1.0f);
-	//glm::mat4 mrot = bone->GetRotateMatrix() * SpreadMat;
-
 	p.pos = GetPosition();
 	if (bone)
 		p.pos = bone->GetMatrix() * glm::vec4(p.pos, 1.0f);

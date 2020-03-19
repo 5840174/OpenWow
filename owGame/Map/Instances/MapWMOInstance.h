@@ -26,6 +26,9 @@ public:
 	CMapWMOInstance(const std::shared_ptr<CWMO>& WMOObject, const ADT_MODF& _placementInfo);
 	virtual ~CMapWMOInstance();
 
+	// CWMO_Base_Instance
+	uint16 GetDoodadSetIndex() const override;
+
 	// ISceneNode
 	void Initialize() override;
 	void Accept(IVisitor* visitor) override;

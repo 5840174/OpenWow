@@ -89,6 +89,13 @@ std::shared_ptr<IBlendState> CM2ParticleSystem::GetBlendState() const
 CM2ParticlesComponent3D::CM2ParticlesComponent3D(const CM2_Base_Instance& SceneNode)
 	: CComponentBase(SceneNode)
 {
+
+	//for (size_t i = 0; i < 1; i++)
+	//{
+	//	const auto& p = GetM2OwnerNode().getM2().getMiscellaneous().GetParticles().at(i);
+	//	m_ParticleSystems.push_back(std::make_shared<CM2ParticleSystem>(GetM2OwnerNode().getM2().GetRenderDevice(), p));
+	//}
+
 	for (const auto& m2ParticleSystem : GetM2OwnerNode().getM2().getMiscellaneous().GetParticles())
 	{
 		m_ParticleSystems.push_back(std::make_shared<CM2ParticleSystem>(GetM2OwnerNode().getM2().GetRenderDevice(), m2ParticleSystem));

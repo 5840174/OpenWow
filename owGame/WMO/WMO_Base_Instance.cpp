@@ -4,8 +4,9 @@
 #include "WMO_Base_Instance.h"
 
 CWMO_Base_Instance::CWMO_Base_Instance(const std::shared_ptr<CWMO>& WMOObject)
-    : m_WMOObject(WMOObject)
-	, CLoadableObject(WMOObject)
+    : CLoadableObject(WMOObject)
+	, m_WMOObject(WMOObject)
+	, m_DoodadSetIndex(UINT16_MAX)
 {
 	SetType(cWMO_NodeType);
 }
@@ -38,6 +39,11 @@ const CWMO& CWMO_Base_Instance::getWMO() const
 {
 	_ASSERT(m_WMOObject != nullptr);
 	return *m_WMOObject;
+}
+
+uint16 CWMO_Base_Instance::GetDoodadSetIndex() const
+{
+	return m_DoodadSetIndex;
 }
 
 

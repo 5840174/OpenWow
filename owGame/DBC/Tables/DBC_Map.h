@@ -21,6 +21,5 @@ __DBC_LOCSTR(							MapDescriptionAllicane, 21 /* + 8 = 29*/);
 __DBC_LOCSTR(							MapDescriptionHorde,	30);
 
 __DBC_REF_ID(DBC_LoadingScreen,			LoadingScreen,			39);
-__DBC_TVALUE(uint32_t,					LoadingScreenID,		39);
 
 DBC_DEF_END

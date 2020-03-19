@@ -328,9 +328,20 @@ struct SM2_Particle
 		uint32 WORLDUP : 1;
 		uint32 DONOTTRAIL : 1;
 		uint32 INLIGHTING : 1;
-		uint32 unk2 : 6;
+		uint32 unk2 : 1;
+		uint32 unk3 : 1;
+		uint32 unk4 : 1;
+		uint32 unk5 : 1;
+		uint32 unk6 : 1;
+		uint32 unk7 : 1;
 		uint32 DONOTBILLBOARD : 1;
-		uint32 : 19;
+		uint32 unk8 : 1;
+		uint32 unk9 : 1;
+		uint32 unk10 : 1;
+		uint32 unk11 : 1;
+		uint32 unk12 : 1;
+		uint32 unk13 : 1;
+		uint32 : 13;
 	} flags;
 
 	glm::vec3 Position;						  // The position. Relative to the following bone.

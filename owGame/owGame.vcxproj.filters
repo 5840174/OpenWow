@@ -276,9 +276,6 @@
     <ClCompile Include="WMO\WMO_PortalsController.cpp">
       <Filter>WMO</Filter>
     </ClCompile>
-    <ClCompile Include="WMO\WMO_Group.cpp">
-      <Filter>WMO\Groups</Filter>
-    </ClCompile>
     <ClCompile Include="WMO\WMO_Group_Part_Batch.cpp">
       <Filter>WMO\Groups</Filter>
     </ClCompile>
@@ -512,6 +509,9 @@
     </ClCompile>
     <ClCompile Include="M2\M2_ParticlesComponent.cpp">
       <Filter>M2\SceneNode &amp; Components\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="WMO\WMO_Group.cpp">
+      <Filter>WMO</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -775,9 +775,6 @@
     </ClInclude>
     <ClInclude Include="WMO\WMO_PortalsController.h">
       <Filter>WMO</Filter>
-    </ClInclude>
-    <ClInclude Include="WMO\WMO_Group.h">
-      <Filter>WMO\Groups</Filter>
     </ClInclude>
     <ClInclude Include="WMO\WMO_Group_Headers.h">
       <Filter>WMO\Groups</Filter>
@@ -1075,6 +1072,9 @@
     </ClInclude>
     <ClInclude Include="M2\M2_ParticlesComponent.h">
       <Filter>M2\SceneNode &amp; Components\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="WMO\WMO_Group.h">
+      <Filter>WMO</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

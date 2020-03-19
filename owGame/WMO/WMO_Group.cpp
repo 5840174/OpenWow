@@ -10,6 +10,7 @@
 // Additional 
 #include "WoWChunkReader.h"
 #include "DBC/DBC__Storage.h"
+#include "WMO_Base_Instance.h"
 #include "WMO_Doodad_Instance.h"
 #include "WMO_Liquid_Instance.h"
 #include "WMO_Fixes.h"
@@ -94,6 +95,9 @@ void WMO_Group::CreateInsances(const std::shared_ptr<ISceneNode3D>& Parent) cons
 {
 	_ASSERT(GetState() == ILoadable::ELoadableState::Loaded);
 
+	//auto parentAsWMOInstance = std::dynamic_pointer_cast<CWMO_Base_Instance>(Parent->GetParent().lock());
+	//_ASSERT(parentAsWMOInstance != nullptr);
+
 	auto parentAsWMOGroupInstance = std::dynamic_pointer_cast<CWMO_Group_Instance>(Parent);
 	_ASSERT(parentAsWMOGroupInstance != nullptr);
 
@@ -128,28 +132,41 @@ void WMO_Group::CreateInsances(const std::shared_ptr<ISceneNode3D>& Parent) cons
 
 #if 1
 #ifdef USE_M2_MODELS
+
+	//std::vector<SWMO_Doodad_SetInfo> activeDoodadSets;
+	//activeDoodadSets.push_back(m_WMOModel.m_DoodadsSetInfos[0]);
+
+	//if (parentAsWMOInstance->GetDoodadSetIndex() != -1)
+	//	activeDoodadSets.push_back(m_WMOModel.m_DoodadsSetInfos[parentAsWMOInstance->GetDoodadSetIndex()]);
+
 	// WMO Group M2s
-	for (const auto& index : m_DoodadsPlacementIndexes)
-	{
-		const SWMO_Doodad_PlacementInfo& placement = m_WMOModel.m_DoodadsPlacementInfos[index];
-
-		std::string doodadFileName = m_WMOModel.m_DoodadsFilenames + placement.flags.nameIndex;
-
-		std::shared_ptr<CM2> m2 = m_BaseManager.GetManager<IWoWObjectsCreator>()->LoadM2(m_RenderDevice, doodadFileName, true);
-		if (m2)
+	//for (const auto& doodadSet : activeDoodadSets)
+	//{
+		//for (size_t i = doodadSet.start; i < doodadSet.start + doodadSet.size; i++)
+		for (size_t i = 0; i < m_WMOModel.m_DoodadsPlacementInfos.size(); i++)
 		{
-			auto inst = Parent->CreateSceneNode<CWMO_Doodad_Instance>(m2, index, placement);
+			auto doodadPlacementIndex = i;//m_DoodadsPlacementIndexes[i];
 
-			if (!m_GroupHeader.flags.DO_NOT_USE_LIGHTING_DIFFUSE && !m_GroupHeader.flags.IS_OUTDOOR)
-				inst->setColor(placement.getColor());
+			const SWMO_Doodad_PlacementInfo& placement = m_WMOModel.m_DoodadsPlacementInfos[doodadPlacementIndex];
 
-			inst->Load();
-			inst->SetState(ELoadableState::Loaded);
+			std::string doodadFileName = m_WMOModel.m_DoodadsFilenames + placement.flags.nameIndex;
 
-			//m_BaseManager.GetManager<ILoader>()->AddToLoadQueue(inst);
-			parentAsWMOGroupInstance->AddRoomObject(inst);
+			std::shared_ptr<CM2> m2 = m_BaseManager.GetManager<IWoWObjectsCreator>()->LoadM2(m_RenderDevice, doodadFileName, true);
+			if (m2)
+			{
+				auto inst = Parent->CreateSceneNode<CWMO_Doodad_Instance>(m2, doodadPlacementIndex, placement);
+
+				if (!m_GroupHeader.flags.DO_NOT_USE_LIGHTING_DIFFUSE && !m_GroupHeader.flags.IS_OUTDOOR)
+					inst->setColor(placement.getColor());
+
+				inst->Load();
+				inst->SetState(ELoadableState::Loaded);
+
+				//m_BaseManager.GetManager<ILoader>()->AddToLoadQueue(inst);
+				parentAsWMOGroupInstance->AddRoomObject(inst);
+			}
 		}
-	}
+	//}
 #endif
 #endif
 }
