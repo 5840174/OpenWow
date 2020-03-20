@@ -58,7 +58,7 @@ EVisitResult CRenderPass_WDL::Visit(const ISceneNode3D* SceneNode)
 		return Base3DPass::Visit(SceneNode);
 	}
 
-	return EVisitResult::Block;
+	return EVisitResult::AllowVisitChilds;
 }
 
 EVisitResult CRenderPass_WDL::Visit(const IModel* Model)
@@ -66,6 +66,9 @@ EVisitResult CRenderPass_WDL::Visit(const IModel* Model)
 	const CWDL_LowResTile* wdlMesh = static_cast<const CWDL_LowResTile*>(Model);
 	if (wdlMesh == nullptr)
         return EVisitResult::Block;
+
+	if (! wdlMesh->IsNeedRender())
+		return EVisitResult::Block;
 
 	Model->Render(GetRenderEventArgs());
 	return EVisitResult::AllowAll;

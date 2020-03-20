@@ -22,6 +22,8 @@ CRenderPass_M2::CRenderPass_M2(IRenderDevice& RenderDevice, const std::shared_pt
 	, m_OpaqueDraw(OpaqueDraw)
 {
 	m_ADT_MDX_Distance = RenderDevice.GetBaseManager().GetManager<ISettings>()->GetGroup("WoWSettings")->GetSettingT<float>("ADT_MDX_Distance");
+
+	m_M2PerObjectConstantBuffer = GetRenderDevice().GetObjectsFactory().CreateConstantBuffer(nullptr, sizeof(M2PerObject));
 }
 
 CRenderPass_M2::~CRenderPass_M2()
@@ -46,9 +48,10 @@ void CRenderPass_M2::DoRenderM2Model(const CM2_Base_Instance* M2SceneNode, const
 			continue;
 
 		geom->UpdateGeometryProps(GetRenderEventArgs(), M2SceneNode);
+
 		m_ShaderM2GeometryParameter->SetConstantBuffer(geom->GetGeometryPropsBuffer());
 		m_ShaderM2GeometryParameter->Bind();
-
+		
 		m_ShaderM2GeometryBonesParameter->SetStructuredBuffer(geom->GetGeometryBonesBuffer());
 		m_ShaderM2GeometryBonesParameter->Bind();
 		{
@@ -60,16 +63,17 @@ void CRenderPass_M2::DoRenderM2Model(const CM2_Base_Instance* M2SceneNode, const
 			{
 				const auto& mat = it2;
 
-				/*if (OpaqueDraw)
+				bool isOpaqueGeom = mat->GetM2Material()->getBlendMode() == 0 || mat->GetM2Material()->getBlendMode() == 1;
+				if (OpaqueDraw)
 				{
-					if (mat->GetM2Material()->getBlendMode() != 0 && mat->GetM2Material()->getBlendMode() != 1)
+					if (! isOpaqueGeom)
 						continue;
 				}
 				else
 				{
-					if (mat->GetM2Material()->getBlendMode() == 0 || mat->GetM2Material()->getBlendMode() == 1)
+					if (isOpaqueGeom)
 						continue;
-				}*/
+				}
 
 				mat->GetM2Material()->GetBlendState()->Bind();
 				mat->GetM2Material()->GetDepthStencilState()->Bind();
@@ -79,6 +83,7 @@ void CRenderPass_M2::DoRenderM2Model(const CM2_Base_Instance* M2SceneNode, const
 				mat->Bind(shaders);
 				{
 					SGeometryDrawArgs geometryDrawArgs = { 0 };
+					//geometryDrawArgs.IndexStartLocation = geom->getProto().indexStart;
 					geometryDrawArgs.IndexCnt = geom->getProto().indexCount;
 					//geometryDrawArgs.VertexStartLocation = geom->getProto().vertexStart;
 					geometryDrawArgs.VertexCnt = geom->getProto().vertexCount;
@@ -128,6 +133,9 @@ std::shared_ptr<IRenderPassPipelined> CRenderPass_M2::CreatePipeline(std::shared
 	pipeline->SetSampler(0, sampler);
 	pipeline->SetSampler(1, sampler);
 
+	m_ShaderM2PerObjectParameter = &vertexShader->GetShaderParameterByName("M2PerObject");
+	_ASSERT(m_ShaderM2PerObjectParameter->IsValid());
+
 	m_ShaderM2GeometryParameter = &vertexShader->GetShaderParameterByName("M2Geometry");
 	_ASSERT(m_ShaderM2GeometryParameter->IsValid());
 
@@ -149,7 +157,16 @@ EVisitResult CRenderPass_M2::Visit(const ISceneNode3D* SceneNode3D)
 	if (const CM2_Base_Instance* m2Instance = static_cast<const CM2_Base_Instance*>(SceneNode3D))
 	{
 		m_CurrentM2Model = m2Instance;
-		return CBaseList3DPass::Visit(m2Instance);
+
+		M2PerObject perObject(m2Instance->GetWorldTransfom(), m2Instance->getColor());
+		m_M2PerObjectConstantBuffer->Set(perObject);
+
+		if (m_ShaderM2PerObjectParameter->IsValid() && m_M2PerObjectConstantBuffer != nullptr)
+		{
+			m_ShaderM2PerObjectParameter->SetConstantBuffer(m_M2PerObjectConstantBuffer);
+			m_ShaderM2PerObjectParameter->Bind();
+		}
+		return EVisitResult::AllowAll;
 	}
 
 	_ASSERT(false);

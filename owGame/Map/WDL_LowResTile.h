@@ -11,12 +11,10 @@ public:
 	CWDL_LowResTile(IRenderDevice& RenderDevice, const CMap& Map, int IndexX, int IndexZ);
 	virtual ~CWDL_LowResTile();
 
-	// IModel
-	bool Render(const RenderEventArgs& renderEventArgs) const override;
+	bool IsNeedRender() const;
 
 private:
 	const CMap& m_MapController;
-
 	const int m_IndexX;
 	const int m_IndexZ;
 };

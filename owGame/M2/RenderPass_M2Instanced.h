@@ -20,6 +20,6 @@ public:
 	EVisitResult Visit(const IModel* Model) override final;
 
 private:
-	IShaderParameter* m_ShaderInstancesBufferParameter;
+	IShaderParameter*                  m_ShaderInstancesBufferParameter;
 	std::shared_ptr<IStructuredBuffer> m_InstancesBuffer;
 };

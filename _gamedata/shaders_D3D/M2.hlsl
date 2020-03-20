@@ -1,5 +1,11 @@
 #include "IDB_SHADER_COMMON_INCLUDE"
 
+struct M2PerObject
+{
+	float4x4 Model;
+	float4   Color;
+};
+
 struct VertexShaderInput
 {
 	float3 position  : POSITION;
@@ -14,6 +20,7 @@ struct VertexShaderOutput
 {
 	float4 positionVS : SV_POSITION;
 	float4 positionWS : POSITION;
+	float4 color      : COLOR0;    
 	float3 normal     : NORMAL0;
 	float2 texCoord0  : TEXCOORD0;
 	float2 texCoord1  : TEXCOORD1;
@@ -33,32 +40,36 @@ cbuffer Material : register(b2)
 	
 	float4x4  gTextureAnimMatrix;
 	//--------------------------------------------------------------( 16 * 4 bytes )
-	
-	float4    gInstanceColor;
-	//--------------------------------------------------------------( 16 bytes )
 };
 
 // Uniforms
+
+cbuffer M2PerObject : register(b6)
+{
+	M2PerObject M2PO;
+}
+
 cbuffer M2Geometry : register(b7)
 {
 	uint gIsAnimated;
 	uint gStartBoneIndex;
 	uint gBonesMaxInfluences;
-	float2 __padding1;
+	float __padding1;
 };
 
 // Textures and samples
 Texture2D DiffuseTexture0        : register(t0);
 Texture2D DiffuseTexture1        : register(t1);
+
 sampler   DiffuseTexture0Sampler : register(s0);
 sampler   DiffuseTexture1Sampler : register(s1);
 
-StructuredBuffer<float4x4> Instances  : register(t3);
+StructuredBuffer<M2PerObject> Instances  : register(t3);
 StructuredBuffer<float4x4> Bones  : register(t4);
 
 float4 MixColorAndTexture(uint BlendMode, float4 _in, float4 tex0);
 
-VertexShaderOutput DoPSRender(VertexShaderInput IN, float4x4 ModelMatrix)
+VertexShaderOutput DoPSRender(VertexShaderInput IN, M2PerObject M2PerObject)
 {
 	float4 newVertex = float4(0.0f, 0.0f, 0.0f, 0.0f);
 	
@@ -83,28 +94,29 @@ VertexShaderOutput DoPSRender(VertexShaderInput IN, float4x4 ModelMatrix)
 		newVertex = float4(IN.position, 1.0f);
 	}
 
-	const float4x4 mvp = mul(PF.Projection, mul(PF.View, ModelMatrix));
+	const float4x4 mvp = mul(PF.Projection, mul(PF.View, M2PerObject.Model));
 
 	VertexShaderOutput OUT;
 	OUT.positionVS = mul(mvp, newVertex);
 	OUT.positionWS = newVertex;
+	OUT.color = M2PerObject.Color;
 	OUT.normal = mul(mvp, IN.normal);
 	if (gTextureAnimEnable)
 	{
 		OUT.texCoord0 = mul(gTextureAnimMatrix, float4(IN.texCoord0, 1.0f, 1.0f)).xy;
-		OUT.texCoord1 = mul(gTextureAnimMatrix, float4(IN.texCoord1, 1.0f, 1.0f)).xy;
+		OUT.texCoord1 = IN.texCoord0; //mul(gTextureAnimMatrix, float4(IN.texCoord1, 1.0f, 1.0f)).xy;
 	}
 	else
 	{
 		OUT.texCoord0 = IN.texCoord0;
-		OUT.texCoord1 = IN.texCoord1;
+		OUT.texCoord1 = IN.texCoord0;
 	}
 	return OUT;
 }
 
 VertexShaderOutput VS_main(VertexShaderInput IN)
 {
-	return DoPSRender(IN, PO.Model);
+	return DoPSRender(IN, M2PO);
 }
 
 VertexShaderOutput VS_main_Inst(VertexShaderInput IN, uint InstanceID : SV_InstanceID)
@@ -135,10 +147,16 @@ DefferedRenderPSOut PS_main(VertexShaderOutput IN) : SV_TARGET
 	float4 colorAndAlpha = gColor;
 	
 	if (gBlendMode == 0 || gBlendMode == 1) 
-		colorAndAlpha.rgb *= gInstanceColor.rgb; // It looks like in order to get correct picture the color from SMODoodadDef should be applied only to opaque submeshes of M2.
+		colorAndAlpha.rgb *= IN.color.rgb; // It looks like in order to get correct picture the color from SMODoodadDef should be applied only to opaque submeshes of M2.
 	
 	colorAndAlpha.a *= gTextureWeight /*TODO: all M2 alpha*/;
-	
+	colorAndAlpha.a *= IN.color.a;
+
+	if (gShader == 1)
+	{
+		const float4 tex1 = DiffuseTexture1.Sample(DiffuseTexture1Sampler, float2(IN.texCoord1.x, 1.0f - IN.texCoord1.y));
+		resultColor *= tex1;
+	}
 
 	resultColor = MixColorAndTexture(gBlendMode, colorAndAlpha, resultColor);
 	

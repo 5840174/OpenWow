@@ -48,7 +48,7 @@ void CM2ParticleSystem::Update(const CM2_Base_Instance * M2Instance, const Updat
 		particle.TexCoordBegin = m_M2ParticleSystem->GetTiles()[m2P.tile].tc[1];
 		particle.TexCoordEnd = m_M2ParticleSystem->GetTiles()[m2P.tile].tc[3];
 		particle.Color = m2P.color;
-		particle.Size = glm::vec2(m2P.size) * 1.0f;
+		particle.Size = glm::vec2(m2P.size);
 		m_ParticleObjects.push_back(particle);
 	}
 }

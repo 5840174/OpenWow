@@ -39,6 +39,9 @@ CM2_Skin_Batch::CM2_Skin_Batch(IBaseManager& BaseManager, IRenderDevice& RenderD
 	{
 		m_Textures.push_back((m_M2Model.getMaterials().GetTexture(SkinBatchProto.texture_Index + i)));
 	}
+	_ASSERT(m_Textures.size() >= 0 && m_Textures.size() <= 2);
+	if (m_Textures.size() == 2)
+		newShader = 1;
 
 	// Texture unit
 	//if (SkinBatchProto.texture_CoordIndex != -1)
@@ -65,6 +68,9 @@ CM2_Skin_Batch::CM2_Skin_Batch(IBaseManager& BaseManager, IRenderDevice& RenderD
 	std::shared_ptr<ISamplerState> sampler = RenderDevice.GetObjectsFactory().CreateSamplerState();
 	sampler->SetFilter(ISamplerState::MinFilter::MinLinear, ISamplerState::MagFilter::MagLinear, ISamplerState::MipFilter::MipLinear);
 	SetSampler(0, sampler);
+
+	sampler = RenderDevice.GetObjectsFactory().CreateSamplerState();
+	sampler->SetFilter(ISamplerState::MinFilter::MinLinear, ISamplerState::MagFilter::MagLinear, ISamplerState::MipFilter::MipLinear);
 	SetSampler(1, sampler);
 }
 
@@ -77,7 +83,7 @@ void CM2_Skin_Batch::UpdateMaterialProps(const RenderEventArgs& RenderEventArgs,
 	ShaderM2BatchProperties props;
 
 	// Shader
-	props.gShader = /*newShader*/0;
+	props.gShader = newShader;
 
 	// Blend mode
 	props.gBlendMode = m_M2ModelMaterial->getBlendMode();
@@ -99,14 +105,19 @@ void CM2_Skin_Batch::UpdateMaterialProps(const RenderEventArgs& RenderEventArgs,
 	props.gInstanceColor = m2Instance->getColor();
 
 	// Textures
+	//_ASSERT(m_Textures.size() < 2);
 	for (uint32 i = 0; i < m_Textures.size(); i++)
 	{
 		std::shared_ptr<const CM2_Part_Texture> m2Texture = m_Textures[i].lock();
-		if (m2Texture == nullptr)
-			continue;
-
-		SetTexture(i, m2Texture->GetTexture(m2Instance));
-		GetSampler(i)->SetWrapMode(m2Texture->GetTextureWrapX(), m2Texture->GetTextureWrapY());
+		if (m2Texture != nullptr)
+		{
+			SetTexture(i, m2Texture->GetTexture(m2Instance));
+			GetSampler(i)->SetWrapMode(m2Texture->GetTextureWrapX(), m2Texture->GetTextureWrapY());
+		}
+		else
+		{
+			SetTexture(i, m_RenderDevice.GetDefaultTexture());
+		}
 	}
 
 	MaterialProxie::UpdateConstantBuffer(&props, sizeof(ShaderM2BatchProperties));

@@ -88,7 +88,6 @@ void WoWWorld::S_SMSG_LOGIN_VERIFY_WORLD(CServerPacket& Buffer)
 	// Map
 	map->MapPreLoad(m_BaseManager.GetManager<CDBCStorage>()->DBC_Map()[mapID]);
 	map->MapLoad();
-	map->MapPostLoad();
 	map->EnterMap(position);
 
 	// Camera

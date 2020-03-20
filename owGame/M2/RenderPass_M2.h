@@ -2,6 +2,16 @@
 
 #include "M2/M2_Base_Instance.h"
 
+struct __declspec(novtable, align(16)) ZN_API M2PerObject
+{
+	M2PerObject(const glm::mat4& Model, const glm::vec4& Color)
+		: Model(Model)
+		, Color(Color)
+	{}
+	glm::mat4 Model;
+	glm::vec4 Color;
+};
+
 class ZN_API CRenderPass_M2 
 	: public CBaseList3DPass
 {
@@ -25,6 +35,8 @@ protected:
 
 	const CM2_Base_Instance* m_CurrentM2Model;
 
+	std::shared_ptr<IConstantBuffer> m_M2PerObjectConstantBuffer;
+	IShaderParameter* m_ShaderM2PerObjectParameter;
 	IShaderParameter* m_ShaderM2GeometryParameter;
 	IShaderParameter* m_ShaderM2GeometryBonesParameter;
 };

@@ -17,7 +17,6 @@ public:
 
 	void                                            MapPreLoad(const DBC_MapRecord* _map);
 	void                                            MapLoad();
-	void                                            MapPostLoad();
 	void                                            Unload();
 
 	//

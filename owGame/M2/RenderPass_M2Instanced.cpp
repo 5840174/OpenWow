@@ -20,7 +20,7 @@
 CRenderPass_M2_Instanced::CRenderPass_M2_Instanced(IRenderDevice & RenderDevice, const std::shared_ptr<CSceneCreateTypedListsPass>& SceneCreateTypedListsPass, bool OpaqueDraw)
 	: CRenderPass_M2(RenderDevice, SceneCreateTypedListsPass, OpaqueDraw)
 {
-	m_InstancesBuffer = GetRenderDevice().GetObjectsFactory().CreateStructuredBuffer(nullptr, 1000, sizeof(glm::mat4), CPUAccess::Write);
+	m_InstancesBuffer = GetRenderDevice().GetObjectsFactory().CreateStructuredBuffer(nullptr, 1000, sizeof(M2PerObject), CPUAccess::Write);
 }
 
 CRenderPass_M2_Instanced::~CRenderPass_M2_Instanced()
@@ -29,7 +29,7 @@ CRenderPass_M2_Instanced::~CRenderPass_M2_Instanced()
 
 void CRenderPass_M2_Instanced::Render(RenderEventArgs & e)
 {
-	std::unordered_map<const IModel*, std::vector<const ISceneNode3D*>> modelPriorMap;
+	std::unordered_map<const CM2_Skin*, std::vector<const CM2_Base_Instance*>> modelPriorMap;
 
 	for (const auto& acceptableNodeType : GetAcceptableNodeTypes())
 	{
@@ -37,23 +37,18 @@ void CRenderPass_M2_Instanced::Render(RenderEventArgs & e)
 		{
 			for (const auto& it : GetSceneNodeListPass()->GetModelsList(acceptableNodeType))
 			{
-				auto& resultIter = modelPriorMap.find(it.Model);
-				if (resultIter == modelPriorMap.end())
-				{
-					modelPriorMap.insert(std::make_pair(it.Model, std::vector<const ISceneNode3D*>({ it.SceneNode })));
-				}
-				else
-				{
-					resultIter->second.push_back(it.SceneNode);
-				}
+				modelPriorMap[static_cast<const CM2_Skin*>(it.Model)].push_back(static_cast<const CM2_Base_Instance*>(it.SceneNode));
 			}
 		}
 	}
 
 	for (const auto& it : modelPriorMap)
 	{
-		std::vector<glm::mat4> instances;
-		std::for_each(it.second.begin(), it.second.end(), [&instances](const ISceneNode3D* sceneNode) {instances.push_back(sceneNode->GetWorldTransfom()); });
+		std::vector<M2PerObject> instances;
+		instances.reserve(it.second.size());
+		std::for_each(it.second.begin(), it.second.end(), [&instances](const CM2_Base_Instance* sceneNode) {
+			instances.push_back(M2PerObject(sceneNode->GetWorldTransfom(), sceneNode->getColor())); 
+		});
 
 		if (instances.size() > m_InstancesBuffer->GetElementCount())
 			m_InstancesBuffer = GetRenderDevice().GetObjectsFactory().CreateStructuredBuffer(instances, CPUAccess::Write);
@@ -63,7 +58,7 @@ void CRenderPass_M2_Instanced::Render(RenderEventArgs & e)
 		m_ShaderInstancesBufferParameter->SetStructuredBuffer(m_InstancesBuffer);
 		m_ShaderInstancesBufferParameter->Bind();
 		{
-			DoRenderM2Model(static_cast<const CM2_Base_Instance*>(*it.second.begin()), static_cast<const CM2_Skin*>(it.first), m_OpaqueDraw, instances.size());
+			DoRenderM2Model(*it.second.begin(), it.first, m_OpaqueDraw, instances.size());
 		}
 		m_ShaderInstancesBufferParameter->Unbind();
 	}

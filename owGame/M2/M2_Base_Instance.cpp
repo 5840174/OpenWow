@@ -42,7 +42,7 @@ bool CM2_Base_Instance::Load()
 		m_SkeletonComponent = AddComponent(std::make_shared<CM2SkeletonComponent3D>(*this));
 	}
 
-	//m_ParticleComponent = AddComponent(std::make_shared<CM2ParticlesComponent3D>(*this));
+	m_ParticleComponent = AddComponent(std::make_shared<CM2ParticlesComponent3D>(*this));
 
 	UpdateLocalTransform();
 	CreateInstances();

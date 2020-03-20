@@ -8,7 +8,7 @@ CLiquidLayer::CLiquidLayer(IRenderDevice& RenderDevice)
 	, m_RenderDevice(RenderDevice)
 	, m_SkyManager(nullptr)
 {
-	//m_SkyManager = m_RenderDevice.GetBaseManager().GetManager<ISkyManager>();
+	m_SkyManager = m_RenderDevice.GetBaseManager().GetManager<ISkyManager>();
 	m_Material = std::make_shared<LiquidMaterial>(m_RenderDevice);
 }
 

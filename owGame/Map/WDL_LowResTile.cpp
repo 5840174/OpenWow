@@ -18,12 +18,7 @@ CWDL_LowResTile::~CWDL_LowResTile()
 {
 }
 
-
-
-//
-// IModel
-//
-bool CWDL_LowResTile::Render(const RenderEventArgs& renderEventArgs) const
+bool CWDL_LowResTile::IsNeedRender() const
 {
 	int32 currentX = m_MapController.GetCurrentX();
 	int32 currentZ = m_MapController.GetCurrentZ();
@@ -33,11 +28,10 @@ bool CWDL_LowResTile::Render(const RenderEventArgs& renderEventArgs) const
 		return false;
 	}
 
-	if (abs(m_IndexX - currentX) > 3 || abs(m_IndexZ - currentZ) > 3)
+	if (glm::abs(m_IndexX - currentX) > 7 || abs(m_IndexZ - currentZ) > 7)
 	{
 		return false;
 	}
 
-	return ModelProxie::Render(renderEventArgs);
+	return true;
 }
-
