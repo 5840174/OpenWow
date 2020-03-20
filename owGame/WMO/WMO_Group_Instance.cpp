@@ -29,7 +29,7 @@ CWMO_Group_Instance::~CWMO_Group_Instance()
 //
 bool CWMO_Group_Instance::Load()
 {
-	m_WMOGroupObject.CreateInsances(shared_from_this());
+	m_WMOGroupObject.CreateInsances(std::dynamic_pointer_cast<CWMO_Group_Instance>(shared_from_this()));
 
 	return true;
 }

@@ -33,7 +33,7 @@ private:
 private:
 	float rem;
 	std::shared_ptr<SM2_ParticleSystem_Wrapper> m_M2ParticleSystem;
-	std::vector<CM2_ParticleObject> m_M2ParticleObjects;
+	CM2_ParticleObject m_M2ParticleObjects[MAX_PARTICLES];
 };
 
 //

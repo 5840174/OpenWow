@@ -33,12 +33,15 @@ CM2ParticleSystem::~CM2ParticleSystem()
 //
 void CM2ParticleSystem::Update(const CM2_Base_Instance * M2Instance, const UpdateEventArgs & e)
 {
-	m_M2ParticleSystem->update(M2Instance, e, rem, m_M2ParticleObjects);
+	m_M2ParticleSystem->update(M2Instance, e, &rem, m_M2ParticleObjects);
 
-	m_ParticleObjects.resize(m_M2ParticleObjects.size());
-	for (size_t i = 0; i < m_M2ParticleObjects.size(); i++)
+	m_ParticleObjects.clear();
+	for (size_t i = 0; i < 100; i++)
 	{
 		const auto& m2P = m_M2ParticleObjects[i];
+		if (!m2P.Active)
+			continue;
+
 		SParticle particle;
 		particle.Position = m2P.pos;
 		_ASSERT(m2P.tile < m_M2ParticleSystem->GetTiles().size());
@@ -46,7 +49,7 @@ void CM2ParticleSystem::Update(const CM2_Base_Instance * M2Instance, const Updat
 		particle.TexCoordEnd = m_M2ParticleSystem->GetTiles()[m2P.tile].tc[3];
 		particle.Color = m2P.color;
 		particle.Size = glm::vec2(m2P.size) * 1.0f;
-		m_ParticleObjects[i] = particle;
+		m_ParticleObjects.push_back(particle);
 	}
 }
 

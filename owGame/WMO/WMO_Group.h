@@ -20,8 +20,7 @@ class CWMO_Doodad_Instance;
 // FORWARD END
 
 class WMO_Group
-	: public ISceneNodeProvider
-	, public CLoadableObject
+	: public CLoadableObject
 {
 public:
 	WMO_Group(IBaseManager& BaseManager, IRenderDevice& RenderDevice, const std::shared_ptr<CWMO>& WMOModel, const uint32 GroupIndex, const SWMO_GroupInfoDef& GroupProto);
@@ -33,7 +32,7 @@ public:
 	const std::vector<CWMO_Part_Portal>& GetPortals() const;
 
 	// ISceneNodeProvider
-	void CreateInsances(const std::shared_ptr<ISceneNode3D>& Parent) const override;
+	void CreateInsances(const std::shared_ptr<CWMO_Group_Instance>& Parent) const;
 
 	// CLoadableObject
 	bool Load() override;

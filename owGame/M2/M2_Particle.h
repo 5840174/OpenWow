@@ -2,6 +2,11 @@
 
 struct CM2_ParticleObject
 {
+	CM2_ParticleObject()
+		: Active(false)
+	{}
+
+	bool Active;
 	glm::vec3 pos;
 	glm::vec3 speed;
 	glm::vec3 down;

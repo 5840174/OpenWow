@@ -9,7 +9,7 @@ class CM2_Base_Instance;
 // FORWARD END
 
 // Defines
-#define MAX_PARTICLES 100000
+#define MAX_PARTICLES 100
 
 #include "M2_Particle.h"
 
@@ -24,7 +24,7 @@ public:
 	SM2_ParticleSystem_Wrapper(const CM2& M2Object, const std::shared_ptr<IFile>& File, const SM2_Particle& M2Particle);
 	virtual ~SM2_ParticleSystem_Wrapper();
 
-	void update(const CM2_Base_Instance* M2Instance, const UpdateEventArgs& e, float& rem, std::vector<CM2_ParticleObject>& Particles) const;
+	void update(const CM2_Base_Instance* M2Instance, const UpdateEventArgs& e, float* rem, CM2_ParticleObject* Particles) const;
 
 	SM2_Particle::Flags               GetFlags() const { return m_Flags; }
 	const glm::vec3&                  GetPosition() const { return m_Position; }
@@ -34,7 +34,7 @@ public:
 	const std::vector<TexCoordSet>&   GetTiles() const;
 
 protected:
-	void               CreateAndDeleteParticles(const CM2_Base_Instance* M2Instance, const UpdateEventArgs& e, float& rem, std::vector<CM2_ParticleObject>& Particles) const;
+	void               CreateAndDeleteParticles(const CM2_Base_Instance* M2Instance, const UpdateEventArgs& e, float * rem, CM2_ParticleObject * Particles) const;
 	CM2_ParticleObject DefaultGenerator_New(const CM2_Base_Instance* M2Instance, float w, float l, float spd, float var, float lifespan, float spr, float spr2) const;
 	CM2_ParticleObject PlaneGenerator_New(const CM2_Base_Instance* M2Instance, float w, float l, float spd, float var, float lifespan, float spr, float spr2) const;
 	CM2_ParticleObject SphereGenerator_New(const CM2_Base_Instance* M2Instance, float w, float l, float spd, float var, float lifespan, float spr, float spr2) const;

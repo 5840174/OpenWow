@@ -3,15 +3,22 @@
 #include "M2_CommonTypes.h"
 
 // interpolation functions
+
 template<class T>
-inline T interpolate(const float r, const T& v1, const T& v2)
+inline T interpolateNone(const float r, const T& v1, const T& v2)
+{
+	return r > 0.5f ? v2 : v1;
+}
+
+template<class T>
+inline T interpolateLinear(const float r, const T& v1, const T& v2)
 {
 	return v1 * (1.0f - r) + v2 * r;
 }
 
 // "linear" interpolation for quaternions should be slerp by default
 template<>
-inline glm::quat interpolate<glm::quat>(const float r, const glm::quat& v1, const glm::quat& v2)
+inline glm::quat interpolateLinear<glm::quat>(const float r, const glm::quat& v1, const glm::quat& v2)
 {
 	return glm::slerp(v1, v2, r);
 }

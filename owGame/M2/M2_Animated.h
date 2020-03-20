@@ -139,10 +139,10 @@ private:
 		switch (m_Type)
 		{
 			case Interpolations::INTERPOLATION_NONE:
-				return m_Values[timeIndex];
+				return interpolateNone<T>(r, m_Values[timeIndex], m_Values[timeIndex + 1]);
 
 			case Interpolations::INTERPOLATION_LINEAR:
-				return interpolate<T>(r, m_Values[timeIndex], m_Values[timeIndex + 1]);
+				return interpolateLinear<T>(r, m_Values[timeIndex], m_Values[timeIndex + 1]);
 
 			case Interpolations::INTERPOLATION_HERMITE:
 				return interpolateHermite<T>(r, m_Values[timeIndex], m_Values[timeIndex + 1], m_ValuesHermiteIn[timeIndex], m_ValuesHermiteOut[timeIndex]);

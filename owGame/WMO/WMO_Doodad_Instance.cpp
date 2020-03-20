@@ -5,6 +5,9 @@
 // General
 #include "WMO_Doodad_Instance.h"
 
+// Additional
+#include "WMO_Base_Instance.h"
+
 CWMO_Doodad_Instance::CWMO_Doodad_Instance(const std::shared_ptr<CM2>& M2Object, uint32 _index, const SWMO_Doodad_PlacementInfo & _placement)
 	: CM2_Base_Instance(M2Object)
 	, m_Index(_index)
@@ -43,9 +46,14 @@ void CWMO_Doodad_Instance::Initialize()
 
 void CWMO_Doodad_Instance::Accept(IVisitor* visitor)
 {
-	if (m_PortalVisibilityState)
+	auto parentOfParent = std::dynamic_pointer_cast<CWMO_Base_Instance>(GetParent().lock()->GetParent().lock());
+
+	if (parentOfParent->IsDoodadInSet(m_Index))
 	{
-		return CM2_Base_Instance::Accept(visitor);
+		if (m_PortalVisibilityState)
+		{
+			return CM2_Base_Instance::Accept(visitor);
+		}
 	}
 }
 

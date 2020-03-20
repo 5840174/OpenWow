@@ -34,23 +34,19 @@ CWMO::CWMO(IBaseManager& BaseManager, IRenderDevice& RenderDevice, const std::st
 
 CWMO::~CWMO()
 {
-	SafeDeleteArray(m_DoodadsFilenames);
 }
 
 //
 // ISceneNodeProvider
 //
-void CWMO::CreateInsances(const std::shared_ptr<ISceneNode3D>& Parent) const
+void CWMO::CreateInsances(const std::shared_ptr<CWMO_Base_Instance>& Parent) const
 {
-	auto parentAsWMOInstance = std::dynamic_pointer_cast<CWMO_Base_Instance>(Parent);
-	_ASSERT(parentAsWMOInstance != nullptr);
-
 	for (const auto& it : m_Groups)
 	{
 		auto groupInstance = Parent->CreateSceneNode<CWMO_Group_Instance>(it);
-		parentAsWMOInstance->AddGroupInstance(groupInstance);
+		Parent->AddGroupInstance(groupInstance);
 		if (it->m_GroupHeader.flags.IS_OUTDOOR)
-			parentAsWMOInstance->AddOutdoorGroupInstance(groupInstance);
+			Parent->AddOutdoorGroupInstance(groupInstance);
 
 		groupInstance->Load();
 		groupInstance->SetState(ILoadable::ELoadableState::Loaded);
@@ -58,11 +54,11 @@ void CWMO::CreateInsances(const std::shared_ptr<ISceneNode3D>& Parent) const
 	}
 
 #ifdef USE_WMO_PORTALS_CULLING
-	for (const auto& groupPtr : parentAsWMOInstance->getGroupInstances())
+	for (const auto& groupPtr : Parent->getGroupInstances())
 	{
 		if (auto group = groupPtr.lock())
 		{
-			group->CreatePortals(parentAsWMOInstance);
+			group->CreatePortals(Parent);
 		}
 		else _ASSERT(false);
 	}
@@ -70,17 +66,15 @@ void CWMO::CreateInsances(const std::shared_ptr<ISceneNode3D>& Parent) const
 
 	for (auto& it : m_Lights)
 	{
-		//parentAsWMOInstance->AddLight(it);
+		//Parent->AddLight(it);
 	}
 }
 
 bool CWMO::Load()
 {
-	std::shared_ptr<IByteBuffer> buffer = nullptr;
-
 	// Textures
+	if (auto buffer = m_ChunkReader->OpenChunk("MOTX"))
 	{
-		buffer = m_ChunkReader->OpenChunk("MOTX");
 		m_TexturesNames = std::unique_ptr<char[]>(new char[buffer->getSize() + 1]);
 		buffer->readBytes(m_TexturesNames.get(), buffer->getSize());
 		m_TexturesNames[buffer->getSize()] = 0x00;
@@ -100,23 +94,24 @@ bool CWMO::Load()
 	}
 
 	// Group names
+	if (auto buffer = m_ChunkReader->OpenChunk("MOGN"))
 	{
-		buffer = m_ChunkReader->OpenChunk("MOGN");
 		m_GroupNames = std::unique_ptr<char[]>(new char[buffer->getSize() + 1]);
 		buffer->readBytes(m_GroupNames.get(), buffer->getSize());
 		m_GroupNames[buffer->getSize()] = 0x00;
 	}
 
 	// Skybox
-	char* skyboxFilename = nullptr;
+	
+	if (auto buffer = m_ChunkReader->OpenChunk("MOSB"))
 	{
-		buffer = m_ChunkReader->OpenChunk("MOSB");
 		if (buffer->getSize() > 4)
 		{
-			skyboxFilename = new char[buffer->getSize() + 1];
-			buffer->readBytes(skyboxFilename, buffer->getSize());
+			std::unique_ptr<char[]> skyboxFilename = std::unique_ptr<char[]>(new char[buffer->getSize() + 1]);
+			buffer->readBytes(skyboxFilename.get(), buffer->getSize());
 			skyboxFilename[buffer->getSize()] = 0x00;
-			Log::Error("WMO[%s]: Skybox [%s]", m_FileName.c_str(), skyboxFilename);
+
+			Log::Error("WMO[%s]: Skybox [%s]", m_FileName.c_str(), skyboxFilename.get());
 		}
 	}
 
@@ -131,11 +126,9 @@ bool CWMO::Load()
 
 	// Portal defs
 	std::vector<CWMO_Part_Portal> portals;
+	for (const auto& pt : m_ChunkReader->OpenChunkT<SWMO_PortalDef>("MOPT"))
 	{
-		for (const auto& pt : m_ChunkReader->OpenChunkT<SWMO_PortalDef>("MOPT"))
-		{
-			portals.push_back(CWMO_Part_Portal(m_RenderDevice, portalVertices, pt));
-		}
+		portals.push_back(CWMO_Part_Portal(m_RenderDevice, portalVertices, pt));
 	}
 
 	// Portal references
@@ -151,68 +144,51 @@ bool CWMO::Load()
 	}
 
 	// Visible vertices
+	for (const auto& vv : m_ChunkReader->OpenChunkT<glm::vec3>("MOVV"))
 	{
-		for (const auto& vv : m_ChunkReader->OpenChunkT<glm::vec3>("MOVV"))
-		{
-			m_VisibleBlockVertices.push_back(Fix_XZmY(vv));
-		}
+		m_VisibleBlockVertices.push_back(Fix_XZmY(vv));
 	}
 
 	// Visible blocks
+	for (const auto& vb : m_ChunkReader->OpenChunkT<SWMO_VisibleBlockListDef>("MOVB"))
 	{
-		for (const auto& vb : m_ChunkReader->OpenChunkT<SWMO_VisibleBlockListDef>("MOVB"))
-		{
-			m_VisibleBlockList.push_back(vb);
-		}
+		m_VisibleBlockList.push_back(vb);
 	}
 
 	// Lights
+	for (const auto& lt : m_ChunkReader->OpenChunkT<SWMO_LightDef>("MOLT"))
 	{
-		for (const auto& lt : m_ChunkReader->OpenChunkT<SWMO_LightDef>("MOLT"))
-		{
-			m_Lights.push_back(std::make_shared<WMO_Part_Light>(lt));
-		}
-		//Log::Info("WMO: Lights count = '%d'", m_Lights.size());
+		m_Lights.push_back(std::make_shared<WMO_Part_Light>(lt));
 	}
 
 	// Doodads set
+	for (const auto& ds : m_ChunkReader->OpenChunkT<SWMO_Doodad_SetInfo>("MODS"))
 	{
-		for (const auto& ds : m_ChunkReader->OpenChunkT<SWMO_Doodad_SetInfo>("MODS"))
-		{
-			m_DoodadsSetInfos.push_back(ds);
-		}
-
-		//Log::Info("WMO: Doodads count = '%d'", m_DoodadsSetInfos.size());
+		m_DoodadsSetInfos.push_back(ds);
 	}
+	//Log::Info("WMO: Doodads count = '%d'", m_DoodadsSetInfos.size());
 
 	// Doodads filenames
+	if (auto buffer = m_ChunkReader->OpenChunk("MODN"))
 	{
-		buffer = m_ChunkReader->OpenChunk("MODN");
-		if (buffer)
-		{
-			m_DoodadsFilenames = new char[buffer->getSize() + 1];
-			buffer->readBytes(m_DoodadsFilenames, buffer->getSize());
-			m_DoodadsFilenames[buffer->getSize()] = 0x00;
-		}
+		m_DoodadsFilenames = std::unique_ptr<char[]>(new char[buffer->getSize() + 1]);
+		buffer->readBytes(m_DoodadsFilenames.get(), buffer->getSize());
+		m_DoodadsFilenames[buffer->getSize()] = 0x00;
 	}
 
 	// Doodads placemnts
+	for (const auto& dd : m_ChunkReader->OpenChunkT<SWMO_Doodad_PlacementInfo>("MODD"))
 	{
-		for (const auto& dd : m_ChunkReader->OpenChunkT<SWMO_Doodad_PlacementInfo>("MODD"))
-		{
-			m_DoodadsPlacementInfos.push_back(dd);
-		}
-
-		// HACK! INCORRECT SIZE
-		m_Header.nDoodadDefs = m_DoodadsPlacementInfos.size();
+		m_DoodadsPlacementInfos.push_back(dd);
 	}
 
+	// HACK! INCORRECT SIZE
+	//m_Header.nDoodadDefs = m_DoodadsPlacementInfos.size();
+
 	// Fog
+	for (const auto& fog : m_ChunkReader->OpenChunkT<SWMO_FogDef>("MFOG"))
 	{
-		for (const auto& fog : m_ChunkReader->OpenChunkT<SWMO_FogDef>("MFOG"))
-		{
-			m_Fogs.push_back(std::make_shared<WMO_Part_Fog>(fog));
-		}
+		m_Fogs.push_back(std::make_shared<WMO_Part_Fog>(fog));
 	}
 
 	// Group info
@@ -249,9 +225,6 @@ bool CWMO::Load()
 			else _ASSERT(false);
 		}
 	}
-
-	if (skyboxFilename) 
-		delete[] skyboxFilename;
 
 	// Create portal controller
 	if (portals.size() > 0)

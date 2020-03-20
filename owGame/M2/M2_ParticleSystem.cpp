@@ -52,9 +52,9 @@ namespace
 	inline T lifeRamp(float currentTime, float mid, const T& a, const T& b, const T& c)
 	{
 		if (currentTime <= mid)
-			return interpolate<T>(currentTime / mid, a, b);
+			return interpolateLinear<T>(currentTime / mid, a, b);
 		else
-			return interpolate<T>((currentTime - mid) / (1.0f - mid), b, c);
+			return interpolateLinear<T>((currentTime - mid) / (1.0f - mid), b, c);
 	}
 }
 
@@ -121,7 +121,7 @@ SM2_ParticleSystem_Wrapper::~SM2_ParticleSystem_Wrapper()
 {
 }
 
-void SM2_ParticleSystem_Wrapper::update(const CM2_Base_Instance* M2Instance, const UpdateEventArgs& e, float& rem, std::vector<CM2_ParticleObject>& Particles) const
+void SM2_ParticleSystem_Wrapper::update(const CM2_Base_Instance* M2Instance, const UpdateEventArgs& e, float * rem, CM2_ParticleObject * Particles) const
 {
 	double deltaTime = e.DeltaTime / 1000.0;
 	uint32 globalTime = static_cast<uint32>(e.TotalTime);
@@ -134,9 +134,12 @@ void SM2_ParticleSystem_Wrapper::update(const CM2_Base_Instance* M2Instance, con
 
 	CreateAndDeleteParticles(M2Instance, e, rem, Particles);
 
-	for (auto& it = Particles.begin(); it != Particles.end(); )
+	for (size_t i = 0; i < MAX_PARTICLES; i++)
 	{
-		CM2_ParticleObject& p = *it;
+		CM2_ParticleObject& p = Particles[i];
+		if (!p.Active)
+			continue;
+
 		p.speed += (p.down * float(grav * deltaTime)) - (p.dir * float(deaccel * deltaTime));
 
 		float mspeed = 1.0f;
@@ -155,9 +158,7 @@ void SM2_ParticleSystem_Wrapper::update(const CM2_Base_Instance* M2Instance, con
 
 		// kill off old Particles
 		if (rlife >= 1.0f)
-			it = Particles.erase(it);
-		else
-			it++;
+			p.Active = false;
 	}
 }
 
@@ -213,7 +214,7 @@ const std::vector<TexCoordSet>& SM2_ParticleSystem_Wrapper::GetTiles() const
 	return tiles;
 }
 
-void SM2_ParticleSystem_Wrapper::CreateAndDeleteParticles(const CM2_Base_Instance * M2Instance, const UpdateEventArgs & e, float & rem, std::vector<CM2_ParticleObject>& Particles) const
+void SM2_ParticleSystem_Wrapper::CreateAndDeleteParticles(const CM2_Base_Instance * M2Instance, const UpdateEventArgs & e, float * rem, CM2_ParticleObject * Particles) const
 {
 	double deltaTime = e.DeltaTime / 1000.0;
 	uint32 globalTime = static_cast<uint32>(e.TotalTime);
@@ -226,24 +227,20 @@ void SM2_ParticleSystem_Wrapper::CreateAndDeleteParticles(const CM2_Base_Instanc
 
 	float ftospawn;
 	if (flife)
-		ftospawn = (deltaTime * frate / flife) + rem;
+		ftospawn = (deltaTime * frate / flife) + *rem;
 	else
-		ftospawn = rem;
+		ftospawn = *rem;
 
 	if (ftospawn < 1.0f)
 	{
-		rem = ftospawn;
-		if (rem < 0)
-			rem = 0;
+		*rem = ftospawn;
+		if (*rem < 0)
+			*rem = 0;
 	}
 	else
 	{
 		int tospawn = (int)ftospawn;
-
-		if ((tospawn + Particles.size()) > MAX_PARTICLES) // Error check to prevent the program from trying to load insane amounts of Particles.
-			tospawn = (int)Particles.size() - MAX_PARTICLES;
-
-		rem = ftospawn - (float)tospawn;
+		*rem = ftospawn - (float)tospawn;
 
 		float emissionAreaLengthValue = emissionAreaLength.GetValue(sequence, sequenceTime, m_M2Object.getSkeleton().getGlobalLoops(), globalTime);
 		float emissionAreaWidthValue = emissionAreaWidth.GetValue(sequence, sequenceTime, m_M2Object.getSkeleton().getGlobalLoops(), globalTime);
@@ -261,24 +258,43 @@ void SM2_ParticleSystem_Wrapper::CreateAndDeleteParticles(const CM2_Base_Instanc
 		{
 			for (int i = 0; i < tospawn; i++)
 			{
+				size_t freeIndex = -1;
+				for (size_t ind = 0; ind < MAX_PARTICLES; ind++)
+				{
+					if (!Particles[ind].Active)
+					{
+						freeIndex = ind;
+						break;
+					}
+				}
+
+				if (freeIndex == -1)
+				{
+					*rem += tospawn - i - 1;
+					break;
+				}
+
 				switch (m_EmitterType)
 				{
 					case 0:
 					{
 						CM2_ParticleObject p = DefaultGenerator_New(M2Instance, emissionAreaLengthValue, emissionAreaWidthValue, emissionSpeedValue, speedVariationValue, lifespanValue, verticalRangeValue, horizontalRangeValue);
-						Particles.push_back(p);
+						p.Active = true;
+						Particles[freeIndex] = p;
 					}
 					break;
 					case 1:
 					{
 						CM2_ParticleObject p = PlaneGenerator_New(M2Instance, emissionAreaLengthValue, emissionAreaWidthValue, emissionSpeedValue, speedVariationValue, lifespanValue, verticalRangeValue, horizontalRangeValue);
-						Particles.push_back(p);
+						p.Active = true;
+						Particles[freeIndex] = p;
 					}
 					break;
 					case 2:
 					{
 						CM2_ParticleObject p = SphereGenerator_New(M2Instance, emissionAreaLengthValue, emissionAreaWidthValue, emissionSpeedValue, speedVariationValue, lifespanValue, verticalRangeValue, horizontalRangeValue);
-						Particles.push_back(p);
+						p.Active = true;
+						Particles[freeIndex] = p;
 					}
 					break;
 					default:

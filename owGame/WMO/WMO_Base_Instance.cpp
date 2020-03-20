@@ -6,7 +6,6 @@
 CWMO_Base_Instance::CWMO_Base_Instance(const std::shared_ptr<CWMO>& WMOObject)
     : CLoadableObject(WMOObject)
 	, m_WMOObject(WMOObject)
-	, m_DoodadSetIndex(UINT16_MAX)
 {
 	SetType(cWMO_NodeType);
 }
@@ -19,7 +18,7 @@ CWMO_Base_Instance::~CWMO_Base_Instance()
 
 void CWMO_Base_Instance::CreateInstances()
 {
-	m_WMOObject->CreateInsances(shared_from_this());
+	m_WMOObject->CreateInsances(std::dynamic_pointer_cast<CWMO_Base_Instance>(shared_from_this()));
 }
 
 
@@ -43,7 +42,18 @@ const CWMO& CWMO_Base_Instance::getWMO() const
 
 uint16 CWMO_Base_Instance::GetDoodadSetIndex() const
 {
-	return m_DoodadSetIndex;
+	return 0;
+}
+
+bool CWMO_Base_Instance::IsDoodadInSet(uint16 doodadIndex) const
+{
+	if (getWMO().IsDoodadInSet(0, doodadIndex))
+		return true;
+
+	if (GetDoodadSetIndex() != 0)
+		return getWMO().IsDoodadInSet(GetDoodadSetIndex(), doodadIndex);
+
+	return false;
 }
 
 

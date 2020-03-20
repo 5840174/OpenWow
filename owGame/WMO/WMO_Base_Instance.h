@@ -25,6 +25,7 @@ public:
 	const CWMO& getWMO() const;
 	
 	virtual uint16 GetDoodadSetIndex() const;
+	bool IsDoodadInSet(uint16 doodadIndex) const;
 
 	void AddGroupInstance(const std::weak_ptr<CWMO_Group_Instance>& _group) { m_GroupInstances.push_back(_group); }
 	const GroupInstances& getGroupInstances() const { return m_GroupInstances; }
@@ -39,7 +40,6 @@ public:
 
 protected:
 	std::shared_ptr<CWMO> m_WMOObject;	
-	uint16 m_DoodadSetIndex;
 	GroupInstances  m_GroupInstances;
 	GroupInstances  m_OutdoorGroupInstances;
 };

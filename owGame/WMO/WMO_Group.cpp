@@ -24,15 +24,15 @@ WMO_Group::WMO_Group(IBaseManager& BaseManager, IRenderDevice& RenderDevice, con
 	, m_GroupIndex(GroupIndex)
 {
 	if (GroupProto.nameoffset != -1)
-		m_GroupName = std::string(m_WMOModel.m_GroupNames.get() + GroupProto.nameoffset);
+		m_GroupName = std::string(m_WMOModel.GetGroupName(GroupProto.nameoffset));
 	else
-		m_GroupName = m_WMOModel.getFilename() + "_Group" + std::to_string(GroupIndex);
+		m_GroupName = m_WMOModel.GetFilename() + "_Group" + std::to_string(GroupIndex);
 
 	m_Bounds = GroupProto.bounding_box.Convert();
 
 	char temp[MAX_PATH];
-	strcpy_s(temp, m_WMOModel.getFilename().c_str());
-	temp[m_WMOModel.getFilename().length() - 4] = 0;
+	strcpy_s(temp, m_WMOModel.GetFilename().c_str());
+	temp[m_WMOModel.GetFilename().length() - 4] = 0;
 
 	char groupFilename[MAX_PATH];
 	sprintf_s(groupFilename, "%s_%03d.wmo", temp, m_GroupIndex);
@@ -91,19 +91,13 @@ const std::vector<CWMO_Part_Portal>& WMO_Group::GetPortals() const
 //
 // ISceneNodeProvider
 //
-void WMO_Group::CreateInsances(const std::shared_ptr<ISceneNode3D>& Parent) const
+void WMO_Group::CreateInsances(const std::shared_ptr<CWMO_Group_Instance>& Parent) const
 {
 	_ASSERT(GetState() == ILoadable::ELoadableState::Loaded);
 
-	//auto parentAsWMOInstance = std::dynamic_pointer_cast<CWMO_Base_Instance>(Parent->GetParent().lock());
-	//_ASSERT(parentAsWMOInstance != nullptr);
-
-	auto parentAsWMOGroupInstance = std::dynamic_pointer_cast<CWMO_Group_Instance>(Parent);
-	_ASSERT(parentAsWMOGroupInstance != nullptr);
-
 	for (const auto& batch : m_WMOBatchIndexes)
 	{
-		parentAsWMOGroupInstance->GetComponent<IModelsComponent3D>()->AddModel(batch);
+		Parent->GetComponent<IModelsComponent3D>()->AddModel(batch);
 	}
 
 	// WMO Group liquid
@@ -119,20 +113,18 @@ void WMO_Group::CreateInsances(const std::shared_ptr<ISceneNode3D>& Parent) cons
 
 		// IColliderComponent3D
 		{
-			BoundingBox bbox = parentAsWMOGroupInstance->GetColliderComponent()->GetBounds();
+			BoundingBox bbox = Parent->GetColliderComponent()->GetBounds();
 			bbox.setMin(bbox.getMin() - realPos);
 			bbox.setMax(bbox.getMax() - realPos);
 			bbox.calculateCenter();
 			liquidInstance->GetColliderComponent()->SetBounds(bbox);
 		}
 
-		parentAsWMOGroupInstance->AddRoomObject(liquidInstance);
+		Parent->AddRoomObject(liquidInstance);
 		
 	}
 
-#if 1
-#ifdef USE_M2_MODELS
-
+#if 1 && defined(USE_M2_MODELS)
 	//std::vector<SWMO_Doodad_SetInfo> activeDoodadSets;
 	//activeDoodadSets.push_back(m_WMOModel.m_DoodadsSetInfos[0]);
 
@@ -143,14 +135,13 @@ void WMO_Group::CreateInsances(const std::shared_ptr<ISceneNode3D>& Parent) cons
 	//for (const auto& doodadSet : activeDoodadSets)
 	//{
 		//for (size_t i = doodadSet.start; i < doodadSet.start + doodadSet.size; i++)
-		for (size_t i = 0; i < m_WMOModel.m_DoodadsPlacementInfos.size(); i++)
+		for (size_t i = 0; i < m_DoodadsPlacementIndexes.size(); i++)
 		{
-			auto doodadPlacementIndex = i;//m_DoodadsPlacementIndexes[i];
+			auto doodadPlacementIndex = m_DoodadsPlacementIndexes[i];
 
-			const SWMO_Doodad_PlacementInfo& placement = m_WMOModel.m_DoodadsPlacementInfos[doodadPlacementIndex];
+			const SWMO_Doodad_PlacementInfo& placement = m_WMOModel.GetDoodadPlacement(doodadPlacementIndex);
 
-			std::string doodadFileName = m_WMOModel.m_DoodadsFilenames + placement.flags.nameIndex;
-
+			std::string doodadFileName = m_WMOModel.GetDoodadFileName(placement.flags.nameIndex);
 			std::shared_ptr<CM2> m2 = m_BaseManager.GetManager<IWoWObjectsCreator>()->LoadM2(m_RenderDevice, doodadFileName, true);
 			if (m2)
 			{
@@ -163,11 +154,10 @@ void WMO_Group::CreateInsances(const std::shared_ptr<ISceneNode3D>& Parent) cons
 				inst->SetState(ELoadableState::Loaded);
 
 				//m_BaseManager.GetManager<ILoader>()->AddToLoadQueue(inst);
-				parentAsWMOGroupInstance->AddRoomObject(inst);
+				Parent->AddRoomObject(inst);
 			}
 		}
 	//}
-#endif
 #endif
 }
 
@@ -288,9 +278,7 @@ bool WMO_Group::Load()
 
 		uint32 doodadsIndexesCount = buffer->getSize() / sizeof(uint16);
 		uint16* doodadsIndexes = (uint16*)buffer->getDataFromCurrent();
-
-		for (uint32 i = 0; i < doodadsIndexesCount; i++)
-			m_DoodadsPlacementIndexes.push_back(doodadsIndexes[i]);
+		m_DoodadsPlacementIndexes.assign(doodadsIndexes, doodadsIndexes + doodadsIndexesCount);
 	}
 
 
@@ -327,7 +315,9 @@ bool WMO_Group::Load()
 		uint32 vertexColorsCount = buffer->getSize() / sizeof(CBgra);
 		CBgra* vertexColors = (CBgra*)buffer->getDataFromCurrent();
 
-		//FixColors(vertexColors, vertexColorsCount, WMOBatchs.data());
+#if WOW_CLIENT_VERSION >= WOW_WOTLK_3_3_5
+		FixColors(vertexColors, vertexColorsCount, WMOBatchs.data());
+#endif
 
 		// Convert
 		std::vector<glm::vec4> vertexColorsConverted;
@@ -351,17 +341,17 @@ bool WMO_Group::Load()
 		SWMO_Group_MLIQDef liquidHeader;
 		buffer->read(&liquidHeader);
 
-		Log::Green
-		(
-			"WMO[%s]: Liq: headerID [%d] headerFlag [%d] MatID: [%d] MatShader[%d]", 
-			m_WMOModel.getFilename().c_str(),
-			m_GroupHeader.liquidType,
-			m_WMOModel.m_Header.flags.use_liquid_type_dbc_id, 
-			liquidHeader.materialID
-		);
+		//Log::Green
+		//(
+		//	"WMO[%s]: Liq: headerID [%d] headerFlag [%d] MatID: [%d] MatShader[%d]", 
+		//	m_WMOModel.getFilename().c_str(),
+		//	m_GroupHeader.liquidType,
+		//	m_WMOModel.m_Header.flags.use_liquid_type_dbc_id, 
+		//	liquidHeader.materialID
+		//);
 
 		uint32 liquid_type;
-		if (m_WMOModel.m_Header.flags.use_liquid_type_dbc_id != 0)
+		if (m_WMOModel.GetHeader().flags.use_liquid_type_dbc_id != 0)
 		{
 			if (m_GroupHeader.liquidType < 21)
 			{
@@ -391,13 +381,12 @@ bool WMO_Group::Load()
 	{
 		std::shared_ptr<WMO_Group_Part_Batch> batch = std::make_shared<WMO_Group_Part_Batch>(m_RenderDevice, m_WMOModel, WMOGroupBatchProto);
 
-		batch->AddConnection(m_WMOModel.m_Materials[WMOGroupBatchProto.material_id], geometry, SGeometryDrawArgs(WMOGroupBatchProto.indexStart, WMOGroupBatchProto.indexCount));
+		batch->AddConnection(m_WMOModel.GetMaterial(WMOGroupBatchProto.material_id), geometry, SGeometryDrawArgs(WMOGroupBatchProto.indexStart, WMOGroupBatchProto.indexCount));
 
 		m_WMOBatchIndexes.push_back(batch);
 	}
 	// TODO: enable me std::sort(m_WMOBatchIndexes.begin(), m_WMOBatchIndexes.end(), WMO_Group_Part_BatchCompare());
 	WMOBatchs.clear();
-
 
 	m_ChunkReader.reset();
 
@@ -412,7 +401,7 @@ void WMO_Group::FixColors(CBgra* mocv, uint32 mocv_count, const SWMO_Group_Batch
 		begin_second_fixup = moba[(uint16)m_GroupHeader.transBatchCount].vertexStart + 1;
 	}
 
-	if (m_WMOModel.m_Header.flags.lighten_interiors)
+	if (m_WMOModel.GetHeader().flags.lighten_interiors)
 	{
 		for (uint32 i = begin_second_fixup; i < mocv_count; ++i)
 		{
@@ -423,11 +412,11 @@ void WMO_Group::FixColors(CBgra* mocv, uint32 mocv_count, const SWMO_Group_Batch
 	{
 		uint8 r = 0, g = 0, b = 0;
 
-		if (m_WMOModel.m_Header.flags.skip_base_color == 0)
+		if (m_WMOModel.GetHeader().flags.skip_base_color == 0)
 		{
-			r = m_WMOModel.m_Header.ambColor.r;
-			g = m_WMOModel.m_Header.ambColor.g;
-			b = m_WMOModel.m_Header.ambColor.b;
+			r = m_WMOModel.GetHeader().ambColor.r;
+			g = m_WMOModel.GetHeader().ambColor.g;
+			b = m_WMOModel.GetHeader().ambColor.b;
 		}
 
 		for (uint32 mocv_index = 0; mocv_index < begin_second_fixup; ++mocv_index)
@@ -468,6 +457,4 @@ void WMO_Group::FixColors(CBgra* mocv, uint32 mocv_count, const SWMO_Group_Batch
 			mocv[i].a = m_GroupHeader.flags.IS_OUTDOOR ? 0xFF : 0x00;
 		}
 	}
-
-
 }
