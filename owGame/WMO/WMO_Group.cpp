@@ -244,9 +244,10 @@ bool WMO_Group::Load()
 
 
 	// Texture coords
-	if (auto buffer = m_ChunkReader->OpenChunk("MOTV"))
+	for (const auto& buffer : m_ChunkReader->OpenChunks("MOTV"))
 	{
 		geometry->AddVertexBuffer(BufferBinding("TEXCOORD", 0), m_RenderDevice.GetObjectsFactory().CreateVertexBuffer((const glm::vec2*)buffer->getData(), buffer->getSize() / sizeof(glm::vec2)));
+		break;
 	}
 
 
@@ -308,7 +309,7 @@ bool WMO_Group::Load()
 
 
 	// Vertex colors
-	if (auto buffer = m_ChunkReader->OpenChunk("MOCV"))
+	for (const auto& buffer : m_ChunkReader->OpenChunks("MOCV"))
 	{
 		_ASSERT(m_GroupHeader.flags.HAS_VERTEX_COLORS);
 
@@ -333,6 +334,7 @@ bool WMO_Group::Load()
 
 		geometry->AddVertexBuffer(BufferBinding("COLOR", 0), m_RenderDevice.GetObjectsFactory().CreateVoidVertexBuffer(vertexColorsConverted.data(), vertexColorsConverted.size(), 0, sizeof(glm::vec4)));
 		m_IsMOCVExists = vertexColorsCount > 0;
+		break;
 	}
 
 

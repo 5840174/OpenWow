@@ -68,7 +68,7 @@ void CM2_Animator::Update(double _time, double _dTime)
 	if (m_IsStopped)
 		return;
 
-	animtime += _dTime / 5.0;
+	animtime += _dTime / 10.0f;
 	m_CurrentTime = static_cast<uint32>(m_CurrentAnimation->getStart() + animtime);
 
 	// Animation don't ended

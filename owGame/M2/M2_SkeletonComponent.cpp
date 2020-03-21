@@ -60,14 +60,14 @@ void CM2SkeletonBone3D::SetParentAndChildsInternals(const std::vector<std::share
 	}
 }
 
-void CM2SkeletonBone3D::Calculate(const CM2_Base_Instance * M2Instance, uint32 GlobalTime)
+void CM2SkeletonBone3D::Calculate(const CM2_Base_Instance * M2Instance, const ICameraComponent3D* Camera, uint32 GlobalTime)
 {
 	if (m_IsCalculated)
 		return;
 
 	auto parentBone = m_ParentBone.lock();
 	if (parentBone)
-		std::dynamic_pointer_cast<CM2SkeletonBone3D>(parentBone)->Calculate(M2Instance, GlobalTime);
+		std::dynamic_pointer_cast<CM2SkeletonBone3D>(parentBone)->Calculate(M2Instance, Camera, GlobalTime);
 
 	m_Matrix = m_M2Bone.calcMatrix(M2Instance, GlobalTime);
 	m_RotateMatrix = m_M2Bone.calcRotationMatrix(M2Instance, GlobalTime);
@@ -76,6 +76,18 @@ void CM2SkeletonBone3D::Calculate(const CM2_Base_Instance * M2Instance, uint32 G
 	{
 		m_Matrix = parentBone->GetMatrix() * m_Matrix;
 		m_RotateMatrix = parentBone->GetRotateMatrix() * m_RotateMatrix;
+	}
+
+	if (m_M2Bone.IsBillboard())
+	{
+		if (parentBone)
+		{
+			m_Matrix = m_M2Bone.calcBillboardMatrix(parentBone->GetMatrix(), M2Instance, Camera);
+		}
+		else
+		{
+			m_Matrix = m_M2Bone.calcBillboardMatrix(glm::mat4(1.0f), M2Instance, Camera);
+		}
 	}
 
 	m_IsCalculated = true;
@@ -129,7 +141,7 @@ void CM2SkeletonComponent3D::Update(const UpdateEventArgs & e)
 		b->Reset();
 
 	for (const auto& b : m_Bones)
-		b->Calculate(&GetM2OwnerNode(), static_cast<uint32>(e.TotalTime));
+		b->Calculate(&GetM2OwnerNode(), e.CameraForCulling, static_cast<uint32>(e.TotalTime));
 
 	// TODO: Fix me
 	const_cast<CM2_Base_Instance&>(GetM2OwnerNode()).UpdateAttachPositionAfterSkeletonUpdate();

@@ -85,7 +85,7 @@ VertexShaderOutput DoPSRender(VertexShaderInput IN, M2PerObject M2PerObject)
 				//boneIndexes[2] = (IN.boneIndex & 0x0000FF00u >>  8) & 0x000000FFu;
 				//boneIndexes[3] = (IN.boneIndex & 0x000000FFu      ) & 0x000000FFu;
 			
-				newVertex += mul(Bones[(IN.boneIndex[i] - gStartBoneIndex)], float4(IN.position, 1.0f) * IN.boneWeight[i]);
+				newVertex += mul(Bones[(IN.boneIndex[i])], float4(IN.position, 1.0f) * IN.boneWeight[i]);
 			}
 		}
 	}
@@ -146,20 +146,19 @@ DefferedRenderPSOut PS_main(VertexShaderOutput IN) : SV_TARGET
 	
 	float4 colorAndAlpha = gColor;
 	
-	if (gBlendMode == 0 || gBlendMode == 1) 
-		colorAndAlpha.rgb *= IN.color.rgb; // It looks like in order to get correct picture the color from SMODoodadDef should be applied only to opaque submeshes of M2.
+	//if (gBlendMode == 0 || gBlendMode == 1) 
+	//	colorAndAlpha.rgb *= IN.color.rgb; // It looks like in order to get correct picture the color from SMODoodadDef should be applied only to opaque submeshes of M2.
 	
 	colorAndAlpha.a *= gTextureWeight /*TODO: all M2 alpha*/;
-	colorAndAlpha.a *= IN.color.a;
+	//colorAndAlpha.a *= IN.color.a;
 
 	if (gShader == 1)
 	{
-		const float4 tex1 = DiffuseTexture1.Sample(DiffuseTexture1Sampler, float2(IN.texCoord1.x, 1.0f - IN.texCoord1.y));
+		const float4 tex1 = DiffuseTexture1.Sample(DiffuseTexture1Sampler, float2(IN.texCoord1.x, 1.0 - IN.texCoord1.y));
 		resultColor *= tex1;
 	}
 
 	resultColor = MixColorAndTexture(gBlendMode, colorAndAlpha, resultColor);
-	//resultColor = float4(1.0f, 1.0f, 1.0f, 1.0f);
 	
 	DefferedRenderPSOut OUT;
 	OUT.Diffuse = resultColor;

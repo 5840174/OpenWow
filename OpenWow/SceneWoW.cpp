@@ -93,6 +93,8 @@ void CSceneWoW::OnPreRender(RenderEventArgs& e)
 	CMapM2Instance::reset();
 #endif
 
+	//m2Instance->SetRotation(glm::vec3(m2Instance->GetRotation().x, m2Instance->GetRotation().y + 0.05f * e.DeltaTime / 60.0f, 0.0f));
+
 	SceneBase::OnPreRender(e);
 }
 
@@ -133,9 +135,9 @@ void CSceneWoW::Load3D()
 	//wmoInstance = GetRootNode3D()->CreateSceneNode<CWMO_Base_Instance>(wmo);
 	//GetBaseManager().GetManager<ILoader>()->AddToLoadQueue(wmoInstance);
 
-	auto m2 = GetBaseManager().GetManager<IWoWObjectsCreator>()->LoadM2(GetRenderDevice(), "World\\Expansion01\\Doodads\\Netherstorm\\BioDomes\\NS_BioDome_All_FX_South.M2");
-	m2Instance = GetRootNode3D()->CreateSceneNode<CM2_Base_Instance>(m2);
-	GetBaseManager().GetManager<ILoader>()->AddToLoadQueue(m2Instance);
+	//auto m2 = GetBaseManager().GetManager<IWoWObjectsCreator>()->LoadM2(GetRenderDevice(), "World\\Expansion01\\Doodads\\Netherstorm\\BioDomes\\NS_BioDome_All_FX_South.M2");
+	//m2Instance = GetRootNode3D()->CreateSceneNode<CM2_Base_Instance>(m2);
+	//GetBaseManager().GetManager<ILoader>()->AddToLoadQueue(m2Instance);
 
 	skyManager = GetRootNode3D()->CreateSceneNode<SkyManager>(GetRenderDevice());
 	GetBaseManager().AddManager<ISkyManager>(skyManager);

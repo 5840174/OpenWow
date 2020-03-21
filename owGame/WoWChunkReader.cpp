@@ -3,9 +3,9 @@
 // General
 #include "WoWChunkReader.h"
 
-WoWChunkReader::WoWChunkReader(IBaseManager& BaseManager, std::string _fileName)
+WoWChunkReader::WoWChunkReader(IBaseManager& BaseManager, std::string FileName)
 {
-	m_ByteBuffer = BaseManager.GetManager<IFilesManager>()->Open(_fileName);
+	m_ByteBuffer = BaseManager.GetManager<IFilesManager>()->Open(FileName);
 	_ASSERT(m_ByteBuffer != nullptr);
 
 	InitMaps();
@@ -36,7 +36,7 @@ std::shared_ptr<IByteBuffer> WoWChunkReader::OpenChunk(const char * _name)
 		return std::shared_ptr<IByteBuffer>();
 
 	const auto& chunkInfos = chunkIterator->second;
-	//_ASSERT(chunkInfos.size() == 1);
+	_ASSERT(chunkInfos.size() == 1);
 	return GetChunk(chunkInfos[0]);
 }
 
@@ -62,7 +62,10 @@ std::vector<std::shared_ptr<IByteBuffer>> WoWChunkReader::OpenChunks(const char 
 
 void WoWChunkReader::InitMaps()
 {
-	char fourcc[5];
+	if (m_ByteBuffer == nullptr)
+		throw CException("Unable to initialize WoWChunkReader.");
+
+	char fourcc[5] = { 0 };
 	uint32 size = 0;
 	while (!m_ByteBuffer->isEof())
 	{
@@ -70,7 +73,6 @@ void WoWChunkReader::InitMaps()
 		m_ByteBuffer->readBytes(fourcc, 4);
 		std::swap(fourcc[0], fourcc[3]);
 		std::swap(fourcc[1], fourcc[2]);
-		fourcc[4] = 0;
 
 		size = 0;
 		m_ByteBuffer->readBytes(&size, 4);

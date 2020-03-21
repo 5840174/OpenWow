@@ -159,10 +159,10 @@ void CMapWDL::Load()
 	//{
 		// Contains 17 * 17 + 16 * 16 = 545 signed 16-bit integers. So a 17 by 17 grid of height values is given, with additional height values in between grid points. Here, the "outer" 17x17 points are listed (in the usual row major order), followed by 16x16 "inner" points. The height values are on the same scale as those used in the regular height maps.
 	//}
-	if (auto buffer = reader.OpenChunk("MAHO"))
-	{
+	//if (auto buffer = reader.OpenChunk("MAHO"))
+	//{
 		// After each MARE chunk there follows a MAHO (MapAreaHOles) chunk. It may be left out if the data is supposed to be 0 all the time. Its an array of 16 shorts. Each short is a bitmask. If the bit is not set, there is a hole at this position.
-	}
+	//}
 
 	// Minimap
 	std::shared_ptr<CImageBase> mimimapImage = std::make_shared<CImageBase>(512, 512, 32, false);

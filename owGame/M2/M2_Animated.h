@@ -185,13 +185,13 @@ public:
 
 		// Prepare data
 		m_Times.resize(b.timestamps.size);
-		m_Values.resize(b.timestamps.size);
-		m_ValuesHermiteIn.resize(b.timestamps.size);
-		m_ValuesHermiteOut.resize(b.timestamps.size);
+		m_Values.resize(b.values.size);
+		m_ValuesHermiteIn.resize(b.values.size);
+		m_ValuesHermiteOut.resize(b.values.size);
 
 		// times
 		M2Array<uint32>* pHeadTimes = (M2Array<uint32>*)(File->getData() + b.timestamps.offset);
-		M2Array<D>* pHeadKeys = (M2Array<D>*)(File->getData() + b.values.offset);
+		M2Array<D>* pHeadValues = (M2Array<D>*)(File->getData() + b.values.offset);
 		for (uint32 j = 0; j < GetCount(); j++)
 		{
 			uint32* times = nullptr;
@@ -200,23 +200,24 @@ public:
 			{
 				_ASSERT(pHeadTimes[j].offset < AnimFiles.at(j)->getSize());
 				times = (uint32*)(AnimFiles.at(j)->getData() + pHeadTimes[j].offset);
-				_ASSERT(pHeadKeys[j].offset < AnimFiles.at(j)->getSize());
-				values = (D*)(AnimFiles.at(j)->getData() + pHeadKeys[j].offset);
+				_ASSERT(pHeadValues[j].offset < AnimFiles.at(j)->getSize());
+				values = (D*)(AnimFiles.at(j)->getData() + pHeadValues[j].offset);
 			}
 			else
 			{
 				_ASSERT(pHeadTimes[j].offset < File->getSize());
 				times = (uint32*)(File->getData() + pHeadTimes[j].offset);
-				_ASSERT(pHeadKeys[j].offset < File->getSize());
-				values = (D*)(File->getData() + pHeadKeys[j].offset);
+				_ASSERT(pHeadValues[j].offset < File->getSize());
+				values = (D*)(File->getData() + pHeadValues[j].offset);
 			}
 
 			_ASSERT(times != nullptr);
-			for (uint32 i = 0; i < pHeadTimes[j].size; i++)
-				m_Times[j].push_back(times[i]);
+			m_Times[j].assign(times, times + pHeadTimes[j].size);
+			//for (uint32 i = 0; i < pHeadTimes[j].size; i++)
+			//	m_Times[j].push_back(times[i]);
 
 			_ASSERT(values != nullptr);
-			for (uint32 i = 0; i < pHeadKeys[j].size; i++)
+			for (uint32 i = 0; i < pHeadValues[j].size; i++)
 			{
 				switch (m_Type)
 				{
@@ -245,7 +246,7 @@ public:
 			SequenceIndex = 0;
 		}
 
-		if (GetCount() <= SequenceIndex)
+		if (SequenceIndex >= GetCount())
 		{
 			return false;
 		}
@@ -270,7 +271,7 @@ public:
 		const std::vector<uint32>& pTimes = m_Times[SequenceIndex];
 		const std::vector<T>& pData = m_Values[SequenceIndex];
 
-		if ((GetCount() > SequenceIndex) && (pData.size() > 1) && (pTimes.size() > 1))
+		if (SequenceIndex < GetCount() && pData.size() > 1 && pTimes.size() > 1)
 		{
 			int max_time = pTimes.at(pTimes.size() - 1);
 			if (max_time > 0)
@@ -292,7 +293,7 @@ public:
 			switch (m_Type)
 			{
 				case Interpolations::INTERPOLATION_NONE:
-					return pData.at(pos);
+					return interpolateNone(r, pData.at(pos), pData.at(pos + 1));
 				case Interpolations::INTERPOLATION_LINEAR:
 					return interpolateLinear<T>(r, pData.at(pos), pData.at(pos + 1));
 				case Interpolations::INTERPOLATION_HERMITE:
@@ -301,7 +302,7 @@ public:
 					_ASSERT_EXPR(false, "M2_Animated: Unknown interpolation type.");
 			}
 		}
-		else if (!(pData.empty()))
+		else if (! pData.empty())
 		{
 			return pData.at(0);
 		}

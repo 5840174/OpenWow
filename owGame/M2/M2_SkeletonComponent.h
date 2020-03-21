@@ -25,7 +25,7 @@ public:
 
 	// Internal
 	void SetParentAndChildsInternals(const std::vector<std::shared_ptr<CM2SkeletonBone3D>>& Bones);
-	void Calculate(const CM2_Base_Instance* M2Instance, uint32 GlobalTime);
+	void Calculate(const CM2_Base_Instance* M2Instance, const ICameraComponent3D* Camera, uint32 GlobalTime);
 	void Reset();
 
 private:

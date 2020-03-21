@@ -89,7 +89,7 @@ public:
 
 	glm::mat4 calcMatrix(const CM2_Base_Instance* M2Instance, uint32 globalTime) const;
 	glm::mat4 calcRotationMatrix(const CM2_Base_Instance* M2Instance, uint32 globalTime) const;
-	glm::mat4 calcBillboardMatrix(const glm::mat4& _viewMatrix, const glm::mat4& _worldMatrix) const;
+	glm::mat4 calcBillboardMatrix(const glm::mat4& CalculatedMatrix, const CM2_Base_Instance* M2Instance, const ICameraComponent3D* Camera) const;
 
 	bool IsInterpolated(uint16 anim) const
 	{

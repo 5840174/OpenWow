@@ -106,7 +106,7 @@ void CM2_SkinSection::UpdateGeometryProps(const RenderEventArgs& RenderEventArgs
 {
 	M2Instance->getAnimator()->Update(RenderEventArgs.TotalTime, RenderEventArgs.DeltaTime);
 
-	/*bool isAnimated = m_M2Model.getSkeleton().hasBones() && m_M2Model.isAnimated();
+	bool isAnimated = m_M2Model.getSkeleton().hasBones() && m_M2Model.isAnimated();
 	m_Properties->gIsAnimated = isAnimated ? 1 : 0;
 	if (isAnimated)
 	{
@@ -136,7 +136,7 @@ void CM2_SkinSection::UpdateGeometryProps(const RenderEventArgs& RenderEventArgs
 		m_BonesList = M2Instance->getSkeletonComponent()->CreatePose(m_SkinSectionProto.bonesStartIndex, m_SkinSectionProto.boneCount);
 		_ASSERT(m_BonesList.size() == m_SkinSectionProto.boneCount);
 		m_StructuredBuffer->Set(m_BonesList);
-	}*/
+	}
 
 	m_PropertiesBuffer->Set(m_Properties, sizeof(ShaderM2GeometryProperties));
 }
