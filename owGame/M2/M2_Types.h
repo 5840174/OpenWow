@@ -317,52 +317,55 @@ struct SM2_RibbonEmitter
 
 	M2Track<uint16> texSlotTrack;
 	M2Track<uint8> visibilityTrack;
+
+#if WOW_CLIENT_VERSION >= WOW_WOTLK_3_3_5
+	int16_t priorityPlane;
+	uint16_t padding;
+#endif
 };
-
-
 
 struct SM2_Particle
 {
 	int32 particleId;                      // Always (as I have seen): -1.
 	struct Flags
 	{
-		uint32 AFFECTEDBYLIGHTING : 1;
-		uint32 unk0 : 1;
-		uint32 unk1 : 1;
-		uint32 WORLDUP : 1;
-		uint32 DONOTTRAIL : 1;
-		uint32 INLIGHTING : 1;
-		uint32 unk2 : 1;
-		uint32 unk3 : 1;
-		uint32 unk4 : 1;
-		uint32 unk5 : 1;
-		uint32 unk6 : 1;
-		uint32 unk7 : 1;
-		uint32 DONOTBILLBOARD : 1;
-		uint32 unk8 : 1;
-		uint32 unk9 : 1;
-		uint32 unk10 : 1;
-		uint32 unk11 : 1;
-		uint32 unk12 : 1;
-		uint32 unk13 : 1;
+		uint32 AFFECTEDBYLIGHTING : 1;     // Particles are affected by lighting;
+		uint32 unk0x2 : 1;
+		uint32 unk0x4 : 1;
+		uint32 WORLDUP : 1;                // Particles travel "up" in world space, rather than model.
+		uint32 DONOTTRAIL : 1;             // Do not Trail
+		uint32 INLIGHTING : 1;             // Unlightning
+		uint32 unk0x40 : 1;                // Use Burst Multiplier
+		uint32 unk0x80 : 1;                // Particles in Model Space
+		uint32 unk0x100 : 1;
+		uint32 unk0x200 : 1;               // spawn position randomized in some way?
+		uint32 unk0x400 : 1;               // STYLE: Pinned Particles, their quad enlarges from their creation position to where they expand.
+		uint32 unk0x800 : 1;
+		uint32 DONOTBILLBOARD : 1;         // XYQuad Particles. They align to XY axis facing Z axis direction.
+		uint32 unk0x2000 : 1;              // clamp to ground; call CParticleEmitter2::ProjectParticle
+		uint32 unk0x4000 : 1;
+		uint32 unk0x8000 : 1;
+		uint32 unk0x10000 : 1;             // ChooseRandomTexture
+		uint32 unk0x20000 : 1;             // STYLE: "Outward" particles, most emitters have this and their particles move away from the origin, when they don't the particles start at origin+(speed*life) and move towards the origin.
+		uint32 unk0x40000 : 1;             // STYLE: unknown. In a large proportion of particles this seems to be simply the opposite of the above flag, but in some (e.g. voidgod.m2 or wingedlionmount.m2) both flags are true.
 		uint32 : 13;
 	} flags;
 
-	glm::vec3 Position;						  // The position. Relative to the following bone.
-	int16 bone;                               // The bone its attached to.
+	glm::vec3 Position;						// The position. Relative to the following bone.
+	int16 bone;                             // The bone its attached to.
 
 	uint16 texture;                           // And the DiffuseTextures that are used. 
 
 	M2Array<char> geometry_model_filename;    // if given, this emitter spawns models
 	M2Array<char> recursion_model_filename;   // if given, this emitter is an alias for the (maximum 4) emitters of the given model
 
-#if (WOW_CLIENT_VERSION >= WOW_CLASSIC_1_12_1) && (WOW_CLIENT_VERSION < WOW_BC_2_4_3)
-	uint16 blendingType;                      // A blending type for the particle. See Below
-	uint16 emitterType;                       // 1 - Plane (rectangle), 2 - Sphere, 3 - Spline, 4 - Bone
-#else
+#if (WOW_CLIENT_VERSION >= WOW_BC_2_4_3)
 	uint8 blendingType;                       // A blending type for the particle. See Below
 	uint8 emitterType;                        // 1 - Plane (rectangle), 2 - Sphere, 3 - Spline, 4 - Bone
 	uint16 particleColorIndex;                // This one is used for ParticleColor.dbc. See below.
+#else
+	uint16 blendingType;                      // A blending type for the particle. See Below
+	uint16 emitterType;                       // 1 - Plane (rectangle), 2 - Sphere, 3 - Spline, 4 - Bone
 #endif
 
 	uint8 particleType;                      // Found below.
@@ -374,12 +377,15 @@ struct SM2_Particle
 
 	M2Track<float> emissionSpeed;             // Base velocity at which particles are emitted.
 	M2Track<float> speedVariation;            // Random variation in particle emission speed. (range: 0 to 1)
+	
 	M2Track<float> verticalRange;             // Drifting away vertically. (range: 0 to pi) For plane generators, this is the maximum polar angle of the initial velocity; 
 											  // 0 makes the velocity straight up (+z). For sphere generators, this is the maximum elevation of the initial position; 
 											  // 0 makes the initial position entirely in the x-y plane (z=0).
+	
 	M2Track<float> horizontalRange;           // They can do it horizontally too! (range: 0 to 2*pi) For plane generators, this is the maximum azimuth angle of the initial velocity; 
 											  // 0 makes the velocity have no sideways (y-axis) component. 
 											  // For sphere generators, this is the maximum azimuth angle of the initial position.
+
 	M2Track<float> gravity;                   // Not necessarily a float; see below.
 
 	M2Track<float> lifespan;
@@ -400,7 +406,14 @@ struct SM2_Particle
 
 	M2Track<float> zSource;                   // When greater than 0, the initial velocity of the particle is (particle.position - C3Vector(0, 0, zSource)).Normalize()
 
-#if WOW_CLIENT_VERSION >= WOW_CLASSIC_1_12_1 && WOW_CLIENT_VERSION <= WOW_BC_2_4_3
+#if WOW_CLIENT_VERSION >= WOW_WOTLK_3_3_5
+	M2TrackFake<glm::vec3> colorTrack;        // Most likely they all have 3 timestamps for {start, middle, end}.
+	M2TrackFake<short> alphaTrack;            // FIXME FIXED16
+	M2TrackFake<glm::vec2> scaleTrack;
+	glm::vec2 scaleVary;                      // A percentage amount to randomly vary the scale of each particle
+	M2TrackFake<uint16> headCellTrack;        // Some kind of intensity values seen: 0,16,17,32 (if set to different it will have high intensity)
+	M2TrackFake<uint16> tailCellTrack;
+#else
 	float midPoint;                           // middleTime; Middle point in lifespan (0 to 1).
 	CBgra colorValues[3];                     // start, middle, end
 	float scaleValues[3];
@@ -408,13 +421,6 @@ struct SM2_Particle
 	uint16 decayUVAnim[3];
 	int16 tailUVAnim[2];                      // start, end
 	int16 tailDecayUVAnim[2];
-#elif WOW_CLIENT_VERSION >= WOW_WOTLK_3_3_5
-	M2TrackFake<glm::vec3> colorTrack;             // Most likely they all have 3 timestamps for {start, middle, end}.
-	M2TrackFake<short> alphaTrack;            // FIXME FIXED16
-	M2TrackFake<glm::vec2> scaleTrack;
-	glm::vec2 scaleVary;                           // A percentage amount to randomly vary the scale of each particle
-	M2TrackFake<uint16> headCellTrack;        // Some kind of intensity values seen: 0,16,17,32 (if set to different it will have high intensity)
-	M2TrackFake<uint16> tailCellTrack;
 #endif
 
 	float tailLength;
@@ -424,7 +430,14 @@ struct SM2_Particle
 	float burstMultiplier;                    // ivelScale; requires (flags & 0x40)
 	float drag;                               // For a non-zero values, instead of travelling linearly the particles seem to slow down sooner. Speed is multiplied by exp( -drag * t ).
 
+#if WOW_CLIENT_VERSION >= WOW_WOTLK_3_3_5
+	float baseSpin;                           // Initial rotation of the particle quad
+	float baseSpinVary;
+	float spin;                               // Rotation of the particle quad per second
+	float spinVary;
+#else
 	float spin;                               // 0.0 for none, 1.0 to rotate the particle 360 degrees throughout its lifetime.
+#endif
 
 	M2Box tumble;
 	glm::vec3 WindVector;

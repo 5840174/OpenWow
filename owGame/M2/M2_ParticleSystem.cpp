@@ -100,6 +100,16 @@ SM2_ParticleSystem_Wrapper::SM2_ParticleSystem_Wrapper(const CM2& M2Object, cons
 	}
 #else
 	m_MiddleTime = 0.5f;
+	glm::vec3 colors2[3];
+	memcpy(colors2, File->getData() + M2Particle.colorTrack.values.offset, sizeof(glm::vec3) * 3);
+
+	for (uint32 i = 0; i < 3; i++)
+	{
+		float opacity = *(short*)(File->getData() + M2Particle.alphaTrack.values.offset + i * sizeof(short));
+
+		m_Colors[i] = glm::vec4(colors2[i].x / 255.0f, colors2[i].y / 255.0f, colors2[i].z / 255.0f, opacity / 32767.0f);
+		m_Scales[i] = (*(float*)(File->getData() + M2Particle.scaleTrack.values.offset + i * sizeof(float)));
+	}
 #endif
 
 	m_Slowdown = M2Particle.drag;
@@ -216,7 +226,7 @@ const std::vector<TexCoordSet>& SM2_ParticleSystem_Wrapper::GetTiles() const
 
 void SM2_ParticleSystem_Wrapper::CreateAndDeleteParticles(const CM2_Base_Instance * M2Instance, const UpdateEventArgs & e, float * rem, CM2_ParticleObject * Particles) const
 {
-	double deltaTime = e.DeltaTime / 1000.0;
+	double deltaTime = e.DeltaTime / 2000.0;
 	uint32 globalTime = static_cast<uint32>(e.TotalTime);
 	
 	uint32 sequence = M2Instance->getAnimator()->getSequenceIndex();
@@ -277,6 +287,7 @@ void SM2_ParticleSystem_Wrapper::CreateAndDeleteParticles(const CM2_Base_Instanc
 				switch (m_EmitterType)
 				{
 					case 0:
+					case 3:
 					{
 						CM2_ParticleObject p = DefaultGenerator_New(M2Instance, emissionAreaLengthValue, emissionAreaWidthValue, emissionSpeedValue, speedVariationValue, lifespanValue, verticalRangeValue, horizontalRangeValue);
 						p.Active = true;

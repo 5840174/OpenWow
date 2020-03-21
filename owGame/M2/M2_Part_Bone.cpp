@@ -24,9 +24,6 @@ SM2_Part_Bone_Wrapper::~SM2_Part_Bone_Wrapper()
 glm::mat4 SM2_Part_Bone_Wrapper::calcMatrix(const CM2_Base_Instance* M2Instance, uint32 globalTime) const
 {
 	glm::mat4 m(1.0f);
-	//if (IsBillboard())
-	//	return m;
-
 	if (const auto& animator = M2Instance->getAnimator())
 	{
 		if (IsInterpolated(animator->getSequenceIndex()))
@@ -76,28 +73,30 @@ glm::mat4 SM2_Part_Bone_Wrapper::calcBillboardMatrix(const glm::mat4& Calculated
 	m = glm::translate(m, getPivot());
 	{
 		glm::mat4 W = m;
+		W = CalculatedMatrix * W;
 		W = M2Instance->GetWorldTransfom() * W;
+
 		glm::mat4 VW = Camera->GetViewMatrix() * W;
 
 		// Set vectors default
 		glm::vec3 worldScale = extractScale(W);
-		glm::vec3 vRight   = glm::vec3(VW[0][0], VW[1][0], VW[2][0]) / worldScale.x;
-		glm::vec3 vUp      = glm::vec3(VW[0][1], VW[1][1], VW[2][1]) / worldScale.y;
-		glm::vec3 vForward = glm::vec3(VW[0][2], VW[1][2], VW[2][2]) / worldScale.z;
+		glm::vec3 vRight     = glm::vec3(VW[0][0], VW[1][0], VW[2][0]) / worldScale.x;
+		glm::vec3 vUp        = glm::vec3(VW[0][1], VW[1][1], VW[2][1]) / worldScale.y;
+		glm::vec3 vForward   = glm::vec3(VW[0][2], VW[1][2], VW[2][2]) / worldScale.z;
 		vRight *= -1.0f;
 
-		if (m_M2Bone.flags.cylindrical_billboard_lock_x)
+		/*if (true || m_M2Bone.flags.cylindrical_billboard_lock_x) // TODO: investigate it
 		{
-			vUp = glm::vec3(VW[0][1], 0, 0);
+			vUp = glm::vec3(VW[0][1], 0, 0) / worldScale.x;
 		}
 		else if (m_M2Bone.flags.cylindrical_billboard_lock_y)
 		{
-			vUp = glm::vec3(0, VW[1][1], 0);
+			vUp = glm::vec3(0, VW[1][1], 0) / worldScale.y;
 		}
 		else if (m_M2Bone.flags.cylindrical_billboard_lock_z)
 		{
-			vUp = glm::vec3(0, 0, VW[2][1]);
-		}
+			vUp = glm::vec3(0, 0, VW[2][1]) / worldScale.z;
+		}*/
 
 		m[0][0] = vForward.x;
 		m[0][1] = vForward.y;

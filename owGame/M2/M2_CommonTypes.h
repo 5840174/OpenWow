@@ -42,7 +42,6 @@ struct M2Track : public M2TrackBase
 template<typename T>
 struct M2TrackFake
 {
-    M2Array<std::pair<uint32, uint32>> interpolation_ranges;
     M2Array<uint32>                    timestamps;
     M2Array<T>                         values;
 };

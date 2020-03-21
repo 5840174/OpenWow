@@ -27,6 +27,9 @@ bool CImageBLP::IsFileSupported(std::shared_ptr<IFile> File)
 		if (Utils::ToLower(File->Extension()) != "blp")
 			return false;
 
+	if (File->getSize() == 0)
+		return false;
+
 	BLPFormat::BLPHeader header = { 0 };
 	File->seek(0);
 	File->read(&header);

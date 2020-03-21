@@ -151,11 +151,11 @@
     <Filter Include="M2\Parts\Parts_Miscellaneous\Ribbons">
       <UniqueIdentifier>{c3e88f44-ee8b-4d54-8c2c-ead2d8e3015b}</UniqueIdentifier>
     </Filter>
-    <Filter Include="M2\Parts\Parts_Skeleton">
-      <UniqueIdentifier>{0bfa29b5-d676-4e47-a3b2-0c3dbaaa6e25}</UniqueIdentifier>
-    </Filter>
     <Filter Include="M2\Parts\Parts_Miscellaneous\Particles">
       <UniqueIdentifier>{f2e5601a-12b9-4f08-bd03-b1e8430bb1d0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="M2\Parts\Parts_Skeleton">
+      <UniqueIdentifier>{0bfa29b5-d676-4e47-a3b2-0c3dbaaa6e25}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

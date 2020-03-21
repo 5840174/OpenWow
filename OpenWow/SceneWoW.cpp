@@ -37,9 +37,9 @@ void CSceneWoW::Initialize()
 
 	
 	Load3D();
-	//Load3D_M2s();
+	Load3D_M2s();
 	//TestCreateMap(MapID);
-	LoadUI();
+	//LoadUI();
 
 
 	std::shared_ptr<CSceneCreateTypedListsPass> sceneListPass = std::make_shared<CSceneCreateTypedListsPass>(GetRenderDevice(), shared_from_this());
@@ -165,9 +165,9 @@ void CSceneWoW::Load3D_M2s()
 	CWorldObjectCreator creator(GetBaseManager());
 
 	const auto& records = GetBaseManager().GetManager<CDBCStorage>()->DBC_CreatureDisplayInfo().Records();
-	for (size_t i = 0; i < 15; i++)
+	for (size_t i = 0; i < 25; i++)
 	{
-		for (size_t j = 0; j < 15; j++)
+		for (size_t j = 0; j < 25; j++)
 		{
 			size_t id = r.NextUInt() % records.size();
 

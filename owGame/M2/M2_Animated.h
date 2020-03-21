@@ -268,6 +268,9 @@ public:
 				time = GlobalTime % globalLoopTimeStamp;
 		}
 
+		if (SequenceIndex >= GetCount())
+			SequenceIndex = 0;
+
 		const std::vector<uint32>& pTimes = m_Times[SequenceIndex];
 		const std::vector<T>& pData = m_Values[SequenceIndex];
 

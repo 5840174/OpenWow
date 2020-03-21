@@ -109,4 +109,5 @@ void CM2_Comp_Miscellaneous::Load(const SM2_Header& M2Header, const std::shared_
 		m_HasMisc = true;
 	}
 #endif
+
 }

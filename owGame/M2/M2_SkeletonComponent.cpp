@@ -80,14 +80,7 @@ void CM2SkeletonBone3D::Calculate(const CM2_Base_Instance * M2Instance, const IC
 
 	if (m_M2Bone.IsBillboard())
 	{
-		if (parentBone)
-		{
-			m_Matrix = m_M2Bone.calcBillboardMatrix(parentBone->GetMatrix(), M2Instance, Camera);
-		}
-		else
-		{
-			m_Matrix = m_M2Bone.calcBillboardMatrix(glm::mat4(1.0f), M2Instance, Camera);
-		}
+		m_Matrix = m_Matrix * m_M2Bone.calcBillboardMatrix(m_Matrix, M2Instance, Camera);
 	}
 
 	m_IsCalculated = true;
