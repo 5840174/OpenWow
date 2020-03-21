@@ -85,6 +85,7 @@ bool CM2::Load()
 			m2Vertexes[i].normal = Fix_XZmY(m2Vertexes[i].normal);
 		}
 
+#if WOW_CLIENT_VERSION <= WOW_BC_2_4_3
 		_ASSERT(m_Header.skin_profiles.size > 0);
 		const SM2_SkinProfile* m2Skins = (const SM2_SkinProfile*)(m_F->getData() + m_Header.skin_profiles.offset);
 		for (uint32 i = 0; i < m_Header.skin_profiles.size; i++)
@@ -94,10 +95,32 @@ bool CM2::Load()
 			m_Skins.push_back(skin);
 			break;
 		}
+#else
+		_ASSERT(m_Header.num_skin_profiles > 0);
+		for (uint32 i = 0; i < m_Header.num_skin_profiles; i++)
+		{
+			char buf[256];
+			sprintf_s(buf, "%s%02d.skin", m_FileNameWithoutExt.c_str(), i);
+
+			std::shared_ptr<IFile> skinFile = GetBaseManager().GetManager<IFilesManager>()->Open(buf);
+
+
+			const SM2_SkinProfile* m2Skin = (const SM2_SkinProfile*)skinFile->getData();
+
+			std::shared_ptr<CM2_Skin> skin = std::make_shared<CM2_Skin>(m_BaseManager, m_RenderDevice, *this, *m2Skin);
+			skin->Load(m_Header, skinFile, m2Vertexes);
+			m_Skins.push_back(skin);
+			break;
+		}
+#endif
 	}
 	else
 	{
+#if WOW_CLIENT_VERSION <= WOW_BC_2_4_3
 		Log::Warn("M2[%s] don't contain geometry. Skins [%d]", getFilename().c_str(), m_Header.skin_profiles.size);
+#else
+		Log::Warn("M2[%s] don't contain geometry. Skins [%d]", getFilename().c_str(), m_Header.num_skin_profiles);
+#endif
 	}
 
 #if 0

@@ -11,9 +11,9 @@ SM2_Part_Bone_Wrapper::SM2_Part_Bone_Wrapper(const CM2& M2Object, const std::sha
 	: m_M2Object(M2Object)
 	, m_M2Bone(M2Bone)
 {
-	m_TranslateAnimated.Initialize(M2Bone.translation, File, Fix_XZmY);
-	m_RotateAnimated.Initialize(M2Bone.rotation, File, Fix_XZmYW);
-	m_ScaleAnimated.Initialize(M2Bone.scale, File, Fix_XZY);
+	m_TranslateAnimated.Initialize(M2Bone.translation, File, M2Object.getSkeleton().GetAnimFiles(), Fix_XZmY);
+	m_RotateAnimated.Initialize(M2Bone.rotation, File, M2Object.getSkeleton().GetAnimFiles(), Fix_XZmYW);
+	m_ScaleAnimated.Initialize(M2Bone.scale, File, M2Object.getSkeleton().GetAnimFiles(), Fix_XZY);
 }
 
 

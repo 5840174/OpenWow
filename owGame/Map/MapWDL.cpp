@@ -110,7 +110,7 @@ void CMapWDL::CreateInsances(const std::shared_ptr<ISceneNode3D>& Parent) const
 	Log::Green("Map_GlobalWMOs[]: Low WMOs count [%d].", m_LowResolutionWMOsPlacementInfo.size());
 	for (auto it : m_LowResolutionWMOsPlacementInfo)
 	{
-		_ASSERT(false);
+		//_ASSERT(false);
 		//CMapWMOInstance* wmoInstance = _parent->CreateSceneNode<CMapWMOInstance>(m_LowResolutionWMOsNames[it.nameIndex], it);
 		//m_LowResolutionWMOs.push_back(wmoInstance);
 	}

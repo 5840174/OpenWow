@@ -18,8 +18,13 @@ public:
 	const CM2_Animation*	getNextVariation()	const { return m_Next.get(); }
 
 	// Times
+#if WOW_CLIENT_VERSION <= WOW_BC_2_4_3
 	uint32					getStart()			const { return m_StartTimeStamp; }
 	uint32					getEnd()			const { return m_EndTimeStamp; }
+#else
+	uint32					getStart()			const { return 0; }
+	uint32					getEnd()			const { return m_Duration; }
+#endif
 
 private:
 	CM2_Animation(const CM2_Animation&) = delete;
@@ -32,6 +37,10 @@ private:
 	const uint16			m_SequenceIndex;
 	std::unique_ptr<CM2_Animation> m_Next;
 
+#if WOW_CLIENT_VERSION <= WOW_BC_2_4_3
 	uint32					m_StartTimeStamp;
 	uint32					m_EndTimeStamp;
+#else
+	uint32					m_Duration;
+#endif
 };

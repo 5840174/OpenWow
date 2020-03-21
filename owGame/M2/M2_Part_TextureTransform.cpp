@@ -10,9 +10,9 @@
 CM2_Part_TextureTransform::CM2_Part_TextureTransform(const CM2& M2Object, const std::shared_ptr<IFile>& File, const SM2_TextureTransform& M2TextureTransform)
 	: m_M2Object(M2Object)
 {
-	m_TranslateAnimated.Initialize(M2TextureTransform.translation, File);
-	m_RotateAnimated.Initialize(M2TextureTransform.rotation, File);
-	m_ScaleAnimated.Initialize(M2TextureTransform.scaling, File);
+	m_TranslateAnimated.Initialize(M2TextureTransform.translation, File, M2Object.getSkeleton().GetAnimFiles());
+	m_RotateAnimated.Initialize(M2TextureTransform.rotation, File, M2Object.getSkeleton().GetAnimFiles());
+	m_ScaleAnimated.Initialize(M2TextureTransform.scaling, File, M2Object.getSkeleton().GetAnimFiles());
 }
 
 CM2_Part_TextureTransform::~CM2_Part_TextureTransform()

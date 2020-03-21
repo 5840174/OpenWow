@@ -50,7 +50,7 @@ private:
 	std::unique_ptr<CM2_Comp_Skeleton> m_Skeleton;
 
 
-private:
+public:
 	std::string							m_FileName;
 	std::string							m_FileNameWithoutExt;
 	std::string							m_FilePath;

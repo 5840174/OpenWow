@@ -15,8 +15,8 @@ public:
 
 	uint16 getSequenceIndex() const { return m_CurrentAnimation->getSequenceIndex(); }
 	uint32 getCurrentTime() { return m_CurrentTime; }
-	uint32 getStart() const { return m_CurrentAnimation->getStart(); }
-	uint32 getEnd() const { return m_CurrentAnimation->getEnd(); }
+	//uint32 getStart() const { return m_CurrentAnimation->getStart(); }
+	//uint32 getEnd() const { return m_CurrentAnimation->getEnd(); }
 
 	//void setOnEndFunction(Function* _onEnd);
 

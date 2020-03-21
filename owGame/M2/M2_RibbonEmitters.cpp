@@ -26,10 +26,10 @@ CM2_RibbonEmitters::CM2_RibbonEmitters(const CM2& M2Object, const std::shared_pt
 	// TODOm_Bone = m_M2Object.getSkeleton().GetBones()[M2RibbonEmitter.boneIndex];
 	posValue = pos = Fix_XZmY(M2RibbonEmitter.position);
 
-	m_Color.Initialize(M2RibbonEmitter.colorTrack, File);
-	m_Alpha.Initialize(M2RibbonEmitter.alphaTrack, File);
-	m_HeightAbove.Initialize(M2RibbonEmitter.heightAboveTrack, File);
-	m_HeightBelow.Initialize(M2RibbonEmitter.heightBelowTrack, File);
+	m_Color.Initialize(M2RibbonEmitter.colorTrack, File, M2Object.getSkeleton().GetAnimFiles());
+	m_Alpha.Initialize(M2RibbonEmitter.alphaTrack, File, M2Object.getSkeleton().GetAnimFiles());
+	m_HeightAbove.Initialize(M2RibbonEmitter.heightAboveTrack, File, M2Object.getSkeleton().GetAnimFiles());
+	m_HeightBelow.Initialize(M2RibbonEmitter.heightBelowTrack, File, M2Object.getSkeleton().GetAnimFiles());
 
 	{
 		uint16_t* TexturesList = (uint16_t*)(File->getData() + M2RibbonEmitter.textureIndices.offset);

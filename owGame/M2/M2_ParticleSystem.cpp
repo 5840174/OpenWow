@@ -79,17 +79,17 @@ SM2_ParticleSystem_Wrapper::SM2_ParticleSystem_Wrapper(const CM2& M2Object, cons
 	rows = M2Particle.textureDimensions_rows;
 	cols = M2Particle.textureDimensions_columns;
 
-	emissionSpeed.Initialize(M2Particle.emissionSpeed, File);
-	speedVariation.Initialize(M2Particle.speedVariation, File);
-	verticalRange.Initialize(M2Particle.verticalRange, File);
-	horizontalRange.Initialize(M2Particle.horizontalRange, File);
-	gravity.Initialize(M2Particle.gravity, File);
-	lifespan.Initialize(M2Particle.lifespan, File);
-	emissionRate.Initialize(M2Particle.emissionRate, File);
-	emissionAreaLength.Initialize(M2Particle.emissionAreaLength, File);
-	emissionAreaWidth.Initialize(M2Particle.emissionAreaWidth, File);
-	zSource.Initialize(M2Particle.zSource, File);
-	enabled.Initialize(M2Particle.enabledIn, File);
+	emissionSpeed.Initialize(M2Particle.emissionSpeed, File, M2Object.getSkeleton().GetAnimFiles());
+	speedVariation.Initialize(M2Particle.speedVariation, File, M2Object.getSkeleton().GetAnimFiles());
+	verticalRange.Initialize(M2Particle.verticalRange, File, M2Object.getSkeleton().GetAnimFiles());
+	horizontalRange.Initialize(M2Particle.horizontalRange, File, M2Object.getSkeleton().GetAnimFiles());
+	gravity.Initialize(M2Particle.gravity, File, M2Object.getSkeleton().GetAnimFiles());
+	lifespan.Initialize(M2Particle.lifespan, File, M2Object.getSkeleton().GetAnimFiles());
+	emissionRate.Initialize(M2Particle.emissionRate, File, M2Object.getSkeleton().GetAnimFiles());
+	emissionAreaLength.Initialize(M2Particle.emissionAreaLength, File, M2Object.getSkeleton().GetAnimFiles());
+	emissionAreaWidth.Initialize(M2Particle.emissionAreaWidth, File, M2Object.getSkeleton().GetAnimFiles());
+	zSource.Initialize(M2Particle.zSource, File, M2Object.getSkeleton().GetAnimFiles());
+	enabled.Initialize(M2Particle.enabledIn, File, M2Object.getSkeleton().GetAnimFiles());
 
 #if WOW_CLIENT_VERSION < WOW_WOTLK_3_3_5
 	m_MiddleTime = M2Particle.midPoint;

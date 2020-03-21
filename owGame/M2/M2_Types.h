@@ -16,8 +16,12 @@ struct SM2_Sequence
 	FOREIGN_KEY_ID(uint16, DBC_AnimationData, animID); // Animation id in AnimationData.dbc	
 	uint16		variationIndex;			// Sub-animation id: Which number in a row of animations this one is.
 
+#if WOW_CLIENT_VERSION <= WOW_BC_2_4_3
 	uint32_t start_timestamp;
 	uint32_t end_timestamp;
+#else
+	uint32_t duration;
+#endif
 	float		movespeed;				// This is the speed the character moves with in this animation.
 
 	struct Flags
@@ -67,7 +71,7 @@ struct SM2_Bone
 	int16			parent_bone;            // Parent bone ID or -1 if there is none.
 	uint16			submesh_id;				// Mesh part ID OR uDistToParent?
 
-#if WOW_CLIENT_VERSION == WOW_BC_2_4_3
+#if WOW_CLIENT_VERSION >= WOW_BC_2_4_3
 	union 
 	{                         // only  BC?
 		struct 

@@ -11,16 +11,16 @@ SM2_Part_Light_Wrapper::SM2_Part_Light_Wrapper(const CM2& M2Object, const std::s
 	: m_M2Object(M2Object)
 	, m_M2Light(M2Light)
 {
-	ambColor.Initialize(M2Light.ambient_color, File);
-	ambIntensity.Initialize(M2Light.ambient_intensity, File);
+	ambColor.Initialize(M2Light.ambient_color, File, M2Object.getSkeleton().GetAnimFiles());
+	ambIntensity.Initialize(M2Light.ambient_intensity, File, M2Object.getSkeleton().GetAnimFiles());
 
-	diffColor.Initialize(M2Light.diffuse_color, File);
-	diffIntensity.Initialize(M2Light.diffuse_intensity, File);
+	diffColor.Initialize(M2Light.diffuse_color, File, M2Object.getSkeleton().GetAnimFiles());
+	diffIntensity.Initialize(M2Light.diffuse_intensity, File, M2Object.getSkeleton().GetAnimFiles());
 
-	attenuation_start.Initialize(M2Light.attenuation_start, File);
-	attenuation_end.Initialize(M2Light.attenuation_end, File);
+	attenuation_start.Initialize(M2Light.attenuation_start, File, M2Object.getSkeleton().GetAnimFiles());
+	attenuation_end.Initialize(M2Light.attenuation_end, File, M2Object.getSkeleton().GetAnimFiles());
 
-	visibility.Initialize(M2Light.visibility, File);
+	visibility.Initialize(M2Light.visibility, File, M2Object.getSkeleton().GetAnimFiles());
 }
 
 SM2_Part_Light_Wrapper::~SM2_Part_Light_Wrapper()

@@ -94,7 +94,7 @@ void CM2_Comp_Miscellaneous::Load(const SM2_Header& M2Header, const std::shared_
 		// Animated
 		m_HasMisc = true;
 	}
-#endif
+
 
 	// Particle systems
 	if (M2Header.particle_emitters.size > 0)
@@ -108,5 +108,5 @@ void CM2_Comp_Miscellaneous::Load(const SM2_Header& M2Header, const std::shared_
 		// Animated
 		m_HasMisc = true;
 	}
-
+#endif
 }

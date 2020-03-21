@@ -159,6 +159,7 @@ DefferedRenderPSOut PS_main(VertexShaderOutput IN) : SV_TARGET
 	}
 
 	resultColor = MixColorAndTexture(gBlendMode, colorAndAlpha, resultColor);
+	//resultColor = float4(1.0f, 1.0f, 1.0f, 1.0f);
 	
 	DefferedRenderPSOut OUT;
 	OUT.Diffuse = resultColor;

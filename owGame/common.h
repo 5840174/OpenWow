@@ -11,7 +11,7 @@
 #define WOW_BC_2_4_3       2  
 #define WOW_WOTLK_3_3_5    3
 
-#define WOW_CLIENT_VERSION WOW_BC_2_4_3
+#define WOW_CLIENT_VERSION WOW_WOTLK_3_3_5
 
 /**
   * Enable or disable M2 models support

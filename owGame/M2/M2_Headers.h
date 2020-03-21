@@ -24,8 +24,9 @@ struct SM2_Header
     // Sequences
     M2Array<SM2_Sequence>			sequences;						// Information about the animations in the model.
     M2Array<int16>					sequencesLookup;				// Mapping of sequence IDs to the entries in the Animation sequences block.
+#if WOW_CLIENT_VERSION <= WOW_BC_2_4_3
     M2Array<int16>					playable_animation_lookup;
-
+#endif
 
     // Bones
     M2Array<SM2_Bone>				bones;                           // MAX_BONES = 0x100
@@ -35,13 +36,19 @@ struct SM2_Header
     M2Array<SM2_Vertex>				vertices;
 
 	// Skin
+#if WOW_CLIENT_VERSION <= WOW_BC_2_4_3
     M2Array<SM2_SkinSection>        skin_profiles;
+#else
+	uint32_t num_skin_profiles;
+#endif
 
     // Materials
     M2Array<SM2_Color>				colors;							// Color and alpha animations definitions.
     M2Array<SM2_Texture>			textures;
     M2Array<SM2_TextureWeight>		textureWeights;
+#if WOW_CLIENT_VERSION <= WOW_BC_2_4_3
     M2Array<void>                   unknown;
+#endif
 	M2Array<SM2_TextureTransform>	textureTransforms;
 
     M2Array<uint16>					replacable_texture_lookup;		// ???

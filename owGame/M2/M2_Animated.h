@@ -10,6 +10,7 @@
 	D is the values type stored in the file (by default this is the same as T)
 	Conv is a conversion object that defines T conv(D) to convert from D to T (by default this is an identity function)	(there might be a nicer way to do this? meh meh)
 */
+#if WOW_CLIENT_VERSION < WOW_WOTLK_3_3_5
 template <class T, class D = T, class Conv = NoConvert<T> >
 class M2_Animated
 {
@@ -19,7 +20,7 @@ public:
 		, m_GlobalSecIndex(-1)
 	{}
 
-	inline void Initialize(const M2Track<D>& b, const std::shared_ptr<IFile>& File, T fixfunc(const T&) = NoFix)
+	inline void Initialize(const M2Track<D>& b, const std::shared_ptr<IFile>& File, const std::vector<std::shared_ptr<IFile>>& /*AnimFiles*/, T fixfunc(const T&) = NoFix)
 	{
 		m_Type = b.interpolation_type;
 		m_GlobalSecIndex = b.global_sequence;
@@ -165,3 +166,164 @@ private:
     std::vector<T> m_ValuesHermiteIn;
     std::vector<T> m_ValuesHermiteOut;
 };
+#else
+template <class T, class D = T, class Conv = NoConvert<T> >
+class M2_Animated
+{
+public:
+	M2_Animated()
+		: m_Type(Interpolations::INTERPOLATION_NONE)
+		, m_GlobalSecIndex(-1)
+	{}
+
+	inline void Initialize(const M2Track<D>& b, const std::shared_ptr<IFile>& File, const std::vector<std::shared_ptr<IFile>>& AnimFiles, T fixfunc(const T&) = NoFix)
+	{
+		m_Type = b.interpolation_type;
+		m_GlobalSecIndex = b.global_sequence;
+
+		_ASSERT(b.timestamps.size == b.values.size);
+
+		// Prepare data
+		m_Times.resize(b.timestamps.size);
+		m_Values.resize(b.timestamps.size);
+		m_ValuesHermiteIn.resize(b.timestamps.size);
+		m_ValuesHermiteOut.resize(b.timestamps.size);
+
+		// times
+		M2Array<uint32>* pHeadTimes = (M2Array<uint32>*)(File->getData() + b.timestamps.offset);
+		M2Array<D>* pHeadKeys = (M2Array<D>*)(File->getData() + b.values.offset);
+		for (uint32 j = 0; j < GetCount(); j++)
+		{
+			uint32* times = nullptr;
+			D* values = nullptr;
+			if (AnimFiles.at(j) != nullptr)
+			{
+				_ASSERT(pHeadTimes[j].offset < AnimFiles.at(j)->getSize());
+				times = (uint32*)(AnimFiles.at(j)->getData() + pHeadTimes[j].offset);
+				_ASSERT(pHeadKeys[j].offset < AnimFiles.at(j)->getSize());
+				values = (D*)(AnimFiles.at(j)->getData() + pHeadKeys[j].offset);
+			}
+			else
+			{
+				_ASSERT(pHeadTimes[j].offset < File->getSize());
+				times = (uint32*)(File->getData() + pHeadTimes[j].offset);
+				_ASSERT(pHeadKeys[j].offset < File->getSize());
+				values = (D*)(File->getData() + pHeadKeys[j].offset);
+			}
+
+			_ASSERT(times != nullptr);
+			for (uint32 i = 0; i < pHeadTimes[j].size; i++)
+				m_Times[j].push_back(times[i]);
+
+			_ASSERT(values != nullptr);
+			for (uint32 i = 0; i < pHeadKeys[j].size; i++)
+			{
+				switch (m_Type)
+				{
+				case Interpolations::INTERPOLATION_NONE:
+				case Interpolations::INTERPOLATION_LINEAR:
+					m_Values[j].push_back(fixfunc(Conv::conv(values[i])));
+					break;
+
+				case Interpolations::INTERPOLATION_HERMITE:
+					m_Values[j].push_back(fixfunc(Conv::conv(values[i * 3 + 0])));
+					m_ValuesHermiteIn[j].push_back(fixfunc(Conv::conv(values[i * 3 + 1])));
+					m_ValuesHermiteOut[j].push_back(fixfunc(Conv::conv(values[i * 3 + 2])));
+					break;
+
+					//default:
+					//	_ASSERT_EXPR(false, "M2_Animated: Unknown interpolation type.");
+				}
+			}
+		}
+	}
+
+	inline bool IsUsesBySequence(uint16 SequenceIndex) const
+	{
+		if (m_GlobalSecIndex != -1)
+		{
+			SequenceIndex = 0;
+		}
+
+		if (GetCount() <= SequenceIndex)
+		{
+			return false;
+		}
+
+		return (m_Values[SequenceIndex].size() > 0);
+	}
+
+	inline T GetValue(uint16 SequenceIndex, uint32 time, const std::vector<SM2_Loop>& GlobalLoop, const uint32 GlobalTime) const
+	{
+		// obtain a time value and a values range
+		if (m_GlobalSecIndex != -1)
+		{
+			time = 0;
+			SequenceIndex = 0;
+
+			_ASSERT(m_GlobalSecIndex >= 0 && m_GlobalSecIndex < GlobalLoop.size());
+			uint32 globalLoopTimeStamp = GlobalLoop[m_GlobalSecIndex].timestamp;
+			if (globalLoopTimeStamp != 0)
+				time = GlobalTime % globalLoopTimeStamp;
+		}
+
+		const std::vector<uint32>& pTimes = m_Times[SequenceIndex];
+		const std::vector<T>& pData = m_Values[SequenceIndex];
+
+		if ((GetCount() > SequenceIndex) && (pData.size() > 1) && (pTimes.size() > 1))
+		{
+			int max_time = pTimes.at(pTimes.size() - 1);
+			if (max_time > 0)
+				time %= max_time; // I think this might not be necessary?
+
+			uint32 pos = 0;
+			for (uint32 i = 0; i < pTimes.size() - 1; i++)
+			{
+				if (time >= pTimes.at(i) && time < pTimes.at(i + 1))
+				{
+					pos = i;
+					break;
+				}
+			}
+
+			uint32 t1 = pTimes.at(pos);
+			uint32 t2 = pTimes.at(pos + 1);
+			float r = static_cast<float>(time - t1) / static_cast<float>(t2 - t1);
+			switch (m_Type)
+			{
+				case Interpolations::INTERPOLATION_NONE:
+					return pData.at(pos);
+				case Interpolations::INTERPOLATION_LINEAR:
+					return interpolateLinear<T>(r, pData.at(pos), pData.at(pos + 1));
+				case Interpolations::INTERPOLATION_HERMITE:
+					return interpolateHermite<T>(r, pData.at(pos), pData.at(pos + 1), m_ValuesHermiteIn[SequenceIndex].at(pos), m_ValuesHermiteOut[SequenceIndex].at(pos));
+				default:
+					_ASSERT_EXPR(false, "M2_Animated: Unknown interpolation type.");
+			}
+		}
+		else if (!(pData.empty()))
+		{
+			return pData.at(0);
+		}
+
+		return T();
+	}
+
+private:
+	inline size_t GetCount() const
+	{
+		return m_Times.size();
+	}
+
+private:
+	Interpolations                   m_Type;
+	int16                            m_GlobalSecIndex;
+
+	std::vector<std::vector<uint32>> m_Times;
+	std::vector<std::vector<T>>      m_Values;
+	std::vector<std::vector<T>>      m_ValuesHermiteIn;
+	std::vector<std::vector<T>>      m_ValuesHermiteOut;
+};
+
+#endif
+

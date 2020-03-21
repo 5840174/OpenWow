@@ -58,11 +58,11 @@ void CSceneWoW::Initialize()
 
 	//m_Technique3D.AddPass(std::make_shared<CRenderPass_WMO2>(GetRenderDevice(), wmoListPass, shared_from_this())->CreatePipeline(GetRenderWindow()->GetRenderTarget(), &GetRenderWindow()->GetViewport()));
 	
-	//m_Technique3D.AddPass(std::make_shared<CRenderPass_M2>(GetRenderDevice(), sceneListPass, true)->CreatePipeline(GetRenderWindow()->GetRenderTarget(), &GetRenderWindow()->GetViewport()));
-	//m_Technique3D.AddPass(std::make_shared<CRenderPass_M2>(GetRenderDevice(), sceneListPass, false)->CreatePipeline(GetRenderWindow()->GetRenderTarget(), &GetRenderWindow()->GetViewport()));
+	m_Technique3D.AddPass(std::make_shared<CRenderPass_M2>(GetRenderDevice(), sceneListPass, true)->CreatePipeline(GetRenderWindow()->GetRenderTarget(), &GetRenderWindow()->GetViewport()));
+	m_Technique3D.AddPass(std::make_shared<CRenderPass_M2>(GetRenderDevice(), sceneListPass, false)->CreatePipeline(GetRenderWindow()->GetRenderTarget(), &GetRenderWindow()->GetViewport()));
 	
-	m_Technique3D.AddPass(std::make_shared<CRenderPass_M2_Instanced>(GetRenderDevice(), sceneListPass, true)->CreatePipeline(GetRenderWindow()->GetRenderTarget(), &GetRenderWindow()->GetViewport()));
-	m_Technique3D.AddPass(std::make_shared<CRenderPass_M2_Instanced>(GetRenderDevice(), sceneListPass, false)->CreatePipeline(GetRenderWindow()->GetRenderTarget(), &GetRenderWindow()->GetViewport()));
+	//m_Technique3D.AddPass(std::make_shared<CRenderPass_M2_Instanced>(GetRenderDevice(), sceneListPass, true)->CreatePipeline(GetRenderWindow()->GetRenderTarget(), &GetRenderWindow()->GetViewport()));
+	//m_Technique3D.AddPass(std::make_shared<CRenderPass_M2_Instanced>(GetRenderDevice(), sceneListPass, false)->CreatePipeline(GetRenderWindow()->GetRenderTarget(), &GetRenderWindow()->GetViewport()));
 	
 	//m_Technique3D.AddPass(std::make_shared<CDrawBoundingBoxPass>(GetRenderDevice(), shared_from_this())->CreatePipeline(GetRenderWindow()->GetRenderTarget(), &GetRenderWindow()->GetViewport()));
 	m_Technique3D.AddPass(std::make_shared<CMaterialParticlePass>(GetRenderDevice(), shared_from_this())->CreatePipeline(GetRenderWindow()->GetRenderTarget(), &GetRenderWindow()->GetViewport()));
@@ -133,9 +133,9 @@ void CSceneWoW::Load3D()
 	//wmoInstance = GetRootNode3D()->CreateSceneNode<CWMO_Base_Instance>(wmo);
 	//GetBaseManager().GetManager<ILoader>()->AddToLoadQueue(wmoInstance);
 
-	//auto m2 = GetBaseManager().GetManager<IWoWObjectsCreator>()->LoadM2(GetRenderDevice(), "World\\Expansion01\\Doodads\\Netherstorm\\BioDomes\\NS_BioDome_All_FX_South.M2");
-	//m2Instance = GetRootNode3D()->CreateSceneNode<CM2_Base_Instance>(m2);
-	//GetBaseManager().GetManager<ILoader>()->AddToLoadQueue(m2Instance);
+	auto m2 = GetBaseManager().GetManager<IWoWObjectsCreator>()->LoadM2(GetRenderDevice(), "World\\Expansion01\\Doodads\\Netherstorm\\BioDomes\\NS_BioDome_All_FX_South.M2");
+	m2Instance = GetRootNode3D()->CreateSceneNode<CM2_Base_Instance>(m2);
+	GetBaseManager().GetManager<ILoader>()->AddToLoadQueue(m2Instance);
 
 	skyManager = GetRootNode3D()->CreateSceneNode<SkyManager>(GetRenderDevice());
 	GetBaseManager().AddManager<ISkyManager>(skyManager);
@@ -198,7 +198,7 @@ void CSceneWoW::Load3D_M2s()
 
 void CSceneWoW::LoadUI()
 {
-	//return;
+#if 1
 	rootForBtns = GetRootNodeUI()->CreateSceneNode<SceneNodeUI>();
 
 	minimap = GetRootNodeUI()->CreateSceneNode<CUITextureNode>(GetRenderDevice(), glm::vec2(256, 256));
@@ -213,7 +213,7 @@ void CSceneWoW::LoadUI()
 	{
 		auto btn = rootForBtns->CreateSceneNode<CUIButtonNode>(GetRenderDevice());
 		btn->CreateDefault();
-		btn->SetText(it->Get_Name());
+		btn->SetText(it->Get_Directory());
 
 		uint32 id = it->Get_ID();
 		btn->SetOnClickCallback([this, id] (const ISceneNodeUI* Node, glm::vec2 Point) { this->TestCreateMap(id); });
@@ -227,7 +227,7 @@ void CSceneWoW::LoadUI()
 		}
 	}
 
-	
+#endif
 	m_TechniqueUI.AddPass(std::make_shared<CUIButtonPass>(GetRenderDevice(), shared_from_this())->CreatePipeline(GetRenderWindow()->GetRenderTarget(), &GetRenderWindow()->GetViewport()));
 	m_TechniqueUI.AddPass(std::make_shared<CUIFontPass>(GetRenderDevice(), shared_from_this())->CreatePipeline(GetRenderWindow()->GetRenderTarget(), &GetRenderWindow()->GetViewport()));
 	m_TechniqueUI.AddPass(std::make_shared<CUITexturePass>(GetRenderDevice(), shared_from_this())->CreatePipeline(GetRenderWindow()->GetRenderTarget(), &GetRenderWindow()->GetViewport()));

@@ -15,10 +15,10 @@ SM2_Part_Camera_Wrapper::SM2_Part_Camera_Wrapper(const CM2& M2Object, const std:
 	m_PositionBase = Fix_XZmY(M2Camera.position_base);
 	m_TargetBase = Fix_XZmY(M2Camera.target_position_base);
 
-	tPos.Initialize(M2Camera.positions, File, Fix_XZmY);
-	tTarget.Initialize(M2Camera.target_position, File, Fix_XZmY);
+	tPos.Initialize(M2Camera.positions, File, M2Object.getSkeleton().GetAnimFiles(), Fix_XZmY);
+	tTarget.Initialize(M2Camera.target_position, File, M2Object.getSkeleton().GetAnimFiles(), Fix_XZmY);
 
-	tRoll.Initialize(M2Camera.roll, File);
+	tRoll.Initialize(M2Camera.roll, File, M2Object.getSkeleton().GetAnimFiles());
 	//fov = M2Camera.fov / sqrtf(1.0f + powf(m_VideoSettings->aspectRatio, 2.0f));;
 }
 

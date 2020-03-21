@@ -21,14 +21,22 @@ struct M2TrackBase
     Interpolations						interpolation_type;
     int16								global_sequence;
 
+#if WOW_CLIENT_VERSION < WOW_WOTLK_3_3_5
     M2Array<std::pair<uint32, uint32>>	interpolation_ranges;
     M2Array<uint32>                     timestamps;
+#else
+	M2Array<M2Array<uint32_t>>          timestamps;
+#endif
 };
 
 template<typename T>
 struct M2Track : public M2TrackBase
 {
-    M2Array<T>                         values;
+#if WOW_CLIENT_VERSION < WOW_WOTLK_3_3_5
+    M2Array<T>           values;
+#else
+	M2Array<M2Array<T>>  values;
+#endif
 };
 
 template<typename T>

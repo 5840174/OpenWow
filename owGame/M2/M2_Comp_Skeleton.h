@@ -39,10 +39,15 @@ public: // Loops & Sequences
 		_ASSERT(indexIntoDirect != -1 && indexIntoDirect < static_cast<int16>(m_Sequences.size()));
 		return m_Sequences[indexIntoDirect];
 	}
+	const std::vector<std::shared_ptr<IFile>>& GetAnimFiles() const
+	{
+		return animFiles;
+	}
 private:
 	std::vector<SM2_Loop>      m_GlobalLoops;
 	std::vector<SM2_Sequence>  m_Sequences;
 	std::vector<int16>         m_SequencesLookup;
+	std::vector<std::shared_ptr<IFile>> animFiles;
 
 
 public:

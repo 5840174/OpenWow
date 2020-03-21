@@ -316,7 +316,7 @@ bool WMO_Group::Load()
 		CBgra* vertexColors = (CBgra*)buffer->getDataFromCurrent();
 
 #if WOW_CLIENT_VERSION >= WOW_WOTLK_3_3_5
-		FixColors(vertexColors, vertexColorsCount, WMOBatchs.data());
+		//FixColors(vertexColors, vertexColorsCount, WMOBatchs.data());
 #endif
 
 		// Convert

@@ -10,8 +10,12 @@ CM2_Animation::CM2_Animation(const CM2& M2Model, const SM2_Sequence& Sequence, s
 	: m_AnimID(Sequence.__animID)
 	, m_AnimationName(AnimationName + "_" + std::to_string(IndexIntoSeq))
 	, m_SequenceIndex(IndexIntoSeq)
+#if WOW_CLIENT_VERSION <= WOW_BC_2_4_3
 	, m_StartTimeStamp(Sequence.start_timestamp)
     , m_EndTimeStamp(Sequence.end_timestamp)
+#else
+	, m_Duration(Sequence.duration)
+#endif
 {
 	if (Sequence.variationNext != -1)
 	{

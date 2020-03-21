@@ -34,7 +34,7 @@ void CMapM2Instance::Initialize()
 
 void CMapM2Instance::Accept(IVisitor* visitor)
 {
-	const auto& idIter = m_AlreadyDraw.find(m_PlacementInfo.uniqueId);
+	/*const auto& idIter = m_AlreadyDraw.find(m_PlacementInfo.uniqueId);
 	if (idIter != m_AlreadyDraw.end())
 	{
 		if (idIter->second != this)
@@ -43,7 +43,7 @@ void CMapM2Instance::Accept(IVisitor* visitor)
 	else
 	{
 		m_AlreadyDraw.insert(std::make_pair(m_PlacementInfo.uniqueId, this));
-	}
+	}*/
 
 	CM2_Base_Instance::Accept(visitor);
 }

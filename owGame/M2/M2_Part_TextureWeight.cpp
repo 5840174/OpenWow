@@ -10,7 +10,7 @@
 CM2_Part_TextureWeight::CM2_Part_TextureWeight(const CM2& M2Object, const std::shared_ptr<IFile>& File, const SM2_TextureWeight& M2TextureWeight)
 	: m_M2Object(M2Object)
 {
-	m_WeightAnimated.Initialize(M2TextureWeight.weight, File);
+	m_WeightAnimated.Initialize(M2TextureWeight.weight, File, M2Object.getSkeleton().GetAnimFiles());
 }
 
 CM2_Part_TextureWeight::~CM2_Part_TextureWeight()

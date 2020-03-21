@@ -32,7 +32,20 @@ void CM2_Comp_Skeleton::Load(const SM2_Header& M2Header, const std::shared_ptr<I
 	{
 		const SM2_Sequence* Sequences = (const SM2_Sequence*)(File->getData() + M2Header.sequences.offset);
 		for (uint32 i = 0; i < M2Header.sequences.size; i++)
+		{
 			m_Sequences.push_back(Sequences[i]);
+
+			if (Sequences[i].flags.DataInM2)
+			{
+				animFiles.push_back(nullptr);
+			}
+			else
+			{
+				char buf[MAX_PATH];
+				sprintf_s(buf, "%s%04d-%02d.anim", m_M2Object.m_FileNameWithoutExt.c_str(), Sequences[i].__animID, Sequences[i].variationIndex);
+				animFiles.push_back(m_M2Object.GetBaseManager().GetManager<IFilesManager>()->Open(buf));
+			}
+		}
 	}
 
 	// Sequences Lookup
@@ -75,7 +88,7 @@ void CM2_Comp_Skeleton::Load(const SM2_Header& M2Header, const std::shared_ptr<I
 	}
 
 	// Game Bones Lookup
-	_ASSERT(M2Header.gameBonesLookup.size < 28 /* TODO: HARDCODED */);
+	//_ASSERT(M2Header.gameBonesLookup.size < 28 /* TODO: HARDCODED */);
 	if (M2Header.gameBonesLookup.size > 0)
 	{
 		const int16* GameBonesLookup = (const int16*)(File->getData() + M2Header.gameBonesLookup.offset);

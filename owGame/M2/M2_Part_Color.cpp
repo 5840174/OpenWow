@@ -10,8 +10,8 @@
 CM2_Part_Color::CM2_Part_Color(const CM2& M2Object, const std::shared_ptr<IFile>& File, const SM2_Color& M2Color)
 	: m_M2Object(M2Object)
 {
-	m_ColorAnimated.Initialize(M2Color.color, File);
-	m_AlphaAnimated.Initialize(M2Color.alpha, File);
+	m_ColorAnimated.Initialize(M2Color.color, File, M2Object.getSkeleton().GetAnimFiles());
+	m_AlphaAnimated.Initialize(M2Color.alpha, File, M2Object.getSkeleton().GetAnimFiles());
 }
 
 CM2_Part_Color::~CM2_Part_Color()
