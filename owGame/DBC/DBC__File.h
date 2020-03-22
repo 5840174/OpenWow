@@ -65,45 +65,39 @@ protected:
 	template<typename T>
 	T getValue(uint32 field) const
 	{
-		_ASSERT_EXPR(field < m_DBC_Stats->getFieldCount(), std::to_string(field).c_str());
+		_ASSERT(field < m_DBC_Stats->getFieldCount());
 		return *reinterpret_cast<T*>(const_cast<uint8*>(m_Offset) + field * 4);
 	}
 
 	// Strings
-	const char* getString(uint32 field) const
+	std::string getString(uint32 field) const
 	{
-		_ASSERT_EXPR(field < m_DBC_Stats->getFieldCount(), std::to_string(field).c_str());
+		_ASSERT(field < m_DBC_Stats->getFieldCount());
 
 		uint32_t stringOffset = getValue<uint32>(field);
 		if (stringOffset >= m_DBC_Stats->getStringSize())
-		{
 			stringOffset = 0;
-		}
 
-		_ASSERT_EXPR(stringOffset < m_DBC_Stats->getStringSize(), std::to_string(stringOffset).c_str());
-		return reinterpret_cast<char*>(const_cast<uint8*>(m_DBC_Stats->GetStringsTable()) + stringOffset);
+		_ASSERT(stringOffset < m_DBC_Stats->getStringSize());
+		return std::string(reinterpret_cast<char*>(const_cast<uint8*>(m_DBC_Stats->GetStringsTable()) + stringOffset));
 	}
 
-	std::string getLocalizedString(uint32 field, int8 locale = -1) const
+	std::wstring getLocalizedString(uint32 field, int8 locale = 0) const
 	{
-		int8 loc = locale;
-		if (locale == -1)
+		uint32 stringOffset = getValue<uint32>(field + locale);
+		if (locale == 0)
 		{
-			_ASSERT_EXPR(field < m_DBC_Stats->getFieldCount() - 16, std::to_string(field).c_str());
-			for (loc = 0; loc < 16; loc++)
+			_ASSERT(field < m_DBC_Stats->getFieldCount() - 16);
+			for (uint8 loc = 0; loc < 16u; loc++)
 			{
-				uint32 stringOffset = getValue<uint32>(field + loc);
+				stringOffset = getValue<uint32>(field + loc);
 				if (stringOffset != 0)
-				{
 					break;
-				}
 			}
 		}
-		_ASSERT_EXPR(field + loc < m_DBC_Stats->getFieldCount(), std::to_string(field).c_str());
-		uint32 stringOffset = getValue<uint32>(field + static_cast<uint32>(loc));
 
-		_ASSERT_EXPR(stringOffset < m_DBC_Stats->getStringSize(), std::to_string(stringOffset).c_str());
-		return Resources::Utf8_to_cp1251(reinterpret_cast<char*>(const_cast<uint8*>(m_DBC_Stats->GetStringsTable()) + stringOffset));
+		_ASSERT(stringOffset < m_DBC_Stats->getFieldCount());
+		return Resources::utf8_to_utf16(getString(field + stringOffset));
 	}
 
 protected:

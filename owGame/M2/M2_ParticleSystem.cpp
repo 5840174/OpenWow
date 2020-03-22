@@ -439,7 +439,7 @@ CM2_ParticleObject SM2_ParticleSystem_Wrapper::SphereGenerator_New(const CM2_Bas
 	p.currentTime = 0;
 	p.maxTime = lifespan;
 	p.origin = p.pos;
-	p.tile = m_Random.Range(0, rows * cols - 1);
+	p.tile = glm::round(m_Random.Range(0, rows * cols - 1));
 	return p;
 }
 

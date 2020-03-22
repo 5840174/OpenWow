@@ -56,7 +56,7 @@ public:
 
 		// Calculate ip and port
 
-		int32 pos = Addres.find(':');
+		size_t pos = Addres.find(':');
 		_ASSERT(pos != -1);
 		m_IPAddres = Addres.substr(0, pos);
 		m_Port = atoi(Addres.substr(pos + 1).c_str());

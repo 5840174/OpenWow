@@ -41,13 +41,13 @@ std::shared_ptr<Creature> CWorldObjectCreator::BuildCreatureFromDisplayInfo(IRen
 
 	// 2. Creature textures
 	{
-		if (strlen(rec->Get_Texture1()) != 0)
+		if (rec->Get_Texture1().length() != 0)
 			newCreature->setSpecialTexture(SM2_Texture::Type::MONSTER_1, RenderDevice.GetObjectsFactory().LoadTexture2D(m2Model->getFilePath() + rec->Get_Texture1() + ".blp"));
 
-		if (strlen(rec->Get_Texture2()) != 0)
+		if (rec->Get_Texture2().length() != 0)
 			newCreature->setSpecialTexture(SM2_Texture::Type::MONSTER_2, RenderDevice.GetObjectsFactory().LoadTexture2D(m2Model->getFilePath() + rec->Get_Texture2() + ".blp"));
 
-		if (strlen(rec->Get_Texture3()) != 0)
+		if (rec->Get_Texture3().length() != 0)
 			newCreature->setSpecialTexture(SM2_Texture::Type::MONSTER_3, RenderDevice.GetObjectsFactory().LoadTexture2D(m2Model->getFilePath() + rec->Get_Texture3() + ".blp"));
 	}
 

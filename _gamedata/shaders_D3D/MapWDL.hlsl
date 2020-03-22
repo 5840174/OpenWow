@@ -1,10 +1,5 @@
 #include "IDB_SHADER_COMMON_INCLUDE"
 
-struct VertexShaderInput
-{
-	float3 position       : POSITION;
-};
-
 
 // Uniforms
 cbuffer Material : register(b2)
@@ -12,13 +7,13 @@ cbuffer Material : register(b2)
     float4 DiffuseColor;
 };
 
-float4 VS_main(VertexShaderInput IN) : SV_POSITION
+float4 VS_main(VSInputP IN) : SV_POSITION
 {
 	const float4x4 mvp = mul(PF.Projection, PF.View);
 	return mul(mvp, float4(IN.position, 1.0f));
 }
 
-DefferedRenderPSOut PS_main(float4 PositionWVP : SV_POSITION) : SV_TARGET
+DefferedRenderPSOut PS_main(float4 PositionWVP : SV_POSITION)
 {
 	DefferedRenderPSOut OUT;
 	OUT.Diffuse = DiffuseColor;
