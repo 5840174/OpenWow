@@ -17,12 +17,12 @@ const Opcodes IgnoredOpcodes[] =
 	Opcodes::SMSG_LOGIN_VERIFY_WORLD,
 	Opcodes::SMSG_ACCOUNT_DATA_TIMES,
 	Opcodes::SMSG_FEATURE_SYSTEM_STATUS,
-	Opcodes::SMSG_BINDPOINTUPDATE,
+	//Opcodes::SMSG_BINDPOINTUPDATE,
 	Opcodes::SMSG_INITIAL_SPELLS,
 	Opcodes::SMSG_SEND_UNLEARN_SPELLS,
 	Opcodes::SMSG_ACTION_BUTTONS,
 	Opcodes::SMSG_INITIALIZE_FACTIONS,
-	Opcodes::SMSG_LOGIN_SETTIMESPEED,
+	//Opcodes::SMSG_LOGIN_SETTIMESPEED,
 	Opcodes::SMSG_SET_FORCED_REACTIONS,
 	Opcodes::SMSG_COMPRESSED_UPDATE_OBJECT,
 	Opcodes::SMSG_MONSTER_MOVE,
@@ -75,10 +75,10 @@ void CWorldSocket::OnRawData(const char * buf, size_t len)
     {
         uint8* data = bufferFromServer.getDataFromCurrentEx();
         uint8  sizeBytes = sizeof(uint16);
-        uint16 size = 0;
+        uint32 size = 0;
         uint16 cmd = 0;
 
-#if 0
+#if 1
         // 1. Decrypt size
         m_WoWCryptoUtils.DecryptRecv(data + 0, 1);
         uint8 firstByte = data[0];
@@ -122,8 +122,8 @@ void CWorldSocket::OnRawData(const char * buf, size_t len)
         }
 
         // DEBUG
-        _ASSERT(cmd < Opcodes::COUNT);
-        //Log::Green("CWorldSocket: Command '%s' (0x%X) size=%d", OpcodesNames[cmd].c_str(), cmd, size);
+        _ASSERT(cmd < Opcodes::NUM_MSG_TYPES);
+        //Log::Green("CWorldSocket: Command '%s' (0x%X) size=%d", OpcodesNames[cmd], cmd, size);
 
         // Seek to data
         bufferFromServer.seekRelative(sizeBytes /*Size*/ + sizeof(uint16) /*Opcode*/);
@@ -250,8 +250,10 @@ bool CWorldSocket::ProcessPacket(CServerPacket ServerPacket)
 void CWorldSocket::S_AuthChallenge(CByteBuffer& _buff)
 {
 	uint32 serverRandomSeed; 
+	_buff.seekRelative(4);
 	_buff.readBytes(&serverRandomSeed, 4);
-	
+	_buff.seekRelative(32);
+
 	BigNumber clientRandomSeed;
     clientRandomSeed.SetRand(4 * 8);
 
@@ -268,10 +270,15 @@ void CWorldSocket::S_AuthChallenge(CByteBuffer& _buff)
 
 	// Send auth packet to server. 
     CClientPacket p(CMSG_AUTH_SESSION);
-    p << 5875;
+    p << (uint32)12340;
     p.writeDummy(4);
     p << m_Login;
+	p.writeDummy(4);
     p.writeBytes(clientRandomSeed.AsByteArray(4).get(), 4);
+	p.writeDummy(4);
+	p.writeDummy(4);
+	p << 1;
+	p.writeDummy(8);
     p.writeBytes(uSHA.GetDigest(), SHA_DIGEST_LENGTH);
 
     // We must pass addons to connect to private servers
@@ -282,8 +289,7 @@ void CWorldSocket::S_AuthChallenge(CByteBuffer& _buff)
     SendPacket(p);
 
 	// Start encription from here
-    m_WoWCryptoUtils.SetKey(m_Key.AsByteArray().get(), 40);
-    m_WoWCryptoUtils.Init();
+    m_WoWCryptoUtils.Init(&m_Key);
 }
 
 void CWorldSocket::S_AuthResponse(CByteBuffer& _buff)

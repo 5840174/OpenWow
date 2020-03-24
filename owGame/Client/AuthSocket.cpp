@@ -88,7 +88,7 @@ namespace
 			bb << build;
 			bb.writeBytes((const uint8*)"68x", 4);   // x86
 			bb.writeBytes((const uint8*)"niW", 4);   // Win
-			bb.writeBytes((const uint8*)"SUne", 4);  // enUS
+			bb.writeBytes((const uint8*)"URur", 4);  // enUS
 			bb << (uint32)180;
 			bb << IPv4;
 			bb << (uint8)Login.size();
@@ -100,10 +100,10 @@ namespace
 		//--
 
 		uint8   gamename[4] = {};
-		const uint8 version1 = 1;
-		const uint8 version2 = 12;
-		const uint8 version3 = 1;
-		const uint16 build = 5875;
+		const uint8 version1 = 3;
+		const uint8 version2 = 3;
+		const uint8 version3 = 5;
+		const uint16 build = 12340;
 		uint32 IPv4;
 		std::string	Login;
 	};

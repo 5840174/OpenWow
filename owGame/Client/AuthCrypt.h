@@ -24,7 +24,9 @@
 #define _AUTHCRYPT_H
 
 #include "BigNumber.h"
+#include "ARC4.h"
 
+#if WOW_CLIENT_VERSION < WOW_WOTLK_3_3_5
 class AuthCrypt
 {
     public:
@@ -51,5 +53,25 @@ class AuthCrypt
         uint8 _send_i, _send_j, _recv_i, _recv_j;
         bool _initialized;
 };
+#else
+
+class AuthCrypt
+{
+public:
+	AuthCrypt();
+
+	void Init(BigNumber* K);
+	void DecryptRecv(uint8 *, size_t);
+	void EncryptSend(uint8 *, size_t);
+
+	bool IsInitialized() const { return _initialized; }
+
+private:
+	ARC4 _clientDecrypt;
+	ARC4 _serverEncrypt;
+	bool _initialized;
+};
+
+#endif
 #endif
 

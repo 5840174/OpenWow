@@ -49,8 +49,8 @@ void main_internal(int argumentCount, char* arguments[])
 	
 	std::shared_ptr<IScene> scene = std::make_shared<CSceneWoW>(*BaseManager);//BaseManager->GetManager<IScenesFactory>()->CreateScene("SceneDefault");
 
-	//WoWClient->SetScene(scene);
-	//WoWClient->BeginConnect("admin", "admin");
+	WoWClient->SetScene(scene);
+	WoWClient->BeginConnect("admin", "admin");
 
 	scene->ConnectEvents(std::dynamic_pointer_cast<IRenderWindowEvents>(firstRenderWindow));
 	scene->Initialize();

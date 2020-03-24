@@ -84,7 +84,7 @@ protected:
 
 	std::wstring getLocalizedString(uint32 field, int8 locale = 0) const
 	{
-		uint32 stringOffset = getValue<uint32>(field + locale);
+		uint32 stringOffset = field + locale;
 		if (locale == 0)
 		{
 			_ASSERT(field < m_DBC_Stats->getFieldCount() - 16);
@@ -92,7 +92,10 @@ protected:
 			{
 				stringOffset = getValue<uint32>(field + loc);
 				if (stringOffset != 0)
+				{
+					stringOffset = field + loc;
 					break;
+				}
 			}
 		}
 

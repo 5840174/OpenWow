@@ -124,7 +124,7 @@ SM2_ParticleSystem_Wrapper::SM2_ParticleSystem_Wrapper(const CM2& M2Object, cons
 		tiles.push_back(tc);
 	}
 
-	printf("Hello!");
+	//printf("Hello!");
 }
 
 SM2_ParticleSystem_Wrapper::~SM2_ParticleSystem_Wrapper()

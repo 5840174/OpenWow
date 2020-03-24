@@ -20,18 +20,16 @@ private:
 	__declspec(align(16)) struct MaterialProperties
 	{
 		MaterialProperties()
-			: gColorLight(1, 1, 1)
-			, gColorDark(1, 1, 1)
+			: gColorLight(1.0f, 1.0f, 1.0f)
+			, gColorDark(1.0f, 1.0f, 1.0f)
+			, gShallowAlpha(1.0f)
+			, gDeepAlpha(1.0f)
 		{}
-		float gShallowAlpha;
-		float gDeepAlpha;
-		glm::vec2 pad0;
-
 		glm::vec3 gColorLight;
-		float pad1;
+		float gShallowAlpha;
 
 		glm::vec3 gColorDark;
-		float pad2;
+		float gDeepAlpha;
 		//-------------------------- ( 32 bytes )
 	};
 	MaterialProperties* m_pProperties;

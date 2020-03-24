@@ -275,7 +275,7 @@ void WoWWorld::ProcessUpdatePacket(CByteBuffer& Bytes)
 			_ASSERT(unk == 0xFF);
 
 			uint64 guid;
-			Bytes >> guid;
+			Bytes.ReadPackedUInt64(guid);
 
 			std::shared_ptr<WoWObject> object = GetWoWObject(guid);
 			object->UpdateValues(Bytes);
@@ -284,7 +284,7 @@ void WoWWorld::ProcessUpdatePacket(CByteBuffer& Bytes)
 		case OBJECT_UPDATE_TYPE::UPDATETYPE_MOVEMENT:
 		{
 			uint64 guid;
-			Bytes >> guid;
+			Bytes.ReadPackedUInt64(guid);
 
 			std::shared_ptr<WoWObject> object = GetWoWObject(guid);
 			object->UpdateMovement(Bytes);

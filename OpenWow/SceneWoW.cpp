@@ -39,7 +39,7 @@ void CSceneWoW::Initialize()
 	Load3D();
 	//Load3D_M2s();
 	//TestCreateMap(MapID);
-	LoadUI();
+	//LoadUI();
 
 
 	std::shared_ptr<CSceneCreateTypedListsPass> sceneListPass = std::make_shared<CSceneCreateTypedListsPass>(GetRenderDevice(), shared_from_this());
@@ -138,6 +138,13 @@ void CSceneWoW::Load3D()
 	//auto m2 = GetBaseManager().GetManager<IWoWObjectsCreator>()->LoadM2(GetRenderDevice(), "World\\Expansion01\\Doodads\\Netherstorm\\BioDomes\\NS_BioDome_All_FX_South.M2");
 	//m2Instance = GetRootNode3D()->CreateSceneNode<CM2_Base_Instance>(m2);
 	//GetBaseManager().GetManager<ILoader>()->AddToLoadQueue(m2Instance);
+
+	auto m2 = GetBaseManager().GetManager<IWoWObjectsCreator>()->LoadM2(GetRenderDevice(), "World\\Expansion01\\Doodads\\Netherstorm\\Float_particles\\Netherstorm_Particles_Pink.mdx");
+	m2Instance = GetRootNode3D()->CreateSceneNode<CM2_Base_Instance>(m2);
+	//m2Instance->SetScale(glm::vec3(100.0f));
+	GetBaseManager().GetManager<ILoader>()->AddToLoadQueue(m2Instance);
+
+	
 
 	skyManager = GetRootNode3D()->CreateSceneNode<SkyManager>(GetRenderDevice());
 	GetBaseManager().AddManager<ISkyManager>(skyManager);

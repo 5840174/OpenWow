@@ -65,58 +65,54 @@ DefferedRenderPSOut PS_main(VertexShaderOutput IN) : SV_TARGET
 	float3 resultColor = float3(0,0,0);
 	float4 resultSpec = float4(0,0,0,0);
 	
+	const float4 sampledAlpha = AlphaMap.Sample(AlphaMapSampler, IN.texCoordDetailAndAlpha.zw);
+	
 #if _IS_NORTREND == 1
 
 	/* NORTREND */
 	float alphaSumma = 0.0;
 	if (LayersCnt >= 2)
 	{
-		float alphaCurrent = AlphaMap.Sample(AlphaMapSampler, IN.texCoordDetailAndAlpha.zw).r;
-		alphaSumma += alphaCurrent;
-		layersColor += ColorMap1.Sample(ColorMapSampler, IN.texCoordDetailAndAlpha.xy).rgb * alphaCurrent;
-		layersSpec += SpecMap1.Sample(ColorMapSampler, IN.texCoordDetailAndAlpha.xy) * alphaCurrent;
+		alphaSumma += sampledAlpha.r;
+		layersColor += ColorMap1.Sample(ColorMapSampler, IN.texCoordDetailAndAlpha.xy).rgb * sampledAlpha.r;
+		layersSpec += SpecMap1.Sample(ColorMapSampler, IN.texCoordDetailAndAlpha.xy) * sampledAlpha.r;
 	}
 	if (LayersCnt >= 3)
 	{
-		float alphaCurrent = AlphaMap.Sample(AlphaMapSampler, IN.texCoordDetailAndAlpha.zw).g;
-		alphaSumma += alphaCurrent;
-		layersColor += ColorMap2.Sample(ColorMapSampler, IN.texCoordDetailAndAlpha.xy).rgb * alphaCurrent;
-		layersSpec += SpecMap2.Sample(ColorMapSampler, IN.texCoordDetailAndAlpha.xy) * alphaCurrent;
+		alphaSumma += sampledAlpha.g;
+		layersColor += ColorMap2.Sample(ColorMapSampler, IN.texCoordDetailAndAlpha.xy).rgb * sampledAlpha.g;
+		layersSpec += SpecMap2.Sample(ColorMapSampler, IN.texCoordDetailAndAlpha.xy) * sampledAlpha.g;
 	}
 	if (LayersCnt >= 4)
 	{
-		float alphaCurrent = AlphaMap.Sample(AlphaMapSampler, IN.texCoordDetailAndAlpha.zw).b;
-		alphaSumma += alphaCurrent;
-		layersColor += ColorMap3.Sample(ColorMapSampler, IN.texCoordDetailAndAlpha.xy).rgb * alphaCurrent;
-		layersSpec += SpecMap3.Sample(ColorMapSampler, IN.texCoordDetailAndAlpha.xy) * alphaCurrent;
+		alphaSumma += sampledAlpha.b;
+		layersColor += ColorMap3.Sample(ColorMapSampler, IN.texCoordDetailAndAlpha.xy).rgb * sampledAlpha.b;
+		layersSpec += SpecMap3.Sample(ColorMapSampler, IN.texCoordDetailAndAlpha.xy) * sampledAlpha.b;
 	}
+	
 	resultColor = ColorMap0.Sample(ColorMapSampler, IN.texCoordDetailAndAlpha.xy).rgb * (1.0 - alphaSumma) + layersColor;
-	resultColor = SpecMap0.Sample(ColorMapSampler, IN.texCoordDetailAndAlpha.xy) * (1.0 - alphaSumma) + layersSpec;
+	resultSpec = SpecMap0.Sample(ColorMapSampler, IN.texCoordDetailAndAlpha.xy) * (1.0 - alphaSumma) + layersSpec;
 	
 #else
 
 	/* NOT NORTREND */
-	const float4 sampledAlpha = AlphaMap.Sample(AlphaMapSampler, IN.texCoordDetailAndAlpha.zw);
-	
 	layersColor = ColorMap0.Sample(ColorMapSampler, IN.texCoordDetailAndAlpha.xy).rgb;
 	layersSpec = SpecMap0.Sample(ColorMapSampler, IN.texCoordDetailAndAlpha.xy);
+	
 	if (LayersCnt >= 2)
 	{
-		const float alphaCurrent = sampledAlpha.r;
-		layersColor = lerp(layersColor, ColorMap1.Sample(ColorMapSampler, IN.texCoordDetailAndAlpha.xy).rgb, alphaCurrent);
-		layersSpec = lerp(layersSpec, SpecMap1.Sample(ColorMapSampler, IN.texCoordDetailAndAlpha.xy), alphaCurrent);
+		layersColor = lerp(layersColor, ColorMap1.Sample(ColorMapSampler, IN.texCoordDetailAndAlpha.xy).rgb, sampledAlpha.r);
+		layersSpec = lerp(layersSpec, SpecMap1.Sample(ColorMapSampler, IN.texCoordDetailAndAlpha.xy), sampledAlpha.r);
 	}
 	if (LayersCnt >= 3)
 	{
-		const float alphaCurrent = sampledAlpha.g;
-		layersColor = lerp(layersColor, ColorMap2.Sample(ColorMapSampler, IN.texCoordDetailAndAlpha.xy).rgb, alphaCurrent);
-		layersSpec = lerp(layersSpec, SpecMap2.Sample(ColorMapSampler, IN.texCoordDetailAndAlpha.xy), alphaCurrent);
+		layersColor = lerp(layersColor, ColorMap2.Sample(ColorMapSampler, IN.texCoordDetailAndAlpha.xy).rgb, sampledAlpha.g);
+		layersSpec = lerp(layersSpec, SpecMap2.Sample(ColorMapSampler, IN.texCoordDetailAndAlpha.xy), sampledAlpha.g);
 	}
 	if (LayersCnt >= 4)
 	{
-		const float alphaCurrent = sampledAlpha.b;
-		layersColor = lerp(layersColor, ColorMap3.Sample(ColorMapSampler, IN.texCoordDetailAndAlpha.xy).rgb, alphaCurrent);
-		layersSpec = lerp(layersSpec, SpecMap3.Sample(ColorMapSampler, IN.texCoordDetailAndAlpha.xy), alphaCurrent);
+		layersColor = lerp(layersColor, ColorMap3.Sample(ColorMapSampler, IN.texCoordDetailAndAlpha.xy).rgb, sampledAlpha.b);
+		layersSpec = lerp(layersSpec, SpecMap3.Sample(ColorMapSampler, IN.texCoordDetailAndAlpha.xy), sampledAlpha.b);
 	}
 	
 	resultColor = layersColor;
@@ -126,8 +122,7 @@ DefferedRenderPSOut PS_main(VertexShaderOutput IN) : SV_TARGET
 
 	if (ShadowMapExists)
 	{
-		float alphaShadow = sampledAlpha.a;
-		resultColor = lerp(resultColor,  float3(0.0, 0.0, 0.0), alphaShadow);
+		resultColor = lerp(resultColor,  float3(0.0, 0.0, 0.0), sampledAlpha.a);
 	}
 	
 	DefferedRenderPSOut OUT;

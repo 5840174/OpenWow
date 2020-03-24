@@ -212,7 +212,17 @@ struct SM2_Material
 		uint16 TWOSIDED : 1;
 		uint16 DEPTHTEST : 1;
 		uint16 DEPTHWRITE : 1;
-		uint16 : 11;
+		uint16 unk0x20 : 1;
+		uint16 unk0x40 : 1;
+		uint16 unk0x80 : 1;
+		uint16 unk0x100 : 1;
+		uint16 unk0x200 : 1;
+		uint16 unk0x400 : 1;
+		uint16 unk0x800 : 1;
+		uint16 unk0x1000 : 1;
+		uint16 unk0x2000 : 1;
+		uint16 unk0x4000 : 1;
+		uint16 unk0x8000 : 1;
 	} flags;
 
 	enum BlendModes : uint16

@@ -14,9 +14,43 @@ struct SM2_Header
     {
         uint32 flag_tilt_x : 1;
         uint32 flag_tilt_y : 1;
-		uint32 unk0 : 1;
+		uint32 unk0x4 : 1;
 		uint32 flag_use_texture_combiner_combos : 1;
-        uint32 : 28;
+
+		uint32 unk0x10 : 1;
+		uint32 unk0x20 : 1;
+		uint32 unk0x40 : 1;
+		uint32 unk0x80 : 1;
+
+		uint32 unk0x100 : 1;
+		uint32 unk0x200 : 1;
+		uint32 unk0x400 : 1;
+		uint32 unk0x800 : 1;
+
+		uint32 unk0x1000 : 1;
+		uint32 unk0x2000 : 1;
+		uint32 unk0x4000 : 1;
+		uint32 unk0x8000 : 1;
+
+		uint32 unk0x10000 : 1;
+		uint32 unk0x20000 : 1;
+		uint32 unk0x40000 : 1;
+		uint32 unk0x80000 : 1;
+
+		uint32 unk0x100000 : 1;
+		uint32 unk0x200000 : 1;
+		uint32 unk0x400000 : 1;
+		uint32 unk0x800000 : 1;
+
+		uint32 unk0x1000000 : 1;
+		uint32 unk0x2000000 : 1;
+		uint32 unk0x4000000 : 1;
+		uint32 unk0x8000000 : 1;
+
+		uint32 unk0x10000000 : 1;
+		uint32 unk0x20000000 : 1;
+		uint32 unk0x40000000 : 1;
+		uint32 unk0x80000000 : 1;
     }								global_flags;
     M2Array<SM2_Loop>				global_loops;					// Timestamps used in global looping animations.
 

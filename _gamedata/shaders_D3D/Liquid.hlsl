@@ -17,15 +17,11 @@ struct VertexShaderOutput
 // Uniforms
 cbuffer Material : register(b2)
 {
-	float gShallowAlpha;
-	float gDeepAlpha;
-	float2 pad0;
-	
 	float3 gColorLight;
-	float pad1;
+	float gShallowAlpha;
 	
 	float3 gColorDark;
-	float pad2;
+	float gDeepAlpha;
 };
 
 // Textures and samples
@@ -45,7 +41,7 @@ VertexShaderOutput VS_main(VertexShaderInput IN)
 
 DefferedRenderPSOut PS_main(VertexShaderOutput IN) : SV_TARGET
 {
-	float alpha = DiffuseTexture.Sample(DiffuseTextureSampler, IN.texCoord).w;
+	float alpha = DiffuseTexture.Sample(DiffuseTextureSampler, IN.texCoord.xy).w;
 
 	float4 resultColor = float4(gColorLight, (1.0 - IN.texCoord.z) * gShallowAlpha) + float4(gColorDark, IN.texCoord.z * gDeepAlpha);
 	resultColor *= (1.0 - alpha);

@@ -85,7 +85,7 @@ glm::mat4 SM2_Part_Bone_Wrapper::calcBillboardMatrix(const glm::mat4& Calculated
 		glm::vec3 vForward   = glm::vec3(VW[0][2], VW[1][2], VW[2][2]) / worldScale.z;
 		vRight *= -1.0f;
 
-		/*if (true || m_M2Bone.flags.cylindrical_billboard_lock_x) // TODO: investigate it
+		if (m_M2Bone.flags.cylindrical_billboard_lock_x) // TODO: investigate it
 		{
 			vUp = glm::vec3(VW[0][1], 0, 0) / worldScale.x;
 		}
@@ -96,7 +96,7 @@ glm::mat4 SM2_Part_Bone_Wrapper::calcBillboardMatrix(const glm::mat4& Calculated
 		else if (m_M2Bone.flags.cylindrical_billboard_lock_z)
 		{
 			vUp = glm::vec3(0, 0, VW[2][1]) / worldScale.z;
-		}*/
+		}
 
 		m[0][0] = vForward.x;
 		m[0][1] = vForward.y;

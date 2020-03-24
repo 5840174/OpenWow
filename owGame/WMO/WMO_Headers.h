@@ -22,7 +22,21 @@ struct SWMO_HeaderDef
 		uint16 skip_base_color : 1;									// do not add base (ambient) color (of MOHD) to MOCVs. apparently does more, e.g. ~!required!~ for multiple MOCVs
 		uint16 use_liquid_type_dbc_id : 1;							// use real liquid type ID from DBCs instead of local one. See MLIQ for further reference.
 		uint16 lighten_interiors : 1;								// makes iterior groups much brighter, effects MOCV rendering. Used e.g.in Stormwind for having shiny bright interiors,
-		uint16 : 12;
+
+		uint16 unk0x10 : 1;
+		uint16 unk0x20 : 1;
+		uint16 unk0x40 : 1;
+		uint16 unk0x80 : 1;
+
+		uint16 unk0x100 : 1;
+		uint16 unk0x200 : 1;
+		uint16 unk0x400 : 1;
+		uint16 unk0x800 : 1;
+
+		uint16 unk0x1000 : 1;
+		uint16 unk0x2000 : 1;
+		uint16 unk0x4000 : 1;
+		uint16 unk0x8000 : 1;
 	} flags;
 	uint16 unk0;										  // ≥ Legion (21108) includes base lod (→ numLod = 3 means '.wmo', 
 
@@ -50,10 +64,12 @@ struct SWMO_MaterialDef
 		uint32 DisableFog : 1;                 // disable fog shading (rarely used)
 		uint32 IsTwoSided : 1;                 // two-sided
 		uint32 F_EXTLIGHT : 1;                 // darkened, the intern face of windows are flagged 0x08
+
 		uint32 F_SIDN : 1;                     // (bright at night, unshaded) (used on windows and lamps in Stormwind, for example) (see emissive color)
 		uint32 F_WINDOW : 1;                   // lighting related (flag checked in CMapObj::UpdateSceneMaterials)
 		uint32 TextureClampS : 1;              // tex clamp S (force this material's m_DiffuseTextures to use clamp s addressing)
 		uint32 TextureClampT : 1;              // tex clamp T (force this material's m_DiffuseTextures to use clamp t addressing)
+
 		uint32 : 24;
 	} flags;
 
@@ -61,12 +77,9 @@ struct SWMO_MaterialDef
 	uint32 blendMode;
 
 	uint32 diffuseNameIndex;					// offset into MOTX
-
-	CBgra emissive_color;						// emissive color; see below (emissive color)
-	CBgra sidn_emissive_color;					// set at runtime; gets sidn-manipulated emissive color; see below (emissive color)
-
+	CBgra sidnColor;						    // The sidnColor CImVector at offset 0x10 is used with the SIDN (self-illuminated day night) scalar from CDayNightObject to light exterior window glows (see flag 0x10 above).
+	CBgra frameSidnColor;					    // set at runtime; gets sidn-manipulated emissive color; see below (emissive color)
 	uint32 envNameIndex;					    // offset into MOTX
-
 	uint32 diffColor;
 
 	FOREIGN_KEY_ID(uint32, DBC_TerrainType, ground_type);

@@ -39,9 +39,11 @@ struct SM2_SkinBatch
 		uint8 InvertSomething : 1;
 		uint8 Transform : 1;
 		uint8 Projected : 1;
-		uint8 unk0 : 1;
+		uint8 unk0x8 : 1;
 		uint8 TextureStatic : 1;
-		uint8 : 3;
+		uint8 unk0x20 : 1;
+		uint8 unk0x40 : 1;
+		uint8 unk0x80 : 1;
 	} flags;
 
 	int8 priorityPlane;

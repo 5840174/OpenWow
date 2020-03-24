@@ -14,12 +14,6 @@ public:
     Opcodes GetPacketOpcode() const;
     bool    IsComplete() const;
 
-	// PackedGUID
-	void ReadPackedUInt64(uint64& guid);
-	void ReadPackedUInt64(uint8 mask, uint64& value);
-	void AppendPackedUInt64(uint64 guid);
-	size_t PackUInt64(uint64 value, uint8* mask, uint8* result);
-
 private:
     uint16  m_Size;
     Opcodes m_Opcode;
