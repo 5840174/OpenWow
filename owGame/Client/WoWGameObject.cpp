@@ -7,8 +7,12 @@
 #include "World/WorldObjectsCreator.h"
 #include "..\World\GameObject\GameObject.h"
 
-WoWGameObject::WoWGameObject()
+WoWGameObject::WoWGameObject(ObjectGuid Guid)
+	: WorldObject(Guid)
 {
+	m_ObjectType |= TYPEMASK_GAMEOBJECT;
+	m_ObjectTypeId = TYPEID_GAMEOBJECT;
+	m_valuesCount = GAMEOBJECT_END;
 }
 
 WoWGameObject::~WoWGameObject()
@@ -20,11 +24,10 @@ WoWGameObject::~WoWGameObject()
 //
 // Protected
 //
-std::shared_ptr<WoWGameObject> WoWGameObject::Create(IBaseManager& BaseManager, IRenderDevice& RenderDevice, IScene * Scene, uint64 guid)
+std::shared_ptr<WoWGameObject> WoWGameObject::Create(IBaseManager& BaseManager, IRenderDevice& RenderDevice, IScene * Scene, ObjectGuid Guid)
 {
-	std::shared_ptr<WoWGameObject> thisObj = Scene->GetRootNode3D()->CreateSceneNode<WoWGameObject>();
-	thisObj->InitInternal(guid, TYPEMASK_GAMEOBJECT, ObjectTypeID::TYPEID_GAMEOBJECT);
-	thisObj->m_valuesCount = GAMEOBJECT_END;
+	std::shared_ptr<WoWGameObject> thisObj = Scene->GetRootNode3D()->CreateSceneNode<WoWGameObject>(Guid);
+	Log::Green("WoWGameObject created!");
 
 	// For test only
 	BoundingBox bbox(glm::vec3(-2.0f), glm::vec3(2.0f));

@@ -32,11 +32,11 @@ public:
 protected:
 	void ProcessUpdatePacket(CByteBuffer& Packet);
 
-	std::shared_ptr<WoWObject> CreateObjectByType(uint64 guid, ObjectTypeID ObjectTypeID);
-	std::shared_ptr<WoWObject> GetWoWObject(uint64 Guid);
+	std::shared_ptr<WoWObject> CreateObjectByType(ObjectGuid guid, ObjectTypeID ObjectTypeID);
+	std::shared_ptr<WoWObject> GetWoWObject(ObjectGuid Guid);
 
 protected: // Cache
-	void SendQueryResponce(uint64 guid);
+	void SendQueryResponce(ObjectGuid Guid);
 	bool ProcessQueryResponse(Opcodes Opcode, CServerPacket& Bytes);
 
 
@@ -47,7 +47,7 @@ private: // Technical stuff
 
 private: // Game objects and entities
 	
-	std::unordered_map<uint64, std::shared_ptr<WoWObject>> m_Objects;
+	std::unordered_map<ObjectGuid, std::shared_ptr<WoWObject>> m_Objects;
 
 
 private: // Cache

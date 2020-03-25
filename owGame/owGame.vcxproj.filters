@@ -157,6 +157,9 @@
     <Filter Include="M2\Parts\Parts_Skeleton">
       <UniqueIdentifier>{0bfa29b5-d676-4e47-a3b2-0c3dbaaa6e25}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Client\Objects\Helpers">
+      <UniqueIdentifier>{3dec4fb3-7334-4f5e-b746-18b6b9bb4f97}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -512,6 +515,9 @@
     </ClCompile>
     <ClCompile Include="WMO\WMO_Group.cpp">
       <Filter>WMO</Filter>
+    </ClCompile>
+    <ClCompile Include="Client\ObjectGUID.cpp">
+      <Filter>Client</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -989,9 +995,6 @@
     <ClInclude Include="DBC\Tables\DBC_Item.h">
       <Filter>DBC\Tables\Item</Filter>
     </ClInclude>
-    <ClInclude Include="Client\ObjectDefines.h">
-      <Filter>Client</Filter>
-    </ClInclude>
     <ClInclude Include="WMO\WMO_Portal_Instance.h">
       <Filter>WMO\Instances</Filter>
     </ClInclude>
@@ -1075,6 +1078,15 @@
     </ClInclude>
     <ClInclude Include="WMO\WMO_Group.h">
       <Filter>WMO</Filter>
+    </ClInclude>
+    <ClInclude Include="Client\MovementTypedefs.h">
+      <Filter>Client\Objects\Helpers</Filter>
+    </ClInclude>
+    <ClInclude Include="Client\MoveSplineFlag.h">
+      <Filter>Client\Objects\Helpers</Filter>
+    </ClInclude>
+    <ClInclude Include="Client\ObjectGUID.h">
+      <Filter>Client</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

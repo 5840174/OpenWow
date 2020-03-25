@@ -26,6 +26,14 @@
 class UpdateMask
 {
     public:
+		/// Type representing how client reads update mask
+		typedef uint32 ClientUpdateMaskType;
+
+		enum UpdateMaskCount
+		{
+			CLIENT_UPDATE_MASK_BITS = sizeof(ClientUpdateMaskType) * 8,
+		};
+
         UpdateMask( ) : mCount( 0 ), mBlocks( 0 ), mUpdateMask( 0 ) { }
         UpdateMask( const UpdateMask& mask ) : mUpdateMask( 0 ) { *this = mask; }
 
@@ -61,10 +69,10 @@ class UpdateMask
                 delete [] mUpdateMask;
 
             mCount = valuesCount;
-            mBlocks = (valuesCount + 31) / 32;
+			mBlocks = (valuesCount + CLIENT_UPDATE_MASK_BITS - 1) / CLIENT_UPDATE_MASK_BITS;
 
-            mUpdateMask = new uint32[mBlocks];
-            memset(mUpdateMask, 0, mBlocks << 2);
+			mUpdateMask = new uint8[mBlocks * CLIENT_UPDATE_MASK_BITS];
+			memset(mUpdateMask, 0, sizeof(uint8) * mBlocks * CLIENT_UPDATE_MASK_BITS);
         }
 
         inline void Clear()
@@ -120,7 +128,7 @@ class UpdateMask
     private:
         uint32 mCount;
         uint32 mBlocks;
-        uint32 *mUpdateMask;
+		uint8 *mUpdateMask;
 };
 #endif
 

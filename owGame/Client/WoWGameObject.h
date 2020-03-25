@@ -55,11 +55,11 @@ class ZN_API WoWGameObject
 	: public WorldObject
 {
 public:
-	WoWGameObject();
+	WoWGameObject(ObjectGuid Guid);
 	virtual ~WoWGameObject();
 
 public:
-	static std::shared_ptr<WoWGameObject> Create(IBaseManager& BaseManager, IRenderDevice& RenderDevice, IScene * Scene, uint64 guid);
+	static std::shared_ptr<WoWGameObject> Create(IBaseManager& BaseManager, IRenderDevice& RenderDevice, IScene * Scene, ObjectGuid Guid);
 	virtual void AfterCreate(IBaseManager& BaseManager, IRenderDevice& RenderDevice, IScene * Scene);
 
 private:

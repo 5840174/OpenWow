@@ -38,6 +38,7 @@
     <ClCompile Include="Client\ARC4.cpp" />
     <ClCompile Include="Client\AuthCrypt.cpp" />
     <ClCompile Include="Client\AuthSocket.cpp" />
+    <ClCompile Include="Client\ObjectGUID.cpp" />
     <ClCompile Include="Client\WoWBag.cpp" />
     <ClCompile Include="Client\BigNumber.cpp" />
     <ClCompile Include="Client\Client.cpp" />
@@ -168,6 +169,9 @@
     <ClInclude Include="Client\AuthCodes.h" />
     <ClInclude Include="Client\AuthCrypt.h" />
     <ClInclude Include="Client\AuthSocket.h" />
+    <ClInclude Include="Client\MovementTypedefs.h" />
+    <ClInclude Include="Client\MoveSplineFlag.h" />
+    <ClInclude Include="Client\ObjectGUID.h" />
     <ClInclude Include="Client\WoWBag.h" />
     <ClInclude Include="Client\BigNumber.h" />
     <ClInclude Include="Client\Client.h" />
@@ -177,7 +181,6 @@
     <ClInclude Include="Client\HMACSHA1.h" />
     <ClInclude Include="Client\WoWItem.h" />
     <ClInclude Include="Client\WoWObject.h" />
-    <ClInclude Include="Client\ObjectDefines.h" />
     <ClInclude Include="Client\Opcodes.h" />
     <ClInclude Include="Client\OpcodesNames.h" />
     <ClInclude Include="Client\OpenSSLCrypto.h" />

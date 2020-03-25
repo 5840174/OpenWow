@@ -15,7 +15,7 @@
 #include "../owGame/DBC/DBC__Storage.h"
 
 // Client
-#include "../owGame/Client/ObjectDefines.h"
+#include "../owGame/Client/ObjectGUID.h"
 #include "../owGame/Client/Client.h"
 
 // Liquid

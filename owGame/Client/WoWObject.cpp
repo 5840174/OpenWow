@@ -6,36 +6,169 @@
 // Additional
 #include "WoWUnit.h"
 
-WoWObject::WoWObject()
-	: m_GUID(0)
-	, m_ObjectType(ObjectTypeMask::TYPEMASK_OBJECT)
-{}
+WoWObject::WoWObject(ObjectGuid Guid)
+	: m_GUID(Guid)
+	, m_ObjectType(0)
+	, m_ObjectTypeId(TYPEID_OBJECT)
+{
+	m_ObjectType |= TYPEMASK_OBJECT;
+	m_ObjectTypeId = TYPEID_OBJECT;
+	m_valuesCount = OBJECT_END;
+}
 
 WoWObject::~WoWObject()
 {}
 
-void WoWObject::UpdateMovement(CByteBuffer & Bytes)
+void WoWObject::ProcessMovementUpdate(CByteBuffer& Bytes)
 {
-	Bytes >> (uint8)flags;
+	WoWUnit* unit = nullptr;
+	WorldObject* object = nullptr;
 
-	// INHERITANCE
-	UpdateMovementData(Bytes);
-	// INHERITANCE
+	if (IsType(TYPEMASK_UNIT))
+		unit = (WoWUnit*)this;
+	else
+		object = (WorldObject*)this;
 
-	uint32 unk0;
-	Bytes.read(&unk0); //(uint32)0x1;
-	_ASSERT(unk0 == 0x1);
+	uint16 updateFlags;
+	Bytes >> (uint16)updateFlags;
 
-	if (GUID_HIPART(m_GUID) == HIGHGUID_TRANSPORT)
+	if (updateFlags & UPDATEFLAG_LIVING)
 	{
-		Bytes >> (uint32)msTime;
+		unit->ProcessMovementPacket(Bytes);
+
+		unit->SetSpeed(MOVE_WALK, Bytes.ReadFloat());
+		unit->SetSpeed(MOVE_RUN, Bytes.ReadFloat());
+		unit->SetSpeed(MOVE_RUN_BACK, Bytes.ReadFloat());
+		unit->SetSpeed(MOVE_SWIM, Bytes.ReadFloat());
+		unit->SetSpeed(MOVE_SWIM_BACK, Bytes.ReadFloat());
+		unit->SetSpeed(MOVE_FLIGHT, Bytes.ReadFloat());
+		unit->SetSpeed(MOVE_FLIGHT_BACK, Bytes.ReadFloat());
+		unit->SetSpeed(MOVE_TURN_RATE, Bytes.ReadFloat());
+		unit->SetSpeed(MOVE_PITCH_RATE, Bytes.ReadFloat());
+
+		if (unit->GetMovementFlags() & MOVEMENTFLAG_SPLINE_ENABLED)
+		{
+			Movement::MoveSplineFlag splineFlags;
+			splineFlags.raw() = Bytes.ReadUInt32();
+
+			if (splineFlags.final_angle)
+			{
+				Bytes.seekRelative(4); // float
+			}
+			else if (splineFlags.final_target)
+			{
+				Bytes.seekRelative(8); // uint64
+			}
+			else if (splineFlags.final_point)
+			{
+				Bytes.seekRelative(12);
+			}
+
+			Bytes.seekRelative(12);
+			//Bytes << move_spline.timePassed();
+			//Bytes << move_spline.Duration();
+			//Bytes << move_spline.GetId();
+
+			Bytes.seekRelative(8);
+			//Bytes << float(1.f);                             // splineInfo.duration_mod; added in 3.1
+			//Bytes << float(1.f);                             // splineInfo.duration_mod_next; added in 3.1
+
+			Bytes.seekRelative(8);
+			//Bytes << move_spline.vertical_acceleration;      // added in 3.1
+			//Bytes << move_spline.effect_start_time;          // added in 3.1
+
+			uint32 nodes;
+			Bytes >> nodes;
+			for (size_t i = 0; i < nodes; i++)
+			{
+				Bytes.seekRelative(12);
+			}
+
+			Bytes.seekRelative(1 + 12);
+			//Bytes << uint8(move_spline.spline.mode());       // added in 3.1
+			//Bytes << (move_spline.isCyclic() ? G3D::Vector3::zero() : move_spline.FinalDestination());
+		}
+	}
+	else
+	{
+		if (updateFlags & UPDATEFLAG_POSITION)
+		{
+			uint64 transportGuid;
+			Bytes.ReadPackedUInt64(transportGuid);
+
+			object->PositionX = Bytes.ReadFloat();
+			object->PositionY = Bytes.ReadFloat();
+			object->PositionZ = Bytes.ReadFloat();
+
+			if (transportGuid != 0)
+			{
+				Bytes.seekRelative(12);
+			}
+			else
+			{
+				object->PositionX = Bytes.ReadFloat();
+				object->PositionY = Bytes.ReadFloat();
+				object->PositionZ = Bytes.ReadFloat();
+			}
+
+			object->Orientation = Bytes.ReadFloat();
+
+			if (GetObjectTypeID() == ObjectTypeID::TYPEID_CORPSE)
+			{
+				object->Orientation = Bytes.ReadFloat();
+			}
+			else
+			{
+				Bytes.seekRelative(4);
+			}
+		}
+		else
+		{
+			if (updateFlags & UPDATEFLAG_STATIONARY_POSITION)
+			{
+				object->PositionX = Bytes.ReadFloat();
+				object->PositionY = Bytes.ReadFloat();
+				object->PositionZ = Bytes.ReadFloat();
+				object->Orientation = Bytes.ReadFloat();
+			}
+		}
 	}
 
-	if (GUID_HIPART(m_GUID) == HIGHGUID_PLAYER_CORPSE)
+	// 0x8
+	if (updateFlags & UPDATEFLAG_UNKNOWN)
 	{
-		uint32 unk1;
-		Bytes.read(&unk1); //(uint32)0xBD38BA14;
-		_ASSERT(unk1 == 0xBD38BA14);
+		Bytes.seekRelative(4);
+	}
+
+	// 0x10
+	if (updateFlags & UPDATEFLAG_LOWGUID)
+	{
+		Bytes.seekRelative(4);
+	}
+
+	// 0x4
+	if (updateFlags & UPDATEFLAG_HAS_TARGET)
+	{
+		uint64 victimGuid;
+		Bytes.ReadPackedUInt64(victimGuid);
+	}
+
+	// 0x2
+	if (updateFlags & UPDATEFLAG_TRANSPORT)
+	{
+		Bytes.seekRelative(4);
+	}
+
+	// 0x80
+	if (updateFlags & UPDATEFLAG_VEHICLE)
+	{
+		Bytes.seekRelative(8);
+	}
+
+	// 0x200
+	if (updateFlags & UPDATEFLAG_ROTATION)
+	{
+		Bytes.seekRelative(8);
 	}
 }
 
@@ -55,29 +188,15 @@ void WoWObject::UpdateValues(CByteBuffer& Bytes)
 			Bytes >> m_uint32Values[index];
 }
 
-void WoWObject::UpdateMovementData(CByteBuffer & Bytes)
-{
-	// Do nothing
-}
-
 
 
 //
 // Protected
 //
-std::shared_ptr<WoWObject> WoWObject::Create(IBaseManager& BaseManager, IRenderDevice& RenderDevice, IScene * Scene, uint64 guid)
+std::shared_ptr<WoWObject> WoWObject::Create(IBaseManager& BaseManager, IRenderDevice& RenderDevice, IScene * Scene, ObjectGuid Guid)
 {
-	std::shared_ptr<WoWObject> thisObj = std::make_shared<WoWObject>();
-	thisObj->InitInternal(guid, TYPEMASK_OBJECT, ObjectTypeID::TYPEID_OBJECT);
-	thisObj->m_valuesCount = OBJECT_END;
+	std::shared_ptr<WoWObject> thisObj = std::make_shared<WoWObject>(Guid);
 	return thisObj;
-}
-
-void WoWObject::InitInternal(uint64 guid, uint16 ObjectType, ObjectTypeID ObjectTypeID)
-{
-	m_GUID = guid;
-	m_ObjectType = ObjectType;
-	m_ObjectTypeId = ObjectTypeID;
 }
 
 void WoWObject::AfterCreate(IBaseManager& BaseManager, IRenderDevice& RenderDevice, IScene * Scene)

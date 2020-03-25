@@ -1,6 +1,6 @@
 #pragma once
 
-#include "ObjectDefines.h"
+#include "ObjectGUID.h"
 #include "UpdateMask.h"
 #include "UpdateFields.h"
 
@@ -16,19 +16,6 @@ enum ZN_API ObjectTypeMask : uint16
 	TYPEMASK_CORPSE = 0x0080,
 	TYPEMASK_AIGROUP = 0x0100,
 	TYPEMASK_AREATRIGGER = 0x0200
-};
-
-
-enum class ZN_API ObjectTypeID : uint8
-{
-	TYPEID_OBJECT = 0,        // WoWObject
-	TYPEID_ITEM = 1,
-	TYPEID_CONTAINER = 2,
-	TYPEID_UNIT = 3,          // WoWUnit
-	TYPEID_PLAYER = 4,        // WoWPlayer
-	TYPEID_GAMEOBJECT = 5,    // WoWGameObject
-	TYPEID_DYNAMICOBJECT = 6,
-	TYPEID_CORPSE = 7
 };
 
 enum class ZN_API OBJECT_UPDATE_TYPE : uint8
@@ -74,52 +61,26 @@ enum CreatureFlagsExtra
 	CREATURE_FLAG_EXTRA_NO_CRIT = 0x00020000,       // creature can't do critical strikes
 };
 
-inline ObjectTypeID GuidHigh2TypeId(uint32 guid_hi)
-{
-	switch (guid_hi)
-	{
-		case HIGHGUID_ITEM:         
-			return ObjectTypeID::TYPEID_ITEM;
-		//case HIGHGUID_CONTAINER:    
-		//	return TYPEID_CONTAINER; HIGHGUID_CONTAINER==HIGHGUID_ITEM currently
-		case HIGHGUID_UNIT:         
-			return ObjectTypeID::TYPEID_UNIT;
-		case HIGHGUID_PET:          
-			return ObjectTypeID::TYPEID_UNIT;
-		case HIGHGUID_PLAYER:       
-			return ObjectTypeID::TYPEID_PLAYER;
-		case HIGHGUID_GAMEOBJECT:   
-			return ObjectTypeID::TYPEID_GAMEOBJECT;
-		case HIGHGUID_DYNAMICOBJECT:
-			return ObjectTypeID::TYPEID_DYNAMICOBJECT;
-		case HIGHGUID_CORPSE:       
-			return ObjectTypeID::TYPEID_CORPSE;
-		case HIGHGUID_MO_TRANSPORT: 
-			return ObjectTypeID::TYPEID_GAMEOBJECT;
-	}
-	return ObjectTypeID::TYPEID_OBJECT;                                              // unknown
-}
-
 class ZN_API WoWObject
 {
 public:
 
 public:
-	WoWObject();
+	WoWObject(ObjectGuid Guid);
 	virtual ~WoWObject();
 
 	uint64 GetGUID() const { return m_GUID; }
 	uint16 GetObjectType() const { return m_ObjectType; }
+	bool IsType(uint16 mask) const { return (mask & m_ObjectType) != 0; }
 	ObjectTypeID GetObjectTypeID() const { return m_ObjectTypeId; }
 
-	void UpdateMovement(CByteBuffer& Bytes);
+	void ProcessMovementUpdate(CByteBuffer& Bytes);
 	void UpdateValues(CByteBuffer& Bytes);
-	virtual void UpdateMovementData(CByteBuffer& Bytes);
 
+	
 
 public: // Creation
-	static std::shared_ptr<WoWObject> Create(IBaseManager& BaseManager, IRenderDevice& RenderDevice, IScene* Scene, uint64 guid);
-	virtual void InitInternal(uint64 guid, uint16 ObjectType, ObjectTypeID ObjectTypeID);
+	static std::shared_ptr<WoWObject> Create(IBaseManager& BaseManager, IRenderDevice& RenderDevice, IScene* Scene, ObjectGuid Guid);
 	virtual void AfterCreate(IBaseManager& BaseManager, IRenderDevice& RenderDevice, IScene * Scene);
 
 public: // Values system
@@ -152,8 +113,8 @@ protected:
 	uint32 msTime;
 	uint8 flags;
 
-private:
-	uint64 m_GUID;
+protected:
+	ObjectGuid m_GUID;
 	uint16 m_ObjectType;
 	ObjectTypeID m_ObjectTypeId;
 };

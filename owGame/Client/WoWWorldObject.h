@@ -8,10 +8,10 @@ class ZN_API WorldObject
 	, public WorldLocation
 {
 public:
-	WorldObject();
+	WorldObject(ObjectGuid Guid);
 	virtual ~WorldObject();
 
-	virtual void UpdateMovementData(CByteBuffer& Bytes) override; // For inheritance
+	//virtual void UpdateMovementData(CByteBuffer& Bytes) override; // For inheritance
 
 protected:
 	void UpdateMovementDataInternal(CByteBuffer& Bytes);

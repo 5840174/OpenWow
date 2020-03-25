@@ -3,19 +3,14 @@
 // General
 #include "WoWWorldObject.h"
 
-WorldObject::WorldObject()
+WorldObject::WorldObject(ObjectGuid Guid)
+	: WoWObject(Guid)
 {
 }
 
 WorldObject::~WorldObject()
 {
 }
-
-void WorldObject::UpdateMovementData(CByteBuffer & Bytes)
-{
-	UpdateMovementDataInternal(Bytes);
-}
-
 
 
 //

@@ -123,8 +123,8 @@ void WoWWorld::S_SMSG_UPDATE_OBJECT(CServerPacket& Buffer)
 
 void WoWWorld::S_SMSG_MONSTER_MOVE(CServerPacket & Buffer)
 {
-	uint64 guid;
-	Buffer.ReadPackedUInt64(guid);
+	ObjectGuid guid;
+	Buffer >> guid;
 
 	//Log::Green("GUID is '%s'", GetLogNameForGuid(guid));
 
@@ -256,8 +256,8 @@ void WoWWorld::ProcessUpdatePacket(CByteBuffer& Bytes)
 	uint32 BlocksCount;
 	Bytes >> BlocksCount;
 
-	uint8  HasTransport;
-	Bytes >> HasTransport;
+	//uint8  HasTransport;
+	//Bytes >> HasTransport;
 
 	for (uint32 i = 0u; i < BlocksCount; i++)
 	{
@@ -270,12 +270,10 @@ void WoWWorld::ProcessUpdatePacket(CByteBuffer& Bytes)
 		{
 		case OBJECT_UPDATE_TYPE::UPDATETYPE_VALUES:
 		{
-			uint8 unk;
-			Bytes.read(&unk); // 0xFF
-			_ASSERT(unk == 0xFF);
+			uint64 guidValue;
+			Bytes.ReadPackedUInt64(guidValue);
 
-			uint64 guid;
-			Bytes.ReadPackedUInt64(guid);
+			ObjectGuid guid(guidValue);
 
 			std::shared_ptr<WoWObject> object = GetWoWObject(guid);
 			object->UpdateValues(Bytes);
@@ -283,29 +281,29 @@ void WoWWorld::ProcessUpdatePacket(CByteBuffer& Bytes)
 		break;
 		case OBJECT_UPDATE_TYPE::UPDATETYPE_MOVEMENT:
 		{
-			uint64 guid;
-			Bytes.ReadPackedUInt64(guid);
+			uint64 guidValue;
+			Bytes.ReadPackedUInt64(guidValue);
+
+			ObjectGuid guid(guidValue);
 
 			std::shared_ptr<WoWObject> object = GetWoWObject(guid);
-			object->UpdateMovement(Bytes);
+			object->ProcessMovementUpdate(Bytes);
 			Log::Warn("UPDATETYPE_MOVEMENT");
 		}
 		break;
 		case OBJECT_UPDATE_TYPE::UPDATETYPE_CREATE_OBJECT:
 		case OBJECT_UPDATE_TYPE::UPDATETYPE_CREATE_OBJECT2:
 		{
-			uint8 unk;
-			Bytes.read(&unk); // 0xFF
-			_ASSERT(unk == 0xFF);
+			uint64 guidValue;
+			Bytes.ReadPackedUInt64(guidValue);
 
-			uint64 guid;
-			Bytes >> guid;
+			ObjectGuid guid(guidValue);
 
 			ObjectTypeID typeID;
 			Bytes.read(&typeID);
 
 			std::shared_ptr<WoWObject> object = GetWoWObject(guid);
-			object->UpdateMovement(Bytes);
+			object->ProcessMovementUpdate(Bytes);
 			object->UpdateValues(Bytes);
 			object->AfterCreate(m_BaseManager, m_RenderDevice, m_Scene);
 
@@ -331,11 +329,12 @@ void WoWWorld::ProcessUpdatePacket(CByteBuffer& Bytes)
 		break;
 		default:
 			Log::Error("Unknown update type %d", updateType);
+			_ASSERT(false);
 		}
 	}
 }
 
-std::shared_ptr<WoWObject> WoWWorld::CreateObjectByType(uint64 guid, ObjectTypeID ObjectTypeID)
+std::shared_ptr<WoWObject> WoWWorld::CreateObjectByType(ObjectGuid guid, ObjectTypeID ObjectTypeID)
 {
 	SendQueryResponce(guid);
 
@@ -372,16 +371,15 @@ std::shared_ptr<WoWObject> WoWWorld::CreateObjectByType(uint64 guid, ObjectTypeI
 	return nullptr;
 }
 
-std::shared_ptr<WoWObject> WoWWorld::GetWoWObject(uint64 Guid)
+std::shared_ptr<WoWObject> WoWWorld::GetWoWObject(ObjectGuid Guid)
 {
 	const auto& objIterator = m_Objects.find(Guid);
 	if (objIterator != m_Objects.end())
 		return objIterator->second;
 
-	uint32 highGuid = GUID_HIPART(Guid);
-	//const char* name = GetLogNameForGuid(Guid);
-	//Log::Info("WoWObject '%s' created.", name);
-	ObjectTypeID typeID = GuidHigh2TypeId(highGuid);
+	HighGuid highGuid = Guid.GetHigh();
+	ObjectTypeID typeID = Guid.GetTypeId();
+
 	_ASSERT(typeID != ObjectTypeID::TYPEID_OBJECT);
 	std::shared_ptr<WoWObject> object = CreateObjectByType(Guid, typeID);
 	m_Objects[Guid] = object;
@@ -393,21 +391,21 @@ std::shared_ptr<WoWObject> WoWWorld::GetWoWObject(uint64 Guid)
 //
 // Cache
 //
-void WoWWorld::SendQueryResponce(uint64 guid)
+void WoWWorld::SendQueryResponce(ObjectGuid Guid)
 {
-	uint32 hiGuid = GUID_HIPART(guid);
-	uint32 enGuid = GUID_ENPART(guid);
+	HighGuid hiGuid = Guid.GetHigh();
+	ObjectGuid::LowType enGuid = Guid.GetEntry();
 
 	switch (hiGuid)
 	{
-	case HIGHGUID_GAMEOBJECT:
+	case HighGuid::GameObject:
 	{
 		if (m_CacheGameObjects.find(enGuid) != m_CacheGameObjects.end())
 			return;
 
 		CClientPacket queryInfo(CMSG_GAMEOBJECT_QUERY);
 		queryInfo << enGuid;
-		queryInfo << guid;
+		queryInfo << Guid;
 		SendPacket(queryInfo);
 
 		// Add to cache, to prevent next requests
@@ -415,14 +413,14 @@ void WoWWorld::SendQueryResponce(uint64 guid)
 	}
 	break;
 
-	case HIGHGUID_UNIT:
+	case HighGuid::Unit:
 	{
 		if (m_CacheCreatures.find(enGuid) != m_CacheCreatures.end())
 			return;
 
 		CClientPacket queryInfo(CMSG_CREATURE_QUERY);
 		queryInfo << enGuid;
-		queryInfo << guid;
+		queryInfo << Guid;
 		SendPacket(queryInfo);
 
 		// Add to cache, to prevent next requests

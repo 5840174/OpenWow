@@ -6,13 +6,11 @@ class ZN_API WoWPlayer
 	: public WoWUnit
 {
 public:
-	WoWPlayer();
+	WoWPlayer(ObjectGuid Guid);
 	virtual ~WoWPlayer();
 
-	void UpdateMovementData(CByteBuffer& Bytes) override final; // For inheritance
-
 public:
-	static std::shared_ptr<WoWPlayer> Create(IBaseManager& BaseManager, IRenderDevice& RenderDevice, IScene * Scene, uint64 guid);
+	static std::shared_ptr<WoWPlayer> Create(IBaseManager& BaseManager, IRenderDevice& RenderDevice, IScene * Scene, ObjectGuid Guid);
 
 private:
 	float transportX;
