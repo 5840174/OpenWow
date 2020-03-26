@@ -177,12 +177,15 @@ void CWorldSocket::Packet2(CByteBuffer& _buf)
             needToRead = incomingBufferSize;
         }
 
-        // Fill data
-        _ASSERT(_buf.getPos() + needToRead <= _buf.getSize());
-        m_CurrentPacket->writeBytes(_buf.getDataFromCurrent(), needToRead);
+		if (needToRead > 0)
+		{
+			// Fill data
+			_ASSERT(_buf.getPos() + needToRead <= _buf.getSize());
+			m_CurrentPacket->writeBytes(_buf.getDataFromCurrent(), needToRead);
 
-        _buf.seekRelative(needToRead);
-        //Log::Info("Packet[%s] readed '%d' of %d'.", OpcodesNames[m_CurrentPacket->GetPacketOpcode()].c_str(), m_CurrentPacket->getSize(), m_CurrentPacket->GetPacketSize());
+			_buf.seekRelative(needToRead);
+			//Log::Info("Packet[%s] readed '%d' of %d'.", OpcodesNames[m_CurrentPacket->GetPacketOpcode()].c_str(), m_CurrentPacket->getSize(), m_CurrentPacket->GetPacketSize());
+		}
     }
 
     // Check if we read full packet

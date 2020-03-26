@@ -33,7 +33,7 @@ WoWWorld::WoWWorld(IBaseManager& BaseManager, IRenderDevice& RenderDevice, IScen
 	AddHandler(SMSG_LOGIN_VERIFY_WORLD, std::bind(&WoWWorld::S_SMSG_LOGIN_VERIFY_WORLD, this, std::placeholders::_1));
 	AddHandler(SMSG_COMPRESSED_UPDATE_OBJECT, std::bind(&WoWWorld::S_SMSG_COMPRESSED_UPDATE_OBJECT, this, std::placeholders::_1));
 	AddHandler(SMSG_UPDATE_OBJECT, std::bind(&WoWWorld::S_SMSG_UPDATE_OBJECT, this, std::placeholders::_1));
-	AddHandler(SMSG_MONSTER_MOVE, std::bind(&WoWWorld::S_SMSG_MONSTER_MOVE, this, std::placeholders::_1));
+	//AddHandler(SMSG_MONSTER_MOVE, std::bind(&WoWWorld::S_SMSG_MONSTER_MOVE, this, std::placeholders::_1));
 }
 
 WoWWorld::~WoWWorld()
@@ -239,10 +239,10 @@ namespace
 
 			for (uint32 i = 0; i < OutOfRangeGUIDsCount; i++)
 			{
-				ByteBuffer.seekRelative(sizeof(uint8)); // (uint8)0xFF;
+				//ByteBuffer.seekRelative(sizeof(uint8)); // (uint8)0xFF;
 
 				uint64 guid;
-				ByteBuffer >> (uint64)guid;
+				ByteBuffer.ReadPackedUInt64(guid);
 				OutOfRangeGUIDs[i] = guid;
 			}
 		}
@@ -255,9 +255,6 @@ void WoWWorld::ProcessUpdatePacket(CByteBuffer& Bytes)
 {
 	uint32 BlocksCount;
 	Bytes >> BlocksCount;
-
-	//uint8  HasTransport;
-	//Bytes >> HasTransport;
 
 	for (uint32 i = 0u; i < BlocksCount; i++)
 	{
@@ -288,7 +285,6 @@ void WoWWorld::ProcessUpdatePacket(CByteBuffer& Bytes)
 
 			std::shared_ptr<WoWObject> object = GetWoWObject(guid);
 			object->ProcessMovementUpdate(Bytes);
-			Log::Warn("UPDATETYPE_MOVEMENT");
 		}
 		break;
 		case OBJECT_UPDATE_TYPE::UPDATETYPE_CREATE_OBJECT:

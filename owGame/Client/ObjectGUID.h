@@ -39,10 +39,18 @@ public:
 
 	typedef uint32 LowType;
 
-	ObjectGuid() : _guid(0) { }
-	explicit ObjectGuid(uint64 guid) : _guid(guid) { }
-	ObjectGuid(HighGuid hi, uint32 entry, LowType counter) : _guid(counter ? uint64(counter) | (uint64(entry) << 24) | (uint64(hi) << 48) : 0) { }
-	ObjectGuid(HighGuid hi, LowType counter) : _guid(counter ? uint64(counter) | (uint64(hi) << 48) : 0) { }
+	ObjectGuid()
+		: _guid(0)
+	{ }
+	explicit ObjectGuid(uint64 guid)
+		: _guid(guid)
+	{ }
+	ObjectGuid(HighGuid hi, uint32 entry, LowType counter)
+		: _guid(counter ? uint64(counter) | (uint64(entry) << 24) | (uint64(hi) << 48) : 0)
+	{ }
+	ObjectGuid(HighGuid hi, LowType counter)
+		: _guid(counter ? uint64(counter) | (uint64(hi) << 48) : 0)
+	{ }
 
 	operator uint64() const { return _guid; }
 	void Set(uint64 guid) { _guid = guid; }
