@@ -63,12 +63,13 @@ void CWoWClient::OnSuccessConnect(BigNumber Key)
 {
     RealmInfo* currRealm = &(m_Realms[0]);
 
-    std::shared_ptr<CWorldSocket> worldSocket = std::make_shared<CWorldSocket>(m_SocketsHandlerThread->Handler(), m_Login, Key);
-	worldSocket->Open(currRealm->getIP(), currRealm->getPort());
-	worldSocket->SetDeleteByHandler();
-	m_SocketsHandlerThread->Handler().Add(worldSocket.get());
+	m_WorldSocket = std::make_shared<CWorldSocket>(m_SocketsHandlerThread->Handler(), m_Login, Key);
+	m_WorldSocket->Open(currRealm->getIP(), currRealm->getPort());
+	m_WorldSocket->SetDeleteByHandler();
 
-	m_World = std::make_unique<WoWWorld>(m_BaseManager, m_RenderDevice, m_Scene, worldSocket);
+	m_SocketsHandlerThread->Handler().Add(m_WorldSocket.get());
+
+	m_World = std::make_unique<WoWWorld>(m_BaseManager, m_RenderDevice, m_Scene, m_WorldSocket);
 }
 
 WoWWorld& CWoWClient::GetWorld() const

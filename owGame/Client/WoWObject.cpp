@@ -25,9 +25,9 @@ void WoWObject::ProcessMovementUpdate(CByteBuffer& Bytes)
 	WorldObject* object = nullptr;
 
 	if (IsType(TYPEMASK_UNIT))
-		unit = (WoWUnit*)this;
+		unit = dynamic_cast<WoWUnit*>(this);
 	else
-		object = (WorldObject*)this;
+		object = dynamic_cast<WorldObject*>(this);
 
 	uint16 updateFlags;
 	Bytes >> (uint16)updateFlags;
@@ -169,6 +169,16 @@ void WoWObject::ProcessMovementUpdate(CByteBuffer& Bytes)
 	if (updateFlags & UPDATEFLAG_ROTATION)
 	{
 		Bytes.seekRelative(8);
+	}
+
+	if (unit)
+		object = (WorldObject*)unit;
+
+	if (object)
+	{
+		glm::vec3 position = fromGameToReal(glm::vec3(object->PositionX, object->PositionY, object->PositionZ));
+		object->SetTranslate(position);
+		object->SetRotation(glm::vec3(0.0f, object->Orientation + glm::half_pi<float>(), 0.0f));
 	}
 }
 

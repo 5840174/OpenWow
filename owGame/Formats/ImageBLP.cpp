@@ -33,6 +33,7 @@ bool CImageBLP::IsFileSupported(std::shared_ptr<IFile> File)
 	BLPFormat::BLPHeader header = { 0 };
 	File->seek(0);
 	File->read(&header);
+
 	return (header.magic[0] == 'B' && header.magic[1] == 'L' && header.magic[2] == 'P' && header.magic[3] == '2' && header.type == 1);
 }
 
@@ -120,6 +121,9 @@ bool CImageBLP::LoadBPL(const BLPFormat::BLPHeader& header, std::shared_ptr<IFil
 							alphaBitCntr = 0;
 							indexInPalleteAlpha++;
 						}
+						break;
+					case 4:
+						alpha = 0xFF;
 						break;
 					case 8:
 						alpha = (*indexInPalleteAlpha++);

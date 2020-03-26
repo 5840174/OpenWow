@@ -103,8 +103,8 @@ void WoWUnit::AfterCreate(IBaseManager& BaseManager, IRenderDevice& RenderDevice
 	uint32 displayInfo = GetUInt32Value(UNIT_FIELD_DISPLAYID);
 	if (displayInfo != 0)
 	{
-		//CWorldObjectCreator creator(BaseManager);
-		//m_HiddenNode = creator.BuildCreatureFromDisplayInfo(RenderDevice, Scene, displayInfo, shared_from_this());
+		CWorldObjectCreator creator(BaseManager);
+		m_HiddenNode = creator.BuildCreatureFromDisplayInfo(RenderDevice, Scene, displayInfo, shared_from_this());
 	}
 	else
 	{

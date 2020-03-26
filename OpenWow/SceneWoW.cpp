@@ -39,7 +39,7 @@ void CSceneWoW::Initialize()
 	Load3D();
 	//Load3D_M2s();
 	//TestCreateMap(MapID);
-	//LoadUI();
+	LoadUI();
 
 
 	std::shared_ptr<CSceneCreateTypedListsPass> sceneListPass = std::make_shared<CSceneCreateTypedListsPass>(GetRenderDevice(), shared_from_this());

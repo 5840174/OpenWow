@@ -108,11 +108,6 @@ public: // Values system
 	};
 	uint16 m_valuesCount;
 
-
-protected:
-	uint32 msTime;
-	uint8 flags;
-
 protected:
 	ObjectGuid m_GUID;
 	uint16 m_ObjectType;

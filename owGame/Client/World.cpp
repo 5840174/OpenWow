@@ -8,6 +8,8 @@
 
 // Types
 #include "WoWBag.h"
+#include "WoWCorpse.h"
+#include "WoWDynamicObject.h"
 #include "WoWGameObject.h"
 #include "WoWItem.h"
 #include "WoWPlayer.h"
@@ -265,67 +267,56 @@ void WoWWorld::ProcessUpdatePacket(CByteBuffer& Bytes)
 
 		switch (updateType)
 		{
-		case OBJECT_UPDATE_TYPE::UPDATETYPE_VALUES:
-		{
-			uint64 guidValue;
-			Bytes.ReadPackedUInt64(guidValue);
+			case OBJECT_UPDATE_TYPE::UPDATETYPE_VALUES:
+			{
+				uint64 guidValue;
+				Bytes.ReadPackedUInt64(guidValue);
 
-			ObjectGuid guid(guidValue);
+				ObjectGuid guid(guidValue);
 
-			std::shared_ptr<WoWObject> object = GetWoWObject(guid);
-			object->UpdateValues(Bytes);
-		}
-		break;
-		case OBJECT_UPDATE_TYPE::UPDATETYPE_MOVEMENT:
-		{
-			uint64 guidValue;
-			Bytes.ReadPackedUInt64(guidValue);
+				std::shared_ptr<WoWObject> object = GetWoWObject(guid);
+				object->UpdateValues(Bytes);
+			}
+			break;
+			case OBJECT_UPDATE_TYPE::UPDATETYPE_MOVEMENT:
+			{
+				uint64 guidValue;
+				Bytes.ReadPackedUInt64(guidValue);
 
-			ObjectGuid guid(guidValue);
+				ObjectGuid guid(guidValue);
 
-			std::shared_ptr<WoWObject> object = GetWoWObject(guid);
-			object->ProcessMovementUpdate(Bytes);
-		}
-		break;
-		case OBJECT_UPDATE_TYPE::UPDATETYPE_CREATE_OBJECT:
-		case OBJECT_UPDATE_TYPE::UPDATETYPE_CREATE_OBJECT2:
-		{
-			uint64 guidValue;
-			Bytes.ReadPackedUInt64(guidValue);
+				std::shared_ptr<WoWObject> object = GetWoWObject(guid);
+				object->ProcessMovementUpdate(Bytes);
+			}
+			break;
+			case OBJECT_UPDATE_TYPE::UPDATETYPE_CREATE_OBJECT:
+			case OBJECT_UPDATE_TYPE::UPDATETYPE_CREATE_OBJECT2:
+			{
+				uint64 guidValue;
+				Bytes.ReadPackedUInt64(guidValue);
+				ObjectGuid guid(guidValue);
 
-			ObjectGuid guid(guidValue);
+				ObjectTypeID typeID;
+				Bytes.read(&typeID);
 
-			ObjectTypeID typeID;
-			Bytes.read(&typeID);
+				std::shared_ptr<WoWObject> object = GetWoWObject(guid);
+				object->ProcessMovementUpdate(Bytes);
+				object->UpdateValues(Bytes);
+				object->AfterCreate(m_BaseManager, m_RenderDevice, m_Scene);
 
-			std::shared_ptr<WoWObject> object = GetWoWObject(guid);
-			object->ProcessMovementUpdate(Bytes);
-			object->UpdateValues(Bytes);
-			object->AfterCreate(m_BaseManager, m_RenderDevice, m_Scene);
+				Log::Warn("UPDATETYPE_CREATE_OBJECT");
+			}
+			break;
+			case OBJECT_UPDATE_TYPE::UPDATETYPE_OUT_OF_RANGE_OBJECTS:
+			{
+				Block_UPDATETYPE_OUT_OF_RANGE_OBJECTS block;
+				block.Fill(Bytes);
+				Log::Warn("UPDATETYPE_OUT_OF_RANGE_OBJECTS");
+			}
+			break;
 
-			Log::Warn("UPDATETYPE_CREATE_OBJECT");
-		}
-		break;
-		/*case OBJECT_UPDATE_TYPE::UPDATETYPE_CREATE_OBJECT2:
-		{
-			Bytes.seekRelative(1); // 0xFF
-			uint64 guid;
-			Bytes >> guid;
-
-			ObjectTypeID typeID;
-			Bytes.read(&typeID);
-		}
-		break;*/
-		case OBJECT_UPDATE_TYPE::UPDATETYPE_OUT_OF_RANGE_OBJECTS:
-		{
-			Block_UPDATETYPE_OUT_OF_RANGE_OBJECTS block;
-			block.Fill(Bytes);
-			Log::Warn("UPDATETYPE_OUT_OF_RANGE_OBJECTS");
-		}
-		break;
-		default:
-			Log::Error("Unknown update type %d", updateType);
-			_ASSERT(false);
+			default:
+				_ASSERT_EXPR(false, "Unknown update type");
 		}
 	}
 }
@@ -355,12 +346,10 @@ std::shared_ptr<WoWObject> WoWWorld::CreateObjectByType(ObjectGuid guid, ObjectT
 		return WoWGameObject::Create(m_BaseManager, m_RenderDevice, m_Scene, guid);
 
 	case ObjectTypeID::TYPEID_DYNAMICOBJECT:
-		_ASSERT(false);
-		return nullptr;
+		return WoWDynamicObject::Create(m_BaseManager, m_RenderDevice, m_Scene, guid);
 
 	case ObjectTypeID::TYPEID_CORPSE:
-		_ASSERT(false);
-		return nullptr;
+		return WoWCorpse::Create(m_BaseManager, m_RenderDevice, m_Scene, guid);
 	}
 
 	_ASSERT(false);

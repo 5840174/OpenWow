@@ -38,6 +38,7 @@ private:
 
     // Sockets
 	std::shared_ptr<CAuthSocket>    m_AuthSocket;
+	std::shared_ptr<CWorldSocket>   m_WorldSocket;
 
 	// World & General
 	IBaseManager& m_BaseManager;

@@ -135,7 +135,7 @@ void CItem_VisualData::InitObjectComponents()
 		if (m_InventoryType == EInventoryType::HEAD)
 		{
 			char modelPostfix[64];
-			sprintf_s(modelPostfix, "_%s%c", m_DBCs->DBC_ChrRaces()[static_cast<size_t>(m_ParentCharacter.GetTemplate().Race)]->Get_ClientPrefix(), getGenderLetter(m_ParentCharacter.GetTemplate().Gender));
+			sprintf_s(modelPostfix, "_%s%c", m_DBCs->DBC_ChrRaces()[static_cast<size_t>(m_ParentCharacter.GetTemplate().Race)]->Get_ClientPrefix().c_str(), getGenderLetter(m_ParentCharacter.GetTemplate().Gender));
 
 			int dotPosition = objectFileName.find_last_of('.');
 			_ASSERT(dotPosition != -1);

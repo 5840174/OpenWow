@@ -11,11 +11,6 @@ public:
 	WorldObject(ObjectGuid Guid);
 	virtual ~WorldObject();
 
-	//virtual void UpdateMovementData(CByteBuffer& Bytes) override; // For inheritance
-
-protected:
-	void UpdateMovementDataInternal(CByteBuffer& Bytes);
-
 private:
 	std::string m_name;
 };

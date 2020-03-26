@@ -43,6 +43,8 @@
     <ClCompile Include="Client\BigNumber.cpp" />
     <ClCompile Include="Client\Client.cpp" />
     <ClCompile Include="Client\ClientPacket.cpp" />
+    <ClCompile Include="Client\WoWCorpse.cpp" />
+    <ClCompile Include="Client\WoWDynamicObject.cpp" />
     <ClCompile Include="Client\WoWGameObject.cpp" />
     <ClCompile Include="Client\HMACSHA1.cpp" />
     <ClCompile Include="Client\WoWItem.cpp" />
@@ -177,6 +179,8 @@
     <ClInclude Include="Client\Client.h" />
     <ClInclude Include="Client\ClientCache.h" />
     <ClInclude Include="Client\ClientPacket.h" />
+    <ClInclude Include="Client\WoWCorpse.h" />
+    <ClInclude Include="Client\WoWDynamicObject.h" />
     <ClInclude Include="Client\WoWGameObject.h" />
     <ClInclude Include="Client\HMACSHA1.h" />
     <ClInclude Include="Client\WoWItem.h" />

@@ -519,6 +519,12 @@
     <ClCompile Include="Client\ObjectGUID.cpp">
       <Filter>Client</Filter>
     </ClCompile>
+    <ClCompile Include="Client\WoWDynamicObject.cpp">
+      <Filter>Client\Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="Client\WoWCorpse.cpp">
+      <Filter>Client\Objects</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="common.h">
@@ -1010,12 +1016,6 @@
     <ClInclude Include="Client\World.h">
       <Filter>Client\World</Filter>
     </ClInclude>
-    <ClInclude Include="Client\UpdateFields.h">
-      <Filter>Client\Objects</Filter>
-    </ClInclude>
-    <ClInclude Include="Client\UpdateMask.h">
-      <Filter>Client\Objects</Filter>
-    </ClInclude>
     <ClInclude Include="DBC\Tables\DBC_GameObjectDisplayInfo.h">
       <Filter>DBC\Tables\GameObject</Filter>
     </ClInclude>
@@ -1087,6 +1087,18 @@
     </ClInclude>
     <ClInclude Include="Client\ObjectGUID.h">
       <Filter>Client</Filter>
+    </ClInclude>
+    <ClInclude Include="Client\UpdateMask.h">
+      <Filter>Client\Objects\Helpers</Filter>
+    </ClInclude>
+    <ClInclude Include="Client\UpdateFields.h">
+      <Filter>Client\Objects\Helpers</Filter>
+    </ClInclude>
+    <ClInclude Include="Client\WoWDynamicObject.h">
+      <Filter>Client\Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="Client\WoWCorpse.h">
+      <Filter>Client\Objects</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
