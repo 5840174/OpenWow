@@ -127,20 +127,14 @@ VertexShaderOutput VS_main_Inst(VertexShaderInput IN, uint InstanceID : SV_Insta
 
 DefferedRenderPSOut PS_main(VertexShaderOutput IN) : SV_TARGET
 {
-	float4 resultColor = DiffuseTexture0.Sample(DiffuseTexture0Sampler, float2(IN.texCoord0.x, 1.0f - IN.texCoord0.y));
-	
 	// Todo: hack!
-	if (gTextureWeight == 0.0f)
+	if (gTextureWeight == 0.0f || gColor.a == 0.0f)
 	{
-		//DefferedRenderPSOut OUT;
-		//OUT.Diffuse = float4(1.0f, 0.0f, 0.0f, 1.0f);
-		//OUT.Specular = float4(0.5f, 0.5f, 0.5f, 1.0f);
-		//OUT.NormalWS = float4(IN.normal, 0.0f);
-		//return OUT;
 		discard;
 	}
-	
-	
+
+
+	float4 resultColor = DiffuseTexture0.Sample(DiffuseTexture0Sampler, float2(IN.texCoord0.x, 1.0f - IN.texCoord0.y));
 	if (gBlendMode == 0) // GxBlend_Opaque
 	{
 		resultColor.a = 1.0f;

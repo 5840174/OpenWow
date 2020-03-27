@@ -23,9 +23,11 @@ public:
 	// FacialHair
 	std::string getFacialHairLowerTexture(const Character* Character) const;
 	std::string getFacialHairUpperTexture(const Character* Character) const;
-	uint32 getFacial1Geoset(const Character* Character) const;
-	uint32 getFacial2Geoset(const Character* Character) const;
-	uint32 getFacial3Geoset(const Character* Character) const;
+	uint32 getFacial01Geoset(const Character* Character) const;
+	uint32 getFacial02Geoset(const Character* Character) const;
+	uint32 getFacial03Geoset(const Character* Character) const;
+	uint32 getFacial16Geoset(const Character* Character) const;
+	uint32 getFacial17Geoset(const Character* Character) const;
 
 	// Hair
 	uint32     getHairGeoset(const Character* Character) const;

@@ -10,8 +10,8 @@
 Character::Character(const std::shared_ptr<CM2>& M2Object)
 	: Creature(M2Object)
 {
-	setMeshEnabled(MeshIDType::Ears, EarsStyles::Enabled);
-	setMeshEnabled(MeshIDType::Eyeglows, EyeglowsStyles::Racial);
+	//setMeshEnabled(MeshIDType::Ears, EarsStyles::Enabled);
+	//setMeshEnabled(MeshIDType::Eyeglows, EyeglowsStyles::Racial);
 }
 
 Character::~Character()
@@ -99,12 +99,11 @@ void Character::RefreshMeshIDs(const Character_SectionWrapper& SectionWrapper)
 	else
 		setMeshEnabled(MeshIDType::SkinAndHair, SectionWrapper.getHairGeoset(this));
 
-	setMeshEnabled(MeshIDType::Facial1, SectionWrapper.getFacial1Geoset(this));
-	setMeshEnabled(MeshIDType::Facial2, (SectionWrapper.getFacial3Geoset(this) == 0) ? 1 : SectionWrapper.getFacial3Geoset(this));
-	setMeshEnabled(MeshIDType::Facial3, (SectionWrapper.getFacial2Geoset(this) == 0) ? 1 : SectionWrapper.getFacial2Geoset(this));
-
-    //setMeshEnabled(MeshIDType::Unk2, SectionWrapper.getFacial16Geoset(this));
-    //setMeshEnabled(MeshIDType::Eyeglows, SectionWrapper.getFacial16Geoset(this));
+	setMeshEnabled(MeshIDType::Facial1,  SectionWrapper.getFacial01Geoset(this));
+	setMeshEnabled(MeshIDType::Facial2,  SectionWrapper.getFacial02Geoset(this));
+	setMeshEnabled(MeshIDType::Facial3,  SectionWrapper.getFacial03Geoset(this));
+	setMeshEnabled(MeshIDType::Unk16,    SectionWrapper.getFacial16Geoset(this));
+	setMeshEnabled(MeshIDType::Eyeglows, SectionWrapper.getFacial17Geoset(this));
 }
 
 

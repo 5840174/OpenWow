@@ -22,7 +22,7 @@ glm::vec4 CM2_Part_Color::GetColorAndAlpha(const CM2_Base_Instance* M2Instance, 
 {
 	_ASSERT(M2Instance != nullptr);
 
-	glm::vec4 colorAndAlpha = glm::vec4(1.0f, 1.0f, 1.0f, 1.0f);
+	glm::vec4 colorAndAlpha = glm::vec4(1.0f, 0.0f, 0.0f, 0.25f);
 
 	if (const auto& animator = M2Instance->getAnimator())
 	{
@@ -43,7 +43,7 @@ glm::vec3 CM2_Part_Color::GetColor(const CM2_Base_Instance* M2Instance, uint32 G
 	if (const auto& animator = M2Instance->getAnimator())
 		if (m_ColorAnimated.IsUsesBySequence(animator->getSequenceIndex()))
 			return m_ColorAnimated.GetValue(animator->getSequenceIndex(), animator->getCurrentTime(), m_M2Object.getSkeleton().getGlobalLoops(), GlobalTime);
-	return glm::vec3(1.0f, 1.0f, 1.0f);
+	return glm::vec3(1.0f, 0.0f, 0.0f);
 }
 
 float CM2_Part_Color::GetAlpha(const CM2_Base_Instance* M2Instance, uint32 GlobalTime) const
@@ -53,5 +53,5 @@ float CM2_Part_Color::GetAlpha(const CM2_Base_Instance* M2Instance, uint32 Globa
 	if (const auto& animator = M2Instance->getAnimator())
 		if (m_AlphaAnimated.IsUsesBySequence(animator->getSequenceIndex()))
 			return m_AlphaAnimated.GetValue(animator->getSequenceIndex(), animator->getCurrentTime(), m_M2Object.getSkeleton().getGlobalLoops(), GlobalTime);
-	return 1.0f;
+	return 0.05f;
 }

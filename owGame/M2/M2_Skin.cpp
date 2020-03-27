@@ -86,6 +86,8 @@ void CM2_Skin::Load(const SM2_Header& M2Header, const std::shared_ptr<IFile>& Fi
 	const SM2_SkinBatch* skinBatchesProtos = (const SM2_SkinBatch*)(File->getData() + m_M2SkinProfile.batches.offset);
 	for (uint32 i = 0; i < m_M2SkinProfile.batches.size; i++)
 	{
+		
+
 		//if (skinBatchesProtos[i].flags.InvertSomething == 1)
 		//	continue;
 

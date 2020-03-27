@@ -71,5 +71,5 @@ private:
 	IBaseManager& m_BaseManager;
 	IRenderDevice& m_RenderDevice;
 	const CM2& m_M2Model;
-	const SM2_SkinBatch& m_SkinBatchProto;
+	const SM2_SkinBatch m_SkinBatchProto;
 };

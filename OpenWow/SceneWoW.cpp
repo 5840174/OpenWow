@@ -37,9 +37,9 @@ void CSceneWoW::Initialize()
 
 	
 	Load3D();
-	//Load3D_M2s();
+	Load3D_M2s();
 	//TestCreateMap(MapID);
-	LoadUI();
+	//LoadUI();
 
 
 	std::shared_ptr<CSceneCreateTypedListsPass> sceneListPass = std::make_shared<CSceneCreateTypedListsPass>(GetRenderDevice(), shared_from_this());
@@ -58,11 +58,11 @@ void CSceneWoW::Initialize()
 
 	//m_Technique3D.AddPass(std::make_shared<CRenderPass_WMO2>(GetRenderDevice(), wmoListPass, shared_from_this())->CreatePipeline(GetRenderWindow()->GetRenderTarget(), &GetRenderWindow()->GetViewport()));
 	
-	//m_Technique3D.AddPass(std::make_shared<CRenderPass_M2>(GetRenderDevice(), sceneListPass, true)->CreatePipeline(GetRenderWindow()->GetRenderTarget(), &GetRenderWindow()->GetViewport()));
-	//m_Technique3D.AddPass(std::make_shared<CRenderPass_M2>(GetRenderDevice(), sceneListPass, false)->CreatePipeline(GetRenderWindow()->GetRenderTarget(), &GetRenderWindow()->GetViewport()));
+	m_Technique3D.AddPass(std::make_shared<CRenderPass_M2>(GetRenderDevice(), sceneListPass, true)->CreatePipeline(GetRenderWindow()->GetRenderTarget(), &GetRenderWindow()->GetViewport()));
+	m_Technique3D.AddPass(std::make_shared<CRenderPass_M2>(GetRenderDevice(), sceneListPass, false)->CreatePipeline(GetRenderWindow()->GetRenderTarget(), &GetRenderWindow()->GetViewport()));
 	
-	m_Technique3D.AddPass(std::make_shared<CRenderPass_M2_Instanced>(GetRenderDevice(), sceneListPass, true)->CreatePipeline(GetRenderWindow()->GetRenderTarget(), &GetRenderWindow()->GetViewport()));
-	m_Technique3D.AddPass(std::make_shared<CRenderPass_M2_Instanced>(GetRenderDevice(), sceneListPass, false)->CreatePipeline(GetRenderWindow()->GetRenderTarget(), &GetRenderWindow()->GetViewport()));
+	//m_Technique3D.AddPass(std::make_shared<CRenderPass_M2_Instanced>(GetRenderDevice(), sceneListPass, true)->CreatePipeline(GetRenderWindow()->GetRenderTarget(), &GetRenderWindow()->GetViewport()));
+	//m_Technique3D.AddPass(std::make_shared<CRenderPass_M2_Instanced>(GetRenderDevice(), sceneListPass, false)->CreatePipeline(GetRenderWindow()->GetRenderTarget(), &GetRenderWindow()->GetViewport()));
 	
 	//m_Technique3D.AddPass(std::make_shared<CDrawBoundingBoxPass>(GetRenderDevice(), shared_from_this())->CreatePipeline(GetRenderWindow()->GetRenderTarget(), &GetRenderWindow()->GetViewport()));
 	//m_Technique3D.AddPass(std::make_shared<CMaterialParticlePass>(GetRenderDevice(), shared_from_this())->CreatePipeline(GetRenderWindow()->GetRenderTarget(), &GetRenderWindow()->GetViewport()));
@@ -131,18 +131,23 @@ void CSceneWoW::OnWindowKeyReleased(KeyEventArgs & e)
 //
 void CSceneWoW::Load3D()
 {
+	//CWorldObjectCreator creator(GetBaseManager());
+	//auto creature = creator.BuildCreatureFromDisplayInfo(GetRenderDevice(), this, 69, GetRootNode3D());
+	//creature->getAnimator()->PlayAnimation(4, true);
+
+
 	//auto wmo = GetBaseManager().GetManager<IWoWObjectsCreator>()->LoadWMO(GetRenderDevice(), /*"World\\wmo\\Lorderon\\Undercity\\Undercity.wmo"*/"World\\wmo\\Outland\\DarkPortal\\DarkPortal_Temple.wmo");
 	//wmoInstance = GetRootNode3D()->CreateSceneNode<CWMO_Base_Instance>(wmo);
 	//GetBaseManager().GetManager<ILoader>()->AddToLoadQueue(wmoInstance);
 
-	//auto m2 = GetBaseManager().GetManager<IWoWObjectsCreator>()->LoadM2(GetRenderDevice(), "World\\Expansion01\\Doodads\\Netherstorm\\BioDomes\\NS_BioDome_All_FX_South.M2");
+	//auto m2 = GetBaseManager().GetManager<IWoWObjectsCreator>()->LoadM2(GetRenderDevice(), "Creature\\ELEMENTALEARTH\\ElementalEarth.m2");
 	//m2Instance = GetRootNode3D()->CreateSceneNode<CM2_Base_Instance>(m2);
 	//GetBaseManager().GetManager<ILoader>()->AddToLoadQueue(m2Instance);
 
-	auto m2 = GetBaseManager().GetManager<IWoWObjectsCreator>()->LoadM2(GetRenderDevice(), "World\\Expansion01\\Doodads\\Netherstorm\\Float_particles\\Netherstorm_Particles_Pink.mdx");
-	m2Instance = GetRootNode3D()->CreateSceneNode<CM2_Base_Instance>(m2);
+	//auto m2 = GetBaseManager().GetManager<IWoWObjectsCreator>()->LoadM2(GetRenderDevice(), "World\\Expansion01\\Doodads\\Netherstorm\\Float_particles\\Netherstorm_Particles_Pink.mdx");
+	//m2Instance = GetRootNode3D()->CreateSceneNode<CM2_Base_Instance>(m2);
 	//m2Instance->SetScale(glm::vec3(100.0f));
-	GetBaseManager().GetManager<ILoader>()->AddToLoadQueue(m2Instance);
+	//GetBaseManager().GetManager<ILoader>()->AddToLoadQueue(m2Instance);
 
 	
 

@@ -43,7 +43,10 @@ void CM2_Comp_Skeleton::Load(const SM2_Header& M2Header, const std::shared_ptr<I
 			{
 				char buf[MAX_PATH];
 				sprintf_s(buf, "%s%04d-%02d.anim", m_M2Object.m_FileNameWithoutExt.c_str(), Sequences[i].__animID, Sequences[i].variationIndex);
-				animFiles.push_back(m_M2Object.GetBaseManager().GetManager<IFilesManager>()->Open(buf));
+				if (m_M2Object.GetBaseManager().GetManager<IFilesManager>()->IsFileExists(buf))
+					animFiles.push_back(m_M2Object.GetBaseManager().GetManager<IFilesManager>()->Open(buf));
+				else
+					animFiles.push_back(nullptr);
 			}
 		}
 	}

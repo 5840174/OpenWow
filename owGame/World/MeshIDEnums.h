@@ -10,7 +10,7 @@ struct ZN_API MeshIDType
 		Facial3,		// 03** Facial3 : {1: (DNE), 2 - 11 : varies} (usually sideburns, but not always)
 		Glove,			// 04** Glove : {1 - 4}
 		Boots,			// 05** Boots : {1 - 5}
-		Unk0,			// 06** 
+		Unk06,			// 06** 
 		Ears,			// 07** Ears : {1: (DNE), 2 : ears}
 		Wristbands,		// 08** Wristbands / Sleeves : {1: (DNE), 2 : normal, 3 : ruffled}
 		Kneepads,		// 09** Kneepads / Legcuffs : {1: (DNE), 2 : long, 3 : short}
@@ -18,14 +18,16 @@ struct ZN_API MeshIDType
 		Pants,			// 11** Pants : {1: regular, 2 : short skirt, 4 : armored pants}
 		Tabard,			// 12** Tabard : {1: (DNE), 2 : tabard}
 		Trousers,		// 13** Trousers : {1: legs, 2 : dress}
-		Unk1,			// 14** 
+		Unk14,			// 14** 
 		Cloak,			// 15** Cloak : {1 - 10: various cloak styles}
-		Unk2,			// 16** 
+		Unk16,			// 16** 
 		Eyeglows,		// 17** Eyeglows : {1: (DNE), 2 : racial eyeglow, 3 : DK eyeglow}
 		Belt,			// 18** Belt / bellypack : {1: (sometimes DNE), 2 : bulky belt}
+		Tail,           // 19** Tail
+		Feet,           // 20** Feet {1: (DNE), 2: feet}
 
-		UNK = 19,
-		Count = 19
+		UNK             = 21,
+		Count           = 21
 	};
 };
 

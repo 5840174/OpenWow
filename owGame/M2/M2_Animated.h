@@ -241,21 +241,31 @@ public:
 
 	inline bool IsUsesBySequence(uint16 SequenceIndex) const
 	{
+		if (IsStaticValue())
+			return true;
+
+		// Global sec always use
 		if (m_GlobalSecIndex != -1)
+			return true;
+
+		if (SequenceIndex < GetCount())
 		{
-			SequenceIndex = 0;
+			if (m_Values[SequenceIndex].empty())
+				return false;
+
+			return true;
 		}
 
-		if (SequenceIndex >= GetCount())
-		{
-			return false;
-		}
-
-		return (m_Values[SequenceIndex].size() > 0);
+		return false;
 	}
 
 	inline T GetValue(uint16 SequenceIndex, uint32 time, const std::vector<SM2_Loop>& GlobalLoop, const uint32 GlobalTime) const
 	{
+		if (IsStaticValue())
+		{
+			return m_Values.at(0).at(0);
+		}
+
 		// obtain a time value and a values range
 		if (m_GlobalSecIndex != -1)
 		{
@@ -268,8 +278,7 @@ public:
 				time = GlobalTime % globalLoopTimeStamp;
 		}
 
-		if (SequenceIndex >= GetCount())
-			SequenceIndex = 0;
+		_ASSERT(SequenceIndex < GetCount());
 
 		const std::vector<uint32>& pTimes = m_Times[SequenceIndex];
 		const std::vector<T>& pData = m_Values[SequenceIndex];
@@ -317,6 +326,18 @@ private:
 	inline size_t GetCount() const
 	{
 		return m_Times.size();
+	}
+
+	inline bool IsStaticValue() const
+	{
+		if (m_GlobalSecIndex == -1 && m_Type == Interpolations::INTERPOLATION_NONE && GetCount() == 1)
+		{
+			_ASSERT(m_Times.at(0).size() == 1);
+			_ASSERT(m_Values.at(0).size() == 1);
+			return true;
+		}
+
+		return false;
 	}
 
 private:

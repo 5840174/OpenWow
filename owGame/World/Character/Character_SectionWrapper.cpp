@@ -36,9 +36,7 @@ std::shared_ptr<ITexture> Character_SectionWrapper::getSkinTexture(const Charact
 		{
 			std::string textureName = i->Get_Texture1();
 			if (textureName.empty())
-			{
 				break;
-			}
 
 			return m_RenderDevice.GetObjectsFactory().LoadTexture2D(textureName);
 		}
@@ -58,9 +56,7 @@ std::shared_ptr<ITexture> Character_SectionWrapper::getSkinExtraTexture(const Ch
 		{
 			std::string textureName = i->Get_Texture2();
 			if (textureName.empty())
-			{
 				break;
-			}
 
 			return m_RenderDevice.GetObjectsFactory().LoadTexture2D(textureName);
 		}
@@ -87,9 +83,7 @@ std::shared_ptr<ITexture> Character_SectionWrapper::getFaceLowerTexture(const Ch
 		{
 			std::string textureName = i->Get_Texture1();
 			if (textureName.empty())
-			{
 				break;
-			}
 
 			return m_RenderDevice.GetObjectsFactory().LoadTexture2D(textureName);
 		}
@@ -111,9 +105,7 @@ std::shared_ptr<ITexture> Character_SectionWrapper::getFaceUpperTexture(const Ch
 		{
 			std::string textureName = i->Get_Texture2();
 			if (textureName.empty())
-			{
 				break;
-			}
 
 			return m_RenderDevice.GetObjectsFactory().LoadTexture2D(textureName);
 		}
@@ -139,7 +131,8 @@ std::string Character_SectionWrapper::getFacialHairLowerTexture(const Character*
 			return i->Get_Texture1();
 		}
 	}
-	_ASSERT(false); return "";
+	_ASSERT(false);
+	return "";
 }
 
 std::string Character_SectionWrapper::getFacialHairUpperTexture(const Character* Character) const
@@ -156,10 +149,11 @@ std::string Character_SectionWrapper::getFacialHairUpperTexture(const Character*
 			return i->Get_Texture2();
 		}
 	}
-	_ASSERT(false);	return "";
+	_ASSERT(false);	
+	return "";
 }
 
-uint32 Character_SectionWrapper::getFacial1Geoset(const Character * Character) const
+uint32 Character_SectionWrapper::getFacial01Geoset(const Character * Character) const
 {
 	for (const auto& i : m_DBCs->DBC_CharacterFacialHairStyles())
 	{
@@ -169,9 +163,6 @@ uint32 Character_SectionWrapper::getFacial1Geoset(const Character * Character) c
 			i->Get_Variation() == Character->GetTemplate().facialStyle
 			)
 		{
-			if (i->Get_Group_01xx() > 100)
-				return i->Get_Other0();
-
 			return i->Get_Group_01xx();
 		}
 	}
@@ -180,7 +171,7 @@ uint32 Character_SectionWrapper::getFacial1Geoset(const Character * Character) c
 	return UINT32_MAX;
 }
 
-uint32 Character_SectionWrapper::getFacial2Geoset(const Character * Character) const
+uint32 Character_SectionWrapper::getFacial02Geoset(const Character * Character) const
 {
 	for (const auto& i : m_DBCs->DBC_CharacterFacialHairStyles())
 	{
@@ -190,9 +181,6 @@ uint32 Character_SectionWrapper::getFacial2Geoset(const Character * Character) c
 			i->Get_Variation() == Character->GetTemplate().facialStyle
 			)
 		{
-			if (i->Get_Group_02xx() > 100)
-				return i->Get_Other1();
-
 			return i->Get_Group_02xx();
 		}
 	}
@@ -201,7 +189,7 @@ uint32 Character_SectionWrapper::getFacial2Geoset(const Character * Character) c
 	return UINT32_MAX;
 }
 
-uint32 Character_SectionWrapper::getFacial3Geoset(const Character * Character) const
+uint32 Character_SectionWrapper::getFacial03Geoset(const Character * Character) const
 {
 	for (const auto& i : m_DBCs->DBC_CharacterFacialHairStyles())
 	{
@@ -211,10 +199,43 @@ uint32 Character_SectionWrapper::getFacial3Geoset(const Character * Character) c
 			i->Get_Variation() == Character->GetTemplate().facialStyle
 			)
 		{
-			if (i->Get_Group_03xx() > 100)
-				return i->Get_Other2();
-
 			return i->Get_Group_03xx();
+		}
+	}
+
+	//_ASSERT(FALSE);
+	return UINT32_MAX;
+}
+
+uint32 Character_SectionWrapper::getFacial16Geoset(const Character * Character) const
+{
+	for (const auto& i : m_DBCs->DBC_CharacterFacialHairStyles())
+	{
+		if (
+			i->Get_Race() == (uint32)Character->GetTemplate().Race &&
+			i->Get_Gender() == (uint32)Character->GetTemplate().Gender &&
+			i->Get_Variation() == Character->GetTemplate().facialStyle
+			)
+		{
+			return i->Get_Group_16xx();
+		}
+	}
+
+	//_ASSERT(FALSE);
+	return UINT32_MAX;
+}
+
+uint32 Character_SectionWrapper::getFacial17Geoset(const Character * Character) const
+{
+	for (const auto& i : m_DBCs->DBC_CharacterFacialHairStyles())
+	{
+		if (
+			i->Get_Race() == (uint32)Character->GetTemplate().Race &&
+			i->Get_Gender() == (uint32)Character->GetTemplate().Gender &&
+			i->Get_Variation() == Character->GetTemplate().facialStyle
+			)
+		{
+			return i->Get_Group_17xx();
 		}
 	}
 
