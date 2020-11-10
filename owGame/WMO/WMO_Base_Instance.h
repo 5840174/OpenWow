@@ -6,7 +6,7 @@
 #include "WMO_Liquid_Instance.h"
 
 class ZN_API CWMO_Base_Instance 
-	: public SceneNode3D
+	: public CSceneNode
 	, public CLoadableObject
 {
 public:

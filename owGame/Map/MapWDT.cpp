@@ -22,7 +22,7 @@ CMapWDT::~CMapWDT()
 {
 }
 
-void CMapWDT::CreateInsances(const std::shared_ptr<ISceneNode3D>& Parent) const
+void CMapWDT::CreateInsances(const std::shared_ptr<ISceneNode>& Parent) const
 {
 	Log::Info("MapWDT: Global WMO exists [%s].", !m_GlobalWMOName.empty() ? "true" : "false");
 

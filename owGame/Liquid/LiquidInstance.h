@@ -3,7 +3,7 @@
 #include "Liquid.h"
 
 class ZN_API Liquid_Instance
-	: public SceneNode3D
+	: public CSceneNode
 {
 public:
 	Liquid_Instance();

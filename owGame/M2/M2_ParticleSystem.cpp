@@ -320,7 +320,7 @@ void SM2_ParticleSystem_Wrapper::CreateAndDeleteParticles(const CM2_Base_Instanc
 
 CM2_ParticleObject SM2_ParticleSystem_Wrapper::DefaultGenerator_New(const CM2_Base_Instance * M2Instance, float w, float l, float spd, float var, float lifespan, float spr, float spr2) const
 {
-	std::shared_ptr<ISkeletonBone3D> bone;
+	std::shared_ptr<ISkeletonComponentBone3D> bone;
 	if (GetBone() != -1)
 		bone = M2Instance->getSkeletonComponent()->GetBone(GetBone());
 
@@ -353,7 +353,7 @@ CM2_ParticleObject SM2_ParticleSystem_Wrapper::DefaultGenerator_New(const CM2_Ba
 
 CM2_ParticleObject SM2_ParticleSystem_Wrapper::PlaneGenerator_New(const CM2_Base_Instance * M2Instance, float w, float l, float spd, float var, float lifespan, float spr, float spr2) const
 {
-	std::shared_ptr<ISkeletonBone3D> bone;
+	std::shared_ptr<ISkeletonComponentBone3D> bone;
 	if (GetBone() != -1)
 		bone = M2Instance->getSkeletonComponent()->GetBone(GetBone());
 
@@ -390,7 +390,7 @@ CM2_ParticleObject SM2_ParticleSystem_Wrapper::PlaneGenerator_New(const CM2_Base
 
 CM2_ParticleObject SM2_ParticleSystem_Wrapper::SphereGenerator_New(const CM2_Base_Instance * M2Instance, float w, float l, float spd, float var, float lifespan, float spr, float spr2) const
 {
-	std::shared_ptr<ISkeletonBone3D> bone;
+	std::shared_ptr<ISkeletonComponentBone3D> bone;
 	if (GetBone() != -1)
 		bone = M2Instance->getSkeletonComponent()->GetBone(GetBone());
 

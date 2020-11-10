@@ -29,18 +29,18 @@ const uint8	cM2Model_TexturesMaxCount = 128;
 const uint8	cM2Model_BonesInfluences = 4;
 
 // Types & Consts
-const SceneNodeType cSky_NodeType               = 1000;
+const ObjectType cSky_NodeType               = 1000;
 
-const SceneNodeType cMap_NodeType               = 1010;
-const SceneNodeType cMapLowResTile_NodeType     = 1011;
-const SceneNodeType cMapTile_NodeType           = 1012;
-const SceneNodeType cMapChunk_NodeType          = 1013;
+const ObjectType cMap_NodeType               = 1010;
+const ObjectType cMapLowResTile_NodeType     = 1011;
+const ObjectType cMapTile_NodeType           = 1012;
+const ObjectType cMapChunk_NodeType          = 1013;
 
-const SceneNodeType cLiquid_NodeType            = 1020;
-const SceneNodeType cLiquid_MapChnuk_NodeType   = 1021;
-const SceneNodeType cLiquid_WMOGroup_NodeType   = 1022;
+const ObjectType cLiquid_NodeType            = 1020;
+const ObjectType cLiquid_MapChnuk_NodeType   = 1021;
+const ObjectType cLiquid_WMOGroup_NodeType   = 1022;
 
-const SceneNodeType cWMO_NodeType               = 1030;
-const SceneNodeType cWMOGroup_NodeType          = 1031;
+const ObjectType cWMO_NodeType               = 1030;
+const ObjectType cWMOGroup_NodeType          = 1031;
 
-const SceneNodeType cM2_NodeType                = 1040;
+const ObjectType cM2_NodeType                = 1040;

@@ -1,22 +1,7 @@
 #pragma once
 
-class ZN_API LiquidMaterial
-	: public MaterialProxie
+namespace
 {
-public:
-	LiquidMaterial(IRenderDevice& RenderDevice);
-	virtual ~LiquidMaterial();
-
-	// LiquidMaterial
-	void SetShallowAlpha(float value);
-	void SetDeepAlpha(float value);
-	void SetColorLight(glm::vec3 value);
-	void SetColorDark(glm::vec3 value);
-
-protected:
-	void UpdateConstantBuffer() const override;
-
-private:
 	__declspec(align(16)) struct MaterialProperties
 	{
 		MaterialProperties()
@@ -32,5 +17,25 @@ private:
 		float gDeepAlpha;
 		//-------------------------- ( 32 bytes )
 	};
+}
+
+class ZN_API LiquidMaterial
+	: public MaterialProxieT<MaterialProperties>
+{
+public:
+	LiquidMaterial(IRenderDevice& RenderDevice);
+	virtual ~LiquidMaterial();
+
+	// LiquidMaterial
+	void SetShallowAlpha(float value);
+	void SetDeepAlpha(float value);
+	void SetColorLight(glm::vec3 value);
+	void SetColorDark(glm::vec3 value);
+
+protected:
+	void UpdateConstantBuffer() const override;
+
+private:
+
 	MaterialProperties* m_pProperties;
 };

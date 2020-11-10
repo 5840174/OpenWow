@@ -8,10 +8,10 @@ public:
 	virtual ~CRenderPass_WDL();
 
 	// IRenderPassPipelined
-	std::shared_ptr<IRenderPassPipelined> CreatePipeline(std::shared_ptr<IRenderTarget> RenderTarget, const Viewport* Viewport) override final;
+	std::shared_ptr<IRenderPassPipelined> ConfigurePipeline(std::shared_ptr<IRenderTarget> RenderTarget, const Viewport* Viewport) override final;
 
     // IVisitor
-	EVisitResult Visit(const ISceneNode3D* SceneNode) override final;
+	EVisitResult Visit(const ISceneNode* SceneNode) override final;
 	EVisitResult Visit(const IModel* Model) override final;
 
 private:

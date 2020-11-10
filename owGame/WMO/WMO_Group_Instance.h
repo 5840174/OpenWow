@@ -12,7 +12,7 @@ class CWMO_Liquid_Instance;
 // FORWARD END
 
 class CWMO_Group_Instance 
-	: public SceneNode3D
+	: public CSceneNode
 	, public CLoadableObject
 	, public IPortalRoom
 {

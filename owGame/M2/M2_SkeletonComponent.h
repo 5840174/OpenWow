@@ -9,16 +9,16 @@ class CM2_Base_Instance;
 // CM2SkeletonBone3D
 //
 class ZN_API CM2SkeletonBone3D
-	: public ISkeletonBone3D
+	: public ISkeletonComponentBone3D
 	, public std::enable_shared_from_this<CM2SkeletonBone3D>
 {
 public:
 	CM2SkeletonBone3D(const SM2_Part_Bone_Wrapper& M2Bone);
 	virtual ~CM2SkeletonBone3D();
 
-	// ISkeletonBone3D
-	const std::weak_ptr<ISkeletonBone3D>& GetParentBone() const override;
-	const std::vector<std::shared_ptr<ISkeletonBone3D>>& GetChilds() const override;
+	// ISkeletonComponentBone3D
+	const std::weak_ptr<ISkeletonComponentBone3D>& GetParentBone() const override;
+	const std::vector<std::shared_ptr<ISkeletonComponentBone3D>>& GetChilds() const override;
 	glm::vec3 GetPivotPoint() const override;
 	const glm::mat4& GetMatrix() const override;
 	const glm::mat4& GetRotateMatrix() const override;
@@ -30,8 +30,8 @@ public:
 
 private:
 	const SM2_Part_Bone_Wrapper&                   m_M2Bone;
-	std::weak_ptr<ISkeletonBone3D>                 m_ParentBone;
-	std::vector<std::shared_ptr<ISkeletonBone3D>>  m_Childs;
+	std::weak_ptr<ISkeletonComponentBone3D>                 m_ParentBone;
+	std::vector<std::shared_ptr<ISkeletonComponentBone3D>>  m_Childs;
 	glm::vec3                                      m_PivotPoint;
 	glm::mat4                                      m_Matrix;
 	glm::mat4                                      m_RotateMatrix;
@@ -43,7 +43,7 @@ private:
 //
 // CM2SkeletonComponent3D
 //
-class __declspec(UUID_SkeletonComponent) ZN_API CM2SkeletonComponent3D
+class ZN_API CM2SkeletonComponent3D
 	: public ISkeletonComponent3D
 	, public CComponentBase
 {
@@ -54,7 +54,7 @@ public:
 	std::vector<glm::mat4> CreatePose(size_t BoneStartIndex, size_t BonesCount) const;
 
 	// ISkeletonComponent3D
-	std::shared_ptr<ISkeletonBone3D> GetBone(size_t Index) const override;
+	std::shared_ptr<ISkeletonComponentBone3D> GetBone(size_t Index) const override;
 
 	// CComponentBase
 	void Update(const UpdateEventArgs& e) override;

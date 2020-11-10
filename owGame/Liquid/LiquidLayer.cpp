@@ -125,7 +125,7 @@ std::shared_ptr<IMaterial> CLiquidLayer::GetMaterial() const
 //
 // IModel
 //
-bool CLiquidLayer::Render(const RenderEventArgs& renderEventArgs) const
+bool CLiquidLayer::Render() const
 {
 	uint32_t texidx = (uint32_t)(renderEventArgs.TotalTime / 60.0f) % m_Textures.size();
 	m_Material->SetTexture(0, m_Textures[texidx]);
@@ -145,7 +145,7 @@ bool CLiquidLayer::Render(const RenderEventArgs& renderEventArgs) const
 		m_Material->SetDeepAlpha(1.0f);
 	}
 
-	return ModelProxie::Render(renderEventArgs);
+	return ModelProxie::Render();
 }
 
 

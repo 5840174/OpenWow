@@ -2,13 +2,6 @@
 
 #include __PACK_BEGIN
 
-enum class Interpolations : uint16_t
-{
-    INTERPOLATION_NONE = 0,
-    INTERPOLATION_LINEAR,
-    INTERPOLATION_HERMITE
-};
-
 template<typename T>
 struct M2Array
 {

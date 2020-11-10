@@ -9,7 +9,7 @@
 #include "MinimapProvider.h"
 
 class ZN_API CMap
-	: public SceneNode3D
+	: public CSceneNode
 {
 public:
 	CMap(IBaseManager& BaseManager, IRenderDevice& RenderDevice);

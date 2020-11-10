@@ -17,7 +17,7 @@ public:
 	virtual ~CMapWDL();
 
 	// ISceneNodeProvider
-	void CreateInsances(const std::shared_ptr<ISceneNode3D>& Parent) const override;
+	void CreateInsances(const std::shared_ptr<ISceneNode>& Parent) const override;
 
 	void UpdateCamera(const ICameraComponent3D* camera);
 

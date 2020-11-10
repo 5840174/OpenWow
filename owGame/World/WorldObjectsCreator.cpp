@@ -19,7 +19,7 @@ CWorldObjectCreator::CWorldObjectCreator(IBaseManager & BaseManager)
 //
 // Factory
 //
-std::shared_ptr<Creature> CWorldObjectCreator::BuildCreatureFromDisplayInfo(IRenderDevice& RenderDevice, IScene* Scene, uint32 _id, const std::shared_ptr<ISceneNode3D>& Parent)
+std::shared_ptr<Creature> CWorldObjectCreator::BuildCreatureFromDisplayInfo(IRenderDevice& RenderDevice, IScene* Scene, uint32 _id, const std::shared_ptr<ISceneNode>& Parent)
 {
 	const DBC_CreatureDisplayInfoRecord* rec = m_DBCs->DBC_CreatureDisplayInfo()[_id];
 	if (rec == nullptr)
@@ -54,7 +54,7 @@ std::shared_ptr<Creature> CWorldObjectCreator::BuildCreatureFromDisplayInfo(IRen
 	return newCreature;
 }
 
-std::shared_ptr<Character> CWorldObjectCreator::BuildCharactedFromTemplate(IRenderDevice& RenderDevice, IScene* Scene, const CInet_CharacterTemplate& b, const std::shared_ptr<ISceneNode3D>& Parent)
+std::shared_ptr<Character> CWorldObjectCreator::BuildCharactedFromTemplate(IRenderDevice& RenderDevice, IScene* Scene, const CInet_CharacterTemplate& b, const std::shared_ptr<ISceneNode>& Parent)
 {
 	// 1. Load model
 	std::shared_ptr<CM2> m2Model = CreateCharacterModel(RenderDevice, b);
@@ -83,7 +83,7 @@ std::shared_ptr<Character> CWorldObjectCreator::BuildCharactedFromTemplate(IRend
 	return newCharacter;
 }
 
-std::shared_ptr<Character> CWorldObjectCreator::BuildCharactedFromDisplayInfo(IRenderDevice& RenderDevice, IScene * Scene, uint32 _id, const std::shared_ptr<ISceneNode3D>& Parent)
+std::shared_ptr<Character> CWorldObjectCreator::BuildCharactedFromDisplayInfo(IRenderDevice& RenderDevice, IScene * Scene, uint32 _id, const std::shared_ptr<ISceneNode>& Parent)
 {
 	const DBC_CreatureDisplayInfoRecord* rec = m_DBCs->DBC_CreatureDisplayInfo()[_id];
 	_ASSERT(rec != nullptr);
@@ -157,7 +157,7 @@ std::shared_ptr<Character> CWorldObjectCreator::BuildCharactedFromDisplayInfo(IR
 	return newCharacter;
 }
 
-std::shared_ptr<GameObject> CWorldObjectCreator::BuildGameObjectFromDisplayInfo(IRenderDevice & RenderDevice, IScene * Scene, uint32 _id, const std::shared_ptr<ISceneNode3D>& Parent)
+std::shared_ptr<GameObject> CWorldObjectCreator::BuildGameObjectFromDisplayInfo(IRenderDevice & RenderDevice, IScene * Scene, uint32 _id, const std::shared_ptr<ISceneNode>& Parent)
 {
 	std::shared_ptr<CM2> m2Model = nullptr;
 	{

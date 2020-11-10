@@ -19,7 +19,7 @@ public:
 	virtual ~CM2();
 
 	// ISceneNodeProvider
-	void CreateInsances(const std::shared_ptr<ISceneNode3D>& Parent) const override;
+	void CreateInsances(const std::shared_ptr<ISceneNode>& Parent) const override;
 
 	// CLoadableObject
 	bool Load() override;
@@ -32,7 +32,7 @@ public:
 	std::string getFilenameWithoutExt() const { return m_FileNameWithoutExt; }
 	std::string getFilePath() const { return m_FilePath; }
 	std::string getUniqueName() const { return m_UniqueName; }
-	cbbox       GetBounds() const { return m_Bounds; }
+	const BoundingBox& GetBounds() const { return m_Bounds; }
 	
 public:
 	const bool isAnimated() const { return m_IsAnimated; }

@@ -21,13 +21,13 @@ CRenderPass_WDL::~CRenderPass_WDL()
 //
 // IRenderPassPipelined
 //
-std::shared_ptr<IRenderPassPipelined> CRenderPass_WDL::CreatePipeline(std::shared_ptr<IRenderTarget> RenderTarget, const Viewport * Viewport)
+std::shared_ptr<IRenderPassPipelined> CRenderPass_WDL::ConfigurePipeline(std::shared_ptr<IRenderTarget> RenderTarget, const Viewport * Viewport)
 {
 	// CreateShaders
-	std::shared_ptr<IShader> vertexShader = GetRenderDevice().GetObjectsFactory().CreateShader(EShaderType::VertexShader, "shaders_D3D/MapWDL.hlsl", "VS_main");
+	std::shared_ptr<IShader> vertexShader = GetRenderDevice().GetObjectsFactory().LoadShader(EShaderType::VertexShader, "shaders_D3D/MapWDL.hlsl", "VS_main");
 	vertexShader->LoadInputLayoutFromReflector();
 
-	std::shared_ptr<IShader> pixelShader = GetRenderDevice().GetObjectsFactory().CreateShader(EShaderType::PixelShader, "shaders_D3D/MapWDL.hlsl", "PS_main");
+	std::shared_ptr<IShader> pixelShader = GetRenderDevice().GetObjectsFactory().LoadShader(EShaderType::PixelShader, "shaders_D3D/MapWDL.hlsl", "PS_main");
 
 	// PIPELINES
 	std::shared_ptr<IPipelineState> pipeline = GetRenderDevice().GetObjectsFactory().CreatePipelineState();
@@ -47,7 +47,7 @@ std::shared_ptr<IRenderPassPipelined> CRenderPass_WDL::CreatePipeline(std::share
 //
 // IVisitor
 //
-EVisitResult CRenderPass_WDL::Visit(const ISceneNode3D* SceneNode)
+EVisitResult CRenderPass_WDL::Visit(const ISceneNode* SceneNode)
 {
 	if (SceneNode->Is(cMap_NodeType))
 	{
@@ -70,6 +70,6 @@ EVisitResult CRenderPass_WDL::Visit(const IModel* Model)
 	if (! wdlMesh->IsNeedRender())
 		return EVisitResult::Block;
 
-	Model->Render(GetRenderEventArgs());
+	Model->Render();
 	return EVisitResult::AllowAll;
 }

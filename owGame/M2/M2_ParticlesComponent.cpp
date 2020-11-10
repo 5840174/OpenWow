@@ -16,8 +16,6 @@ CM2ParticleSystem::CM2ParticleSystem(IRenderDevice& RenderDevice, const std::sha
 {
 	if (m_M2ParticleSystem->GetTexture())
 	{
-		m_Material = std::make_shared<MaterialParticle>(RenderDevice);
-		m_Material->SetTexture(0, m_M2ParticleSystem->GetTexture());
 	}
 
 	m_BlendState = RenderDevice.GetObjectsFactory().CreateBlendState();
@@ -71,14 +69,14 @@ const std::vector<SParticle>& CM2ParticleSystem::GetParticles() const
 	return m_ParticleObjects;
 }
 
-void CM2ParticleSystem::SetMaterial(const std::shared_ptr<IMaterial>& Material)
+void CM2ParticleSystem::SetTexture(const std::shared_ptr<ITexture>& Texture)
 {
 	_ASSERT(false);
 }
 
-std::shared_ptr<IMaterial> CM2ParticleSystem::GetMaterial() const
+std::shared_ptr<ITexture> CM2ParticleSystem::GetTexture() const
 {
-	return m_Material;
+	return m_Texture;
 }
 
 std::shared_ptr<IBlendState> CM2ParticleSystem::GetBlendState() const

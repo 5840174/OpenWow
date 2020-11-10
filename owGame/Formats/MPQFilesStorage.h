@@ -22,30 +22,25 @@ struct SMPQFileLocation
 };
 
 class ZN_API CMPQFilesStorage 
-	: public IFilesStorage
-	, public IFilesStorageEx
+	: public IznFilesStorage
 {
 public:
-	CMPQFilesStorage(std::string _path, Priority _priority = Priority::PRIOR_NORMAL);
+	CMPQFilesStorage(std::string _path);
 	virtual ~CMPQFilesStorage();
 
 	// IFilesStorage
 	std::shared_ptr<IFile>  OpenFile(std::string FileName, EFileAccessType FileAccessType = EFileAccessType::Read) override;
 	bool                    SaveFile(std::shared_ptr<IFile> File) override;
-	size_t                  GetFileSize(std::string FileName) override;
-	bool                    IsFileExists(std::string FileName) override;
-
-	// IFilesStorageEx
-	Priority GetPriority() const;
+	size_t                  GetFileSize(std::string FileName) const override;
+	bool                    IsFileExists(std::string FileName) const override;
 
 	// CMPQFilesStorage
 	void AddArchive(std::string _filename);
-	SMPQFileLocation GetFileLocation(const std::string& _filename);
+	SMPQFileLocation GetFileLocation(const std::string& _filename) const ;
 
 private:
 	const std::string           m_Path;
-	const Priority              m_Priority;
 
 	std::vector<mpq_archive_s*> m_OpenArchives;
-	std::mutex                  m_Lock;
+	mutable std::mutex m_Lock;
 };

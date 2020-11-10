@@ -39,10 +39,10 @@ bool CM2_Base_Instance::Load()
 
 	if (getM2().getSkeleton().hasBones())
 	{
-		m_SkeletonComponent = AddComponent(std::make_shared<CM2SkeletonComponent3D>(*this));
+		m_SkeletonComponent = AddComponentT(std::make_shared<CM2SkeletonComponent3D>(*this));
 	}
 
-	m_ParticleComponent = AddComponent(std::make_shared<CM2ParticlesComponent3D>(*this));
+	m_ParticleComponent = AddComponentT(std::make_shared<CM2ParticlesComponent3D>(*this));
 
 	UpdateLocalTransform();
 	CreateInstances();
@@ -96,10 +96,10 @@ const std::shared_ptr<ITexture>& CM2_Base_Instance::getSpecialTexture(SM2_Textur
 
 void CM2_Base_Instance::Initialize()
 {
-	GetColliderComponent()->SetCullStrategy(IColliderComponent3D::ECullStrategy::ByFrustrumAndDistance);
-	GetColliderComponent()->SetCullDistance(GetBaseManager().GetManager<ISettings>()->GetGroup("WoWSettings")->GetSettingT<float>("ADT_MDX_Distance")->Get());
-	GetColliderComponent()->SetBounds(getM2().GetBounds());
-	GetColliderComponent()->SetDebugDrawMode(false);
+	GetComponentT<IColliderComponent3D>()->SetCullStrategy(IColliderComponent3D::ECullStrategy::ByFrustrumAndDistance);
+	GetComponentT<IColliderComponent3D>()->SetCullDistance(GetBaseManager().GetManager<ISettings>()->GetGroup("WoWSettings")->GetSettingT<float>("ADT_MDX_Distance")->Get());
+	GetComponentT<IColliderComponent3D>()->SetBounds(getM2().GetBounds());
+	GetComponentT<IColliderComponent3D>()->SetDebugDrawMode(false);
 }
 
 void CM2_Base_Instance::Update(const UpdateEventArgs & e)
@@ -107,7 +107,7 @@ void CM2_Base_Instance::Update(const UpdateEventArgs & e)
 	if (GetState() != ILoadable::ELoadableState::Loaded)
 		return;
 
-	if (GetColliderComponent()->IsCulled(e.Camera))
+	if (GetComponentT<IColliderComponent3D>()->IsCulled(e.Camera))
 		return;
 
 	if (m_Animator)
@@ -121,7 +121,7 @@ void CM2_Base_Instance::Update(const UpdateEventArgs & e)
 
 void CM2_Base_Instance::Accept(IVisitor* visitor)
 {
-	SceneNode3D::Accept(visitor);
+	CSceneNode::Accept(visitor);
 }
 
 
@@ -133,7 +133,7 @@ glm::mat4 CM2_Base_Instance::CalculateLocalTransform() const
 {
 	if (m_AttachmentType != M2_AttachmentType::NotAttached)
 	{
-		if (auto parent = GetParent().lock())
+		if (auto parent = GetParent())
 		{
 			auto parentM2Instance = std::dynamic_pointer_cast<CM2_Base_Instance>(parent);
 			_ASSERT(parentM2Instance != nullptr);
@@ -156,6 +156,6 @@ glm::mat4 CM2_Base_Instance::CalculateLocalTransform() const
 
 void CM2_Base_Instance::RegisterComponents()
 {
-	m_Components_Models = AddComponent(std::make_shared<CModelsComponent3D>(*this));
-    m_Components_Collider = AddComponent(std::make_shared<CM2_ColliderComponent>(*this));
+	AddComponentT(std::make_shared<CModelsComponent3D>(*this));
+    AddComponentT(std::make_shared<CM2_ColliderComponent>(*this));
 }

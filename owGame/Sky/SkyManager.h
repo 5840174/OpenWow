@@ -3,7 +3,7 @@
 #include "Sky.h"
 
 class ZN_API SkyManager
-	: public SceneNode3D
+	: public CSceneNode
 	, public ISkyManager
 	, public CLoadableObject
 {

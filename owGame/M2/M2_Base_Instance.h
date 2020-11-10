@@ -8,7 +8,7 @@
 #include "M2_ParticlesComponent.h"
 
 class ZN_API CM2_Base_Instance 
-	: public SceneNode3D
+	: public CSceneNode
 	, public CLoadableObject
 {
 public:

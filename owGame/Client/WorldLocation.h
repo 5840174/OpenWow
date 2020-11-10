@@ -1,7 +1,7 @@
 #pragma once
 
 struct ZN_API WorldLocation
-	: public SceneNode3D
+	: public CSceneNode
 {
 	explicit WorldLocation(uint32 _mapid = 0, float _x = 0, float _y = 0, float _z = 0, float _o = 0)
 		: mapid(_mapid)

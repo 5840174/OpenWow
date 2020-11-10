@@ -20,12 +20,12 @@ CM2SkeletonBone3D::~CM2SkeletonBone3D()
 {
 }
 
-const std::weak_ptr<ISkeletonBone3D>& CM2SkeletonBone3D::GetParentBone() const
+const std::weak_ptr<ISkeletonComponentBone3D>& CM2SkeletonBone3D::GetParentBone() const
 {
 	return m_ParentBone;
 }
 
-const std::vector<std::shared_ptr<ISkeletonBone3D>>& CM2SkeletonBone3D::GetChilds() const
+const std::vector<std::shared_ptr<ISkeletonComponentBone3D>>& CM2SkeletonBone3D::GetChilds() const
 {
 	return m_Childs;
 }
@@ -122,7 +122,7 @@ std::vector<glm::mat4> CM2SkeletonComponent3D::CreatePose(size_t BoneStartIndex,
 //
 // ISkeletonComponent3D
 //
-std::shared_ptr<ISkeletonBone3D> CM2SkeletonComponent3D::GetBone(size_t Index) const
+std::shared_ptr<ISkeletonComponentBone3D> CM2SkeletonComponent3D::GetBone(size_t Index) const
 {
 	_ASSERT(Index < m_Bones.size());
 	return m_Bones.at(Index);

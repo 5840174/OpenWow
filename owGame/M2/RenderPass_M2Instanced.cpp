@@ -71,7 +71,7 @@ void CRenderPass_M2_Instanced::Render(RenderEventArgs & e)
 std::shared_ptr<IRenderPassPipelined> CRenderPass_M2_Instanced::CreatePipeline(std::shared_ptr<IRenderTarget> RenderTarget, const Viewport * Viewport)
 {
 	// CreateShaders
-	std::shared_ptr<IShader> vertexShader = GetRenderDevice().GetObjectsFactory().CreateShader(EShaderType::VertexShader, "shaders_D3D/M2.hlsl", "VS_main_Inst");
+	std::shared_ptr<IShader> vertexShader = GetRenderDevice().GetObjectsFactory().LoadShader(EShaderType::VertexShader, "shaders_D3D/M2.hlsl", "VS_main_Inst");
 	//vertexShader->LoadInputLayoutFromReflector();
 	std::vector<SCustomVertexElement> elements;
 	elements.push_back({ 0, 0,  ECustomVertexElementType::FLOAT3, ECustomVertexElementUsage::POSITION, 0 });
@@ -82,7 +82,7 @@ std::shared_ptr<IRenderPassPipelined> CRenderPass_M2_Instanced::CreatePipeline(s
 	elements.push_back({ 0, 68, ECustomVertexElementType::FLOAT2, ECustomVertexElementUsage::TEXCOORD, 1 });
 	vertexShader->LoadInputLayoutFromCustomElements(elements);
 
-	std::shared_ptr<IShader> pixelShader = GetRenderDevice().GetObjectsFactory().CreateShader(EShaderType::PixelShader, "shaders_D3D/M2.hlsl", "PS_main");
+	std::shared_ptr<IShader> pixelShader = GetRenderDevice().GetObjectsFactory().LoadShader(EShaderType::PixelShader, "shaders_D3D/M2.hlsl", "PS_main");
 
 	// PIPELINES
 	std::shared_ptr<IPipelineState> pipeline = GetRenderDevice().GetObjectsFactory().CreatePipelineState();

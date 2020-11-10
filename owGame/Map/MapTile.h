@@ -9,7 +9,7 @@ class CMap;
 // FORWARD END
 
 class ZN_API CMapTile
-	: public SceneNode3D
+	: public CSceneNode
 	, public CLoadableObject
 {
 public:

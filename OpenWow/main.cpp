@@ -17,7 +17,7 @@ void main_internal(int argumentCount, char* arguments[])
 
 	CNativeWindowFactory nativeWindowFactory(&app);
 
-	std::unique_ptr<INativeWindow> nativeWindow = nativeWindowFactory.CreateWindowInstance(
+	std::unique_ptr<IznNativeWindow> nativeWindow = nativeWindowFactory.CreateWindowInstance(
 		L"Zenon Engine",
 		BaseManager->GetManager<ISettings>()->GetGroup("Video")->GetSettingT<glm::vec2>("WindowSize")->Get().x,
 		BaseManager->GetManager<ISettings>()->GetGroup("Video")->GetSettingT<glm::vec2>("WindowSize")->Get().y
@@ -31,10 +31,10 @@ void main_internal(int argumentCount, char* arguments[])
 
 	IRenderDevice& renderDevice = app.CreateRenderDevice(RenderDeviceType::RenderDeviceType_DirectX);
 
-	std::shared_ptr<IFontsManager> fontsManager = std::make_shared<FontsManager>(renderDevice, *BaseManager);
-	BaseManager->AddManager<IFontsManager>(std::move(fontsManager));
+	std::shared_ptr<IznFontsManager> fontsManager = std::make_shared<FontsManager>(renderDevice, *BaseManager);
+	BaseManager->AddManager<IznFontsManager>(std::move(fontsManager));
 
-	const auto& firstRenderWindow = renderDevice.GetObjectsFactory().CreateRenderWindow(*nativeWindow, false);
+	const auto& firstRenderWindow = renderDevice.GetObjectsFactory().CreateRenderWindow(std::move(nativeWindow), false);
 	app.AddRenderWindow(firstRenderWindow);
 
 	//const auto& secondRenderWindow = renderDevice.GetObjectsFactory().CreateRenderWindow(*nativeWindow2, false);

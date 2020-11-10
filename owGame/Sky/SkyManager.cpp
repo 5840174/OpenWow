@@ -158,7 +158,7 @@ void SkyManager::InitBuffer()
 	std::shared_ptr<IModel> model = m_RenderDevice.GetObjectsFactory().CreateModel();
 	model->AddConnection(nullptr, geometry);
 
-	GetComponent<IModelsComponent3D>()->AddModel(model);
+	GetComponentT<IModelsComponent3D>()->SetModel(model);
 }
 
 void SkyManager::CalculateSkiesWeights(const glm::vec3& pos)

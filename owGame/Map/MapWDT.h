@@ -41,7 +41,7 @@ public:
 	virtual ~CMapWDT();
 
 	// ISceneNodeProvider
-	void CreateInsances(const std::shared_ptr<ISceneNode3D>& Parent) const override;
+	void CreateInsances(const std::shared_ptr<ISceneNode>& Parent) const override;
 
 	void Load();
 

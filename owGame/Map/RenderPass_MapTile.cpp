@@ -8,7 +8,7 @@
 #include "MapTile.h"
 
 CRenderPass_MapTile::CRenderPass_MapTile(IRenderDevice& RenderDevice, std::shared_ptr<IScene> scene)
-	: ScenePass(RenderDevice, scene)
+	: ScenePass(scene)
 {
 	m_WoWSettings = RenderDevice.GetBaseManager().GetManager<ISettings>()->GetGroup("WoWSettings");
 }
@@ -21,7 +21,7 @@ CRenderPass_MapTile::~CRenderPass_MapTile()
 //
 // IVisitor
 //
-EVisitResult CRenderPass_MapTile::Visit(const ISceneNode3D* node)
+EVisitResult CRenderPass_MapTile::Visit(const ISceneNode* node)
 {	
 	if (node->Is(cMapTile_NodeType))
 	{

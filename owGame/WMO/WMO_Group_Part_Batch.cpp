@@ -30,7 +30,7 @@ WMO_Group_Part_Batch::~WMO_Group_Part_Batch()
 //
 // ModelProxie
 //
-bool WMO_Group_Part_Batch::Render(const RenderEventArgs& renderEventArgs) const
+bool WMO_Group_Part_Batch::Render() const
 {
-	return ModelProxie::Render(renderEventArgs);
+	return ModelProxie::Render();
 }

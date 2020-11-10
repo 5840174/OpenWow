@@ -3,7 +3,7 @@
 // General
 #include "MPQFilesStorage.h"
 
-CMPQFilesStorage::CMPQFilesStorage(std::string _path, Priority _priority)
+CMPQFilesStorage::CMPQFilesStorage(std::string _path)
 	: m_Path(_path)
 	, m_Priority(_priority)
 {
@@ -109,7 +109,7 @@ bool CMPQFilesStorage::SaveFile(std::shared_ptr<IFile> File)
 	return false;
 }
 
-size_t CMPQFilesStorage::GetFileSize(std::string FileName)
+size_t CMPQFilesStorage::GetFileSize(std::string FileName) const
 {
 	std::lock_guard<std::mutex> lock(m_Lock);
 
@@ -124,21 +124,11 @@ size_t CMPQFilesStorage::GetFileSize(std::string FileName)
 	return 0;
 }
 
-bool CMPQFilesStorage::IsFileExists(std::string FileName)
+bool CMPQFilesStorage::IsFileExists(std::string FileName) const
 {
 	std::lock_guard<std::mutex> lock(m_Lock);
 
 	return GetFileLocation(FileName).exists;
-}
-
-
-
-//
-// IFilesStorageEx
-//
-IFilesStorageEx::Priority CMPQFilesStorage::GetPriority() const
-{
-	return m_Priority;
 }
 
 
@@ -187,7 +177,7 @@ void CMPQFilesStorage::AddArchive(std::string filename)
 	Log::Green("CMPQFile[%s]: Added!", filename.c_str());
 }
 
-SMPQFileLocation CMPQFilesStorage::GetFileLocation(const std::string& filename)
+SMPQFileLocation CMPQFilesStorage::GetFileLocation(const std::string& filename) const
 {
 	for (auto& i = m_OpenArchives.rbegin(); i != m_OpenArchives.rend(); ++i)
 	{
