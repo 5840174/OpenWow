@@ -6,10 +6,10 @@
 // Additional
 #include "MapChunk.h"
 
-CRenderPass_ADT_MCNK::CRenderPass_ADT_MCNK(IRenderDevice& RenderDevice, const std::shared_ptr<CSceneCreateTypedListsPass>& SceneNodeListPass)
-	: CBaseList3DPass(RenderDevice, SceneNodeListPass, cMapChunk_NodeType)
+CRenderPass_ADT_MCNK::CRenderPass_ADT_MCNK(IScene& Scene)
+	: Base3DPass(Scene)
 {
-	m_ADT_MCNK_Distance = RenderDevice.GetBaseManager().GetManager<ISettings>()->GetGroup("WoWSettings")->GetPropertyT<float>("ADT_MCNK_Distance");
+	m_ADT_MCNK_Distance = GetBaseManager().GetManager<ISettings>()->GetGroup("WoWSettings")->GetPropertyT<float>("ADT_MCNK_Distance");
 }
 
 CRenderPass_ADT_MCNK::~CRenderPass_ADT_MCNK()
@@ -20,12 +20,14 @@ CRenderPass_ADT_MCNK::~CRenderPass_ADT_MCNK()
 //
 // IRenderPassPipelined
 //
-std::shared_ptr<IRenderPassPipelined> CRenderPass_ADT_MCNK::CreatePipeline(std::shared_ptr<IRenderTarget> RenderTarget, const Viewport * Viewport)
+std::shared_ptr<IRenderPassPipelined> CRenderPass_ADT_MCNK::ConfigurePipeline(std::shared_ptr<IRenderTarget> RenderTarget)
 {
+	__super::ConfigurePipeline(RenderTarget);
+
 	std::shared_ptr<IShader> vertexShader;
 	std::shared_ptr<IShader> pixelShader;
 
-	if (GetRenderDevice().GetDeviceType() == RenderDeviceType::RenderDeviceType_DirectX)
+	if (GetRenderDevice().GetDeviceType() == RenderDeviceType::RenderDeviceType_DirectX11)
 	{
 		vertexShader = GetRenderDevice().GetObjectsFactory().LoadShader(EShaderType::VertexShader, "shaders_D3D/MapChunk.hlsl", "VS_main");
 		pixelShader = GetRenderDevice().GetObjectsFactory().LoadShader(EShaderType::PixelShader, "shaders_D3D/MapChunk.hlsl", "PS_main");
@@ -42,10 +44,10 @@ std::shared_ptr<IRenderPassPipelined> CRenderPass_ADT_MCNK::CreatePipeline(std::
 	pipeline->GetBlendState()->SetBlendMode(disableBlending);
 	pipeline->GetDepthStencilState()->SetDepthMode(enableDepthWrites);
 	pipeline->GetRasterizerState()->SetCullMode(IRasterizerState::CullMode::Back);
-	pipeline->GetRasterizerState()->SetFillMode(IRasterizerState::FillMode::Solid);
+	pipeline->GetRasterizerState()->SetFillMode(IRasterizerState::FillMode::Solid, IRasterizerState::FillMode::Solid);
 	pipeline->SetRenderTarget(RenderTarget);
-	pipeline->SetShader(EShaderType::VertexShader, vertexShader);
-	pipeline->SetShader(EShaderType::PixelShader, pixelShader);
+	pipeline->SetShader(vertexShader);
+	pipeline->SetShader(pixelShader);
 
 	// Create samplers
 	std::shared_ptr<ISamplerState> linearClampSampler = GetRenderDevice().GetObjectsFactory().CreateSamplerState();
@@ -59,7 +61,7 @@ std::shared_ptr<IRenderPassPipelined> CRenderPass_ADT_MCNK::CreatePipeline(std::
 	pipeline->SetSampler(0, linearRepeatSampler);
 	pipeline->SetSampler(1, linearClampSampler);
 
-	return SetPipeline(pipeline);
+	return shared_from_this();
 }
 
 
@@ -67,13 +69,11 @@ std::shared_ptr<IRenderPassPipelined> CRenderPass_ADT_MCNK::CreatePipeline(std::
 //
 // IVisitor
 //
-EVisitResult CRenderPass_ADT_MCNK::Visit(const ISceneNode* SceneNode3D)
+EVisitResult CRenderPass_ADT_MCNK::Visit(const std::shared_ptr<ISceneNode>& SceneNode3D)
 {
-	_ASSERT(SceneNode3D->Is(cMapChunk_NodeType));
-	
-	if (const CMapChunk* adtMCNKInstance = static_cast<const CMapChunk*>(SceneNode3D))
+	if (const auto adtMCNKInstance = std::dynamic_pointer_cast<CMapChunk>(SceneNode3D))
 	{
-		return CBaseList3DPass::Visit(SceneNode3D);
+		return __super::Visit(adtMCNKInstance);
 	}
 
 	_ASSERT(false);

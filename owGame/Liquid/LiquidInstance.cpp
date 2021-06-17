@@ -3,9 +3,10 @@
 // General
 #include "LiquidInstance.h"
 
-Liquid_Instance::Liquid_Instance()
+Liquid_Instance::Liquid_Instance(IScene& Scene)
+	: CSceneNode(Scene)
 {
-	SetType(cLiquid_NodeType);
+
 }
 
 Liquid_Instance::~Liquid_Instance()

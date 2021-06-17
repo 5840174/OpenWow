@@ -12,7 +12,7 @@ class ZN_API CMap
 	: public CSceneNode
 {
 public:
-	CMap(IBaseManager& BaseManager, IRenderDevice& RenderDevice);
+	CMap(IScene& Scene, IBaseManager& BaseManager, IRenderDevice& RenderDevice);
 	virtual ~CMap();
 
 	void                                            MapPreLoad(const DBC_MapRecord* _map);
@@ -34,7 +34,9 @@ public: // Getters
 
 	bool                                            isUncompressedAlpha() const { return m_WDT->getFlags().Flag_8bitMCAL; }
 	bool                                            isTileBased() const { return m_WDT->MapHasTiles(); }
+#ifdef USE_WMO_MODELS
 	std::shared_ptr<CMapWMOInstance>                getGlobalInstance() const { return m_WDT->GetGlobalWMOInstance(); }
+#endif
 	int                                             GetCurrentX() const { return m_CurrentTileX; }
 	int                                             GetCurrentZ() const { return m_CurrentTileZ; }
 

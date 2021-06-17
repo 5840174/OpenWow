@@ -36,7 +36,7 @@ void CMapWMOInstance::Initialize()
 
 	// CTransformComponent
 	{
-		SetTranslate(m_PlacementInfo.position);
+		SetPosition(m_PlacementInfo.position);
 		SetRotation(m_PlacementInfo.rotation);
 	}
 
@@ -66,7 +66,7 @@ void CMapWMOInstance::Accept(IVisitor* visitor)
 glm::mat4 CMapWMOInstance::CalculateLocalTransform() const
 {
 	glm::mat4 localTransform = glm::mat4(1.0f);
-	localTransform = glm::translate(localTransform, GetTranslation());
+	localTransform = glm::translate(localTransform, GetPosition());
 	localTransform = glm::rotate(localTransform, glm::radians(GetRotation().y - 90.0f), glm::vec3(0, 1, 0));
 	localTransform = glm::rotate(localTransform, glm::radians(-GetRotation().x), glm::vec3(0, 0, 1));
 	localTransform = glm::rotate(localTransform, glm::radians(GetRotation().z), glm::vec3(1, 0, 0));

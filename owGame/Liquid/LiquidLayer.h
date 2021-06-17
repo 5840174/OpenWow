@@ -15,7 +15,7 @@ public:
 	std::shared_ptr<IMaterial> GetMaterial() const;
 
 	// IModel
-	bool Render() const override;
+	bool Render(const ShaderMap& Shaders) const override;
 
 public:
 	const DBC_LiquidTypeRecord* LiquidType;

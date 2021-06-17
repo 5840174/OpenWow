@@ -6,8 +6,9 @@
 // General
 #include "MapTile.h"
 
-CMapTile::CMapTile(IBaseManager& BaseManager, IRenderDevice& RenderDevice, const CMap& Map, uint32 IndexX, uint32 IndexZ)
-	: m_BaseManager(BaseManager)
+CMapTile::CMapTile(IScene& Scene, IBaseManager& BaseManager, IRenderDevice& RenderDevice, const CMap& Map, uint32 IndexX, uint32 IndexZ)
+	: CSceneNode(Scene)
+	, m_BaseManager(BaseManager)
 	, m_RenderDevice(RenderDevice)
 	, m_Map(Map)
 	, m_IndexX(IndexX)
@@ -54,7 +55,7 @@ void CMapTile::Initialize()
 	if (false)
 	{
 		std::shared_ptr<IColliderComponent> colliderComponent = GetComponentT<IColliderComponent>();
-		glm::vec3 translate = GetTranslation();
+		glm::vec3 translate = GetPosition();
 
 		BoundingBox bbox
 		(
@@ -120,7 +121,7 @@ bool CMapTile::Load()
 #if 0
 		textureInfo->diffuseTexture = GetBaseManager().GetManager<IImagesFactory>()->CreateImage(_string);
 #else
-		textureInfo->diffuseTexture = m_RenderDevice.GetObjectsFactory().LoadTexture2D(_string);
+		textureInfo->diffuseTexture = m_RenderDevice.GetBaseManager().GetManager<IznTexturesFactory>()->LoadTexture2D(_string);
 #endif
 
 		// PreLoad specular texture
@@ -131,7 +132,7 @@ bool CMapTile::Load()
 #if 0
 			textureInfo->specularTexture = GetBaseManager().GetManager<IImagesFactory>()->CreateImage(specularTextureName);
 #else
-			textureInfo->specularTexture = m_RenderDevice.GetObjectsFactory().LoadTexture2D(specularTextureName);
+			textureInfo->specularTexture = m_RenderDevice.GetBaseManager().GetManager<IznTexturesFactory>()->LoadTexture2D(specularTextureName);
 #endif
 		}
 		catch (const CException& e)
@@ -247,7 +248,11 @@ bool CMapTile::Load()
 
 	for (uint32_t i = 0; i < C_ChunksInTileGlobal; i++)
 	{
-		auto chunk = CreateSceneNode<CMapChunk>(m_RenderDevice, m_Map, std::dynamic_pointer_cast<CMapTile>(shared_from_this()), chunks[i], f);
+		auto chunk = MakeShared(CMapChunk, GetScene(), m_RenderDevice, m_Map, std::dynamic_pointer_cast<CMapTile>(shared_from_this()), chunks[i], f);
+		chunk->Initialize();
+		AddChild(chunk);
+		//auto chunk = GetScene().CreateSceneNode<CMapChunk>(m_RenderDevice, m_Map, std::dynamic_pointer_cast<CMapTile>(shared_from_this()), chunks[i], f);
+
 		GetBaseManager().GetManager<ILoader>()->AddToLoadQueue(chunk);
 		m_Chunks.push_back(chunk.get());
 	}

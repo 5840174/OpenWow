@@ -115,6 +115,17 @@ void SkyManager::Calculate(const ICameraComponent3D* camera, uint32 _time)
 	colorsBuffer->Copy(colorsBufferNew.get());
 }
 
+namespace
+{
+inline void rotate(float x0, float y0, float *x, float *y, float angle)
+{
+	float xa = *x - x0;
+	float ya = *y - y0;
+	*x = xa * glm::cos(angle) - ya * glm::sin(angle) + x0;
+	*y = xa * glm::sin(angle) + ya * glm::cos(angle) + y0;
+}
+}
+
 void SkyManager::InitBuffer()
 {
 	glm::vec3 basepos1[C_SkycolorsCount];

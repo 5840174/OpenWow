@@ -179,7 +179,7 @@ void WoWObject::ProcessMovementUpdate(CByteBuffer& Bytes)
 	if (object)
 	{
 		glm::vec3 position = fromGameToReal(glm::vec3(object->PositionX, object->PositionY, object->PositionZ));
-		object->SetTranslate(position);
+		object->SetPosition(position);
 		object->SetRotation(glm::vec3(0.0f, object->Orientation + glm::half_pi<float>(), 0.0f));
 	}
 }

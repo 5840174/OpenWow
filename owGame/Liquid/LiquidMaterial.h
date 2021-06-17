@@ -31,11 +31,4 @@ public:
 	void SetDeepAlpha(float value);
 	void SetColorLight(glm::vec3 value);
 	void SetColorDark(glm::vec3 value);
-
-protected:
-	void UpdateConstantBuffer() const override;
-
-private:
-
-	MaterialProperties* m_pProperties;
 };

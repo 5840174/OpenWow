@@ -29,10 +29,9 @@ public:
 	virtual ~CMPQFilesStorage();
 
 	// IFilesStorage
-	std::shared_ptr<IFile>  OpenFile(std::string FileName, EFileAccessType FileAccessType = EFileAccessType::Read) override;
-	bool                    SaveFile(std::shared_ptr<IFile> File) override;
-	size_t                  GetFileSize(std::string FileName) const override;
-	bool                    IsFileExists(std::string FileName) const override;
+	std::shared_ptr<IFile>  Open(std::string FileName) override;
+	size_t                  GetSize(std::string FileName) const override;
+	bool                    IsExists(std::string FileName) const override;
 
 	// CMPQFilesStorage
 	void AddArchive(std::string _filename);

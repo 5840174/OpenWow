@@ -28,12 +28,11 @@ namespace
 	}
 }
 
-CMap::CMap(IBaseManager& BaseManager, IRenderDevice& RenderDevice)
-	: m_BaseManager(BaseManager)
+CMap::CMap(IScene& Scene, IBaseManager& BaseManager, IRenderDevice& RenderDevice)
+	: CSceneNode(Scene)
+	, m_BaseManager(BaseManager)
 	, m_RenderDevice(RenderDevice)
 {
-	SetType(cMap_NodeType);
-
 	m_CurrentTileX = m_CurrentTileZ = -1;
 	m_IsOnInvalidTile = false;
 
@@ -54,7 +53,7 @@ CMap::CMap(IBaseManager& BaseManager, IRenderDevice& RenderDevice)
 
 CMap::~CMap()
 {
-	SafeDelete(_MapShared);
+	delete _MapShared;
 }
 
 // --
@@ -116,14 +115,14 @@ void CMap::Update(const UpdateEventArgs& e)
 	if (m_Current[midTile][midTile] != nullptr || m_IsOnInvalidTile)
 	{
 		if (m_IsOnInvalidTile ||
-			(camera->GetTranslation().x < m_Current[midTile][midTile]->GetTranslation().x) ||
-			(camera->GetTranslation().x > (m_Current[midTile][midTile]->GetTranslation().x + C_TileSize)) ||
-			(camera->GetTranslation().z < m_Current[midTile][midTile]->GetTranslation().z) ||
-			(camera->GetTranslation().z > (m_Current[midTile][midTile]->GetTranslation().z + C_TileSize)))
+			(camera->GetPosition().x < m_Current[midTile][midTile]->GetPosition().x) ||
+			(camera->GetPosition().x > (m_Current[midTile][midTile]->GetPosition().x + C_TileSize)) ||
+			(camera->GetPosition().z < m_Current[midTile][midTile]->GetPosition().z) ||
+			(camera->GetPosition().z > (m_Current[midTile][midTile]->GetPosition().z + C_TileSize)))
 		{
 
-			enteredTileX = static_cast<int>(camera->GetTranslation().x / C_TileSize);
-			enteredTileZ = static_cast<int>(camera->GetTranslation().z / C_TileSize);
+			enteredTileX = static_cast<int>(camera->GetPosition().x / C_TileSize);
+			enteredTileZ = static_cast<int>(camera->GetPosition().z / C_TileSize);
 
 			loading = true;
 		}
@@ -225,7 +224,11 @@ std::shared_ptr<CMapTile> CMap::LoadTile(int32 x, int32 z)
 	}
 
 	// Create new tile
-	m_ADTCache[firstnull] = CreateSceneNode<CMapTile>(m_BaseManager, m_RenderDevice, *this, x, z);
+	m_ADTCache[firstnull] = MakeShared(CMapTile, GetScene(), m_BaseManager, m_RenderDevice, *this, x, z);
+	m_ADTCache[firstnull]->Initialize();
+	AddChild(m_ADTCache[firstnull]);
+	//m_ADTCache[firstnull] = GetScene().CreateSceneNode<CMapTile>(m_BaseManager, m_RenderDevice, *this, x, z);
+
 	m_BaseManager.GetManager<ILoader>()->AddToLoadQueue(m_ADTCache[firstnull]);
 	return m_ADTCache[firstnull];
 }
@@ -248,11 +251,11 @@ uint32 CMap::GetAreaID(const ICameraComponent3D* camera)
 		return UINT32_MAX;
 	}
 
-	int32 tileX = (int)(camera->GetTranslation().x / C_TileSize);
-	int32 tileZ = (int)(camera->GetTranslation().z / C_TileSize);
+	int32 tileX = (int)(camera->GetPosition().x / C_TileSize);
+	int32 tileZ = (int)(camera->GetPosition().z / C_TileSize);
 
-	int32 chunkX = (int)(fmod(camera->GetTranslation().x, C_TileSize) / C_ChunkSize);
-	int32 chunkZ = (int)(fmod(camera->GetTranslation().z, C_TileSize) / C_ChunkSize);
+	int32 chunkX = (int)(fmod(camera->GetPosition().x, C_TileSize) / C_ChunkSize);
+	int32 chunkZ = (int)(fmod(camera->GetPosition().z, C_TileSize) / C_ChunkSize);
 
 	if (
 		(tileX < m_CurrentTileX - static_cast<int32>(C_RenderedTiles / 2)) ||

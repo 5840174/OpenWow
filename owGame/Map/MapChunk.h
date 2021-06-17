@@ -12,7 +12,7 @@ class ZN_API CMapChunk
 	, public CLoadableObject
 {
 public:
-	CMapChunk(IRenderDevice& RenderDevice, const CMap& Map, const std::shared_ptr<CMapTile>& MapTile, const ADT_MCIN& Chunk, const std::shared_ptr<IByteBuffer>& Bytes);
+	CMapChunk(IScene& Scene, IRenderDevice& RenderDevice, const CMap& Map, const std::shared_ptr<CMapTile>& MapTile, const ADT_MCIN& Chunk, const std::shared_ptr<IByteBuffer>& Bytes);
 	virtual ~CMapChunk();
 
 	uint32 GetAreaID() const;

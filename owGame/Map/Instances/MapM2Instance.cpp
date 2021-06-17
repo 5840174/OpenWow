@@ -24,7 +24,7 @@ void CMapM2Instance::Initialize()
 {
 	// CTransformComponent
 	{
-		SetTranslate(m_PlacementInfo.position);
+		SetPosition(m_PlacementInfo.position);
 		SetRotation(m_PlacementInfo.rotation);
 		SetScale(glm::vec3(static_cast<float>(m_PlacementInfo.scale) / 1024.0f));
 	}
@@ -54,7 +54,7 @@ void CMapM2Instance::Accept(IVisitor* visitor)
 glm::mat4 CMapM2Instance::CalculateLocalTransform() const
 {
 	glm::mat4 localTransform(1.0f);
-	localTransform = glm::translate(localTransform, GetTranslation());
+	localTransform = glm::translate(localTransform, GetPosition());
 	localTransform = glm::rotate(localTransform, glm::radians(GetRotation().y - 90.0f), glm::vec3(0, 1, 0));
 	localTransform = glm::rotate(localTransform, glm::radians(-GetRotation().x)       , glm::vec3(0, 0, 1));
 	localTransform = glm::rotate(localTransform, glm::radians(GetRotation().z)        , glm::vec3(1, 0, 0));

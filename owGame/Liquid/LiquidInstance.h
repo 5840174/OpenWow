@@ -6,6 +6,6 @@ class ZN_API Liquid_Instance
 	: public CSceneNode
 {
 public:
-	Liquid_Instance();
+	Liquid_Instance(IScene& Scene);
 	virtual ~Liquid_Instance();
 };

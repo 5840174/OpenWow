@@ -69,7 +69,9 @@ protected:
 	bool LoadDXT_Helper(std::shared_ptr<IFile> io);
 
 public: // Static
+	static bool IsFilenameSupported(const std::string& Filename);
 	static bool IsFileSupported(std::shared_ptr<IFile> File);
+	static std::shared_ptr<CImageBLP> CreateEmptyImage(uint32 Width, uint32 Height, uint32 BitsPerPixel);
 	static std::shared_ptr<CImageBLP> CreateImage(std::shared_ptr<IFile> File);
 
 };

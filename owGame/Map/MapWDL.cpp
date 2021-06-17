@@ -106,7 +106,9 @@ void CMapWDL::CreateInsances(const std::shared_ptr<ISceneNode>& Parent) const
 		}
 	}
 
+
 	// Load low-resolution WMOs
+#ifdef USE_WMO_MODELS
 	Log::Green("Map_GlobalWMOs[]: Low WMOs count [%d].", m_LowResolutionWMOsPlacementInfo.size());
 	for (auto it : m_LowResolutionWMOsPlacementInfo)
 	{
@@ -114,6 +116,7 @@ void CMapWDL::CreateInsances(const std::shared_ptr<ISceneNode>& Parent) const
 		//CMapWMOInstance* wmoInstance = _parent->CreateSceneNode<CMapWMOInstance>(m_LowResolutionWMOsNames[it.nameIndex], it);
 		//m_LowResolutionWMOs.push_back(wmoInstance);
 	}
+#endif
 }
 
 void CMapWDL::UpdateCamera(const ICameraComponent3D * camera)
@@ -138,27 +141,35 @@ void CMapWDL::Load()
 		buffer->readBytes(&version, 4);
 		_ASSERT_EXPR(version == 18, "Version mismatch != 18");
 	}
+
 	if (auto buffer = reader.OpenChunk("MWMO")) // Filenames for WMO that appear in the low resolution map. Zero terminated strings.
 	{
 		//WOWCHUNK_READ_STRINGS_BEGIN
 		//	m_LowResolutionWMOsNames.push_back(_string);
 		//WOWCHUNK_READ_STRINGS_END;
 	}
+
 	if (auto buffer = reader.OpenChunk("MWID")) // List of indexes into the MWMO chunk.
 	{
 	}
+
+#ifdef USE_WMO_MODELS
 	for (const auto& placement : reader.OpenChunkT<ADT_MODF>("MODF")) // Placement information for the WMO. Appears to be the same 64 byte structure used in the WDT and ADT MODF chunks.
 	{
 		m_LowResolutionWMOsPlacementInfo.push_back(placement);
 	}
+#endif
+
 	if (auto buffer = reader.OpenChunk("MAOF")) // Contains 64*64 = 4096 unsigned 32-bit integers, these are absolute offsets in the file to each map tile's MapAreaLow-array-entry. For unused tiles the value is 0.
 	{
 		buffer->readBytes(m_MAREOffsets, C_TilesInMap * C_TilesInMap * sizeof(uint32));
 	}
+
 	//if (auto buffer = reader.OpenChunk("MARE")) // Heightmap for one map tile.
 	//{
 		// Contains 17 * 17 + 16 * 16 = 545 signed 16-bit integers. So a 17 by 17 grid of height values is given, with additional height values in between grid points. Here, the "outer" 17x17 points are listed (in the usual row major order), followed by 16x16 "inner" points. The height values are on the same scale as those used in the regular height maps.
 	//}
+
 	//if (auto buffer = reader.OpenChunk("MAHO"))
 	//{
 		// After each MARE chunk there follows a MAHO (MapAreaHOles) chunk. It may be left out if the data is supposed to be 0 all the time. Its an array of 16 shorts. Each short is a bitmask. If the bit is not set, there is a hole at this position.
@@ -251,5 +262,5 @@ void CMapWDL::Load()
 
 	// Finish minimap
 	m_Minimap = m_RenderDevice.GetObjectsFactory().CreateEmptyTexture();
-	m_Minimap->LoadTextureFromImage(mimimapImage);
+	m_Minimap->LoadTexture2DFromImage(mimimapImage);
 }

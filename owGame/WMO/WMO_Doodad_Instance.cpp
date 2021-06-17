@@ -17,7 +17,7 @@ CWMO_Doodad_Instance::CWMO_Doodad_Instance(const std::shared_ptr<CM2>& M2Object,
 {
 	// CTransformComponent
 	{
-		SetTranslate(Fix_XZmY(_placement.position));
+		SetPosition(Fix_XZmY(_placement.position));
 		SetRotationQuaternion(glm::quat(_placement.orientation.w, -_placement.orientation.z, _placement.orientation.x, _placement.orientation.y));
 		SetScale(glm::vec3(_placement.scale, -_placement.scale, -_placement.scale));
 	}

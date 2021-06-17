@@ -15,6 +15,41 @@ static inline glm::quat Fix_XZmYW(const glm::quat& _quat)
 	return glm::quat(_quat.w, _quat.x, _quat.z, -_quat.y);
 }
 
+inline glm::vec4 fromARGB(uint32 color)
+{
+	const float a = ((color & 0xFF000000) >> 24) / 255.0f;
+	const float r = ((color & 0x00FF0000) >> 16) / 255.0f;
+	const float g = ((color & 0x0000FF00) >> 8) / 255.0f;
+	const float b = ((color & 0x000000FF)) / 255.0f;
+	return glm::vec4(r, g, b, a);
+}
+
+static inline glm::vec3 fromRGB(uint32 color)
+{
+	const float r = ((color & 0xFF0000) >> 16) / 255.0f;
+	const float g = ((color & 0x00FF00) >> 8) / 255.0f;
+	const float b = ((color & 0x0000FF)) / 255.0f;
+	return glm::vec3(r, g, b);
+}
+
+static inline glm::vec4 fromBGRA(uint32 color)
+{
+	const float b = ((color & 0xFF000000) >> 24) / 255.0f;
+	const float g = ((color & 0x00FF0000) >> 16) / 255.0f;
+	const float r = ((color & 0x0000FF00) >> 8) / 255.0f;
+	const float a = ((color & 0x000000FF)) / 255.0f;
+	return glm::vec4(r, g, b, a);
+}
+
+static inline glm::vec4 fromABGR(uint32 color)
+{
+	const float a = ((color & 0xFF000000) >> 24) / 255.0f;
+	const float b = ((color & 0x00FF0000) >> 16) / 255.0f;
+	const float g = ((color & 0x0000FF00) >> 8) / 255.0f;
+	const float r = ((color & 0x000000FF)) / 255.0f;
+	return glm::vec4(r, g, b, a);
+}
+
 #include __PACK_BEGIN
 
 struct C4Plane

@@ -28,6 +28,8 @@ const float C_DetailSize = 8.0f;
 const uint8	cM2Model_TexturesMaxCount = 128;
 const uint8	cM2Model_BonesInfluences = 4;
 
+/*
+
 // Types & Consts
 const ObjectType cSky_NodeType               = 1000;
 
@@ -44,3 +46,5 @@ const ObjectType cWMO_NodeType               = 1030;
 const ObjectType cWMOGroup_NodeType          = 1031;
 
 const ObjectType cM2_NodeType                = 1040;
+
+*/

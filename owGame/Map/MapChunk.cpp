@@ -11,6 +11,7 @@
 #include "MapChunkLiquid.h"
 #include "Map_Shared.h"
 #include "MapChunkMaterial.h"
+#include "Liquid/LiquidInstance.h"
 
 namespace
 {
@@ -24,15 +25,15 @@ namespace
 	}
 }
 
-CMapChunk::CMapChunk(IRenderDevice& RenderDevice, const CMap& Map, const std::shared_ptr<CMapTile>& MapTile, const ADT_MCIN& Chunk, const std::shared_ptr<IByteBuffer>& Bytes)
-	: CLoadableObject(MapTile)
+CMapChunk::CMapChunk(IScene& Scene, IRenderDevice& RenderDevice, const CMap& Map, const std::shared_ptr<CMapTile>& MapTile, const ADT_MCIN& Chunk, const std::shared_ptr<IByteBuffer>& Bytes)
+	: CSceneNode(Scene)
+	, CLoadableObject(MapTile)
 	, m_RenderDevice(RenderDevice)
 	, m_Map(Map)
 	, m_MapTile(*MapTile)
 	, m_Bytes(Bytes)
 {
 	m_Bytes = std::make_shared<CByteBuffer>(Bytes->getData() + Chunk.offset, Chunk.size);
-	SetType(cMapChunk_NodeType);
 	SetName("Chunk [" + std::to_string(Chunk.offset) + "]");
 }
 
@@ -72,11 +73,11 @@ void CMapChunk::Initialize()
 	// Scene node params
 	{
 		// Set translate
-		SetTranslate(glm::vec3(header.xpos * (-1.0f) + C_ZeroPoint, header.ypos, header.zpos * (-1.0f) + C_ZeroPoint));
+		SetPosition(glm::vec3(header.xpos * (-1.0f) + C_ZeroPoint, header.ypos, header.zpos * (-1.0f) + C_ZeroPoint));
 	}
 
 	{
-		glm::vec3 translate = GetTranslation();
+		glm::vec3 translate = GetPosition();
 
 		// Bounds
 		BoundingBox bbox
@@ -97,7 +98,7 @@ void CMapChunk::Initialize()
 //
 bool CMapChunk::Load()
 {
-	if (auto depend = GetDependense().lock())
+	if (auto depend = GetDependense())
 		if (depend->GetState() == ILoadable::ELoadableState::Deleted)
 			return false;
 
@@ -189,9 +190,14 @@ bool CMapChunk::Load()
 			}
 		}
 
-		bbox.setMinY(minHeight);
-		bbox.setMaxY(maxHeight);
-		bbox.calculateCenter();
+		auto min = bbox.getMin();
+		min.y = minHeight;
+		bbox.setMin(min);
+
+		auto max = bbox.getMax();
+		max.y = maxHeight;
+		bbox.setMax(max);
+
         GetComponentT<IColliderComponent>()->SetBounds(bbox);
 
 		verticesBuffer = m_RenderDevice.GetObjectsFactory().CreateVertexBuffer(tempVertexes, C_MapBufferSize);
@@ -328,28 +334,45 @@ bool CMapChunk::Load()
 			// Set this chunk BBOX
 			{
 				BoundingBox bbox = GetComponentT<IColliderComponent>()->GetBounds();
-				float bboxMinHeight = std::min(bbox.getMin().y, (height.min - GetTranslation().y));
-				float bboxMaxHeight = std::max(bbox.getMax().y, (height.max - GetTranslation().y));
-				bbox.setMinY(bboxMinHeight);
-				bbox.setMaxY(bboxMaxHeight);
-				bbox.calculateCenter();
+				float bboxMinHeight = std::min(bbox.getMin().y, (height.min - GetPosition().y));
+				float bboxMaxHeight = std::max(bbox.getMax().y, (height.max - GetPosition().y));
+
+				auto min = bbox.getMin();
+				min.y = bboxMinHeight;
+				bbox.setMin(min);
+
+				auto max = bbox.getMax();
+				max.y = bboxMaxHeight;
+				bbox.setMax(max);
+
+
 				GetComponentT<IColliderComponent>()->SetBounds(bbox);
 			}
 
 			CMapChunkLiquid liquidObject(m_RenderDevice, m_Bytes, header);
 
-			auto liquidInstance = CreateSceneNode<Liquid_Instance>();
+			auto liquidInstance = MakeShared(Liquid_Instance, GetScene());
+			liquidInstance->Initialize();
+			AddChild(liquidInstance);
+			//auto liquidInstance = GetScene().CreateSceneNode<Liquid_Instance>();
+
 			liquidObject.CreateInsances(liquidInstance);
 
 			// Transform
-			liquidInstance->SetTranslate(glm::vec3(0.0f, (-GetTranslation().y), 0.0f));
+			liquidInstance->SetPosition(glm::vec3(0.0f, (-GetPosition().y), 0.0f));
 
 			// IColliderComponent
 			{
 				BoundingBox bbox = GetComponentT<IColliderComponent>()->GetBounds();
-				bbox.setMinY(height.min);
-				bbox.setMaxY(height.max);
-				bbox.calculateCenter();
+
+				auto min = bbox.getMin();
+				min.y = height.min;
+				bbox.setMin(min);
+
+				auto max = bbox.getMin();
+				max.y = height.max;
+				bbox.setMax(max);
+
 				liquidInstance->GetComponentT<IColliderComponent>()->SetCullStrategy(IColliderComponent::ECullStrategy::ByFrustrumAndDistance2D);
 				liquidInstance->GetComponentT<IColliderComponent>()->SetBounds(bbox);
 				liquidInstance->GetComponentT<IColliderComponent>()->SetDebugDrawMode(false);
@@ -420,7 +443,7 @@ bool CMapChunk::Load()
 	}
 
 	std::shared_ptr<ITexture> blendRBGShadowATexture = m_RenderDevice.GetObjectsFactory().CreateEmptyTexture();
-	blendRBGShadowATexture->LoadTextureFromImage(blendBuff);
+	blendRBGShadowATexture->LoadTexture2DFromImage(blendBuff);
 
 	mat->SetTexture(4, blendRBGShadowATexture);
 	mat->SetLayersCnt(header.nLayers);
@@ -441,7 +464,7 @@ bool CMapChunk::Load()
 		std::shared_ptr<IModel> model = m_RenderDevice.GetObjectsFactory().CreateModel();
 		model->AddConnection(mat, defaultGeometry);
 
-		GetComponent<CModelsComponent3D>()->AddModel(model);
+		GetComponentT<IModelComponent>()->SetModel(model);
 	}
 
 

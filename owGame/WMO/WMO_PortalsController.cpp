@@ -30,7 +30,7 @@ void CWMO_PortalsController::Update(const CWMO_Base_Instance* SceneNodeInstance,
 		if (auto group = groupPtr.lock())
 			group->Reset();
 
-	glm::vec3 cameraTranslate = _camera->GetTranslation();
+	glm::vec3 cameraTranslate = _camera->GetPosition();
 	Frustum cameraFrustum = _camera->GetFrustum();
 	bool insideIndoor = false;
 

@@ -14,7 +14,7 @@ public:
 	SM2_Part_Camera_Wrapper(const CM2& M2Model, const std::shared_ptr<IFile>& File, const SM2_Camera& M2Camera);
 	virtual ~SM2_Part_Camera_Wrapper();
 
-	glm::vec3 GetTranslation() const { return pResult; }
+	glm::vec3 GetPosition() const { return pResult; }
 	glm::vec3 getTarget() const { return tResult; }
 
 	void calc(uint32 time, uint32 globalTime);

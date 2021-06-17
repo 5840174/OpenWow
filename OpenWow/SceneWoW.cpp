@@ -279,7 +279,7 @@ void CSceneWoW::TestCreateMap(uint32 MapID)
 
 	if (map->getGlobalInstance())
 	{
-		GetCameraController()->GetCamera()->SetTranslation(map->getGlobalInstance()->GetTranslation());
+		GetCameraController()->GetCamera()->SetTranslation(map->getGlobalInstance()->GetPosition());
 	}
 }
 
@@ -288,7 +288,7 @@ void CSceneWoW::GoToCoord(const ISceneNodeUI* Node, const glm::vec2& Point)
 	Log::Green("Coord %f %f", Point.x, Point.y);
 	glm::vec2 conv = (Point / Node->GetSize() * 512.0f) * (C_TileSize * 64.0f / 512.0f);
 
-	GetCameraController()->GetCamera()->SetTranslation(glm::vec3(conv.x, GetCameraController()->GetCamera()->GetTranslation().y, conv.y));
+	GetCameraController()->GetCamera()->SetTranslation(glm::vec3(conv.x, GetCameraController()->GetCamera()->GetPosition().y, conv.y));
 }
 
 void CSceneWoW::TestDeleteMap()

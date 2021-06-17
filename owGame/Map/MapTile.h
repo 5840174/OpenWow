@@ -13,7 +13,7 @@ class ZN_API CMapTile
 	, public CLoadableObject
 {
 public:
-	CMapTile(IBaseManager& BaseManager, IRenderDevice& RenderDevice, const CMap& Map, uint32 IndexX, uint32 IndexZ);
+	CMapTile(IScene& Scene, IBaseManager& BaseManager, IRenderDevice& RenderDevice, const CMap& Map, uint32 IndexX, uint32 IndexZ);
 	virtual ~CMapTile();
 
 	int                                             getIndexX() const;

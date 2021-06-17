@@ -71,7 +71,7 @@
       <AdditionalIncludeDirectories>..\..\ZenonEngine\shared\;..\..\ZenonEngine\Externals\;..\shared\;..\Externals\;..\Externals\OpenSSL\include;..\owGame\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <TreatSpecificWarningsAsErrors>4172</TreatSpecificWarningsAsErrors>
-      <DisableSpecificWarnings>4251</DisableSpecificWarnings>
+      <DisableSpecificWarnings>4251;4250;4715</DisableSpecificWarnings>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>DebugFull</GenerateDebugInformation>
@@ -89,7 +89,7 @@
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <TreatSpecificWarningsAsErrors>4172</TreatSpecificWarningsAsErrors>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
-      <DisableSpecificWarnings>4251</DisableSpecificWarnings>
+      <DisableSpecificWarnings>4251;4250;4715</DisableSpecificWarnings>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>DebugFull</GenerateDebugInformation>

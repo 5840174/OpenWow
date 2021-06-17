@@ -111,7 +111,7 @@ void WMO_Group::CreateInsances(const std::shared_ptr<CWMO_Group_Instance>& Paren
 		m_WMOLiqiud->CreateInsances(liquidInstance);
 
 		// Transform
-		liquidInstance->SetTranslate(glm::vec3(realPos.x, 0, realPos.z));
+		liquidInstance->SetPosition(glm::vec3(realPos.x, 0, realPos.z));
 
 		// IColliderComponent
 		{

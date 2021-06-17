@@ -31,7 +31,7 @@ void CSceneWoW2::Initialize()
 	GetCameraController()->SetCamera(cameraNode->GetComponent<ICameraComponent3D>());
 	GetCameraController()->GetCamera()->SetPerspectiveProjection(ICameraComponent3D::EPerspectiveProjectionHand::Right, 45.0f, static_cast<float>(GetRenderWindow()->GetWindowWidth()) / static_cast<float>(GetRenderWindow()->GetWindowHeight()), 0.5f, 10000.0f);
 
-	GetCameraController()->GetCamera()->SetTranslation(m_FakeCamera->GetTranslation());
+	GetCameraController()->GetCamera()->SetTranslation(m_FakeCamera->GetPosition());
 	GetCameraController()->GetCamera()->SetYaw(200);
 	GetCameraController()->GetCamera()->SetPitch(-27.8);
 

@@ -5,7 +5,6 @@
 
 CMPQFilesStorage::CMPQFilesStorage(std::string _path)
 	: m_Path(_path)
-	, m_Priority(_priority)
 {
 #if WOW_CLIENT_VERSION == WOW_CLASSIC_1_12_1
 	AddArchive("base.MPQ");
@@ -76,11 +75,11 @@ CMPQFilesStorage::~CMPQFilesStorage()
 //
 // // IFilesStorage
 //
-std::shared_ptr<IFile> CMPQFilesStorage::OpenFile(std::string FileName, EFileAccessType FileAccessType)
+std::shared_ptr<IFile> CMPQFilesStorage::Open(std::string FileName)
 {
 	std::lock_guard<std::mutex> lock(m_Lock);
 
-	std::shared_ptr<CFile> file = std::make_shared<CFile>(FileName);
+	std::shared_ptr<CFile> file = std::make_shared<CFile>(FileName, shared_from_this());
 	CByteBuffer& byteBuffer = file->GetByteBuffer();
 	
 	SMPQFileLocation location = GetFileLocation(file->Path_Name());
@@ -103,13 +102,7 @@ std::shared_ptr<IFile> CMPQFilesStorage::OpenFile(std::string FileName, EFileAcc
 	return file;
 }
 
-bool CMPQFilesStorage::SaveFile(std::shared_ptr<IFile> File)
-{
-	_ASSERT_EXPR(false, L"CMPQFilesStorage: Unable to save file to this file storage.");
-	return false;
-}
-
-size_t CMPQFilesStorage::GetFileSize(std::string FileName) const
+size_t CMPQFilesStorage::GetSize(std::string FileName) const
 {
 	std::lock_guard<std::mutex> lock(m_Lock);
 
@@ -124,10 +117,9 @@ size_t CMPQFilesStorage::GetFileSize(std::string FileName) const
 	return 0;
 }
 
-bool CMPQFilesStorage::IsFileExists(std::string FileName) const
+bool CMPQFilesStorage::IsExists(std::string FileName) const
 {
 	std::lock_guard<std::mutex> lock(m_Lock);
-
 	return GetFileLocation(FileName).exists;
 }
 

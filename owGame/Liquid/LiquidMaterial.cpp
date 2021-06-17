@@ -4,21 +4,14 @@
 #include "LiquidMaterial.h"
 
 LiquidMaterial::LiquidMaterial(IRenderDevice& RenderDevice)
-	: MaterialProxieT(RenderDevice, "LiquidMaterial")
+	: MaterialProxieT(RenderDevice.GetObjectsFactory().CreateMaterial("LiquidMaterial"))
 {
-	m_pProperties = (MaterialProperties*)_aligned_malloc(sizeof(MaterialProperties), 16);
-	*m_pProperties = MaterialProperties();
 }
 
 LiquidMaterial::~LiquidMaterial()
 {
-	if (m_pProperties)
-	{
-		_aligned_free(m_pProperties);
-		m_pProperties = nullptr;
-	}
-}
 
+}
 
 
 //
@@ -26,31 +19,20 @@ LiquidMaterial::~LiquidMaterial()
 //
 void LiquidMaterial::SetShallowAlpha(float value)
 {
-	m_pProperties->gShallowAlpha = value;
-	MarkConstantBufferDirty();
+	MaterialData().gShallowAlpha = value;
 }
 
 void LiquidMaterial::SetDeepAlpha(float value)
 {
-	m_pProperties->gDeepAlpha = value;
-	MarkConstantBufferDirty();
+	MaterialData().gDeepAlpha = value;
 }
 
 void LiquidMaterial::SetColorLight(glm::vec3 value)
 {
-	m_pProperties->gColorLight = value;
-	MarkConstantBufferDirty();
+	MaterialData().gColorLight = value;
 }
 
 void LiquidMaterial::SetColorDark(glm::vec3 value)
 {
-	m_pProperties->gColorDark = value;
-	MarkConstantBufferDirty();
-}
-
-//--
-
-void LiquidMaterial::UpdateConstantBuffer() const
-{
-	MaterialProxie::UpdateConstantBuffer(m_pProperties, sizeof(MaterialProperties));
+	MaterialData().gColorDark = value;
 }

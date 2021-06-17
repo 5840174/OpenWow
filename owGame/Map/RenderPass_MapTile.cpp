@@ -7,10 +7,10 @@
 #include "Map.h"
 #include "MapTile.h"
 
-CRenderPass_MapTile::CRenderPass_MapTile(IRenderDevice& RenderDevice, std::shared_ptr<IScene> scene)
-	: ScenePass(scene)
+CRenderPass_MapTile::CRenderPass_MapTile(IScene& Scene)
+	: Base3DPass(Scene)
 {
-	m_WoWSettings = RenderDevice.GetBaseManager().GetManager<ISettings>()->GetGroup("WoWSettings");
+	m_WoWSettings = GetBaseManager().GetManager<ISettings>()->GetGroup("WoWSettings");
 }
 
 CRenderPass_MapTile::~CRenderPass_MapTile()
@@ -21,17 +21,14 @@ CRenderPass_MapTile::~CRenderPass_MapTile()
 //
 // IVisitor
 //
-EVisitResult CRenderPass_MapTile::Visit(const ISceneNode* node)
+EVisitResult CRenderPass_MapTile::Visit(const std::shared_ptr<ISceneNode>& node)
 {	
-	if (node->Is(cMapTile_NodeType))
+	if (const auto map = std::dynamic_pointer_cast<CMapTile>(node))
 	{
-		if (const CMapTile* map = static_cast<const CMapTile*>(node))
-		{
-			if (!map->GetMap().getTileIsCurrent(map->getIndexX(), map->getIndexZ()))
-				return EVisitResult::Block;
+		if (false == map->GetMap().getTileIsCurrent(map->getIndexX(), map->getIndexZ()))
+			return EVisitResult::Block;
 
-			ScenePass::Visit(node);
-		}
+		return __super::Visit(map);
 	}
 
 	return EVisitResult::AllowAll;

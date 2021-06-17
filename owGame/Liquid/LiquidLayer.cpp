@@ -68,10 +68,10 @@ std::shared_ptr<IGeometry> CLiquidLayer::CreateGeometry(float YDir)
 			a1 = a2 = a3 = a4 = 1.0f;
 			if (depths.size() > 0)
 			{
-				a1 = minf(static_cast<float>(depths[p1]) / 127.0f, 1.0f); // whats the magic formular here ???
-				a2 = minf(static_cast<float>(depths[p2]) / 127.0f, 1.0f);
-				a3 = minf(static_cast<float>(depths[p3]) / 127.0f, 1.0f);
-				a4 = minf(static_cast<float>(depths[p4]) / 127.0f, 1.0f);
+				a1 = glm::min(static_cast<float>(depths[p1]) / 127.0f, 1.0f); // whats the magic formular here ???
+				a2 = glm::min(static_cast<float>(depths[p2]) / 127.0f, 1.0f);
+				a3 = glm::min(static_cast<float>(depths[p3]) / 127.0f, 1.0f);
+				a4 = glm::min(static_cast<float>(depths[p4]) / 127.0f, 1.0f);
 			}
 
 			// Skip hidden water tile
@@ -125,9 +125,9 @@ std::shared_ptr<IMaterial> CLiquidLayer::GetMaterial() const
 //
 // IModel
 //
-bool CLiquidLayer::Render() const
+bool CLiquidLayer::Render(const ShaderMap& Shaders) const
 {
-	uint32_t texidx = (uint32_t)(renderEventArgs.TotalTime / 60.0f) % m_Textures.size();
+	uint32_t texidx = 0;//(uint32_t)(renderEventArgs.TotalTime / 60.0f) % m_Textures.size();
 	m_Material->SetTexture(0, m_Textures[texidx]);
 
 	if (m_SkyManager != nullptr)
@@ -145,7 +145,7 @@ bool CLiquidLayer::Render() const
 		m_Material->SetDeepAlpha(1.0f);
 	}
 
-	return ModelProxie::Render();
+	return ModelProxie::Render(Shaders);
 }
 
 
@@ -182,7 +182,7 @@ void CLiquidLayer::InitTextures(DBC_LIQUIDTYPE_Type::List _liquidType)
 	for (int i = 1; i <= 30; i++)
 	{
 		sprintf(buf, "%s.%d.blp", baseName.c_str(), i);
-		std::shared_ptr<ITexture> texture = m_RenderDevice.GetObjectsFactory().LoadTexture2D(buf);
+		std::shared_ptr<ITexture> texture = m_RenderDevice.GetBaseManager().GetManager<IznTexturesFactory>()->LoadTexture2D(buf);
 		m_Textures.push_back(texture);
 	}
 }

@@ -6,10 +6,10 @@
 // Additional 
 #include "SkyManager.h"
 
-CRenderPass_Sky::CRenderPass_Sky(IRenderDevice& RenderDevice, const std::shared_ptr<CSceneCreateTypedListsPass>& SceneNodeListPass)
-	: CBaseList3DPass(RenderDevice, SceneNodeListPass, cSky_NodeType)
+CRenderPass_Sky::CRenderPass_Sky(IScene& Scene)
+	: Base3DPass(Scene)
 {
-	m_WoWSettings = RenderDevice.GetBaseManager().GetManager<ISettings>()->GetGroup("WoWSettings");
+	m_WoWSettings = GetBaseManager().GetManager<ISettings>()->GetGroup("WoWSettings");
 }
 
 CRenderPass_Sky::~CRenderPass_Sky()
@@ -20,12 +20,14 @@ CRenderPass_Sky::~CRenderPass_Sky()
 //
 // IRenderPassPipelined
 //
-std::shared_ptr<IRenderPassPipelined> CRenderPass_Sky::CreatePipeline(std::shared_ptr<IRenderTarget> RenderTarget, const Viewport * Viewport)
+std::shared_ptr<IRenderPassPipelined> CRenderPass_Sky::ConfigurePipeline(std::shared_ptr<IRenderTarget> RenderTarget)
 {
+	__super::ConfigurePipeline(RenderTarget);
+
 	std::shared_ptr<IShader> vertexShader;
 	std::shared_ptr<IShader> pixelShader;
 
-	if (GetRenderDevice().GetDeviceType() == RenderDeviceType::RenderDeviceType_DirectX)
+	if (GetRenderDevice().GetDeviceType() == RenderDeviceType::RenderDeviceType_DirectX11)
 	{
 		vertexShader = GetRenderDevice().GetObjectsFactory().LoadShader(EShaderType::VertexShader, "shaders_D3D/Sky.hlsl", "VS_main");
 		pixelShader = GetRenderDevice().GetObjectsFactory().LoadShader(EShaderType::PixelShader, "shaders_D3D/Sky.hlsl", "PS_main");
@@ -42,12 +44,12 @@ std::shared_ptr<IRenderPassPipelined> CRenderPass_Sky::CreatePipeline(std::share
 	pipeline->GetBlendState()->SetBlendMode(disableBlending);
 	pipeline->GetDepthStencilState()->SetDepthMode(disableDepthWrites);
 	pipeline->GetRasterizerState()->SetCullMode(IRasterizerState::CullMode::None);
-	pipeline->GetRasterizerState()->SetFillMode(IRasterizerState::FillMode::Solid);
+	pipeline->GetRasterizerState()->SetFillMode(IRasterizerState::FillMode::Solid, IRasterizerState::FillMode::Solid);
 	pipeline->SetRenderTarget(RenderTarget);
-	pipeline->SetShader(EShaderType::VertexShader, vertexShader);
-	pipeline->SetShader(EShaderType::PixelShader, pixelShader);
+	pipeline->SetShader(vertexShader);
+	pipeline->SetShader(pixelShader);
 
-	return SetPipeline(pipeline);
+	return shared_from_this();
 }
 
 
@@ -55,12 +57,10 @@ std::shared_ptr<IRenderPassPipelined> CRenderPass_Sky::CreatePipeline(std::share
 //
 // IVisitor
 //
-EVisitResult CRenderPass_Sky::Visit(const ISceneNode * node)
+EVisitResult CRenderPass_Sky::Visit(const std::shared_ptr<ISceneNode>& node)
 {
-	_ASSERT(node->Is(cSky_NodeType));
-
-	if (const SkyManager* skyManagerInstance = static_cast<const SkyManager*>(node))
-		return CBaseList3DPass::Visit(skyManagerInstance);
+	if (const auto skyManagerInstance = std::dynamic_pointer_cast<SkyManager>(node))
+		return __super::Visit(skyManagerInstance);
 
 	_ASSERT(false);
 	return EVisitResult::Block;

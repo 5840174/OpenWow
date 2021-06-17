@@ -1,14 +1,14 @@
 #pragma once
 
 class ZN_API CRenderPass_MapTile
-	: public ScenePass
+	: public Base3DPass
 {
 public:
-	CRenderPass_MapTile(IRenderDevice& RenderDevice, std::shared_ptr<IScene> scene);
+	CRenderPass_MapTile(IScene& Scene);
 	virtual ~CRenderPass_MapTile();
 
     // IVisitor
-	EVisitResult Visit(const ISceneNode* node) override final;
+	EVisitResult Visit(const std::shared_ptr<ISceneNode>& node) override final;
 
 private:
 	std::shared_ptr<IPropertiesGroup> m_WoWSettings;

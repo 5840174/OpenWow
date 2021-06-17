@@ -30,7 +30,7 @@ public:
 	{
 		gLogInstance = dynamic_cast<CLog*>(m_BaseManager.GetManager<ILog>());
 
-		m_BaseManager.GetManager<ISettings>()->AddGroup("WoWSettings", std::make_shared<CWoWSettingsGroup>());
+		m_BaseManager.GetManager<ISettings>()->AddGroup(std::make_shared<CWoWSettingsGroup>());
 		
 		// MPQ
 #if WOW_CLIENT_VERSION == WOW_CLASSIC_1_12_1
@@ -38,7 +38,7 @@ public:
 #elif WOW_CLIENT_VERSION == WOW_BC_2_4_3
 		m_BaseManager.GetManager<IFilesManager>()->AddFilesStorage("MPQStorage", std::make_shared<CMPQFilesStorage>("c:\\_engine\\World of Warcraft 2.4.3\\Data\\", IFilesStorageEx::Priority::PRIOR_HIGH));
 #elif WOW_CLIENT_VERSION == WOW_WOTLK_3_3_5
-		m_BaseManager.GetManager<IFilesManager>()->AddFilesStorage("MPQStorage", std::make_shared<CMPQFilesStorage>("c:\\_engine\\World of Warcraft 3.3.5a\\Data\\", IFilesStorageEx::Priority::PRIOR_HIGH));
+		m_BaseManager.GetManager<IFilesManager>()->AddStorage(EFilesStorageType::GAMEDATA, std::make_shared<CMPQFilesStorage>("c:\\_engine\\World of Warcraft 3.3.5a\\Data\\"));
 #endif
 
 		// BLP
@@ -47,8 +47,10 @@ public:
 		std::shared_ptr<CDBCStorage> dbcStorage = std::make_shared<CDBCStorage>(m_BaseManager);
 		m_BaseManager.AddManager<CDBCStorage>(dbcStorage);
 
+#if 0
 		auto WoWObjectsCreator = std::make_shared<CWorldObjectCreator>(m_BaseManager);
 		m_BaseManager.AddManager<IWoWObjectsCreator>(WoWObjectsCreator);
+#endif
 
 		return true;
 	}

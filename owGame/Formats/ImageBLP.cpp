@@ -19,6 +19,19 @@ bool CImageBLP::LoadImageData(std::shared_ptr<IFile> File)
 	return LoadBPL(header, File);
 }
 
+bool CImageBLP::IsFilenameSupported(const std::string & Filename)
+{
+	auto lastPointPos = Filename.find_last_of('.');
+	if (lastPointPos != std::string::npos)
+	{
+		std::string extension = Filename.substr(lastPointPos + 1);
+		extension = Utils::ToLower(extension);
+		return extension == "png";
+	}
+
+	return false;
+}
+
 bool CImageBLP::IsFileSupported(std::shared_ptr<IFile> File)
 {
 	_ASSERT(File != nullptr);
@@ -37,12 +50,17 @@ bool CImageBLP::IsFileSupported(std::shared_ptr<IFile> File)
 	return (header.magic[0] == 'B' && header.magic[1] == 'L' && header.magic[2] == 'P' && header.magic[3] == '2' && header.type == 1);
 }
 
+std::shared_ptr<CImageBLP> CImageBLP::CreateEmptyImage(uint32 Width, uint32 Height, uint32 BitsPerPixel)
+{
+	return std::shared_ptr<CImageBLP>();
+}
+
 std::shared_ptr<CImageBLP> CImageBLP::CreateImage(std::shared_ptr<IFile> File)
 {
 	_ASSERT(IsFileSupported(File));
 
 	std::shared_ptr<CImageBLP> imageBLP = std::make_shared<CImageBLP>();
-	if (!imageBLP->LoadImageData(File))
+	if (false == imageBLP->LoadImageData(File))
 	{
 		Log::Error("CImageBLP: Unable to load PLP file '%s'.", File->Name().c_str());
 		return nullptr;
@@ -69,7 +87,7 @@ bool CImageBLP::LoadBPL(const BLPFormat::BLPHeader& header, std::shared_ptr<IFil
 	m_BitsPerPixel = 32;
 	m_Stride = m_Width * (m_BitsPerPixel / 8);
 	m_IsTransperent = (header.alphaChannelBitDepth != 0);
-	m_Data = new uint8[m_Height * m_Stride];
+	m_Data.resize(m_Height * m_Stride);
 
 
 	bool    hasAlpha = (header.alphaChannelBitDepth != 0);
@@ -169,7 +187,7 @@ bool CImageBLP::LoadBPL(const BLPFormat::BLPHeader& header, std::shared_ptr<IFil
 		case BLPFormat::BLPColorEncoding::COLOR_ARGB8888:
 		{
 			f->seek(header.mipOffsets[currentMip]);
-			f->readBytes(m_Data, header.mipSizes[currentMip]);
+			f->readBytes(&m_Data[0], header.mipSizes[currentMip]);
 		}
 		break;
 
@@ -208,7 +226,7 @@ bool CImageBLP::LoadDXT_Helper(std::shared_ptr<IFile> io)
 
 			// TODO: probably need some endian work here
 			BYTE *pbSrc = (BYTE *)input_buffer;
-			BYTE *pbDst = GetLine(y);
+			BYTE *pbDst = GetLineEx(y);
 
 			if (m_Width >= 4)
 			{
@@ -231,7 +249,7 @@ bool CImageBLP::LoadDXT_Helper(std::shared_ptr<IFile> io)
 		io->readBytes(input_buffer, sizeof(typename INFO::Block) * inputLine);
 		// TODO: probably need some endian work here
 		BYTE *pbSrc = (BYTE *)input_buffer;
-		BYTE *pbDst = GetLine(y);
+		BYTE *pbDst = GetLineEx(y);
 
 		if (m_Width >= 4)
 		{

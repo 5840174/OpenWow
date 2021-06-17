@@ -6,8 +6,8 @@
 // Additional
 #include "Liquid/LiquidInstance.h"
 
-CRenderPass_Liquid::CRenderPass_Liquid(IRenderDevice& RenderDevice, const std::shared_ptr<CSceneCreateTypedListsPass>& SceneNodeListPass)
-	: CBaseList3DPass(RenderDevice, SceneNodeListPass, { cLiquid_NodeType, cLiquid_MapChnuk_NodeType, cLiquid_WMOGroup_NodeType } )
+CRenderPass_Liquid::CRenderPass_Liquid(IScene& Scene)
+	: Base3DPass(Scene)
 {}
 
 CRenderPass_Liquid::~CRenderPass_Liquid()
@@ -18,8 +18,10 @@ CRenderPass_Liquid::~CRenderPass_Liquid()
 //
 // IRenderPassPipelined
 //
-std::shared_ptr<IRenderPassPipelined> CRenderPass_Liquid::CreatePipeline(std::shared_ptr<IRenderTarget> RenderTarget, const Viewport * Viewport)
+std::shared_ptr<IRenderPassPipelined> CRenderPass_Liquid::ConfigurePipeline(std::shared_ptr<IRenderTarget> RenderTarget)
 {
+	__super::ConfigurePipeline(RenderTarget);
+
 	// CreateShaders
 	std::shared_ptr<IShader> vertexShader = GetRenderDevice().GetObjectsFactory().LoadShader(EShaderType::VertexShader, "shaders_D3D/Liquid.hlsl", "VS_main");
 	vertexShader->LoadInputLayoutFromReflector();
@@ -31,10 +33,10 @@ std::shared_ptr<IRenderPassPipelined> CRenderPass_Liquid::CreatePipeline(std::sh
 	pipeline->GetBlendState()->SetBlendMode(alphaBlending);
 	pipeline->GetDepthStencilState()->SetDepthMode(enableDepthWrites);
 	pipeline->GetRasterizerState()->SetCullMode(IRasterizerState::CullMode::None);
-	pipeline->GetRasterizerState()->SetFillMode(IRasterizerState::FillMode::Solid);
+	pipeline->GetRasterizerState()->SetFillMode(IRasterizerState::FillMode::Solid, IRasterizerState::FillMode::Solid);
 	pipeline->SetRenderTarget(RenderTarget);
-	pipeline->SetShader(EShaderType::VertexShader, vertexShader);
-	pipeline->SetShader(EShaderType::PixelShader, pixelShader);
+	pipeline->SetShader(vertexShader);
+	pipeline->SetShader(pixelShader);
 
 	// Create samplers
 	std::shared_ptr<ISamplerState> sampler = GetRenderDevice().GetObjectsFactory().CreateSamplerState();
@@ -42,7 +44,7 @@ std::shared_ptr<IRenderPassPipelined> CRenderPass_Liquid::CreatePipeline(std::sh
 	sampler->SetWrapMode(ISamplerState::WrapMode::Clamp, ISamplerState::WrapMode::Clamp, ISamplerState::WrapMode::Clamp);
 	pipeline->SetSampler(0, sampler);
 
-	return SetPipeline(pipeline);
+	return shared_from_this();
 }
 
 
@@ -50,13 +52,13 @@ std::shared_ptr<IRenderPassPipelined> CRenderPass_Liquid::CreatePipeline(std::sh
 //
 // IVisitor
 //
-EVisitResult CRenderPass_Liquid::Visit(const ISceneNode* SceneNode3D)
+EVisitResult CRenderPass_Liquid::Visit(const std::shared_ptr<ISceneNode>& SceneNode3D)
 {
-	_ASSERT(SceneNode3D->Is(cLiquid_NodeType) || SceneNode3D->Is(cLiquid_MapChnuk_NodeType) || SceneNode3D->Is(cLiquid_WMOGroup_NodeType));
+	//_ASSERT(SceneNode3D->Is(cLiquid_NodeType) || SceneNode3D->Is(cLiquid_MapChnuk_NodeType) || SceneNode3D->Is(cLiquid_WMOGroup_NodeType));
 	
-	if (const auto* liquidInstance = static_cast<const Liquid_Instance*>(SceneNode3D))
+	if (auto liquidInstance = std::dynamic_pointer_cast<Liquid_Instance>(SceneNode3D))
 	{
-		return CBaseList3DPass::Visit(SceneNode3D);
+		return __super::Visit(liquidInstance);
 	}
 
 	_ASSERT(false);
