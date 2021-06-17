@@ -1,5 +1,7 @@
 #include "stdafx.h"
 
+#ifdef USE_WMO_MODELS
+
 // Include
 #include "WMO_Base_Instance.h"
 
@@ -242,3 +244,6 @@ bool CWMO::Load()
 
 	return true;
 }
+
+#endif
+

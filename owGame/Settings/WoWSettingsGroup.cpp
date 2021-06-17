@@ -4,29 +4,27 @@
 #include "WoWSettingsGroup.h"
 
 CWoWSettingsGroup::CWoWSettingsGroup()
-{}
+	: CPropertiesGroup("WoWSettings", "WoWSettings")
+{
+	// Distances
+	AddProperty(MakeShared(CProperty<float>, "ADT_MCNK_Distance", "", 998.0f * 2.0f));
+	AddProperty(MakeShared(CProperty<float>, "ADT_MCNK_HighRes_Distance", "", 384.0f * 0.65f * 2.0f));
+	AddProperty(MakeShared(CProperty<float>, "ADT_MDX_Distance", "", 384.0f * 2.0f * 2.0f));
+	AddProperty(MakeShared(CProperty<float>, "ADT_WMO_Distance", "", 384.0f * 1.5f * 2.0f));
+	AddProperty(MakeShared(CProperty<float>, "WMO_MODD_Distance", "", 64.0f * 2.0f));
+
+	// Drawing objects
+	AddProperty(MakeShared(CProperty<bool>, "draw_mcnk", "", true));
+	AddProperty(MakeShared(CProperty<bool>, "draw_mcnk_low", "", true));
+	AddProperty(MakeShared(CProperty<bool>, "draw_map_wmo", "", true));
+	AddProperty(MakeShared(CProperty<bool>, "draw_wmo_doodads", "", true));
+	AddProperty(MakeShared(CProperty<bool>, "draw_map_m2", "", true));
+	AddProperty(MakeShared(CProperty<bool>, "draw_water", "", true));
+	AddProperty(MakeShared(CProperty<bool>, "draw_map_water", "", true));
+	AddProperty(MakeShared(CProperty<bool>, "draw_wmo_water", "", true));
+
+	AddProperty(MakeShared(CProperty<bool>, "drawfog", "", true));
+}
 
 CWoWSettingsGroup::~CWoWSettingsGroup()
 {}
-
-void CWoWSettingsGroup::AddDefaultSettings()
-{
-	// Distances
-	AddSetting("ADT_MCNK_Distance", std::make_shared<CSettingBase<float>>(998.0f * 2.0f));
-	AddSetting("ADT_MCNK_HighRes_Distance", std::make_shared<CSettingBase<float>>(384.0f * 0.65f * 2.0f));
-	AddSetting("ADT_MDX_Distance", std::make_shared<CSettingBase<float>>(384.0f * 2.0f * 2.0f));
-	AddSetting("ADT_WMO_Distance", std::make_shared<CSettingBase<float>>(384.0f * 1.5f * 2.0f));
-	AddSetting("WMO_MODD_Distance", std::make_shared<CSettingBase<float>>(64.0f * 2.0f));
-
-	// Drawing objects
-	AddSetting("draw_mcnk", std::make_shared<CSettingBase<bool>>(true));
-	AddSetting("draw_mcnk_low", std::make_shared<CSettingBase<bool>>(true));
-	AddSetting("draw_map_wmo", std::make_shared<CSettingBase<bool>>(true));
-	AddSetting("draw_wmo_doodads", std::make_shared<CSettingBase<bool>>(true));
-	AddSetting("draw_map_m2", std::make_shared<CSettingBase<bool>>(true));
-	AddSetting("draw_water", std::make_shared<CSettingBase<bool>>(true));
-	AddSetting("draw_map_water", std::make_shared<CSettingBase<bool>>(true));
-	AddSetting("draw_wmo_water", std::make_shared<CSettingBase<bool>>(true));
-
-	AddSetting("drawfog", std::make_shared<CSettingBase<bool>>(true));
-}

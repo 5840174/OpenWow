@@ -1,5 +1,7 @@
 #include "stdafx.h"
 
+#ifdef USE_M2_MODELS
+
 // Include
 #include "M2.h"
 #include "M2_Base_Instance.h"
@@ -114,3 +116,5 @@ glm::mat4 SM2_Part_Bone_Wrapper::calcBillboardMatrix(const glm::mat4& Calculated
 
 	return m;
 }
+
+#endif

@@ -1,5 +1,7 @@
 #pragma once
 
+#ifdef USE_WMO_MODELS
+
 #include "WMO/WMO_Base_Instance.h"
 
 struct ADT_MODF
@@ -44,3 +46,5 @@ public:	// Static
 private:
 	static std::unordered_map<uint32, const CMapWMOInstance*> m_AlreadyDraw;
 };
+
+#endif

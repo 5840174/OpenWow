@@ -1,5 +1,7 @@
 #include "stdafx.h"
 
+#ifdef USE_M2_MODELS
+
 // General
 #include "RenderPass_M2.h"
 
@@ -21,7 +23,7 @@ CRenderPass_M2::CRenderPass_M2(IRenderDevice& RenderDevice, const std::shared_pt
 	, m_CurrentM2Model(nullptr)
 	, m_OpaqueDraw(OpaqueDraw)
 {
-	m_ADT_MDX_Distance = RenderDevice.GetBaseManager().GetManager<ISettings>()->GetGroup("WoWSettings")->GetSettingT<float>("ADT_MDX_Distance");
+	m_ADT_MDX_Distance = RenderDevice.GetBaseManager().GetManager<ISettings>()->GetGroup("WoWSettings")->GetPropertyT<float>("ADT_MDX_Distance");
 
 	m_M2PerObjectConstantBuffer = GetRenderDevice().GetObjectsFactory().CreateConstantBuffer(nullptr, sizeof(M2PerObject));
 }
@@ -150,7 +152,7 @@ std::shared_ptr<IRenderPassPipelined> CRenderPass_M2::CreatePipeline(std::shared
 //
 // IVisitor
 //
-EVisitResult CRenderPass_M2::Visit(const ISceneNode3D* SceneNode3D)
+EVisitResult CRenderPass_M2::Visit(const ISceneNode* SceneNode3D)
 {
 	_ASSERT(SceneNode3D->Is(cM2_NodeType));
 
@@ -184,3 +186,5 @@ EVisitResult CRenderPass_M2::Visit(const IModel* Model)
 
 	return EVisitResult::Block;
 }
+
+#endif

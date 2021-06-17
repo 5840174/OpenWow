@@ -1,5 +1,7 @@
 #pragma once
 
+#ifdef USE_M2_MODELS
+
 #include "M2/M2_Base_Instance.h"
 #include "World/MeshIDEnums.h"
 
@@ -18,3 +20,5 @@ private:
 	// Mesh provider
 	uint32				m_MeshID[MeshIDType::Count];
 };
+
+#endif

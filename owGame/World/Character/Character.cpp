@@ -1,5 +1,7 @@
 #include "stdafx.h"
 
+#ifdef USE_M2_MODELS
+
 // General
 #include "Character.h"
 
@@ -109,7 +111,7 @@ void Character::RefreshMeshIDs(const Character_SectionWrapper& SectionWrapper)
 
 
 //
-// ISceneNode3D
+// ISceneNode
 //
 void Character::Initialize()
 {
@@ -118,3 +120,5 @@ void Character::Initialize()
 	for (uint32 slot = 0; slot < INVENTORY_SLOT_BAG_END; slot++) // TODO: Move to constuctor
 		m_VisualItems[static_cast<EInventoryType>(slot)] = std::make_shared<CItem_VisualData>(getM2().GetBaseManager(), getM2().GetRenderDevice(), std::dynamic_pointer_cast<Character>(shared_from_this()));
 }
+
+#endif

@@ -1,5 +1,7 @@
 #include "stdafx.h"
 
+#if 0
+
 // Include
 #include "Client.h"
 
@@ -387,3 +389,5 @@ void CWorldSocket::CreateAddonsBuffer(CByteBuffer& AddonsBuffer)
     //                  addonsRealSize + compressedSize
     //AddonsBuffer.Resize(sizeof(uint32) + destLen);
 }
+
+#endif

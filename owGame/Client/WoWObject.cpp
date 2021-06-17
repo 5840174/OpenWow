@@ -1,5 +1,7 @@
 #include "stdafx.h"
 
+#if 0
+
 // General
 #include "WoWObject.h"
 
@@ -343,3 +345,5 @@ bool WoWObject::PrintIndexError(uint32 index, bool set) const
 	Log::Error("WoWObject: Attempt %s non-existed value field: %u (count: %u) for object typeid: %u type mask: %u", (set ? "set value to" : "get value from"), index, m_valuesCount, GetObjectTypeID(), GetObjectType());
 	return true;
 }
+
+#endif

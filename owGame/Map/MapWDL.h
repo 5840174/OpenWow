@@ -30,8 +30,10 @@ private:
 	uint32											m_MAREOffsets[C_TilesInMap][C_TilesInMap];
 	mutable std::shared_ptr<WDL_Node_Material>              m_LowResilutionTileMaterial;
 	std::vector<std::string>						m_LowResolutionWMOsNames;
+#ifdef USE_WMO_MODELS
 	std::vector<ADT_MODF>					        m_LowResolutionWMOsPlacementInfo;
 	mutable std::vector<CMapWMOInstance*>	m_LowResolutionWMOs;
+#endif
 
 private: // PARENT
 	IBaseManager& m_BaseManager;

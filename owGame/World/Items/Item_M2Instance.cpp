@@ -1,5 +1,7 @@
 #include "stdafx.h"
 
+#ifdef USE_M2_MODELS
+
 // General
 #include "Item_M2Instance.h"
 
@@ -16,3 +18,5 @@ void CItem_M2Instance::AddVisualEffect(std::shared_ptr<CM2_Base_Instance> _visua
 {
 	AddChild(_visualEffect);
 }
+
+#endif

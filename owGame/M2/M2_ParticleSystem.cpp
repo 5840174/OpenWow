@@ -1,5 +1,7 @@
 #include "stdafx.h"
 
+#ifdef USE_M2_MODELS
+
 // Inlcudes
 #include "M2.h"
 #include "M2_Base_Instance.h"
@@ -609,4 +611,4 @@ void SM2_ParticleSystem_Wrapper::initTile(glm::vec2 * tc, int num)
 	}
 }
 
-
+#endif

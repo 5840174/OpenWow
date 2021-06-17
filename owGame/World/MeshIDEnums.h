@@ -1,5 +1,7 @@
 #pragma once
 
+#ifdef USE_M2_MODELS
+
 struct ZN_API MeshIDType
 {
 	enum List : uint8
@@ -51,3 +53,5 @@ struct ZN_API EyeglowsStyles
 		DK
 	};
 };
+
+#endif

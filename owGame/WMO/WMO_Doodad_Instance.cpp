@@ -1,5 +1,7 @@
 #include "stdafx.h"
 
+#ifdef USE_WMO_MODELS
+
 #ifdef USE_M2_MODELS
 
 // General
@@ -31,7 +33,7 @@ CWMO_Doodad_Instance::~CWMO_Doodad_Instance()
 //
 BoundingBox CWMO_Doodad_Instance::GetBoundingBox() const
 {
-	return GetColliderComponent()->GetWorldBounds();
+	return GetComponentT<IColliderComponent>()->GetWorldBounds();
 }
 
 
@@ -56,5 +58,7 @@ void CWMO_Doodad_Instance::Accept(IVisitor* visitor)
 		}
 	}
 }
+
+#endif
 
 #endif

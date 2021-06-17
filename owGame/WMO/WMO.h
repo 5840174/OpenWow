@@ -1,5 +1,7 @@
 ﻿#pragma once
 
+#ifdef USE_WMO_MODELS
+
 // OpenWoW
 #include "WoWChunkReader.h"
 
@@ -98,3 +100,5 @@ private:
 	SWMO_HeaderDef m_Header;				// MOHD chunk
 	BoundingBox m_Bounds;
 };
+
+#endif

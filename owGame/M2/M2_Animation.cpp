@@ -1,5 +1,7 @@
 #include "stdafx.h"
 
+#ifdef USE_M2_MODELS
+
 // Include
 #include "M2.h"
 
@@ -32,3 +34,5 @@ CM2_Animation::~CM2_Animation()
 {
 
 }
+
+#endif

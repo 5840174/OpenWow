@@ -1,5 +1,7 @@
 #include "stdafx.h"
 
+#if 0
+
 // Include
 #include "Client.h"
 
@@ -409,3 +411,5 @@ void CAuthSocket::OnRawData(const char * buf, size_t len)
 
 	ProcessHandler(currHandler, bb);
 }
+
+#endif

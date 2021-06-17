@@ -1,5 +1,7 @@
 #include "stdafx.h"
 
+#ifdef USE_WMO_MODELS
+
 // Include
 #include "WMO.h"
 
@@ -35,3 +37,5 @@ void CWMO_Part_Portal::setGroup(int32 _group, int16 side)
 	}
 	else _ASSERT(false);
 }
+
+#endif

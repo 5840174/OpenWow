@@ -1,5 +1,7 @@
 #pragma once
 
+#if 0
+
 #include "AuthSocket.h"
 #include "WorldSocket.h"
 
@@ -46,3 +48,5 @@ private:
 	IScene* m_Scene;
 	std::unique_ptr<WoWWorld> m_World;
 };
+
+#endif

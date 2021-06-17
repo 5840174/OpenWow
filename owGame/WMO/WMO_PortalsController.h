@@ -1,5 +1,7 @@
 #pragma once
 
+#ifdef USE_WMO_MODELS
+
 #include "WMO_Headers.h"
 
 // FORWARD BEGIN
@@ -17,5 +19,7 @@ public:
 	void Update(const CWMO_Base_Instance* SceneNodeInstance, const ICameraComponent3D* _camera);
 	bool Recur(const CWMO_Base_Instance* SceneNodeInstance, const std::shared_ptr<IPortalRoom>& Room, const Frustum& CameraFrustum, const glm::vec3& _InvWorldCamera, const Frustum& _frustum, bool _isFirstIteration);
 };
+
+#endif
 
 #endif

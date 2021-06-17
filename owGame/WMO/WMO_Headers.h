@@ -1,5 +1,7 @@
 ﻿#pragma once
 
+#ifdef USE_WMO_MODELS
+
 #include "DBC/DBC__Storage.h"
 
 #include __PACK_BEGIN
@@ -205,3 +207,5 @@ struct SWMO_FogDef
 };
 
 #include __PACK_END
+
+#endif

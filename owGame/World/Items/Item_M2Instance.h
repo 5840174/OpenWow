@@ -1,5 +1,7 @@
 #pragma once
 
+#ifdef USE_M2_MODELS
+
 #include "M2/M2_Base_Instance.h"
 
 class CItem_M2Instance 
@@ -14,3 +16,5 @@ public:
 private:
 	std::vector<std::shared_ptr<CM2_Base_Instance>> m_VisualEffects;
 };
+
+#endif

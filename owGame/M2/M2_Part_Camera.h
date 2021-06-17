@@ -1,5 +1,7 @@
 #pragma once
 
+#ifdef USE_M2_MODELS
+
 #include "M2_Types.h"
 
 // FORWARD BEGIN
@@ -39,3 +41,5 @@ private:
 private:
 	const CM2& m_M2Object;
 };
+
+#endif

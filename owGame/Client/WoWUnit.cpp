@@ -1,5 +1,7 @@
 #include "stdafx.h"
 
+#if 0
+
 // General
 #include "WoWUnit.h"
 
@@ -93,7 +95,7 @@ std::shared_ptr<WoWUnit> WoWUnit::Create(IBaseManager& BaseManager, IRenderDevic
 	// For test only
 	BoundingBox bbox(glm::vec3(-2.0f), glm::vec3(2.0f));
 	bbox.calculateCenter();
-	//thisObj->GetColliderComponent()->SetBounds(bbox);
+	//thisObj->GetComponentT<IColliderComponent>()->SetBounds(bbox);
 
 	return thisObj;
 }
@@ -111,3 +113,5 @@ void WoWUnit::AfterCreate(IBaseManager& BaseManager, IRenderDevice& RenderDevice
 		_ASSERT(false);
 	}
 }
+
+#endif

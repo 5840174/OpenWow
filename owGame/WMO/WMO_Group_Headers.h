@@ -1,5 +1,7 @@
 #pragma once
 
+#ifdef USE_WMO_MODELS
+
 #include "DBC/DBC__Storage.h"
 
 #include __PACK_BEGIN
@@ -147,3 +149,5 @@ struct SWMO_Group_MLIQDef
 };
 
 #include __PACK_END
+
+#endif

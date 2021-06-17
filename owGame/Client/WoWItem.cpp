@@ -1,5 +1,7 @@
 #include "stdafx.h"
 
+#if 0
+
 // General
 #include "WoWItem.h"
 
@@ -20,3 +22,5 @@ std::shared_ptr<WoWItem> WoWItem::Create(IBaseManager & BaseManager, IRenderDevi
 	std::shared_ptr<WoWItem> thisObj = std::make_shared<WoWItem>(Guid);
 	return thisObj;
 }
+
+#endif

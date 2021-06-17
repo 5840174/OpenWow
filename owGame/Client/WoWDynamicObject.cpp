@@ -1,5 +1,7 @@
 #include "stdafx.h"
 
+#if 0
+
 // General
 #include "WoWDynamicObject.h"
 
@@ -20,3 +22,5 @@ std::shared_ptr<WoWDynamicObject> WoWDynamicObject::Create(IBaseManager & BaseMa
 	std::shared_ptr<WoWDynamicObject> thisObj = std::make_shared<WoWDynamicObject>(Guid);
 	return thisObj;
 }
+
+#endif

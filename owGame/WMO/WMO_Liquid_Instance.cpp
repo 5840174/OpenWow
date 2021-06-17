@@ -1,5 +1,7 @@
 #include "stdafx.h"
 
+#ifdef USE_WMO_MODELS
+
 // General
 #include "WMO_Liquid_Instance.h"
 
@@ -15,7 +17,7 @@ CWMO_Liquid_Instance::~CWMO_Liquid_Instance()
 
 BoundingBox CWMO_Liquid_Instance::GetBoundingBox() const
 {
-	return GetColliderComponent()->GetWorldBounds();
+	return GetComponentT<IColliderComponent>()->GetWorldBounds();
 }
 
 
@@ -30,3 +32,5 @@ void CWMO_Liquid_Instance::Accept(IVisitor* visitor)
 		Liquid_Instance::Accept(visitor);
 	}
 }
+
+#endif

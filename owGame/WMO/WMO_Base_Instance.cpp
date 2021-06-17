@@ -1,5 +1,7 @@
 #include "stdafx.h"
 
+#ifdef USE_WMO_MODELS
+
 // General
 #include "WMO_Base_Instance.h"
 
@@ -63,9 +65,9 @@ bool CWMO_Base_Instance::IsDoodadInSet(uint16 doodadIndex) const
 //
 void CWMO_Base_Instance::Initialize()
 {
-	GetColliderComponent()->SetCullStrategy(IColliderComponent3D::ECullStrategy::ByFrustrumAndDistance);
-	GetColliderComponent()->SetBounds(getWMO().GetBounds());
-	GetColliderComponent()->SetDebugDrawMode(true);
+	GetComponentT<IColliderComponent>()->SetCullStrategy(IColliderComponent::ECullStrategy::ByFrustrumAndDistance);
+	GetComponentT<IColliderComponent>()->SetBounds(getWMO().GetBounds());
+	GetComponentT<IColliderComponent>()->SetDebugDrawMode(true);
 }
 
 void CWMO_Base_Instance::Update(const UpdateEventArgs& e)
@@ -85,3 +87,5 @@ void CWMO_Base_Instance::Accept(IVisitor* visitor)
 {
 	SceneNode3D::Accept(visitor);
 }
+
+#endif

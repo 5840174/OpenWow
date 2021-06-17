@@ -1,5 +1,7 @@
 #pragma once
 
+#ifdef USE_WMO_MODELS
+
 #include "Liquid/Liquid.h"
 
 #include "WMO_Group_Headers.h"
@@ -24,3 +26,5 @@ private:
 	const WMO_Group&    m_WMOGroupObject;
 	SWMO_Group_MLIQDef  m_LiquidHeader;
 };
+
+#endif

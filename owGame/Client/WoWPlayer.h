@@ -1,5 +1,7 @@
 #pragma once
 
+#if 0
+
 #include "WoWUnit.h"
 
 class ZN_API WoWPlayer
@@ -19,3 +21,5 @@ private:
 	float transportO;
 	uint64 transportGUID;
 };
+
+#endif

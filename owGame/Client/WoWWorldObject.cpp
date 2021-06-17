@@ -1,5 +1,7 @@
 #include "stdafx.h"
 
+#if 0
+
 // General
 #include "WoWWorldObject.h"
 
@@ -11,3 +13,5 @@ WorldObject::WorldObject(ObjectGuid Guid)
 WorldObject::~WorldObject()
 {
 }
+
+#endif

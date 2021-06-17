@@ -11,8 +11,11 @@
 
 CMapWDT::CMapWDT(IBaseManager& BaseManager, IRenderDevice& RenderDevice, const CMap& Map)
 	: m_IsTileBased(false)
-	, m_GlobalWMO(nullptr)
 	
+#ifdef USE_WMO_MODELS
+	, m_GlobalWMO(nullptr)
+#endif
+
 	, m_BaseManager(BaseManager)
 	, m_RenderDevice(RenderDevice)
 	, m_Map(Map)
@@ -28,6 +31,7 @@ void CMapWDT::CreateInsances(const std::shared_ptr<ISceneNode>& Parent) const
 
 	if (!m_GlobalWMOName.empty())
 	{
+#ifdef USE_WMO_MODELS
 		std::shared_ptr<CWMO> wmo = m_BaseManager.GetManager<IWoWObjectsCreator>()->LoadWMO(m_RenderDevice, m_GlobalWMOName);
 		if (wmo)
 		{
@@ -35,6 +39,7 @@ void CMapWDT::CreateInsances(const std::shared_ptr<ISceneNode>& Parent) const
 			m_BaseManager.GetManager<ILoader>()->AddToLoadQueue(inst);
 			std::const_pointer_cast<CMapWMOInstance>(m_GlobalWMO) = inst;
 		}
+#endif
 	}
 }
 
@@ -76,12 +81,14 @@ void CMapWDT::Load()
         delete[] buf;
     }
 
+#ifdef USE_WMO_MODELS
 	if (auto buffer = reader.OpenChunk("MODF"))
     {
         _ASSERT(m_MPHD.flags.Flag_GlobalWMO);
         _ASSERT((buffer->getSize() / sizeof(ADT_MODF)) == 1);
         buffer->readBytes(&m_GlobalWMOPlacementInfo, sizeof(ADT_MODF));
     }
+#endif
 
 
 	_ASSERT(m_IsTileBased || m_GlobalWMOName.size() > 0);

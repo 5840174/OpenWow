@@ -1,5 +1,7 @@
 #pragma once
 
+#ifdef USE_WMO_MODELS
+
 #include "WMO.h"
 #include "WMO_Group_Instance.h"
 #include "WMO_Doodad_Instance.h"
@@ -43,3 +45,5 @@ protected:
 	GroupInstances  m_GroupInstances;
 	GroupInstances  m_OutdoorGroupInstances;
 };
+
+#endif

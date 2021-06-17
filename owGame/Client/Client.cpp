@@ -1,5 +1,7 @@
 #include "stdafx.h"
 
+#if 0
+
 // General
 #include "Client.h"
 
@@ -77,3 +79,5 @@ WoWWorld& CWoWClient::GetWorld() const
 	_ASSERT(m_World != nullptr);
 	return *m_World;
 }
+
+#endif

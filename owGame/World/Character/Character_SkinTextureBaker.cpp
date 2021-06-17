@@ -1,5 +1,7 @@
 #include "stdafx.h"
 
+#ifdef USE_M2_MODELS
+
 // Include
 #include "Character.h"
 
@@ -139,3 +141,5 @@ void Character_SkinTextureBaker::FillPixels(DBC_CharComponent_Sections _type, st
 		}
 	}
 }
+
+#endif

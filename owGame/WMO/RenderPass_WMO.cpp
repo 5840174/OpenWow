@@ -1,5 +1,7 @@
 #include "stdafx.h"
 
+#ifdef USE_WMO_MODELS
+
 // General
 #include "RenderPass_WMO.h"
 
@@ -27,7 +29,7 @@ std::shared_ptr<IRenderPassPipelined> CRenderPass_WMO::CreatePipeline(std::share
 	std::shared_ptr<IShader> g_pVertexShader;
 	std::shared_ptr<IShader> g_pPixelShader;
 
-	if (GetRenderDevice().GetDeviceType() == RenderDeviceType::RenderDeviceType_DirectX)
+	if (GetRenderDevice().GetDeviceType() == RenderDeviceType::RenderDeviceType_DirectX11)
 	{
 		g_pVertexShader = GetRenderDevice().GetObjectsFactory().LoadShader(EShaderType::VertexShader, "shaders_D3D/WMO.hlsl", "VS_main");
 		g_pPixelShader = GetRenderDevice().GetObjectsFactory().LoadShader(EShaderType::PixelShader, "shaders_D3D/WMO.hlsl", "PS_main");
@@ -43,8 +45,8 @@ std::shared_ptr<IRenderPassPipelined> CRenderPass_WMO::CreatePipeline(std::share
 	std::shared_ptr<IPipelineState> pipeline = GetRenderDevice().GetObjectsFactory().CreatePipelineState();
 	pipeline->GetDepthStencilState()->SetDepthMode(enableDepthWrites);
 	pipeline->SetRenderTarget(RenderTarget);
-	pipeline->SetShader(EShaderType::VertexShader, g_pVertexShader);
-	pipeline->SetShader(EShaderType::PixelShader, g_pPixelShader);
+	pipeline->SetShader(g_pVertexShader);
+	pipeline->SetShader(g_pPixelShader);
 
 	return SetPipeline(pipeline);
 }
@@ -54,7 +56,7 @@ std::shared_ptr<IRenderPassPipelined> CRenderPass_WMO::CreatePipeline(std::share
 //
 // IVisitor
 //
-EVisitResult CRenderPass_WMO::Visit(const ISceneNode3D* SceneNode3D)
+EVisitResult CRenderPass_WMO::Visit(const ISceneNode* SceneNode3D)
 {
 	if (SceneNode3D->Is(cWMO_NodeType) || SceneNode3D->Is(cWMOGroup_NodeType))
 	{
@@ -90,13 +92,13 @@ CRenderPass_WMO2::~CRenderPass_WMO2()
 
 struct Struct
 {
-	Struct(const ISceneNode3D* Node, const IGeometry* Geom, const SGeometryDrawArgs& GeometryDrawArgs)
+	Struct(const ISceneNode* Node, const IGeometry* Geom, const SGeometryDrawArgs& GeometryDrawArgs)
 		: Node(Node)
 		, Geom(Geom)
 		,GeometryDrawArgs(GeometryDrawArgs)
 	{}
 
-	const ISceneNode3D* Node;
+	const ISceneNode* Node;
 	const IGeometry* Geom;
 	SGeometryDrawArgs GeometryDrawArgs;
 };
@@ -176,5 +178,7 @@ std::shared_ptr<IRenderPassPipelined> CRenderPass_WMO2::CreatePipeline(std::shar
 
 	return SetPipeline(pipeline);
 }
+
+#endif
 
 #endif

@@ -1,5 +1,7 @@
 #pragma once
 
+#ifdef USE_M2_MODELS
+
 #include "M2/M2_Base_Instance.h"
 #include "M2/RenderPass_M2.h"
 
@@ -16,10 +18,12 @@ public:
 	virtual std::shared_ptr<IRenderPassPipelined> CreatePipeline(std::shared_ptr<IRenderTarget> RenderTarget, const Viewport* Viewport) override;
 
 	// IVisitor
-	EVisitResult Visit(const ISceneNode3D* node) override final;
+	EVisitResult Visit(const ISceneNode* node) override final;
 	EVisitResult Visit(const IModel* Model) override final;
 
 private:
 	IShaderParameter*                  m_ShaderInstancesBufferParameter;
 	std::shared_ptr<IStructuredBuffer> m_InstancesBuffer;
 };
+
+#endif

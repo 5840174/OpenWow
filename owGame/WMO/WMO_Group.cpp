@@ -1,5 +1,7 @@
 #include "stdafx.h"
 
+#ifdef USE_WMO_MODELS
+
 // Include
 #include "WMO.h"
 #include "WMO_Group_Instance.h"
@@ -97,7 +99,7 @@ void WMO_Group::CreateInsances(const std::shared_ptr<CWMO_Group_Instance>& Paren
 
 	for (const auto& batch : m_WMOBatchIndexes)
 	{
-		Parent->GetComponent<IModelsComponent3D>()->AddModel(batch);
+		Parent->GetComponent<IModelComponent>()->AddModel(batch);
 	}
 
 	// WMO Group liquid
@@ -111,13 +113,13 @@ void WMO_Group::CreateInsances(const std::shared_ptr<CWMO_Group_Instance>& Paren
 		// Transform
 		liquidInstance->SetTranslate(glm::vec3(realPos.x, 0, realPos.z));
 
-		// IColliderComponent3D
+		// IColliderComponent
 		{
-			BoundingBox bbox = Parent->GetColliderComponent()->GetBounds();
+			BoundingBox bbox = Parent->GetComponentT<IColliderComponent>()->GetBounds();
 			bbox.setMin(bbox.getMin() - realPos);
 			bbox.setMax(bbox.getMax() - realPos);
 			bbox.calculateCenter();
-			liquidInstance->GetColliderComponent()->SetBounds(bbox);
+			liquidInstance->GetComponentT<IColliderComponent>()->SetBounds(bbox);
 		}
 
 		Parent->AddRoomObject(liquidInstance);
@@ -460,3 +462,5 @@ void WMO_Group::FixColors(CBgra* mocv, uint32 mocv_count, const SWMO_Group_Batch
 		}
 	}
 }
+
+#endif

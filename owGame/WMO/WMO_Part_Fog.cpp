@@ -1,5 +1,7 @@
 #include "stdafx.h"
 
+#ifdef USE_WMO_MODELS
+
 // General
 #include "Wmo_Part_Fog.h"
 
@@ -26,3 +28,5 @@ void WMO_Part_Fog::setup()
 		glDisable(GL_FOG);
 	}*/
 }
+
+#endif

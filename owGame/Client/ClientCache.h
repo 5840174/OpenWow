@@ -1,5 +1,7 @@
 #pragma once
 
+#if 0
+
 #include "WoWGameObject.h"
 #include "WoWUnit.h"
 
@@ -391,3 +393,5 @@ struct ZN_API SCreatureQueryResult
 };
 
 #pragma endregion
+
+#endif

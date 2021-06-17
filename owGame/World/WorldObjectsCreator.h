@@ -1,5 +1,7 @@
 #pragma once
 
+#ifdef USE_M2_MODELS
+
 #include "DBC/DBC__Storage.h"
 
 // Factory
@@ -48,3 +50,5 @@ private:
 
 	std::map<uint32, std::shared_ptr<IBlendState>> m_EGxBlendStates;
 };
+
+#endif

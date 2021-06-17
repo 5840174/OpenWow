@@ -3,7 +3,7 @@
 // Gerenal
 #include "SceneWoW2.h"
 
-CSceneWoW2::CSceneWoW2(IBaseManager& BaseManager, const std::shared_ptr<ISceneNode3D>& Fake3DRootNode, const std::shared_ptr<ICameraComponent3D>& ExternalCamera)
+CSceneWoW2::CSceneWoW2(IBaseManager& BaseManager, const std::shared_ptr<ISceneNode>& Fake3DRootNode, const std::shared_ptr<ICameraComponent3D>& ExternalCamera)
 	: SceneBase(BaseManager)
 	, m_Fake3DRootNode(Fake3DRootNode)
 	, m_FakeCamera(ExternalCamera)

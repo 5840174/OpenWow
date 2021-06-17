@@ -11,8 +11,8 @@ public:
 	std::shared_ptr<IRenderPassPipelined> CreatePipeline(std::shared_ptr<IRenderTarget> RenderTarget, const Viewport* Viewport) override final;
 
     // IVisitor
-    EVisitResult Visit(const ISceneNode3D* node) override final;
+    EVisitResult Visit(const ISceneNode* node) override final;
 
 private:
-	std::shared_ptr<ISettingT<float>> m_ADT_MCNK_Distance;
+	std::shared_ptr<IPropertyT<float>> m_ADT_MCNK_Distance;
 };

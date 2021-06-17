@@ -11,5 +11,5 @@ public:
 	EVisitResult Visit(const ISceneNode* node) override final;
 
 private:
-	std::shared_ptr<ISettingGroup> m_WoWSettings;
+	std::shared_ptr<IPropertiesGroup> m_WoWSettings;
 };

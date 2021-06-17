@@ -1,5 +1,7 @@
 #pragma once
 
+#ifdef USE_M2_MODELS
+
 #include "M2_Types.h"
 
 // FORWARD BEGIN
@@ -13,7 +15,7 @@ public:
 	SM2_Part_Light_Wrapper(const CM2& M2Object, const std::shared_ptr<IFile>& File, const SM2_Light& M2Light);
 	virtual ~SM2_Part_Light_Wrapper();
 
-	SLight    GetLight(const CM2_Base_Instance* M2Instance, uint32 globalTime) const;
+	CLight    GetLight(const CM2_Base_Instance* M2Instance, uint32 globalTime) const;
 	int16     GetAttachBone() const { return m_M2Light.bone; }
 	glm::vec3 GetPosition() const { return Fix_XZmY(m_M2Light.position); }
 
@@ -30,3 +32,5 @@ private:
 	const CM2& m_M2Object;
 	const SM2_Light& m_M2Light;
 };
+
+#endif

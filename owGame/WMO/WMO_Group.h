@@ -1,5 +1,7 @@
 ﻿#pragma once
 
+#ifdef USE_WMO_MODELS
+
 // OpenWoW
 #include "WoWChunkReader.h"
 
@@ -83,3 +85,5 @@ private:
 	const uint32 m_GroupIndex;
 	std::unique_ptr<WoWChunkReader> m_ChunkReader;
 };
+
+#endif

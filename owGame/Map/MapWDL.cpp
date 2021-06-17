@@ -101,7 +101,7 @@ void CMapWDL::CreateInsances(const std::shared_ptr<ISceneNode>& Parent) const
 				
 				std::shared_ptr<CWDL_LowResTile> lowResTile = std::make_shared<CWDL_LowResTile>(m_RenderDevice, m_MapController, i, j);
 				lowResTile->AddConnection(m_LowResilutionTileMaterial, geometry);
-				Parent->GetComponentT<IModelsComponent3D>()->SetModel(lowResTile);
+				Parent->GetComponentT<IModelComponent>()->SetModel(lowResTile);
 			}
 		}
 	}

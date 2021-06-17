@@ -1,5 +1,7 @@
 #include "stdafx.h"
 
+#ifdef USE_M2_MODELS
+
 // Include
 #include "M2_Base_Instance.h"
 
@@ -38,3 +40,5 @@ const std::shared_ptr<ITexture>& CM2_Part_Texture::GetTexture(const CM2_Base_Ins
 		return M2Instance->getSpecialTexture(m_SpecialType);
 	return m_Texture;
 }
+
+#endif

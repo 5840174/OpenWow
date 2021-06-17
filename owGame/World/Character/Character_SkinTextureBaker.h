@@ -1,5 +1,7 @@
 #pragma once
 
+#ifdef USE_M2_MODELS
+
 struct CharacterSkinLayout
 {
 	enum List : uint32
@@ -46,3 +48,5 @@ private:
 	IRenderDevice& m_RenderDevice;
 	CDBCStorage* m_DBCs;
 };
+
+#endif

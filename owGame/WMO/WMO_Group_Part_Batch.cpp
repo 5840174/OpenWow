@@ -1,5 +1,7 @@
 #include "stdafx.h"
 
+#ifdef USE_WMO_MODELS
+
 // Include
 #include "WMO.h"
 #include "WMO_Group.h"
@@ -34,3 +36,5 @@ bool WMO_Group_Part_Batch::Render() const
 {
 	return ModelProxie::Render();
 }
+
+#endif

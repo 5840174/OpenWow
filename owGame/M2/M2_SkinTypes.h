@@ -1,5 +1,7 @@
 #pragma once
 
+#ifdef USE_M2_MODELS
+
 #include __PACK_BEGIN
 
 struct SM2_SkinBones
@@ -80,3 +82,5 @@ struct SM2_SkinProfile
 	// Values seen : 256, 64, 53, 21
 };
 #include __PACK_END
+
+#endif

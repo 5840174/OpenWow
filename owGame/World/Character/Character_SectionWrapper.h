@@ -1,5 +1,7 @@
 #pragma once
 
+#ifdef USE_M2_MODELS
+
 #include "DBC/DBC__Storage.h"
 
 // FORWARD BEGIN
@@ -45,3 +47,5 @@ private:
 	IRenderDevice& m_RenderDevice;
 	CDBCStorage* m_DBCs;
 };
+
+#endif

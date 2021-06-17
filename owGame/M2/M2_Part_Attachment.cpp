@@ -1,5 +1,7 @@
 #include "stdafx.h"
 
+#ifdef USE_M2_MODELS
+
 // Include
 #include "M2.h"
 
@@ -20,3 +22,5 @@ SM2_Part_Attachment_Wrapper::SM2_Part_Attachment_Wrapper(const CM2& M2Object, co
 SM2_Part_Attachment_Wrapper::~SM2_Part_Attachment_Wrapper()
 {
 }
+
+#endif

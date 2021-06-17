@@ -1,5 +1,7 @@
 #include "stdafx.h"
 
+#ifdef USE_M2_MODELS
+
 // General
 #include "M2_Base_Instance.h"
 
@@ -96,10 +98,10 @@ const std::shared_ptr<ITexture>& CM2_Base_Instance::getSpecialTexture(SM2_Textur
 
 void CM2_Base_Instance::Initialize()
 {
-	GetComponentT<IColliderComponent3D>()->SetCullStrategy(IColliderComponent3D::ECullStrategy::ByFrustrumAndDistance);
-	GetComponentT<IColliderComponent3D>()->SetCullDistance(GetBaseManager().GetManager<ISettings>()->GetGroup("WoWSettings")->GetSettingT<float>("ADT_MDX_Distance")->Get());
-	GetComponentT<IColliderComponent3D>()->SetBounds(getM2().GetBounds());
-	GetComponentT<IColliderComponent3D>()->SetDebugDrawMode(false);
+	GetComponentT<IColliderComponent>()->SetCullStrategy(IColliderComponent::ECullStrategy::ByFrustrumAndDistance);
+	GetComponentT<IColliderComponent>()->SetCullDistance(GetBaseManager().GetManager<ISettings>()->GetGroup("WoWSettings")->GetPropertyT<float>("ADT_MDX_Distance")->Get());
+	GetComponentT<IColliderComponent>()->SetBounds(getM2().GetBounds());
+	GetComponentT<IColliderComponent>()->SetDebugDrawMode(false);
 }
 
 void CM2_Base_Instance::Update(const UpdateEventArgs & e)
@@ -107,7 +109,7 @@ void CM2_Base_Instance::Update(const UpdateEventArgs & e)
 	if (GetState() != ILoadable::ELoadableState::Loaded)
 		return;
 
-	if (GetComponentT<IColliderComponent3D>()->IsCulled(e.Camera))
+	if (GetComponentT<IColliderComponent>()->IsCulled(e.Camera))
 		return;
 
 	if (m_Animator)
@@ -159,3 +161,5 @@ void CM2_Base_Instance::RegisterComponents()
 	AddComponentT(std::make_shared<CModelsComponent3D>(*this));
     AddComponentT(std::make_shared<CM2_ColliderComponent>(*this));
 }
+
+#endif

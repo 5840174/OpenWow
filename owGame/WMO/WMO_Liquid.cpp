@@ -1,5 +1,7 @@
 #include "stdafx.h"
 
+#ifdef USE_WMO_MODELS
+
 // General
 #include "WMO_Liquid.h"
 
@@ -30,3 +32,5 @@ CWMO_Liquid::~CWMO_Liquid()
 {
 
 }
+
+#endif

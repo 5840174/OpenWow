@@ -13,7 +13,6 @@ CMapTile::CMapTile(IBaseManager& BaseManager, IRenderDevice& RenderDevice, const
 	, m_IndexX(IndexX)
 	, m_IndexZ(IndexZ)
 {
-	SetType(cMapTile_NodeType);
 	SetName("MapTile[" + std::to_string(getIndexX()) + "," + std::to_string(getIndexZ()) + "]");
 }
 
@@ -54,7 +53,7 @@ void CMapTile::Initialize()
 	// CColliderComponent
 	if (false)
 	{
-		std::shared_ptr<IColliderComponent3D> colliderComponent = GetColliderComponent();
+		std::shared_ptr<IColliderComponent> colliderComponent = GetComponentT<IColliderComponent>();
 		glm::vec3 translate = GetTranslation();
 
 		BoundingBox bbox
@@ -63,7 +62,7 @@ void CMapTile::Initialize()
 			glm::vec3(translate.x + C_TileSize, Math::MinFloat, translate.z + C_TileSize)
 		);
 		colliderComponent->SetBounds(bbox);
-		colliderComponent->SetCullStrategy(IColliderComponent3D::ECullStrategy::ByFrustrumAndDistance2D);
+		colliderComponent->SetCullStrategy(IColliderComponent::ECullStrategy::ByFrustrumAndDistance2D);
 	}
 }
 
@@ -227,6 +226,7 @@ bool CMapTile::Load()
 #endif
 
 	// WMO PlacementInfo
+#ifdef USE_WMO_MODELS
 	std::vector<ADT_MODF> m_WMOsPlacementInfo;
 	f->seek(startPos + header.MODF);
 	{
@@ -241,6 +241,7 @@ bool CMapTile::Load()
 			m_WMOsPlacementInfo.push_back(placementInfo);
 		}
 	}
+#endif
 
 	//-- Load Chunks ---------------------------------------------------------------------
 
@@ -252,12 +253,11 @@ bool CMapTile::Load()
 	}
 
 
-#if 1
+#ifdef USE_WMO_MODELS
 	//-- WMOs --------------------------------------------------------------------------
 
 	for (const auto& it : m_WMOsPlacementInfo)
 	{
-//#ifndef _DEBUG
 		std::shared_ptr<CWMO> wmo = m_BaseManager.GetManager<IWoWObjectsCreator>()->LoadWMO(m_RenderDevice, m_WMOsNames[it.nameIndex]);
 		if (wmo)
 		{
@@ -265,16 +265,13 @@ bool CMapTile::Load()
 			GetBaseManager().GetManager<ILoader>()->AddToLoadQueue(inst);
 			m_WMOsInstances.push_back(inst.get());
 		}
-//#endif
 	}
 #endif
 
-#if 1
 	//-- MDXs -------------------------------------------------------------------------
 #ifdef USE_M2_MODELS
 	for (const auto& it : m_MDXsPlacementInfo)
 	{
-//#ifndef _DEBUG
 		std::shared_ptr<CM2> m2 = m_BaseManager.GetManager<IWoWObjectsCreator>()->LoadM2(m_RenderDevice, m_MDXsNames[it.nameIndex]);
 		if (m2)
 		{
@@ -282,10 +279,8 @@ bool CMapTile::Load()
 			GetBaseManager().GetManager<ILoader>()->AddToLoadQueue(inst);
 			m_MDXsInstances.push_back(inst.get());
 		}
-//#endif
 	}
 	//---------------------------------------------------------------------------------
-#endif
 #endif
 
 	Log::Green("MapTile[%d, %d, %s]: Loaded!", m_IndexX, m_IndexZ, filename);

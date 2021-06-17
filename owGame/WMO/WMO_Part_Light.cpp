@@ -1,5 +1,7 @@
 #include "stdafx.h"
 
+#ifdef USE_WMO_MODELS
+
 // Includes
 
 // General
@@ -39,3 +41,5 @@ void WMO_Part_Light::setup(uint32 light)
 
 	//glEnable(light);
 }
+
+#endif

@@ -32,7 +32,9 @@ public:
 	std::vector<std::shared_ptr<ADT_TextureInfo>>	m_Textures;
 
 	// Instances
+#ifdef USE_WMO_MODELS
 	std::vector<CMapWMOInstance*>	m_WMOsInstances;
+#endif
 #ifdef USE_M2_MODELS
 	std::vector<CMapM2Instance*>	m_MDXsInstances;
 #endif

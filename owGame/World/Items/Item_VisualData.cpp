@@ -1,5 +1,7 @@
 #include "stdafx.h"
 
+#ifdef USE_M2_MODELS
+
 // Include
 #include "World/Character/Character.h"
 
@@ -294,3 +296,5 @@ char CItem_VisualData::getGenderLetter(Gender _gender)
 
 	return 0x00;
 }
+
+#endif

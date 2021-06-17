@@ -1,5 +1,7 @@
 ﻿#pragma once
 
+#ifdef USE_M2_MODELS
+
 #include "M2_Types.h"
 
 // FORWARD BEGIN
@@ -125,3 +127,5 @@ private:
 	const CM2& m_M2Object;
 	const SM2_Bone m_M2Bone;
 };
+
+#endif

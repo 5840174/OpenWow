@@ -1,5 +1,7 @@
 #pragma once
 
+#ifdef USE_M2_MODELS
+
 #include "M2/M2_Base_Instance.h"
 
 struct __declspec(novtable, align(16)) ZN_API M2PerObject
@@ -26,11 +28,11 @@ public:
 	virtual std::shared_ptr<IRenderPassPipelined> CreatePipeline(std::shared_ptr<IRenderTarget> RenderTarget, const Viewport* Viewport) override;
 
     // IVisitor
-    virtual EVisitResult Visit(const ISceneNode3D* node) override;
+    virtual EVisitResult Visit(const ISceneNode* node) override;
 	virtual EVisitResult Visit(const IModel* Model) override;
 
 protected:
-	std::shared_ptr<ISettingT<float>> m_ADT_MDX_Distance;
+	std::shared_ptr<IPropertyT<float>> m_ADT_MDX_Distance;
 	bool m_OpaqueDraw;
 
 	const CM2_Base_Instance* m_CurrentM2Model;
@@ -40,3 +42,5 @@ protected:
 	IShaderParameter* m_ShaderM2GeometryParameter;
 	IShaderParameter* m_ShaderM2GeometryBonesParameter;
 };
+
+#endif

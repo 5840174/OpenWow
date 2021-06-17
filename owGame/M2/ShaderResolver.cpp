@@ -1,5 +1,7 @@
 #include "stdafx.h"
 
+#ifdef USE_M2_MODELS
+
 #include "M2_Types.h"
 
 #include "ShaderResolver.h"
@@ -503,3 +505,5 @@ int32 GetPixel(const SM2_SkinBatch& batch)
 	_ASSERT(index < 15);
 	return arr[index];
 }
+
+#endif

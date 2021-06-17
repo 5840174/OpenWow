@@ -1,5 +1,7 @@
 #pragma once
 
+#ifdef USE_WMO_MODELS
+
 class CWMOPortalInstance
 	: public IPortal
 {
@@ -20,3 +22,5 @@ private:
 	std::vector<glm::vec3>     m_Vertices;
 	Plane				       m_Plane;
 };
+
+#endif

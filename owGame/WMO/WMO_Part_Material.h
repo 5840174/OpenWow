@@ -1,13 +1,31 @@
 #pragma once
 
+#ifdef USE_WMO_MODELS
+
 #include "WMO_Headers.h"
 
 // FORWARD BEGIN
 class CWMO;
 // FORWARD END
 
+namespace
+{
+__declspec(align(16)) struct WMO_Part_MaterialMaterialProperties
+{
+	WMO_Part_MaterialMaterialProperties()
+		: BlendMode(0)
+		, MOCVExists(0)
+	{}
+
+	uint32 BlendMode;
+	uint32 MOCVExists;
+	glm::vec2   m_Pad;
+	//-------------------------- ( 32 bytes )
+};
+}
+
 class WMO_Part_Material 
-	: public MaterialProxie
+	: public MaterialProxieT<WMO_Part_MaterialMaterialProperties>
 {
 public:
 	WMO_Part_Material(IRenderDevice& RenderDevice, const CWMO& WMOModel, const SWMO_MaterialDef& WMOMaterialProto);
@@ -20,18 +38,7 @@ public:
     void UpdateConstantBuffer() const override;
 
 private:
-	__declspec(align(16)) struct MaterialProperties
-	{
-		MaterialProperties()
-			: BlendMode(0)
-			, MOCVExists(0)
-		{}
-
-		uint32 BlendMode;
-		uint32 MOCVExists;
-		glm::vec2   m_Pad;
-		//-------------------------- ( 32 bytes )
-	};
+	
 	MaterialProperties*            m_pProperties;
 
 	std::shared_ptr<IDepthStencilState> m_DepthStencilState;
@@ -41,3 +48,5 @@ private:
 private:
 	const CWMO& m_WMOModel;
 };
+
+#endif

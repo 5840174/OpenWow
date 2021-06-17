@@ -1,5 +1,7 @@
 #include "stdafx.h"
 
+#ifdef USE_WMO_MODELS
+
 // Include 
 #include "WMO_Group.h"
 
@@ -49,3 +51,5 @@ void CWMO_Group_Part_BSP_Node::Render(const glm::mat4& _worldMatrix)
 	_Render->r.setFillMode(R_FillMode::RS_FILL_SOLID);
 	_Render->r.setCullMode(R_CullMode::RS_CULL_NONE);*/
 }
+
+#endif

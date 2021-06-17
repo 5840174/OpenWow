@@ -1,5 +1,7 @@
 #include "stdafx.h"
 
+#if 0
+
 // General
 #include "WoWCorpse.h"
 
@@ -20,3 +22,5 @@ std::shared_ptr<WoWCorpse> WoWCorpse::Create(IBaseManager & BaseManager, IRender
 	std::shared_ptr<WoWCorpse> thisObj = std::make_shared<WoWCorpse>(Guid);
 	return thisObj;
 }
+
+#endif

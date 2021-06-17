@@ -1,5 +1,7 @@
 #pragma once
 
+#ifdef USE_M2_MODELS
+
 #include "M2_CommonTypes.h"
 #include "M2_SkinTypes.h"
 
@@ -58,3 +60,5 @@ private:
 	IRenderDevice&          m_RenderDevice;
 	const CM2&               m_M2Model;
 };
+
+#endif

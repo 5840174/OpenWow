@@ -1,5 +1,7 @@
 #pragma once
 
+#ifdef USE_WMO_MODELS
+
 #include "WMO_Group_Headers.h"
 
 // FORWARD BEGIN
@@ -20,3 +22,5 @@ private:
 	std::shared_ptr<IModel> m_GEOM_Collision;
 	glm::vec4 color;
 };
+
+#endif

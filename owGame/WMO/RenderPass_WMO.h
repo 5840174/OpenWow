@@ -1,5 +1,7 @@
 #pragma once
 
+#ifdef USE_WMO_MODELS
+
 #include "WMO_Base_Instance.h"
 
 class ZN_API CRenderPass_WMO 
@@ -13,11 +15,11 @@ public:
 	std::shared_ptr<IRenderPassPipelined> CreatePipeline(std::shared_ptr<IRenderTarget> RenderTarget, const Viewport* Viewport) override final;
 
     // IVisitor
-    EVisitResult Visit(const ISceneNode3D* node) override final;
+    EVisitResult Visit(const ISceneNode* node) override final;
 	EVisitResult Visit(const IGeometry* Geometry, const IMaterial* Material, SGeometryDrawArgs GeometryDrawArgs = SGeometryDrawArgs()) override final;
 
 private:
-	std::shared_ptr<ISettingGroup> m_WoWSettings;
+	std::shared_ptr<IPropertiesGroup> m_WoWSettings;
 };
 
 #if 0
@@ -43,3 +45,5 @@ private:
 };
 
 #endif
+
+#endif 

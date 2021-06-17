@@ -50,7 +50,7 @@ std::shared_ptr<IRenderPassPipelined> CRenderPass_Liquid::CreatePipeline(std::sh
 //
 // IVisitor
 //
-EVisitResult CRenderPass_Liquid::Visit(const ISceneNode3D* SceneNode3D)
+EVisitResult CRenderPass_Liquid::Visit(const ISceneNode* SceneNode3D)
 {
 	_ASSERT(SceneNode3D->Is(cLiquid_NodeType) || SceneNode3D->Is(cLiquid_MapChnuk_NodeType) || SceneNode3D->Is(cLiquid_WMOGroup_NodeType));
 	

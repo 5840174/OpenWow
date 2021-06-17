@@ -1,5 +1,7 @@
 #include "stdafx.h"
 
+#ifdef USE_M2_MODELS
+
 // General
 #include "M2.h"
 
@@ -47,11 +49,11 @@ CM2::~CM2()
 {
 }
 
-void CM2::CreateInsances(const std::shared_ptr<ISceneNode3D>& Parent) const
+void CM2::CreateInsances(const std::shared_ptr<ISceneNode>& Parent) const
 {
 	for (auto& it : m_Skins)
 	{
-		Parent->GetComponent<IModelsComponent3D>()->AddModel(it);
+		Parent->GetComponent<IModelComponent>()->AddModel(it);
 		break;
 	}
 }
@@ -178,3 +180,5 @@ bool CM2::Load()
 
 	return true;
 }
+
+#endif

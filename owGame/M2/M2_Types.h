@@ -1,5 +1,7 @@
 #pragma once
 
+#ifdef USE_M2_MODELS
+
 #include "DBC/DBC__Storage.h"
 
 #include "M2_CommonTypes.h"
@@ -95,9 +97,9 @@ struct SM2_Bone
 
 	inline bool IsAnimated() const
 	{
-		return translation.interpolation_type != Interpolations::INTERPOLATION_NONE ||
-			rotation.interpolation_type       != Interpolations::INTERPOLATION_NONE ||
-			scale.interpolation_type          != Interpolations::INTERPOLATION_NONE ||
+		return translation.interpolation_type != Interpolations::None ||
+			rotation.interpolation_type       != Interpolations::None ||
+			scale.interpolation_type          != Interpolations::None ||
 			flags.spherical_billboard                                               ||
 			flags.cylindrical_billboard_lock_x                                      ||
 			flags.cylindrical_billboard_lock_y                                      ||
@@ -465,3 +467,5 @@ struct SM2_Particle
 #include __PACK_END
 
 #include "M2_Animated.h"
+
+#endif

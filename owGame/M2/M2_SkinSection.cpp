@@ -1,5 +1,7 @@
 #include "stdafx.h"
 
+#ifdef USE_M2_MODELS
+
 // Include
 #include "M2.h"
 #include "M2_Base_Instance.h"
@@ -150,3 +152,5 @@ const std::shared_ptr<IStructuredBuffer>& CM2_SkinSection::GetGeometryBonesBuffe
 {
 	return m_StructuredBuffer;
 }
+
+#endif

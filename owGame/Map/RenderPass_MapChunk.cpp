@@ -9,7 +9,7 @@
 CRenderPass_ADT_MCNK::CRenderPass_ADT_MCNK(IRenderDevice& RenderDevice, const std::shared_ptr<CSceneCreateTypedListsPass>& SceneNodeListPass)
 	: CBaseList3DPass(RenderDevice, SceneNodeListPass, cMapChunk_NodeType)
 {
-	m_ADT_MCNK_Distance = RenderDevice.GetBaseManager().GetManager<ISettings>()->GetGroup("WoWSettings")->GetSettingT<float>("ADT_MCNK_Distance");
+	m_ADT_MCNK_Distance = RenderDevice.GetBaseManager().GetManager<ISettings>()->GetGroup("WoWSettings")->GetPropertyT<float>("ADT_MCNK_Distance");
 }
 
 CRenderPass_ADT_MCNK::~CRenderPass_ADT_MCNK()
@@ -67,7 +67,7 @@ std::shared_ptr<IRenderPassPipelined> CRenderPass_ADT_MCNK::CreatePipeline(std::
 //
 // IVisitor
 //
-EVisitResult CRenderPass_ADT_MCNK::Visit(const ISceneNode3D* SceneNode3D)
+EVisitResult CRenderPass_ADT_MCNK::Visit(const ISceneNode* SceneNode3D)
 {
 	_ASSERT(SceneNode3D->Is(cMapChunk_NodeType));
 	

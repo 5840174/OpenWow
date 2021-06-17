@@ -1,5 +1,7 @@
 #include "stdafx.h"
 
+#ifdef USE_M2_MODELS
+
 // General
 #include "Creature.h"
 
@@ -66,5 +68,4 @@ bool Creature::isMeshEnabled(uint32 _index) const
 	return false;
 }
 
-
-
+#endif

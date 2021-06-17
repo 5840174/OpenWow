@@ -1,5 +1,7 @@
 #include "stdafx.h"
 
+#if 0
+
 // General
 #include "World.h"
 
@@ -476,3 +478,5 @@ bool WoWWorld::ProcessQueryResponse(Opcodes Opcode, CServerPacket& Bytes)
 
 	return false;
 }
+
+#endif

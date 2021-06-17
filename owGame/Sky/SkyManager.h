@@ -8,7 +8,7 @@ class ZN_API SkyManager
 	, public CLoadableObject
 {
 public:
-	SkyManager(IRenderDevice& RenderDevice);
+	SkyManager(IRenderDevice& RenderDevice, IScene& Scene);
 	virtual ~SkyManager();
 
 	// ILoadableObject

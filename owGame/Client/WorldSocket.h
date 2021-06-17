@@ -1,5 +1,7 @@
 #pragma once
 
+#if 0
+
 #include "AuthCrypt.h"
 #include "Opcodes.h"
 #include "ServerPacket.h"
@@ -58,3 +60,5 @@ private:
 	std::string m_Login;
 	BigNumber   m_Key;
 };
+
+#endif

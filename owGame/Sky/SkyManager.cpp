@@ -11,10 +11,10 @@ const float  C_SkyAngles[] = { 90.0f,                          30.0f,           
 const uint32 C_Skycolors[] = { LightColors::LIGHT_COLOR_SKY_0, LightColors::LIGHT_COLOR_SKY_1, LightColors::LIGHT_COLOR_SKY_2, LightColors::LIGHT_COLOR_SKY_3, LightColors::LIGHT_COLOR_SKY_4, LightColors::LIGHT_COLOR_FOG, LightColors::LIGHT_COLOR_FOG };
 const uint32 C_SkycolorsCount = 7;
 
-SkyManager::SkyManager(IRenderDevice& RenderDevice)
-	: m_RenderDevice(RenderDevice)
+SkyManager::SkyManager(IRenderDevice& RenderDevice, IScene& Scene)
+	: CSceneNode(Scene)
+	, m_RenderDevice(RenderDevice)
 {
-	SetType(cSky_NodeType);
 }
 
 SkyManager::~SkyManager()
@@ -47,7 +47,7 @@ bool SkyManager::Load(uint32 MapID)
 		skies.back()->m_IsGlobalSky = true;
 	}
 
-	GetColliderComponent()->SetCullStrategy(IColliderComponent3D::ECullStrategy::None);
+	GetComponentT<IColliderComponent>()->SetCullStrategy(IColliderComponent::ECullStrategy::None);
 
 	InitBuffer();
 
@@ -68,7 +68,7 @@ void SkyManager::Update(const UpdateEventArgs& e)
 
 	Calculate(e.CameraForCulling, 1440/*GetMapController()->getTime()->GetTime()*/);
 
-	SetTranslate(e.CameraForCulling->GetTranslation());
+	SetPosition(e.CameraForCulling->GetPosition());
 }
 
 
@@ -81,7 +81,7 @@ void SkyManager::Calculate(const ICameraComponent3D* camera, uint32 _time)
 	if (GetState() != ILoadable::ELoadableState::Loaded)
 		return;
 
-	CalculateSkiesWeights(camera->GetTranslation());
+	CalculateSkiesWeights(camera->GetPosition());
 
 	// interpolation
 	m_Interpolated.Clear();
@@ -158,7 +158,7 @@ void SkyManager::InitBuffer()
 	std::shared_ptr<IModel> model = m_RenderDevice.GetObjectsFactory().CreateModel();
 	model->AddConnection(nullptr, geometry);
 
-	GetComponentT<IModelsComponent3D>()->SetModel(model);
+	GetComponentT<IModelComponent>()->SetModel(model);
 }
 
 void SkyManager::CalculateSkiesWeights(const glm::vec3& pos)

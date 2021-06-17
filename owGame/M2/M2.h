@@ -1,5 +1,7 @@
 #pragma once
 
+#ifdef USE_M2_MODELS
+
 #include "M2_Headers.h"
 
 // Components
@@ -74,3 +76,5 @@ private:
 	IBaseManager& m_BaseManager;
 	IRenderDevice& m_RenderDevice;
 };
+
+#endif

@@ -1,5 +1,7 @@
 #pragma once
 
+#if 0
+
 #include "WoWObject.h"
 #include "WorldLocation.h"
 
@@ -14,3 +16,5 @@ public:
 private:
 	std::string m_name;
 };
+
+#endif

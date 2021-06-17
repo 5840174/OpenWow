@@ -1,5 +1,7 @@
 #include "stdafx.h"
 
+#ifdef USE_M2_MODELS
+
 // Include
 #include "M2.h"
 #include "M2_Base_Instance.h"
@@ -27,9 +29,9 @@ SM2_Part_Light_Wrapper::~SM2_Part_Light_Wrapper()
 {
 }
 
-SLight SM2_Part_Light_Wrapper::GetLight(const CM2_Base_Instance * M2Instance, uint32 globalTime) const
+CLight SM2_Part_Light_Wrapper::GetLight(const CM2_Base_Instance * M2Instance, uint32 globalTime) const
 {
-	SLight lightStruct;
+	CLight lightStruct;
 	if (m_M2Light.type == SM2_Light::Type::Directional)
 	{
 		// TODO: rotation used world pos of node + rotate_bone * pos
@@ -68,3 +70,5 @@ SLight SM2_Part_Light_Wrapper::GetLight(const CM2_Base_Instance * M2Instance, ui
 
 	return lightStruct;
 }
+
+#endif

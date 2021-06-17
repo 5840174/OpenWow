@@ -1,5 +1,7 @@
 #pragma once
 
+#ifdef USE_M2_MODELS
+
 #include "M2_Types.h"
 #include "M2_Part_Bone.h"
 
@@ -81,3 +83,5 @@ private:
 	const SM2_Particle m_M2Particle;
 	Random m_Random;
 };
+
+#endif

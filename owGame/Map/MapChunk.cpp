@@ -85,10 +85,10 @@ void CMapChunk::Initialize()
 			glm::vec3(0.0f + C_ChunkSize, Math::MinFloat, 0.0f + C_ChunkSize)
 		);
 
-		GetColliderComponent()->SetCullStrategy(IColliderComponent3D::ECullStrategy::ByFrustrumAndDistance2D);
-		GetColliderComponent()->SetCullDistance(m_RenderDevice.GetBaseManager().GetManager<ISettings>()->GetGroup("WoWSettings")->GetSettingT<float>("ADT_MCNK_Distance")->Get());
-		GetColliderComponent()->SetBounds(bbox);
-		GetColliderComponent()->SetDebugDrawMode(false);
+		GetComponentT<IColliderComponent>()->SetCullStrategy(IColliderComponent::ECullStrategy::ByFrustrumAndDistance2D);
+		GetComponentT<IColliderComponent>()->SetCullDistance(m_RenderDevice.GetBaseManager().GetManager<ISettings>()->GetGroup("WoWSettings")->GetPropertyT<float>("ADT_MCNK_Distance")->Get());
+		GetComponentT<IColliderComponent>()->SetBounds(bbox);
+		GetComponentT<IColliderComponent>()->SetDebugDrawMode(false);
 	}
 }
 
@@ -161,7 +161,7 @@ bool CMapChunk::Load()
 		glm::vec3 tempVertexes[C_MapBufferSize];
 		glm::vec3* ttv = tempVertexes;
 
-		BoundingBox bbox = GetColliderComponent()->GetBounds();
+		BoundingBox bbox = GetComponentT<IColliderComponent>()->GetBounds();
 
 
 		float minHeight = Math::MaxFloat;
@@ -192,7 +192,7 @@ bool CMapChunk::Load()
 		bbox.setMinY(minHeight);
 		bbox.setMaxY(maxHeight);
 		bbox.calculateCenter();
-        GetColliderComponent()->SetBounds(bbox);
+        GetComponentT<IColliderComponent>()->SetBounds(bbox);
 
 		verticesBuffer = m_RenderDevice.GetObjectsFactory().CreateVertexBuffer(tempVertexes, C_MapBufferSize);
 	}
@@ -327,13 +327,13 @@ bool CMapChunk::Load()
 
 			// Set this chunk BBOX
 			{
-				BoundingBox bbox = GetColliderComponent()->GetBounds();
+				BoundingBox bbox = GetComponentT<IColliderComponent>()->GetBounds();
 				float bboxMinHeight = std::min(bbox.getMin().y, (height.min - GetTranslation().y));
 				float bboxMaxHeight = std::max(bbox.getMax().y, (height.max - GetTranslation().y));
 				bbox.setMinY(bboxMinHeight);
 				bbox.setMaxY(bboxMaxHeight);
 				bbox.calculateCenter();
-				GetColliderComponent()->SetBounds(bbox);
+				GetComponentT<IColliderComponent>()->SetBounds(bbox);
 			}
 
 			CMapChunkLiquid liquidObject(m_RenderDevice, m_Bytes, header);
@@ -344,15 +344,15 @@ bool CMapChunk::Load()
 			// Transform
 			liquidInstance->SetTranslate(glm::vec3(0.0f, (-GetTranslation().y), 0.0f));
 
-			// IColliderComponent3D
+			// IColliderComponent
 			{
-				BoundingBox bbox = GetColliderComponent()->GetBounds();
+				BoundingBox bbox = GetComponentT<IColliderComponent>()->GetBounds();
 				bbox.setMinY(height.min);
 				bbox.setMaxY(height.max);
 				bbox.calculateCenter();
-				liquidInstance->GetColliderComponent()->SetCullStrategy(IColliderComponent3D::ECullStrategy::ByFrustrumAndDistance2D);
-				liquidInstance->GetColliderComponent()->SetBounds(bbox);
-				liquidInstance->GetColliderComponent()->SetDebugDrawMode(false);
+				liquidInstance->GetComponentT<IColliderComponent>()->SetCullStrategy(IColliderComponent::ECullStrategy::ByFrustrumAndDistance2D);
+				liquidInstance->GetComponentT<IColliderComponent>()->SetBounds(bbox);
+				liquidInstance->GetComponentT<IColliderComponent>()->SetDebugDrawMode(false);
 			}
 		}
 	}

@@ -1,5 +1,7 @@
 #pragma once
 
+#if 0
+
 #include "WoWWorldObject.h"
 #include "World/GameObject/GameObject.h"
 
@@ -65,3 +67,5 @@ public:
 private:
 	std::shared_ptr<GameObject> m_HiddenNode;
 };
+
+#endif

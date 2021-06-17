@@ -4,7 +4,7 @@ class CSceneWoW2
 	: public SceneBase
 {
 public:
-	CSceneWoW2(IBaseManager& BaseManager, const std::shared_ptr<ISceneNode3D>& Fake3DRootNode, const std::shared_ptr<ICameraComponent3D>& ExternalCamera);
+	CSceneWoW2(IBaseManager& BaseManager, const std::shared_ptr<ISceneNode>& Fake3DRootNode, const std::shared_ptr<ICameraComponent3D>& ExternalCamera);
 	virtual ~CSceneWoW2();
 
 	// IGameState
@@ -28,6 +28,6 @@ private:
 	CMap* map;
 	WowTime wowGameTime;
 
-	std::shared_ptr<ISceneNode3D> m_Fake3DRootNode;
+	std::shared_ptr<ISceneNode> m_Fake3DRootNode;
 	std::shared_ptr<ICameraComponent3D> m_FakeCamera;
 };

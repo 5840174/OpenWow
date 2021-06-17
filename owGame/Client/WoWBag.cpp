@@ -1,5 +1,7 @@
 #include "stdafx.h"
 
+#if 0
+
 // General
 #include "WoWBag.h"
 
@@ -25,3 +27,5 @@ std::shared_ptr<WoWBag> WoWBag::Create(IBaseManager & BaseManager, IRenderDevice
 	std::shared_ptr<WoWBag> thisObj = std::make_shared<WoWBag>(Guid);
 	return thisObj;
 }
+
+#endif

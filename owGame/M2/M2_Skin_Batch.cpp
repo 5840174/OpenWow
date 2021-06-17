@@ -1,5 +1,7 @@
 #include "stdafx.h"
 
+#ifdef USE_M2_MODELS
+
 // Include
 #include "M2.h"
 #include "M2_Base_Instance.h"
@@ -120,3 +122,5 @@ void CM2_Skin_Batch::UpdateMaterialProps(const RenderEventArgs& RenderEventArgs,
 
 	MaterialProxie::UpdateConstantBuffer(&props, sizeof(ShaderM2BatchProperties));
 }
+
+#endif

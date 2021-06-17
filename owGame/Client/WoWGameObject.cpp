@@ -1,5 +1,7 @@
 #include "stdafx.h"
 
+#if 0
+
 // General
 #include "WoWGameObject.h"
 
@@ -32,7 +34,7 @@ std::shared_ptr<WoWGameObject> WoWGameObject::Create(IBaseManager& BaseManager, 
 	// For test only
 	BoundingBox bbox(glm::vec3(-2.0f), glm::vec3(2.0f));
 	bbox.calculateCenter();
-	//thisObj->GetColliderComponent()->SetBounds(bbox);
+	//thisObj->GetComponentT<IColliderComponent>()->SetBounds(bbox);
 
 	return thisObj;
 }
@@ -47,3 +49,4 @@ void WoWGameObject::AfterCreate(IBaseManager & BaseManager, IRenderDevice & Rend
 	}
 }
 
+#endif

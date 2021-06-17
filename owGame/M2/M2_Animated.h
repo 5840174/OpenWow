@@ -1,5 +1,7 @@
 #pragma once
 
+#ifdef USE_M2_MODELS
+
 #include "M2_AnimatedConverters.h"
 #include "M2_Types.h"
 
@@ -16,7 +18,7 @@ class M2_Animated
 {
 public:
 	M2_Animated()
-		: m_Type(Interpolations::INTERPOLATION_NONE)
+		: m_Type(Interpolations::None)
 		, m_GlobalSecIndex(-1)
 	{}
 
@@ -25,7 +27,7 @@ public:
 		m_Type = b.interpolation_type;
 		m_GlobalSecIndex = b.global_sequence;
 
-		_ASSERT((b.interpolation_ranges.size > 0) || (m_GlobalSecIndex != -1) || (m_Type == Interpolations::INTERPOLATION_NONE));
+		_ASSERT((b.interpolation_ranges.size > 0) || (m_GlobalSecIndex != -1) || (m_Type == Interpolations::None));
 
 		// ranges
 		if (b.interpolation_ranges.size > 0)
@@ -50,12 +52,12 @@ public:
 		{
 			switch (m_Type)
 			{
-				case Interpolations::INTERPOLATION_NONE:
-				case Interpolations::INTERPOLATION_LINEAR:
+				case Interpolations::None:
+				case Interpolations::Linear:
 					m_Values.push_back(fixfunc(Conv::conv(values[i])));
 					break;
 
-				case Interpolations::INTERPOLATION_HERMITE:
+				case Interpolations::Hermite:
 					m_Values.push_back(fixfunc(Conv::conv(values[i * 3 + 0])));
 					m_ValuesHermiteIn.push_back(fixfunc(Conv::conv(values[i * 3 + 1])));
 					m_ValuesHermiteOut.push_back(fixfunc(Conv::conv(values[i * 3 + 2])));
@@ -70,7 +72,7 @@ public:
 
 	inline bool IsUsesBySequence(uint16 SequenceIndex) const
 	{
-		if (m_Type == Interpolations::INTERPOLATION_NONE)
+		if (m_Type == Interpolations::None)
 			return m_Values.size() == 1;
 
 		if (m_GlobalSecIndex == -1 && m_Ranges.size() <= SequenceIndex)
@@ -139,13 +141,13 @@ private:
 
 		switch (m_Type)
 		{
-			case Interpolations::INTERPOLATION_NONE:
+			case Interpolations::None:
 				return interpolateNone<T>(r, m_Values[timeIndex], m_Values[timeIndex + 1]);
 
-			case Interpolations::INTERPOLATION_LINEAR:
+			case Interpolations::Linear:
 				return interpolateLinear<T>(r, m_Values[timeIndex], m_Values[timeIndex + 1]);
 
-			case Interpolations::INTERPOLATION_HERMITE:
+			case Interpolations::Hermite:
 				return interpolateHermite<T>(r, m_Values[timeIndex], m_Values[timeIndex + 1], m_ValuesHermiteIn[timeIndex], m_ValuesHermiteOut[timeIndex]);
 
 			default:
@@ -172,7 +174,7 @@ class M2_Animated
 {
 public:
 	M2_Animated()
-		: m_Type(Interpolations::INTERPOLATION_NONE)
+		: m_Type(Interpolations::None)
 		, m_GlobalSecIndex(-1)
 	{}
 
@@ -221,12 +223,12 @@ public:
 			{
 				switch (m_Type)
 				{
-				case Interpolations::INTERPOLATION_NONE:
-				case Interpolations::INTERPOLATION_LINEAR:
+				case Interpolations::None:
+				case Interpolations::Linear:
 					m_Values[j].push_back(fixfunc(Conv::conv(values[i])));
 					break;
 
-				case Interpolations::INTERPOLATION_HERMITE:
+				case Interpolations::Hermite:
 					m_Values[j].push_back(fixfunc(Conv::conv(values[i * 3 + 0])));
 					m_ValuesHermiteIn[j].push_back(fixfunc(Conv::conv(values[i * 3 + 1])));
 					m_ValuesHermiteOut[j].push_back(fixfunc(Conv::conv(values[i * 3 + 2])));
@@ -304,11 +306,11 @@ public:
 			float r = static_cast<float>(time - t1) / static_cast<float>(t2 - t1);
 			switch (m_Type)
 			{
-				case Interpolations::INTERPOLATION_NONE:
+				case Interpolations::None:
 					return interpolateNone(r, pData.at(pos), pData.at(pos + 1));
-				case Interpolations::INTERPOLATION_LINEAR:
+				case Interpolations::Linear:
 					return interpolateLinear<T>(r, pData.at(pos), pData.at(pos + 1));
-				case Interpolations::INTERPOLATION_HERMITE:
+				case Interpolations::Hermite:
 					return interpolateHermite<T>(r, pData.at(pos), pData.at(pos + 1), m_ValuesHermiteIn[SequenceIndex].at(pos), m_ValuesHermiteOut[SequenceIndex].at(pos));
 				default:
 					_ASSERT_EXPR(false, "M2_Animated: Unknown interpolation type.");
@@ -352,3 +354,4 @@ private:
 
 #endif
 
+#endif

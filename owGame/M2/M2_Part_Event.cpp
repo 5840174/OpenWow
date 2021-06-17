@@ -1,5 +1,7 @@
 #include "stdafx.h"
 
+#ifdef USE_M2_MODELS
+
 // Include
 #include "M2.h"
 
@@ -20,3 +22,6 @@ SM2_Part_Event_Wrapper::SM2_Part_Event_Wrapper(const CM2& M2Object, const std::s
 SM2_Part_Event_Wrapper::~SM2_Part_Event_Wrapper()
 {
 }
+
+#endif
+

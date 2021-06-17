@@ -1,5 +1,7 @@
 #pragma once
 
+#if 0
+
 #include "WoWItem.h"
 
 class ZN_API WoWBag
@@ -15,3 +17,5 @@ public:
 private:
 
 };
+
+#endif

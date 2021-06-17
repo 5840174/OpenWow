@@ -1,5 +1,7 @@
 #pragma once
 
+#ifdef USE_WMO_MODELS
+
 #include "WMO_Group.h"
 #include "WMO_Portal_Instance.h"
 
@@ -57,3 +59,5 @@ private:
 private:
 	const WMO_Group& m_WMOGroupObject;
 };
+
+#endif

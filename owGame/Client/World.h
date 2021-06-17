@@ -1,5 +1,7 @@
 #pragma once
 
+#if 0
+
 #include "ServerPacket.h"
 #include "WorldSocket.h"
 
@@ -62,3 +64,5 @@ private:
 	std::shared_ptr<SkyManager> skyManager;
 	std::shared_ptr<CMap> map;
 };
+
+#endif

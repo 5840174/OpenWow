@@ -1,5 +1,7 @@
 #pragma once
 
+#ifdef USE_WMO_MODELS
+
 enum LightType
 {
 	OMNI_LGT,
@@ -24,3 +26,5 @@ public:
 private:
 	const SWMO_LightDef m_WMOLightProto;
 };
+
+#endif

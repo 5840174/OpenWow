@@ -1,5 +1,7 @@
 #pragma once
 
+#ifdef USE_WMO_MODELS
+
 #include "Liquid/LiquidInstance.h"
 #include "WMO_Headers.h"
 #include "WMO_Group.h"
@@ -22,3 +24,5 @@ public:
 private:
 	bool m_PortalVisibilityState;
 };
+
+#endif

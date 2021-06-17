@@ -1,5 +1,7 @@
 #include "stdafx.h"
 
+#ifdef USE_M2_MODELS
+
 // General
 #include "RenderPass_M2Instanced.h"
 
@@ -111,7 +113,7 @@ std::shared_ptr<IRenderPassPipelined> CRenderPass_M2_Instanced::CreatePipeline(s
 	return SetPipeline(pipeline);
 }
 
-EVisitResult CRenderPass_M2_Instanced::Visit(const ISceneNode3D * node)
+EVisitResult CRenderPass_M2_Instanced::Visit(const ISceneNode * node)
 {
 	_ASSERT(false);
 	return EVisitResult::Block;
@@ -122,3 +124,5 @@ EVisitResult CRenderPass_M2_Instanced::Visit(const IModel * Model)
 	_ASSERT(false);
 	return EVisitResult::Block;
 }
+
+#endif

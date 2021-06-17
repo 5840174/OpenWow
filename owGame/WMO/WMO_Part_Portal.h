@@ -1,5 +1,7 @@
 #pragma once
 
+#ifdef USE_WMO_MODELS
+
 #include "WMO_Headers.h"
 
 // FORWARD BEGIN
@@ -28,3 +30,5 @@ private:
 	int32					m_GrInner;
 	int32					m_GrOuter;
 };
+
+#endif

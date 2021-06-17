@@ -26,7 +26,7 @@ public:
 	void                                            ClearCache();
 	uint32                                          GetAreaID(const ICameraComponent3D* camera);
 
-	// ISceneNode3D
+	// ISceneNode
 	void                                            Update(const UpdateEventArgs& e) override;
 
 public: // Getters

@@ -1,5 +1,7 @@
 #pragma once
 
+#ifdef USE_M2_MODELS
+
 #include "World/Creature/Creature.h"
 #include "World/Items/Item_VisualData.h"
 
@@ -26,10 +28,12 @@ public:
 	void RefreshTextures(const Character_SectionWrapper& SectionWrapper, std::shared_ptr<ITexture> SkinTexture);
 	void RefreshMeshIDs(const Character_SectionWrapper& SectionWrapper);
 
-	// ISceneNode3D
+	// ISceneNode
 	void Initialize() override;
 
 private:
 	CInet_CharacterTemplate			                    m_Template;
 	std::map<EInventoryType, std::shared_ptr<CItem_VisualData>>  m_VisualItems;
 };
+
+#endif

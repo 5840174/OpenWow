@@ -1,5 +1,7 @@
 #pragma once
 
+#ifdef USE_M2_MODELS
+
 class CM2;
 class CM2_Base_Instance;
 #include "M2/M2_ParticleSystem.h"
@@ -57,3 +59,5 @@ protected:
 private:
 	std::vector<std::shared_ptr<CM2ParticleSystem>> m_ParticleSystems;
 };
+
+#endif

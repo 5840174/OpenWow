@@ -1,5 +1,7 @@
 #pragma once
 
+#ifdef USE_WMO_MODELS
+
 #include "WMO_Headers.h"
 
 class WMO_Part_Fog
@@ -15,3 +17,5 @@ public:
 private:
 	SWMO_FogDef m_WMOFogProto;
 };
+
+#endif

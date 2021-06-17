@@ -1,5 +1,7 @@
 #pragma once
 
+#ifdef USE_M2_MODELS
+
 #include "World/MeshIDEnums.h"
 #include "Client/Templates/CharacterEnums.h"
 #include "Client/Templates/ItemTemplate.h"
@@ -63,3 +65,5 @@ private:
 	const CDBCStorage* m_DBCs;
 	Character& m_ParentCharacter;
 };
+
+#endif

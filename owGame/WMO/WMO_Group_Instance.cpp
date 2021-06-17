@@ -1,5 +1,7 @@
 #include "stdafx.h"
 
+#ifdef USE_WMO_MODELS
+
 // Include
 #include "WMO_Base_Instance.h"
 #include "WMO_Doodad_Instance.h"
@@ -71,7 +73,7 @@ void CWMO_Group_Instance::Reset()
 
 BoundingBox CWMO_Group_Instance::GetBoundingBox() const
 {
-	return GetColliderComponent()->GetWorldBounds();
+	return GetComponentT<IColliderComponent>()->GetWorldBounds();
 }
 
 void CWMO_Group_Instance::SetVisibilityState(bool Value)
@@ -138,9 +140,9 @@ void CWMO_Group_Instance::CreatePortals(const std::shared_ptr<CWMO_Base_Instance
 //
 void CWMO_Group_Instance::Initialize()
 {
-	GetColliderComponent()->SetCullStrategy(IColliderComponent3D::ECullStrategy::ByFrustrumAndDistance);
-	GetColliderComponent()->SetBounds(m_WMOGroupObject.m_Bounds);
-	GetColliderComponent()->SetDebugDrawMode(true);
+	GetComponentT<IColliderComponent>()->SetCullStrategy(IColliderComponent::ECullStrategy::ByFrustrumAndDistance);
+	GetComponentT<IColliderComponent>()->SetBounds(m_WMOGroupObject.m_Bounds);
+	GetComponentT<IColliderComponent>()->SetDebugDrawMode(true);
 }
 
 void CWMO_Group_Instance::Accept(IVisitor* visitor)
@@ -150,3 +152,5 @@ void CWMO_Group_Instance::Accept(IVisitor* visitor)
 		SceneNode3D::Accept(visitor);
 	}	
 }
+
+#endif

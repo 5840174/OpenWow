@@ -1,5 +1,7 @@
 #include "stdafx.h"
 
+#ifdef USE_M2_MODELS
+
 // General
 #include "WorldObjectsCreator.h"
 
@@ -419,3 +421,5 @@ IBlendState::BlendMode CWorldObjectCreator::GetEGxBlendMode(uint32 Index)
 	_ASSERT(false);
 	return IBlendState::BlendMode();
 }
+
+#endif

@@ -1,5 +1,7 @@
 #pragma once
 
+#if 0
+
 #include "AuthCodes.h"
 
 #include "SHA1.h"
@@ -45,3 +47,5 @@ private:
 	std::string m_Login;
 	SHA1Hash    m_LoginPasswordHash;
 };
+
+#endif

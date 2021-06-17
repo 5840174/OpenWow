@@ -1,5 +1,7 @@
 #pragma once
 
+#ifdef USE_WMO_MODELS
+
 #ifdef USE_M2_MODELS
 
 #include "M2/M2_Base_Instance.h"
@@ -26,5 +28,7 @@ private:
 	const uint32        m_Index;
 	bool                m_PortalVisibilityState;
 };
+
+#endif
 
 #endif

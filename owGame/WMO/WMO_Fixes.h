@@ -1,5 +1,7 @@
 #pragma once
 
+#ifdef USE_WMO_MODELS
+
 #include "WMO.h"
 #include "WMO_Group.h"
 
@@ -91,3 +93,5 @@
 		color.w = opacity * 255.0;
 	}
 }*/
+
+#endif

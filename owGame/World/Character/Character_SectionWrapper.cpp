@@ -1,5 +1,7 @@
 #include "stdafx.h"
 
+#ifdef USE_M2_MODELS
+
 // Include
 #include "Character.h"
 
@@ -396,3 +398,5 @@ std::string Character_SectionWrapper::getNakedTorsoTexture(const Character * Cha
 	_ASSERT(false);
 	return "";
 }
+
+#endif

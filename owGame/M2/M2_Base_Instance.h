@@ -1,5 +1,7 @@
 #pragma once
 
+#ifdef USE_M2_MODELS
+
 #include "M2.h"
 
 // Components
@@ -67,9 +69,13 @@ private:
 
 	// Animtion
 	std::shared_ptr<CM2_Animator>           m_Animator;
+#if 0
 	std::shared_ptr<CM2SkeletonComponent3D> m_SkeletonComponent;
 	std::shared_ptr<CM2ParticlesComponent3D>m_ParticleComponent;
+#endif
 
 private:
 	std::shared_ptr<const CM2>           m_M2;
 };
+
+#endif

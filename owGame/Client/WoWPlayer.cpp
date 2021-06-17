@@ -1,5 +1,7 @@
 #include "stdafx.h"
 
+#if 0
+
 // General
 #include "WoWPlayer.h"
 
@@ -27,7 +29,9 @@ std::shared_ptr<WoWPlayer> WoWPlayer::Create(IBaseManager& BaseManager, IRenderD
 	// For test only
 	BoundingBox bbox(glm::vec3(-2.0f), glm::vec3(2.0f));
 	bbox.calculateCenter();
-	//thisObj->GetColliderComponent()->SetBounds(bbox);
+	//thisObj->GetComponentT<IColliderComponent>()->SetBounds(bbox);
 
 	return thisObj;
 }
+
+#endif

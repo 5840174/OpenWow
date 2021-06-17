@@ -1,5 +1,7 @@
 #include "stdafx.h"
 
+#ifdef USE_WMO_MODELS
+
 // General
 #include "MapWMOInstance.h"
 
@@ -78,3 +80,5 @@ void CMapWMOInstance::reset()
 	m_AlreadyDraw.clear();
 }
 std::unordered_map<uint32, const CMapWMOInstance*> CMapWMOInstance::m_AlreadyDraw;
+
+#endif

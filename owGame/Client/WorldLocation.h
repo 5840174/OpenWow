@@ -1,5 +1,7 @@
 #pragma once
 
+#if 0
+
 struct ZN_API WorldLocation
 	: public CSceneNode
 {
@@ -25,3 +27,5 @@ struct ZN_API WorldLocation
 	float PositionZ;
 	float Orientation;
 };
+
+#endif

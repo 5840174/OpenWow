@@ -1,5 +1,7 @@
 #pragma once
 
+#if 0
+
 #include "WoWWorldObject.h"
 
 #include "World/Creature/Creature.h"
@@ -251,3 +253,5 @@ protected:
 private:
 	std::shared_ptr<Creature> m_HiddenNode;
 };
+
+#endif

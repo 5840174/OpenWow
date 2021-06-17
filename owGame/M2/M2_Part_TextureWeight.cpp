@@ -1,5 +1,7 @@
 #include "stdafx.h"
 
+#ifdef USE_M2_MODELS
+
 // Include
 #include "M2.h"
 #include "M2_Base_Instance.h"
@@ -24,3 +26,5 @@ float CM2_Part_TextureWeight::GetWeight(const CM2_Base_Instance* M2Instance, uin
 			return m_WeightAnimated.GetValue(animator->getSequenceIndex(), animator->getCurrentTime(), m_M2Object.getSkeleton().getGlobalLoops(), GlobalTime);
 	return 1.0f;
 }
+
+#endif

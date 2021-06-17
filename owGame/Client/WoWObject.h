@@ -1,5 +1,7 @@
 #pragma once
 
+#if 0
+
 #include "ObjectGUID.h"
 #include "UpdateMask.h"
 #include "UpdateFields.h"
@@ -113,3 +115,5 @@ protected:
 	uint16 m_ObjectType;
 	ObjectTypeID m_ObjectTypeId;
 };
+
+#endif

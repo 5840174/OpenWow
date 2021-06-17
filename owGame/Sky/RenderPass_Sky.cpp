@@ -55,7 +55,7 @@ std::shared_ptr<IRenderPassPipelined> CRenderPass_Sky::CreatePipeline(std::share
 //
 // IVisitor
 //
-EVisitResult CRenderPass_Sky::Visit(const ISceneNode3D * node)
+EVisitResult CRenderPass_Sky::Visit(const ISceneNode * node)
 {
 	_ASSERT(node->Is(cSky_NodeType));
 

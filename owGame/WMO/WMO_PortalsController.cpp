@@ -1,5 +1,7 @@
 #include "stdafx.h"
 
+#ifdef USE_WMO_MODELS
+
 // Include
 #include "WMO.h"
 #include "WMO_Base_Instance.h"
@@ -32,7 +34,7 @@ void CWMO_PortalsController::Update(const CWMO_Base_Instance* SceneNodeInstance,
 	Frustum cameraFrustum = _camera->GetFrustum();
 	bool insideIndoor = false;
 
-	BoundingBox wmoBaseInstanceBounds = const_cast<CWMO_Base_Instance*>(SceneNodeInstance)->GetColliderComponent()->GetBounds();
+	BoundingBox wmoBaseInstanceBounds = const_cast<CWMO_Base_Instance*>(SceneNodeInstance)->GetComponentT<IColliderComponent>()->GetBounds();
 	wmoBaseInstanceBounds.transform(SceneNodeInstance->GetWorldTransfom());
 
 	if (wmoBaseInstanceBounds.isPointInside(cameraTranslate))
@@ -136,5 +138,7 @@ bool CWMO_PortalsController::Recur(const CWMO_Base_Instance* SceneNodeInstance, 
 
 	return true;
 }
+
+#endif
 
 #endif

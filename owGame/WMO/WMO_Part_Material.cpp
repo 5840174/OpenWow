@@ -1,5 +1,7 @@
 #include "stdafx.h"
 
+#ifdef USE_WMO_MODELS
+
 // Include
 #include "Wmo.h"
 
@@ -87,3 +89,5 @@ void WMO_Part_Material::UpdateConstantBuffer() const
 
 	_Render->getRenderStorage()->SetEGxBlend(_Render->r.getState(), m_WMOMaterialProto.blendMode);
 }*/
+
+#endif

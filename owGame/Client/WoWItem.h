@@ -1,5 +1,7 @@
 #pragma once
 
+#if 0
+
 #include "WoWObject.h"
 
 class ZN_API WoWItem
@@ -15,3 +17,5 @@ public:
 private:
 
 };
+
+#endif

@@ -13,15 +13,31 @@
 
 #define WOW_CLIENT_VERSION WOW_WOTLK_3_3_5
 
+
 /**
-  * Enable or disable M2 models support
+  * Enable or disable WMO models support
 */
-#define USE_M2_MODELS
+//#define USE_WMO_MODELS
 
 /**
   * Enable or disable WMO culling by portals
 */
 //#define USE_WMO_PORTALS_CULLING
+
+
+/**
+  * Enable or disable M2 models support
+*/
+//#define USE_M2_MODELS
+
+
+
+
+
+struct ISceneNodeProvider
+{
+	virtual void CreateInsances(const std::shared_ptr<ISceneNode>& Parent) const = 0;
+};
 
 
 // Interfaces

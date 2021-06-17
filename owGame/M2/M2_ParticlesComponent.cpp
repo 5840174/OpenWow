@@ -1,5 +1,7 @@
 #include "stdafx.h"
 
+#ifdef USE_M2_MODELS
+
 // Include
 #include "M2.h"
 #include "M2_Base_Instance.h"
@@ -133,3 +135,5 @@ const CM2_Base_Instance& CM2ParticlesComponent3D::GetM2OwnerNode() const
 {
 	return reinterpret_cast<const CM2_Base_Instance&>(GetOwnerNode());
 }
+
+#endif
