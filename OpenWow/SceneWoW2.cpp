@@ -1,5 +1,7 @@
 #include "stdafx.h"
 
+#if 0
+
 // Gerenal
 #include "SceneWoW2.h"
 
@@ -100,3 +102,5 @@ void CSceneWoW2::OnWindowKeyReleased(KeyEventArgs & e)
 {
 	SceneBase::OnWindowKeyReleased(e);
 }
+
+#endif

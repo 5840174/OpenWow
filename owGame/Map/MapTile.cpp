@@ -51,6 +51,8 @@ const CMap & CMapTile::GetMap() const
 //
 void CMapTile::Initialize()
 {
+	__super::Initialize();
+
 	// CColliderComponent
 	if (false)
 	{
@@ -249,11 +251,17 @@ bool CMapTile::Load()
 	for (uint32_t i = 0; i < C_ChunksInTileGlobal; i++)
 	{
 		auto chunk = MakeShared(CMapChunk, GetScene(), m_RenderDevice, m_Map, std::dynamic_pointer_cast<CMapTile>(shared_from_this()), chunks[i], f);
+		chunk->RegisterComponents();
 		chunk->Initialize();
+		
 		AddChild(chunk);
 		//auto chunk = GetScene().CreateSceneNode<CMapChunk>(m_RenderDevice, m_Map, std::dynamic_pointer_cast<CMapTile>(shared_from_this()), chunks[i], f);
 
-		GetBaseManager().GetManager<ILoader>()->AddToLoadQueue(chunk);
+		chunk->SetState(ILoadable::ELoadableState::Loaded);
+		chunk->Load();
+		
+		//GetBaseManager().GetManager<ILoader>()->AddToLoadQueue(chunk);
+
 		m_Chunks.push_back(chunk.get());
 	}
 

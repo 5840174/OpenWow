@@ -6,6 +6,179 @@
 // Additional
 #include "Client/Client.h"
 
+
+CSceneWoW::CSceneWoW(IBaseManager& BaseManager, IRenderWindow& RenderWindow)
+	: SceneBase(BaseManager, RenderWindow)
+	//, m_World(rp3d::Vector3(0.0f, -9.81f, 0.0f))
+{
+	// Change the number of iterations of the velocity solver
+	//m_World.setNbIterationsVelocitySolver(15);
+	// Change the number of iterations of the position solver
+	//m_World.setNbIterationsPositionSolver(8);
+
+}
+
+CSceneWoW::~CSceneWoW()
+{
+	Log::Info("Scene destroyed.");
+}
+
+
+//
+// IGameState
+//
+void CSceneWoW::Initialize()
+{
+	__super::Initialize();
+
+	// Light
+	{
+		auto lightNode = CreateSceneNodeT<ISceneNode>();
+		lightNode->SetName("Light");
+		lightNode->SetLocalPosition(glm::vec3(-50.0f, 250.0f, -50.0f));
+		lightNode->SetLocalRotationDirection(glm::vec3(-0.5, -0.5f, -0.5f));
+		//lightNode->SetLocalRotationEuler(glm::vec3(45.0f, -45.0f, 0.0f));
+
+		auto lightComponent = GetBaseManager().GetManager<IObjectsFactory>()->GetClassFactoryCast<IComponentFactory>()->CreateComponentT<CLightComponent>(cSceneNodeLightComponent, *lightNode.get());
+		lightComponent->SetLight(MakeShared(CLight, GetBaseManager()));
+		lightComponent->GetLight()->SetCastShadows(true);
+		lightComponent->GetLight()->SetType(ELightType::Spot);
+		lightComponent->GetLight()->SetAmbientColor(ColorRGB(0.25f));
+		lightComponent->GetLight()->SetColor(ColorRGB(1.0f, 1.0f, 1.0f));
+		lightComponent->GetLight()->SetRange(1000.0f);
+		lightComponent->GetLight()->SetIntensity(1.0077f);
+		lightComponent->GetLight()->SetSpotlightAngle(30.0f);
+
+		lightNode->AddComponent(cSceneNodeLightComponent, lightComponent);
+	}
+
+	// Camera
+	{
+		auto cameraNode = CreateSceneNodeT<ISceneNode>();
+		cameraNode->SetName("Camera");
+		cameraNode->AddComponentT(GetBaseManager().GetManager<IObjectsFactory>()->GetClassFactoryCast<IComponentFactory>()->CreateComponentT<ICameraComponent3D>(cSceneNodeCameraComponent, *cameraNode));
+
+		SetCameraController(MakeShared(CFreeCameraController));
+		GetCameraController()->SetCamera(cameraNode->GetComponentT<ICameraComponent3D>());
+		GetCameraController()->GetCamera()->SetPerspectiveProjection(75.0f, static_cast<float>(GetRenderWindow().GetWindowWidth()) / static_cast<float>(GetRenderWindow().GetWindowHeight()), 1.0f, 15000.0f);
+		GetCameraController()->GetCamera()->SetPosition(glm::vec3(100.0f));
+		GetCameraController()->GetCamera()->SetYaw(225);
+		GetCameraController()->GetCamera()->SetPitch(-45);
+	}
+
+
+
+
+	{
+		std::shared_ptr<CRenderPass_Sky> skyPass = MakeShared(CRenderPass_Sky, *this);
+		skyPass->ConfigurePipeline(GetRenderWindow().GetRenderTarget());
+		GetRenderer()->Add3DPass(skyPass);
+	}
+
+	{
+		std::shared_ptr<CRenderPass_MapTile> tilePass = MakeShared(CRenderPass_MapTile, *this);
+		tilePass->ConfigurePipeline(GetRenderWindow().GetRenderTarget());
+		GetRenderer()->Add3DPass(tilePass);
+	}
+
+	{
+		std::shared_ptr<CRenderPass_ADT_MCNK> adtMCNKPass = MakeShared(CRenderPass_ADT_MCNK, *this);
+		adtMCNKPass->ConfigurePipeline(GetRenderWindow().GetRenderTarget());
+		GetRenderer()->Add3DPass(adtMCNKPass);
+	}
+
+
+	{
+		std::shared_ptr<CRenderPass_Liquid> liquidPass = MakeShared(CRenderPass_Liquid, *this);
+		liquidPass->ConfigurePipeline(GetRenderWindow().GetRenderTarget());
+		GetRenderer()->Add3DPass(liquidPass);
+	}
+
+
+	
+
+
+
+	skyManager = MakeShared(SkyManager, GetRenderDevice(), *this);
+	skyManager->Initialize();
+	skyManager->RegisterComponents();
+	GetRootSceneNode()->AddChild(skyManager);
+	//skyManager = GetRootSceneNode().CreateSceneNode<SkyManager>(GetRenderDevice());
+	GetBaseManager().AddManager<ISkyManager>(skyManager);
+
+	skyManager->Load(0);
+
+
+	map = MakeShared(CMap, *this, GetBaseManager(), GetRenderDevice());
+	map->Initialize();
+	map->RegisterComponents();
+	GetRootSceneNode()->AddChild(map);
+	//map = GetRootNode3D()->CreateSceneNode<CMap>(GetBaseManager(), GetRenderDevice());
+
+	const float x = 40;
+	const float y = 30;
+	glm::vec3 position = glm::vec3(19700, 150, 17500);//glm::vec3(x * C_TileSize + C_TileSize / 2.0f, 100.0f, y * C_TileSize + C_TileSize / 2.0f);
+
+	map->MapPreLoad(GetBaseManager().GetManager<CDBCStorage>()->DBC_Map()[1]);
+	map->MapLoad();
+	map->EnterMap(position);
+
+
+	GetCameraController()->GetCamera()->SetPosition(position);
+
+}
+
+void CSceneWoW::Finalize()
+{
+	SceneBase::Finalize();
+}
+
+void CSceneWoW::OnUpdate(UpdateEventArgs & e)
+{
+	__super::OnUpdate(e);
+
+	skyManager->Update(e);
+	map->Update(e);
+}
+
+bool CSceneWoW::OnMousePressed(const MouseButtonEventArgs & e, const Ray& RayToWorld)
+{
+	return false;
+}
+
+void CSceneWoW::OnMouseMoved(const MouseMotionEventArgs & e, const Ray & RayToWorld)
+{}
+
+
+
+//
+// Keyboard events
+//
+bool CSceneWoW::OnWindowKeyPressed(KeyEventArgs & e)
+{
+	return SceneBase::OnWindowKeyPressed(e);
+}
+
+void CSceneWoW::OnWindowKeyReleased(KeyEventArgs & e)
+{
+	SceneBase::OnWindowKeyReleased(e);
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+#if 0
+
+
 CSceneWoW::CSceneWoW(IBaseManager& BaseManager)
 	: SceneBase(BaseManager)
 {}
@@ -86,16 +259,17 @@ void CSceneWoW::OnRayIntersected(const glm::vec3& Point)
 //
 //
 //
-void CSceneWoW::OnPreRender(RenderEventArgs& e)
+void CSceneWoW::OnRender(RenderEventArgs& e)
 {
 	CMapWMOInstance::reset();
+
 #ifdef USE_M2_MODELS
 	CMapM2Instance::reset();
 #endif
 
 	//m2Instance->SetRotation(glm::vec3(m2Instance->GetRotation().x, m2Instance->GetRotation().y + 0.05f * e.DeltaTime / 60.0f, 0.0f));
 
-	SceneBase::OnPreRender(e);
+	SceneBase::OnRender(e);
 }
 
 
@@ -277,18 +451,18 @@ void CSceneWoW::TestCreateMap(uint32 MapID)
 
 	//GetCameraController()->GetCamera()->SetTranslation(glm::vec3(0, 100.0f, 0));
 
-	if (map->getGlobalInstance())
-	{
-		GetCameraController()->GetCamera()->SetTranslation(map->getGlobalInstance()->GetPosition());
-	}
+	//if (map->getGlobalInstance())
+	//{
+	//	GetCameraController()->GetCamera()->SetPosition(map->getGlobalInstance()->GetPosition());
+	//}
 }
 
-void CSceneWoW::GoToCoord(const ISceneNodeUI* Node, const glm::vec2& Point)
+void CSceneWoW::GoToCoord(const IUIControl* Node, const glm::vec2& Point)
 {
 	Log::Green("Coord %f %f", Point.x, Point.y);
 	glm::vec2 conv = (Point / Node->GetSize() * 512.0f) * (C_TileSize * 64.0f / 512.0f);
 
-	GetCameraController()->GetCamera()->SetTranslation(glm::vec3(conv.x, GetCameraController()->GetCamera()->GetPosition().y, conv.y));
+	GetCameraController()->GetCamera()->SetPosition(glm::vec3(conv.x, GetCameraController()->GetCamera()->GetPosition().y, conv.y));
 }
 
 void CSceneWoW::TestDeleteMap()
@@ -296,3 +470,4 @@ void CSceneWoW::TestDeleteMap()
 	map->Unload();
 }
 
+#endif

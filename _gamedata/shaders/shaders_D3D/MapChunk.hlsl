@@ -1,4 +1,4 @@
-#include "IDB_SHADER_COMMON_INCLUDE"
+#include "CommonInclude.hlsl"
 
 #ifndef _IS_NORTREND
 #pragma message( "_IS_NORTREND undefined. Default to 0.")
@@ -58,7 +58,7 @@ VertexShaderOutput VS_main(VertexShaderInput IN)
 	return OUT;
 }
 
-DefferedRenderPSOut PS_main(VertexShaderOutput IN) : SV_TARGET
+float4 PS_main(VertexShaderOutput IN) : SV_TARGET
 {
 	float3 layersColor = float3(0,0,0);
 	float4 layersSpec = float4(0,0,0,0);
@@ -125,9 +125,11 @@ DefferedRenderPSOut PS_main(VertexShaderOutput IN) : SV_TARGET
 		resultColor = lerp(resultColor,  float3(0.0, 0.0, 0.0), sampledAlpha.a);
 	}
 	
-	DefferedRenderPSOut OUT;
-	OUT.Diffuse = float4(resultColor, 1.0f);
-	OUT.Specular = resultSpec;
-	OUT.NormalWS = float4(IN.normal, 0.0f);
-	return OUT;
+	return float4(resultColor, 1.0f);
+	
+	//DefferedRenderPSOut OUT;
+	//OUT.Diffuse = float4(resultColor, 1.0f);
+	//OUT.Specular = resultSpec;
+	//OUT.NormalVS = float4(IN.normal, 0.0f);
+	//return OUT;
 }

@@ -23,13 +23,13 @@ CRenderPass_MapTile::~CRenderPass_MapTile()
 //
 EVisitResult CRenderPass_MapTile::Visit(const std::shared_ptr<ISceneNode>& node)
 {	
-	if (const auto map = std::dynamic_pointer_cast<CMapTile>(node))
-	{
-		if (false == map->GetMap().getTileIsCurrent(map->getIndexX(), map->getIndexZ()))
-			return EVisitResult::Block;
+	//if (const auto map = std::dynamic_pointer_cast<CMapTile>(node))
+	//{
+	//	if (false == map->GetMap().getTileIsCurrent(map->getIndexX(), map->getIndexZ()))
+	//		return EVisitResult::AllowVisitChilds;
+	//
+	//	return __super::Visit(map);
+	//}
 
-		return __super::Visit(map);
-	}
-
-	return EVisitResult::AllowAll;
+	return EVisitResult::AllowVisitChilds;
 }

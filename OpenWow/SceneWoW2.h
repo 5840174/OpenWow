@@ -1,5 +1,7 @@
 #pragma once
 
+#if 0
+
 class CSceneWoW2
 	: public SceneBase
 {
@@ -31,3 +33,5 @@ private:
 	std::shared_ptr<ISceneNode> m_Fake3DRootNode;
 	std::shared_ptr<ICameraComponent3D> m_FakeCamera;
 };
+
+#endif

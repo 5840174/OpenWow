@@ -1,86 +1,67 @@
 #include "stdafx.h"
 
-static IBaseManager* BaseManager = nullptr;
-
 #include "SceneWoW.h"
-#include "SceneWoW2.h"
+
+#include "BugTrap/BugTrap.h"
 
 void main_internal(int argumentCount, char* arguments[])
 {
-	setlocale(LC_ALL, "Russian");
+	CApplicationNative_PlatformWindows app;
 
-	// 1. Initialize engine and some improtant managers
-	BaseManager = InitializeEngine(Utils::ArgumentsToVector(argumentCount, arguments), "");
+	IRenderDevice& renderDevice = app.CreateRenderDevice(RenderDeviceType::RenderDeviceType_DirectX11);
 
-	// 3. Create application
-	Application app(*BaseManager, ::GetModuleHandle(NULL));
+	app.GetBaseManager().AddManager<IznFontsManager>(MakeShared(FontsManager, renderDevice, app.GetBaseManager()));
 
-	CNativeWindowFactory nativeWindowFactory(&app);
+	{
+		app.GetBaseManager().GetManager<ILoader>()->Start();
 
-	std::unique_ptr<IznNativeWindow> nativeWindow = nativeWindowFactory.CreateWindowInstance(
-		L"Zenon Engine",
-		BaseManager->GetManager<ISettings>()->GetGroup("Video")->GetSettingT<glm::vec2>("WindowSize")->Get().x,
-		BaseManager->GetManager<ISettings>()->GetGroup("Video")->GetSettingT<glm::vec2>("WindowSize")->Get().y
-	);
+		{
+			glm::ivec2 windowSize = app.GetBaseManager().GetManager<ISettings>()->GetGroup("Video")->GetPropertyT<glm::vec2>("WindowSize")->Get();
+			std::unique_ptr<IznNativeWindow> nativeWindow = app.CreateNativeWindow("Zenon Engine", windowSize);
 
-	/*std::unique_ptr<INativeWindow> nativeWindow2 = nativeWindowFactory.CreateWindowInstance(
-		L"Zenon Engine test window",
-		BaseManager->GetManager<ISettings>()->GetGroup("Video")->GetSettingT<glm::vec2>("WindowSize")->Get().x,
-		BaseManager->GetManager<ISettings>()->GetGroup("Video")->GetSettingT<glm::vec2>("WindowSize")->Get().y
-	);*/
+			const auto& renderWindow = renderDevice.GetObjectsFactory().CreateRenderWindow(std::move(nativeWindow), true);
+			app.AddRenderWindow(renderWindow);
 
-	IRenderDevice& renderDevice = app.CreateRenderDevice(RenderDeviceType::RenderDeviceType_DirectX);
+			std::shared_ptr<IScene> scene = MakeShared(CSceneWoW, app.GetBaseManager(), *renderWindow);
+			renderWindow->SetRenderWindowEventListener(std::dynamic_pointer_cast<IRenderWindowEventListener>(scene));
+			renderWindow->SetNativeWindowEventListener(std::dynamic_pointer_cast<IznNativeWindowEventListener>(scene));
+			scene->Initialize();
+		}
 
-	std::shared_ptr<IznFontsManager> fontsManager = std::make_shared<FontsManager>(renderDevice, *BaseManager);
-	BaseManager->AddManager<IznFontsManager>(std::move(fontsManager));
+		/*{
+			std::unique_ptr<IznNativeWindow> nativeWindow2 = nativeWindowFactory.CreateWindowInstance(L"Zenon Engine", windowWidth, windowHeight);
 
-	const auto& firstRenderWindow = renderDevice.GetObjectsFactory().CreateRenderWindow(std::move(nativeWindow), false);
-	app.AddRenderWindow(firstRenderWindow);
+			const auto& renderWindow2 = renderDevice.GetObjectsFactory().CreateRenderWindow(std::move(nativeWindow2), false);
+			app.AddRenderWindow(renderWindow2);
 
-	//const auto& secondRenderWindow = renderDevice.GetObjectsFactory().CreateRenderWindow(*nativeWindow2, false);
-	//app.AddRenderWindow(secondRenderWindow);
-
-	auto environmentManager = BaseManager->AddManager<EnvironmentManager>(std::make_shared<EnvironmentManager>(*BaseManager));
-	BaseManager->GetManager<IWoWObjectsCreator>()->InitEGxBlend(renderDevice);
-
-	BaseManager->GetManager<ILoader>()->Start();
-
-	std::shared_ptr<CWoWClient> WoWClient = std::make_unique<CWoWClient>(*BaseManager, renderDevice, "127.0.0.1");
-	
-	std::shared_ptr<IScene> scene = std::make_shared<CSceneWoW>(*BaseManager);//BaseManager->GetManager<IScenesFactory>()->CreateScene("SceneDefault");
-
-	//WoWClient->SetScene(scene);
-	//WoWClient->BeginConnect("admin", "admin");
-
-	scene->ConnectEvents(std::dynamic_pointer_cast<IRenderWindowEvents>(firstRenderWindow));
-	scene->Initialize();
-
-	//std::shared_ptr<IScene> scene2 = std::make_shared<CSceneWoW2>(*BaseManager, scene->GetRootNode3D(), scene->GetCameraController()->GetCamera());//BaseManager->GetManager<IScenesFactory>()->CreateScene("SceneDefault");
-	//scene2->ConnectEvents(std::dynamic_pointer_cast<IRenderWindowEvents>(secondRenderWindow));
-	//scene2->Initialize();
+			std::shared_ptr<IScene> scene2 = MakeShared(CSceneDefault, *BaseManager, *renderWindow2);
+			renderWindow2->SetRenderWindowEventListener(std::dynamic_pointer_cast<IRenderWindowEventListener>(scene2));
+			renderWindow2->SetNativeWindowEventListener(std::dynamic_pointer_cast<IznNativeWindowEventListener>(scene2));
+			scene2->Initialize();
+		}*/
+	}
 
 	app.Run();
+
+	app.Stop();
 }
 
-#include <iostream>
 
 int main(int argumentCount, char* arguments[])
 {
 #ifdef _DEBUG
 	_CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
 	_CrtSetReportMode(_CRT_ERROR, _CRTDBG_MODE_DEBUG);
-
-	_CrtMemState _ms;
-	_CrtMemCheckpoint(&_ms);
 #endif
-	new char[228];
+
+	BT_InstallSehFilter();
+	BT_SetAppName(L"ZenonEngine");
+	//BT_SetSupportEMail(L"your@email.com");
+	BT_SetFlags(BTF_DETAILEDMODE /*| BTF_EDITMAIL*/);
+	//BT_SetSupportServer(L"localhost", 9999);
+	//BT_SetSupportURL(L"http://www.your-web-site.com");
+
 	main_internal(argumentCount, arguments);
 
-	if (BaseManager)
-		delete BaseManager;
-
-#ifdef _DEBUG
-	_CrtMemDumpAllObjectsSince(&_ms);
-#endif
 	return 0;
 }

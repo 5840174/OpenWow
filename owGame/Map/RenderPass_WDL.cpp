@@ -32,14 +32,13 @@ std::shared_ptr<IRenderPassPipelined> CRenderPass_WDL::ConfigurePipeline(std::sh
 	std::shared_ptr<IShader> pixelShader = GetRenderDevice().GetObjectsFactory().LoadShader(EShaderType::PixelShader, "shaders_D3D/MapWDL.hlsl", "PS_main");
 
 	// PIPELINES
-	std::shared_ptr<IPipelineState> pipeline = GetRenderDevice().GetObjectsFactory().CreatePipelineState();
-	pipeline->GetBlendState()->SetBlendMode(disableBlending);
-	pipeline->GetDepthStencilState()->SetDepthMode(disableDepthWrites);
-	pipeline->GetRasterizerState()->SetCullMode(IRasterizerState::CullMode::Back);
-	pipeline->GetRasterizerState()->SetFillMode(IRasterizerState::FillMode::Wireframe, IRasterizerState::FillMode::Wireframe);
-	pipeline->SetRenderTarget(RenderTarget);
-	pipeline->SetShader(vertexShader);
-	pipeline->SetShader(pixelShader);
+	GetPipeline().GetBlendState()->SetBlendMode(disableBlending);
+	GetPipeline().GetDepthStencilState()->SetDepthMode(disableDepthWrites);
+	GetPipeline().GetRasterizerState()->SetCullMode(IRasterizerState::CullMode::Back);
+	GetPipeline().GetRasterizerState()->SetFillMode(IRasterizerState::FillMode::Wireframe, IRasterizerState::FillMode::Wireframe);
+	GetPipeline().SetRenderTarget(RenderTarget);
+	GetPipeline().SetShader(vertexShader);
+	GetPipeline().SetShader(pixelShader);
 
 	return shared_from_this();
 }

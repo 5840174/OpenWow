@@ -38,8 +38,9 @@ public:
 #elif WOW_CLIENT_VERSION == WOW_BC_2_4_3
 		m_BaseManager.GetManager<IFilesManager>()->AddFilesStorage("MPQStorage", std::make_shared<CMPQFilesStorage>("c:\\_engine\\World of Warcraft 2.4.3\\Data\\", IFilesStorageEx::Priority::PRIOR_HIGH));
 #elif WOW_CLIENT_VERSION == WOW_WOTLK_3_3_5
-		m_BaseManager.GetManager<IFilesManager>()->AddStorage(EFilesStorageType::GAMEDATA, std::make_shared<CMPQFilesStorage>("c:\\_engine\\World of Warcraft 3.3.5a\\Data\\"));
+		m_BaseManager.GetManager<IFilesManager>()->AddStorage(EFilesStorageType::GAMEDATA, std::make_shared<CMPQFilesStorage>("C:\\Games\\World of Warcraft 3.3.5a\\Data\\"));
 #endif
+		m_BaseManager.GetManager<IFilesManager>()->AddStorage(EFilesStorageType::GAMEDATA, MakeShared(CLocalFilesStorage, "D:\\OpenWow\\_gamedata\\"));
 
 		// BLP
 		m_BaseManager.GetManager<IImagesFactory>()->AddImageLoader(std::make_shared<CImageLoaderT<CImageBLP>>());

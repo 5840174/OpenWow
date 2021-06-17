@@ -52,6 +52,8 @@ uint32 CMapChunk::GetAreaID() const
 //
 void CMapChunk::Initialize()
 {
+	__super::Initialize();
+
 	//m_Bytes->seek(m_MCIN.offset);
 
 // Chunk + size (8)
@@ -352,6 +354,7 @@ bool CMapChunk::Load()
 			CMapChunkLiquid liquidObject(m_RenderDevice, m_Bytes, header);
 
 			auto liquidInstance = MakeShared(Liquid_Instance, GetScene());
+			liquidInstance->RegisterComponents();
 			liquidInstance->Initialize();
 			AddChild(liquidInstance);
 			//auto liquidInstance = GetScene().CreateSceneNode<Liquid_Instance>();

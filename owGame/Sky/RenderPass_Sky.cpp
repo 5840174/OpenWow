@@ -40,14 +40,13 @@ std::shared_ptr<IRenderPassPipelined> CRenderPass_Sky::ConfigurePipeline(std::sh
 	vertexShader->LoadInputLayoutFromReflector();
 
 	// PIPELINES
-	std::shared_ptr<IPipelineState> pipeline = GetRenderDevice().GetObjectsFactory().CreatePipelineState();
-	pipeline->GetBlendState()->SetBlendMode(disableBlending);
-	pipeline->GetDepthStencilState()->SetDepthMode(disableDepthWrites);
-	pipeline->GetRasterizerState()->SetCullMode(IRasterizerState::CullMode::None);
-	pipeline->GetRasterizerState()->SetFillMode(IRasterizerState::FillMode::Solid, IRasterizerState::FillMode::Solid);
-	pipeline->SetRenderTarget(RenderTarget);
-	pipeline->SetShader(vertexShader);
-	pipeline->SetShader(pixelShader);
+	GetPipeline().GetBlendState()->SetBlendMode(disableBlending);
+	GetPipeline().GetDepthStencilState()->SetDepthMode(disableDepthWrites);
+	GetPipeline().GetRasterizerState()->SetCullMode(IRasterizerState::CullMode::None);
+	GetPipeline().GetRasterizerState()->SetFillMode(IRasterizerState::FillMode::Solid, IRasterizerState::FillMode::Solid);
+	GetPipeline().SetRenderTarget(RenderTarget);
+	GetPipeline().SetShader(vertexShader);
+	GetPipeline().SetShader(pixelShader);
 
 	return shared_from_this();
 }
@@ -59,9 +58,8 @@ std::shared_ptr<IRenderPassPipelined> CRenderPass_Sky::ConfigurePipeline(std::sh
 //
 EVisitResult CRenderPass_Sky::Visit(const std::shared_ptr<ISceneNode>& node)
 {
-	if (const auto skyManagerInstance = std::dynamic_pointer_cast<SkyManager>(node))
+	if (auto skyManagerInstance = std::dynamic_pointer_cast<SkyManager>(node))
 		return __super::Visit(skyManagerInstance);
 
-	_ASSERT(false);
-	return EVisitResult::Block;
+	return EVisitResult::AllowVisitChilds;
 }

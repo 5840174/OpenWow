@@ -40,26 +40,13 @@ std::shared_ptr<IRenderPassPipelined> CRenderPass_ADT_MCNK::ConfigurePipeline(st
 	vertexShader->LoadInputLayoutFromReflector();
 
 	// PIPELINES
-	std::shared_ptr<IPipelineState> pipeline = GetRenderDevice().GetObjectsFactory().CreatePipelineState();
-	pipeline->GetBlendState()->SetBlendMode(disableBlending);
-	pipeline->GetDepthStencilState()->SetDepthMode(enableDepthWrites);
-	pipeline->GetRasterizerState()->SetCullMode(IRasterizerState::CullMode::Back);
-	pipeline->GetRasterizerState()->SetFillMode(IRasterizerState::FillMode::Solid, IRasterizerState::FillMode::Solid);
-	pipeline->SetRenderTarget(RenderTarget);
-	pipeline->SetShader(vertexShader);
-	pipeline->SetShader(pixelShader);
-
-	// Create samplers
-	std::shared_ptr<ISamplerState> linearClampSampler = GetRenderDevice().GetObjectsFactory().CreateSamplerState();
-	linearClampSampler->SetFilter(ISamplerState::MinFilter::MinLinear, ISamplerState::MagFilter::MagLinear, ISamplerState::MipFilter::MipNearest);
-	linearClampSampler->SetWrapMode(ISamplerState::WrapMode::Clamp, ISamplerState::WrapMode::Clamp, ISamplerState::WrapMode::Clamp);
-
-	std::shared_ptr<ISamplerState> linearRepeatSampler = GetRenderDevice().GetObjectsFactory().CreateSamplerState();
-	linearRepeatSampler->SetFilter(ISamplerState::MinFilter::MinLinear, ISamplerState::MagFilter::MagLinear, ISamplerState::MipFilter::MipLinear);
-	linearRepeatSampler->SetWrapMode(ISamplerState::WrapMode::Repeat, ISamplerState::WrapMode::Repeat, ISamplerState::WrapMode::Repeat);
-
-	pipeline->SetSampler(0, linearRepeatSampler);
-	pipeline->SetSampler(1, linearClampSampler);
+	GetPipeline().GetBlendState()->SetBlendMode(disableBlending);
+	GetPipeline().GetDepthStencilState()->SetDepthMode(enableDepthWrites);
+	GetPipeline().GetRasterizerState()->SetCullMode(IRasterizerState::CullMode::Back);
+	GetPipeline().GetRasterizerState()->SetFillMode(IRasterizerState::FillMode::Solid, IRasterizerState::FillMode::Solid);
+	GetPipeline().SetRenderTarget(RenderTarget);
+	GetPipeline().SetShader(vertexShader);
+	GetPipeline().SetShader(pixelShader);
 
 	return shared_from_this();
 }
@@ -72,10 +59,7 @@ std::shared_ptr<IRenderPassPipelined> CRenderPass_ADT_MCNK::ConfigurePipeline(st
 EVisitResult CRenderPass_ADT_MCNK::Visit(const std::shared_ptr<ISceneNode>& SceneNode3D)
 {
 	if (const auto adtMCNKInstance = std::dynamic_pointer_cast<CMapChunk>(SceneNode3D))
-	{
-		return __super::Visit(adtMCNKInstance);
-	}
+		return __super::Visit(SceneNode3D);
 
-	_ASSERT(false);
-	return EVisitResult::Block;
+	return EVisitResult::AllowVisitChilds;
 }

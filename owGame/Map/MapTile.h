@@ -20,6 +20,7 @@ public:
 	int                                             getIndexZ() const;
 	const CMapChunk*                                getChunk(int32 x, int32 z) const;
 	const CMap&                                     GetMap() const;
+
 	// SceneNode3D
 	void											Initialize() override;
 

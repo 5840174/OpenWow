@@ -47,11 +47,12 @@ bool SkyManager::Load(uint32 MapID)
 		skies.back()->m_IsGlobalSky = true;
 	}
 
-	GetComponentT<IColliderComponent>()->SetCullStrategy(IColliderComponent::ECullStrategy::None);
+	if (auto colliderComponent = GetComponentT<IColliderComponent>())
+		colliderComponent->SetCullStrategy(IColliderComponent::ECullStrategy::None);
 
 	InitBuffer();
 
-	SetState(ILoadable::ELoadableState::Loaded);
+	//SetState(ILoadable::ELoadableState::Loaded);
 
 	return true;
 }
@@ -63,8 +64,8 @@ bool SkyManager::Load(uint32 MapID)
 //
 void SkyManager::Update(const UpdateEventArgs& e)
 {
-	if (GetState() != ILoadable::ELoadableState::Loaded)
-		return;
+	//if (GetState() != ILoadable::ELoadableState::Loaded)
+	//	return;
 
 	Calculate(e.CameraForCulling, 1440/*GetMapController()->getTime()->GetTime()*/);
 
@@ -78,8 +79,8 @@ void SkyManager::Update(const UpdateEventArgs& e)
 //
 void SkyManager::Calculate(const ICameraComponent3D* camera, uint32 _time)
 {
-	if (GetState() != ILoadable::ELoadableState::Loaded)
-		return;
+	//if (GetState() != ILoadable::ELoadableState::Loaded)
+	//	return;
 
 	CalculateSkiesWeights(camera->GetPosition());
 

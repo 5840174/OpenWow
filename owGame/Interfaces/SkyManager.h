@@ -58,10 +58,12 @@ struct LightWaterAlpha
     };
 };
 
-ZN_INTERFACE __declspec(uuid("8D86DF19-0FB3-47F3-B0BC-215788EA5500")) ISkyManager 
+ZN_INTERFACE ISkyManager 
 	: public IManager
 {
 	virtual ~ISkyManager() = 0 {};
+
+	ZN_OBJECTCLASS(UINT16_MAX - 100u)
 
 	virtual void Calculate(const ICameraComponent3D* camera, uint32 _time) = 0;
 	virtual bool HasSkies() const = 0;
