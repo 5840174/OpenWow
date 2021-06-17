@@ -35,6 +35,7 @@ public:
 
 	// CLoadableObject
 	bool Load() override;
+	bool Delete() override;
 
 public:
 	std::string GetFilename() const { return m_FileName; }

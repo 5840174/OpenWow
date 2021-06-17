@@ -17,7 +17,7 @@ public:
 	virtual ~WMO_Group_Part_Batch();
 
 	// ModelProxie
-	bool Render() const override;
+	bool Render(const ShaderMap& Shaders) const override;
 
 private:
 	BoundingBox m_Bounds;

@@ -253,13 +253,11 @@ bool CMapTile::Load()
 		auto chunk = MakeShared(CMapChunk, GetScene(), m_RenderDevice, m_Map, std::dynamic_pointer_cast<CMapTile>(shared_from_this()), chunks[i], f);
 		chunk->RegisterComponents();
 		chunk->Initialize();
-		
 		AddChild(chunk);
 		//auto chunk = GetScene().CreateSceneNode<CMapChunk>(m_RenderDevice, m_Map, std::dynamic_pointer_cast<CMapTile>(shared_from_this()), chunks[i], f);
 
 		chunk->SetState(ILoadable::ELoadableState::Loaded);
 		chunk->Load();
-		
 		//GetBaseManager().GetManager<ILoader>()->AddToLoadQueue(chunk);
 
 		m_Chunks.push_back(chunk.get());
@@ -271,11 +269,19 @@ bool CMapTile::Load()
 
 	for (const auto& it : m_WMOsPlacementInfo)
 	{
-		std::shared_ptr<CWMO> wmo = m_BaseManager.GetManager<IWoWObjectsCreator>()->LoadWMO(m_RenderDevice, m_WMOsNames[it.nameIndex]);
+		std::shared_ptr<CWMO> wmo = m_BaseManager.GetManager<IWoWObjectsCreator>()->LoadWMO(m_RenderDevice, m_WMOsNames[it.nameIndex], true);
 		if (wmo)
 		{
-			auto inst = CreateSceneNode<CMapWMOInstance>(wmo, it);
-			GetBaseManager().GetManager<ILoader>()->AddToLoadQueue(inst);
+			auto inst = MakeShared(CMapWMOInstance, GetScene(), wmo, it);
+			inst->RegisterComponents();
+			inst->Initialize();
+			AddChild(inst);
+			//auto inst = CreateSceneNode<CMapWMOInstance>(wmo, it);
+
+			inst->SetState(ILoadable::ELoadableState::Loaded);
+			inst->Load();
+			//GetBaseManager().GetManager<ILoader>()->AddToLoadQueue(inst);
+
 			m_WMOsInstances.push_back(inst.get());
 		}
 	}

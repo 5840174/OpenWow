@@ -25,11 +25,12 @@ public:
 	typedef std::vector<CWMO_Liquid_Instance*> LuqidInstances;
 
 public:
-	CWMO_Group_Instance(const std::shared_ptr<WMO_Group>& WMOGroupObject);
+	CWMO_Group_Instance(IScene& Scene, const std::shared_ptr<WMO_Group>& WMOGroupObject);
 	virtual ~CWMO_Group_Instance();
 
 	// CLoadableObject
 	bool Load() override;
+	bool Delete() override;
 
 	// IPortalRoom
 	void AddPortal(const std::shared_ptr<IPortal>& Portal) override final;

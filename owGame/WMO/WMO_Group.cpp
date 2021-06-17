@@ -99,7 +99,7 @@ void WMO_Group::CreateInsances(const std::shared_ptr<CWMO_Group_Instance>& Paren
 
 	for (const auto& batch : m_WMOBatchIndexes)
 	{
-		Parent->GetComponent<IModelComponent>()->AddModel(batch);
+		Parent->GetComponentT<IModelComponent>()->AddModel(batch);
 	}
 
 	// WMO Group liquid
@@ -107,7 +107,13 @@ void WMO_Group::CreateInsances(const std::shared_ptr<CWMO_Group_Instance>& Paren
 	{
 		glm::vec3 realPos = Fix_XZmY(m_WMOLiqiud->GetHeader().pos);
 
-		auto liquidInstance = Parent->CreateSceneNode<CWMO_Liquid_Instance>();
+		//auto liquidInstance = Parent->CreateSceneNode<CWMO_Liquid_Instance>();
+		auto liquidInstance = MakeShared(CWMO_Liquid_Instance, Parent->GetScene());
+		liquidInstance->RegisterComponents();
+		liquidInstance->Initialize();
+		Parent->AddChild(liquidInstance);
+
+
 		m_WMOLiqiud->CreateInsances(liquidInstance);
 
 		// Transform
@@ -118,7 +124,6 @@ void WMO_Group::CreateInsances(const std::shared_ptr<CWMO_Group_Instance>& Paren
 			BoundingBox bbox = Parent->GetComponentT<IColliderComponent>()->GetBounds();
 			bbox.setMin(bbox.getMin() - realPos);
 			bbox.setMax(bbox.getMax() - realPos);
-			bbox.calculateCenter();
 			liquidInstance->GetComponentT<IColliderComponent>()->SetBounds(bbox);
 		}
 
@@ -395,6 +400,11 @@ bool WMO_Group::Load()
 	m_ChunkReader.reset();
 
 	return true;
+}
+
+bool WMO_Group::Delete()
+{
+	return false;
 }
 
 void WMO_Group::FixColors(CBgra* mocv, uint32 mocv_count, const SWMO_Group_BatchDef* moba)

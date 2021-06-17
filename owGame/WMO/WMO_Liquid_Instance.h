@@ -11,7 +11,7 @@ class ZN_API CWMO_Liquid_Instance
 	, public IPortalRoomObject
 {
 public:
-	CWMO_Liquid_Instance();
+	CWMO_Liquid_Instance(IScene& Scene);
 	virtual ~CWMO_Liquid_Instance();
 
 	// IPortalRoomObject

@@ -17,7 +17,7 @@
 /**
   * Enable or disable WMO models support
 */
-//#define USE_WMO_MODELS
+#define USE_WMO_MODELS
 
 /**
   * Enable or disable WMO culling by portals

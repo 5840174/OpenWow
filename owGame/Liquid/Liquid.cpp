@@ -27,7 +27,7 @@ void CLiquid::CreateInsances(const std::shared_ptr<ISceneNode>& Parent) const
 	std::shared_ptr<IModelComponent> meshes = Parent->GetComponentT<IModelComponent>();
 	for (const auto& it : m_WaterLayers)
 	{
-		meshes->SetModel(it);
+		meshes->AddModel(it);
 	}
 }
 

@@ -15,13 +15,14 @@ public:
 	typedef std::vector<std::weak_ptr<CWMO_Group_Instance>> GroupInstances;
 
 public:
-	CWMO_Base_Instance(const std::shared_ptr<CWMO>& WMOObject);
+	CWMO_Base_Instance(IScene& Scene, const std::shared_ptr<CWMO>& WMOObject);
 	virtual ~CWMO_Base_Instance();
 
 	void CreateInstances();
 
 	// CLoadableObject
 	bool Load() override;
+	bool Delete() override;
 
 	// CWMO_Base_Instance
 	const CWMO& getWMO() const;

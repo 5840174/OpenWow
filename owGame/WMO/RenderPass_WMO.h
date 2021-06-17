@@ -5,18 +5,18 @@
 #include "WMO_Base_Instance.h"
 
 class ZN_API CRenderPass_WMO 
-	: public CBaseList3DPass
+	: public Base3DPass
 {
 public:
-	CRenderPass_WMO(IRenderDevice& RenderDevice, const std::shared_ptr<CSceneCreateTypedListsPass>& SceneNodeListPass);
+	CRenderPass_WMO(IScene& Scene);
 	virtual ~CRenderPass_WMO();
 
 	// IRenderPassPipelined
-	std::shared_ptr<IRenderPassPipelined> CreatePipeline(std::shared_ptr<IRenderTarget> RenderTarget, const Viewport* Viewport) override final;
+	std::shared_ptr<IRenderPassPipelined> ConfigurePipeline(std::shared_ptr<IRenderTarget> RenderTarget) override final;
 
     // IVisitor
-    EVisitResult Visit(const ISceneNode* node) override final;
-	EVisitResult Visit(const IGeometry* Geometry, const IMaterial* Material, SGeometryDrawArgs GeometryDrawArgs = SGeometryDrawArgs()) override final;
+    EVisitResult Visit(const std::shared_ptr<ISceneNode>& node) override final;
+	EVisitResult Visit(const std::shared_ptr<IGeometry>& Geometry, const std::shared_ptr<IMaterial>& Material, SGeometryDrawArgs GeometryDrawArgs) override final;
 
 private:
 	std::shared_ptr<IPropertiesGroup> m_WoWSettings;

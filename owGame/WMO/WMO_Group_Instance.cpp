@@ -10,13 +10,13 @@
 // General
 #include "WMO_Group_Instance.h"
 
-CWMO_Group_Instance::CWMO_Group_Instance(const std::shared_ptr<WMO_Group>& WMOGroupObject) 
-	: CLoadableObject(WMOGroupObject)
+CWMO_Group_Instance::CWMO_Group_Instance(IScene& Scene, const std::shared_ptr<WMO_Group>& WMOGroupObject)
+	: CSceneNode(Scene)
+	, CLoadableObject(WMOGroupObject)
 	, m_PortalsVis(true)
 	, m_Calculated(false)
 	, m_WMOGroupObject(*WMOGroupObject)
 {
-	SetType(cWMOGroup_NodeType);
 }
 
 CWMO_Group_Instance::~CWMO_Group_Instance()
@@ -34,6 +34,11 @@ bool CWMO_Group_Instance::Load()
 	m_WMOGroupObject.CreateInsances(std::dynamic_pointer_cast<CWMO_Group_Instance>(shared_from_this()));
 
 	return true;
+}
+
+bool CWMO_Group_Instance::Delete()
+{
+	return false;
 }
 
 
@@ -140,6 +145,8 @@ void CWMO_Group_Instance::CreatePortals(const std::shared_ptr<CWMO_Base_Instance
 //
 void CWMO_Group_Instance::Initialize()
 {
+	__super::Initialize();
+
 	GetComponentT<IColliderComponent>()->SetCullStrategy(IColliderComponent::ECullStrategy::ByFrustrumAndDistance);
 	GetComponentT<IColliderComponent>()->SetBounds(m_WMOGroupObject.m_Bounds);
 	GetComponentT<IColliderComponent>()->SetDebugDrawMode(true);
@@ -149,7 +156,7 @@ void CWMO_Group_Instance::Accept(IVisitor* visitor)
 {
 	if (m_PortalsVis)
 	{
-		SceneNode3D::Accept(visitor);
+		__super::Accept(visitor);
 	}	
 }
 

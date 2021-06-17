@@ -9,15 +9,10 @@
 #include "Wmo_Part_Material.h"
 
 WMO_Part_Material::WMO_Part_Material(IRenderDevice& RenderDevice, const CWMO& WMOModel, const SWMO_MaterialDef& WMOMaterialProto)
-	: MaterialProxie(RenderDevice.GetObjectsFactory().CreateMaterial(sizeof(MaterialProperties)))
+	: MaterialProxieT(RenderDevice.GetObjectsFactory().CreateMaterial("WMO_Part_Material"))
 	, m_WMOModel(WMOModel)
 {
-	SetWrapper(this);
-
-	// Constant buffer
-	m_pProperties = (MaterialProperties*)_aligned_malloc(sizeof(MaterialProperties), 16);
-	(*m_pProperties) = MaterialProperties();
-	(*m_pProperties).BlendMode = WMOMaterialProto.blendMode;
+	MaterialData().BlendMode = WMOMaterialProto.blendMode;
 
 	// Create samplers
 	std::shared_ptr<ISamplerState> sampler = RenderDevice.GetObjectsFactory().CreateSamplerState();
@@ -30,7 +25,7 @@ WMO_Part_Material::WMO_Part_Material(IRenderDevice& RenderDevice, const CWMO& WM
 
 	// This
 	std::string textureName = m_WMOModel.GetTextureName(WMOMaterialProto.diffuseNameIndex);
-	std::shared_ptr<ITexture> texture = RenderDevice.GetObjectsFactory().LoadTexture2D(textureName);
+	std::shared_ptr<ITexture> texture = GetBaseManager().GetManager<IznTexturesFactory>()->LoadTexture2D(textureName);
 	SetTexture(0, texture);
 
 	//if (m_WMOMaterialProto.envNameIndex)
@@ -50,16 +45,6 @@ WMO_Part_Material::WMO_Part_Material(IRenderDevice& RenderDevice, const CWMO& WM
 
 WMO_Part_Material::~WMO_Part_Material()
 {
-	if (m_pProperties)
-	{
-		_aligned_free(m_pProperties);
-		m_pProperties = nullptr;
-	}
-}
-
-void WMO_Part_Material::UpdateConstantBuffer() const
-{
-    MaterialProxie::UpdateConstantBuffer(m_pProperties, sizeof(MaterialProperties));
 }
 
 /*void WMO_Part_Material::fillRenderState(RenderState* _state) const

@@ -45,7 +45,12 @@ void CWMO::CreateInsances(const std::shared_ptr<CWMO_Base_Instance>& Parent) con
 {
 	for (const auto& it : m_Groups)
 	{
-		auto groupInstance = Parent->CreateSceneNode<CWMO_Group_Instance>(it);
+		//auto groupInstance = Parent->CreateSceneNode<CWMO_Group_Instance>(it);
+		auto groupInstance = MakeShared(CWMO_Group_Instance, Parent->GetScene(), it);
+		groupInstance->RegisterComponents();
+		groupInstance->Initialize();
+		Parent->AddChild(groupInstance);
+
 		Parent->AddGroupInstance(groupInstance);
 		if (it->m_GroupHeader.flags.IS_OUTDOOR)
 			Parent->AddOutdoorGroupInstance(groupInstance);
@@ -243,6 +248,11 @@ bool CWMO::Load()
 	}
 
 	return true;
+}
+
+bool CWMO::Delete()
+{
+	return false;
 }
 
 #endif

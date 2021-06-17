@@ -48,10 +48,9 @@ public:
 		std::shared_ptr<CDBCStorage> dbcStorage = std::make_shared<CDBCStorage>(m_BaseManager);
 		m_BaseManager.AddManager<CDBCStorage>(dbcStorage);
 
-#if 0
 		auto WoWObjectsCreator = std::make_shared<CWorldObjectCreator>(m_BaseManager);
 		m_BaseManager.AddManager<IWoWObjectsCreator>(WoWObjectsCreator);
-#endif
+
 
 		return true;
 	}

@@ -8,8 +8,8 @@
 // Additional
 #include "WMO\\RenderPass_WMO.h"
 
-CMapWMOInstance::CMapWMOInstance(const std::shared_ptr<CWMO>& WMOObject, const ADT_MODF& _placementInfo)
-	: CWMO_Base_Instance(WMOObject)
+CMapWMOInstance::CMapWMOInstance(IScene& Scene, const std::shared_ptr<CWMO>& WMOObject, const ADT_MODF& _placementInfo)
+	: CWMO_Base_Instance(Scene, WMOObject)
 	, m_PlacementInfo(_placementInfo)
 {
 }
@@ -31,16 +31,13 @@ uint16 CMapWMOInstance::GetDoodadSetIndex() const
 //
 void CMapWMOInstance::Initialize()
 {
+	__super::Initialize();
+
 	uint16 doodadSetIndex = m_PlacementInfo.doodadSetIndex;
 	//m_DoodadSetInfo = _wmoObject->m_DoodadsSetInfos[doodadSetIndex];
 
-	// CTransformComponent
-	{
-		SetPosition(m_PlacementInfo.position);
-		SetRotation(m_PlacementInfo.rotation);
-	}
-
-	__super::Initialize();
+	SetPosition(m_PlacementInfo.position);
+	SetLocalRotationEuler(m_PlacementInfo.rotation);
 }
 
 void CMapWMOInstance::Accept(IVisitor* visitor)
@@ -67,9 +64,9 @@ glm::mat4 CMapWMOInstance::CalculateLocalTransform() const
 {
 	glm::mat4 localTransform = glm::mat4(1.0f);
 	localTransform = glm::translate(localTransform, GetPosition());
-	localTransform = glm::rotate(localTransform, glm::radians(GetRotation().y - 90.0f), glm::vec3(0, 1, 0));
-	localTransform = glm::rotate(localTransform, glm::radians(-GetRotation().x), glm::vec3(0, 0, 1));
-	localTransform = glm::rotate(localTransform, glm::radians(GetRotation().z), glm::vec3(1, 0, 0));
+	localTransform = glm::rotate(localTransform, glm::radians(GetLocalRotationEuler().y - 90.0f), glm::vec3(0, 1, 0));
+	localTransform = glm::rotate(localTransform, glm::radians(-GetLocalRotationEuler().x), glm::vec3(0, 0, 1));
+	localTransform = glm::rotate(localTransform, glm::radians(GetLocalRotationEuler().z), glm::vec3(1, 0, 0));
 	return localTransform;
 }
 

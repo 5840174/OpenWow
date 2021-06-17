@@ -1,4 +1,4 @@
-#include "IDB_SHADER_COMMON_INCLUDE"
+#include "CommonInclude.hlsl"
 
 struct VertexShaderInput
 {
@@ -46,7 +46,7 @@ VertexShaderOutput VS_main(VertexShaderInput IN)
 	return OUT;
 }
 
-DefferedRenderPSOut PS_main(VertexShaderOutput IN) : SV_TARGET
+float4 PS_main(VertexShaderOutput IN) : SV_TARGET
 {
 	float4 resultColor = DiffuseTexture.Sample(DiffuseTextureSampler, IN.texCoord0);
 	
@@ -63,11 +63,12 @@ DefferedRenderPSOut PS_main(VertexShaderOutput IN) : SV_TARGET
 		if (resultColor.a < (1.0f / 255.0f)) discard;
 	}
 	
-	DefferedRenderPSOut OUT;
-	OUT.Diffuse = resultColor;
+	return resultColor;
+	//DefferedRenderPSOut OUT;
+	//OUT.Diffuse = resultColor;
 	//if (gMOCVExists)
 	//	OUT.Diffuse += IN.color;
-	OUT.Specular = float4(1.0f, 1.0f, 1.0f, 1.0f);
-	OUT.NormalWS = float4(IN.normalVS, 1.0f);
-	return OUT;
+	//OUT.Specular = float4(1.0f, 1.0f, 1.0f, 1.0f);
+	//OUT.NormalWS = float4(IN.normalVS, 1.0f);
+	//return OUT;
 }

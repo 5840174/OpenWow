@@ -1,7 +1,5 @@
 #include "stdafx.h"
 
-#ifdef USE_M2_MODELS
-
 // General
 #include "WorldObjectsCreator.h"
 
@@ -17,7 +15,7 @@ CWorldObjectCreator::CWorldObjectCreator(IBaseManager & BaseManager)
 }
 
 
-
+#ifdef USE_M2_MODELS
 //
 // Factory
 //
@@ -172,7 +170,7 @@ std::shared_ptr<GameObject> CWorldObjectCreator::BuildGameObjectFromDisplayInfo(
 	m_BaseManager.GetManager<ILoader>()->AddToLoadQueue(newGameObject);
 	return newGameObject;
 }
-
+#endif
 
 
 //
@@ -182,6 +180,7 @@ void CWorldObjectCreator::ClearCache()
 {
 }
 
+#ifdef USE_M2_MODELS
 std::shared_ptr<CM2> CWorldObjectCreator::LoadM2(IRenderDevice& RenderDevice, const std::string& Filename, bool ImmediateLoad)
 {
 	std::lock_guard<std::mutex> lock(m_M2Lock);
@@ -231,6 +230,7 @@ std::shared_ptr<CM2> CWorldObjectCreator::LoadM2(IRenderDevice& RenderDevice, co
 
 	return m2Object;
 }
+#endif
 
 std::shared_ptr<CWMO> CWorldObjectCreator::LoadWMO(IRenderDevice& RenderDevice, const std::string& Filename, bool ImmediateLoad)
 {
@@ -290,6 +290,8 @@ std::shared_ptr<IBlendState> CWorldObjectCreator::GetEGxBlend(uint32 Index) cons
 //
 // Private 
 //
+#ifdef USE_M2_MODELS
+
 std::shared_ptr<CM2> CWorldObjectCreator::CreateCreatureModel(IRenderDevice& RenderDevice, const DBC_CreatureDisplayInfoRecord* CreatureDisplayInfo)
 {
 	const DBC_CreatureModelDataRecord* modelRec = m_DBCs->DBC_CreatureModelData()[CreatureDisplayInfo->Get_Model()];
@@ -316,6 +318,7 @@ std::shared_ptr<CM2> CWorldObjectCreator::CreateGameObjectModel(IRenderDevice & 
 	std::string modelName = GameObjectDisplayInfoRecord->Get_ModelName();
 	return LoadM2(RenderDevice, modelName);
 }
+#endif
 
 
 
@@ -421,5 +424,3 @@ IBlendState::BlendMode CWorldObjectCreator::GetEGxBlendMode(uint32 Index)
 	_ASSERT(false);
 	return IBlendState::BlendMode();
 }
-
-#endif

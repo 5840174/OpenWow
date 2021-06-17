@@ -5,11 +5,11 @@
 // General
 #include "WMO_Base_Instance.h"
 
-CWMO_Base_Instance::CWMO_Base_Instance(const std::shared_ptr<CWMO>& WMOObject)
-    : CLoadableObject(WMOObject)
+CWMO_Base_Instance::CWMO_Base_Instance(IScene& Scene, const std::shared_ptr<CWMO>& WMOObject)
+    : CSceneNode(Scene)
+	, CLoadableObject(WMOObject)
 	, m_WMOObject(WMOObject)
 {
-	SetType(cWMO_NodeType);
 }
 
 CWMO_Base_Instance::~CWMO_Base_Instance()
@@ -33,6 +33,11 @@ bool CWMO_Base_Instance::Load()
 	CreateInstances();
 
 	return true;
+}
+
+bool CWMO_Base_Instance::Delete()
+{
+	return false;
 }
 
 
@@ -65,9 +70,11 @@ bool CWMO_Base_Instance::IsDoodadInSet(uint16 doodadIndex) const
 //
 void CWMO_Base_Instance::Initialize()
 {
-	GetComponentT<IColliderComponent>()->SetCullStrategy(IColliderComponent::ECullStrategy::ByFrustrumAndDistance);
-	GetComponentT<IColliderComponent>()->SetBounds(getWMO().GetBounds());
-	GetComponentT<IColliderComponent>()->SetDebugDrawMode(true);
+	__super::Initialize();
+
+	//GetComponentT<IColliderComponent>()->SetCullStrategy(IColliderComponent::ECullStrategy::ByFrustrumAndDistance);
+	//GetComponentT<IColliderComponent>()->SetBounds(getWMO().GetBounds());
+	//GetComponentT<IColliderComponent>()->SetDebugDrawMode(true);
 }
 
 void CWMO_Base_Instance::Update(const UpdateEventArgs& e)
@@ -85,7 +92,7 @@ void CWMO_Base_Instance::Update(const UpdateEventArgs& e)
 
 void CWMO_Base_Instance::Accept(IVisitor* visitor)
 {
-	SceneNode3D::Accept(visitor);
+	__super::Accept(visitor);
 }
 
 #endif

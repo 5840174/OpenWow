@@ -35,12 +35,7 @@ public:
 	const std::shared_ptr<IBlendState>& GetBlendState() const { return m_BlendState; };
 	const std::shared_ptr<IRasterizerState>& GetRasterizerState() const { return m_RasterizerState; };
 
-    void UpdateConstantBuffer() const override;
-
 private:
-	
-	MaterialProperties*            m_pProperties;
-
 	std::shared_ptr<IDepthStencilState> m_DepthStencilState;
 	std::shared_ptr<IBlendState>        m_BlendState;
 	std::shared_ptr<IRasterizerState>   m_RasterizerState;

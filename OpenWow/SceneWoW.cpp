@@ -67,7 +67,7 @@ void CSceneWoW::Initialize()
 	}
 
 
-
+	GetBaseManager().GetManager<IWoWObjectsCreator>()->InitEGxBlend(GetRenderDevice());
 
 	{
 		std::shared_ptr<CRenderPass_Sky> skyPass = MakeShared(CRenderPass_Sky, *this);
@@ -92,6 +92,12 @@ void CSceneWoW::Initialize()
 		std::shared_ptr<CRenderPass_Liquid> liquidPass = MakeShared(CRenderPass_Liquid, *this);
 		liquidPass->ConfigurePipeline(GetRenderWindow().GetRenderTarget());
 		GetRenderer()->Add3DPass(liquidPass);
+	}
+
+	{
+		std::shared_ptr<CRenderPass_WMO> wmoPass = MakeShared(CRenderPass_WMO, *this);
+		wmoPass->ConfigurePipeline(GetRenderWindow().GetRenderTarget());
+		GetRenderer()->Add3DPass(wmoPass);
 	}
 
 

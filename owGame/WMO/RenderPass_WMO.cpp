@@ -10,10 +10,10 @@
 #include "WMO_Group_Instance.h"
 #include "WMO/WMO_Part_Material.h"
 
-CRenderPass_WMO::CRenderPass_WMO(IRenderDevice& RenderDevice, const std::shared_ptr<CSceneCreateTypedListsPass>& SceneNodeListPass)
-	: CBaseList3DPass(RenderDevice, SceneNodeListPass, cWMOGroup_NodeType)
+CRenderPass_WMO::CRenderPass_WMO(IScene& Scene)
+	: Base3DPass(Scene)
 {
-	m_WoWSettings = RenderDevice.GetBaseManager().GetManager<ISettings>()->GetGroup("WoWSettings");
+	m_WoWSettings = GetBaseManager().GetManager<ISettings>()->GetGroup("WoWSettings");
 }
 
 CRenderPass_WMO::~CRenderPass_WMO()
@@ -24,8 +24,10 @@ CRenderPass_WMO::~CRenderPass_WMO()
 //
 // IRenderPassPipelined
 //
-std::shared_ptr<IRenderPassPipelined> CRenderPass_WMO::CreatePipeline(std::shared_ptr<IRenderTarget> RenderTarget, const Viewport * Viewport)
+std::shared_ptr<IRenderPassPipelined> CRenderPass_WMO::ConfigurePipeline(std::shared_ptr<IRenderTarget> RenderTarget)
 {
+	__super::ConfigurePipeline(RenderTarget);
+
 	std::shared_ptr<IShader> g_pVertexShader;
 	std::shared_ptr<IShader> g_pPixelShader;
 
@@ -42,13 +44,12 @@ std::shared_ptr<IRenderPassPipelined> CRenderPass_WMO::CreatePipeline(std::share
 	g_pVertexShader->LoadInputLayoutFromReflector();
 
 	// PIPELINES
-	std::shared_ptr<IPipelineState> pipeline = GetRenderDevice().GetObjectsFactory().CreatePipelineState();
-	pipeline->GetDepthStencilState()->SetDepthMode(enableDepthWrites);
-	pipeline->SetRenderTarget(RenderTarget);
-	pipeline->SetShader(g_pVertexShader);
-	pipeline->SetShader(g_pPixelShader);
+	GetPipeline().GetDepthStencilState()->SetDepthMode(enableDepthWrites);
+	GetPipeline().SetRenderTarget(RenderTarget);
+	GetPipeline().SetShader(g_pVertexShader);
+	GetPipeline().SetShader(g_pPixelShader);
 
-	return SetPipeline(pipeline);
+	return shared_from_this();
 }
 
 
@@ -56,24 +57,21 @@ std::shared_ptr<IRenderPassPipelined> CRenderPass_WMO::CreatePipeline(std::share
 //
 // IVisitor
 //
-EVisitResult CRenderPass_WMO::Visit(const ISceneNode* SceneNode3D)
+EVisitResult CRenderPass_WMO::Visit(const std::shared_ptr<ISceneNode>& SceneNode3D)
 {
-	if (SceneNode3D->Is(cWMO_NodeType) || SceneNode3D->Is(cWMOGroup_NodeType))
-	{
-		return CBaseList3DPass::Visit(SceneNode3D);
-	}
+	if (std::dynamic_pointer_cast<CWMO_Group_Instance>(SceneNode3D))
+		return __super::Visit(SceneNode3D);
 
-	return EVisitResult::Block;
+	return EVisitResult::AllowVisitChilds;
 }
 
-EVisitResult CRenderPass_WMO::Visit(const IGeometry * Geometry, const IMaterial * Material, SGeometryDrawArgs GeometryDrawArgs)
+EVisitResult CRenderPass_WMO::Visit(const std::shared_ptr<IGeometry>& Geometry, const std::shared_ptr<IMaterial>& Material, SGeometryDrawArgs GeometryDrawArgs)
 {
-	auto wmoMaterial = static_cast<const WMO_Part_Material*>(Material);
-
+	auto wmoMaterial = std::dynamic_pointer_cast<WMO_Part_Material>(Material);
 	wmoMaterial->GetBlendState()->Bind();
 	wmoMaterial->GetRasterizerState()->Bind();
 	
-	return CBaseList3DPass::Visit(Geometry, Material, GeometryDrawArgs);
+	return __super::Visit(Geometry, Material, GeometryDrawArgs);
 }
 
 

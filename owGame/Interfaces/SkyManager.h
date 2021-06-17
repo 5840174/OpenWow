@@ -58,7 +58,7 @@ struct LightWaterAlpha
     };
 };
 
-ZN_INTERFACE ISkyManager 
+ZN_INTERFACE ZN_API ISkyManager 
 	: public IManager
 {
 	virtual ~ISkyManager() = 0 {};
