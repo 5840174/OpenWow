@@ -163,7 +163,7 @@ void CLiquidLayer::InitTextures(DBC_LIQUIDTYPE_Type::List _liquidType)
 	}
 	else if (_liquidType == DBC_LIQUIDTYPE_Type::ocean)
 	{
-		baseName = "XTextures\\ocean\\ocean";
+		baseName = "XTextures\\ocean\\ocean_h";
 	}
 	else if (_liquidType == DBC_LIQUIDTYPE_Type::magma)
 	{
