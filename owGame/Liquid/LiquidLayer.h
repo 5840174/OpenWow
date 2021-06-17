@@ -19,6 +19,7 @@ public:
 
 public:
 	const DBC_LiquidTypeRecord* LiquidType;
+	uint16 VertexFormat;
 
 	float MinHeightLevel;
 	float MaxHeightLevel;

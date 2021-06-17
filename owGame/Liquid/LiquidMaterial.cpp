@@ -5,13 +5,10 @@
 
 LiquidMaterial::LiquidMaterial(IRenderDevice& RenderDevice)
 	: MaterialProxieT(RenderDevice.GetObjectsFactory().CreateMaterial("LiquidMaterial"))
-{
-}
+{}
 
 LiquidMaterial::~LiquidMaterial()
-{
-
-}
+{}
 
 
 //

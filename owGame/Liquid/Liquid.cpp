@@ -102,6 +102,5 @@ void CLiquid::createLayers(const DBC_LiquidTypeRecord* _type, const std::shared_
 
 	auto geometry = layer->CreateGeometry(ydir);
 	layer->AddConnection(layer->GetMaterial(), geometry);
-
 	m_WaterLayers.push_back(layer);
 }

@@ -2,21 +2,21 @@
 
 namespace
 {
-__declspec(align(16)) struct MaterialProperties
-{
-	MaterialProperties()
-		: gColorLight(1.0f, 1.0f, 1.0f)
-		, gColorDark(1.0f, 1.0f, 1.0f)
-		, gShallowAlpha(1.0f)
-		, gDeepAlpha(1.0f)
-	{}
-	glm::vec3 gColorLight;
-	float gShallowAlpha;
+	__declspec(align(16)) struct MaterialProperties
+	{
+		MaterialProperties()
+			: gColorLight(1.0f, 1.0f, 1.0f)
+			, gColorDark(1.0f, 1.0f, 1.0f)
+			, gShallowAlpha(1.0f)
+			, gDeepAlpha(1.0f)
+		{}
+		glm::vec3 gColorLight;
+		float gShallowAlpha;
 
-	glm::vec3 gColorDark;
-	float gDeepAlpha;
-	//-------------------------- ( 32 bytes )
-};
+		glm::vec3 gColorDark;
+		float gDeepAlpha;
+		//-------------------------- ( 32 bytes )
+	};
 }
 
 class ZN_API LiquidMaterial

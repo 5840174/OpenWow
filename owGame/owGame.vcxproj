@@ -107,6 +107,7 @@
     <ClCompile Include="Map\MapChunkMaterial.cpp" />
     <ClCompile Include="Map\MapChunkLiquid.cpp" />
     <ClCompile Include="Map\MapTile.cpp" />
+    <ClCompile Include="Map\MapTileLiquid.cpp" />
     <ClCompile Include="Map\MapWDL.cpp" />
     <ClCompile Include="Map\MapWDT.cpp" />
     <ClCompile Include="Map\Map_Shared.cpp" />
@@ -295,6 +296,7 @@
     <ClInclude Include="Map\MapChunkMaterial.h" />
     <ClInclude Include="Map\MapChunkLiquid.h" />
     <ClInclude Include="Map\MapTile.h" />
+    <ClInclude Include="Map\MapTileLiquid.h" />
     <ClInclude Include="Map\MapWDL.h" />
     <ClInclude Include="Map\MapWDT.h" />
     <ClInclude Include="Map\Map_Headers.h" />

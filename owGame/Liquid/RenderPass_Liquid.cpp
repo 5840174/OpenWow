@@ -50,5 +50,5 @@ EVisitResult CRenderPass_Liquid::Visit(const std::shared_ptr<ISceneNode>& SceneN
 	if (auto liquidInstance = std::dynamic_pointer_cast<Liquid_Instance>(SceneNode3D))
 		return __super::Visit(liquidInstance);
 
-    return EVisitResult::Block;
+    return EVisitResult::AllowVisitChilds;
 }

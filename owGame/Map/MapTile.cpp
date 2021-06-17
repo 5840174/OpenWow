@@ -6,6 +6,9 @@
 // General
 #include "MapTile.h"
 
+// Additional
+#include "MapTileLiquid.h"
+
 CMapTile::CMapTile(IScene& Scene, IBaseManager& BaseManager, IRenderDevice& RenderDevice, const CMap& Map, uint32 IndexX, uint32 IndexZ)
 	: CSceneNode(Scene)
 	, m_BaseManager(BaseManager)
@@ -105,6 +108,43 @@ bool CMapTile::Load()
 		uint32 count = size / sizeof(ADT_MCIN);
 		_ASSERT(count == C_ChunksInTileGlobal);
 		memcpy(chunks, f->getDataFromCurrent(), sizeof(ADT_MCIN) * count);
+	}
+
+	// Liquids
+	if (header.MH20 != 0)
+	{
+		f->seek(startPos + header.MH20);
+		{
+			f->seekRelative(4);
+			uint32_t size;
+			f->readBytes(&size, sizeof(uint32_t));
+			_ASSERT(size > 0);
+
+			const uint8* abuf = f->getDataFromCurrent();
+			for (uint32 i = 0; i < C_ChunksInTile; i++)
+			{
+				for (uint32 j = 0; j < C_ChunksInTile; j++)
+				{
+					MH2O_Header* mh2o_Header = (MH2O_Header*)abuf;
+					if (mh2o_Header->layersCount > 0)
+					{
+						CMapTileLiquid liquidObject(GetRenderDevice(), f, *mh2o_Header);
+
+						auto liquidInstance = MakeShared(Liquid_Instance, GetScene());
+						liquidInstance->RegisterComponents();
+						liquidInstance->Initialize();
+						AddChild(liquidInstance);
+						//auto liquidInstance = GetScene().CreateSceneNode<Liquid_Instance>();
+
+						liquidObject.CreateInsances(liquidInstance);
+
+						// Transform
+						liquidInstance->SetPosition(glm::vec3((m_IndexX * C_TileSize) + (j * C_ChunkSize), 0.0f, (m_IndexZ * C_TileSize) + (i * C_ChunkSize)));
+					}
+					abuf += sizeof(MH2O_Header);
+				}
+			}
+		}
 	}
 
 	// TextureInfo

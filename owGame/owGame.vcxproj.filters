@@ -525,6 +525,9 @@
     <ClCompile Include="Client\WoWCorpse.cpp">
       <Filter>Client\Objects</Filter>
     </ClCompile>
+    <ClCompile Include="Map\MapTileLiquid.cpp">
+      <Filter>Map\Tile</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="common.h">
@@ -1099,6 +1102,9 @@
     </ClInclude>
     <ClInclude Include="Client\WoWCorpse.h">
       <Filter>Client\Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="Map\MapTileLiquid.h">
+      <Filter>Map\Tile</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
