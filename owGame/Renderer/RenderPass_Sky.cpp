@@ -9,6 +9,8 @@
 CRenderPass_Sky::CRenderPass_Sky(IScene& Scene)
 	: Base3DPass(Scene)
 {
+	SetPassName("Sky");
+
 	m_WoWSettings = GetBaseManager().GetManager<ISettings>()->GetGroup("WoWSettings");
 }
 

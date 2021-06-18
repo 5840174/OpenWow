@@ -147,7 +147,7 @@ void CWMO_Group_Instance::Initialize()
 
 	GetComponentT<IColliderComponent>()->SetCullStrategy(IColliderComponent::ECullStrategy::ByFrustrumAndDistance);
 	GetComponentT<IColliderComponent>()->SetBounds(m_WMOGroupObject.m_Bounds);
-	GetComponentT<IColliderComponent>()->SetDebugDrawMode(true);
+	GetComponentT<IColliderComponent>()->SetDebugDrawMode(false);
 }
 
 void CWMO_Group_Instance::Accept(IVisitor* visitor)

@@ -11,10 +11,8 @@
 #include "Map/MapWDLTileModel.h"
 #include "WoWChunkReader.h"
 
-CMapWDL::CMapWDL(const IBaseManager& BaseManager, IRenderDevice& RenderDevice, const CMap& Map)
+CMapWDL::CMapWDL(const CMap& Map)
 	: m_Minimap(nullptr)
-	, m_BaseManager(BaseManager)
-	, m_RenderDevice(RenderDevice)
 	, m_Map(Map)
 {}
 
@@ -31,7 +29,7 @@ void CMapWDL::CreateInsances(const std::shared_ptr<ISceneNode>& Parent) const
 	std::string fileName = m_Map.GetMapFolder() + ".wdl";
 
 	// Low-resolution tiles
-	std::shared_ptr<IFile> f = m_BaseManager.GetManager<IFilesManager>()->Open(fileName);
+	std::shared_ptr<IFile> f = m_Map.GetBaseManager().GetManager<IFilesManager>()->Open(fileName);
 	if (f == nullptr)
 	{
 		Log::Error("World[%s]: WDL: Error opening.", fileName.c_str());
@@ -39,7 +37,7 @@ void CMapWDL::CreateInsances(const std::shared_ptr<ISceneNode>& Parent) const
 	}
 
 	// Material
-	m_LowResilutionTileMaterial = std::make_shared<CMapWDLTileMaterial>(m_RenderDevice);
+	m_LowResilutionTileMaterial = std::make_shared<CMapWDLTileMaterial>(m_Map.GetBaseManager().GetApplication().GetRenderDevice());
 
 	// Heightmap
 	glm::vec3 lowres[17][17];
@@ -94,12 +92,12 @@ void CMapWDL::CreateInsances(const std::shared_ptr<ISceneNode>& Parent) const
 				}
 
 				// Vertex buffer
-				std::shared_ptr<IBuffer> __vb = m_RenderDevice.GetObjectsFactory().CreateVertexBuffer(vecrtices);
+				std::shared_ptr<IBuffer> __vb = m_Map.GetBaseManager().GetApplication().GetRenderDevice().GetObjectsFactory().CreateVertexBuffer(vecrtices);
 
-				std::shared_ptr<IGeometry> geometry = m_RenderDevice.GetObjectsFactory().CreateGeometry();
+				std::shared_ptr<IGeometry> geometry = m_Map.GetBaseManager().GetApplication().GetRenderDevice().GetObjectsFactory().CreateGeometry();
 				geometry->SetVertexBuffer(__vb);
 
-				std::shared_ptr<CMapWDLTileModel> lowResTile = std::make_shared<CMapWDLTileModel>(m_RenderDevice, m_Map, i, j);
+				std::shared_ptr<CMapWDLTileModel> lowResTile = std::make_shared<CMapWDLTileModel>(m_Map.GetBaseManager().GetApplication().GetRenderDevice(), m_Map, i, j);
 				lowResTile->AddConnection(m_LowResilutionTileMaterial, geometry);
 				Parent->GetComponentT<IModelComponent>()->AddModel(lowResTile);
 			}
@@ -130,10 +128,9 @@ void CMapWDL::Load()
 	// Offsets to MARE
 	memset(m_MAREOffsets, 0x00, C_TilesInMap * C_TilesInMap * sizeof(uint32));
 
-	std::shared_ptr<IByteBuffer> bytes = m_BaseManager.GetManager<IFilesManager>()->Open(m_Map.GetMapFolder() + ".wdl");
+	std::shared_ptr<IByteBuffer> bytes = m_Map.GetBaseManager().GetManager<IFilesManager>()->Open(m_Map.GetMapFolder() + ".wdl");
 
-	WoWChunkReader reader(m_BaseManager, bytes);
-
+	WoWChunkReader reader(m_Map.GetBaseManager(), bytes);
 
 	if (auto buffer = reader.OpenChunk("MVER"))
 	{
@@ -261,6 +258,6 @@ void CMapWDL::Load()
 	}
 
 	// Finish minimap
-	m_Minimap = m_RenderDevice.GetObjectsFactory().CreateEmptyTexture();
+	m_Minimap = m_Map.GetBaseManager().GetApplication().GetRenderDevice().GetObjectsFactory().CreateEmptyTexture();
 	m_Minimap->LoadTexture2DFromImage(mimimapImage);
 }

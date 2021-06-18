@@ -97,7 +97,7 @@ void CM2_Skin::Load(const SM2_Header& M2Header, const std::shared_ptr<IFile>& Fi
 		//if (skinBatchObject->m_PriorityPlan != 0)
 		//	Log::Green("Test");
 
-		m_TTT[skinBatchesProtos[i].skinSectionIndex].push_back(skinBatchObject);
+		m_GeometryMarerials[skinBatchesProtos[i].skinSectionIndex].push_back(skinBatchObject);
 		/*auto& ttIter = m_TTT.find(m_Sections[skinBatchesProtos[i].skinSectionIndex]);
 		if (ttIter == m_TTT.end())
 		{
@@ -113,11 +113,10 @@ void CM2_Skin::Load(const SM2_Header& M2Header, const std::shared_ptr<IFile>& Fi
 		//m_Models.push_back(model);
 	}
 
-	for (auto& it : m_TTT)
+	for (auto& it : m_GeometryMarerials)
 	{
-		auto& batches = it.second;
-		std::sort(batches.begin(), batches.end(), [](const std::shared_ptr<CM2_Skin_Batch>& left, const std::shared_ptr<CM2_Skin_Batch>& right)
-		{
+		auto& materials = it.second; // aka batch
+		std::sort(materials.begin(), materials.end(), [](const std::shared_ptr<CM2_Skin_Batch>& left, const std::shared_ptr<CM2_Skin_Batch>& right) {
 			return left->m_PriorityPlan < right->m_PriorityPlan;
 		});
 	}

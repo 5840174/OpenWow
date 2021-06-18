@@ -21,40 +21,40 @@
 ^CMPQFile[ruRU/patch-ruRU.MPQ]: Added!
 ^CMPQFile[ruRU/patch-ruRU-2.MPQ]: Added!
 ^CMPQFile[ruRU/patch-ruRU-3.MPQ]: Added!
-~DBCFile[AnimationData.dbc]: Records count = '1353902472'.
-~DBCFile[GroundEffectDoodad.dbc]: Records count = '1353902472'.
-~DBCFile[GroundEffectTexture.dbc]: Records count = '1353902472'.
-~DBCFile[LoadingScreens.dbc]: Records count = '1353902472'.
-~DBCFile[Material.dbc]: Records count = '1353902472'.
-~DBCFile[Map.dbc]: Records count = '1353902472'.
-~DBCFile[TerrainType.dbc]: Records count = '1353902472'.
-~DBCFile[WMOAreaTable.dbc]: Records count = '1353902472'.
-~DBCFile[WorldSafeLocs.dbc]: Records count = '1353902472'.
-~DBCFile[AreaTable.dbc]: Records count = '1353902472'.
-~DBCFile[CharacterFacialHairStyles.dbc]: Records count = '1353902472'.
-~DBCFile[CharComponentTextureLayouts.dbc]: Records count = '1353902472'.
-~DBCFile[CharComponentTextureSections.dbc]: Records count = '1353902472'.
-~DBCFile[CharHairGeosets.dbc]: Records count = '1353902472'.
-~DBCFile[CharSections.dbc]: Records count = '1353902472'.
-~DBCFile[ChrRaces.dbc]: Records count = '1353902472'.
-~DBCFile[CinematicCamera.dbc]: Records count = '1353902472'.
-~DBCFile[CinematicSequences.dbc]: Records count = '1353902472'.
-~DBCFile[CreatureDisplayInfo.dbc]: Records count = '1353902472'.
-~DBCFile[CreatureDisplayInfoExtra.dbc]: Records count = '1353902472'.
-~DBCFile[CreatureModelData.dbc]: Records count = '1353902472'.
-~DBCFile[HelmetGeosetVisData.dbc]: Records count = '1353902472'.
-~DBCFile[ItemBagFamily.dbc]: Records count = '1353902472'.
-~DBCFile[ItemClass.dbc]: Records count = '1353902472'.
-~DBCFile[ItemDisplayInfo.dbc]: Records count = '1353902472'.
-~DBCFile[ItemVisualEffects.dbc]: Records count = '1353902472'.
-~DBCFile[ItemVisuals.dbc]: Records count = '1353902472'.
-~DBCFile[Light.dbc]: Records count = '1353902472'.
-~DBCFile[LightFloatBand.dbc]: Records count = '1353902472'.
-~DBCFile[LightIntBand.dbc]: Records count = '1353902472'.
-~DBCFile[LightParams.dbc]: Records count = '1353902472'.
-~DBCFile[LightSkybox.dbc]: Records count = '1353902472'.
-~DBCFile[LiquidType.dbc]: Records count = '1353902472'.
-~DBCFile[GameObjectDisplayInfo.dbc]: Records count = '1353902360'.
+~DBCFile[AnimationData.dbc]: Records count = '-1810896808'.
+~DBCFile[GroundEffectDoodad.dbc]: Records count = '-1810896808'.
+~DBCFile[GroundEffectTexture.dbc]: Records count = '-1810896808'.
+~DBCFile[LoadingScreens.dbc]: Records count = '-1810896808'.
+~DBCFile[Material.dbc]: Records count = '-1810896808'.
+~DBCFile[Map.dbc]: Records count = '-1810896808'.
+~DBCFile[TerrainType.dbc]: Records count = '-1810896808'.
+~DBCFile[WMOAreaTable.dbc]: Records count = '-1810896808'.
+~DBCFile[WorldSafeLocs.dbc]: Records count = '-1810896808'.
+~DBCFile[AreaTable.dbc]: Records count = '-1810896808'.
+~DBCFile[CharacterFacialHairStyles.dbc]: Records count = '-1810896808'.
+~DBCFile[CharComponentTextureLayouts.dbc]: Records count = '-1810896808'.
+~DBCFile[CharComponentTextureSections.dbc]: Records count = '-1810896808'.
+~DBCFile[CharHairGeosets.dbc]: Records count = '-1810896808'.
+~DBCFile[CharSections.dbc]: Records count = '-1810896808'.
+~DBCFile[ChrRaces.dbc]: Records count = '-1810896808'.
+~DBCFile[CinematicCamera.dbc]: Records count = '-1810896808'.
+~DBCFile[CinematicSequences.dbc]: Records count = '-1810896808'.
+~DBCFile[CreatureDisplayInfo.dbc]: Records count = '-1810896808'.
+~DBCFile[CreatureDisplayInfoExtra.dbc]: Records count = '-1810896808'.
+~DBCFile[CreatureModelData.dbc]: Records count = '-1810896808'.
+~DBCFile[HelmetGeosetVisData.dbc]: Records count = '-1810896808'.
+~DBCFile[ItemBagFamily.dbc]: Records count = '-1810896808'.
+~DBCFile[ItemClass.dbc]: Records count = '-1810896808'.
+~DBCFile[ItemDisplayInfo.dbc]: Records count = '-1810896808'.
+~DBCFile[ItemVisualEffects.dbc]: Records count = '-1810896808'.
+~DBCFile[ItemVisuals.dbc]: Records count = '-1810896808'.
+~DBCFile[Light.dbc]: Records count = '-1810896808'.
+~DBCFile[LightFloatBand.dbc]: Records count = '-1810896808'.
+~DBCFile[LightIntBand.dbc]: Records count = '-1810896808'.
+~DBCFile[LightParams.dbc]: Records count = '-1810896808'.
+~DBCFile[LightSkybox.dbc]: Records count = '-1810896808'.
+~DBCFile[LiquidType.dbc]: Records count = '-1810896808'.
+~DBCFile[GameObjectDisplayInfo.dbc]: Records count = '-1810896920'.
 ~FontsManager: Font 'Fonts\consola.ttf' loaded. Size [14].
 ~Loading shader 'shaders_D3D/Sky.hlsl':'VS_main'.
 ~Loading shader 'shaders_D3D/Sky.hlsl':'PS_main'.
@@ -70,6 +70,8 @@
 ~Loading shader 'shaders_D3D/M2.hlsl':'PS_main'.
 ~Loading shader 'shaders_D3D/Liquid.hlsl':'VS_main'.
 ~Loading shader 'shaders_D3D/Liquid.hlsl':'PS_main'.
+~Loading shader '3D/Debug.hlsl':'VS_main'.
+~Loading shader '3D/Debug.hlsl':'PS_main'.
 ~Loading shader 'UI/UIControlCommon.hlsl':'VS_main'.
 ~Loading shader 'UI/UIControlCommon.hlsl':'PS_main'.
 ~Loading shader 'UI/UI_Font.hlsl':'VS_main'.
@@ -106,18 +108,66 @@
 !File 'Tileset\Generic\WaterBlue_s.blp' not exists.
 ^MapTile[30, 18, World\Maps\Northrend\Northrend_30_18.adt]: Loaded!
 ^MapTile[31, 18, World\Maps\Northrend\Northrend_31_18.adt]: Loaded!
-^MapTile[28, 18, World\Maps\Northrend\Northrend_28_18.adt]: Loaded!
-@M2[WORLD\EXPANSION02\DOODADS\GENERIC\SCOURGE\SC_SPIRITEFFECT_01.M2] don't contain geometry. Skins [1]
-^MapTile[28, 19, World\Maps\Northrend\Northrend_28_19.adt]: Loaded!
-^MapTile[28, 20, World\Maps\Northrend\Northrend_28_20.adt]: Loaded!
-@MapTile[31, 22] unloaded.
-@MapTile[30, 22] unloaded.
-@M2[WORLD\GENERIC\PASSIVEDOODADS\PARTICLEEMITTERS\BLACKSMITH_SMOKE.M2] don't contain geometry. Skins [1]
-^MapTile[28, 17, World\Maps\Northrend\Northrend_28_17.adt]: Loaded!
 !File 'TILESET\Terrain Cube Maps\TCB_CrystalSong_A_s.blp' not exists.
 ^MapTile[29, 17, World\Maps\Northrend\Northrend_29_17.adt]: Loaded!
 !File 'TILESET\Terrain Cube Maps\TCB_CrystalSong_A_s.blp' not exists.
 ^MapTile[30, 17, World\Maps\Northrend\Northrend_30_17.adt]: Loaded!
+^MapTile[31, 17, World\Maps\Northrend\Northrend_31_17.adt]: Loaded!
+@MapTile[29, 22] unloaded.
+@MapTile[31, 22] unloaded.
+^MapTile[29, 16, World\Maps\Northrend\Northrend_29_16.adt]: Loaded!
+!File 'TILESET\Terrain Cube Maps\TCB_CrystalSong_A_s.blp' not exists.
+@M2[WORLD\GENERIC\TAUREN\PASSIVE DOODADS\SMOKE\TAURENCOLOREDSMOKE01.M2] don't contain geometry. Skins [1]
+^MapTile[30, 16, World\Maps\Northrend\Northrend_30_16.adt]: Loaded!
+^MapTile[31, 16, World\Maps\Northrend\Northrend_31_16.adt]: Loaded!
+@MapTile[29, 21] unloaded.
+@MapTile[30, 22] unloaded.
+@MapTile[31, 21] unloaded.
+@M2[WORLD\GENERIC\PASSIVEDOODADS\PARTICLEEMITTERS\BLACKSMITH_SMOKE.M2] don't contain geometry. Skins [1]
+^MapTile[28, 17, World\Maps\Northrend\Northrend_28_17.adt]: Loaded!
+^MapTile[28, 18, World\Maps\Northrend\Northrend_28_18.adt]: Loaded!
+@M2[WORLD\EXPANSION02\DOODADS\GENERIC\SCOURGE\SC_SPIRITEFFECT_01.M2] don't contain geometry. Skins [1]
+^MapTile[28, 19, World\Maps\Northrend\Northrend_28_19.adt]: Loaded!
+@MapTile[30, 21] unloaded.
+@MapTile[31, 20] unloaded.
+@MapTile[31, 16] unloaded.
+^MapTile[31, 20, World\Maps\Northrend\Northrend_31_20.adt]: Loaded!
+@MapTile[29, 16] unloaded.
+^MapTile[29, 21, World\Maps\Northrend\Northrend_29_21.adt]: Loaded!
+!File 'TILESET\Terrain Cube Maps\TCB_CrystalSong_B_s.blp' not exists.
+@M2[WORLD\EXPANSION02\DOODADS\CRYSTALSONGFOREST\SPARKLES\CRYSTALSONG_SPARKLES03.M2] don't contain geometry. Skins [1]
+^MapTile[30, 21, World\Maps\Northrend\Northrend_30_21.adt]: Loaded!
+^MapTile[31, 21, World\Maps\Northrend\Northrend_31_21.adt]: Loaded!
+@MapTile[28, 17] unloaded.
+@MapTile[30, 16] unloaded.
+@MapTile[28, 18] unloaded.
+@M2[WORLD\GENERIC\PASSIVEDOODADS\PARTICLEEMITTERS\BLACKSMITH_SMOKE.M2] don't contain geometry. Skins [1]
+^MapTile[29, 22, World\Maps\Northrend\Northrend_29_22.adt]: Loaded!
+!File 'TILESET\Terrain Cube Maps\TCB_CrystalSong_B_s.blp' not exists.
+@M2[WORLD\GENERIC\PASSIVEDOODADS\PARTICLEEMITTERS\BLACKSMITH_SMOKE.M2] don't contain geometry. Skins [1]
+^MapTile[30, 22, World\Maps\Northrend\Northrend_30_22.adt]: Loaded!
+^MapTile[31, 22, World\Maps\Northrend\Northrend_31_22.adt]: Loaded!
+@MapTile[31, 17] unloaded.
+@MapTile[29, 17] unloaded.
+@MapTile[30, 17] unloaded.
+@WndProc: WM_CLOSE.
+@WndProc: WM_DESTROY.
+~Scene destroyed.
+@MapTile[29, 20] unloaded.
+@MapTile[30, 20] unloaded.
+@MapTile[29, 19] unloaded.
+@MapTile[30, 19] unloaded.
+@MapTile[31, 19] unloaded.
+@MapTile[29, 18] unloaded.
+@MapTile[30, 18] unloaded.
+@MapTile[31, 18] unloaded.
+@MapTile[28, 19] unloaded.
+@MapTile[31, 20] unloaded.
+@MapTile[29, 21] unloaded.
+@MapTile[30, 21] unloaded.
 @MapTile[31, 21] unloaded.
 @MapTile[29, 22] unloaded.
-@MapTile[30, 21] unloaded.
+@MapTile[30, 22] unloaded.
+@MapTile[31, 22] unloaded.
+~~RenderWindowBase
+@SaveToLocalFile: File 'D:\OpenWow\OpenWow//settings.xml' already exists and will be removed.

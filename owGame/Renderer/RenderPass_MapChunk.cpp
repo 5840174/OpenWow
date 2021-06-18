@@ -9,6 +9,8 @@
 CRenderPass_ADT_MCNK::CRenderPass_ADT_MCNK(IScene& Scene)
 	: Base3DPass(Scene)
 {
+	SetPassName("MapChunk");
+
 	m_ADT_MCNK_Distance = GetBaseManager().GetManager<ISettings>()->GetGroup("WoWSettings")->GetPropertyT<float>("ADT_MCNK_Distance");
 }
 
@@ -59,7 +61,13 @@ std::shared_ptr<IRenderPassPipelined> CRenderPass_ADT_MCNK::ConfigurePipeline(st
 EVisitResult CRenderPass_ADT_MCNK::Visit(const std::shared_ptr<ISceneNode>& SceneNode3D)
 {
 	if (const auto adtMCNKInstance = std::dynamic_pointer_cast<CMapChunk>(SceneNode3D))
+	{
+		if (auto colliderComponent = SceneNode3D->GetComponentT<IColliderComponent>())
+			if (colliderComponent->IsCulled(GetRenderEventArgs().Camera))
+				return EVisitResult::Block;
+
 		return __super::Visit(SceneNode3D);
+	}
 
 	return EVisitResult::AllowVisitChilds;
 }

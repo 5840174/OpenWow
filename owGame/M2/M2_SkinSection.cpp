@@ -93,7 +93,7 @@ CM2_SkinSection::CM2_SkinSection(IRenderDevice& RenderDevice, const CM2& M2Model
 	if (m_SkinSectionProto.boneCount > 0)
 	{
 		m_BonesList.resize(m_SkinSectionProto.boneCount);
-		m_StructuredBuffer = m_RenderDevice.GetObjectsFactory().CreateStructuredBuffer(m_BonesList, EAccess::CPUWrite);
+		m_BonesBuffer = m_RenderDevice.GetObjectsFactory().CreateStructuredBuffer(m_BonesList, EAccess::CPUWrite);
 	}
 }
 
@@ -135,7 +135,7 @@ void CM2_SkinSection::UpdateGeometryProps(const RenderEventArgs& RenderEventArgs
 
 		m_BonesList = M2Instance->getSkeletonComponent()->CreatePose(m_SkinSectionProto.bonesStartIndex, m_SkinSectionProto.boneCount);
 		_ASSERT(m_BonesList.size() == m_SkinSectionProto.boneCount);
-		m_StructuredBuffer->Set(m_BonesList);
+		m_BonesBuffer->Set(m_BonesList);
 	}
 
 	m_PropertiesBuffer->Set(m_Properties, sizeof(ShaderM2GeometryProperties));
@@ -148,5 +148,5 @@ const std::shared_ptr<IConstantBuffer>& CM2_SkinSection::GetGeometryPropsBuffer(
 
 const std::shared_ptr<IStructuredBuffer>& CM2_SkinSection::GetGeometryBonesBuffer() const
 {
-	return m_StructuredBuffer;
+	return m_BonesBuffer;
 }

@@ -13,6 +13,8 @@
 CRenderPass_WMO::CRenderPass_WMO(IScene& Scene)
 	: Base3DPass(Scene)
 {
+	SetPassName("WMO");
+
 	m_WoWSettings = GetBaseManager().GetManager<ISettings>()->GetGroup("WoWSettings");
 }
 
@@ -57,10 +59,24 @@ std::shared_ptr<IRenderPassPipelined> CRenderPass_WMO::ConfigurePipeline(std::sh
 //
 // IVisitor
 //
-EVisitResult CRenderPass_WMO::Visit(const std::shared_ptr<ISceneNode>& SceneNode3D)
+EVisitResult CRenderPass_WMO::Visit(const std::shared_ptr<ISceneNode>& SceneNode)
 {
-	if (std::dynamic_pointer_cast<CWMO_Group_Instance>(SceneNode3D))
-		return __super::Visit(SceneNode3D);
+	if (std::dynamic_pointer_cast<CWMO_Base_Instance>(SceneNode))
+	{
+		if (auto colliderComponent = SceneNode->GetComponentT<IColliderComponent>())
+			if (false == colliderComponent->IsCulled(GetRenderEventArgs().Camera))
+				return EVisitResult::Block;
+
+		return __super::Visit(SceneNode);
+	}
+	else if (std::dynamic_pointer_cast<CWMO_Group_Instance>(SceneNode))
+	{
+		if (auto colliderComponent = SceneNode->GetComponentT<IColliderComponent>())
+			if (false == colliderComponent->IsCulled(GetRenderEventArgs().Camera))
+				return EVisitResult::Block;
+
+		return __super::Visit(SceneNode);
+	}
 
 	return EVisitResult::AllowVisitChilds;
 }

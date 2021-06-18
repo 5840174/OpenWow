@@ -31,8 +31,8 @@ public: // Getters
 	std::string                                     GetMapFolder() const;
 
 	bool                                            IsNortrend() const;
-	bool                                            isUncompressedAlpha() const { return m_WDT->getFlags().Flag_8bitMCAL; }
-	bool                                            isTileBased() const { return m_WDT->MapHasTiles(); }
+	bool                                            isUncompressedAlpha() const { return m_WDT->IsMapTileUse8BitAlphaMCAL(); }
+	bool                                            isTileBased() const { return m_WDT->IsMapTileExists(); }
 #ifdef USE_WMO_MODELS
 	std::shared_ptr<CMapWMOInstance>                getGlobalInstance() const { return m_WDT->GetGlobalWMOInstance(); }
 #endif

@@ -52,7 +52,7 @@ private:
 	std::shared_ptr<IConstantBuffer> m_PropertiesBuffer;
 
 	std::vector<glm::mat4> m_BonesList;
-	std::shared_ptr<IStructuredBuffer> m_StructuredBuffer;
+	std::shared_ptr<IStructuredBuffer> m_BonesBuffer;
 
 private:
 	IRenderDevice&          m_RenderDevice;

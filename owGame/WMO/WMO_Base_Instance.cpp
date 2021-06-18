@@ -72,9 +72,9 @@ void CWMO_Base_Instance::Initialize()
 {
 	__super::Initialize();
 
-	//GetComponentT<IColliderComponent>()->SetCullStrategy(IColliderComponent::ECullStrategy::ByFrustrumAndDistance);
-	//GetComponentT<IColliderComponent>()->SetBounds(getWMO().GetBounds());
-	//GetComponentT<IColliderComponent>()->SetDebugDrawMode(true);
+	GetComponentT<IColliderComponent>()->SetCullStrategy(IColliderComponent::ECullStrategy::ByFrustrumAndDistance);
+	GetComponentT<IColliderComponent>()->SetBounds(getWMO().GetBounds());
+	GetComponentT<IColliderComponent>()->SetDebugDrawMode(true);
 }
 
 void CWMO_Base_Instance::Update(const UpdateEventArgs& e)

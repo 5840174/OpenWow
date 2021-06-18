@@ -130,6 +130,8 @@ std::shared_ptr<CM2SkeletonBone3D> CM2SkeletonComponent3D::GetBone(size_t Index)
 
 void CM2SkeletonComponent3D::Update(const UpdateEventArgs & e)
 {
+	return;
+
 	for (const auto& b : m_Bones)
 		b->Reset();
 

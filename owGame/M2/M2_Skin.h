@@ -19,14 +19,14 @@ public:
 
 	void Load(const SM2_Header& M2Header, const std::shared_ptr<IFile>& File, const std::vector<SM2_Vertex>& Vertices);
 
-	const std::vector<std::shared_ptr<CM2_SkinSection>>& GetSections() const
+	const std::vector<std::shared_ptr<CM2_SkinSection>>& GetGeometries() const
 	{
 		return m_Sections;
 	}
 
-	const std::map<size_t, std::vector<std::shared_ptr<CM2_Skin_Batch>>>& GetTTT() const
+	const std::map<size_t, std::vector<std::shared_ptr<CM2_Skin_Batch>>>& GetGeometryMaterials() const
 	{
-		return m_TTT;
+		return m_GeometryMarerials;
 	}
 
 	// IModel
@@ -36,7 +36,7 @@ private:
 	std::vector<std::shared_ptr<CM2_SkinSection>> m_Sections; // 'Geometries'
 	std::vector<std::shared_ptr<CM2_Skin_Batch>> m_Batches;   // 'Materials'
 
-	std::map<size_t, std::vector<std::shared_ptr<CM2_Skin_Batch>>> m_TTT;
+	std::map<size_t, std::vector<std::shared_ptr<CM2_Skin_Batch>>> m_GeometryMarerials;
 	
 private:
 	IBaseManager& m_BaseManager;

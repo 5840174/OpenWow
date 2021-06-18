@@ -10,6 +10,8 @@
 CRenderPass_MapTile::CRenderPass_MapTile(IScene& Scene)
 	: Base3DPass(Scene)
 {
+	SetPassName("MapTile");
+
 	m_WoWSettings = GetBaseManager().GetManager<ISettings>()->GetGroup("WoWSettings");
 }
 

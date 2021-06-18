@@ -106,10 +106,10 @@ void CMap::MapPreLoad(const DBC_MapRecord* DBCMapRecord)
 
 	Log::Print("Map[%s]: Id [%d]. Preloading...", m_MapDBCRecord->Get_Directory().c_str(), m_MapDBCRecord->Get_ID());
 
-	m_WDL = std::make_unique<CMapWDL>(GetBaseManager(), GetRenderDevice(), *this);
+	m_WDL = std::make_unique<CMapWDL>(*this);
 	m_WDL->Load();
 
-	m_WDT = std::make_unique<CMapWDT>(GetBaseManager(), GetRenderDevice(), *this);
+	m_WDT = std::make_unique<CMapWDT>(*this);
 }
 
 void CMap::MapLoad()
@@ -191,7 +191,7 @@ void CMap::EnterMap(glm::vec3 CameraPosition)
 
 void CMap::EnterMap(int32 x, int32 z)
 {
-	if (IsBadTileIndex(x, z) || false == m_WDT->getTileFlags(x, z).Flag_HasADT)
+	if (IsBadTileIndex(x, z) || false == m_WDT->IsMapTileExists())
 	{
 		m_IsOnInvalidTile = true;
 		return;
@@ -216,7 +216,7 @@ std::shared_ptr<CMapTile> CMap::LoadTile(int32 x, int32 z)
 		return nullptr;
 	}
 
-	if (false == m_WDT->getTileFlags(x, z).Flag_HasADT)
+	if (false == m_WDT->IsMapTileExists())
 	{
 		return nullptr;
 	}
@@ -286,7 +286,7 @@ void CMap::ClearCache()
 
 uint32 CMap::GetAreaID(glm::vec3 CameraPosition)
 {
-	if (false == m_WDT->MapHasTiles())
+	if (false == m_WDT->IsMapTileExists())
 		return UINT32_MAX;
 
 	int32 tileX = (int)(CameraPosition.x / C_TileSize);

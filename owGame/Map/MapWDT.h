@@ -14,9 +14,15 @@ struct WDT_MPHD
 		uint32 Flag_UseMCCV : 1;    // Use vertex shading (ADT.MCNK.MCCV)
 		uint32 Flag_8bitMCAL : 1;   // Decides whether to use _env terrain shaders or not: funky and if MCAL has 4096 instead of 2048(?)
 		uint32 Flag_HasDoodadRefsSortedBySizeCat : 1;       // if enabled, the ADT's MCRF(m2 only) chunks need to be sorted by size category
+
+#if WOW_CLIENT_VERSION == WOW_CATA_4_3_4
 		uint32 Flag_HasMCLV : 1;    // vertexBufferFormat = PNC2. (adds second color: ADT.MCNK.MCLV)
 		uint32 Flag_FlipGround : 1; // Flips the ground display upside down to create a ceiling (Cataclysm)
 		uint32 : 26;
+#else
+		uint32 : 28;
+#endif
+
 	} flags;
 	uint32 something;
 	uint32 unused[6];
@@ -37,7 +43,7 @@ class CMapWDT
 	: public ISceneNodeProvider
 {
 public:
-	CMapWDT(const IBaseManager& BaseManager, IRenderDevice& RenderDevice, const CMap& Map);
+	CMapWDT(const CMap& Map);
 	virtual ~CMapWDT();
 
 	// ISceneNodeProvider
@@ -45,33 +51,26 @@ public:
 
 	void Load();
 
-	const WDT_MPHD::Flags& getFlags() const { return m_MPHD.flags; }
-	const WDT_MAIN::Flags& getTileFlags(uint32 x, uint32 y) const { return m_TileFlag[x][y].flags; }
+	bool IsMapTileExists() { return m_IsTileBased; }
+	bool IsMapTileUse8BitAlphaMCAL() const { return m_MPHD.flags.Flag_8bitMCAL; }
 
-	bool MapHasTiles() { return m_IsTileBased; }
-	bool MapHasGlobalWMO() { return !m_GlobalWMOName.empty(); }
-
+	bool MapHasGlobalWMO() { return false == m_GlobalWMOName.empty(); }
 #ifdef USE_WMO_MODELS
 	std::shared_ptr<CMapWMOInstance> GetGlobalWMOInstance() const { return m_GlobalWMO; }
 #endif
 
 
 private:
+	const CMap&                         m_Map;
+
 	WDT_MPHD						    m_MPHD;
 	bool								m_IsTileBased;
 	WDT_MAIN							m_TileFlag[C_TilesInMap][C_TilesInMap];
 
-private:
+	// Global WMO
 	std::string							m_GlobalWMOName;
-
 #ifdef USE_WMO_MODELS
 	ADT_MODF							m_GlobalWMOPlacementInfo;
 	std::shared_ptr<CMapWMOInstance>	m_GlobalWMO;
 #endif
-
-
-private: 
-	const IBaseManager& m_BaseManager;
-	IRenderDevice& m_RenderDevice;
-	const CMap&  m_Map;	
 };

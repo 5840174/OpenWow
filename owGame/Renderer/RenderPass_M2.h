@@ -33,7 +33,7 @@ public:
 	void DoRenderM2Model(const CM2_Base_Instance* M2SceneNode, const CM2_Skin* M2Model, UINT InstancesCnt = UINT32_MAX);
 
 	// IRenderPassPipelined
-	virtual std::shared_ptr<IRenderPassPipelined> ConfigurePipeline(std::shared_ptr<IRenderTarget> RenderTarget) override;
+	std::shared_ptr<IRenderPassPipelined> ConfigurePipeline(std::shared_ptr<IRenderTarget> RenderTarget) override;
 
     // IVisitor
     virtual EVisitResult Visit(const std::shared_ptr<ISceneNode>& node) override;
@@ -43,7 +43,7 @@ protected:
 	std::shared_ptr<IPropertyT<float>> m_ADT_MDX_Distance;
 	ERenderPassM2DrawMode m_DrawMode;
 
-	std::shared_ptr<CM2_Base_Instance> m_CurrentM2Model;
+	const CM2_Base_Instance* m_CurrentM2Model;
 
 	std::shared_ptr<IConstantBuffer> m_M2PerObjectConstantBuffer;
 	IShaderParameter* m_ShaderM2PerObjectParameter;

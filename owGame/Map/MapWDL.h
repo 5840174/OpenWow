@@ -11,7 +11,7 @@ class CMapWDL
 	: public ISceneNodeProvider
 {
 public:
-	CMapWDL(const IBaseManager& BaseManager, IRenderDevice& RenderDevice, const CMap& Map);
+	CMapWDL(const CMap& Map);
 	virtual ~CMapWDL();
 
 	// ISceneNodeProvider
@@ -24,6 +24,7 @@ public:
 	std::shared_ptr<ITexture> getMinimap() { return m_Minimap; }
 
 private:
+	const CMap&                                     m_Map;
 	std::shared_ptr<ITexture>					    m_Minimap;
 	uint32											m_MAREOffsets[C_TilesInMap][C_TilesInMap];
 	mutable std::shared_ptr<CMapWDLTileMaterial>    m_LowResilutionTileMaterial;
@@ -31,10 +32,5 @@ private:
 #ifdef USE_WMO_MODELS
 	std::vector<ADT_MODF>					        m_LowResolutionWMOsPlacementInfo;
 	mutable std::vector<CMapWMOInstance*>	        m_LowResolutionWMOs;
-#endif
-
-private: // PARENT
-	const IBaseManager& m_BaseManager;
-	IRenderDevice& m_RenderDevice;
-	const CMap& m_Map;
+#endif	
 };

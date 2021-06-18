@@ -67,6 +67,11 @@ void CSceneWoW::Initialize()
 	}
 
 
+	m_RendererStatisticText = CreateUIControlTCast<IUIControlText>();
+	m_RendererStatisticText->SetLocalPosition(glm::vec2(5.0f, 200.0f));
+	m_RendererStatisticText->SetText("");
+
+
 	GetBaseManager().GetManager<IWoWObjectsCreator>()->InitEGxBlend(GetRenderDevice());
 
 
@@ -114,6 +119,8 @@ void CSceneWoW::OnUpdate(UpdateEventArgs & e)
 
 	skyManager->Update(e);
 	map->Update(e);
+
+	m_RendererStatisticText->SetText(GetRenderer()->GetStatisticText());
 }
 
 bool CSceneWoW::OnMousePressed(const MouseButtonEventArgs & e, const Ray& RayToWorld)

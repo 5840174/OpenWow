@@ -20,6 +20,8 @@
 CRenderPass_M2_Instanced::CRenderPass_M2_Instanced(IScene& Scene, ERenderPassM2DrawMode DrawMode)
 	: CRenderPass_M2(Scene, DrawMode)
 {
+	SetPassName("M2Instanced");
+
 	m_InstancesBuffer = GetRenderDevice().GetObjectsFactory().CreateStructuredBuffer(nullptr, 1000, sizeof(M2PerObject), EAccess::CPUWrite);
 }
 
@@ -27,30 +29,29 @@ CRenderPass_M2_Instanced::~CRenderPass_M2_Instanced()
 {
 }
 
+
+
+//
+// IRenderPass
+//
 void CRenderPass_M2_Instanced::Render(RenderEventArgs & e)
 {
-	m_modelPriorMap.clear();
+	m_ModelsNodes.clear();
 
+	// This action will call 'Visit' methods
 	__super::Render(e);
 
-	/*std::unordered_map<const CM2_Skin*, std::vector<const CM2_Base_Instance*>> modelPriorMap;
-
-	for (const auto& acceptableNodeType : GetAcceptableNodeTypes())
+	for (const auto& modelNodeIt : m_ModelsNodes)
 	{
-		if (GetSceneNodeListPass()->HasModelsList(acceptableNodeType))
-		{
-			for (const auto& it : GetSceneNodeListPass()->GetModelsList(acceptableNodeType))
-			{
-				modelPriorMap[static_cast<const CM2_Skin*>(it.Model)].push_back(static_cast<const CM2_Base_Instance*>(it.SceneNode));
-			}
-		}
-	}*/
+		const auto& skin = modelNodeIt.first;
+		const auto& m2BaseInstances = modelNodeIt.second;
 
-	for (const auto& it : m_modelPriorMap)
-	{
 		std::vector<M2PerObject> instances;
-		instances.reserve(it.second.size());
-		std::for_each(it.second.begin(), it.second.end(), [&instances](const CM2_Base_Instance* sceneNode) {
+		instances.reserve(m2BaseInstances.size());
+
+		
+
+		std::for_each(m2BaseInstances.begin(), m2BaseInstances.end(), [&instances](const CM2_Base_Instance* sceneNode) {
 			instances.push_back(M2PerObject(sceneNode->GetWorldTransfom(), sceneNode->getColor())); 
 		});
 
@@ -62,7 +63,7 @@ void CRenderPass_M2_Instanced::Render(RenderEventArgs & e)
 		m_ShaderInstancesBufferParameter->SetStructuredBuffer(m_InstancesBuffer);
 		m_ShaderInstancesBufferParameter->Bind();
 		{
-			DoRenderM2Model(*it.second.begin(), it.first, instances.size());
+			DoRenderM2Model(*m2BaseInstances.begin(), skin, instances.size());
 		}
 		m_ShaderInstancesBufferParameter->Unbind();
 	}
@@ -116,15 +117,20 @@ std::shared_ptr<IRenderPassPipelined> CRenderPass_M2_Instanced::ConfigurePipelin
 	return shared_from_this();
 }
 
-EVisitResult CRenderPass_M2_Instanced::Visit(const std::shared_ptr<ISceneNode>& node)
+EVisitResult CRenderPass_M2_Instanced::Visit(const std::shared_ptr<ISceneNode>& SceneNode)
 {
-	if (auto m2Instance = std::dynamic_pointer_cast<CM2_Base_Instance>(node))
+	m_CurrentM2Instance = nullptr;
+
+	if (auto colliderComponent = SceneNode->GetComponentT<IColliderComponent>())
+		if (colliderComponent->IsCulled(GetRenderEventArgs().Camera))
+			return EVisitResult::Block;
+
+	if (auto m2Instance = std::dynamic_pointer_cast<CM2_Base_Instance>(SceneNode))
 	{
-		m_CurrentM2Instance = dynamic_cast<const CM2_Base_Instance*>(node.get());
+		m_CurrentM2Instance = m2Instance.get();
 		return EVisitResult::AllowAll;
 	}
 
-	m_CurrentM2Instance = nullptr;
 	return EVisitResult::AllowVisitChilds;
 }
 
@@ -132,9 +138,10 @@ EVisitResult CRenderPass_M2_Instanced::Visit(const std::shared_ptr<IModel>& Mode
 {
 	if (m_CurrentM2Instance != nullptr)
 	{
-		m_modelPriorMap[dynamic_cast<const CM2_Skin*>(Model.get())].push_back(m_CurrentM2Instance);
+		m_ModelsNodes[dynamic_cast<const CM2_Skin*>(Model.get())].push_back(m_CurrentM2Instance);
 		return EVisitResult::AllowAll;
 	}
 
+	_ASSERT(false);
 	return EVisitResult::Block;
 }

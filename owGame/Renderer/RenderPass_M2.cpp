@@ -21,6 +21,8 @@ CRenderPass_M2::CRenderPass_M2(IScene& Scene, ERenderPassM2DrawMode DrawMode)
 	, m_CurrentM2Model(nullptr)
 	, m_DrawMode(DrawMode)
 {
+	SetPassName("M2");
+
 	m_ADT_MDX_Distance = Scene.GetBaseManager().GetManager<ISettings>()->GetGroup("WoWSettings")->GetPropertyT<float>("ADT_MDX_Distance");
 
 	m_M2PerObjectConstantBuffer = GetRenderDevice().GetObjectsFactory().CreateConstantBuffer(nullptr, sizeof(M2PerObject));
@@ -39,31 +41,31 @@ void CRenderPass_M2::DoRenderM2Model(const CM2_Base_Instance* M2SceneNode, const
 	const ShaderMap& shaders = GetPipeline().GetShaders();
 	const IShader* vertexShader = shaders.at(EShaderType::VertexShader).get();
 
-	for (const auto& it : M2Model->GetTTT())
+	for (const auto& geometryMaterialsIt : M2Model->GetGeometryMaterials())
 	{
-		const auto& geom = M2Model->GetSections()[it.first];
+		const auto& geometry = M2Model->GetGeometries()[geometryMaterialsIt.first];
+		const auto& materials = geometryMaterialsIt.second;
 
-		uint32 meshPartID = geom->getProto().meshPartID;
+		uint32 meshPartID = geometry->getProto().meshPartID;
 		if (false == M2SceneNode->isMeshEnabled(meshPartID))
 			continue;
 
-		geom->UpdateGeometryProps(GetRenderEventArgs(), M2SceneNode);
+		geometry->UpdateGeometryProps(GetRenderEventArgs(), M2SceneNode);
 
-		m_ShaderM2GeometryParameter->SetConstantBuffer(geom->GetGeometryPropsBuffer());
+		m_ShaderM2GeometryParameter->SetConstantBuffer(geometry->GetGeometryPropsBuffer());
 		m_ShaderM2GeometryParameter->Bind();
 		
-		m_ShaderM2GeometryBonesParameter->SetStructuredBuffer(geom->GetGeometryBonesBuffer());
+		m_ShaderM2GeometryBonesParameter->SetStructuredBuffer(geometry->GetGeometryBonesBuffer());
 		m_ShaderM2GeometryBonesParameter->Bind();
 		{
-			std::shared_ptr<IGeometryInternal> geomInternal = std::dynamic_pointer_cast<IGeometryInternal>(geom);
+			auto geomInternal = std::dynamic_pointer_cast<IGeometryInternal>(geometry);
 			geomInternal->Render_BindAllBuffers(vertexShader);
 
-
-			for (const auto& it2 : it.second)
+			for (const auto& materialsIt : materials)
 			{
-				const auto& mat = it2;
+				const auto& material = materialsIt;
 
-				bool isOpaqueGeom = mat->GetM2Material()->getBlendMode() == 0 || mat->GetM2Material()->getBlendMode() == 1;
+				bool isOpaqueGeom = material->GetM2Material()->getBlendMode() == 0 || material->GetM2Material()->getBlendMode() == 1;
 				switch (m_DrawMode)
 				{
 					case ERenderPassM2DrawMode::Opaque:
@@ -78,29 +80,24 @@ void CRenderPass_M2::DoRenderM2Model(const CM2_Base_Instance* M2SceneNode, const
 							continue;
 					}
 					break;
-					case ERenderPassM2DrawMode::All:
-					{
-						// do nothing
-					}
-					break;
 				}
 
-				mat->GetM2Material()->GetBlendState()->Bind();
-				mat->GetM2Material()->GetDepthStencilState()->Bind();
-				mat->GetM2Material()->GetRasterizerState()->Bind();
+				material->GetM2Material()->GetBlendState()->Bind();
+				material->GetM2Material()->GetDepthStencilState()->Bind();
+				material->GetM2Material()->GetRasterizerState()->Bind();
 
-				mat->UpdateMaterialProps(GetRenderEventArgs(), M2SceneNode);
-				mat->Bind(GetPipeline().GetPixelShaderPtr());
+				material->UpdateMaterialProps(GetRenderEventArgs(), M2SceneNode);
+				material->Bind(GetPipeline().GetPixelShaderPtr());
 				{
 					SGeometryDrawArgs geometryDrawArgs = { 0 };
 					//geometryDrawArgs.IndexStartLocation = geom->getProto().indexStart;
-					geometryDrawArgs.IndexCnt = geom->getProto().indexCount;
+					geometryDrawArgs.IndexCnt = geometry->getProto().indexCount;
 					//geometryDrawArgs.VertexStartLocation = geom->getProto().vertexStart;
-					geometryDrawArgs.VertexCnt = geom->getProto().vertexCount;
+					geometryDrawArgs.VertexCnt = geometry->getProto().vertexCount;
 					geometryDrawArgs.InstanceCnt = InstancesCnt;
 					geomInternal->Render_Draw(geometryDrawArgs);
 				}
-				mat->Unbind(GetPipeline().GetPixelShaderPtr());
+				material->Unbind(GetPipeline().GetPixelShaderPtr());
 			}
 
 			geomInternal->Render_UnbindAllBuffers(vertexShader);
@@ -165,7 +162,7 @@ EVisitResult CRenderPass_M2::Visit(const std::shared_ptr<ISceneNode>& SceneNode3
 {
 	if (auto m2Instance = std::dynamic_pointer_cast<CM2_Base_Instance>(SceneNode3D))
 	{
-		m_CurrentM2Model = m2Instance;
+		m_CurrentM2Model = m2Instance.get();
 
 		M2PerObject perObject(m2Instance->GetWorldTransfom(), m2Instance->getColor());
 		m_M2PerObjectConstantBuffer->Set(perObject);
@@ -186,8 +183,7 @@ EVisitResult CRenderPass_M2::Visit(const std::shared_ptr<IModel>& Model)
 {
 	if (auto m2Skin = std::dynamic_pointer_cast<CM2_Skin>(Model))
 	{
-		DoRenderM2Model(m_CurrentM2Model.get(), m2Skin.get());
-
+		DoRenderM2Model(m_CurrentM2Model, m2Skin.get());
 		return EVisitResult::AllowAll;
 	}
 

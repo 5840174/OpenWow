@@ -10,6 +10,8 @@
 CRenderPass_WDL::CRenderPass_WDL(IScene& Scene)
 	: Base3DPass(Scene)
 {
+	SetPassName("MapWDL");
+
 	m_WoWSettings = GetBaseManager().GetManager<ISettings>()->GetGroup("WoWSettings");
 }
 

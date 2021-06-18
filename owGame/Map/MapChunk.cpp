@@ -162,9 +162,6 @@ bool CMapChunk::Load()
 		glm::vec3 tempVertexes[C_MapBufferSize];
 		glm::vec3* ttv = tempVertexes;
 
-		BoundingBox bbox = GetComponentT<IColliderComponent>()->GetBounds();
-
-
 		float minHeight = Math::MaxFloat;
 		float maxHeight = Math::MinFloat;
 
@@ -190,15 +187,20 @@ bool CMapChunk::Load()
 			}
 		}
 
-		auto min = bbox.getMin();
-		min.y = minHeight;
-		bbox.setMin(min);
+		// Update bounds
+		{
+			BoundingBox bbox = GetComponentT<IColliderComponent>()->GetBounds();
 
-		auto max = bbox.getMax();
-		max.y = maxHeight;
-		bbox.setMax(max);
+			auto min = bbox.getMin();
+			min.y = minHeight;
+			bbox.setMin(min);
 
-		GetComponentT<IColliderComponent>()->SetBounds(bbox);
+			auto max = bbox.getMax();
+			max.y = maxHeight;
+			bbox.setMax(max);
+
+			GetComponentT<IColliderComponent>()->SetBounds(bbox);
+		}
 
 		verticesBuffer = GetRenderDevice().GetObjectsFactory().CreateVertexBuffer(tempVertexes, C_MapBufferSize);
 	}
@@ -221,7 +223,7 @@ bool CMapChunk::Load()
 	// R, G, B - alphas, A - shadow
 	std::shared_ptr<CImageBase> blendBuff = std::make_shared<CImageBase>(64, 64, 32, true);
 
-	// Shadows
+	// Shadows (MCSH)
 	if (m_Header.flags.has_mcsh)
 	{
 		m_Bytes->seek(startPos + m_Header.ofsShadow);
@@ -242,6 +244,17 @@ bool CMapChunk::Load()
 				}
 			}
 
+			// TODO: Investiagete it
+			/*if (false == m_Header.flags.do_not_fix_alpha_map)
+			{
+				for (uint8 i = 0; i < 64; ++i)
+				{
+					sbuf[i * 64 + 63] = sbuf[i * 64 + 62];
+					sbuf[63 * 64 + i] = sbuf[62 * 64 + i];
+				}
+				sbuf[63 * 64 + 63] = sbuf[62 * 64 + 62];
+			}*/
+
 			for (int p = 0; p < 64 * 64; p++)
 			{
 				blendBuff->GetDataEx()[p * 4 + 3] = sbuf[p];
@@ -249,7 +262,7 @@ bool CMapChunk::Load()
 		}
 	}
 
-	// Alpha
+	// Alpha (MCAL)
 	m_Bytes->seek(startPos + m_Header.ofsAlpha);
 	{
 		for (uint32 i = 1; i < m_Header.nLayers; i++)
@@ -290,8 +303,7 @@ bool CMapChunk::Load()
 			}
 			else
 			{
-				uint8* p;
-				p = amap;
+				uint8* p = amap;
 				for (uint8 j = 0; j < 64; j++)
 				{
 					for (uint8 i = 0; i < 32; i++)
@@ -300,11 +312,10 @@ bool CMapChunk::Load()
 						*p++ = (c & 0x0f) << 4;
 						*p++ = (c & 0xf0);
 					}
-
 				}
 			}
 
-			if (!m_Header.flags.do_not_fix_alpha_map)
+			if (false == m_Header.flags.do_not_fix_alpha_map)
 			{
 				for (uint8 i = 0; i < 64; ++i)
 				{
@@ -321,7 +332,7 @@ bool CMapChunk::Load()
 		}
 	}
 
-	// Liquids
+	// Liquids (MCLQ)
 	m_Bytes->seek(startPos + m_Header.ofsLiquid);
 	{
 		if (m_Header.sizeLiquid > 8)
@@ -330,7 +341,7 @@ bool CMapChunk::Load()
 			m_Bytes->read(&height);
 
 			// Set this chunk BBOX
-			{
+			/*{
 				BoundingBox bbox = GetComponentT<IColliderComponent>()->GetBounds();
 				float bboxMinHeight = std::min(bbox.getMin().y, (height.min - GetPosition().y));
 				float bboxMaxHeight = std::max(bbox.getMax().y, (height.max - GetPosition().y));
@@ -344,7 +355,7 @@ bool CMapChunk::Load()
 				bbox.setMax(max);
 
 				GetComponentT<IColliderComponent>()->SetBounds(bbox);
-			}
+			}*/
 
 			auto liquidInstance = CreateSceneNode<Liquid_Instance>();
 
@@ -373,7 +384,7 @@ bool CMapChunk::Load()
 		}
 	}
 
-	// MCCV colors
+	// Vertex colors (MCCV)
 	if (m_Header.flags.has_mccv)
 	{
 		m_Bytes->seek(startPos + m_Header.ofsMCCV);

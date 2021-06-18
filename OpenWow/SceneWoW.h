@@ -26,6 +26,7 @@ protected:
 private:
 	std::shared_ptr<SkyManager> skyManager;
 	std::shared_ptr<CMap> map;
+	std::shared_ptr<IUIControlText> m_RendererStatisticText;
 };
 
 

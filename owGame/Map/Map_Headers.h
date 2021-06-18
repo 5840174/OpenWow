@@ -60,7 +60,7 @@ struct ADT_MCNK_Header
 		uint32 has_mccv : 1;
 		uint32 unk1 : 1;
 		uint32 unk2 : 7;
-		uint32 do_not_fix_alpha_map : 1;      // "fix" alpha maps in MCAL (4 bit alpha maps are 63*63 instead of 64*64). Note that this also means that it *has* to be 4 bit alpha maps, otherwise UnpackAlphaShadowBits will assert.
+		uint32 do_not_fix_alpha_map : 1; //"fix" alpha maps in MCAL and MCSH(4 bit alpha maps are 63 * 63 instead of 64 * 64).
 		uint32 : 16;
 	} flags;
 
@@ -108,6 +108,7 @@ struct ADT_MCNK_Header
 struct ADT_MCNK_MCLY
 {
 	uint32 textureIndex;
+
 	struct Flags
 	{
 		uint32 animation_rotation : 3;        // each tick is 45
@@ -119,7 +120,7 @@ struct ADT_MCNK_MCLY
 		uint32 use_cube_map_reflection : 1;   // This makes the layer behave like its a reflection of the skybox. See below
 		uint32 : 21;
 	} flags;
+
 	uint32 offsetInMCAL;
-	FOREIGN_KEY_ID(uint16, DBC_GroundEffectTexture, effectId);
-	int16 unk0;
+	FOREIGN_KEY_ID(uint32, DBC_GroundEffectTexture, effectId);
 };

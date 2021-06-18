@@ -8,7 +8,9 @@
 
 CRenderPass_Liquid::CRenderPass_Liquid(IScene& Scene)
 	: Base3DPass(Scene)
-{}
+{
+	SetPassName("Liquid");
+}
 
 CRenderPass_Liquid::~CRenderPass_Liquid()
 {}

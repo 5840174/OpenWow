@@ -9,16 +9,14 @@
 // Additional
 #include "WoWChunkReader.h"
 
-CMapWDT::CMapWDT(const IBaseManager& BaseManager, IRenderDevice& RenderDevice, const CMap& Map)
-	: m_IsTileBased(false)
+CMapWDT::CMapWDT(const CMap& Map)
+	: m_Map(Map)
+	
+	, m_IsTileBased(false)
 	
 #ifdef USE_WMO_MODELS
 	, m_GlobalWMO(nullptr)
 #endif
-
-	, m_BaseManager(BaseManager)
-	, m_RenderDevice(RenderDevice)
-	, m_Map(Map)
 {}
 
 CMapWDT::~CMapWDT()
@@ -32,11 +30,10 @@ void CMapWDT::CreateInsances(const std::shared_ptr<ISceneNode>& Parent) const
 	if (false == m_GlobalWMOName.empty())
 	{
 #ifdef USE_WMO_MODELS
-		std::shared_ptr<CWMO> wmo = m_BaseManager.GetManager<IWoWObjectsCreator>()->LoadWMO(m_RenderDevice, m_GlobalWMOName, true);
-		if (wmo)
+		if (std::shared_ptr<CWMO> wmo = m_Map.GetBaseManager().GetManager<IWoWObjectsCreator>()->LoadWMO(m_Map.GetBaseManager().GetApplication().GetRenderDevice(), m_GlobalWMOName))
 		{
 			auto inst = Parent->CreateSceneNode<CMapWMOInstance>(wmo, m_GlobalWMOPlacementInfo);
-			m_BaseManager.GetManager<ILoader>()->AddToLoadQueue(inst);
+			m_Map.GetBaseManager().GetManager<ILoader>()->AddToLoadQueue(inst);
 
 			std::const_pointer_cast<CMapWMOInstance>(m_GlobalWMO) = inst;
 		}
@@ -46,7 +43,7 @@ void CMapWDT::CreateInsances(const std::shared_ptr<ISceneNode>& Parent) const
 
 void CMapWDT::Load()
 {
-    WoWChunkReader reader(m_BaseManager, m_Map.GetMapFolder() + ".wdt");
+    WoWChunkReader reader(m_Map.GetBaseManager(), m_Map.GetMapFolder() + ".wdt");
 
 	if (auto buffer = reader.OpenChunk("MVER"))
     {

@@ -10,6 +10,7 @@
 #define WOW_CLASSIC_1_12_1 1
 #define WOW_BC_2_4_3       2  
 #define WOW_WOTLK_3_3_5    3
+#define WOW_CATA_4_3_4     4
 
 #define WOW_CLIENT_VERSION WOW_WOTLK_3_3_5
 
