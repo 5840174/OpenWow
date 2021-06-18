@@ -15,12 +15,12 @@ public:
 	CMap(IScene& Scene);
 	virtual ~CMap();
 
-	void                                            MapPreLoad(const DBC_MapRecord* _map);
+	void                                            MapPreLoad(const DBC_MapRecord* DBCMapRecord);
 	void                                            MapLoad();
 	void                                            Unload();
 
 	//
-	void                                            EnterMap(glm::vec3 _cameraPosition);
+	void                                            EnterMap(glm::vec3 CameraPosition);
 	void                                            EnterMap(int32 x, int32 z);
 	std::shared_ptr<CMapTile>                       LoadTile(int32 x, int32 z);
 	void                                            ClearCache();
@@ -54,8 +54,8 @@ private:
 	const DBC_MapRecord*                            m_MapDBCRecord;
 
 
-	std::shared_ptr<CMapTile>	                    m_ADTCache[C_TilesCacheSize];
-	std::shared_ptr<CMapTile>	                    m_Current[C_RenderedTiles][C_RenderedTiles];
+	std::shared_ptr<CMapTile>	                    m_MapTilesCache[C_TilesCacheSize];
+	std::shared_ptr<CMapTile>	                    m_MapTilesCurrent[C_RenderedTiles][C_RenderedTiles];
 	int32					                        m_CurrentTileX, m_CurrentTileZ;
 	bool					                        m_IsOnInvalidTile;
 

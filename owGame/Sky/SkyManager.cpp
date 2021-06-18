@@ -68,7 +68,7 @@ void SkyManager::Update(const UpdateEventArgs& e)
 
 	Calculate(e.CameraForCulling, 1440/*GetMapController()->getTime()->GetTime()*/);
 
-	SetPosition(e.CameraForCulling->GetPosition());
+	SetLocalPosition(e.CameraForCulling->GetPosition());
 }
 
 

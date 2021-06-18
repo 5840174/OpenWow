@@ -4,7 +4,7 @@
 #include "RenderPass_WDL.h"
 
 // Additional
-#include "Map/WDL_LowResTile.h"
+#include "Map/MapWDLTileModel.h"
 #include "Map/Map.h"
 
 CRenderPass_WDL::CRenderPass_WDL(IScene& Scene)
@@ -58,7 +58,7 @@ EVisitResult CRenderPass_WDL::Visit(const std::shared_ptr<ISceneNode>& SceneNode
 
 EVisitResult CRenderPass_WDL::Visit(const std::shared_ptr<IModel>& Model)
 {
-	const auto wdlMesh = std::dynamic_pointer_cast<CWDL_LowResTile>(Model);
+	const auto wdlMesh = std::dynamic_pointer_cast<CMapWDLTileModel>(Model);
 	if (wdlMesh == nullptr)
         return EVisitResult::Block;
 

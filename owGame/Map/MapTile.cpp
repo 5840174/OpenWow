@@ -133,7 +133,7 @@ bool CMapTile::Load()
 						liquidObject.CreateInsances(liquidInstance);
 
 						// Transform
-						liquidInstance->SetPosition(glm::vec3((m_IndexX * C_TileSize) + (j * C_ChunkSize), 0.0f, (m_IndexZ * C_TileSize) + (i * C_ChunkSize)));
+						liquidInstance->SetLocalPosition(glm::vec3((m_IndexX * C_TileSize) + (j * C_ChunkSize), 0.0f, (m_IndexZ * C_TileSize) + (i * C_ChunkSize)));
 					}
 					abuf += sizeof(MH2O_Header);
 				}
@@ -304,6 +304,10 @@ bool CMapTile::Load()
 
 			m_WMOsInstances.push_back(inst.get());
 		}
+		else
+		{
+			Log::Warn("CMapTile: WMO model '%s' is nullptr.", m_WMOsNames[it.nameIndex].c_str());
+		}
 	}
 #endif
 
@@ -317,6 +321,10 @@ bool CMapTile::Load()
 			GetBaseManager().GetManager<ILoader>()->AddToLoadQueue(inst);
 			
 			m_MDXsInstances.push_back(inst.get());
+		}
+		else
+		{
+			Log::Warn("CMapTile: M2 model '%s' is nullptr.", m_MDXsNames[it.nameIndex].c_str());
 		}
 	}
 	//---------------------------------------------------------------------------------

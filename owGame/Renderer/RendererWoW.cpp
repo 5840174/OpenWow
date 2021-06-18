@@ -40,7 +40,8 @@ void CRendererWoW::Initialize(std::shared_ptr<IRenderTarget> OutputRenderTarget)
 	Add3DPass(MakeShared(CRenderPass_MapTile, GetScene())->ConfigurePipeline(OutputRenderTarget));
 	Add3DPass(MakeShared(CRenderPass_ADT_MCNK, GetScene())->ConfigurePipeline(OutputRenderTarget));
 	Add3DPass(MakeShared(CRenderPass_WMO, GetScene())->ConfigurePipeline(OutputRenderTarget));
-	Add3DPass(MakeShared(CRenderPass_M2, GetScene(), ERenderPassM2DrawMode::All)->ConfigurePipeline(OutputRenderTarget));
+	Add3DPass(MakeShared(CRenderPass_M2_Instanced, GetScene(), ERenderPassM2DrawMode::All)->ConfigurePipeline(OutputRenderTarget));
+	//Add3DPass(MakeShared(CRenderPass_M2, GetScene(), ERenderPassM2DrawMode::All)->ConfigurePipeline(OutputRenderTarget));
 	//Add3DPass(MakeShared(CRenderPass_M2, GetScene(), false)->ConfigurePipeline(OutputRenderTarget));
 	Add3DPass(MakeShared(CRenderPass_Liquid, GetScene())->ConfigurePipeline(OutputRenderTarget));
 

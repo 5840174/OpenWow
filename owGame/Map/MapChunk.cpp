@@ -71,7 +71,7 @@ void CMapChunk::Initialize()
 	// Scene node params
 	{
 		// Set translate
-		SetPosition(glm::vec3(header.xpos * (-1.0f) + C_ZeroPoint, header.ypos, header.zpos * (-1.0f) + C_ZeroPoint));
+		SetLocalPosition(glm::vec3(header.xpos * (-1.0f) + C_ZeroPoint, header.ypos, header.zpos * (-1.0f) + C_ZeroPoint));
 	}
 
 	{

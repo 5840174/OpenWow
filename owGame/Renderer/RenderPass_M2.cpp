@@ -34,7 +34,7 @@ CRenderPass_M2::~CRenderPass_M2()
 //
 // CRenderPass_M2
 //
-void CRenderPass_M2::DoRenderM2Model(const CM2_Base_Instance* M2SceneNode, const CM2_Skin* M2Model, ERenderPassM2DrawMode DrawMode, UINT InstancesCnt)
+void CRenderPass_M2::DoRenderM2Model(const CM2_Base_Instance* M2SceneNode, const CM2_Skin* M2Model, UINT InstancesCnt)
 {
 	const ShaderMap& shaders = GetPipeline().GetShaders();
 	const IShader* vertexShader = shaders.at(EShaderType::VertexShader).get();
@@ -64,7 +64,7 @@ void CRenderPass_M2::DoRenderM2Model(const CM2_Base_Instance* M2SceneNode, const
 				const auto& mat = it2;
 
 				bool isOpaqueGeom = mat->GetM2Material()->getBlendMode() == 0 || mat->GetM2Material()->getBlendMode() == 1;
-				switch (DrawMode)
+				switch (m_DrawMode)
 				{
 					case ERenderPassM2DrawMode::Opaque:
 					{
@@ -186,7 +186,7 @@ EVisitResult CRenderPass_M2::Visit(const std::shared_ptr<IModel>& Model)
 {
 	if (auto m2Skin = std::dynamic_pointer_cast<CM2_Skin>(Model))
 	{
-		DoRenderM2Model(m_CurrentM2Model.get(), m2Skin.get(), m_DrawMode);
+		DoRenderM2Model(m_CurrentM2Model.get(), m2Skin.get());
 
 		return EVisitResult::AllowAll;
 	}

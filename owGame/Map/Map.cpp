@@ -56,12 +56,12 @@ CMap::~CMap()
 
 // --
 
-void CMap::MapPreLoad(const DBC_MapRecord* _map)
+void CMap::MapPreLoad(const DBC_MapRecord* DBCMapRecord)
 {
-	m_MapDBCRecord = _map;
+	m_MapDBCRecord = DBCMapRecord;
 	m_MapFolderName = CMapShared::getMapFolder(m_MapDBCRecord);
 
-	Log::Print("Map[%s]: Id [%d]. Preloading...", m_MapDBCRecord->Get_Directory(), m_MapDBCRecord->Get_ID());
+	Log::Print("Map[%s]: Id [%d]. Preloading...", m_MapDBCRecord->Get_Directory().c_str(), m_MapDBCRecord->Get_ID());
 
 	m_WDL = std::make_unique<CMapWDL>(GetBaseManager(), GetRenderDevice(), *this);
 	m_WDL->Load();
@@ -86,9 +86,9 @@ void CMap::Unload()
 
 	for (int i = 0; i < C_TilesCacheSize; i++)
 	{
-		if (m_ADTCache[i] != nullptr)
+		if (m_MapTilesCache[i] != nullptr)
 		{
-			RemoveChild(m_ADTCache[i]);
+			RemoveChild(m_MapTilesCache[i]);
 		}
 	}
 
@@ -96,7 +96,7 @@ void CMap::Unload()
 	{
 		for (int j = 0; j < C_RenderedTiles; j++)
 		{
-			RemoveChild(m_Current[i][j]);
+			RemoveChild(m_MapTilesCurrent[i][j]);
 		}
 	}
 }
@@ -108,15 +108,15 @@ void CMap::Update(const UpdateEventArgs& e)
 	const ICameraComponent3D* camera = e.CameraForCulling;
 
 	bool loading = false;
-	int enteredTileX, enteredTileZ;
+	int enteredTileX = -1, enteredTileZ = -1;
 	int midTile = static_cast<uint32>(C_RenderedTiles / 2);
-	if (m_Current[midTile][midTile] != nullptr || m_IsOnInvalidTile)
+	if (m_MapTilesCurrent[midTile][midTile] != nullptr || m_IsOnInvalidTile)
 	{
 		if (m_IsOnInvalidTile ||
-			(camera->GetPosition().x < m_Current[midTile][midTile]->GetPosition().x) ||
-			(camera->GetPosition().x > (m_Current[midTile][midTile]->GetPosition().x + C_TileSize)) ||
-			(camera->GetPosition().z < m_Current[midTile][midTile]->GetPosition().z) ||
-			(camera->GetPosition().z > (m_Current[midTile][midTile]->GetPosition().z + C_TileSize)))
+			(camera->GetPosition().x < m_MapTilesCurrent[midTile][midTile]->GetPosition().x) ||
+			(camera->GetPosition().x > (m_MapTilesCurrent[midTile][midTile]->GetPosition().x + C_TileSize)) ||
+			(camera->GetPosition().z < m_MapTilesCurrent[midTile][midTile]->GetPosition().z) ||
+			(camera->GetPosition().z > (m_MapTilesCurrent[midTile][midTile]->GetPosition().z + C_TileSize)))
 		{
 
 			enteredTileX = static_cast<int>(camera->GetPosition().x / C_TileSize);
@@ -142,14 +142,14 @@ void CMap::Update(const UpdateEventArgs& e)
 
 //--
 
-void CMap::EnterMap(glm::vec3 _cameraPosition)
+void CMap::EnterMap(glm::vec3 CameraPosition)
 {
-	EnterMap(_cameraPosition.x / C_TileSize, _cameraPosition.z / C_TileSize);
+	EnterMap(CameraPosition.x / C_TileSize, CameraPosition.z / C_TileSize);
 }
 
 void CMap::EnterMap(int32 x, int32 z)
 {
-	if (IsBadTileIndex(x, z) || !m_WDT->getTileFlags(x, z).Flag_HasADT)
+	if (IsBadTileIndex(x, z) || false == m_WDT->getTileFlags(x, z).Flag_HasADT)
 	{
 		m_IsOnInvalidTile = true;
 		return;
@@ -162,7 +162,7 @@ void CMap::EnterMap(int32 x, int32 z)
 	{
 		for (uint8 j = 0; j < C_RenderedTiles; j++)
 		{
-			m_Current[i][j] = LoadTile(x - static_cast<uint32>(C_RenderedTiles / 2) + i, z - static_cast<uint32>(C_RenderedTiles / 2) + j);
+			m_MapTilesCurrent[i][j] = LoadTile(x - (C_RenderedTiles / 2u) + i, z - (C_RenderedTiles / 2u) + j);
 		}
 	}
 }
@@ -174,39 +174,40 @@ std::shared_ptr<CMapTile> CMap::LoadTile(int32 x, int32 z)
 		return nullptr;
 	}
 
-	if (!m_WDT->getTileFlags(x, z).Flag_HasADT)
+	if (false == m_WDT->getTileFlags(x, z).Flag_HasADT)
 	{
 		return nullptr;
 	}
 
 	// Try get tile from cache
-	int firstnull = C_TilesCacheSize;
-	for (int i = 0; i < C_TilesCacheSize; i++)
+	uint32 freePositionInTileCache = C_TilesCacheSize;
+
+	for (uint32 i = 0; i < C_TilesCacheSize; i++)
 	{
-		if ((m_ADTCache[i] != nullptr) && (m_ADTCache[i]->getIndexX() == x) && (m_ADTCache[i]->getIndexZ() == z))
+		if ((m_MapTilesCache[i] != nullptr) && (m_MapTilesCache[i]->getIndexX() == x) && (m_MapTilesCache[i]->getIndexZ() == z))
 		{
-			return m_ADTCache[i];
+			return m_MapTilesCache[i];
 		}
 
-		if ((m_ADTCache[i] == nullptr) && (i < firstnull))
+		if ((m_MapTilesCache[i] == nullptr) && (i < freePositionInTileCache))
 		{
-			firstnull = i;
+			freePositionInTileCache = i;
 		}
 	}
 
 	// ok we need to find a place in the cache
-	if (firstnull == C_TilesCacheSize)
+	if (freePositionInTileCache == C_TilesCacheSize)
 	{
 		int score, maxscore = 0, maxidx = 0;
+
 		// oh shit we need to throw away a tile
 		for (int i = 0; i < C_TilesCacheSize; i++)
 		{
-			if (m_ADTCache[i] == nullptr)
-			{
+			auto currentTileInCache = m_MapTilesCache[i];
+			if (currentTileInCache == nullptr)
 				continue;
-			}
 
-			score = abs(m_ADTCache[i]->getIndexX() - m_CurrentTileX) + abs(m_ADTCache[i]->getIndexZ() - m_CurrentTileZ);
+			score = glm::abs(currentTileInCache->getIndexX() - m_CurrentTileX) + glm::abs(currentTileInCache->getIndexZ() - m_CurrentTileZ);
 
 			if (score > maxscore)
 			{
@@ -216,25 +217,27 @@ std::shared_ptr<CMapTile> CMap::LoadTile(int32 x, int32 z)
 		}
 
 		// maxidx is the winner (loser)
-		RemoveChild(m_ADTCache[maxidx]);
-		GetBaseManager().GetManager<ILoader>()->AddToDeleteQueue(m_ADTCache[maxidx]);
-		firstnull = maxidx;
+		RemoveChild(m_MapTilesCache[maxidx]);
+		GetBaseManager().GetManager<ILoader>()->AddToDeleteQueue(m_MapTilesCache[maxidx]);
+		freePositionInTileCache = maxidx;
 	}
 
 	// Create new tile
-	m_ADTCache[firstnull] = CreateSceneNode<CMapTile>(*this, x, z);
-	GetBaseManager().GetManager<ILoader>()->AddToLoadQueue(m_ADTCache[firstnull]);
+	auto newTile = CreateSceneNode<CMapTile>(*this, x, z);
+	GetBaseManager().GetManager<ILoader>()->AddToLoadQueue(newTile);
 
-	return m_ADTCache[firstnull];
+	m_MapTilesCache[freePositionInTileCache] = newTile;
+
+	return newTile;
 }
 
 void CMap::ClearCache()
 {
-	for (int i = 0; i < C_TilesCacheSize; i++)
+	for (uint32 i = 0; i < C_TilesCacheSize; i++)
 	{
-		if (m_ADTCache[i] != nullptr && !IsTileInCurrent(*m_ADTCache[i]))
+		if (m_MapTilesCache[i] != nullptr && false == IsTileInCurrent(*m_MapTilesCache[i]))
 		{
-			m_ADTCache[i] = 0;
+			m_MapTilesCache[i] = 0;
 		}
 	}
 }
@@ -265,7 +268,7 @@ uint32 CMap::GetAreaID(const ICameraComponent3D* camera)
 	int32 indexX = tileZ - m_CurrentTileZ + static_cast<int32>(C_RenderedTiles / 2);
 	int32 indexY = tileX - m_CurrentTileX + static_cast<int32>(C_RenderedTiles / 2);
 
-	auto curTile = m_Current[indexX][indexY];
+	auto curTile = m_MapTilesCurrent[indexX][indexY];
 	if (curTile == nullptr)
 	{
 		return UINT32_MAX;
@@ -283,7 +286,7 @@ uint32 CMap::GetAreaID(const ICameraComponent3D* camera)
 bool CMap::getTileIsCurrent(int x, int z) const
 {
     int midTile = static_cast<uint32>(C_RenderedTiles / 2);
-    auto currentTile = m_Current[midTile][midTile];
+    auto currentTile = m_MapTilesCurrent[midTile][midTile];
     if (currentTile == nullptr)
     {
         return false;
@@ -304,8 +307,8 @@ bool CMap::IsTileInCurrent(const CMapTile& _mapTile)
 {
 	for (int i = 0; i < C_RenderedTiles; i++)
 		for (int j = 0; j < C_RenderedTiles; j++)
-			if (m_Current[i][j] != nullptr)
-				if (m_Current[i][j].get() == &_mapTile)
+			if (m_MapTilesCurrent[i][j] != nullptr)
+				if (m_MapTilesCurrent[i][j].get() == &_mapTile)
 					return true;
 	return false;
 }

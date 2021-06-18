@@ -1,14 +1,14 @@
 #pragma once
 
 // Tiles
-const uint32 C_TilesInMap = 64;
+const uint32 C_TilesInMap = 64u;
 
 #ifdef _DEBUG
-const int32 C_RenderedTiles = 1;
-const int32 C_TilesCacheSize = ((C_RenderedTiles + 1) * (C_RenderedTiles + 1));
+const uint32 C_RenderedTiles = 1u;
+const uint32 C_TilesCacheSize = ((C_RenderedTiles + 1u) * (C_RenderedTiles + 1u));
 #else
-const int32 C_RenderedTiles = 3;
-const int32 C_TilesCacheSize = ((C_RenderedTiles + 1) * (C_RenderedTiles + 1));
+const uint32 C_RenderedTiles = 3u;
+const uint32 C_TilesCacheSize = ((C_RenderedTiles + 1u) * (C_RenderedTiles + 1u));
 #endif
 
 const float C_TileSize = 533.3333333333f;
@@ -27,24 +27,3 @@ const float C_DetailSize = 8.0f;
 // M2 models
 const uint8	cM2Model_TexturesMaxCount = 128;
 const uint8	cM2Model_BonesInfluences = 4;
-
-/*
-
-// Types & Consts
-const ObjectType cSky_NodeType               = 1000;
-
-const ObjectType cMap_NodeType               = 1010;
-const ObjectType cMapLowResTile_NodeType     = 1011;
-const ObjectType cMapTile_NodeType           = 1012;
-const ObjectType cMapChunk_NodeType          = 1013;
-
-const ObjectType cLiquid_NodeType            = 1020;
-const ObjectType cLiquid_MapChnuk_NodeType   = 1021;
-const ObjectType cLiquid_WMOGroup_NodeType   = 1022;
-
-const ObjectType cWMO_NodeType               = 1030;
-const ObjectType cWMOGroup_NodeType          = 1031;
-
-const ObjectType cM2_NodeType                = 1040;
-
-*/

@@ -28,8 +28,9 @@ public:
 #ifdef USE_M2_MODELS
 	std::shared_ptr<CM2> LoadM2(IRenderDevice& RenderDevice, const std::string& Filename, bool ImmediateLoad = false) override final;
 #endif
+#ifdef USE_WMO_MODELS
 	std::shared_ptr<CWMO> LoadWMO(IRenderDevice& RenderDevice, const std::string& Filename, bool ImmediateLoad = false) override final;
-	
+#endif
 	void                         InitEGxBlend(IRenderDevice& RenderDevice) override final;
 	std::shared_ptr<IBlendState> GetEGxBlend(uint32 Index) const override final;
 
@@ -50,9 +51,9 @@ private:
 	std::mutex m_M2Lock;
 	std::unordered_map<std::string, std::weak_ptr<CM2>> m_M2ObjectsWPtrs;
 #endif
-
+#ifdef USE_WMO_MODELS
 	std::mutex m_WMOLock;
 	std::unordered_map<std::string, std::weak_ptr<CWMO>> m_WMOObjectsWPtrs;
-
+#endif
 	std::map<uint32, std::shared_ptr<IBlendState>> m_EGxBlendStates;
 };

@@ -152,7 +152,7 @@ void WoWWorld::S_SMSG_MONSTER_MOVE(CServerPacket & Buffer)
 	if (objIterator != m_Objects.end())
 	{
 		auto objAsUnit = std::dynamic_pointer_cast<WoWUnit>(objIterator->second);
-		objAsUnit->SetPosition(fromGameToReal(glm::vec3(positionX, positionY, positionZ)));
+		objAsUnit->LocalSetPosition(fromGameToReal(glm::vec3(positionX, positionY, positionZ)));
 	}
 
 	if (isStopped == 0)

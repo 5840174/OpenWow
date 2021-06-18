@@ -2,24 +2,24 @@
 
 // Include
 #include "Map.h"
-#include "WDL_Node_Material.h"
+#include "MapWDLTileMaterial.h"
 
 // General
 #include "MapWDL.h"
 
 // Additional
+#include "Map/MapWDLTileModel.h"
 #include "WoWChunkReader.h"
 
 CMapWDL::CMapWDL(const IBaseManager& BaseManager, IRenderDevice& RenderDevice, const CMap& Map)
 	: m_Minimap(nullptr)
 	, m_BaseManager(BaseManager)
 	, m_RenderDevice(RenderDevice)
-	, m_MapController(Map)
+	, m_Map(Map)
 {}
 
 CMapWDL::~CMapWDL()
-{
-}
+{}
 
 //--
 
@@ -28,7 +28,7 @@ CMapWDL::~CMapWDL()
 //
 void CMapWDL::CreateInsances(const std::shared_ptr<ISceneNode>& Parent) const
 {
-	std::string fileName = m_MapController.GetMapFolder() + ".wdl";
+	std::string fileName = m_Map.GetMapFolder() + ".wdl";
 
 	// Low-resolution tiles
 	std::shared_ptr<IFile> f = m_BaseManager.GetManager<IFilesManager>()->Open(fileName);
@@ -39,7 +39,7 @@ void CMapWDL::CreateInsances(const std::shared_ptr<ISceneNode>& Parent) const
 	}
 
 	// Material
-	m_LowResilutionTileMaterial = std::make_shared<WDL_Node_Material>(m_RenderDevice);
+	m_LowResilutionTileMaterial = std::make_shared<CMapWDLTileMaterial>(m_RenderDevice);
 
 	// Heightmap
 	glm::vec3 lowres[17][17];
@@ -97,9 +97,9 @@ void CMapWDL::CreateInsances(const std::shared_ptr<ISceneNode>& Parent) const
 				std::shared_ptr<IBuffer> __vb = m_RenderDevice.GetObjectsFactory().CreateVertexBuffer(vecrtices);
 
 				std::shared_ptr<IGeometry> geometry = m_RenderDevice.GetObjectsFactory().CreateGeometry();
-				geometry->SetVertexBuffer(__vb);		
-				
-				std::shared_ptr<CWDL_LowResTile> lowResTile = std::make_shared<CWDL_LowResTile>(m_RenderDevice, m_MapController, i, j);
+				geometry->SetVertexBuffer(__vb);
+
+				std::shared_ptr<CMapWDLTileModel> lowResTile = std::make_shared<CMapWDLTileModel>(m_RenderDevice, m_Map, i, j);
 				lowResTile->AddConnection(m_LowResilutionTileMaterial, geometry);
 				Parent->GetComponentT<IModelComponent>()->AddModel(lowResTile);
 			}
@@ -130,7 +130,7 @@ void CMapWDL::Load()
 	// Offsets to MARE
 	memset(m_MAREOffsets, 0x00, C_TilesInMap * C_TilesInMap * sizeof(uint32));
 
-	std::shared_ptr<IByteBuffer> bytes = m_BaseManager.GetManager<IFilesManager>()->Open(m_MapController.GetMapFolder() + ".wdl");
+	std::shared_ptr<IByteBuffer> bytes = m_BaseManager.GetManager<IFilesManager>()->Open(m_Map.GetMapFolder() + ".wdl");
 
 	WoWChunkReader reader(m_BaseManager, bytes);
 
@@ -203,7 +203,7 @@ void CMapWDL::Load()
 						if (hval < 0)
 						{
 							// water = blue
-							if (hval < -511) 
+							if (hval < -511)
 								hval = -511;
 							hval /= -2;
 							r = g = 0;

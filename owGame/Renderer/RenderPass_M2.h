@@ -30,7 +30,7 @@ public:
 	virtual ~CRenderPass_M2();
 
 	// CRenderPass_M2
-	void DoRenderM2Model(const CM2_Base_Instance* M2SceneNode, const CM2_Skin* M2Model, ERenderPassM2DrawMode DrawMode, UINT InstancesCnt = UINT32_MAX);
+	void DoRenderM2Model(const CM2_Base_Instance* M2SceneNode, const CM2_Skin* M2Model, UINT InstancesCnt = UINT32_MAX);
 
 	// IRenderPassPipelined
 	virtual std::shared_ptr<IRenderPassPipelined> ConfigurePipeline(std::shared_ptr<IRenderTarget> RenderTarget) override;

@@ -183,20 +183,24 @@ void CWorldObjectCreator::ClearCache()
 #ifdef USE_M2_MODELS
 std::shared_ptr<CM2> CWorldObjectCreator::LoadM2(IRenderDevice& RenderDevice, const std::string& Filename, bool ImmediateLoad)
 {
-	std::lock_guard<std::mutex> lock(m_M2Lock);
-
-	const auto& M2ObjectsWPtrsIt = m_M2ObjectsWPtrs.find(Filename);
-	
-	// Already exists
-	if (M2ObjectsWPtrsIt != m_M2ObjectsWPtrs.end())
 	{
-		if (auto M2ObjectsPtr = M2ObjectsWPtrsIt->second.lock())
+		std::lock_guard<std::mutex> lock(m_M2Lock);
+
+		const auto& M2ObjectsWPtrsIt = m_M2ObjectsWPtrs.find(Filename);
+		if (M2ObjectsWPtrsIt != m_M2ObjectsWPtrs.end())
 		{
-			return M2ObjectsPtr;
-		}
-		else
-		{
-			m_M2ObjectsWPtrs.erase(M2ObjectsWPtrsIt);
+			if (M2ObjectsWPtrsIt->second.expired())
+			{
+				m_M2ObjectsWPtrs.erase(M2ObjectsWPtrsIt);
+			}
+			else if (auto M2ObjectsPtr = M2ObjectsWPtrsIt->second.lock())
+			{
+				return M2ObjectsPtr;
+			}
+			else
+			{
+				throw std::exception("Unknown issue.");
+			}
 		}
 	}
 
@@ -205,18 +209,12 @@ std::shared_ptr<CM2> CWorldObjectCreator::LoadM2(IRenderDevice& RenderDevice, co
 	if (newName.find("orgrimmarsmokeemitter.mdx") != -1 || newName.find("orgrimmarfloatingembers.mdx") != -1)
 		return nullptr;
 
-	std::shared_ptr<CM2> m2Object;
-	try
-	{
-		m2Object = std::make_shared<CM2>(m_BaseManager, RenderDevice, Filename);
-	}
-	catch (const CException& e)
-	{
-		Log::Error("CWorldObjectCreator: Error while creating M2 model: '%s'.", e.Message().c_str());
-		return nullptr;
-	}
+	std::shared_ptr<CM2> m2Object = std::make_shared<CM2>(m_BaseManager, RenderDevice, Filename);
 
-	m_M2ObjectsWPtrs[Filename] = m2Object;
+	{
+		std::lock_guard<std::mutex> lock(m_M2Lock);
+		m_M2ObjectsWPtrs[Filename] = m2Object;
+	}
 
 	if (ImmediateLoad)
 	{
@@ -234,26 +232,34 @@ std::shared_ptr<CM2> CWorldObjectCreator::LoadM2(IRenderDevice& RenderDevice, co
 
 std::shared_ptr<CWMO> CWorldObjectCreator::LoadWMO(IRenderDevice& RenderDevice, const std::string& Filename, bool ImmediateLoad)
 {
-	std::lock_guard<std::mutex> lock(m_WMOLock);
-
-	const auto& WMOObjectsWPtrsIt = m_WMOObjectsWPtrs.find(Filename);
-
-	// Already exists
-	if (WMOObjectsWPtrsIt != m_WMOObjectsWPtrs.end())
 	{
-		if (auto WMOObjectsPtr = WMOObjectsWPtrsIt->second.lock())
+		std::lock_guard<std::mutex> lock(m_WMOLock);
+
+		const auto& WMOObjectsWPtrsIt = m_WMOObjectsWPtrs.find(Filename);
+		if (WMOObjectsWPtrsIt != m_WMOObjectsWPtrs.end())
 		{
-			return WMOObjectsPtr;
-		}
-		else
-		{
-			m_WMOObjectsWPtrs.erase(WMOObjectsWPtrsIt);
+			if (WMOObjectsWPtrsIt->second.expired())
+			{
+				m_WMOObjectsWPtrs.erase(WMOObjectsWPtrsIt);
+			}
+			else if (auto WMOObjectsPtr = WMOObjectsWPtrsIt->second.lock())
+			{
+				return WMOObjectsPtr;
+			}
+			else
+			{
+				throw std::exception("Unknown issue.");
+			}
 		}
 	}
 
 	std::shared_ptr<CWMO> wmoObject = std::make_shared<CWMO>(m_BaseManager, RenderDevice, Filename);
-	m_WMOObjectsWPtrs.insert(std::make_pair(Filename, wmoObject));
-	
+
+	{
+		std::lock_guard<std::mutex> lock(m_WMOLock);
+		m_WMOObjectsWPtrs.insert(std::make_pair(Filename, wmoObject));
+	}
+
 	if (ImmediateLoad)
 	{
 		wmoObject->Load();

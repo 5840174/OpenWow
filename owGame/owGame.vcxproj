@@ -109,8 +109,8 @@
     <ClCompile Include="Map\MapWDT.cpp" />
     <ClCompile Include="Map\Map_Shared.cpp" />
     <ClCompile Include="Map\MinimapProvider.cpp" />
-    <ClCompile Include="Map\WDL_LowResTile.cpp" />
-    <ClCompile Include="Map\WDL_Node_Material.cpp" />
+    <ClCompile Include="Map\MapWDLTileModel.cpp" />
+    <ClCompile Include="Map\MapWDLTileMaterial.cpp" />
     <ClCompile Include="owGame.cpp" />
     <ClCompile Include="Renderer\RendererWoW.cpp" />
     <ClCompile Include="Renderer\RenderPass_Liquid.cpp" />
@@ -301,8 +301,8 @@
     <ClInclude Include="Map\Map_Headers.h" />
     <ClInclude Include="Map\Map_Shared.h" />
     <ClInclude Include="Map\MinimapProvider.h" />
-    <ClInclude Include="Map\WDL_LowResTile.h" />
-    <ClInclude Include="Map\WDL_Node_Material.h" />
+    <ClInclude Include="Map\MapWDLTileModel.h" />
+    <ClInclude Include="Map\MapWDLTileMaterial.h" />
     <ClInclude Include="Renderer\RendererWoW.h" />
     <ClInclude Include="Renderer\RenderPass_Liquid.h" />
     <ClInclude Include="Renderer\RenderPass_M2.h" />

@@ -9,11 +9,15 @@ CMapWMOInstance::CMapWMOInstance(IScene& Scene, const std::shared_ptr<CWMO>& WMO
 	: CWMO_Base_Instance(Scene, WMOObject)
 	, m_PlacementInfo(_placementInfo)
 {
+	SetName("CMapWMOInstance: " + WMOObject->GetFilename());
 }
 
 CMapWMOInstance::~CMapWMOInstance()
 {
+	//Log::Info("CMapWMOInstance: '%s' deleted.", GetName().c_str());
 }
+
+
 
 //
 // CWMO_Base_Instance
@@ -33,7 +37,7 @@ void CMapWMOInstance::Initialize()
 	uint16 doodadSetIndex = m_PlacementInfo.doodadSetIndex;
 	//m_DoodadSetInfo = _wmoObject->m_DoodadsSetInfos[doodadSetIndex];
 
-	SetPosition(m_PlacementInfo.position);
+	SetLocalPosition(m_PlacementInfo.position);
 	SetLocalRotationEuler(m_PlacementInfo.rotation);
 }
 

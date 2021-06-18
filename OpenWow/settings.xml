@@ -1,0 +1,13 @@
+<?xml version="1.0" ?>
+<xml>
+	<Settings>
+		<Video>
+			<WindowSize>1280.000, 1024.000</WindowSize>
+			<VSyncEnabled>false</VSyncEnabled>
+			<MultisampleEnabled>false</MultisampleEnabled>
+		</Video>
+		<FileSystem>
+			<UserdataPath>D:/ZenonEngine_userdata/</UserdataPath>
+		</FileSystem>
+	</Settings>
+</xml>

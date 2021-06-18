@@ -79,7 +79,7 @@ void CSceneWoW::Initialize()
 
 	const float x = 40;
 	const float y = 30;
-	glm::vec3 position = glm::vec3(19700, 150, 17500);//glm::vec3(x * C_TileSize + C_TileSize / 2.0f, 100.0f, y * C_TileSize + C_TileSize / 2.0f);
+	glm::vec3 position = glm::vec3(20700, 150, 11800);//glm::vec3(x * C_TileSize + C_TileSize / 2.0f, 100.0f, y * C_TileSize + C_TileSize / 2.0f);
 
 	map->MapPreLoad(GetBaseManager().GetManager<CDBCStorage>()->DBC_Map()[1]);
 	map->MapLoad();
@@ -97,6 +97,9 @@ void CSceneWoW::Finalize()
 
 void CSceneWoW::OnUpdate(UpdateEventArgs & e)
 {
+	CMapWMOInstance::reset();
+	CMapM2Instance::reset();
+
 	__super::OnUpdate(e);
 
 	skyManager->Update(e);

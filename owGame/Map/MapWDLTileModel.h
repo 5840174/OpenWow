@@ -4,17 +4,17 @@
 class CMap;
 // FORWARD END
 
-class CWDL_LowResTile 
+class CMapWDLTileModel 
 	: public ModelProxie
 {
 public:
-	CWDL_LowResTile(IRenderDevice& RenderDevice, const CMap& Map, int IndexX, int IndexZ);
-	virtual ~CWDL_LowResTile();
+	CMapWDLTileModel(IRenderDevice& RenderDevice, const CMap& Map, int IndexX, int IndexZ);
+	virtual ~CMapWDLTileModel();
 
 	bool IsNeedRender() const;
 
 private:
-	const CMap& m_MapController;
+	const CMap& m_Map;
 	const int m_IndexX;
 	const int m_IndexZ;
 };
