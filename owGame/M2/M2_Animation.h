@@ -1,7 +1,5 @@
 #pragma once
 
-#ifdef USE_M2_MODELS
-
 #include "M2_Types.h"
 
 class CM2_Animation
@@ -46,5 +44,3 @@ private:
 	uint32					m_Duration;
 #endif
 };
-
-#endif

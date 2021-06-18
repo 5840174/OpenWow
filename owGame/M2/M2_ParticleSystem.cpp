@@ -1,7 +1,5 @@
 #include "stdafx.h"
 
-#ifdef USE_M2_MODELS
-
 // Inlcudes
 #include "M2.h"
 #include "M2_Base_Instance.h"
@@ -14,11 +12,10 @@ namespace
 {
 	glm::mat4 CalcSpreadMatrix(float Spread1, float Spread2, float w, float l)
 	{
-		Random random(time(0));
 		float a[2], c[2], s[2];
 
-		a[0] = random.Range(-Spread1, Spread1) / 2.0f;
-		a[1] = random.Range(-Spread2, Spread2) / 2.0f;
+		a[0] = Random::Range(-Spread1, Spread1) / 2.0f;
+		a[1] = Random::Range(-Spread2, Spread2) / 2.0f;
 
 		for (size_t i = 0; i < 2; i++)
 		{
@@ -64,7 +61,6 @@ namespace
 SM2_ParticleSystem_Wrapper::SM2_ParticleSystem_Wrapper(const CM2& M2Object, const std::shared_ptr<IFile>& File, const SM2_Particle& M2Particle)
 	: m_M2Object(M2Object)
 	, m_M2Particle(M2Particle)
-	, m_Random(time(0))
 {
 	m_Flags = M2Particle.flags;
 	m_Position = Fix_XZmY(M2Particle.Position);
@@ -149,7 +145,7 @@ void SM2_ParticleSystem_Wrapper::update(const CM2_Base_Instance* M2Instance, con
 	for (size_t i = 0; i < MAX_PARTICLES; i++)
 	{
 		CM2_ParticleObject& p = Particles[i];
-		if (!p.Active)
+		if (false == p.Active)
 			continue;
 
 		p.speed += (p.down * float(grav * deltaTime)) - (p.dir * float(deaccel * deltaTime));
@@ -322,7 +318,7 @@ void SM2_ParticleSystem_Wrapper::CreateAndDeleteParticles(const CM2_Base_Instanc
 
 CM2_ParticleObject SM2_ParticleSystem_Wrapper::DefaultGenerator_New(const CM2_Base_Instance * M2Instance, float w, float l, float spd, float var, float lifespan, float spr, float spr2) const
 {
-	std::shared_ptr<ISkeletonComponentBone3D> bone;
+	std::shared_ptr<CM2SkeletonBone3D> bone;
 	if (GetBone() != -1)
 		bone = M2Instance->getSkeletonComponent()->GetBone(GetBone());
 
@@ -336,7 +332,7 @@ CM2_ParticleObject SM2_ParticleSystem_Wrapper::DefaultGenerator_New(const CM2_Ba
 		p.dir = bone->GetRotateMatrix() * glm::vec4(p.dir, 0.0f);
 
 	p.down = glm::vec3(0, -1.0f, 0);
-	p.speed = glm::normalize(p.dir) * spd * (1.0f + m_Random.Range(-var, var));
+	p.speed = glm::normalize(p.dir) * spd * (1.0f + Random::Range(-var, var));
 
 	/*if (m_ParticleSystem->GetFlags().DONOTBILLBOARD)
 	{
@@ -349,13 +345,13 @@ CM2_ParticleObject SM2_ParticleSystem_Wrapper::DefaultGenerator_New(const CM2_Ba
 	p.currentTime = 0;
 	p.maxTime = lifespan;
 	p.origin = p.pos;
-	p.tile = m_Random.Range(0, rows * cols - 1);
+	p.tile = Random::Range(0, rows * cols - 1);
 	return p;
 }
 
 CM2_ParticleObject SM2_ParticleSystem_Wrapper::PlaneGenerator_New(const CM2_Base_Instance * M2Instance, float w, float l, float spd, float var, float lifespan, float spr, float spr2) const
 {
-	std::shared_ptr<ISkeletonComponentBone3D> bone;
+	std::shared_ptr<CM2SkeletonBone3D> bone;
 	if (GetBone() != -1)
 		bone = M2Instance->getSkeletonComponent()->GetBone(GetBone());
 
@@ -364,7 +360,7 @@ CM2_ParticleObject SM2_ParticleSystem_Wrapper::PlaneGenerator_New(const CM2_Base
 	//glm::mat4 SpreadMat = CalcSpreadMatrix(spr, spr, 1.0f, 1.0f);
 	//glm::mat4 mrot = bone->GetRotateMatrix() * SpreadMat;
 
-	p.pos = GetPosition() + glm::vec3(m_Random.Range(-l, l), 0, m_Random.Range(-w, w));
+	p.pos = GetPosition() + glm::vec3(Random::Range(-l, l), 0, Random::Range(-w, w));
 	if (bone)
 		p.pos = bone->GetMatrix() * glm::vec4(p.pos, 1.0f);
 
@@ -373,7 +369,7 @@ CM2_ParticleObject SM2_ParticleSystem_Wrapper::PlaneGenerator_New(const CM2_Base
 		p.dir = bone->GetRotateMatrix() * glm::vec4(p.dir, 0.0f);
 
 	p.down = glm::vec3(0, -1.0f, 0);
-	p.speed = glm::normalize(p.dir) * spd * (1.0f + m_Random.Range(-var, var));
+	p.speed = glm::normalize(p.dir) * spd * (1.0f + Random::Range(-var, var));
 
 	/*if (m_ParticleSystem->GetFlags().DONOTBILLBOARD)
 	{
@@ -386,20 +382,20 @@ CM2_ParticleObject SM2_ParticleSystem_Wrapper::PlaneGenerator_New(const CM2_Base
 	p.currentTime = 0;
 	p.maxTime = lifespan;
 	p.origin = p.pos;
-	p.tile = m_Random.Range(0, rows * cols - 1);
+	p.tile = Random::Range(0, rows * cols - 1);
 	return p;
 }
 
 CM2_ParticleObject SM2_ParticleSystem_Wrapper::SphereGenerator_New(const CM2_Base_Instance * M2Instance, float w, float l, float spd, float var, float lifespan, float spr, float spr2) const
 {
-	std::shared_ptr<ISkeletonComponentBone3D> bone;
+	std::shared_ptr<CM2SkeletonBone3D> bone;
 	if (GetBone() != -1)
 		bone = M2Instance->getSkeletonComponent()->GetBone(GetBone());
 
 	CM2_ParticleObject p;
 	glm::vec3 dir;
 
-	float radius = m_Random.Range(0.0f, 1.0f);
+	float radius = Random::Range(0.0f, 1.0f);
 
 	//Spread Calculation
 	glm::mat4 SpreadMat = CalcSpreadMatrix(spr * 2, spr2 * 2, w, l);
@@ -435,13 +431,13 @@ CM2_ParticleObject SM2_ParticleSystem_Wrapper::SphereGenerator_New(const CM2_Bas
 	else
 		dir = glm::normalize(bdir);
 
-	p.speed = glm::normalize(dir) * spd * (1.0f + m_Random.Range(-var, var));   // ?
+	p.speed = glm::normalize(dir) * spd * (1.0f + Random::Range(-var, var));   // ?
 	p.dir = glm::normalize(dir);//mrot * vec3(0, 1.0f,0);
 	p.down = glm::vec3(0, -1.0f, 0);
 	p.currentTime = 0;
 	p.maxTime = lifespan;
 	p.origin = p.pos;
-	p.tile = glm::round(m_Random.Range(0, rows * cols - 1));
+	p.tile = glm::round(Random::Range(0, rows * cols - 1));
 	return p;
 }
 
@@ -610,5 +606,3 @@ void SM2_ParticleSystem_Wrapper::initTile(glm::vec2 * tc, int num)
 		tc[(i + 4 - order) & 3] = otc[i];
 	}
 }
-
-#endif

@@ -1,7 +1,5 @@
 #include "stdafx.h"
 
-#ifdef USE_M2_MODELS
-
 // Include
 #include "M2.h"
 #include "M2_Base_Instance.h"
@@ -95,7 +93,7 @@ CM2_SkinSection::CM2_SkinSection(IRenderDevice& RenderDevice, const CM2& M2Model
 	if (m_SkinSectionProto.boneCount > 0)
 	{
 		m_BonesList.resize(m_SkinSectionProto.boneCount);
-		m_StructuredBuffer = m_RenderDevice.GetObjectsFactory().CreateStructuredBuffer(m_BonesList, CPUAccess::Write);
+		m_StructuredBuffer = m_RenderDevice.GetObjectsFactory().CreateStructuredBuffer(m_BonesList, EAccess::CPUWrite);
 	}
 }
 
@@ -152,5 +150,3 @@ const std::shared_ptr<IStructuredBuffer>& CM2_SkinSection::GetGeometryBonesBuffe
 {
 	return m_StructuredBuffer;
 }
-
-#endif

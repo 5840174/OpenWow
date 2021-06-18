@@ -27,23 +27,16 @@ CMapWDT::~CMapWDT()
 
 void CMapWDT::CreateInsances(const std::shared_ptr<ISceneNode>& Parent) const
 {
-	Log::Info("MapWDT: Global WMO exists [%s].", !m_GlobalWMOName.empty() ? "true" : "false");
+	Log::Info("MapWDT: Global WMO exists [%s].", false == m_GlobalWMOName.empty() ? "true" : "false");
 
-	if (!m_GlobalWMOName.empty())
+	if (false == m_GlobalWMOName.empty())
 	{
 #ifdef USE_WMO_MODELS
 		std::shared_ptr<CWMO> wmo = m_BaseManager.GetManager<IWoWObjectsCreator>()->LoadWMO(m_RenderDevice, m_GlobalWMOName, true);
 		if (wmo)
 		{
-			auto inst = MakeShared(CMapWMOInstance, Parent->GetScene(), wmo, m_GlobalWMOPlacementInfo);
-			inst->RegisterComponents();
-			inst->Initialize();
-			Parent->AddChild(inst);
-			//auto inst = Parent->CreateSceneNode<CMapWMOInstance>(wmo, m_GlobalWMOPlacementInfo);
-
-			inst->SetState(ILoadable::ELoadableState::Loaded);
-			inst->Load();
-			//m_BaseManager.GetManager<ILoader>()->AddToLoadQueue(inst);
+			auto inst = Parent->CreateSceneNode<CMapWMOInstance>(wmo, m_GlobalWMOPlacementInfo);
+			m_BaseManager.GetManager<ILoader>()->AddToLoadQueue(inst);
 
 			std::const_pointer_cast<CMapWMOInstance>(m_GlobalWMO) = inst;
 		}
@@ -97,7 +90,6 @@ void CMapWDT::Load()
         buffer->readBytes(&m_GlobalWMOPlacementInfo, sizeof(ADT_MODF));
     }
 #endif
-
 
 	_ASSERT(m_IsTileBased || m_GlobalWMOName.size() > 0);
 }

@@ -1,7 +1,5 @@
 #include "stdafx.h"
 
-#ifdef USE_M2_MODELS
-
 // General
 #include "M2_Part_Material.h"
 
@@ -42,5 +40,3 @@ CM2_Part_Material::CM2_Part_Material(IBaseManager& BaseManager, IRenderDevice& R
 CM2_Part_Material::~CM2_Part_Material()
 {
 }
-
-#endif

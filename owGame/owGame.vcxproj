@@ -69,7 +69,6 @@
     <ClCompile Include="Liquid\LiquidInstance.cpp" />
     <ClCompile Include="Liquid\LiquidLayer.cpp" />
     <ClCompile Include="Liquid\LiquidMaterial.cpp" />
-    <ClCompile Include="Liquid\RenderPass_Liquid.cpp" />
     <ClCompile Include="M2\M2.cpp" />
     <ClCompile Include="M2\M2_Animation.cpp" />
     <ClCompile Include="M2\M2_AnimationSet.cpp" />
@@ -97,8 +96,6 @@
     <ClCompile Include="M2\M2_SkinSection.cpp" />
     <ClCompile Include="M2\M2_Skin_Batch.cpp" />
     <ClCompile Include="M2\M2_ParticleSystem.cpp" />
-    <ClCompile Include="M2\RenderPass_M2.cpp" />
-    <ClCompile Include="M2\RenderPass_M2Instanced.cpp" />
     <ClCompile Include="M2\ShaderResolver.cpp" />
     <ClCompile Include="Map\Instances\MapM2Instance.cpp" />
     <ClCompile Include="Map\Instances\MapWMOInstance.cpp" />
@@ -112,16 +109,21 @@
     <ClCompile Include="Map\MapWDT.cpp" />
     <ClCompile Include="Map\Map_Shared.cpp" />
     <ClCompile Include="Map\MinimapProvider.cpp" />
-    <ClCompile Include="Map\RenderPass_MapChunk.cpp" />
-    <ClCompile Include="Map\RenderPass_MapTile.cpp" />
-    <ClCompile Include="Map\RenderPass_WDL.cpp" />
     <ClCompile Include="Map\WDL_LowResTile.cpp" />
     <ClCompile Include="Map\WDL_Node_Material.cpp" />
     <ClCompile Include="owGame.cpp" />
+    <ClCompile Include="Renderer\RendererWoW.cpp" />
+    <ClCompile Include="Renderer\RenderPass_Liquid.cpp" />
+    <ClCompile Include="Renderer\RenderPass_M2.cpp" />
+    <ClCompile Include="Renderer\RenderPass_M2Instanced.cpp" />
+    <ClCompile Include="Renderer\RenderPass_MapChunk.cpp" />
+    <ClCompile Include="Renderer\RenderPass_MapTile.cpp" />
+    <ClCompile Include="Renderer\RenderPass_Sky.cpp" />
+    <ClCompile Include="Renderer\RenderPass_WDL.cpp" />
+    <ClCompile Include="Renderer\RenderPass_WMO.cpp" />
     <ClCompile Include="Settings\WoWSettingsGroup.cpp" />
     <ClCompile Include="Sky\Environment\DayNightPhase.cpp" />
     <ClCompile Include="Sky\Environment\EnvironmentManager.cpp" />
-    <ClCompile Include="Sky\RenderPass_Sky.cpp" />
     <ClCompile Include="Sky\Sky.cpp" />
     <ClCompile Include="Sky\SkyManager.cpp" />
     <ClCompile Include="Sky\SkyParams.cpp" />
@@ -129,7 +131,6 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
-    <ClCompile Include="WMO\RenderPass_WMO.cpp" />
     <ClCompile Include="WMO\WMO.cpp" />
     <ClCompile Include="WMO\WMO_Base_Instance.cpp" />
     <ClCompile Include="WMO\WMO_Doodad_Instance.cpp" />
@@ -245,13 +246,13 @@
     <ClInclude Include="Formats\ImageBLP.h" />
     <ClInclude Include="Formats\MPQFilesStorage.h" />
     <ClInclude Include="Interfaces\ILiquid.h" />
+    <ClInclude Include="Interfaces\M2Interfaces.h" />
     <ClInclude Include="Interfaces\Managers.h" />
     <ClInclude Include="Interfaces\SkyManager.h" />
     <ClInclude Include="Liquid\Liquid.h" />
     <ClInclude Include="Liquid\LiquidInstance.h" />
     <ClInclude Include="Liquid\LiquidLayer.h" />
     <ClInclude Include="Liquid\LiquidMaterial.h" />
-    <ClInclude Include="Liquid\RenderPass_Liquid.h" />
     <ClInclude Include="M2\M2.h" />
     <ClInclude Include="M2\M2_Animated.h" />
     <ClInclude Include="M2\M2_AnimatedConverters.h" />
@@ -286,8 +287,6 @@
     <ClInclude Include="M2\M2_Types.h" />
     <ClInclude Include="M2\M2_Particle.h" />
     <ClInclude Include="M2\M2_ParticleSystem.h" />
-    <ClInclude Include="M2\RenderPass_M2.h" />
-    <ClInclude Include="M2\RenderPass_M2Instanced.h" />
     <ClInclude Include="M2\ShaderResolver.h" />
     <ClInclude Include="Map\Instances\MapM2Instance.h" />
     <ClInclude Include="Map\Instances\MapWMOInstance.h" />
@@ -302,20 +301,24 @@
     <ClInclude Include="Map\Map_Headers.h" />
     <ClInclude Include="Map\Map_Shared.h" />
     <ClInclude Include="Map\MinimapProvider.h" />
-    <ClInclude Include="Map\RenderPass_MapChunk.h" />
-    <ClInclude Include="Map\RenderPass_MapTile.h" />
-    <ClInclude Include="Map\RenderPass_WDL.h" />
     <ClInclude Include="Map\WDL_LowResTile.h" />
     <ClInclude Include="Map\WDL_Node_Material.h" />
+    <ClInclude Include="Renderer\RendererWoW.h" />
+    <ClInclude Include="Renderer\RenderPass_Liquid.h" />
+    <ClInclude Include="Renderer\RenderPass_M2.h" />
+    <ClInclude Include="Renderer\RenderPass_M2Instanced.h" />
+    <ClInclude Include="Renderer\RenderPass_MapChunk.h" />
+    <ClInclude Include="Renderer\RenderPass_MapTile.h" />
+    <ClInclude Include="Renderer\RenderPass_Sky.h" />
+    <ClInclude Include="Renderer\RenderPass_WDL.h" />
+    <ClInclude Include="Renderer\RenderPass_WMO.h" />
     <ClInclude Include="Settings\WoWSettingsGroup.h" />
     <ClInclude Include="Sky\Environment\DayNightPhase.h" />
     <ClInclude Include="Sky\Environment\EnvironmentManager.h" />
-    <ClInclude Include="Sky\RenderPass_Sky.h" />
     <ClInclude Include="Sky\Sky.h" />
     <ClInclude Include="Sky\SkyManager.h" />
     <ClInclude Include="Sky\SkyParams.h" />
     <ClInclude Include="stdafx.h" />
-    <ClInclude Include="WMO\RenderPass_WMO.h" />
     <ClInclude Include="WMO\WMO.h" />
     <ClInclude Include="WMO\WMO_Base_Instance.h" />
     <ClInclude Include="WMO\WMO_Doodad_Instance.h" />

@@ -13,7 +13,7 @@ class ZN_API Character
 	: public Creature
 {
 public:
-    Character(const std::shared_ptr<CM2>& M2Object);
+    Character(IScene& Scene, const std::shared_ptr<CM2>& M2Object);
     virtual ~Character();
 
     CInet_CharacterTemplate& GetTemplate() { return m_Template; }

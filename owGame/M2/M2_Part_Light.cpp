@@ -1,7 +1,5 @@
 #include "stdafx.h"
 
-#ifdef USE_M2_MODELS
-
 // Include
 #include "M2.h"
 #include "M2_Base_Instance.h"
@@ -29,9 +27,10 @@ SM2_Part_Light_Wrapper::~SM2_Part_Light_Wrapper()
 {
 }
 
-CLight SM2_Part_Light_Wrapper::GetLight(const CM2_Base_Instance * M2Instance, uint32 globalTime) const
+std::shared_ptr<ILight> SM2_Part_Light_Wrapper::GetLight(const CM2_Base_Instance * M2Instance, uint32 globalTime) const
 {
-	CLight lightStruct;
+	std::shared_ptr<CLight> lightStruct = MakeShared(CLight, m_M2Object.GetBaseManager());
+
 	if (m_M2Light.type == SM2_Light::Type::Directional)
 	{
 		// TODO: rotation used world pos of node + rotate_bone * pos
@@ -57,18 +56,18 @@ CLight SM2_Part_Light_Wrapper::GetLight(const CM2_Base_Instance * M2Instance, ui
 		//	ambient.a = ambIntensity.GetValue(animator->getSequenceIndex(), animator->getCurrentTime(), m_M2Object.getSkeleton().getGlobalLoops(), globalTime);
 		
 		if (diffColor.IsUsesBySequence(animator->getSequenceIndex()))
-			lightStruct.Color.rgb = diffColor.GetValue(animator->getSequenceIndex(), animator->getCurrentTime(), m_M2Object.getSkeleton().getGlobalLoops(), globalTime);
+			lightStruct->SetColor(ColorRGB(diffColor.GetValue(animator->getSequenceIndex(), animator->getCurrentTime(), m_M2Object.getSkeleton().getGlobalLoops(), globalTime)));
+		
 		if (diffIntensity.IsUsesBySequence(animator->getSequenceIndex()))
-			lightStruct.Intensity = diffIntensity.GetValue(animator->getSequenceIndex(), animator->getCurrentTime(), m_M2Object.getSkeleton().getGlobalLoops(), globalTime);
+			lightStruct->SetIntensity(diffIntensity.GetValue(animator->getSequenceIndex(), animator->getCurrentTime(), m_M2Object.getSkeleton().getGlobalLoops(), globalTime));
 
 		if (attenuation_start.IsUsesBySequence(animator->getSequenceIndex()))
 			attenStart = attenuation_start.GetValue(animator->getSequenceIndex(), animator->getCurrentTime(), m_M2Object.getSkeleton().getGlobalLoops(), globalTime);
 		if (attenuation_end.IsUsesBySequence(animator->getSequenceIndex()))
 			attenEnd = attenuation_end.GetValue(animator->getSequenceIndex(), animator->getCurrentTime(), m_M2Object.getSkeleton().getGlobalLoops(), globalTime);
-		lightStruct.Range = attenEnd;
+
+		lightStruct->SetIntensity(attenEnd);
 	}
 
 	return lightStruct;
 }
-
-#endif

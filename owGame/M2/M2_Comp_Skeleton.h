@@ -1,7 +1,5 @@
 #pragma once
 
-#ifdef USE_M2_MODELS
-
 // M2
 #include "M2_Headers.h"
 
@@ -105,5 +103,3 @@ private:
 private:
 	const CM2& m_M2Object;
 };
-
-#endif

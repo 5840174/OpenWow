@@ -28,7 +28,18 @@
 /**
   * Enable or disable M2 models support
 */
-//#define USE_M2_MODELS
+#define USE_M2_MODELS
+
+
+/**
+  * Enable or disable M2 models support
+*/
+//#define USE_M2_PARTICLES
+
+/**
+  * Enable or disable M2 models support
+*/
+//#define USE_M2_RIBBONS
 
 
 

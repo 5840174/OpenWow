@@ -1,7 +1,5 @@
 #pragma once
 
-#ifdef USE_M2_MODELS
-
 struct CM2_ParticleObject
 {
 	CM2_ParticleObject()
@@ -20,5 +18,3 @@ struct CM2_ParticleObject
 	glm::vec4 color;
 	int tile;
 };
-
-#endif

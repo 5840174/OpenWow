@@ -1,7 +1,5 @@
 #include "stdafx.h"
 
-#ifdef USE_M2_MODELS
-
 // Include
 #include "M2.h"
 #include "M2_Part_Bone.h"
@@ -236,5 +234,3 @@ void CM2_RibbonEmitters::Render(const glm::mat4& _world)
 	}
 	pass->Unbind();*/
 }
-
-#endif

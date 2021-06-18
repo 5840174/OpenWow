@@ -10,17 +10,13 @@
 // Additional
 #include "WMO_Base_Instance.h"
 
-CWMO_Doodad_Instance::CWMO_Doodad_Instance(const std::shared_ptr<CM2>& M2Object, uint32 _index, const SWMO_Doodad_PlacementInfo & _placement)
-	: CM2_Base_Instance(M2Object)
+CWMO_Doodad_Instance::CWMO_Doodad_Instance(IScene& Scene, const std::shared_ptr<CM2>& M2Object, uint32 _index, const SWMO_Doodad_PlacementInfo & _placement)
+	: CM2_Base_Instance(Scene, M2Object)
 	, m_Index(_index)
+	, m_Placement(_placement)
 	, m_PortalVisibilityState(true)
 {
-	// CTransformComponent
-	{
-		SetPosition(Fix_XZmY(_placement.position));
-		SetRotationQuaternion(glm::quat(_placement.orientation.w, -_placement.orientation.z, _placement.orientation.x, _placement.orientation.y));
-		SetScale(glm::vec3(_placement.scale, -_placement.scale, -_placement.scale));
-	}
+	
 }
 
 CWMO_Doodad_Instance::~CWMO_Doodad_Instance()
@@ -44,12 +40,18 @@ BoundingBox CWMO_Doodad_Instance::GetBoundingBox() const
 void CWMO_Doodad_Instance::Initialize()
 {
 	__super::Initialize();
+
+	// CTransformComponent
+	{
+		SetLocalPosition(Fix_XZmY(m_Placement.position));
+		SetLocalRotationQuaternion(glm::quat(m_Placement.orientation.w, -m_Placement.orientation.z, m_Placement.orientation.x, m_Placement.orientation.y));
+		SetLocalScale(glm::vec3(m_Placement.scale, -m_Placement.scale, -m_Placement.scale));
+	}
 }
 
 void CWMO_Doodad_Instance::Accept(IVisitor* visitor)
 {
-	auto parentOfParent = std::dynamic_pointer_cast<CWMO_Base_Instance>(GetParent().lock()->GetParent().lock());
-
+	auto parentOfParent = std::dynamic_pointer_cast<CWMO_Base_Instance>(GetParent()->GetParent());
 	if (parentOfParent->IsDoodadInSet(m_Index))
 	{
 		if (m_PortalVisibilityState)

@@ -1,4 +1,4 @@
-#include "IDB_SHADER_COMMON_INCLUDE"
+#include "CommonInclude.hlsl"
 
 struct M2PerObject
 {
@@ -125,7 +125,7 @@ VertexShaderOutput VS_main_Inst(VertexShaderInput IN, uint InstanceID : SV_Insta
 }
 
 
-DefferedRenderPSOut PS_main(VertexShaderOutput IN) : SV_TARGET
+float4 PS_main(VertexShaderOutput IN) : SV_TARGET
 {
 	// Todo: hack!
 	if (gTextureWeight == 0.0f || gColor.a == 0.0f)
@@ -166,11 +166,13 @@ DefferedRenderPSOut PS_main(VertexShaderOutput IN) : SV_TARGET
 
 	resultColor = MixColorAndTexture(gBlendMode, colorAndAlpha, resultColor);
 	
-	DefferedRenderPSOut OUT;
-	OUT.Diffuse = resultColor;
-	OUT.Specular = float4(0.5f, 0.5f, 0.5f, 1.0f);
-	OUT.NormalWS = float4(IN.normal, 0.0f);
-	return OUT;
+	return resultColor;
+	
+	//DefferedRenderPSOut OUT;
+	//OUT.Diffuse = resultColor;
+	//OUT.Specular = float4(0.5f, 0.5f, 0.5f, 1.0f);
+	//OUT.NormalWS = float4(IN.normal, 0.0f);
+	//return OUT;
 }
 
 

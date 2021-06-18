@@ -286,41 +286,27 @@ bool CMapTile::Load()
 	}
 #endif
 
-	//-- Load Chunks ---------------------------------------------------------------------
+	SetState(ILoadable::ELoadableState::Loaded);
 
+	//-- Load Chunks ---------------------------------------------------------------------
 	for (uint32_t i = 0; i < C_ChunksInTileGlobal; i++)
 	{
-		auto chunk = MakeShared(CMapChunk, GetScene(), m_RenderDevice, m_Map, std::dynamic_pointer_cast<CMapTile>(shared_from_this()), chunks[i], f);
-		chunk->RegisterComponents();
-		chunk->Initialize();
-		AddChild(chunk);
-		//auto chunk = GetScene().CreateSceneNode<CMapChunk>(m_RenderDevice, m_Map, std::dynamic_pointer_cast<CMapTile>(shared_from_this()), chunks[i], f);
-
-		chunk->SetState(ILoadable::ELoadableState::Loaded);
-		chunk->Load();
-		//GetBaseManager().GetManager<ILoader>()->AddToLoadQueue(chunk);
+		auto chunk = CreateSceneNode<CMapChunk>(m_RenderDevice, m_Map, std::dynamic_pointer_cast<CMapTile>(shared_from_this()), chunks[i], f);
+		GetBaseManager().GetManager<ILoader>()->AddToLoadQueue(chunk);
 
 		m_Chunks.push_back(chunk.get());
 	}
 
 
-#ifdef USE_WMO_MODELS
 	//-- WMOs --------------------------------------------------------------------------
-
+#ifdef USE_WMO_MODELS
 	for (const auto& it : m_WMOsPlacementInfo)
 	{
 		std::shared_ptr<CWMO> wmo = m_BaseManager.GetManager<IWoWObjectsCreator>()->LoadWMO(m_RenderDevice, m_WMOsNames[it.nameIndex], true);
 		if (wmo)
 		{
-			auto inst = MakeShared(CMapWMOInstance, GetScene(), wmo, it);
-			inst->RegisterComponents();
-			inst->Initialize();
-			AddChild(inst);
-			//auto inst = CreateSceneNode<CMapWMOInstance>(wmo, it);
-
-			inst->SetState(ILoadable::ELoadableState::Loaded);
-			inst->Load();
-			//GetBaseManager().GetManager<ILoader>()->AddToLoadQueue(inst);
+			auto inst = CreateSceneNode<CMapWMOInstance>(wmo, it);
+			GetBaseManager().GetManager<ILoader>()->AddToLoadQueue(inst);
 
 			m_WMOsInstances.push_back(inst.get());
 		}
@@ -331,11 +317,11 @@ bool CMapTile::Load()
 #ifdef USE_M2_MODELS
 	for (const auto& it : m_MDXsPlacementInfo)
 	{
-		std::shared_ptr<CM2> m2 = m_BaseManager.GetManager<IWoWObjectsCreator>()->LoadM2(m_RenderDevice, m_MDXsNames[it.nameIndex]);
-		if (m2)
+		if (auto m2 = m_BaseManager.GetManager<IWoWObjectsCreator>()->LoadM2(m_RenderDevice, m_MDXsNames[it.nameIndex]))
 		{
 			auto inst = CreateSceneNode<CMapM2Instance>(m2, it);
 			GetBaseManager().GetManager<ILoader>()->AddToLoadQueue(inst);
+			
 			m_MDXsInstances.push_back(inst.get());
 		}
 	}

@@ -1,22 +1,20 @@
 #include "stdafx.h"
 
-#ifdef USE_M2_MODELS
-
 // General
 #include "M2_Base_Instance.h"
 
 // Additional
 #include "M2_ColliderComponent.h"
 
-CM2_Base_Instance::CM2_Base_Instance(const std::shared_ptr<CM2>& M2Object) 
-	: CLoadableObject(M2Object)
+CM2_Base_Instance::CM2_Base_Instance(IScene& Scene, const std::shared_ptr<CM2>& M2Object) 
+	: CSceneNode(Scene)
+	, CLoadableObject(M2Object)
 	, m_M2(M2Object)
 	, m_AttachmentType(M2_AttachmentType::NotAttached)
 	, m_Color(glm::vec4(1.0f, 1.0f, 1.0f, 1.0f))
 	, m_Alpha(1.0f)
 	, m_Animator(nullptr)
 {
-	SetType(cM2_NodeType);
 }
 
 CM2_Base_Instance::~CM2_Base_Instance()
@@ -44,12 +42,19 @@ bool CM2_Base_Instance::Load()
 		m_SkeletonComponent = AddComponentT(std::make_shared<CM2SkeletonComponent3D>(*this));
 	}
 
+#ifdef USE_M2_PARTICLES
 	m_ParticleComponent = AddComponentT(std::make_shared<CM2ParticlesComponent3D>(*this));
+#endif
 
 	UpdateLocalTransform();
 	CreateInstances();
 
 	return true;
+}
+
+bool CM2_Base_Instance::Delete()
+{
+	return false;
 }
 
 const CM2& CM2_Base_Instance::getM2() const
@@ -98,6 +103,8 @@ const std::shared_ptr<ITexture>& CM2_Base_Instance::getSpecialTexture(SM2_Textur
 
 void CM2_Base_Instance::Initialize()
 {
+	__super::Initialize();
+
 	GetComponentT<IColliderComponent>()->SetCullStrategy(IColliderComponent::ECullStrategy::ByFrustrumAndDistance);
 	GetComponentT<IColliderComponent>()->SetCullDistance(GetBaseManager().GetManager<ISettings>()->GetGroup("WoWSettings")->GetPropertyT<float>("ADT_MDX_Distance")->Get());
 	GetComponentT<IColliderComponent>()->SetBounds(getM2().GetBounds());
@@ -115,10 +122,10 @@ void CM2_Base_Instance::Update(const UpdateEventArgs & e)
 	if (m_Animator)
 		m_Animator->Update(e.TotalTime, e.DeltaTime);
 
+#ifdef USE_M2_PARTICLES
 	if (m_ParticleComponent)
 		m_ParticleComponent->Update(e);
-
-
+#endif
 }
 
 void CM2_Base_Instance::Accept(IVisitor* visitor)
@@ -158,8 +165,6 @@ glm::mat4 CM2_Base_Instance::CalculateLocalTransform() const
 
 void CM2_Base_Instance::RegisterComponents()
 {
-	AddComponentT(std::make_shared<CModelsComponent3D>(*this));
+	AddComponentT(GetBaseManager().GetManager<IObjectsFactory>()->GetClassFactoryCast<IComponentFactory>()->CreateComponentT<IModelComponent>(cSceneNodeModelsComponent, *this));
     AddComponentT(std::make_shared<CM2_ColliderComponent>(*this));
 }
-
-#endif

@@ -1,7 +1,5 @@
 #pragma once
 
-#ifdef USE_M2_MODELS
-
 #include "M2_SkinTypes.h"
 
 #include "M2_Skin_Batch.h"
@@ -46,5 +44,3 @@ private:
 	const CM2& m_M2Model;
 	const SM2_SkinProfile m_M2SkinProfile;
 };
-
-#endif

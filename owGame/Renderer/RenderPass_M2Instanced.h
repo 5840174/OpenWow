@@ -1,6 +1,6 @@
 #pragma once
 
-#ifdef USE_M2_MODELS
+#if 0
 
 #include "M2/M2_Base_Instance.h"
 #include "M2/RenderPass_M2.h"

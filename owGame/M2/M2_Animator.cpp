@@ -1,7 +1,5 @@
 #include "stdafx.h"
 
-#ifdef USE_M2_MODELS
-
 // Include
 #include "M2.h"
 
@@ -95,5 +93,3 @@ void CM2_Animator::Update(double _time, double _dTime)
 		PlayAnimation(m_CurrentAnimation->getAnimID(), true);
 	}
 }
-
-#endif

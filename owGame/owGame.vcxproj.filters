@@ -61,9 +61,6 @@
     <Filter Include="M2\Animations">
       <UniqueIdentifier>{24d1f815-62cb-4320-a2ff-bc9199660f64}</UniqueIdentifier>
     </Filter>
-    <Filter Include="RenderStuff">
-      <UniqueIdentifier>{1e13051f-c332-4b25-bbab-9946eb8efde1}</UniqueIdentifier>
-    </Filter>
     <Filter Include="M2\SceneNode &amp; Components">
       <UniqueIdentifier>{be155204-7f8e-47b8-bbe5-297cc583c228}</UniqueIdentifier>
     </Filter>
@@ -159,6 +156,15 @@
     </Filter>
     <Filter Include="Client\Objects\Helpers">
       <UniqueIdentifier>{3dec4fb3-7334-4f5e-b746-18b6b9bb4f97}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Renderer">
+      <UniqueIdentifier>{1e13051f-c332-4b25-bbab-9946eb8efde1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Map\Chunk">
+      <UniqueIdentifier>{456352ef-c2dc-4daf-bb4f-644ab7b067ee}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Renderer\Passes">
+      <UniqueIdentifier>{02270be1-6396-493a-9359-4596ada55281}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -306,12 +312,6 @@
     <ClCompile Include="WMO\WMO_Part_Portal.cpp">
       <Filter>WMO\Parts</Filter>
     </ClCompile>
-    <ClCompile Include="M2\RenderPass_M2.cpp">
-      <Filter>RenderStuff</Filter>
-    </ClCompile>
-    <ClCompile Include="WMO\RenderPass_WMO.cpp">
-      <Filter>RenderStuff</Filter>
-    </ClCompile>
     <ClCompile Include="WoWChunkReader.cpp">
       <Filter>WoW Specific</Filter>
     </ClCompile>
@@ -363,12 +363,6 @@
     <ClCompile Include="Sky\SkyParams.cpp">
       <Filter>Sky</Filter>
     </ClCompile>
-    <ClCompile Include="Sky\RenderPass_Sky.cpp">
-      <Filter>RenderStuff</Filter>
-    </ClCompile>
-    <ClCompile Include="Liquid\RenderPass_Liquid.cpp">
-      <Filter>RenderStuff</Filter>
-    </ClCompile>
     <ClCompile Include="WMO\WMO_Group_Instance.cpp">
       <Filter>WMO\Instances</Filter>
     </ClCompile>
@@ -396,12 +390,6 @@
     <ClCompile Include="Map\MinimapProvider.cpp">
       <Filter>Map</Filter>
     </ClCompile>
-    <ClCompile Include="Map\RenderPass_MapTile.cpp">
-      <Filter>RenderStuff</Filter>
-    </ClCompile>
-    <ClCompile Include="Map\RenderPass_WDL.cpp">
-      <Filter>RenderStuff</Filter>
-    </ClCompile>
     <ClCompile Include="Map\WDL_LowResTile.cpp">
       <Filter>Map\WDL</Filter>
     </ClCompile>
@@ -410,12 +398,6 @@
     </ClCompile>
     <ClCompile Include="Map\MapWDL.cpp">
       <Filter>Map\WDL</Filter>
-    </ClCompile>
-    <ClCompile Include="Map\MapChunk.cpp">
-      <Filter>Map\Tile</Filter>
-    </ClCompile>
-    <ClCompile Include="Map\MapChunkMaterial.cpp">
-      <Filter>Map\Tile</Filter>
     </ClCompile>
     <ClCompile Include="Map\MapTile.cpp">
       <Filter>Map\Tile</Filter>
@@ -486,15 +468,6 @@
     <ClCompile Include="M2\M2_AnimationSet.cpp">
       <Filter>M2\Animations</Filter>
     </ClCompile>
-    <ClCompile Include="Map\MapChunkLiquid.cpp">
-      <Filter>Map\Tile</Filter>
-    </ClCompile>
-    <ClCompile Include="M2\RenderPass_M2Instanced.cpp">
-      <Filter>RenderStuff</Filter>
-    </ClCompile>
-    <ClCompile Include="Map\RenderPass_MapChunk.cpp">
-      <Filter>RenderStuff</Filter>
-    </ClCompile>
     <ClCompile Include="M2\M2_Animator.cpp">
       <Filter>M2\SceneNode &amp; Components</Filter>
     </ClCompile>
@@ -527,6 +500,42 @@
     </ClCompile>
     <ClCompile Include="Map\MapTileLiquid.cpp">
       <Filter>Map\Tile</Filter>
+    </ClCompile>
+    <ClCompile Include="Renderer\RendererWoW.cpp">
+      <Filter>Renderer</Filter>
+    </ClCompile>
+    <ClCompile Include="Map\MapChunkMaterial.cpp">
+      <Filter>Map\Chunk</Filter>
+    </ClCompile>
+    <ClCompile Include="Map\MapChunkLiquid.cpp">
+      <Filter>Map\Chunk</Filter>
+    </ClCompile>
+    <ClCompile Include="Map\MapChunk.cpp">
+      <Filter>Map\Chunk</Filter>
+    </ClCompile>
+    <ClCompile Include="Renderer\RenderPass_Liquid.cpp">
+      <Filter>Renderer\Passes</Filter>
+    </ClCompile>
+    <ClCompile Include="Renderer\RenderPass_M2.cpp">
+      <Filter>Renderer\Passes</Filter>
+    </ClCompile>
+    <ClCompile Include="Renderer\RenderPass_M2Instanced.cpp">
+      <Filter>Renderer\Passes</Filter>
+    </ClCompile>
+    <ClCompile Include="Renderer\RenderPass_MapChunk.cpp">
+      <Filter>Renderer\Passes</Filter>
+    </ClCompile>
+    <ClCompile Include="Renderer\RenderPass_MapTile.cpp">
+      <Filter>Renderer\Passes</Filter>
+    </ClCompile>
+    <ClCompile Include="Renderer\RenderPass_Sky.cpp">
+      <Filter>Renderer\Passes</Filter>
+    </ClCompile>
+    <ClCompile Include="Renderer\RenderPass_WDL.cpp">
+      <Filter>Renderer\Passes</Filter>
+    </ClCompile>
+    <ClCompile Include="Renderer\RenderPass_WMO.cpp">
+      <Filter>Renderer\Passes</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -824,12 +833,6 @@
     <ClInclude Include="WMO\WMO_Part_Portal.h">
       <Filter>WMO\Parts</Filter>
     </ClInclude>
-    <ClInclude Include="M2\RenderPass_M2.h">
-      <Filter>RenderStuff</Filter>
-    </ClInclude>
-    <ClInclude Include="WMO\RenderPass_WMO.h">
-      <Filter>RenderStuff</Filter>
-    </ClInclude>
     <ClInclude Include="WoWChunkReader.h">
       <Filter>WoW Specific</Filter>
     </ClInclude>
@@ -908,12 +911,6 @@
     <ClInclude Include="Sky\SkyParams.h">
       <Filter>Sky</Filter>
     </ClInclude>
-    <ClInclude Include="Sky\RenderPass_Sky.h">
-      <Filter>RenderStuff</Filter>
-    </ClInclude>
-    <ClInclude Include="Liquid\RenderPass_Liquid.h">
-      <Filter>RenderStuff</Filter>
-    </ClInclude>
     <ClInclude Include="WMO\WMO_Group_Instance.h">
       <Filter>WMO\Instances</Filter>
     </ClInclude>
@@ -944,12 +941,6 @@
     <ClInclude Include="Map\MinimapProvider.h">
       <Filter>Map</Filter>
     </ClInclude>
-    <ClInclude Include="Map\RenderPass_MapTile.h">
-      <Filter>RenderStuff</Filter>
-    </ClInclude>
-    <ClInclude Include="Map\RenderPass_WDL.h">
-      <Filter>RenderStuff</Filter>
-    </ClInclude>
     <ClInclude Include="Map\WDL_LowResTile.h">
       <Filter>Map\WDL</Filter>
     </ClInclude>
@@ -958,12 +949,6 @@
     </ClInclude>
     <ClInclude Include="Map\MapWDL.h">
       <Filter>Map\WDL</Filter>
-    </ClInclude>
-    <ClInclude Include="Map\MapChunk.h">
-      <Filter>Map\Tile</Filter>
-    </ClInclude>
-    <ClInclude Include="Map\MapChunkMaterial.h">
-      <Filter>Map\Tile</Filter>
     </ClInclude>
     <ClInclude Include="Map\MapTile.h">
       <Filter>Map\Tile</Filter>
@@ -1049,15 +1034,6 @@
     <ClInclude Include="M2\M2_AnimationSet.h">
       <Filter>M2\Animations</Filter>
     </ClInclude>
-    <ClInclude Include="Map\MapChunkLiquid.h">
-      <Filter>Map\Tile</Filter>
-    </ClInclude>
-    <ClInclude Include="M2\RenderPass_M2Instanced.h">
-      <Filter>RenderStuff</Filter>
-    </ClInclude>
-    <ClInclude Include="Map\RenderPass_MapChunk.h">
-      <Filter>RenderStuff</Filter>
-    </ClInclude>
     <ClInclude Include="M2\M2_Animator.h">
       <Filter>M2\SceneNode &amp; Components</Filter>
     </ClInclude>
@@ -1105,6 +1081,45 @@
     </ClInclude>
     <ClInclude Include="Map\MapTileLiquid.h">
       <Filter>Map\Tile</Filter>
+    </ClInclude>
+    <ClInclude Include="Interfaces\M2Interfaces.h">
+      <Filter>Interfaces</Filter>
+    </ClInclude>
+    <ClInclude Include="Renderer\RendererWoW.h">
+      <Filter>Renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="Map\MapChunkMaterial.h">
+      <Filter>Map\Chunk</Filter>
+    </ClInclude>
+    <ClInclude Include="Map\MapChunkLiquid.h">
+      <Filter>Map\Chunk</Filter>
+    </ClInclude>
+    <ClInclude Include="Map\MapChunk.h">
+      <Filter>Map\Chunk</Filter>
+    </ClInclude>
+    <ClInclude Include="Renderer\RenderPass_Liquid.h">
+      <Filter>Renderer\Passes</Filter>
+    </ClInclude>
+    <ClInclude Include="Renderer\RenderPass_M2.h">
+      <Filter>Renderer\Passes</Filter>
+    </ClInclude>
+    <ClInclude Include="Renderer\RenderPass_M2Instanced.h">
+      <Filter>Renderer\Passes</Filter>
+    </ClInclude>
+    <ClInclude Include="Renderer\RenderPass_MapChunk.h">
+      <Filter>Renderer\Passes</Filter>
+    </ClInclude>
+    <ClInclude Include="Renderer\RenderPass_MapTile.h">
+      <Filter>Renderer\Passes</Filter>
+    </ClInclude>
+    <ClInclude Include="Renderer\RenderPass_Sky.h">
+      <Filter>Renderer\Passes</Filter>
+    </ClInclude>
+    <ClInclude Include="Renderer\RenderPass_WDL.h">
+      <Filter>Renderer\Passes</Filter>
+    </ClInclude>
+    <ClInclude Include="Renderer\RenderPass_WMO.h">
+      <Filter>Renderer\Passes</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

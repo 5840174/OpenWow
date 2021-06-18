@@ -9,8 +9,8 @@
 #include "Character_SectionWrapper.h"
 #include "Character_SkinTextureBaker.h"
 
-Character::Character(const std::shared_ptr<CM2>& M2Object)
-	: Creature(M2Object)
+Character::Character(IScene& Scene, const std::shared_ptr<CM2>& M2Object)
+	: Creature(Scene, M2Object)
 {
 	//setMeshEnabled(MeshIDType::Ears, EarsStyles::Enabled);
 	//setMeshEnabled(MeshIDType::Eyeglows, EyeglowsStyles::Racial);
@@ -44,7 +44,6 @@ void Character::RefreshItemVisualData()
 	{
 		m_VisualItems[static_cast<EInventoryType>(i)]->TemplateSet(m_Template.ItemsTemplates[i]);
 		GetBaseManager().GetManager<ILoader>()->AddToLoadQueue(m_VisualItems[static_cast<EInventoryType>(i)]);
-		//m_VisualItems[static_cast<EInventoryType>(i)]->Load();
 
 		if (i == EQUIPMENT_SLOT_HEAD)
 		{

@@ -1,8 +1,8 @@
 #pragma once
 
-#ifdef USE_M2_MODELS
-
 #include "M2.h"
+
+#include "Interfaces/M2Interfaces.h"
 
 // Components
 #include "M2_Animator.h"
@@ -14,13 +14,14 @@ class ZN_API CM2_Base_Instance
 	, public CLoadableObject
 {
 public:
-	CM2_Base_Instance(const std::shared_ptr<CM2>& M2Object);
+	CM2_Base_Instance(IScene& Scene, const std::shared_ptr<CM2>& M2Object);
 	virtual ~CM2_Base_Instance();
 
 	void                                CreateInstances();
 
 	// CLoadableObject
 	bool                                Load() override;
+	bool                                Delete() override;
 
 	// CM2_Base_Instance
 	const CM2&                          getM2() const;
@@ -43,7 +44,9 @@ public:
 	// Animations
 	const std::shared_ptr<CM2_Animator>&           getAnimator() const { return m_Animator; }
 	const std::shared_ptr<CM2SkeletonComponent3D>  getSkeletonComponent() const { return m_SkeletonComponent; }
+#ifdef USE_M2_PARTICLES
 	const std::shared_ptr<CM2ParticlesComponent3D>   getParticleComponent() const { return m_ParticleComponent; }
+#endif
 
     // Components
     virtual void                        RegisterComponents() override;
@@ -69,13 +72,11 @@ private:
 
 	// Animtion
 	std::shared_ptr<CM2_Animator>           m_Animator;
-#if 0
 	std::shared_ptr<CM2SkeletonComponent3D> m_SkeletonComponent;
+#ifdef USE_M2_PARTICLES
 	std::shared_ptr<CM2ParticlesComponent3D>m_ParticleComponent;
 #endif
 
 private:
 	std::shared_ptr<const CM2>           m_M2;
 };
-
-#endif

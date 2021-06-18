@@ -1,7 +1,5 @@
 #pragma once
 
-#ifdef USE_M2_MODELS
-
 #include "M2_CommonTypes.h"
 
 template<class T>
@@ -41,5 +39,3 @@ public:
 		return static_cast<float>(t) / 32767.0f;
 	}
 };
-
-#endif

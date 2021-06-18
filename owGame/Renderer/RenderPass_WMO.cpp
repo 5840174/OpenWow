@@ -6,8 +6,8 @@
 #include "RenderPass_WMO.h"
 
 // Additional
-#include "WMO_Base_Instance.h"
-#include "WMO_Group_Instance.h"
+#include "WMO/WMO_Base_Instance.h"
+#include "WMO/WMO_Group_Instance.h"
 #include "WMO/WMO_Part_Material.h"
 
 CRenderPass_WMO::CRenderPass_WMO(IScene& Scene)
@@ -75,8 +75,8 @@ EVisitResult CRenderPass_WMO::Visit(const std::shared_ptr<IGeometry>& Geometry, 
 }
 
 
-#if 0
 
+#if 0
 CRenderPass_WMO2::CRenderPass_WMO2(IRenderDevice & RenderDevice, const std::shared_ptr<BuildRenderListPassTemplated<CWMO_Group_Instance>>& List, std::shared_ptr<IScene> scene)
 	: Base3DPass(RenderDevice, scene)
 	, m_List(List)

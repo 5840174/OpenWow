@@ -40,7 +40,7 @@ std::shared_ptr<ITexture> Character_SectionWrapper::getSkinTexture(const Charact
 			if (textureName.empty())
 				break;
 
-			return m_RenderDevice.GetObjectsFactory().LoadTexture2D(textureName);
+			return m_BaseManager.GetManager<IznTexturesFactory>()->LoadTexture2D(textureName);
 		}
 	}
 
@@ -60,7 +60,7 @@ std::shared_ptr<ITexture> Character_SectionWrapper::getSkinExtraTexture(const Ch
 			if (textureName.empty())
 				break;
 
-			return m_RenderDevice.GetObjectsFactory().LoadTexture2D(textureName);
+			return m_BaseManager.GetManager<IznTexturesFactory>()->LoadTexture2D(textureName);
 		}
 	}
 
@@ -87,7 +87,7 @@ std::shared_ptr<ITexture> Character_SectionWrapper::getFaceLowerTexture(const Ch
 			if (textureName.empty())
 				break;
 
-			return m_RenderDevice.GetObjectsFactory().LoadTexture2D(textureName);
+			return m_BaseManager.GetManager<IznTexturesFactory>()->LoadTexture2D(textureName);
 		}
 	}
 	return nullptr;
@@ -109,7 +109,7 @@ std::shared_ptr<ITexture> Character_SectionWrapper::getFaceUpperTexture(const Ch
 			if (textureName.empty())
 				break;
 
-			return m_RenderDevice.GetObjectsFactory().LoadTexture2D(textureName);
+			return m_BaseManager.GetManager<IznTexturesFactory>()->LoadTexture2D(textureName);
 		}
 	}
 	return nullptr;
@@ -302,7 +302,7 @@ std::shared_ptr<ITexture> Character_SectionWrapper::getHairTexture(const Charact
 			if (textureName.empty())
 				break;
 
-			return m_RenderDevice.GetObjectsFactory().LoadTexture2D(textureName);
+			return m_BaseManager.GetManager<IznTexturesFactory>()->LoadTexture2D(textureName);
 		}
 	}
 
@@ -325,7 +325,7 @@ std::shared_ptr<ITexture> Character_SectionWrapper::getHairScalpLowerTexture(con
 			if (textureName.empty())
 				break;
 
-			return m_RenderDevice.GetObjectsFactory().LoadTexture2D(textureName);
+			return m_BaseManager.GetManager<IznTexturesFactory>()->LoadTexture2D(textureName);
 		}
 	}
 
@@ -349,7 +349,7 @@ std::shared_ptr<ITexture> Character_SectionWrapper::getHairScalpUpperTexture(con
 			if (textureName.empty())
 				break;
 
-			return m_RenderDevice.GetObjectsFactory().LoadTexture2D(textureName);
+			return m_BaseManager.GetManager<IznTexturesFactory>()->LoadTexture2D(textureName);
 		}
 	}
 

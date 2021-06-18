@@ -1,10 +1,13 @@
 #pragma once
 
-#ifdef USE_M2_MODELS
+#ifdef USE_M2_PARTICLES
 
+#include "M2/M2_ParticleSystem.h"
+
+// FORWARD BEGIN
 class CM2;
 class CM2_Base_Instance;
-#include "M2/M2_ParticleSystem.h"
+// FORWARD END
 
 //
 // CM2ParticleSystem
@@ -38,6 +41,8 @@ private:
 	CM2_ParticleObject m_M2ParticleObjects[MAX_PARTICLES];
 };
 
+
+
 //
 // CM2ParticlesComponent3D
 //
@@ -49,6 +54,12 @@ public:
 	CM2ParticlesComponent3D(const CM2_Base_Instance& SceneNode);
 	virtual ~CM2ParticlesComponent3D();
 
+	// IParticleComponent3D
+	void AddParticleSystem(std::shared_ptr<IParticleSystem> ParticleSystem) override;
+	void RemoveParticleSystem(std::shared_ptr<IParticleSystem> ParticleSystem) override;
+	void DeleteAllParticleSystem() override;
+	const std::vector<std::shared_ptr<IParticleSystem>>& GetParticleSystems() const override;
+
 	// ISceneNodeComponent
 	void Update(const UpdateEventArgs& e) override final;
 	void Accept(IVisitor* visitor) override final;
@@ -57,7 +68,7 @@ protected:
 	const CM2_Base_Instance& GetM2OwnerNode() const;
 
 private:
-	std::vector<std::shared_ptr<CM2ParticleSystem>> m_ParticleSystems;
+	std::vector<std::shared_ptr<IParticleSystem>> m_ParticleSystems;
 };
 
 #endif

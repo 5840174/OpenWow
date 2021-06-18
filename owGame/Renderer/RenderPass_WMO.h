@@ -2,8 +2,6 @@
 
 #ifdef USE_WMO_MODELS
 
-#include "WMO_Base_Instance.h"
-
 class ZN_API CRenderPass_WMO 
 	: public Base3DPass
 {

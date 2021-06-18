@@ -4,7 +4,7 @@
 #include "RenderPass_Sky.h"
 
 // Additional 
-#include "SkyManager.h"
+#include "Sky/SkyManager.h"
 
 CRenderPass_Sky::CRenderPass_Sky(IScene& Scene)
 	: Base3DPass(Scene)

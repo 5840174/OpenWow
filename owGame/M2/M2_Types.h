@@ -1,7 +1,5 @@
 #pragma once
 
-#ifdef USE_M2_MODELS
-
 #include "DBC/DBC__Storage.h"
 
 #include "M2_CommonTypes.h"
@@ -467,5 +465,3 @@ struct SM2_Particle
 #include __PACK_END
 
 #include "M2_Animated.h"
-
-#endif

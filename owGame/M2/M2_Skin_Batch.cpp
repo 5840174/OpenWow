@@ -1,7 +1,5 @@
 #include "stdafx.h"
 
-#ifdef USE_M2_MODELS
-
 // Include
 #include "M2.h"
 #include "M2_Base_Instance.h"
@@ -10,7 +8,7 @@
 #include "M2_Skin_Batch.h"
 
 CM2_Skin_Batch::CM2_Skin_Batch(IBaseManager& BaseManager, IRenderDevice& RenderDevice, const CM2& M2Model, const SM2_SkinBatch& SkinBatchProto)
-	: MaterialProxieT(RenderDevice, "CM2_Skin_Batch")
+	: MaterialProxieT(RenderDevice.GetObjectsFactory().CreateMaterial("CM2_Skin_Batch"))
 	, m_BaseManager(BaseManager)
 	, m_RenderDevice(RenderDevice)
 	, m_M2Model(M2Model)
@@ -80,29 +78,27 @@ CM2_Skin_Batch::~CM2_Skin_Batch()
 
 void CM2_Skin_Batch::UpdateMaterialProps(const RenderEventArgs& RenderEventArgs, const CM2_Base_Instance* m2Instance)
 {
-	ShaderM2BatchProperties props;
-
 	// Shader
-	props.gShader = newShader;
+	MaterialData().gShader = newShader;
 
 	// Blend mode
-	props.gBlendMode = m_M2ModelMaterial->getBlendMode();
+	MaterialData().gBlendMode = m_M2ModelMaterial->getBlendMode();
 
 	// Model color
 	if (m_Color != nullptr)
-		props.gColor = m_Color->GetColorAndAlpha(m2Instance, static_cast<uint32>(RenderEventArgs.TotalTime));
+		MaterialData().gColor = m_Color->GetColorAndAlpha(m2Instance, static_cast<uint32>(RenderEventArgs.TotalTime));
 
 	// Texture alpha
 	if (m_TextureWeight != nullptr)
-		props.gTextureWeight = m_TextureWeight->GetWeight(m2Instance, static_cast<uint32>(RenderEventArgs.TotalTime));
+		MaterialData().gTextureWeight = m_TextureWeight->GetWeight(m2Instance, static_cast<uint32>(RenderEventArgs.TotalTime));
 
 	// Texture transform
-	props.gTextureAnimEnable = m_TextureTransform != nullptr;
+	MaterialData().gTextureAnimEnable = m_TextureTransform != nullptr;
 	if (m_TextureTransform != nullptr)
-		props.gTextureAnimMatrix = m_TextureTransform->GetTransform(m2Instance, static_cast<uint32>(RenderEventArgs.TotalTime));
+		MaterialData().gTextureAnimMatrix = m_TextureTransform->GetTransform(m2Instance, static_cast<uint32>(RenderEventArgs.TotalTime));
 
 	// Instance color (for WMO doodads)
-	props.gInstanceColor = m2Instance->getColor();
+	MaterialData().gInstanceColor = m2Instance->getColor();
 
 	// Textures
 	//_ASSERT(m_Textures.size() < 2);
@@ -116,11 +112,7 @@ void CM2_Skin_Batch::UpdateMaterialProps(const RenderEventArgs& RenderEventArgs,
 		}
 		else
 		{
-			SetTexture(i, m_RenderDevice.GetDefaultTexture());
+			SetTexture(i, m_RenderDevice.GetBaseManager().GetManager<IznTexturesFactory>()->GetDefaultTexture());
 		}
 	}
-
-	MaterialProxie::UpdateConstantBuffer(&props, sizeof(ShaderM2BatchProperties));
 }
-
-#endif

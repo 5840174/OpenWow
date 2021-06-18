@@ -1,7 +1,5 @@
 ﻿#pragma once
 
-#ifdef USE_M2_MODELS
-
 #include "M2_Types.h"
 
 #include __PACK_BEGIN
@@ -127,5 +125,3 @@ struct SM2_Header
 };
 
 #include __PACK_END
-
-#endif

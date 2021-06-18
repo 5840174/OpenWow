@@ -61,12 +61,12 @@ std::shared_ptr<ITexture> Character_SkinTextureBaker::createTexture(const Charac
 		// Female
 		std::string nakedUpperTexture = sectionSrapper.getNakedTorsoTexture(_character);
 		if (nakedUpperTexture.length() > 0)
-			FillPixels(DBC_CharComponent_Sections::TORSO_UPPER, m_RenderDevice.GetObjectsFactory().LoadTexture2D(nakedUpperTexture));
+			FillPixels(DBC_CharComponent_Sections::TORSO_UPPER, m_BaseManager.GetManager<IznTexturesFactory>()->LoadTexture2D(nakedUpperTexture));
 
 		// Male + Female
 		std::string nakedLowerTexture = sectionSrapper.getNakedPelvisTexture(_character);
 		_ASSERT(nakedLowerTexture.length() > 0);
-		FillPixels(DBC_CharComponent_Sections::LEGS_UPPER, m_RenderDevice.GetObjectsFactory().LoadTexture2D(nakedLowerTexture));
+		FillPixels(DBC_CharComponent_Sections::LEGS_UPPER, m_BaseManager.GetManager<IznTexturesFactory>()->LoadTexture2D(nakedLowerTexture));
 	}
 
 	// 3. Apply items texture components
@@ -88,8 +88,8 @@ std::shared_ptr<ITexture> Character_SkinTextureBaker::createTexture(const Charac
 	std::shared_ptr<CImageBase> image = std::make_shared<CImageBase>(cSkinTextureWidth, cSkinTextureHeight, 32, true);
 	std::memmove(image->GetDataEx(), m_Pixels, image->GetHeight() * image->GetStride());
 
-	bakedSkinTexture->LoadTextureFromImage(image);
-	SafeDeleteArray(m_Pixels);
+	bakedSkinTexture->LoadTexture2DFromImage(image);
+	delete[] m_Pixels;
 
 	return bakedSkinTexture;
 }

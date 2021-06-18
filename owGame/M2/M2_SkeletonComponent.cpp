@@ -1,7 +1,5 @@
 #include "stdafx.h"
 
-#ifdef USE_M2_MODELS
-
 // Include
 #include "M2.h"
 #include "M2_Base_Instance.h"
@@ -22,12 +20,12 @@ CM2SkeletonBone3D::~CM2SkeletonBone3D()
 {
 }
 
-const std::weak_ptr<ISkeletonComponentBone3D>& CM2SkeletonBone3D::GetParentBone() const
+const std::weak_ptr<CM2SkeletonBone3D>& CM2SkeletonBone3D::GetParentBone() const
 {
 	return m_ParentBone;
 }
 
-const std::vector<std::shared_ptr<ISkeletonComponentBone3D>>& CM2SkeletonBone3D::GetChilds() const
+const std::vector<std::shared_ptr<CM2SkeletonBone3D>>& CM2SkeletonBone3D::GetChilds() const
 {
 	return m_Childs;
 }
@@ -117,14 +115,14 @@ std::vector<glm::mat4> CM2SkeletonComponent3D::CreatePose(size_t BoneStartIndex,
 	std::vector<glm::mat4> result;
 	result.reserve(BonesCount);
 	for (size_t i = BoneStartIndex; i < BoneStartIndex + BonesCount; i++)
-		result.push_back(m_Bones[GetM2OwnerNode().getM2().getSkeleton().getBoneLookupIndex(i)]->GetMatrix());
+		result.push_back(m_Bones[GetM2OwnerNode()->getM2().getSkeleton().getBoneLookupIndex(i)]->GetMatrix());
 	return result;
 }
 
 //
 // ISkeletonComponent3D
 //
-std::shared_ptr<ISkeletonComponentBone3D> CM2SkeletonComponent3D::GetBone(size_t Index) const
+std::shared_ptr<CM2SkeletonBone3D> CM2SkeletonComponent3D::GetBone(size_t Index) const
 {
 	_ASSERT(Index < m_Bones.size());
 	return m_Bones.at(Index);
@@ -136,19 +134,16 @@ void CM2SkeletonComponent3D::Update(const UpdateEventArgs & e)
 		b->Reset();
 
 	for (const auto& b : m_Bones)
-		b->Calculate(&GetM2OwnerNode(), e.CameraForCulling, static_cast<uint32>(e.TotalTime));
+		b->Calculate(GetM2OwnerNode(), e.CameraForCulling, static_cast<uint32>(e.TotalTime));
 
 	// TODO: Fix me
-	const_cast<CM2_Base_Instance&>(GetM2OwnerNode()).UpdateAttachPositionAfterSkeletonUpdate();
+	const_cast<CM2_Base_Instance*>(GetM2OwnerNode())->UpdateAttachPositionAfterSkeletonUpdate();
 }
 
 //
 // Protected
 //
-const CM2_Base_Instance& CM2SkeletonComponent3D::GetM2OwnerNode() const
+const CM2_Base_Instance* CM2SkeletonComponent3D::GetM2OwnerNode() const
 {
-	return reinterpret_cast<const CM2_Base_Instance&>(GetOwnerNode());
+	return dynamic_cast<const CM2_Base_Instance*>(&GetOwnerNode());
 }
-
-
-#endif

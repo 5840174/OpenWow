@@ -1,6 +1,6 @@
 #include "stdafx.h"
 
-#ifdef USE_M2_MODELS
+#ifdef USE_M2_PARTICLES
 
 // Include
 #include "M2.h"
@@ -109,6 +109,33 @@ CM2ParticlesComponent3D::~CM2ParticlesComponent3D()
 {
 }
 
+
+
+//
+// IParticleComponent3D
+//
+void CM2ParticlesComponent3D::AddParticleSystem(std::shared_ptr<IParticleSystem> ParticleSystem)
+{
+	m_ParticleSystems.push_back(ParticleSystem);
+}
+
+void CM2ParticlesComponent3D::RemoveParticleSystem(std::shared_ptr<IParticleSystem> ParticleSystem)
+{
+	throw std::exception("Not implemented.");
+}
+
+void CM2ParticlesComponent3D::DeleteAllParticleSystem()
+{
+	throw std::exception("Not implemented.");
+}
+
+const std::vector<std::shared_ptr<IParticleSystem>>& CM2ParticlesComponent3D::GetParticleSystems() const
+{
+	return m_ParticleSystems;
+}
+
+
+
 //
 // ISceneNodeComponent
 //
@@ -116,7 +143,8 @@ void CM2ParticlesComponent3D::Update(const UpdateEventArgs& e)
 {
 	for (auto& it : m_ParticleSystems)
 	{
-		it->Update(&GetM2OwnerNode(), e);
+		if (auto m2ParticleSystem  = std::dynamic_pointer_cast<CM2ParticleSystem>(it))
+			m2ParticleSystem->Update(&GetM2OwnerNode(), e);
 	}
 }
 
@@ -124,7 +152,7 @@ void CM2ParticlesComponent3D::Accept(IVisitor * visitor)
 {
 	for (auto& it : m_ParticleSystems)
 	{
-		visitor->Visit((const IParticleSystem*)it.get());
+		visitor->Visit(it);
 	}
 }
 

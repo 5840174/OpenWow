@@ -1,7 +1,5 @@
 #pragma once
 
-#ifdef USE_M2_MODELS
-
 #include "M2_Headers.h"
 
 // Components
@@ -25,6 +23,7 @@ public:
 
 	// CLoadableObject
 	bool Load() override;
+	bool Delete() override;
 
 	IBaseManager& GetBaseManager() const { return m_BaseManager; }
 	IRenderDevice& GetRenderDevice() const { return m_RenderDevice; }
@@ -76,5 +75,3 @@ private:
 	IBaseManager& m_BaseManager;
 	IRenderDevice& m_RenderDevice;
 };
-
-#endif

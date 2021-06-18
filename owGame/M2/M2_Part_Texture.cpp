@@ -1,7 +1,5 @@
 #include "stdafx.h"
 
-#ifdef USE_M2_MODELS
-
 // Include
 #include "M2_Base_Instance.h"
 
@@ -20,7 +18,7 @@ CM2_Part_Texture::CM2_Part_Texture(IBaseManager& BaseManager, IRenderDevice& Ren
 	if (m_SpecialType == SM2_Texture::Type::NONE)
 	{
 		std::string textureFileName = (const char*)(File->getData() + M2Texture.filename.offset);
-		m_Texture = RenderDevice.GetObjectsFactory().LoadTexture2D(textureFileName);
+		m_Texture = BaseManager.GetManager<IznTexturesFactory>()->LoadTexture2D(textureFileName);
 	}
 }
 
@@ -40,5 +38,3 @@ const std::shared_ptr<ITexture>& CM2_Part_Texture::GetTexture(const CM2_Base_Ins
 		return M2Instance->getSpecialTexture(m_SpecialType);
 	return m_Texture;
 }
-
-#endif

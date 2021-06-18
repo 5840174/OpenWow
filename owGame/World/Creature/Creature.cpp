@@ -10,8 +10,8 @@ m_FileName="Creature\\Alexstrasza\\Alexstrasza.m2"
 
 */
 
-Creature::Creature(const std::shared_ptr<CM2>& M2Object)
-	: CM2_Base_Instance(M2Object)
+Creature::Creature(IScene& Scene, const std::shared_ptr<CM2>& M2Object)
+	: CM2_Base_Instance(Scene, M2Object)
 {
 	for (uint32 i = 0; i < MeshIDType::Count; i++)
 		m_MeshID[i] = 1;

@@ -149,18 +149,14 @@ void WMO_Group::CreateInsances(const std::shared_ptr<CWMO_Group_Instance>& Paren
 			const SWMO_Doodad_PlacementInfo& placement = m_WMOModel.GetDoodadPlacement(doodadPlacementIndex);
 
 			std::string doodadFileName = m_WMOModel.GetDoodadFileName(placement.flags.nameIndex);
-			std::shared_ptr<CM2> m2 = m_BaseManager.GetManager<IWoWObjectsCreator>()->LoadM2(m_RenderDevice, doodadFileName, true);
-			if (m2)
+			if (std::shared_ptr<CM2> m2 = m_BaseManager.GetManager<IWoWObjectsCreator>()->LoadM2(m_RenderDevice, doodadFileName, true))
 			{
 				auto inst = Parent->CreateSceneNode<CWMO_Doodad_Instance>(m2, doodadPlacementIndex, placement);
 
-				if (!m_GroupHeader.flags.DO_NOT_USE_LIGHTING_DIFFUSE && !m_GroupHeader.flags.IS_OUTDOOR)
+				if (false == m_GroupHeader.flags.DO_NOT_USE_LIGHTING_DIFFUSE && !m_GroupHeader.flags.IS_OUTDOOR)
 					inst->setColor(placement.getColor());
 
-				inst->Load();
-				inst->SetState(ELoadableState::Loaded);
-
-				//m_BaseManager.GetManager<ILoader>()->AddToLoadQueue(inst);
+				m_BaseManager.GetManager<ILoader>()->AddToLoadQueue(inst);
 				Parent->AddRoomObject(inst);
 			}
 		}

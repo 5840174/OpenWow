@@ -1,7 +1,5 @@
 #include "stdafx.h"
 
-#ifdef USE_M2_MODELS
-
 // Include
 #include "M2.h"
 #include "M2_Base_Instance.h"
@@ -46,5 +44,3 @@ glm::mat4 CM2_Part_TextureTransform::GetTransform(const CM2_Base_Instance* M2Ins
 
 	return matrix;
 }
-
-#endif

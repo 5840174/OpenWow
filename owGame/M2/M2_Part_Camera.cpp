@@ -1,7 +1,5 @@
 #include "stdafx.h"
 
-#ifdef USE_M2_MODELS
-
 // Include
 #include "M2.h"
 
@@ -67,5 +65,3 @@ void SM2_Part_Camera_Wrapper::getParams(glm::vec3* _position, glm::vec3* _target
 	*_nearPlane = nearclip;
 	*_farPlane = farclip;
 }
-
-#endif

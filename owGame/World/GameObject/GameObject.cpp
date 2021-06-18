@@ -6,8 +6,8 @@
 #include "GameObject.h"
 
 
-GameObject::GameObject(const std::shared_ptr<CM2>& M2Object)
-	: CM2_Base_Instance(M2Object)
+GameObject::GameObject(IScene& Scene, const std::shared_ptr<CM2>& M2Object)
+	: CM2_Base_Instance(Scene, M2Object)
 {}
 
 GameObject::~GameObject()

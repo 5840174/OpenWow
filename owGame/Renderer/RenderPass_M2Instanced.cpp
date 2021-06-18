@@ -1,22 +1,22 @@
 #include "stdafx.h"
 
-#ifdef USE_M2_MODELS
+#if 0
 
 // General
 #include "RenderPass_M2Instanced.h"
 
 // Additional
-#include "M2_Part_Color.h"
-#include "M2_Part_Material.h"
-#include "M2_Part_Texture.h"
-#include "M2_Part_TextureTransform.h"
-#include "M2_Part_TextureWeight.h"
+#include "M2/M2_Part_Color.h"
+#include "M2/M2_Part_Material.h"
+#include "M2/M2_Part_Texture.h"
+#include "M2/M2_Part_TextureTransform.h"
+#include "M2/M2_Part_TextureWeight.h"
 
 // Additional (SceneNodes)
-#include "M2_Base_Instance.h"
+#include "M2/M2_Base_Instance.h"
 
 // Additional (meshes)
-#include "M2_Skin_Batch.h"
+#include "M2/M2_Skin_Batch.h"
 
 
 CRenderPass_M2_Instanced::CRenderPass_M2_Instanced(IRenderDevice & RenderDevice, const std::shared_ptr<CSceneCreateTypedListsPass>& SceneCreateTypedListsPass, bool OpaqueDraw)

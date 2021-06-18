@@ -1,16 +1,15 @@
 #pragma once
 
-#ifdef USE_M2_MODELS
-
 // FORWARD BEGIN
 class CM2_Base_Instance;
 // FORWARD END
 
-class 
-    __declspec(UUID_ColliderComponent)
-    CM2_ColliderComponent : public CColliderComponent3D
+class CM2_ColliderComponent 
+	: public CColliderComponent
 {
 public:
+	ZN_OBJECTCLASS(cSceneNodeColliderComponent);
+
     CM2_ColliderComponent(const ISceneNode& OwnerNode);
     virtual ~CM2_ColliderComponent();
 
@@ -20,5 +19,3 @@ protected:
     // CColliderComponent
     virtual void UpdateBounds() override;
 };
-
-#endif

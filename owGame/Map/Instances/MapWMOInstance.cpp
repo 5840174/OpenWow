@@ -5,9 +5,6 @@
 // General
 #include "MapWMOInstance.h"
 
-// Additional
-#include "WMO\\RenderPass_WMO.h"
-
 CMapWMOInstance::CMapWMOInstance(IScene& Scene, const std::shared_ptr<CWMO>& WMOObject, const ADT_MODF& _placementInfo)
 	: CWMO_Base_Instance(Scene, WMOObject)
 	, m_PlacementInfo(_placementInfo)

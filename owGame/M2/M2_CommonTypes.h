@@ -1,7 +1,5 @@
 #pragma once
 
-#ifdef USE_M2_MODELS
-
 #include __PACK_BEGIN
 
 template<typename T>
@@ -65,5 +63,3 @@ struct M2Range
 };
 
 #include __PACK_END
-
-#endif

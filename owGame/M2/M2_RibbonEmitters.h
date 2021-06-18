@@ -1,7 +1,5 @@
 #pragma once
 
-#ifdef USE_M2_MODELS
-
 // FORWARD BEGIN
 class CM2;
 class SM2_Part_Bone_Wrapper;
@@ -49,5 +47,3 @@ private:
 private:
 	const CM2& m_M2Object;
 };
-
-#endif

@@ -4,7 +4,7 @@
 #include "RenderPass_MapChunk.h"
 
 // Additional
-#include "MapChunk.h"
+#include "Map/MapChunk.h"
 
 CRenderPass_ADT_MCNK::CRenderPass_ADT_MCNK(IScene& Scene)
 	: Base3DPass(Scene)

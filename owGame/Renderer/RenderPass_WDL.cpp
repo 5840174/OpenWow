@@ -4,8 +4,8 @@
 #include "RenderPass_WDL.h"
 
 // Additional
-#include "WDL_LowResTile.h"
-#include "Map.h"
+#include "Map/WDL_LowResTile.h"
+#include "Map/Map.h"
 
 CRenderPass_WDL::CRenderPass_WDL(IScene& Scene)
 	: Base3DPass(Scene)

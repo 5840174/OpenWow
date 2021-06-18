@@ -69,41 +69,6 @@ void CSceneWoW::Initialize()
 
 	GetBaseManager().GetManager<IWoWObjectsCreator>()->InitEGxBlend(GetRenderDevice());
 
-	{
-		std::shared_ptr<CRenderPass_Sky> skyPass = MakeShared(CRenderPass_Sky, *this);
-		skyPass->ConfigurePipeline(GetRenderWindow().GetRenderTarget());
-		GetRenderer()->Add3DPass(skyPass);
-	}
-
-	{
-		std::shared_ptr<CRenderPass_MapTile> tilePass = MakeShared(CRenderPass_MapTile, *this);
-		tilePass->ConfigurePipeline(GetRenderWindow().GetRenderTarget());
-		GetRenderer()->Add3DPass(tilePass);
-	}
-
-	{
-		std::shared_ptr<CRenderPass_ADT_MCNK> adtMCNKPass = MakeShared(CRenderPass_ADT_MCNK, *this);
-		adtMCNKPass->ConfigurePipeline(GetRenderWindow().GetRenderTarget());
-		GetRenderer()->Add3DPass(adtMCNKPass);
-	}
-
-
-	{
-		std::shared_ptr<CRenderPass_Liquid> liquidPass = MakeShared(CRenderPass_Liquid, *this);
-		liquidPass->ConfigurePipeline(GetRenderWindow().GetRenderTarget());
-		GetRenderer()->Add3DPass(liquidPass);
-	}
-
-	{
-		std::shared_ptr<CRenderPass_WMO> wmoPass = MakeShared(CRenderPass_WMO, *this);
-		wmoPass->ConfigurePipeline(GetRenderWindow().GetRenderTarget());
-		GetRenderer()->Add3DPass(wmoPass);
-	}
-
-
-	
-
-
 
 	skyManager = MakeShared(SkyManager, GetRenderDevice(), *this);
 	skyManager->Initialize();
@@ -172,12 +137,18 @@ void CSceneWoW::OnWindowKeyReleased(KeyEventArgs & e)
 
 
 
+//
+// Protected
+//
+void CSceneWoW::InitializeRenderer()
+{
+	auto wowRenderer = MakeShared(CRendererWoW, GetBaseManager(), *this);
+	wowRenderer->Initialize(GetRenderWindow().GetRenderTarget());
+	m_ForwardRenderer = wowRenderer;
+	m_DefferedRenderrer = wowRenderer;
 
-
-
-
-
-
+	SetRenderer(wowRenderer);
+}
 
 
 

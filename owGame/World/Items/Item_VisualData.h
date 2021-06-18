@@ -34,7 +34,9 @@ public:
 	CItem_VisualData(IBaseManager& BaseManager, IRenderDevice& RenderDevice, const std::shared_ptr<Character>& Character);
 	virtual ~CItem_VisualData();
 
+	// CLoadableObject
 	bool Load();
+	bool Delete();
 
 	const std::vector<ObjectComponent>&  getObjectComponents() const { return m_ObjectComponents; }
 	const std::vector<GeosetComponent>&  getGeosetComponents() const { return m_GeosetComponents; }

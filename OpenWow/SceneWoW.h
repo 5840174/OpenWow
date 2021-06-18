@@ -20,6 +20,9 @@ public:
 	virtual bool OnWindowKeyPressed(KeyEventArgs& e) override;
 	virtual void OnWindowKeyReleased(KeyEventArgs& e) override;
 
+protected:
+	virtual void InitializeRenderer() override;
+
 private:
 	std::shared_ptr<SkyManager> skyManager;
 	std::shared_ptr<CMap> map;

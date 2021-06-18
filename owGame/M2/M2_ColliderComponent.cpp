@@ -1,7 +1,5 @@
 #include "stdafx.h"
 
-#ifdef USE_M2_MODELS
-
 // Include
 #include "M2_Base_Instance.h"
 
@@ -9,7 +7,7 @@
 #include "M2_ColliderComponent.h"
 
 CM2_ColliderComponent::CM2_ColliderComponent(const ISceneNode& OwnerNode)
-    : CColliderComponent3D(OwnerNode)
+    : CColliderComponent(OwnerNode)
 {
 }
 
@@ -34,5 +32,3 @@ void CM2_ColliderComponent::UpdateBounds()
     //GetComponentT<IColliderComponent>()->SetBounds(bbox);
 	__super::UpdateBounds();
 }
-
-#endif

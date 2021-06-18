@@ -109,6 +109,11 @@ bool CItem_VisualData::Load()
 	return true;
 }
 
+bool CItem_VisualData::Delete()
+{
+	return false;
+}
+
 	//if (m_InventoryType == EInventoryType::CLOAK)
 	//{
 	//	return;
@@ -161,7 +166,6 @@ void CItem_VisualData::InitObjectComponents()
 
 		std::shared_ptr<CItem_M2Instance> itemObjectInstance = m_ParentCharacter.CreateSceneNode<CItem_M2Instance>(m2Model);
 		m_BaseManager.GetManager<ILoader>()->AddToLoadQueue(itemObjectInstance);
-		//itemObjectInstance->Load();
 		itemObjectInstance->Attach(itemObjectAttach.GetAttachmentType());
 		itemObjectInstance->setSpecialTexture(SM2_Texture::Type::OBJECT_SKIN, itemObjectTexture);
 
@@ -194,6 +198,7 @@ void CItem_VisualData::InitObjectComponents()
 					visualEffectInstance->Attach(itemObjectInstance->getM2().getMiscellaneous().getAttachment((M2_AttachmentType)j).GetAttachmentType());
 				else
 					visualEffectInstance->Attach(itemObjectAttach.GetAttachmentType());
+
 				itemObjectInstance->AddVisualEffect(visualEffectInstance);
 			}
 		}
@@ -244,7 +249,7 @@ std::string CItem_VisualData::GetObjectModelName(EInventoryType _objectType, std
 
 std::shared_ptr<ITexture> CItem_VisualData::LoadObjectTexture(EInventoryType _objectType, std::string _textureName)
 {
-	return m_RenderDevice.GetObjectsFactory().LoadTexture2D("Item\\ObjectComponents\\" + std::string(ItemObjectComponents[static_cast<size_t>(_objectType)].folder) + "\\" + _textureName + ".blp");
+	return m_BaseManager.GetManager<IznTexturesFactory>()->LoadTexture2D("Item\\ObjectComponents\\" + std::string(ItemObjectComponents[static_cast<size_t>(_objectType)].folder) + "\\" + _textureName + ".blp");
 }
 
 std::shared_ptr<ITexture> CItem_VisualData::LoadSkinTexture(DBC_CharComponent_Sections _type, std::string _textureName)
@@ -257,15 +262,15 @@ std::shared_ptr<ITexture> CItem_VisualData::LoadSkinTexture(DBC_CharComponent_Se
 
 	if (fManager->IsFileExists(universalTexture))
 	{
-		return m_RenderDevice.GetObjectsFactory().LoadTexture2D(universalTexture);
+		return m_BaseManager.GetManager<IznTexturesFactory>()->LoadTexture2D(universalTexture);
 	}
 	else if (fManager->IsFileExists(maleTexture))
 	{
-		return m_RenderDevice.GetObjectsFactory().LoadTexture2D(maleTexture);
+		return m_BaseManager.GetManager<IznTexturesFactory>()->LoadTexture2D(maleTexture);
 	}
 	else if (fManager->IsFileExists(femaleTexture))
 	{
-		return m_RenderDevice.GetObjectsFactory().LoadTexture2D(femaleTexture);
+		return m_BaseManager.GetManager<IznTexturesFactory>()->LoadTexture2D(femaleTexture);
 	}
 
 	return nullptr;

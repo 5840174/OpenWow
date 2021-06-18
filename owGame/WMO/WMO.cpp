@@ -45,19 +45,13 @@ void CWMO::CreateInsances(const std::shared_ptr<CWMO_Base_Instance>& Parent) con
 {
 	for (const auto& it : m_Groups)
 	{
-		//auto groupInstance = Parent->CreateSceneNode<CWMO_Group_Instance>(it);
-		auto groupInstance = MakeShared(CWMO_Group_Instance, Parent->GetScene(), it);
-		groupInstance->RegisterComponents();
-		groupInstance->Initialize();
-		Parent->AddChild(groupInstance);
+		auto groupInstance = Parent->CreateSceneNode<CWMO_Group_Instance>(it);
 
 		Parent->AddGroupInstance(groupInstance);
 		if (it->m_GroupHeader.flags.IS_OUTDOOR)
 			Parent->AddOutdoorGroupInstance(groupInstance);
 
-		groupInstance->Load();
-		groupInstance->SetState(ILoadable::ELoadableState::Loaded);
-		//m_BaseManager.GetManager<ILoader>()->AddToLoadQueue(groupInstance);
+		m_BaseManager.GetManager<ILoader>()->AddToLoadQueue(groupInstance);
 	}
 
 #ifdef USE_WMO_PORTALS_CULLING
@@ -204,9 +198,8 @@ bool CWMO::Load()
 		for (const auto& groupInfo : m_ChunkReader->OpenChunkT<SWMO_GroupInfoDef>("MOGI"))
 		{
 			std::shared_ptr<WMO_Group> group = std::make_shared<WMO_Group>(m_BaseManager, m_RenderDevice, std::dynamic_pointer_cast<CWMO>(shared_from_this()), cntr++, groupInfo);
-			group->Load();
-			group->SetState(ELoadableState::Loaded);
-			//m_BaseManager.GetManager<ILoader>()->AddToLoadQueue(group);
+			m_BaseManager.GetManager<ILoader>()->AddToLoadQueue(group);
+
 			m_Groups.push_back(group);
 
 			if (group->m_GroupHeader.flags.IS_OUTDOOR)

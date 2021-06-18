@@ -4,8 +4,8 @@
 #include "RenderPass_MapTile.h"
 
 // Additional
-#include "Map.h"
-#include "MapTile.h"
+#include "Map/Map.h"
+#include "Map/MapTile.h"
 
 CRenderPass_MapTile::CRenderPass_MapTile(IScene& Scene)
 	: Base3DPass(Scene)

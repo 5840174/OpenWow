@@ -1,7 +1,5 @@
 #pragma once
 
-#ifdef USE_M2_MODELS
-
 #include "M2_AnimatedConverters.h"
 #include "M2_Types.h"
 
@@ -332,7 +330,7 @@ private:
 
 	inline bool IsStaticValue() const
 	{
-		if (m_GlobalSecIndex == -1 && m_Type == Interpolations::INTERPOLATION_NONE && GetCount() == 1)
+		if (m_GlobalSecIndex == -1 && m_Type == Interpolations::None && GetCount() == 1)
 		{
 			_ASSERT(m_Times.at(0).size() == 1);
 			_ASSERT(m_Values.at(0).size() == 1);
@@ -351,7 +349,5 @@ private:
 	std::vector<std::vector<T>>      m_ValuesHermiteIn;
 	std::vector<std::vector<T>>      m_ValuesHermiteOut;
 };
-
-#endif
 
 #endif

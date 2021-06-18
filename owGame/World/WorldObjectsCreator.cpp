@@ -34,7 +34,7 @@ std::shared_ptr<Creature> CWorldObjectCreator::BuildCreatureFromDisplayInfo(IRen
 	if (m2Model == nullptr)
 		return nullptr;
 
-	std::shared_ptr<Creature> newCreature = Scene->CreateSceneNode<Creature>(Parent, m2Model);
+	std::shared_ptr<Creature> newCreature = Parent->CreateSceneNode<Creature>(m2Model);
 	m_BaseManager.GetManager<ILoader>()->AddToLoadQueue(newCreature);
 	newCreature->setAlpha(static_cast<float>(rec->Get_Opacity()) / 255.0f);
 	newCreature->SetScale(glm::vec3(rec->Get_Scale()));
@@ -42,13 +42,13 @@ std::shared_ptr<Creature> CWorldObjectCreator::BuildCreatureFromDisplayInfo(IRen
 	// 2. Creature textures
 	{
 		if (rec->Get_Texture1().length() != 0)
-			newCreature->setSpecialTexture(SM2_Texture::Type::MONSTER_1, RenderDevice.GetObjectsFactory().LoadTexture2D(m2Model->getFilePath() + rec->Get_Texture1() + ".blp"));
+			newCreature->setSpecialTexture(SM2_Texture::Type::MONSTER_1, m_BaseManager.GetManager<IznTexturesFactory>()->LoadTexture2D(m2Model->getFilePath() + rec->Get_Texture1() + ".blp"));
 
 		if (rec->Get_Texture2().length() != 0)
-			newCreature->setSpecialTexture(SM2_Texture::Type::MONSTER_2, RenderDevice.GetObjectsFactory().LoadTexture2D(m2Model->getFilePath() + rec->Get_Texture2() + ".blp"));
+			newCreature->setSpecialTexture(SM2_Texture::Type::MONSTER_2, m_BaseManager.GetManager<IznTexturesFactory>()->LoadTexture2D(m2Model->getFilePath() + rec->Get_Texture2() + ".blp"));
 
 		if (rec->Get_Texture3().length() != 0)
-			newCreature->setSpecialTexture(SM2_Texture::Type::MONSTER_3, RenderDevice.GetObjectsFactory().LoadTexture2D(m2Model->getFilePath() + rec->Get_Texture3() + ".blp"));
+			newCreature->setSpecialTexture(SM2_Texture::Type::MONSTER_3, m_BaseManager.GetManager<IznTexturesFactory>()->LoadTexture2D(m2Model->getFilePath() + rec->Get_Texture3() + ".blp"));
 	}
 
 	return newCreature;
@@ -61,7 +61,7 @@ std::shared_ptr<Character> CWorldObjectCreator::BuildCharactedFromTemplate(IRend
 	if (m2Model == nullptr)
 		return nullptr;
 
-	std::shared_ptr<Character> newCharacter = Scene->CreateSceneNode<Character>(Parent, m2Model);
+	std::shared_ptr<Character> newCharacter = Parent->CreateSceneNode<Character>(m2Model);
 	m_BaseManager.GetManager<ILoader>()->AddToLoadQueue(newCharacter);
 
 	// 2. Template
@@ -96,7 +96,7 @@ std::shared_ptr<Character> CWorldObjectCreator::BuildCharactedFromDisplayInfo(IR
 	if (m2Model == nullptr)
 		return nullptr;
 
-	std::shared_ptr<Character> newCharacter = Scene->CreateSceneNode<Character>(Parent, m2Model);
+	std::shared_ptr<Character> newCharacter = Parent->CreateSceneNode<Character>(m2Model);
 	m_BaseManager.GetManager<ILoader>()->AddToLoadQueue(newCharacter);
 
 	// 2. Template
@@ -139,7 +139,7 @@ std::shared_ptr<Character> CWorldObjectCreator::BuildCharactedFromDisplayInfo(IR
 		std::shared_ptr<ITexture> bakedSkinTexture = nullptr;
 		if (!bakedTextureName.empty())
 		{
-			bakedSkinTexture = RenderDevice.GetObjectsFactory().LoadTexture2D("Textures\\BakedNpcTextures\\" + bakedTextureName);
+			bakedSkinTexture = m_BaseManager.GetManager<IznTexturesFactory>()->LoadTexture2D("Textures\\BakedNpcTextures\\" + bakedTextureName);
 		}
 		else
 		{
@@ -166,7 +166,7 @@ std::shared_ptr<GameObject> CWorldObjectCreator::BuildGameObjectFromDisplayInfo(
 			return nullptr;
 	}
 
-	std::shared_ptr<GameObject> newGameObject = Scene->CreateSceneNode<GameObject>(Parent, m2Model);
+	std::shared_ptr<GameObject> newGameObject = Parent->CreateSceneNode<GameObject>(m2Model);
 	m_BaseManager.GetManager<ILoader>()->AddToLoadQueue(newGameObject);
 	return newGameObject;
 }

@@ -1,7 +1,5 @@
 #include "stdafx.h"
 
-#ifdef USE_M2_MODELS
-
 // Include
 #include "M2.h"
 
@@ -29,7 +27,7 @@ void CM2_Comp_Materials::Load(const SM2_Header& M2Header, const std::shared_ptr<
 			m_Colors.push_back(color);
 
 			// Animated
-			if (m2Colors[i].color.interpolation_type != Interpolations::INTERPOLATION_NONE || m2Colors[i].alpha.interpolation_type != Interpolations::INTERPOLATION_NONE)
+			if (m2Colors[i].color.interpolation_type != Interpolations::None || m2Colors[i].alpha.interpolation_type != Interpolations::None)
 			{
 				//m_M2->m_HasMisc = true;
 			}
@@ -100,7 +98,7 @@ void CM2_Comp_Materials::Load(const SM2_Header& M2Header, const std::shared_ptr<
 			m_TextureWeights.push_back(textureWeight);
 
 			// Animated
-			if (m2TexturesWeights[i].weight.interpolation_type != Interpolations::INTERPOLATION_NONE)
+			if (m2TexturesWeights[i].weight.interpolation_type != Interpolations::None)
 			{
 				//m_M2->m_HasMisc = true;
 			}
@@ -129,9 +127,9 @@ void CM2_Comp_Materials::Load(const SM2_Header& M2Header, const std::shared_ptr<
 			m_TexturesTransform.push_back(textureTransform);
 
 			// AnimTextures
-			if (m2TexturesTransforms[i].translation.interpolation_type != Interpolations::INTERPOLATION_NONE ||
-				m2TexturesTransforms[i].rotation.interpolation_type != Interpolations::INTERPOLATION_NONE ||
-				m2TexturesTransforms[i].scaling.interpolation_type != Interpolations::INTERPOLATION_NONE)
+			if (m2TexturesTransforms[i].translation.interpolation_type != Interpolations::None ||
+				m2TexturesTransforms[i].rotation.interpolation_type != Interpolations::None ||
+				m2TexturesTransforms[i].scaling.interpolation_type != Interpolations::None)
 			{
 				m_IsAnimTextures = true;
 			}
@@ -148,5 +146,3 @@ void CM2_Comp_Materials::Load(const SM2_Header& M2Header, const std::shared_ptr<
 		}
 	}
 }
-
-#endif
