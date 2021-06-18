@@ -107,12 +107,7 @@ void WMO_Group::CreateInsances(const std::shared_ptr<CWMO_Group_Instance>& Paren
 	{
 		glm::vec3 realPos = Fix_XZmY(m_WMOLiqiud->GetHeader().pos);
 
-		//auto liquidInstance = Parent->CreateSceneNode<CWMO_Liquid_Instance>();
-		auto liquidInstance = MakeShared(CWMO_Liquid_Instance, Parent->GetScene());
-		liquidInstance->RegisterComponents();
-		liquidInstance->Initialize();
-		Parent->AddChild(liquidInstance);
-
+		auto liquidInstance = Parent->CreateSceneNode<CWMO_Liquid_Instance>();
 
 		m_WMOLiqiud->CreateInsances(liquidInstance);
 

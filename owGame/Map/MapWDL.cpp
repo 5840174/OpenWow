@@ -10,7 +10,7 @@
 // Additional
 #include "WoWChunkReader.h"
 
-CMapWDL::CMapWDL(IBaseManager& BaseManager, IRenderDevice& RenderDevice, const CMap& Map)
+CMapWDL::CMapWDL(const IBaseManager& BaseManager, IRenderDevice& RenderDevice, const CMap& Map)
 	: m_Minimap(nullptr)
 	, m_BaseManager(BaseManager)
 	, m_RenderDevice(RenderDevice)

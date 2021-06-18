@@ -3,9 +3,9 @@
 class ZN_API WoWChunkReader 
 {
 public:
-	WoWChunkReader(IBaseManager& BaseManager, std::string FileName);
-	WoWChunkReader(IBaseManager& BaseManager, const std::shared_ptr<IByteBuffer>& ByteBuffer);
-	WoWChunkReader(IBaseManager& BaseManager, const void* DataPtr, size_t DataSize);
+	WoWChunkReader(const IBaseManager& BaseManager, std::string FileName);
+	WoWChunkReader(const IBaseManager& BaseManager, const std::shared_ptr<IByteBuffer>& ByteBuffer);
+	WoWChunkReader(const IBaseManager& BaseManager, const void* DataPtr, size_t DataSize);
 	virtual ~WoWChunkReader();
 
 	std::shared_ptr<IByteBuffer> OpenChunk(const char* _name);

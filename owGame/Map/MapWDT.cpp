@@ -9,7 +9,7 @@
 // Additional
 #include "WoWChunkReader.h"
 
-CMapWDT::CMapWDT(IBaseManager& BaseManager, IRenderDevice& RenderDevice, const CMap& Map)
+CMapWDT::CMapWDT(const IBaseManager& BaseManager, IRenderDevice& RenderDevice, const CMap& Map)
 	: m_IsTileBased(false)
 	
 #ifdef USE_WMO_MODELS

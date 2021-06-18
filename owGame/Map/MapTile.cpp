@@ -9,11 +9,9 @@
 // Additional
 #include "MapTileLiquid.h"
 
-CMapTile::CMapTile(IScene& Scene, IBaseManager& BaseManager, IRenderDevice& RenderDevice, const CMap& Map, uint32 IndexX, uint32 IndexZ)
+CMapTile::CMapTile(IScene& Scene, const CMap& MapParent, uint32 IndexX, uint32 IndexZ)
 	: CSceneNode(Scene)
-	, m_BaseManager(BaseManager)
-	, m_RenderDevice(RenderDevice)
-	, m_Map(Map)
+	, m_MapParent(MapParent)
 	, m_IndexX(IndexX)
 	, m_IndexZ(IndexZ)
 {
@@ -25,6 +23,10 @@ CMapTile::~CMapTile()
 	Log::Warn("MapTile[%d, %d] unloaded.", m_IndexX, m_IndexZ);
 }
 
+const CMap& CMapTile::GetMap() const
+{
+	return m_MapParent;
+}
 
 int CMapTile::getIndexX() const
 {
@@ -44,10 +46,7 @@ const CMapChunk* CMapTile::getChunk(int32 x, int32 z) const
     return m_Chunks[x * C_ChunksInTile + z];
 }
 
-const CMap & CMapTile::GetMap() const
-{
-	return m_Map;
-}
+
 
 //
 // SceneNode3D
@@ -78,7 +77,7 @@ void CMapTile::Initialize()
 bool CMapTile::Load()
 {
 	char filename[256];
-	sprintf_s(filename, "%s_%d_%d.adt", m_Map.GetMapFolder().c_str(), m_IndexX, m_IndexZ);
+	sprintf_s(filename, "%s_%d_%d.adt", GetMap().GetMapFolder().c_str(), m_IndexX, m_IndexZ);
 
 	std::shared_ptr<IFile> f = GetBaseManager().GetManager<IFilesManager>()->Open(filename);
 	uint32_t startPos = f->getPos() + 20;
@@ -130,12 +129,7 @@ bool CMapTile::Load()
 					{
 						CMapTileLiquid liquidObject(GetRenderDevice(), f, *mh2o_Header);
 
-						auto liquidInstance = MakeShared(Liquid_Instance, GetScene());
-						liquidInstance->RegisterComponents();
-						liquidInstance->Initialize();
-						AddChild(liquidInstance);
-						//auto liquidInstance = GetScene().CreateSceneNode<Liquid_Instance>();
-
+						auto liquidInstance = CreateSceneNode<Liquid_Instance>();
 						liquidObject.CreateInsances(liquidInstance);
 
 						// Transform
@@ -163,7 +157,7 @@ bool CMapTile::Load()
 #if 0
 		textureInfo->diffuseTexture = GetBaseManager().GetManager<IImagesFactory>()->CreateImage(_string);
 #else
-		textureInfo->diffuseTexture = m_RenderDevice.GetBaseManager().GetManager<IznTexturesFactory>()->LoadTexture2D(_string);
+		textureInfo->diffuseTexture = GetBaseManager().GetManager<IznTexturesFactory>()->LoadTexture2D(_string);
 #endif
 
 		// PreLoad specular texture
@@ -174,7 +168,7 @@ bool CMapTile::Load()
 #if 0
 			textureInfo->specularTexture = GetBaseManager().GetManager<IImagesFactory>()->CreateImage(specularTextureName);
 #else
-			textureInfo->specularTexture = m_RenderDevice.GetBaseManager().GetManager<IznTexturesFactory>()->LoadTexture2D(specularTextureName);
+			textureInfo->specularTexture = GetBaseManager().GetManager<IznTexturesFactory>()->LoadTexture2D(specularTextureName);
 #endif
 		}
 		catch (const CException& e)
@@ -291,7 +285,8 @@ bool CMapTile::Load()
 	//-- Load Chunks ---------------------------------------------------------------------
 	for (uint32_t i = 0; i < C_ChunksInTileGlobal; i++)
 	{
-		auto chunk = CreateSceneNode<CMapChunk>(m_RenderDevice, m_Map, std::dynamic_pointer_cast<CMapTile>(shared_from_this()), chunks[i], f);
+		auto chunk = CreateSceneNode<CMapChunk>(*this, chunks[i], f);
+		std::dynamic_pointer_cast<ILoadable>(chunk)->AddDependense(std::dynamic_pointer_cast<ILoadable>(shared_from_this()));
 		GetBaseManager().GetManager<ILoader>()->AddToLoadQueue(chunk);
 
 		m_Chunks.push_back(chunk.get());
@@ -302,8 +297,7 @@ bool CMapTile::Load()
 #ifdef USE_WMO_MODELS
 	for (const auto& it : m_WMOsPlacementInfo)
 	{
-		std::shared_ptr<CWMO> wmo = m_BaseManager.GetManager<IWoWObjectsCreator>()->LoadWMO(m_RenderDevice, m_WMOsNames[it.nameIndex], true);
-		if (wmo)
+		if (std::shared_ptr<CWMO> wmo = GetBaseManager().GetManager<IWoWObjectsCreator>()->LoadWMO(GetRenderDevice(), m_WMOsNames[it.nameIndex], true))
 		{
 			auto inst = CreateSceneNode<CMapWMOInstance>(wmo, it);
 			GetBaseManager().GetManager<ILoader>()->AddToLoadQueue(inst);
@@ -317,7 +311,7 @@ bool CMapTile::Load()
 #ifdef USE_M2_MODELS
 	for (const auto& it : m_MDXsPlacementInfo)
 	{
-		if (auto m2 = m_BaseManager.GetManager<IWoWObjectsCreator>()->LoadM2(m_RenderDevice, m_MDXsNames[it.nameIndex]))
+		if (auto m2 = GetBaseManager().GetManager<IWoWObjectsCreator>()->LoadM2(GetRenderDevice(), m_MDXsNames[it.nameIndex]))
 		{
 			auto inst = CreateSceneNode<CMapM2Instance>(m2, it);
 			GetBaseManager().GetManager<ILoader>()->AddToLoadQueue(inst);

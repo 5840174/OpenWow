@@ -7,7 +7,7 @@ class ZN_API SkyManager
 	, public ISkyManager
 {
 public:
-	SkyManager(IRenderDevice& RenderDevice, IScene& Scene);
+	SkyManager(IScene& Scene);
 	virtual ~SkyManager();
 
 	// ILoadableObject
@@ -35,8 +35,5 @@ private:
 	CSkyParams                                      m_Interpolated;
 	std::shared_ptr<IBuffer>                        colorsBuffer;
 	std::vector<std::shared_ptr<Sky>>               skies;
-
-private:
-	IRenderDevice& m_RenderDevice;
 };
 

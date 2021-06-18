@@ -25,12 +25,10 @@ namespace
 	}
 }
 
-CMapChunk::CMapChunk(IScene& Scene, IRenderDevice& RenderDevice, const CMap& Map, const std::shared_ptr<CMapTile>& MapTile, const ADT_MCIN& Chunk, const std::shared_ptr<IByteBuffer>& Bytes)
+CMapChunk::CMapChunk(IScene& Scene, const CMapTile& MapTileParent, const ADT_MCIN& Chunk, const std::shared_ptr<IByteBuffer>& Bytes)
 	: CSceneNode(Scene)
-	, CLoadableObject(MapTile)
-	, m_RenderDevice(RenderDevice)
-	, m_Map(Map)
-	, m_MapTile(*MapTile)
+	, m_MapTile(MapTileParent)
+	, m_Map(m_MapTile.GetMap())
 	, m_Bytes(Bytes)
 {
 	m_Bytes = std::make_shared<CByteBuffer>(Bytes->getData() + Chunk.offset, Chunk.size);
@@ -43,7 +41,7 @@ CMapChunk::~CMapChunk()
 
 uint32 CMapChunk::GetAreaID() const
 {
-    return m_AreaID;
+    return header.areaid;
 }
 
 
@@ -70,8 +68,6 @@ void CMapChunk::Initialize()
 	// Read header
 	m_Bytes->readBytes(&header, sizeof(ADT_MCNK_Header));
 
-	m_AreaID = header.areaid;
-
 	// Scene node params
 	{
 		// Set translate
@@ -89,7 +85,7 @@ void CMapChunk::Initialize()
 		);
 
 		GetComponentT<IColliderComponent>()->SetCullStrategy(IColliderComponent::ECullStrategy::ByFrustrumAndDistance2D);
-		GetComponentT<IColliderComponent>()->SetCullDistance(m_RenderDevice.GetBaseManager().GetManager<ISettings>()->GetGroup("WoWSettings")->GetPropertyT<float>("ADT_MCNK_Distance")->Get());
+		GetComponentT<IColliderComponent>()->SetCullDistance(GetBaseManager().GetManager<ISettings>()->GetGroup("WoWSettings")->GetPropertyT<float>("ADT_MCNK_Distance")->Get());
 		GetComponentT<IColliderComponent>()->SetBounds(bbox);
 		GetComponentT<IColliderComponent>()->SetDebugDrawMode(false);
 	}
@@ -152,7 +148,7 @@ bool CMapChunk::Load()
 
 		//normalsBuffer = _Render->r.createVertexBuffer(C_MapBufferSize * sizeof(vec3), tempNormals, false);
 		//normalsBuffer = _Render->r.createVertexBuffer(C_MapBufferSize * sizeof(int24), normals_INT24, false);
-		normalsBuffer = m_RenderDevice.GetObjectsFactory().CreateVertexBuffer(tempNormals, C_MapBufferSize);
+		normalsBuffer = GetRenderDevice().GetObjectsFactory().CreateVertexBuffer(tempNormals, C_MapBufferSize);
 	}
 
 	// Heights
@@ -202,7 +198,7 @@ bool CMapChunk::Load()
 
         GetComponentT<IColliderComponent>()->SetBounds(bbox);
 
-		verticesBuffer = m_RenderDevice.GetObjectsFactory().CreateVertexBuffer(tempVertexes, C_MapBufferSize);
+		verticesBuffer = GetRenderDevice().GetObjectsFactory().CreateVertexBuffer(tempVertexes, C_MapBufferSize);
 	}
 
 	if (m_MapTile.GetState() != ILoadable::ELoadableState::Loaded)
@@ -351,18 +347,14 @@ bool CMapChunk::Load()
 				GetComponentT<IColliderComponent>()->SetBounds(bbox);
 			}
 
-			CMapChunkLiquid liquidObject(m_RenderDevice, m_Bytes, header);
+			CMapChunkLiquid liquidObject(GetRenderDevice(), m_Bytes, header);
 
-			auto liquidInstance = MakeShared(Liquid_Instance, GetScene());
-			liquidInstance->RegisterComponents();
-			liquidInstance->Initialize();
-			AddChild(liquidInstance);
-			//auto liquidInstance = GetScene().CreateSceneNode<Liquid_Instance>();
+			auto liquidInstance = CreateSceneNode<Liquid_Instance>();
 
 			liquidObject.CreateInsances(liquidInstance);
 
 			// Transform
-			liquidInstance->SetPosition(glm::vec3(0.0f, (-GetPosition().y), 0.0f));
+			liquidInstance->SetLocalPosition(glm::vec3(0.0f, (-GetPosition().y), 0.0f));
 
 			// IColliderComponent
 			{
@@ -390,7 +382,7 @@ bool CMapChunk::Load()
 		return true;
 
 	// Material
-	std::shared_ptr<ADT_MCNK_Material> mat = std::make_shared<ADT_MCNK_Material>(m_RenderDevice);
+	std::shared_ptr<ADT_MCNK_Material> mat = std::make_shared<ADT_MCNK_Material>(GetRenderDevice());
 
 #if 0
 	// Create chunk texture
@@ -439,13 +431,14 @@ bool CMapChunk::Load()
 #else
 	for (uint32 i = 0; i < header.nLayers; i++)
 	{
-		if (m_MapTile.GetState() != ILoadable::ELoadableState::Loaded) return false;
+		if (m_MapTile.GetState() != ILoadable::ELoadableState::Loaded)
+			return false;
 
 		mat->SetTexture(i + 0, m_MapTile.m_Textures.at(mcly[i].textureIndex)->diffuseTexture);
 		//mat->SetTexture(i + 5, m_MapTile.m_Textures.at(mcly[i].textureIndex)->specularTexture);
 	}
 
-	std::shared_ptr<ITexture> blendRBGShadowATexture = m_RenderDevice.GetObjectsFactory().CreateEmptyTexture();
+	std::shared_ptr<ITexture> blendRBGShadowATexture = GetRenderDevice().GetObjectsFactory().CreateEmptyTexture();
 	blendRBGShadowATexture->LoadTexture2DFromImage(blendBuff);
 
 	mat->SetTexture(4, blendRBGShadowATexture);
@@ -456,15 +449,15 @@ bool CMapChunk::Load()
 
 	{ // Geom High
 		const std::vector<uint16>& mapArrayHigh = _MapShared->GenarateHighMapArray(header.holes);
-		std::shared_ptr<IBuffer> __ibHigh = m_RenderDevice.GetObjectsFactory().CreateIndexBuffer(mapArrayHigh);
+		std::shared_ptr<IBuffer> __ibHigh = GetRenderDevice().GetObjectsFactory().CreateIndexBuffer(mapArrayHigh);
 
-		std::shared_ptr<IGeometry> defaultGeometry = m_RenderDevice.GetObjectsFactory().CreateGeometry();
+		std::shared_ptr<IGeometry> defaultGeometry = GetRenderDevice().GetObjectsFactory().CreateGeometry();
 		defaultGeometry->AddVertexBuffer(BufferBinding("POSITION", 0), verticesBuffer);
 		defaultGeometry->AddVertexBuffer(BufferBinding("NORMAL", 0), normalsBuffer);
 		defaultGeometry->AddVertexBuffer(BufferBinding("TEXCOORD", 0), _MapShared->BufferTextureCoordDetailAndAlpha);
 		defaultGeometry->SetIndexBuffer(__ibHigh);
 
-		std::shared_ptr<IModel> model = m_RenderDevice.GetObjectsFactory().CreateModel();
+		std::shared_ptr<IModel> model = GetRenderDevice().GetObjectsFactory().CreateModel();
 		model->AddConnection(mat, defaultGeometry);
 
 		GetComponentT<IModelComponent>()->SetModel(model);

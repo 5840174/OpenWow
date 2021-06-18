@@ -70,21 +70,12 @@ void CSceneWoW::Initialize()
 	GetBaseManager().GetManager<IWoWObjectsCreator>()->InitEGxBlend(GetRenderDevice());
 
 
-	skyManager = MakeShared(SkyManager, GetRenderDevice(), *this);
-	skyManager->Initialize();
-	skyManager->RegisterComponents();
-	GetRootSceneNode()->AddChild(skyManager);
-	//skyManager = GetRootSceneNode().CreateSceneNode<SkyManager>(GetRenderDevice());
+	skyManager = GetRootSceneNode()->CreateSceneNode<SkyManager>();
 	GetBaseManager().AddManager<ISkyManager>(skyManager);
 
 	skyManager->Load(0);
 
-
-	map = MakeShared(CMap, *this, GetBaseManager(), GetRenderDevice());
-	map->Initialize();
-	map->RegisterComponents();
-	GetRootSceneNode()->AddChild(map);
-	//map = GetRootNode3D()->CreateSceneNode<CMap>(GetBaseManager(), GetRenderDevice());
+	map = GetRootSceneNode()->CreateSceneNode<CMap>();
 
 	const float x = 40;
 	const float y = 30;

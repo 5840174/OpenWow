@@ -28,17 +28,15 @@ namespace
 	}
 }
 
-CMap::CMap(IScene& Scene, IBaseManager& BaseManager, IRenderDevice& RenderDevice)
+CMap::CMap(IScene& Scene)
 	: CSceneNode(Scene)
-	, m_BaseManager(BaseManager)
-	, m_RenderDevice(RenderDevice)
 {
 	m_CurrentTileX = m_CurrentTileZ = -1;
 	m_IsOnInvalidTile = false;
 
 	if (_MapShared == nullptr)
 	{
-		_MapShared = new CMapShared(m_RenderDevice);
+		_MapShared = new CMapShared(GetRenderDevice());
 	}
 
 	mProvider = nullptr;
@@ -65,10 +63,10 @@ void CMap::MapPreLoad(const DBC_MapRecord* _map)
 
 	Log::Print("Map[%s]: Id [%d]. Preloading...", m_MapDBCRecord->Get_Directory(), m_MapDBCRecord->Get_ID());
 
-	m_WDL = std::make_unique<CMapWDL>(m_BaseManager, m_RenderDevice, *this);
+	m_WDL = std::make_unique<CMapWDL>(GetBaseManager(), GetRenderDevice(), *this);
 	m_WDL->Load();
 
-	m_WDT = std::make_unique<CMapWDT>(m_BaseManager, m_RenderDevice, *this);
+	m_WDT = std::make_unique<CMapWDT>(GetBaseManager(), GetRenderDevice(), *this);
 }
 
 void CMap::MapLoad()
@@ -219,13 +217,13 @@ std::shared_ptr<CMapTile> CMap::LoadTile(int32 x, int32 z)
 
 		// maxidx is the winner (loser)
 		RemoveChild(m_ADTCache[maxidx]);
-		m_BaseManager.GetManager<ILoader>()->AddToDeleteQueue(m_ADTCache[maxidx]);
+		GetBaseManager().GetManager<ILoader>()->AddToDeleteQueue(m_ADTCache[maxidx]);
 		firstnull = maxidx;
 	}
 
 	// Create new tile
-	m_ADTCache[firstnull] = CreateSceneNode<CMapTile>(m_BaseManager, m_RenderDevice, *this, x, z);
-	m_BaseManager.GetManager<ILoader>()->AddToLoadQueue(m_ADTCache[firstnull]);
+	m_ADTCache[firstnull] = CreateSceneNode<CMapTile>(*this, x, z);
+	GetBaseManager().GetManager<ILoader>()->AddToLoadQueue(m_ADTCache[firstnull]);
 
 	return m_ADTCache[firstnull];
 }

@@ -41,12 +41,9 @@ void CWMO_Doodad_Instance::Initialize()
 {
 	__super::Initialize();
 
-	// CTransformComponent
-	{
-		SetLocalPosition(Fix_XZmY(m_Placement.position));
-		SetLocalRotationQuaternion(glm::quat(m_Placement.orientation.w, -m_Placement.orientation.z, m_Placement.orientation.x, m_Placement.orientation.y));
-		SetLocalScale(glm::vec3(m_Placement.scale, -m_Placement.scale, -m_Placement.scale));
-	}
+	SetLocalPosition(Fix_XZmY(m_Placement.position));
+	SetLocalRotationQuaternion(glm::quat(m_Placement.orientation.w, -m_Placement.orientation.z, m_Placement.orientation.x, m_Placement.orientation.y));
+	SetLocalScale(glm::vec3(m_Placement.scale, -m_Placement.scale, -m_Placement.scale));
 }
 
 void CWMO_Doodad_Instance::Accept(IVisitor* visitor)

@@ -13,13 +13,13 @@ class ZN_API CMapTile
 	, public CLoadableObject
 {
 public:
-	CMapTile(IScene& Scene, IBaseManager& BaseManager, IRenderDevice& RenderDevice, const CMap& Map, uint32 IndexX, uint32 IndexZ);
+	CMapTile(IScene& Scene, const CMap& MapParent, uint32 IndexX, uint32 IndexZ);
 	virtual ~CMapTile();
 
+	const CMap&                                     GetMap() const;
 	int                                             getIndexX() const;
 	int                                             getIndexZ() const;
 	const CMapChunk*                                getChunk(int32 x, int32 z) const;
-	const CMap&                                     GetMap() const;
 
 	// SceneNode3D
 	void											Initialize() override;
@@ -41,11 +41,9 @@ public:
 #endif
 	std::vector<CMapChunk*>			m_Chunks;
 
-private:
-	IBaseManager& m_BaseManager;
-	IRenderDevice& m_RenderDevice;
-	const CMap& m_Map;
 
+private:
+	const CMap& m_MapParent;
 	const int m_IndexX;
 	const int m_IndexZ;
 };

@@ -11,9 +11,8 @@ const float  C_SkyAngles[] = { 90.0f,                          30.0f,           
 const uint32 C_Skycolors[] = { LightColors::LIGHT_COLOR_SKY_0, LightColors::LIGHT_COLOR_SKY_1, LightColors::LIGHT_COLOR_SKY_2, LightColors::LIGHT_COLOR_SKY_3, LightColors::LIGHT_COLOR_SKY_4, LightColors::LIGHT_COLOR_FOG, LightColors::LIGHT_COLOR_FOG };
 const uint32 C_SkycolorsCount = 7;
 
-SkyManager::SkyManager(IRenderDevice& RenderDevice, IScene& Scene)
+SkyManager::SkyManager(IScene& Scene)
 	: CSceneNode(Scene)
-	, m_RenderDevice(RenderDevice)
 {
 }
 
@@ -22,11 +21,11 @@ SkyManager::~SkyManager()
 
 bool SkyManager::Load(uint32 MapID)
 {
-	for (const auto& it : m_RenderDevice.GetBaseManager().GetManager<CDBCStorage>()->DBC_Light())
+	for (const auto& it : GetBaseManager().GetManager<CDBCStorage>()->DBC_Light())
 	{
 		if (MapID == it->Get_MapID())
 		{
-			std::shared_ptr<Sky> sky = std::make_shared<Sky>(m_RenderDevice.GetBaseManager().GetManager<CDBCStorage>(), it);
+			std::shared_ptr<Sky> sky = std::make_shared<Sky>(GetBaseManager().GetManager<CDBCStorage>(), it);
 			skies.push_back(sky);
 		}
 	}
@@ -112,7 +111,7 @@ void SkyManager::Calculate(const ICameraComponent3D* camera, uint32 _time)
 		}
 	}
 
-	std::shared_ptr<IBuffer> colorsBufferNew = m_RenderDevice.GetObjectsFactory().CreateVertexBuffer(colors);
+	std::shared_ptr<IBuffer> colorsBufferNew = GetRenderDevice().GetObjectsFactory().CreateVertexBuffer(colors);
 	colorsBuffer->Copy(colorsBufferNew.get());
 }
 
@@ -156,18 +155,18 @@ void SkyManager::InitBuffer()
 	}
 
 	// Vertex buffer
-	std::shared_ptr<IBuffer> vertexBuffer = m_RenderDevice.GetObjectsFactory().CreateVertexBuffer(vertices);
+	std::shared_ptr<IBuffer> vertexBuffer = GetRenderDevice().GetObjectsFactory().CreateVertexBuffer(vertices);
 
 	// Colors buffer
-	colorsBuffer = m_RenderDevice.GetObjectsFactory().CreateVoidVertexBuffer(vertices.data(), vertices.size(), 0, sizeof(glm::vec4));
+	colorsBuffer = GetRenderDevice().GetObjectsFactory().CreateVoidVertexBuffer(vertices.data(), vertices.size(), 0, sizeof(glm::vec4));
 
 	// Geometry
-	std::shared_ptr<IGeometry> geometry = m_RenderDevice.GetObjectsFactory().CreateGeometry();
+	std::shared_ptr<IGeometry> geometry = GetRenderDevice().GetObjectsFactory().CreateGeometry();
 	geometry->AddVertexBuffer(BufferBinding("POSITION", 0), vertexBuffer);
 	geometry->AddVertexBuffer(BufferBinding("COLOR", 0), colorsBuffer);
 
 	// Material
-	std::shared_ptr<IModel> model = m_RenderDevice.GetObjectsFactory().CreateModel();
+	std::shared_ptr<IModel> model = GetRenderDevice().GetObjectsFactory().CreateModel();
 	model->AddConnection(nullptr, geometry);
 
 	GetComponentT<IModelComponent>()->SetModel(model);

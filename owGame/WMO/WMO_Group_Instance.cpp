@@ -16,12 +16,10 @@ CWMO_Group_Instance::CWMO_Group_Instance(IScene& Scene, const std::shared_ptr<WM
 	, m_PortalsVis(true)
 	, m_Calculated(false)
 	, m_WMOGroupObject(*WMOGroupObject)
-{
-}
+{}
 
 CWMO_Group_Instance::~CWMO_Group_Instance()
-{
-}
+{}
 
 
 

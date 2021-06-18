@@ -3,7 +3,7 @@
 // General
 #include "WoWChunkReader.h"
 
-WoWChunkReader::WoWChunkReader(IBaseManager& BaseManager, std::string FileName)
+WoWChunkReader::WoWChunkReader(const IBaseManager& BaseManager, std::string FileName)
 {
 	m_ByteBuffer = BaseManager.GetManager<IFilesManager>()->Open(FileName);
 	_ASSERT(m_ByteBuffer != nullptr);
@@ -11,13 +11,13 @@ WoWChunkReader::WoWChunkReader(IBaseManager& BaseManager, std::string FileName)
 	InitMaps();
 }
 
-WoWChunkReader::WoWChunkReader(IBaseManager& BaseManager, const std::shared_ptr<IByteBuffer>& ByteBuffer)
+WoWChunkReader::WoWChunkReader(const IBaseManager& BaseManager, const std::shared_ptr<IByteBuffer>& ByteBuffer)
 	: m_ByteBuffer(ByteBuffer)
 {
 	InitMaps();
 }
 
-WoWChunkReader::WoWChunkReader(IBaseManager& BaseManager, const void* DataPtr, size_t DataSize)
+WoWChunkReader::WoWChunkReader(const IBaseManager& BaseManager, const void* DataPtr, size_t DataSize)
 	: m_ByteBuffer(std::make_shared<CByteBuffer>(DataPtr, DataSize))
 {
 	InitMaps();

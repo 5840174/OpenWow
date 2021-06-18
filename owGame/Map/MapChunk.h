@@ -12,7 +12,7 @@ class ZN_API CMapChunk
 	, public CLoadableObject
 {
 public:
-	CMapChunk(IScene& Scene, IRenderDevice& RenderDevice, const CMap& Map, const std::shared_ptr<CMapTile>& MapTile, const ADT_MCIN& Chunk, const std::shared_ptr<IByteBuffer>& Bytes);
+	CMapChunk(IScene& Scene, const CMapTile& MapTileParent, const ADT_MCIN& Chunk, const std::shared_ptr<IByteBuffer>& Bytes);
 	virtual ~CMapChunk();
 
 	uint32 GetAreaID() const;
@@ -25,14 +25,8 @@ public:
 	bool Delete() override;
 
 private:
+	const CMapTile& m_MapTile;
+	const CMap& m_Map;
 	ADT_MCNK_Header                 header;
-
-	uint32                          m_AreaID;
-
-private:
-	IRenderDevice&                  m_RenderDevice;
-	const CMap&						m_Map;
-	const CMapTile&			        m_MapTile;
-
 	std::shared_ptr<IByteBuffer>    m_Bytes;
 };
