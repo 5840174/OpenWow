@@ -6,7 +6,11 @@
 #include "Tables/DBC_GroundEffectTexture.h"
 #include "Tables/DBC_LoadingScreen.h"
 #include "Tables/DBC_Material.h"
+#if WOW_CLIENT_VERSION < WOW_WOTLK_3_3_5
 #include "Tables/DBC_Map.h"
+#else 
+#include "Tables/DBC_Map_WotLK.h"
+#endif
 #include "Tables/DBC_TerrainType.h"
 #include "Tables/DBC_WMOAreaTable.h"
 #include "Tables/DBC_WorldSafeLocs.h"

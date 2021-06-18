@@ -23,7 +23,17 @@ void ADT_MCNK_Material::SetLayersCnt(uint32 value)
 	MaterialData().LayersCnt = value;
 }
 
-void ADT_MCNK_Material::SetShadowMapExists(uint32 value)
+void ADT_MCNK_Material::SetIsShadowMapExists(uint32 value)
 {
-	MaterialData().ShadowMapExists = value;
+	MaterialData().IsShadowMapExists = value;
+}
+
+void ADT_MCNK_Material::SetIsMCCVExists(uint32 value)
+{
+	MaterialData().IsMCCVExists = value;
+}
+
+void ADT_MCNK_Material::SetIsNortrend(uint32 value)
+{
+	MaterialData().IsNortrend = value;
 }

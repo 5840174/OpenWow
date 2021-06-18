@@ -46,6 +46,18 @@ const CMapChunk* CMapTile::getChunk(int32 x, int32 z) const
     return m_Chunks[x * C_ChunksInTile + z];
 }
 
+bool CMapTile::IsNortrend() const
+{
+	return m_Header.flags.IsNortrend;
+}
+
+std::shared_ptr<ADT_TextureInfo> CMapTile::GetTextureInfo(size_t Index) const
+{
+	if (Index >= m_Textures.size())
+		return nullptr;
+	return m_Textures[Index];
+}
+
 
 
 //
@@ -93,12 +105,12 @@ bool CMapTile::Load()
 	// MHDR + size (8)
 	f->seekRelative(8);
 	{
-		f->readBytes(&header, sizeof(ADT_MHDR));
+		f->readBytes(&m_Header, sizeof(ADT_MHDR));
 	}
 
 	// Chunks info
 	ADT_MCIN chunks[C_ChunksInTileGlobal];
-	f->seek(startPos + header.MCIN);
+	f->seek(startPos + m_Header.MCIN);
 	{
 		f->seekRelative(4);
 		uint32_t size;
@@ -110,9 +122,9 @@ bool CMapTile::Load()
 	}
 
 	// Liquids
-	if (header.MH20 != 0)
+	if (m_Header.MH20 != 0)
 	{
-		f->seek(startPos + header.MH20);
+		f->seek(startPos + m_Header.MH20);
 		{
 			f->seekRelative(4);
 			uint32_t size;
@@ -142,7 +154,7 @@ bool CMapTile::Load()
 	}
 
 	// TextureInfo
-	f->seek(startPos + header.MTEX);
+	f->seek(startPos + m_Header.MTEX);
 	{
 		f->seekRelative(4);
 		uint32_t size;
@@ -183,7 +195,7 @@ bool CMapTile::Load()
 
 	// M2 names
 	std::vector<std::string> m_MDXsNames;
-	f->seek(startPos + header.MMDX);
+	f->seek(startPos + m_Header.MMDX);
 	{
 		f->seekRelative(4);
 		uint32_t size;
@@ -197,7 +209,7 @@ bool CMapTile::Load()
 
 	// M2 Offsets
 	std::vector<uint32> m_MDXsOffsets;
-	f->seek(startPos + header.MMID);
+	f->seek(startPos + m_Header.MMID);
 	{
 		f->seekRelative(4);
 		uint32_t size;
@@ -215,7 +227,7 @@ bool CMapTile::Load()
 
 	// WMO Names
 	std::vector<std::string> m_WMOsNames;
-	f->seek(startPos + header.MWMO);
+	f->seek(startPos + m_Header.MWMO);
 	{
 		f->seekRelative(4);
 		uint32_t size;
@@ -228,7 +240,7 @@ bool CMapTile::Load()
 
 	// WMO Offsets
 	std::vector<uint32> m_WMOsOffsets;
-	f->seek(startPos + header.MWID);
+	f->seek(startPos + m_Header.MWID);
 	{
 		f->seekRelative(4);
 		uint32_t size;
@@ -247,7 +259,7 @@ bool CMapTile::Load()
 	// M2 PlacementInfo
 #ifdef USE_M2_MODELS
 	std::vector<ADT_MDXDef> m_MDXsPlacementInfo;
-	f->seek(startPos + header.MDDF);
+	f->seek(startPos + m_Header.MDDF);
 	{
 		f->seekRelative(4);
 		uint32_t size;
@@ -265,7 +277,7 @@ bool CMapTile::Load()
 	// WMO PlacementInfo
 #ifdef USE_WMO_MODELS
 	std::vector<ADT_MODF> m_WMOsPlacementInfo;
-	f->seek(startPos + header.MODF);
+	f->seek(startPos + m_Header.MODF);
 	{
 		f->seekRelative(4);
 		uint32_t size;

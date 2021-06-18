@@ -5,6 +5,13 @@
 
 namespace
 {
+	bool IsHole(uint16 holes, uint16 i, uint16 j)
+	{
+		const uint16 holetab_h[4] = { 0x1111, 0x2222, 0x4444, 0x8888 };
+		const uint16 holetab_v[4] = { 0x000F, 0x00F0, 0x0F00, 0xF000 };
+		return (holes & holetab_h[i] & holetab_v[j]) != 0;
+	}
+
 	bool IsBadTileIndex(int i, int j)
 	{
 		if (i < 0)
@@ -24,7 +31,7 @@ namespace
 
 	bool IsGoodTileIndex(int i, int j)
 	{
-		return (!IsBadTileIndex(i, j));
+		return (false == IsBadTileIndex(i, j));
 	}
 }
 
@@ -34,9 +41,47 @@ CMap::CMap(IScene& Scene)
 	m_CurrentTileX = m_CurrentTileZ = -1;
 	m_IsOnInvalidTile = false;
 
-	if (_MapShared == nullptr)
 	{
-		_MapShared = new CMapShared(GetRenderDevice());
+		m_HighMapStrip = GenarateHighMapArray();
+		m_DefaultMapStrip = GenarateDefaultMapArray();
+
+		glm::vec4 detailAndAlphaTextureCoord[C_MapBufferSize];
+
+		// init texture coordinates for detail map:
+		glm::vec4* dtc = detailAndAlphaTextureCoord;
+		const float detail_half = 0.5f * C_DetailSize / 8.0f;
+		for (int j = 0; j < 17; j++)
+		{
+			for (int i = 0; i < ((j % 2) ? 8 : 9); i++)
+			{
+				float tx = C_DetailSize / 8.0f * i;
+				float ty = C_DetailSize / 8.0f * j * 0.5f;
+				if (j % 2)
+				{
+					tx += detail_half;
+				}
+				(*dtc++).xy = glm::vec2(tx, ty);
+			}
+		}
+
+		// init texture coordinates for alpha map:
+		glm::vec4* atc = detailAndAlphaTextureCoord;
+		const float alpha_half = 0.5f * 1.0f / 8.0f;
+		for (int j = 0; j < 17; j++)
+		{
+			for (int i = 0; i < ((j % 2) ? 8 : 9); i++)
+			{
+				float tx = 1.0f / 8.0f * i;
+				float ty = 1.0f / 8.0f * j * 0.5f;
+				if (j % 2)
+				{
+					tx += alpha_half;
+				}
+				(*atc++).zw = glm::vec2(tx, ty);
+			}
+		}
+
+		m_BufferTextureCoordDetailAndAlpha = GetRenderDevice().GetObjectsFactory().CreateVertexBuffer(detailAndAlphaTextureCoord, C_MapBufferSize);
 	}
 
 	mProvider = nullptr;
@@ -51,7 +96,6 @@ CMap::CMap(IScene& Scene)
 
 CMap::~CMap()
 {
-	delete _MapShared;
 }
 
 // --
@@ -59,7 +103,6 @@ CMap::~CMap()
 void CMap::MapPreLoad(const DBC_MapRecord* DBCMapRecord)
 {
 	m_MapDBCRecord = DBCMapRecord;
-	m_MapFolderName = CMapShared::getMapFolder(m_MapDBCRecord);
 
 	Log::Print("Map[%s]: Id [%d]. Preloading...", m_MapDBCRecord->Get_Directory().c_str(), m_MapDBCRecord->Get_ID());
 
@@ -140,7 +183,6 @@ void CMap::Update(const UpdateEventArgs& e)
 		m_WDL->UpdateCamera(camera);
 }
 
-//--
 
 void CMap::EnterMap(glm::vec3 CameraPosition)
 {
@@ -242,32 +284,27 @@ void CMap::ClearCache()
 	}
 }
 
-uint32 CMap::GetAreaID(const ICameraComponent3D* camera)
+uint32 CMap::GetAreaID(glm::vec3 CameraPosition)
 {
-	if (!m_WDT->MapHasTiles())
-	{
+	if (false == m_WDT->MapHasTiles())
 		return UINT32_MAX;
-	}
 
-	int32 tileX = (int)(camera->GetPosition().x / C_TileSize);
-	int32 tileZ = (int)(camera->GetPosition().z / C_TileSize);
+	int32 tileX = (int)(CameraPosition.x / C_TileSize);
+	int32 tileZ = (int)(CameraPosition.z / C_TileSize);
 
-	int32 chunkX = (int)(fmod(camera->GetPosition().x, C_TileSize) / C_ChunkSize);
-	int32 chunkZ = (int)(fmod(camera->GetPosition().z, C_TileSize) / C_ChunkSize);
+	int32 chunkX = (int)(glm::mod(CameraPosition.x, C_TileSize) / C_ChunkSize);
+	int32 chunkZ = (int)(glm::mod(CameraPosition.z, C_TileSize) / C_ChunkSize);
 
-	if (
-		(tileX < m_CurrentTileX - static_cast<int32>(C_RenderedTiles / 2)) ||
+	if ((tileX < m_CurrentTileX - static_cast<int32>(C_RenderedTiles / 2)) ||
 		(tileX > m_CurrentTileX + static_cast<int32>(C_RenderedTiles / 2)) ||
 		(tileZ < m_CurrentTileZ - static_cast<int32>(C_RenderedTiles / 2)) ||
-		(tileZ > m_CurrentTileZ + static_cast<int32>(C_RenderedTiles / 2))
-		)
+		(tileZ > m_CurrentTileZ + static_cast<int32>(C_RenderedTiles / 2)))
 	{
 		return UINT32_MAX;
 	}
 
 	int32 indexX = tileZ - m_CurrentTileZ + static_cast<int32>(C_RenderedTiles / 2);
 	int32 indexY = tileX - m_CurrentTileX + static_cast<int32>(C_RenderedTiles / 2);
-
 	auto curTile = m_MapTilesCurrent[indexX][indexY];
 	if (curTile == nullptr)
 	{
@@ -281,6 +318,20 @@ uint32 CMap::GetAreaID(const ICameraComponent3D* camera)
 	}
 
 	return curChunk->GetAreaID();
+}
+
+
+//
+// Public (Getters)
+//
+std::string CMap::GetMapFolder() const
+{
+	return "World\\Maps\\" + std::string(m_MapDBCRecord->Get_Directory()) + "\\" + std::string(m_MapDBCRecord->Get_Directory());
+}
+
+bool CMap::IsNortrend() const
+{
+	return m_MapDBCRecord->Get_Expansion() == 2;
 }
 
 bool CMap::getTileIsCurrent(int x, int z) const
@@ -311,4 +362,98 @@ bool CMap::IsTileInCurrent(const CMapTile& _mapTile)
 				if (m_MapTilesCurrent[i][j].get() == &_mapTile)
 					return true;
 	return false;
+}
+
+
+
+
+//
+// Public (MapShared)
+//
+std::vector<uint16> CMap::GenarateHighMapArray(uint16 _holes) const
+{
+	if (_holes == 0 && false == m_HighMapStrip.empty())
+	{
+		return m_HighMapStrip;
+	}
+
+	int16 outerArray[9][9];
+	for (uint16 i = 0; i < 9; i++)
+		for (uint16 j = 0; j < 9; j++)
+			outerArray[i][j] = (i * 17) + j;
+
+	int16 innerArray[8][8];
+	for (uint16 i = 0; i < 8; i++)
+		for (uint16 j = 0; j < 8; j++)
+			innerArray[i][j] = 9 + (i * 17) + j;
+
+	std::vector<uint16> myIndexes;
+	for (uint16 i = 0; i < 8; i++)
+	{
+		for (uint16 j = 0; j < 8; j++)
+		{
+			if (IsHole(_holes, j / 2, i / 2))
+			{
+				continue;
+			}
+
+			myIndexes.push_back(outerArray[i][j]);
+			myIndexes.push_back(innerArray[i][j]);
+			myIndexes.push_back(outerArray[i][j + 1]);
+
+			myIndexes.push_back(outerArray[i][j + 1]);
+			myIndexes.push_back(innerArray[i][j]);
+			myIndexes.push_back(outerArray[i + 1][j + 1]);
+
+			myIndexes.push_back(outerArray[i + 1][j + 1]);
+			myIndexes.push_back(innerArray[i][j]);
+			myIndexes.push_back(outerArray[i + 1][j]);
+
+			myIndexes.push_back(outerArray[i + 1][j]);
+			myIndexes.push_back(innerArray[i][j]);
+			myIndexes.push_back(outerArray[i][j]);
+		}
+	}
+
+	return myIndexes;
+}
+
+std::vector<uint16> CMap::GenarateDefaultMapArray(uint16 _holes) const
+{
+	if (_holes == 0 && false == m_DefaultMapStrip.empty())
+	{
+		return m_DefaultMapStrip;
+	}
+
+	int16 outerArray[9][9];
+	for (uint16 i = 0; i < 9; i++)
+		for (uint16 j = 0; j < 9; j++)
+			outerArray[i][j] = (i * 17) + j;
+
+	std::vector<uint16> myIndexes;
+	for (uint16 i = 0; i < 8; i += 1)
+	{
+		for (uint16 j = 0; j < 8; j += 1)
+		{
+			if (IsHole(_holes, j / 2, i / 2))
+			{
+				continue;
+			}
+
+			myIndexes.push_back(outerArray[i][j]);
+			myIndexes.push_back(outerArray[i + 1][j]);
+			myIndexes.push_back(outerArray[i][j + 1]);
+
+			myIndexes.push_back(outerArray[i][j + 1]);
+			myIndexes.push_back(outerArray[i + 1][j]);
+			myIndexes.push_back(outerArray[i + 1][j + 1]);
+		}
+	}
+
+	return myIndexes;
+}
+
+std::shared_ptr<IBuffer> CMap::GetBufferTextureCoordDetailAndAlpha() const
+{
+	return m_BufferTextureCoordDetailAndAlpha;
 }

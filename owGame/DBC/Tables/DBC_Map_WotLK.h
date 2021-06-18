@@ -2,10 +2,6 @@
 
 #include "DBC/DBC__File.h"
 
-// FORWARD BEGIN
-DBC_DEFINE(DBC_LoadingScreen);
-// FORWARD END
-
 DBC_DEF_BEGIN(DBC_Map)
 
 __DBC_STRING(						Directory,					2);		// std::string
@@ -25,7 +21,6 @@ __DBC_REF_ID(DBC_Map,				parentMapID,				20);
 __DBC_LOCSTR(						MapDescriptionAllicane,		21 /* + 8 = 29*/);
 __DBC_LOCSTR(						MapDescriptionHorde,		30);
 
-__DBC_REF_ID(DBC_LoadingScreen,		LoadingScreen,				39);
 __DBC_TVALUE(uint32_t,				LoadingScreenID,			39);
 
 __DBC_TVALUE(uint32_t,				Expansion,					64);

@@ -13,7 +13,7 @@ struct WDT_MPHD
 		uint32 Flag_GlobalWMO : 1;  // Use global map object definition.
 		uint32 Flag_UseMCCV : 1;    // Use vertex shading (ADT.MCNK.MCCV)
 		uint32 Flag_8bitMCAL : 1;   // Decides whether to use _env terrain shaders or not: funky and if MCAL has 4096 instead of 2048(?)
-		uint32 Flag_Unk0 : 1;       // Disables something. No idea what. Another rendering thing. Someone may check all them in wild life..
+		uint32 Flag_HasDoodadRefsSortedBySizeCat : 1;       // if enabled, the ADT's MCRF(m2 only) chunks need to be sorted by size category
 		uint32 Flag_HasMCLV : 1;    // vertexBufferFormat = PNC2. (adds second color: ADT.MCNK.MCLV)
 		uint32 Flag_FlipGround : 1; // Flips the ground display upside down to create a ceiling (Cataclysm)
 		uint32 : 26;

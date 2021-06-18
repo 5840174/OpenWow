@@ -107,7 +107,6 @@
     <ClCompile Include="Map\MapTileLiquid.cpp" />
     <ClCompile Include="Map\MapWDL.cpp" />
     <ClCompile Include="Map\MapWDT.cpp" />
-    <ClCompile Include="Map\Map_Shared.cpp" />
     <ClCompile Include="Map\MinimapProvider.cpp" />
     <ClCompile Include="Map\MapWDLTileModel.cpp" />
     <ClCompile Include="Map\MapWDLTileMaterial.cpp" />
@@ -299,7 +298,6 @@
     <ClInclude Include="Map\MapWDL.h" />
     <ClInclude Include="Map\MapWDT.h" />
     <ClInclude Include="Map\Map_Headers.h" />
-    <ClInclude Include="Map\Map_Shared.h" />
     <ClInclude Include="Map\MinimapProvider.h" />
     <ClInclude Include="Map\MapWDLTileModel.h" />
     <ClInclude Include="Map\MapWDLTileMaterial.h" />

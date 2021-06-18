@@ -20,16 +20,22 @@ public:
 	int                                             getIndexX() const;
 	int                                             getIndexZ() const;
 	const CMapChunk*                                getChunk(int32 x, int32 z) const;
+	bool                                            IsNortrend() const;
+	std::shared_ptr<ADT_TextureInfo>                GetTextureInfo(size_t Index) const;
 
-	// SceneNode3D
+	// CSceneNode
 	void											Initialize() override;
 
 	// ILoadableObject
 	bool                                            Load() override;
 	bool                                            Delete() override;
 
-public:
-	ADT_MHDR                                        header;
+private:
+	const CMap&                                     m_MapParent;
+	const int                                       m_IndexX;
+	const int                                       m_IndexZ;
+
+	ADT_MHDR                                        m_Header;
 	std::vector<std::shared_ptr<ADT_TextureInfo>>	m_Textures;
 
 	// Instances
@@ -40,10 +46,4 @@ public:
 	std::vector<CMapM2Instance*>	m_MDXsInstances;
 #endif
 	std::vector<CMapChunk*>			m_Chunks;
-
-
-private:
-	const CMap& m_MapParent;
-	const int m_IndexX;
-	const int m_IndexZ;
 };

@@ -7,6 +7,9 @@ struct ADT_MHDR
 	struct Flags
 	{
 		uint32 HasMFBO : 1;
+#if WOW_CLIENT_VERSION >= WOW_WOTLK_3_3_5
+		uint32 IsNortrend : 2;           // is set for some northrend ones.
+#endif
 	} flags;
 
 	uint32 MCIN;

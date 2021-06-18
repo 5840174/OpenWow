@@ -1,15 +1,10 @@
 #include "CommonInclude.hlsl"
 
-#ifndef _IS_NORTREND
-#pragma message( "_IS_NORTREND undefined. Default to 0.")
-#define _IS_NORTREND 0 // should be defined by the application.
-#endif
-
 struct VertexShaderInput
 {
 	float3 position       : POSITION;
 	float3 normal         : NORMAL0;
-	//float4 mccvColor      : COLOR0;
+	float3 mccvColor      : COLOR0;
 	float4 texCoordDetailAndAlpha : TEXCOORD0;
 };
 
@@ -18,7 +13,7 @@ struct VertexShaderOutput
 	float4 positionVS     : SV_POSITION;
 	float4 positionWS     : POSITION;
 	float3 normal         : NORMAL0;
-	//float4 mccvColor      : COLOR0;
+	float3 mccvColor      : COLOR0;
 	float4 texCoordDetailAndAlpha : TEXCOORD0;
 };
 
@@ -27,7 +22,9 @@ struct VertexShaderOutput
 cbuffer Material : register(b2)
 {
 	uint   LayersCnt;
-	bool   ShadowMapExists;
+	bool   IsShadowMapExists;
+	bool   IsMCCVExists;
+	bool   IsNortrend;
     //-------------------------- ( 16 bytes )
 };
 
@@ -52,7 +49,7 @@ VertexShaderOutput VS_main(VertexShaderInput IN)
 	OUT.positionVS = mul(mvp, float4(IN.position, 1.0f));
 	OUT.positionWS = float4(IN.position, 1.0f);
 	OUT.normal = mul(mvp, float4(IN.normal, 0.0f));
-	//OUT.mccvColor = IN.mccvColor;
+	OUT.mccvColor = IN.mccvColor;
 	OUT.texCoordDetailAndAlpha = IN.texCoordDetailAndAlpha;
 	
 	return OUT;
@@ -67,8 +64,8 @@ float4 PS_main(VertexShaderOutput IN) : SV_TARGET
 	
 	const float4 sampledAlpha = AlphaMap.Sample(AlphaMapSampler, IN.texCoordDetailAndAlpha.zw);
 	
-#if _IS_NORTREND == 1
-
+if (IsNortrend == 1)
+{
 	/* NORTREND */
 	float alphaSumma = 0.0;
 	if (LayersCnt >= 2)
@@ -92,9 +89,9 @@ float4 PS_main(VertexShaderOutput IN) : SV_TARGET
 	
 	resultColor = ColorMap0.Sample(ColorMapSampler, IN.texCoordDetailAndAlpha.xy).rgb * (1.0 - alphaSumma) + layersColor;
 	resultSpec = SpecMap0.Sample(ColorMapSampler, IN.texCoordDetailAndAlpha.xy) * (1.0 - alphaSumma) + layersSpec;
-	
-#else
-
+}
+else
+{
 	/* NOT NORTREND */
 	layersColor = ColorMap0.Sample(ColorMapSampler, IN.texCoordDetailAndAlpha.xy).rgb;
 	layersSpec = SpecMap0.Sample(ColorMapSampler, IN.texCoordDetailAndAlpha.xy);
@@ -116,13 +113,17 @@ float4 PS_main(VertexShaderOutput IN) : SV_TARGET
 	}
 	
 	resultColor = layersColor;
-	resultSpec = layersSpec;
-	
-#endif
+	resultSpec = layersSpec;	
+}
 
-	if (ShadowMapExists)
+	if (IsShadowMapExists)
 	{
 		resultColor = lerp(resultColor,  float3(0.0, 0.0, 0.0), sampledAlpha.a);
+	}
+	
+	if (IsMCCVExists)
+	{
+		resultColor *= float4(IN.mccvColor, 1.0f);
 	}
 	
 	return float4(resultColor, 1.0f);

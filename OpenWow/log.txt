@@ -21,40 +21,40 @@
 ^CMPQFile[ruRU/patch-ruRU.MPQ]: Added!
 ^CMPQFile[ruRU/patch-ruRU-2.MPQ]: Added!
 ^CMPQFile[ruRU/patch-ruRU-3.MPQ]: Added!
-~DBCFile[AnimationData.dbc]: Records count = '-661656520'.
-~DBCFile[GroundEffectDoodad.dbc]: Records count = '-661656520'.
-~DBCFile[GroundEffectTexture.dbc]: Records count = '-661656520'.
-~DBCFile[LoadingScreens.dbc]: Records count = '-661656520'.
-~DBCFile[Material.dbc]: Records count = '-661656520'.
-~DBCFile[Map.dbc]: Records count = '-661656520'.
-~DBCFile[TerrainType.dbc]: Records count = '-661656520'.
-~DBCFile[WMOAreaTable.dbc]: Records count = '-661656520'.
-~DBCFile[WorldSafeLocs.dbc]: Records count = '-661656520'.
-~DBCFile[AreaTable.dbc]: Records count = '-661656520'.
-~DBCFile[CharacterFacialHairStyles.dbc]: Records count = '-661656520'.
-~DBCFile[CharComponentTextureLayouts.dbc]: Records count = '-661656520'.
-~DBCFile[CharComponentTextureSections.dbc]: Records count = '-661656520'.
-~DBCFile[CharHairGeosets.dbc]: Records count = '-661656520'.
-~DBCFile[CharSections.dbc]: Records count = '-661656520'.
-~DBCFile[ChrRaces.dbc]: Records count = '-661656520'.
-~DBCFile[CinematicCamera.dbc]: Records count = '-661656520'.
-~DBCFile[CinematicSequences.dbc]: Records count = '-661656520'.
-~DBCFile[CreatureDisplayInfo.dbc]: Records count = '-661656520'.
-~DBCFile[CreatureDisplayInfoExtra.dbc]: Records count = '-661656520'.
-~DBCFile[CreatureModelData.dbc]: Records count = '-661656520'.
-~DBCFile[HelmetGeosetVisData.dbc]: Records count = '-661656520'.
-~DBCFile[ItemBagFamily.dbc]: Records count = '-661656520'.
-~DBCFile[ItemClass.dbc]: Records count = '-661656520'.
-~DBCFile[ItemDisplayInfo.dbc]: Records count = '-661656520'.
-~DBCFile[ItemVisualEffects.dbc]: Records count = '-661656520'.
-~DBCFile[ItemVisuals.dbc]: Records count = '-661656520'.
-~DBCFile[Light.dbc]: Records count = '-661656520'.
-~DBCFile[LightFloatBand.dbc]: Records count = '-661656520'.
-~DBCFile[LightIntBand.dbc]: Records count = '-661656520'.
-~DBCFile[LightParams.dbc]: Records count = '-661656520'.
-~DBCFile[LightSkybox.dbc]: Records count = '-661656520'.
-~DBCFile[LiquidType.dbc]: Records count = '-661656520'.
-~DBCFile[GameObjectDisplayInfo.dbc]: Records count = '-661656632'.
+~DBCFile[AnimationData.dbc]: Records count = '1353902472'.
+~DBCFile[GroundEffectDoodad.dbc]: Records count = '1353902472'.
+~DBCFile[GroundEffectTexture.dbc]: Records count = '1353902472'.
+~DBCFile[LoadingScreens.dbc]: Records count = '1353902472'.
+~DBCFile[Material.dbc]: Records count = '1353902472'.
+~DBCFile[Map.dbc]: Records count = '1353902472'.
+~DBCFile[TerrainType.dbc]: Records count = '1353902472'.
+~DBCFile[WMOAreaTable.dbc]: Records count = '1353902472'.
+~DBCFile[WorldSafeLocs.dbc]: Records count = '1353902472'.
+~DBCFile[AreaTable.dbc]: Records count = '1353902472'.
+~DBCFile[CharacterFacialHairStyles.dbc]: Records count = '1353902472'.
+~DBCFile[CharComponentTextureLayouts.dbc]: Records count = '1353902472'.
+~DBCFile[CharComponentTextureSections.dbc]: Records count = '1353902472'.
+~DBCFile[CharHairGeosets.dbc]: Records count = '1353902472'.
+~DBCFile[CharSections.dbc]: Records count = '1353902472'.
+~DBCFile[ChrRaces.dbc]: Records count = '1353902472'.
+~DBCFile[CinematicCamera.dbc]: Records count = '1353902472'.
+~DBCFile[CinematicSequences.dbc]: Records count = '1353902472'.
+~DBCFile[CreatureDisplayInfo.dbc]: Records count = '1353902472'.
+~DBCFile[CreatureDisplayInfoExtra.dbc]: Records count = '1353902472'.
+~DBCFile[CreatureModelData.dbc]: Records count = '1353902472'.
+~DBCFile[HelmetGeosetVisData.dbc]: Records count = '1353902472'.
+~DBCFile[ItemBagFamily.dbc]: Records count = '1353902472'.
+~DBCFile[ItemClass.dbc]: Records count = '1353902472'.
+~DBCFile[ItemDisplayInfo.dbc]: Records count = '1353902472'.
+~DBCFile[ItemVisualEffects.dbc]: Records count = '1353902472'.
+~DBCFile[ItemVisuals.dbc]: Records count = '1353902472'.
+~DBCFile[Light.dbc]: Records count = '1353902472'.
+~DBCFile[LightFloatBand.dbc]: Records count = '1353902472'.
+~DBCFile[LightIntBand.dbc]: Records count = '1353902472'.
+~DBCFile[LightParams.dbc]: Records count = '1353902472'.
+~DBCFile[LightSkybox.dbc]: Records count = '1353902472'.
+~DBCFile[LiquidType.dbc]: Records count = '1353902472'.
+~DBCFile[GameObjectDisplayInfo.dbc]: Records count = '1353902360'.
 ~FontsManager: Font 'Fonts\consola.ttf' loaded. Size [14].
 ~Loading shader 'shaders_D3D/Sky.hlsl':'VS_main'.
 ~Loading shader 'shaders_D3D/Sky.hlsl':'PS_main'.
@@ -75,23 +75,49 @@
 ~Loading shader 'UI/UI_Font.hlsl':'VS_main'.
 ~Loading shader 'UI/UI_Font.hlsl':'PS_main'.
 ~Sky: [1] is global sky.
- Map[Kalimdor]: Id [1]. Preloading...
- Map[Kalimdor]: Id [1]. Loading...
-^Map_GlobalWMOs[]: Low WMOs count [0].
+ Map[Northrend]: Id [571]. Preloading...
+ Map[Northrend]: Id [571]. Loading...
+^Map_GlobalWMOs[]: Low WMOs count [4].
 ~MapWDT: Global WMO exists [false].
-^MapTile[37, 21, World\Maps\Kalimdor\Kalimdor_37_21.adt]: Loaded!
-^MapTile[37, 22, World\Maps\Kalimdor\Kalimdor_37_22.adt]: Loaded!
-^MapTile[37, 23, World\Maps\Kalimdor\Kalimdor_37_23.adt]: Loaded!
-^MapTile[38, 21, World\Maps\Kalimdor\Kalimdor_38_21.adt]: Loaded!
-^MapTile[38, 22, World\Maps\Kalimdor\Kalimdor_38_22.adt]: Loaded!
-^MapTile[38, 23, World\Maps\Kalimdor\Kalimdor_38_23.adt]: Loaded!
-^MapTile[39, 21, World\Maps\Kalimdor\Kalimdor_39_21.adt]: Loaded!
-^MapTile[39, 22, World\Maps\Kalimdor\Kalimdor_39_22.adt]: Loaded!
-^MapTile[39, 23, World\Maps\Kalimdor\Kalimdor_39_23.adt]: Loaded!
-^MapTile[37, 20, World\Maps\Kalimdor\Kalimdor_37_20.adt]: Loaded!
-^MapTile[38, 20, World\Maps\Kalimdor\Kalimdor_38_20.adt]: Loaded!
-^MapTile[39, 20, World\Maps\Kalimdor\Kalimdor_39_20.adt]: Loaded!
-^MapTile[40, 20, World\Maps\Kalimdor\Kalimdor_40_20.adt]: Loaded!
-^MapTile[40, 21, World\Maps\Kalimdor\Kalimdor_40_21.adt]: Loaded!
-@M2[WORLD\AZEROTH\BURNINGSTEPPES\PASSIVEDOODADS\FALLINGEMBERS\FALLINGEMBERS.M2] don't contain geometry. Skins [1]
-^MapTile[40, 22, World\Maps\Kalimdor\Kalimdor_40_22.adt]: Loaded!
+@M2[WORLD\EXPANSION01\DOODADS\SILVERMYST\SMOKE\D_SMOKE.M2] don't contain geometry. Skins [1]
+^MapTile[29, 20, World\Maps\Northrend\Northrend_29_20.adt]: Loaded!
+^MapTile[29, 21, World\Maps\Northrend\Northrend_29_21.adt]: Loaded!
+@M2[WORLD\GENERIC\PASSIVEDOODADS\PARTICLEEMITTERS\BLACKSMITH_SMOKE.M2] don't contain geometry. Skins [1]
+^MapTile[29, 22, World\Maps\Northrend\Northrend_29_22.adt]: Loaded!
+^MapTile[30, 20, World\Maps\Northrend\Northrend_30_20.adt]: Loaded!
+!File 'TILESET\Terrain Cube Maps\TCB_CrystalSong_B_s.blp' not exists.
+@M2[WORLD\EXPANSION02\DOODADS\CRYSTALSONGFOREST\SPARKLES\CRYSTALSONG_SPARKLES03.M2] don't contain geometry. Skins [1]
+^MapTile[30, 21, World\Maps\Northrend\Northrend_30_21.adt]: Loaded!
+!File 'TILESET\Terrain Cube Maps\TCB_CrystalSong_B_s.blp' not exists.
+@M2[WORLD\GENERIC\PASSIVEDOODADS\PARTICLEEMITTERS\BLACKSMITH_SMOKE.M2] don't contain geometry. Skins [1]
+^MapTile[30, 22, World\Maps\Northrend\Northrend_30_22.adt]: Loaded!
+@M2[WORLD\LORDAERON\STRATHOLME\PASSIVEDOODADS\FX\STRATHOLMEFIRESMOKEEMBERM.M2] don't contain geometry. Skins [1]
+^MapTile[31, 20, World\Maps\Northrend\Northrend_31_20.adt]: Loaded!
+^MapTile[31, 21, World\Maps\Northrend\Northrend_31_21.adt]: Loaded!
+^MapTile[31, 22, World\Maps\Northrend\Northrend_31_22.adt]: Loaded!
+@M2[WORLD\EXPANSION01\DOODADS\SHADOWMOON\SMOKE\SHADOWMOONCRACKSMOKE01.M2] don't contain geometry. Skins [1]
+@M2[WORLD\AZEROTH\BURNINGSTEPPES\PASSIVEDOODADS\SMOKE\ASHTREESMOKE01.M2] don't contain geometry. Skins [1]
+^MapTile[29, 19, World\Maps\Northrend\Northrend_29_19.adt]: Loaded!
+@M2[WORLD\GENERIC\UNDEAD\PASSIVE DOODADS\UNDERCITYSLIMEFALLS\SKULLSPOUTSPLASH.M2] don't contain geometry. Skins [1]
+^MapTile[30, 19, World\Maps\Northrend\Northrend_30_19.adt]: Loaded!
+^MapTile[31, 19, World\Maps\Northrend\Northrend_31_19.adt]: Loaded!
+^MapTile[29, 18, World\Maps\Northrend\Northrend_29_18.adt]: Loaded!
+!File 'TILESET\Generic\tgatest_s.blp' not exists.
+!File 'Tileset\Generic\WaterBlue_s.blp' not exists.
+^MapTile[30, 18, World\Maps\Northrend\Northrend_30_18.adt]: Loaded!
+^MapTile[31, 18, World\Maps\Northrend\Northrend_31_18.adt]: Loaded!
+^MapTile[28, 18, World\Maps\Northrend\Northrend_28_18.adt]: Loaded!
+@M2[WORLD\EXPANSION02\DOODADS\GENERIC\SCOURGE\SC_SPIRITEFFECT_01.M2] don't contain geometry. Skins [1]
+^MapTile[28, 19, World\Maps\Northrend\Northrend_28_19.adt]: Loaded!
+^MapTile[28, 20, World\Maps\Northrend\Northrend_28_20.adt]: Loaded!
+@MapTile[31, 22] unloaded.
+@MapTile[30, 22] unloaded.
+@M2[WORLD\GENERIC\PASSIVEDOODADS\PARTICLEEMITTERS\BLACKSMITH_SMOKE.M2] don't contain geometry. Skins [1]
+^MapTile[28, 17, World\Maps\Northrend\Northrend_28_17.adt]: Loaded!
+!File 'TILESET\Terrain Cube Maps\TCB_CrystalSong_A_s.blp' not exists.
+^MapTile[29, 17, World\Maps\Northrend\Northrend_29_17.adt]: Loaded!
+!File 'TILESET\Terrain Cube Maps\TCB_CrystalSong_A_s.blp' not exists.
+^MapTile[30, 17, World\Maps\Northrend\Northrend_30_17.adt]: Loaded!
+@MapTile[31, 21] unloaded.
+@MapTile[29, 22] unloaded.
+@MapTile[30, 21] unloaded.

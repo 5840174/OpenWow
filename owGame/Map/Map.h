@@ -1,8 +1,5 @@
 #pragma once
 
-#include "Map_Shared.h"
-#include "Sky/SkyManager.h"
-#include "Sky/Environment/EnvironmentManager.h"
 #include "MapTile.h"
 #include "MapWDT.h"
 #include "MapWDL.h"
@@ -19,19 +16,21 @@ public:
 	void                                            MapLoad();
 	void                                            Unload();
 
-	//
 	void                                            EnterMap(glm::vec3 CameraPosition);
 	void                                            EnterMap(int32 x, int32 z);
 	std::shared_ptr<CMapTile>                       LoadTile(int32 x, int32 z);
 	void                                            ClearCache();
-	uint32                                          GetAreaID(const ICameraComponent3D* camera);
+	uint32                                          GetAreaID(glm::vec3 CameraPosition);
+
 
 	// ISceneNode
 	void                                            Update(const UpdateEventArgs& e) override;
 
-public: // Getters
-	std::string                                     GetMapFolder() const { return m_MapFolderName; }
 
+public: // Getters
+	std::string                                     GetMapFolder() const;
+
+	bool                                            IsNortrend() const;
 	bool                                            isUncompressedAlpha() const { return m_WDT->getFlags().Flag_8bitMCAL; }
 	bool                                            isTileBased() const { return m_WDT->MapHasTiles(); }
 #ifdef USE_WMO_MODELS
@@ -49,18 +48,28 @@ public: // Getters
 	bool                                            IsTileInCurrent(const CMapTile& _mapTile);
 
 
-private:
-	std::string                                     m_MapFolderName;
-	const DBC_MapRecord*                            m_MapDBCRecord;
+public: // shared
+	std::vector<uint16>                             GenarateHighMapArray(uint16 _holes = 0) const;
+	std::vector<uint16>                             GenarateDefaultMapArray(uint16 _holes = 0) const;
+	std::shared_ptr<IBuffer>                        GetBufferTextureCoordDetailAndAlpha() const;
 
+private:
+	const DBC_MapRecord*                            m_MapDBCRecord;
 
 	std::shared_ptr<CMapTile>	                    m_MapTilesCache[C_TilesCacheSize];
 	std::shared_ptr<CMapTile>	                    m_MapTilesCurrent[C_RenderedTiles][C_RenderedTiles];
-	int32					                        m_CurrentTileX, m_CurrentTileZ;
+	int32					                        m_CurrentTileX;
+	int32					                        m_CurrentTileZ;
 	bool					                        m_IsOnInvalidTile;
 
 	std::unique_ptr<CMapWDT>	                    m_WDT;
 	std::unique_ptr<CMapWDL>	                    m_WDL;
+
+
+private: // shared
+	std::vector<uint16>                             m_HighMapStrip;
+	std::vector<uint16>                             m_DefaultMapStrip;
+	std::shared_ptr<IBuffer>                        m_BufferTextureCoordDetailAndAlpha;
 
 	// Minimap
 	CMinimapProvider*		                        mProvider;

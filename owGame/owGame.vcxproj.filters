@@ -381,9 +381,6 @@
     <ClCompile Include="Map\Map.cpp">
       <Filter>Map</Filter>
     </ClCompile>
-    <ClCompile Include="Map\Map_Shared.cpp">
-      <Filter>Map</Filter>
-    </ClCompile>
     <ClCompile Include="Map\MapWDT.cpp">
       <Filter>Map</Filter>
     </ClCompile>
@@ -930,9 +927,6 @@
       <Filter>Map</Filter>
     </ClInclude>
     <ClInclude Include="Map\Map_Headers.h">
-      <Filter>Map</Filter>
-    </ClInclude>
-    <ClInclude Include="Map\Map_Shared.h">
       <Filter>Map</Filter>
     </ClInclude>
     <ClInclude Include="Map\MapWDT.h">

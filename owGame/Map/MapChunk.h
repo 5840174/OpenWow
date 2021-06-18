@@ -15,6 +15,7 @@ public:
 	CMapChunk(IScene& Scene, const CMapTile& MapTileParent, const ADT_MCIN& Chunk, const std::shared_ptr<IByteBuffer>& Bytes);
 	virtual ~CMapChunk();
 
+	// CMapChunk
 	uint32 GetAreaID() const;
 
 	// SceneNode3D
@@ -25,8 +26,8 @@ public:
 	bool Delete() override;
 
 private:
-	const CMapTile& m_MapTile;
-	const CMap& m_Map;
-	ADT_MCNK_Header                 header;
+	const CMapTile&                 m_MapTile;
+	const CMap&                     m_Map;
+	ADT_MCNK_Header                 m_Header;
 	std::shared_ptr<IByteBuffer>    m_Bytes;
 };

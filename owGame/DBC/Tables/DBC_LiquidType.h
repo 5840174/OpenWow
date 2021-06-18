@@ -14,6 +14,7 @@ struct DBC_LIQUIDTYPE_Type
 };
 
 #if WOW_CLIENT_VERSION < WOW_WOTLK_3_3_5
+
 DBC_DEF_BEGIN(DBC_LiquidType)
 
 __DBC_STRING(Name, 2);
@@ -22,7 +23,9 @@ __DBC_TVALUE(DBC_LIQUIDTYPE_Type::List, Type, 4);
 __DBC_TVALUE(uint32, SpellID, 4);
 
 DBC_DEF_END
+
 #else
+
 DBC_DEF_BEGIN(DBC_LiquidType)
 
 __DBC_STRING(Name, 2);
@@ -50,4 +53,5 @@ __DBC_TARRAY(uint32, floats, 24, 18);
 __DBC_TARRAY(uint32, ints, 42, 4);
 
 DBC_DEF_END
+
 #endif

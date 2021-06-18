@@ -9,7 +9,6 @@
 
 // Additional
 #include "MapChunkLiquid.h"
-#include "Map_Shared.h"
 #include "MapChunkMaterial.h"
 #include "Liquid/LiquidInstance.h"
 
@@ -29,20 +28,24 @@ CMapChunk::CMapChunk(IScene& Scene, const CMapTile& MapTileParent, const ADT_MCI
 	: CSceneNode(Scene)
 	, m_MapTile(MapTileParent)
 	, m_Map(m_MapTile.GetMap())
-	, m_Bytes(Bytes)
 {
-	m_Bytes = std::make_shared<CByteBuffer>(Bytes->getData() + Chunk.offset, Chunk.size);
-	SetName("Chunk [" + std::to_string(Chunk.offset) + "]");
+	m_Bytes = MakeShared(CByteBuffer, Bytes->getData() + Chunk.offset, Chunk.size);
+	SetName("MapTile[" + std::to_string(m_MapTile.getIndexX()) + "," + std::to_string(m_MapTile.getIndexZ()) + "]_Chunk[" + std::to_string(Chunk.offset) + "]");
 }
 
 CMapChunk::~CMapChunk()
 {}
 
 
+
+//
+// CMapChunk
+//
 uint32 CMapChunk::GetAreaID() const
 {
-    return header.areaid;
+    return m_Header.areaid;
 }
+
 
 
 //
@@ -61,17 +64,15 @@ void CMapChunk::Initialize()
 	uint32_t size;
 	m_Bytes->read(&size);
 
-	SetName("MapTile[" + std::to_string(m_MapTile.getIndexX()) + "," + std::to_string(m_MapTile.getIndexZ()) + "]_Chunk[" + std::to_string(offset) + "]");
-
 	uint32_t startPos = m_Bytes->getPos();
 
 	// Read header
-	m_Bytes->readBytes(&header, sizeof(ADT_MCNK_Header));
+	m_Bytes->readBytes(&m_Header, sizeof(ADT_MCNK_Header));
 
 	// Scene node params
 	{
 		// Set translate
-		SetLocalPosition(glm::vec3(header.xpos * (-1.0f) + C_ZeroPoint, header.ypos, header.zpos * (-1.0f) + C_ZeroPoint));
+		SetLocalPosition(glm::vec3(m_Header.xpos * (-1.0f) + C_ZeroPoint, m_Header.ypos, m_Header.zpos * (-1.0f) + C_ZeroPoint));
 	}
 
 	{
@@ -104,9 +105,10 @@ bool CMapChunk::Load()
 
 	std::shared_ptr<IBuffer> verticesBuffer = nullptr;
 	std::shared_ptr<IBuffer> normalsBuffer = nullptr;
+	std::shared_ptr<IBuffer> mccvBuffer = nullptr;
 
 	// Normals
-	m_Bytes->seek(startPos + header.ofsNormal);
+	m_Bytes->seek(startPos + m_Header.ofsNormal);
 	{
 		struct int24
 		{
@@ -152,7 +154,7 @@ bool CMapChunk::Load()
 	}
 
 	// Heights
-	m_Bytes->seek(startPos + header.ofsHeight);
+	m_Bytes->seek(startPos + m_Header.ofsHeight);
 	{
 		float heights[C_MapBufferSize];
 		float* t_heights = heights;
@@ -196,19 +198,18 @@ bool CMapChunk::Load()
 		max.y = maxHeight;
 		bbox.setMax(max);
 
-        GetComponentT<IColliderComponent>()->SetBounds(bbox);
+		GetComponentT<IColliderComponent>()->SetBounds(bbox);
 
 		verticesBuffer = GetRenderDevice().GetObjectsFactory().CreateVertexBuffer(tempVertexes, C_MapBufferSize);
 	}
 
-	if (m_MapTile.GetState() != ILoadable::ELoadableState::Loaded)
-		return false;
+	_ASSERT(m_MapTile.GetState() == ILoadable::ELoadableState::Loaded);
 
 	// Textures
 	ADT_MCNK_MCLY mcly[4];
-	m_Bytes->seek(startPos + header.ofsLayer);
+	m_Bytes->seek(startPos + m_Header.ofsLayer);
 	{
-		for (uint32 i = 0; i < header.nLayers; i++)
+		for (uint32 i = 0; i < m_Header.nLayers; i++)
 		{
 			m_Bytes->readBytes(&mcly[i], sizeof(ADT_MCNK_MCLY));
 
@@ -221,9 +222,9 @@ bool CMapChunk::Load()
 	std::shared_ptr<CImageBase> blendBuff = std::make_shared<CImageBase>(64, 64, 32, true);
 
 	// Shadows
-	if (header.flags.has_mcsh)
+	if (m_Header.flags.has_mcsh)
 	{
-		m_Bytes->seek(startPos + header.ofsShadow);
+		m_Bytes->seek(startPos + m_Header.ofsShadow);
 		{
 			uint8 sbuf[64 * 64];
 			uint8* p;
@@ -249,9 +250,9 @@ bool CMapChunk::Load()
 	}
 
 	// Alpha
-	m_Bytes->seek(startPos + header.ofsAlpha);
+	m_Bytes->seek(startPos + m_Header.ofsAlpha);
 	{
-		for (uint32 i = 1; i < header.nLayers; i++)
+		for (uint32 i = 1; i < m_Header.nLayers; i++)
 		{
 			uint8 amap[64 * 64];
 			memset(amap, 0x00, 64 * 64);
@@ -303,7 +304,7 @@ bool CMapChunk::Load()
 				}
 			}
 
-			if (!header.flags.do_not_fix_alpha_map)
+			if (!m_Header.flags.do_not_fix_alpha_map)
 			{
 				for (uint8 i = 0; i < 64; ++i)
 				{
@@ -321,13 +322,12 @@ bool CMapChunk::Load()
 	}
 
 	// Liquids
-	m_Bytes->seek(startPos + header.ofsLiquid);
+	m_Bytes->seek(startPos + m_Header.ofsLiquid);
 	{
-		if (header.sizeLiquid > 8)
+		if (m_Header.sizeLiquid > 8)
 		{
 			CRange height;
 			m_Bytes->read(&height);
-
 
 			// Set this chunk BBOX
 			{
@@ -343,18 +343,16 @@ bool CMapChunk::Load()
 				max.y = bboxMaxHeight;
 				bbox.setMax(max);
 
-
 				GetComponentT<IColliderComponent>()->SetBounds(bbox);
 			}
 
-			CMapChunkLiquid liquidObject(GetRenderDevice(), m_Bytes, header);
-
 			auto liquidInstance = CreateSceneNode<Liquid_Instance>();
 
+			CMapChunkLiquid liquidObject(GetRenderDevice(), m_Bytes, m_Header);
 			liquidObject.CreateInsances(liquidInstance);
 
 			// Transform
-			liquidInstance->SetLocalPosition(glm::vec3(0.0f, (-GetPosition().y), 0.0f));
+			liquidInstance->SetLocalPosition(glm::vec3(0.0f, -GetPosition().y, 0.0f));
 
 			// IColliderComponent
 			{
@@ -375,14 +373,49 @@ bool CMapChunk::Load()
 		}
 	}
 
+	// MCCV colors
+	if (m_Header.flags.has_mccv)
+	{
+		m_Bytes->seek(startPos + m_Header.ofsMCCV);
+		{
+			glm::vec3 mccvColorsVec3[C_MapBufferSize] = {};
+
+			uint32 mccvColorsUINT8[C_MapBufferSize];
+			memset(mccvColorsUINT8, 0x00, sizeof(uint32) * C_MapBufferSize);
+
+			glm::vec3* t_mccvColorsVec3 = mccvColorsVec3;
+			uint32* t_mccvColorsUINT8 = mccvColorsUINT8;
+
+			for (int j = 0; j < 17; j++)
+			{
+				for (uint32 i = 0; i < ((j % 2u) ? 8u : 9u); i++)
+				{
+					CBgra nor;
+					m_Bytes->readBytes(&nor, sizeof(CBgra));
+
+					*t_mccvColorsVec3++ = glm::vec3(nor.r, nor.g, nor.b) / 127.0f;
+
+					//*t_mccvColorsUINT8++ = uint32(
+					//	(uint8)(nor[3]) << 24 |
+					//	(uint8)(nor[0]) << 16 |
+					//	(uint8)(nor[1]) << 8 |
+					//	(uint8)(nor[2])
+					//);
+				}
+			}
+
+			mccvBuffer = GetRenderDevice().GetObjectsFactory().CreateVertexBuffer(mccvColorsVec3, C_MapBufferSize);
+		}
+	}
+
 	m_Bytes.reset();
 
 	// All chunk is holes
-	if (header.holes == UINT16_MAX)
+	if (m_Header.holes == UINT16_MAX)
 		return true;
 
 	// Material
-	std::shared_ptr<ADT_MCNK_Material> mat = std::make_shared<ADT_MCNK_Material>(GetRenderDevice());
+	std::shared_ptr<ADT_MCNK_Material> mapChunkMaterial = std::make_shared<ADT_MCNK_Material>(GetRenderDevice());
 
 #if 0
 	// Create chunk texture
@@ -408,7 +441,7 @@ bool CMapChunk::Load()
 			resultTexture.GetDataEx()[t + 3] = 255;
 		}
 
-		for (size_t l = 1; l < header.nLayers; l++)
+		for (size_t l = 1; l < m_Header.nLayers; l++)
 		{
 			if (m_MapTile.GetState() != ILoadable::ELoadableState::Loaded) return false;
 
@@ -429,43 +462,50 @@ bool CMapChunk::Load()
 		mat->SetTexture(0, diffuseTexture);
 	}
 #else
-	for (uint32 i = 0; i < header.nLayers; i++)
+	for (uint32 i = 0; i < m_Header.nLayers; i++)
 	{
 		if (m_MapTile.GetState() != ILoadable::ELoadableState::Loaded)
 			return false;
 
-		mat->SetTexture(i + 0, m_MapTile.m_Textures.at(mcly[i].textureIndex)->diffuseTexture);
+		mapChunkMaterial->SetTexture(i + 0, m_MapTile.GetTextureInfo(mcly[i].textureIndex)->diffuseTexture);
 		//mat->SetTexture(i + 5, m_MapTile.m_Textures.at(mcly[i].textureIndex)->specularTexture);
 	}
 
 	std::shared_ptr<ITexture> blendRBGShadowATexture = GetRenderDevice().GetObjectsFactory().CreateEmptyTexture();
 	blendRBGShadowATexture->LoadTexture2DFromImage(blendBuff);
 
-	mat->SetTexture(4, blendRBGShadowATexture);
-	mat->SetLayersCnt(header.nLayers);
+	mapChunkMaterial->SetTexture(4, blendRBGShadowATexture);
+	mapChunkMaterial->SetLayersCnt(m_Header.nLayers);
 #endif
 
-	mat->SetShadowMapExists(header.flags.has_mcsh == 1);
+	mapChunkMaterial->SetIsShadowMapExists(m_Header.flags.has_mcsh);
+	mapChunkMaterial->SetIsMCCVExists(m_Header.flags.has_mccv);
+	mapChunkMaterial->SetIsNortrend(m_Map.IsNortrend());
 
-	{ // Geom High
-		const std::vector<uint16>& mapArrayHigh = _MapShared->GenarateHighMapArray(header.holes);
+	// Geom High
+	{ 
+		const std::vector<uint16>& mapArrayHigh = m_Map.GenarateHighMapArray(m_Header.holes);
 		std::shared_ptr<IBuffer> __ibHigh = GetRenderDevice().GetObjectsFactory().CreateIndexBuffer(mapArrayHigh);
 
 		std::shared_ptr<IGeometry> defaultGeometry = GetRenderDevice().GetObjectsFactory().CreateGeometry();
+
 		defaultGeometry->AddVertexBuffer(BufferBinding("POSITION", 0), verticesBuffer);
 		defaultGeometry->AddVertexBuffer(BufferBinding("NORMAL", 0), normalsBuffer);
-		defaultGeometry->AddVertexBuffer(BufferBinding("TEXCOORD", 0), _MapShared->BufferTextureCoordDetailAndAlpha);
+		defaultGeometry->AddVertexBuffer(BufferBinding("TEXCOORD", 0), m_Map.GetBufferTextureCoordDetailAndAlpha());
+		if (mccvBuffer)
+			defaultGeometry->AddVertexBuffer(BufferBinding("COLOR", 0), mccvBuffer);
+
 		defaultGeometry->SetIndexBuffer(__ibHigh);
 
-		std::shared_ptr<IModel> model = GetRenderDevice().GetObjectsFactory().CreateModel();
-		model->AddConnection(mat, defaultGeometry);
+		std::shared_ptr<IModel> mapChunkModel = GetRenderDevice().GetObjectsFactory().CreateModel();
+		mapChunkModel->AddConnection(mapChunkMaterial, defaultGeometry);
 
-		GetComponentT<IModelComponent>()->SetModel(model);
+		GetComponentT<IModelComponent>()->SetModel(mapChunkModel);
 	}
 
 
 	/*{ // Geom Default
-		std::vector<uint16>& mapArrayDefault = _MapShared->GenarateDefaultMapArray(header.holes);
+		std::vector<uint16>& mapArrayDefault = _MapShared->GenarateDefaultMapArray(m_Header.holes);
 		std::shared_ptr<IBuffer> __ibDefault = GetManager<IRenderDevice>(GetBaseManager())->CreateIndexBuffer(mapArrayDefault);
 
 		__geomDefault = GetManager<IRenderDevice>(GetBaseManager())->CreateMesh();
