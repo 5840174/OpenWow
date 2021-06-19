@@ -2,12 +2,12 @@
 
 #ifdef USE_WMO_MODELS
 
-#include "Liquid/LiquidInstance.h"
+#include "Liquid/LiquidBaseInstance.h"
 #include "WMO_Headers.h"
 #include "WMO_Group.h"
 
 class ZN_API CWMO_Liquid_Instance
-	: public Liquid_Instance
+	: public CLiquidBaseInstance
 	, public IPortalRoomObject
 {
 public:

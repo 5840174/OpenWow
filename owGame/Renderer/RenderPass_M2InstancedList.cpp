@@ -1,7 +1,7 @@
 #include "stdafx.h"
 
 // General
-#include "RenderPass_M2Instanced.h"
+#include "RenderPass_M2InstancedList.h"
 
 // Additional
 #include "M2/M2_Part_Color.h"
@@ -17,15 +17,15 @@
 #include "M2/M2_Skin_Batch.h"
 
 
-CRenderPass_M2_Instanced::CRenderPass_M2_Instanced(IScene& Scene, ERenderPassM2DrawMode DrawMode)
-	: CRenderPass_M2(Scene, DrawMode)
+CRenderPass_M2InstancedList::CRenderPass_M2InstancedList(IRenderDevice& RenderDevice, const std::shared_ptr<IRenderPassCreateTypelessList>& CreateTypelessList, ERenderPassM2DrawMode DrawMode)
+	: CRenderPass_M2List(RenderDevice, CreateTypelessList, DrawMode)
 {
-	SetPassName("M2Instanced");
+	SetPassName("M2InstancedList");
 
 	m_InstancesBuffer = GetRenderDevice().GetObjectsFactory().CreateStructuredBuffer(nullptr, 1000, sizeof(M2PerObject), EAccess::CPUWrite);
 }
 
-CRenderPass_M2_Instanced::~CRenderPass_M2_Instanced()
+CRenderPass_M2InstancedList::~CRenderPass_M2InstancedList()
 {
 }
 
@@ -34,7 +34,7 @@ CRenderPass_M2_Instanced::~CRenderPass_M2_Instanced()
 //
 // IRenderPass
 //
-void CRenderPass_M2_Instanced::Render(RenderEventArgs & e)
+void CRenderPass_M2InstancedList::Render(RenderEventArgs & e)
 {
 	m_ModelsNodes.clear();
 
@@ -65,13 +65,9 @@ void CRenderPass_M2_Instanced::Render(RenderEventArgs & e)
 		}
 		m_ShaderInstancesBufferParameter->Unbind();
 	}
-
-
-	//Log::Info("Test = '%d'", modelPriorMap.size());
-
 }
 
-std::shared_ptr<IRenderPassPipelined> CRenderPass_M2_Instanced::ConfigurePipeline(std::shared_ptr<IRenderTarget> RenderTarget)
+std::shared_ptr<IRenderPassPipelined> CRenderPass_M2InstancedList::ConfigurePipeline(std::shared_ptr<IRenderTarget> RenderTarget)
 {
 	__super::ConfigurePipeline(RenderTarget);
 
@@ -98,11 +94,6 @@ std::shared_ptr<IRenderPassPipelined> CRenderPass_M2_Instanced::ConfigurePipelin
 	GetPipeline().SetShader(vertexShader);
 	GetPipeline().SetShader(pixelShader);
 
-	//std::shared_ptr<ISamplerState> sampler = GetRenderDevice().GetObjectsFactory().CreateSamplerState();
-	//sampler->SetFilter(ISamplerState::MinFilter::MinLinear, ISamplerState::MagFilter::MagLinear, ISamplerState::MipFilter::MipLinear);
-	//pipeline->SetSampler(0, sampler);
-	//pipeline->SetSampler(1, sampler);
-
 	m_ShaderInstancesBufferParameter = vertexShader->GetShaderParameterByName("Instances");
 	_ASSERT(m_ShaderInstancesBufferParameter != nullptr);
 
@@ -115,29 +106,24 @@ std::shared_ptr<IRenderPassPipelined> CRenderPass_M2_Instanced::ConfigurePipelin
 	return shared_from_this();
 }
 
-EVisitResult CRenderPass_M2_Instanced::Visit(const std::shared_ptr<ISceneNode>& SceneNode)
+EVisitResult CRenderPass_M2InstancedList::Visit(const std::shared_ptr<ISceneNode>& SceneNode)
 {
 	m_CurrentM2Instance = nullptr;
-
-	if (auto colliderComponent = SceneNode->GetComponentT<IColliderComponent>())
-		if (colliderComponent->IsCulled(GetRenderEventArgs().Camera))
-			return EVisitResult::Block;
-
 	if (auto m2Instance = std::dynamic_pointer_cast<CM2_Base_Instance>(SceneNode))
 	{
 		m_CurrentM2Instance = m2Instance.get();
-		return EVisitResult::AllowAll;
+		return EVisitResult::AllowVisitContent;
 	}
 
-	return EVisitResult::AllowVisitChilds;
+	return EVisitResult::Block;
 }
 
-EVisitResult CRenderPass_M2_Instanced::Visit(const std::shared_ptr<IModel>& Model)
+EVisitResult CRenderPass_M2InstancedList::Visit(const std::shared_ptr<IModel>& Model)
 {
 	if (m_CurrentM2Instance != nullptr)
 	{
 		m_ModelsNodes[dynamic_cast<const CM2_Skin*>(Model.get())].push_back(m_CurrentM2Instance);
-		return EVisitResult::AllowAll;
+		return EVisitResult::AllowVisitContent;
 	}
 
 	_ASSERT(false);

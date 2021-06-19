@@ -1,11 +1,13 @@
 #pragma once
 
-class ZN_API CRenderPass_MapChunk 
-	: public Base3DPass
+#include "RenderPassProcessTypelessList.h"
+
+class ZN_API CRenderPass_MapChunkList
+	: public CRenderPassProcessTypelessList
 {
 public:
-	CRenderPass_MapChunk(IScene& Scene);
-	virtual ~CRenderPass_MapChunk();
+	CRenderPass_MapChunkList(IRenderDevice& RenderDevice, const std::shared_ptr<IRenderPassCreateTypelessList>& CreateTypelessList);
+	virtual ~CRenderPass_MapChunkList();
 
 	// IRenderPassPipelined
 	std::shared_ptr<IRenderPassPipelined> ConfigurePipeline(std::shared_ptr<IRenderTarget> RenderTarget) override final;

@@ -1,20 +1,20 @@
 #include "stdafx.h"
 
 // General
-#include "RenderPass_MapChunk.h"
+#include "RenderPass_MapChunkList.h"
 
 // Additional
 #include "Map/MapChunk.h"
 
-CRenderPass_MapChunk::CRenderPass_MapChunk(IScene& Scene)
-	: Base3DPass(Scene)
+CRenderPass_MapChunkList::CRenderPass_MapChunkList(IRenderDevice& RenderDevice, const std::shared_ptr<IRenderPassCreateTypelessList>& CreateTypelessList)
+	: CRenderPassProcessTypelessList(RenderDevice, CreateTypelessList)
 {
-	SetPassName("MapChunk");
+	SetPassName("MapChunkList");
 
 	m_MapChunkRenderDistance = GetBaseManager().GetManager<ISettings>()->GetGroup("WoWSettings")->GetPropertyT<float>("MapChunkRenderDistance");
 }
 
-CRenderPass_MapChunk::~CRenderPass_MapChunk()
+CRenderPass_MapChunkList::~CRenderPass_MapChunkList()
 {}
 
 
@@ -22,7 +22,7 @@ CRenderPass_MapChunk::~CRenderPass_MapChunk()
 //
 // IRenderPassPipelined
 //
-std::shared_ptr<IRenderPassPipelined> CRenderPass_MapChunk::ConfigurePipeline(std::shared_ptr<IRenderTarget> RenderTarget)
+std::shared_ptr<IRenderPassPipelined> CRenderPass_MapChunkList::ConfigurePipeline(std::shared_ptr<IRenderTarget> RenderTarget)
 {
 	__super::ConfigurePipeline(RenderTarget);
 
@@ -58,16 +58,12 @@ std::shared_ptr<IRenderPassPipelined> CRenderPass_MapChunk::ConfigurePipeline(st
 //
 // IVisitor
 //
-EVisitResult CRenderPass_MapChunk::Visit(const std::shared_ptr<ISceneNode>& SceneNode3D)
+EVisitResult CRenderPass_MapChunkList::Visit(const std::shared_ptr<ISceneNode>& SceneNode3D)
 {
 	if (const auto adtMCNKInstance = std::dynamic_pointer_cast<CMapChunk>(SceneNode3D))
 	{
-		if (auto colliderComponent = SceneNode3D->GetComponentT<IColliderComponent>())
-			if (colliderComponent->IsCulled(GetRenderEventArgs().Camera))
-				return EVisitResult::Block;
-
 		return __super::Visit(SceneNode3D);
 	}
 
-	return EVisitResult::AllowVisitChilds;
+	return EVisitResult::Block;
 }

@@ -18,7 +18,7 @@
 
 // Liquid
 #include "../owGame/Liquid/Liquid.h"
-#include "../owGame/Liquid/LiquidInstance.h"
+#include "../owGame/Liquid/LiquidBaseInstance.h"
 
 // M2
 #include "../owGame/M2/M2_Base_Instance.h"

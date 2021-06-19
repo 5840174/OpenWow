@@ -72,9 +72,14 @@ void CWMO_Base_Instance::Initialize()
 {
 	__super::Initialize();
 
-	GetComponentT<IColliderComponent>()->SetCullStrategy(IColliderComponent::ECullStrategy::ByFrustrumAndDistance);
-	GetComponentT<IColliderComponent>()->SetBounds(getWMO().GetBounds());
-	GetComponentT<IColliderComponent>()->SetDebugDrawMode(true);
+	if (auto colliderComponent = GetComponentT<IColliderComponent>())
+	{
+		colliderComponent->SetCullStrategy(IColliderComponent::ECullStrategy::ByFrustrumAndDistance);
+		colliderComponent->SetCullDistance(GetBaseManager().GetManager<ISettings>()->GetGroup("WoWSettings")->GetPropertyT<float>("ADT_WMO_Distance")->Get());
+		colliderComponent->SetBounds(getWMO().GetBounds());
+		colliderComponent->SetDebugDrawMode(false);
+		colliderComponent->SetDebugDrawColor(ColorRGBA(0.8f, 0.8f, 0.2f, 0.8f));
+	}
 }
 
 void CWMO_Base_Instance::Update(const UpdateEventArgs& e)

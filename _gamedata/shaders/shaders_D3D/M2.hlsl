@@ -60,14 +60,15 @@ cbuffer M2Geometry : register(b7)
 // Textures and samples
 Texture2D DiffuseTexture0        : register(t0);
 Texture2D DiffuseTexture1        : register(t1);
-
 sampler   DiffuseTexture0Sampler : register(s0);
 sampler   DiffuseTexture1Sampler : register(s1);
 
 StructuredBuffer<M2PerObject> Instances  : register(t3);
 StructuredBuffer<float4x4> Bones  : register(t4);
 
+
 float4 MixColorAndTexture(uint BlendMode, float4 _in, float4 tex0);
+
 
 VertexShaderOutput DoPSRender(VertexShaderInput IN, M2PerObject M2PerObject)
 {

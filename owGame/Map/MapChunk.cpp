@@ -10,7 +10,7 @@
 // Additional
 #include "MapChunkLiquid.h"
 #include "MapChunkMaterial.h"
-#include "Liquid/LiquidInstance.h"
+#include "Liquid/LiquidBaseInstance.h"
 
 namespace
 {
@@ -75,6 +75,7 @@ void CMapChunk::Initialize()
 		//SetLocalPosition(glm::vec3(- m_Header.xpos + C_ZeroPoint, m_Header.ypos, - m_Header.zpos + C_ZeroPoint));
 	}
 
+	if (auto colliderComponent = GetComponentT<IColliderComponent>())
 	{
 		BoundingBox bbox
 		(
@@ -82,11 +83,11 @@ void CMapChunk::Initialize()
 			glm::vec3(-m_Header.xpos + C_ZeroPoint + C_ChunkSize, Math::MinFloat, -m_Header.zpos + C_ZeroPoint + C_ChunkSize)
 		);
 
-		GetComponentT<IColliderComponent>()->SetCullStrategy(IColliderComponent::ECullStrategy::ByFrustrumAndDistance2D);
-		GetComponentT<IColliderComponent>()->SetCullDistance(GetBaseManager().GetManager<ISettings>()->GetGroup("WoWSettings")->GetPropertyT<float>("MapChunkRenderDistance")->Get());
-		GetComponentT<IColliderComponent>()->SetBounds(bbox);
-		GetComponentT<IColliderComponent>()->SetDebugDrawMode(false);
-		GetComponentT<IColliderComponent>()->SetDebugDrawColor(ColorRGBA(0.3f, 1.0f, 0.3f, 0.8f));
+		colliderComponent->SetCullStrategy(IColliderComponent::ECullStrategy::ByFrustrumAndDistance2D);
+		colliderComponent->SetCullDistance(GetBaseManager().GetManager<ISettings>()->GetGroup("WoWSettings")->GetPropertyT<float>("MapChunkRenderDistance")->Get());
+		colliderComponent->SetBounds(bbox);
+		colliderComponent->SetDebugDrawMode(false);
+		colliderComponent->SetDebugDrawColor(ColorRGBA(0.3f, 1.0f, 0.2f, 0.8f));
 	}
 }
 
@@ -355,7 +356,7 @@ bool CMapChunk::Load()
 				GetComponentT<IColliderComponent>()->SetBounds(bbox);
 			}*/
 
-			auto liquidInstance = CreateSceneNode<Liquid_Instance>();
+			auto liquidInstance = CreateSceneNode<CLiquidBaseInstance>();
 
 			CMapChunkLiquid liquidObject(GetRenderDevice(), m_Bytes, m_Header);
 			liquidObject.CreateInsances(liquidInstance);
@@ -364,10 +365,7 @@ bool CMapChunk::Load()
 			liquidInstance->SetLocalPosition(glm::vec3(0.0f, -GetPosition().y, 0.0f));
 
 			// Collide liquid with chunk
-			liquidInstance->GetComponentT<IColliderComponent>()->SetCullStrategy(IColliderComponent::ECullStrategy::ByFrustrumAndDistance2D);
 			liquidInstance->GetComponentT<IColliderComponent>()->SetBounds(GetComponentT<IColliderComponent>()->GetBounds());
-			liquidInstance->GetComponentT<IColliderComponent>()->SetDebugDrawMode(true);
-			liquidInstance->GetComponentT<IColliderComponent>()->SetDebugDrawColor(ColorRGBA(0.3f, 0.3f, 0.8f, 0.8f));
 		}
 	}
 

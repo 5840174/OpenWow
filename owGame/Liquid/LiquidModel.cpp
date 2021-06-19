@@ -1,7 +1,7 @@
 #include "stdafx.h"
 
 // General
-#include "LiquidLayer.h"
+#include "LiquidModel.h"
 
 CLiquidLayer::CLiquidLayer(IRenderDevice& RenderDevice)
 	: ModelProxie(RenderDevice.GetObjectsFactory().CreateModel())

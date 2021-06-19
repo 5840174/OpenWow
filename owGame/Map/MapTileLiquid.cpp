@@ -5,7 +5,7 @@
 
 // Additional
 #include "DBC/Tables/DBC_LiquidType.h"
-#include "Liquid/LiquidLayer.h"
+#include "Liquid/LiquidModel.h"
 
 #pragma region Types
 #include __PACK_BEGIN

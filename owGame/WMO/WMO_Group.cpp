@@ -105,25 +105,24 @@ void WMO_Group::CreateInsances(const std::shared_ptr<CWMO_Group_Instance>& Paren
 	// WMO Group liquid
 	if (m_WMOLiqiud != nullptr)
 	{
-		glm::vec3 realPos = Fix_XZmY(m_WMOLiqiud->GetHeader().pos);
-
 		auto liquidInstance = Parent->CreateSceneNode<CWMO_Liquid_Instance>();
 
 		m_WMOLiqiud->CreateInsances(liquidInstance);
 
 		// Transform
+		glm::vec3 realPos = Fix_XZmY(m_WMOLiqiud->GetHeader().pos);
 		liquidInstance->SetPosition(glm::vec3(realPos.x, 0, realPos.z));
 
-		// IColliderComponent
+		// Collider
+		if (auto liquidColliderComponent = liquidInstance->GetComponentT<IColliderComponent>())
 		{
 			BoundingBox bbox = Parent->GetComponentT<IColliderComponent>()->GetBounds();
 			bbox.setMin(bbox.getMin() - realPos);
 			bbox.setMax(bbox.getMax() - realPos);
-			liquidInstance->GetComponentT<IColliderComponent>()->SetBounds(bbox);
+			liquidColliderComponent->SetBounds(bbox);
 		}
 
 		Parent->AddRoomObject(liquidInstance);
-		
 	}
 
 #if 1 && defined(USE_M2_MODELS)

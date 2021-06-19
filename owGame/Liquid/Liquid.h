@@ -1,8 +1,7 @@
 #pragma once
 
-#include "LiquidLayer.h"
+#include "LiquidModel.h"
 
-#pragma region Types
 #include __PACK_BEGIN
 
 struct SLiquidVertex
@@ -43,8 +42,12 @@ struct SLiquidFlag
 };
 
 #include __PACK_END
-#pragma endregion
 
+
+
+//
+// CLiquid
+//
 class ZN_API CLiquid
 	: public ISceneNodeProvider
 {
@@ -62,10 +65,11 @@ protected:
 	void createLayers(const DBC_LiquidTypeRecord* _type, const std::shared_ptr<IByteBuffer>& Bytes);
 	
 public:
-	uint32                                                              m_TilesX, m_TilesY;
-	std::vector<std::shared_ptr<CLiquidLayer>>							m_WaterLayers;
+	uint32 m_TilesX;
+	uint32 m_TilesY;
+	std::vector<std::shared_ptr<CLiquidLayer>> m_WaterLayers;
 
-	float                                                               ydir;
+	float ydir;
 
 protected:
 	IRenderDevice& m_RenderDevice;

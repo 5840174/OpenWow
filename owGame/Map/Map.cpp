@@ -346,10 +346,10 @@ bool CMap::getTileIsCurrent(int x, int z) const
     int32 currentZ = currentTile->getIndexZ();
 
     return (
-        x >= (currentX - (C_RenderedTiles / 2)) &&
-        z >= (currentZ - (C_RenderedTiles / 2)) &&
-        x <= (currentX + (C_RenderedTiles / 2)) &&
-        z <= (currentZ + (C_RenderedTiles / 2))
+        x >= (currentX - (C_RenderedTiles / 2u)) &&
+        z >= (currentZ - (C_RenderedTiles / 2u)) &&
+        x <= (currentX + (C_RenderedTiles / 2u)) &&
+        z <= (currentZ + (C_RenderedTiles / 2u))
         );
 }
 

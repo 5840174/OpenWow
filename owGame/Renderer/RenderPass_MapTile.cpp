@@ -7,8 +7,9 @@
 #include "Map/Map.h"
 #include "Map/MapTile.h"
 
-CRenderPass_MapTile::CRenderPass_MapTile(IScene& Scene)
+CRenderPass_MapTile::CRenderPass_MapTile(IScene& Scene, const std::shared_ptr<IRenderPassCreateTypelessList>& SceneListTypeless)
 	: Base3DPass(Scene)
+	, m_SceneListTypeless(SceneListTypeless)
 {
 	SetPassName("MapTile");
 

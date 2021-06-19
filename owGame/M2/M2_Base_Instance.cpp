@@ -38,9 +38,7 @@ bool CM2_Base_Instance::Load()
 		m_Animator = std::make_shared<CM2_Animator>(GetBaseManager(), getM2());
 
 	if (getM2().getSkeleton().hasBones())
-	{
 		m_SkeletonComponent = AddComponentT(std::make_shared<CM2SkeletonComponent3D>(*this));
-	}
 
 #ifdef USE_M2_PARTICLES
 	m_ParticleComponent = AddComponentT(std::make_shared<CM2ParticlesComponent3D>(*this));
@@ -105,10 +103,14 @@ void CM2_Base_Instance::Initialize()
 {
 	__super::Initialize();
 
-	GetComponentT<IColliderComponent>()->SetCullStrategy(IColliderComponent::ECullStrategy::ByFrustrumAndDistance);
-	GetComponentT<IColliderComponent>()->SetCullDistance(GetBaseManager().GetManager<ISettings>()->GetGroup("WoWSettings")->GetPropertyT<float>("ADT_MDX_Distance")->Get());
-	GetComponentT<IColliderComponent>()->SetBounds(getM2().GetBounds());
-	GetComponentT<IColliderComponent>()->SetDebugDrawMode(false);
+	if (auto colliderComponent = GetComponentT<IColliderComponent>())
+	{
+		colliderComponent->SetCullStrategy(IColliderComponent::ECullStrategy::ByFrustrumAndDistance);
+		colliderComponent->SetCullDistance(GetBaseManager().GetManager<ISettings>()->GetGroup("WoWSettings")->GetPropertyT<float>("ADT_MDX_Distance")->Get());
+		colliderComponent->SetBounds(getM2().GetBounds());
+		colliderComponent->SetDebugDrawMode(false);
+		colliderComponent->SetDebugDrawColor(ColorRGBA(0.9f, 0.2f, 0.2f, 0.8f));
+	}
 }
 
 void CM2_Base_Instance::Update(const UpdateEventArgs & e)

@@ -4,7 +4,7 @@ class ZN_API CRenderPass_MapTile
 	: public Base3DPass
 {
 public:
-	CRenderPass_MapTile(IScene& Scene);
+	CRenderPass_MapTile(IScene& Scene, const std::shared_ptr<IRenderPassCreateTypelessList>& SceneListTypeless);
 	virtual ~CRenderPass_MapTile();
 
     // IVisitor
@@ -12,4 +12,5 @@ public:
 
 private:
 	std::shared_ptr<IPropertiesGroup> m_WoWSettings;
+	std::shared_ptr<IRenderPassCreateTypelessList> m_SceneListTypeless;
 };

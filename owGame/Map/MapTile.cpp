@@ -75,19 +75,21 @@ void CMapTile::Initialize()
 	// Do not set local transform
 	//SetLocalPosition(glm::vec3(m_IndexX * C_TileSize, 0.0f, m_IndexZ * C_TileSize));
 
-	// CColliderComponent
-	std::shared_ptr<IColliderComponent> colliderComponent = GetComponentT<IColliderComponent>();
-	glm::vec3 translate = GetPosition();
+	// Collider
+	if (auto colliderComponent = GetComponentT<IColliderComponent>())
+	{
+		BoundingBox bbox
+		(
+			glm::vec3((getIndexX() * C_TileSize),              Math::MaxFloat, (getIndexZ() * C_TileSize)),
+			glm::vec3((getIndexX() * C_TileSize) + C_TileSize, Math::MinFloat, (getIndexZ() * C_TileSize) + C_TileSize)
+		);
 
-	BoundingBox bbox
-	(
-		glm::vec3((getIndexX() * C_TileSize),              Math::MaxFloat, (getIndexZ() * C_TileSize)),
-		glm::vec3((getIndexX() * C_TileSize) + C_TileSize, Math::MinFloat, (getIndexZ() * C_TileSize) + C_TileSize)
-	);
-	colliderComponent->SetBounds(bbox);
-	colliderComponent->SetCullStrategy(IColliderComponent::ECullStrategy::ByFrustrumAndDistance2D);
-	colliderComponent->SetDebugDrawMode(true);
-	colliderComponent->SetDebugDrawColor(ColorRGBA(0.5f, 0.8f, 0.2f, 0.8f));
+		colliderComponent->SetBounds(bbox);
+		colliderComponent->SetCullStrategy(IColliderComponent::ECullStrategy::ByFrustrumAndDistance2D);
+		colliderComponent->SetCullDistance(GetBaseManager().GetManager<ISettings>()->GetGroup("WoWSettings")->GetPropertyT<float>("MapChunkRenderDistance")->Get());
+		colliderComponent->SetDebugDrawMode(true);
+		colliderComponent->SetDebugDrawColor(ColorRGBA(0.5f, 0.8f, 0.2f, 0.8f));
+	}
 }
 
 //
@@ -151,23 +153,22 @@ bool CMapTile::Load()
 					{
 						CMapTileLiquid liquidObject(GetRenderDevice(), f, *mh2o_Header);
 
-						auto liquidInstance = CreateSceneNode<Liquid_Instance>();
+						auto liquidInstance = CreateSceneNode<CLiquidBaseInstance>();
 						liquidObject.CreateInsances(liquidInstance);
 
 						// Transform
 						liquidInstance->SetLocalPosition(glm::vec3((getIndexX() * C_TileSize) + (j * C_ChunkSize), 0.0f, (getIndexZ() * C_TileSize) + (i * C_ChunkSize)));
 
 						// Collider
-						auto colliderComponent = liquidInstance->GetComponentT<IColliderComponent>();
-						colliderComponent->SetCullStrategy(IColliderComponent::ECullStrategy::ByFrustrumAndDistance2D);
-						colliderComponent->SetBounds(BoundingBox(
-							glm::vec3(0.0f, liquidObject.getMinHeight() - 1.0f, 0.0f),
-							glm::vec3(C_ChunkSize, liquidObject.getMaxHeight() + 1.0f, C_ChunkSize)
-						));
-						colliderComponent->SetDebugDrawMode(true);
-						colliderComponent->SetDebugDrawColor(ColorRGBA(0.3f, 0.3f, 0.8f, 0.8f));
+						if (auto liquidColliderComponent = liquidInstance->GetComponentT<IColliderComponent>())
+						{
+							liquidColliderComponent->SetBounds(BoundingBox(
+								glm::vec3(0.0f,        liquidObject.getMinHeight() - 1.0f, 0.0f),
+								glm::vec3(C_ChunkSize, liquidObject.getMaxHeight() + 1.0f, C_ChunkSize)
+							));
 
-						ExtendMapTileBounds(colliderComponent->GetWorldBounds());
+							ExtendMapTileBounds(liquidColliderComponent->GetWorldBounds());
+						}
 					}
 					abuf += sizeof(MH2O_Header);
 				}
@@ -332,6 +333,9 @@ bool CMapTile::Load()
 		if (std::shared_ptr<CWMO> wmo = GetBaseManager().GetManager<IWoWObjectsCreator>()->LoadWMO(GetRenderDevice(), m_WMOsNames[it.nameIndex], true))
 		{
 			auto inst = CreateSceneNode<CMapWMOInstance>(wmo, it);
+
+			ExtendMapTileBounds(inst->GetComponentT<IColliderComponent>()->GetWorldBounds());
+
 			GetBaseManager().GetManager<ILoader>()->AddToLoadQueue(inst);
 
 			m_WMOsInstances.push_back(inst.get());
@@ -350,6 +354,9 @@ bool CMapTile::Load()
 		if (auto m2 = GetBaseManager().GetManager<IWoWObjectsCreator>()->LoadM2(GetRenderDevice(), m_MDXsNames[it.nameIndex]))
 		{
 			auto inst = CreateSceneNode<CMapM2Instance>(m2, it);
+
+			ExtendMapTileBounds(inst->GetComponentT<IColliderComponent>()->GetWorldBounds());
+
 			GetBaseManager().GetManager<ILoader>()->AddToLoadQueue(inst);
 			
 			m_MDXsInstances.push_back(inst.get());

@@ -145,9 +145,14 @@ void CWMO_Group_Instance::Initialize()
 {
 	__super::Initialize();
 
-	GetComponentT<IColliderComponent>()->SetCullStrategy(IColliderComponent::ECullStrategy::ByFrustrumAndDistance);
-	GetComponentT<IColliderComponent>()->SetBounds(m_WMOGroupObject.m_Bounds);
-	GetComponentT<IColliderComponent>()->SetDebugDrawMode(false);
+	if (auto colliderComponent = GetComponentT<IColliderComponent>())
+	{
+		colliderComponent->SetCullStrategy(IColliderComponent::ECullStrategy::ByFrustrumAndDistance);
+		colliderComponent->SetCullDistance(GetBaseManager().GetManager<ISettings>()->GetGroup("WoWSettings")->GetPropertyT<float>("ADT_WMO_Distance")->Get());
+		colliderComponent->SetBounds(m_WMOGroupObject.m_Bounds);
+		colliderComponent->SetDebugDrawMode(false);
+		colliderComponent->SetDebugDrawColor(ColorRGBA(0.8f, 0.6f, 0.2f, 0.8f));
+	}
 }
 
 void CWMO_Group_Instance::Accept(IVisitor* visitor)

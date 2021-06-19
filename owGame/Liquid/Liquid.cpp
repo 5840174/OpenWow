@@ -1,7 +1,7 @@
 #include "stdafx.h"
 
 // General
-#include "liquid.h"
+#include "Liquid.h"
 
 
 CLiquid::CLiquid(IRenderDevice& RenderDevice, uint32 x, uint32 y)

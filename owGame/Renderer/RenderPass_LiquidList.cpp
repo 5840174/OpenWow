@@ -1,18 +1,18 @@
 #include "stdafx.h"
 
 // General
-#include "RenderPass_Liquid.h"
+#include "RenderPass_LiquidList.h"
 
 // Additional
 #include "Liquid/LiquidBaseInstance.h"
 
-CRenderPass_Liquid::CRenderPass_Liquid(IScene& Scene)
-	: Base3DPass(Scene)
+CRenderPass_LiquidList::CRenderPass_LiquidList(IRenderDevice& RenderDevice, const std::shared_ptr<IRenderPassCreateTypelessList>& CreateTypelessList)
+	: CRenderPassProcessTypelessList(RenderDevice, CreateTypelessList)
 {
-	SetPassName("Liquid");
+	SetPassName("LiquidList");
 }
 
-CRenderPass_Liquid::~CRenderPass_Liquid()
+CRenderPass_LiquidList::~CRenderPass_LiquidList()
 {}
 
 
@@ -20,17 +20,15 @@ CRenderPass_Liquid::~CRenderPass_Liquid()
 //
 // IRenderPassPipelined
 //
-std::shared_ptr<IRenderPassPipelined> CRenderPass_Liquid::ConfigurePipeline(std::shared_ptr<IRenderTarget> RenderTarget)
+std::shared_ptr<IRenderPassPipelined> CRenderPass_LiquidList::ConfigurePipeline(std::shared_ptr<IRenderTarget> RenderTarget)
 {
 	__super::ConfigurePipeline(RenderTarget);
 
-	// CreateShaders
 	std::shared_ptr<IShader> vertexShader = GetRenderDevice().GetObjectsFactory().LoadShader(EShaderType::VertexShader, "shaders_D3D/Liquid.hlsl", "VS_main");
 	vertexShader->LoadInputLayoutFromReflector();
 
 	std::shared_ptr<IShader> pixelShader = GetRenderDevice().GetObjectsFactory().LoadShader(EShaderType::PixelShader, "shaders_D3D/Liquid.hlsl", "PS_main");
 
-	// PIPELINES
 	GetPipeline().GetBlendState()->SetBlendMode(alphaBlending);
 	GetPipeline().GetDepthStencilState()->SetDepthMode(enableDepthWrites);
 	GetPipeline().GetRasterizerState()->SetCullMode(IRasterizerState::CullMode::None);
@@ -47,10 +45,10 @@ std::shared_ptr<IRenderPassPipelined> CRenderPass_Liquid::ConfigurePipeline(std:
 //
 // IVisitor
 //
-EVisitResult CRenderPass_Liquid::Visit(const std::shared_ptr<ISceneNode>& SceneNode3D)
+EVisitResult CRenderPass_LiquidList::Visit(const std::shared_ptr<ISceneNode>& SceneNode3D)
 {
 	if (auto liquidInstance = std::dynamic_pointer_cast<CLiquidBaseInstance>(SceneNode3D))
 		return __super::Visit(liquidInstance);
 
-    return EVisitResult::AllowVisitChilds;
+    return EVisitResult::Block;
 }

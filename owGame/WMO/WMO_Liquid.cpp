@@ -14,8 +14,6 @@ CWMO_Liquid::CWMO_Liquid(IRenderDevice& RenderDevice, const CWMO& WMOObject, con
 	ydir = -1.0f; // Magic for WMO
 	createLayers(RenderDevice.GetBaseManager().GetManager<CDBCStorage>()->DBC_LiquidType()[1], Bytes);
 
-	// m_WMOLiqiud->CreateFromWMO(buffer, m_WMOModel.m_Materials[m_LiquidHeader.materialID], m_BaseManager.GetManager<CDBCStorage>()->DBC_LiquidType()[1], m_GroupHeader.flags.IS_INDOOR);
-
 	/*if (_indoor)
 	{
 		m_WaterColorLight = fromRGB(_material->GetDiffuseColor());

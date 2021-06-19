@@ -166,6 +166,12 @@
     <Filter Include="Utils">
       <UniqueIdentifier>{e5bf550a-5a51-4482-87bc-533a4e241f7c}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Renderer\PassesList">
+      <UniqueIdentifier>{31285c6c-47bd-4b31-a2f6-e43ca88b98d1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Liquid\Instances">
+      <UniqueIdentifier>{5a9d94b7-58a4-4951-adbd-dde2c8952320}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -343,15 +349,6 @@
       <Filter>Formats\libmpq</Filter>
     </ClCompile>
     <ClCompile Include="Liquid\Liquid.cpp">
-      <Filter>Liquid</Filter>
-    </ClCompile>
-    <ClCompile Include="Liquid\LiquidInstance.cpp">
-      <Filter>Liquid</Filter>
-    </ClCompile>
-    <ClCompile Include="Liquid\LiquidLayer.cpp">
-      <Filter>Liquid</Filter>
-    </ClCompile>
-    <ClCompile Include="Liquid\LiquidMaterial.cpp">
       <Filter>Liquid</Filter>
     </ClCompile>
     <ClCompile Include="Sky\Sky.cpp">
@@ -536,6 +533,42 @@
     </ClCompile>
     <ClCompile Include="Interfaces\Managers.cpp">
       <Filter>Interfaces</Filter>
+    </ClCompile>
+    <ClCompile Include="Renderer\RenderPass_MapChunkList.cpp">
+      <Filter>Renderer\PassesList</Filter>
+    </ClCompile>
+    <ClCompile Include="Renderer\RenderPass_WMOList.cpp">
+      <Filter>Renderer\PassesList</Filter>
+    </ClCompile>
+    <ClCompile Include="Renderer\RenderPassCreateTypelessList.cpp">
+      <Filter>Renderer</Filter>
+    </ClCompile>
+    <ClCompile Include="Renderer\RenderPassProcessTypelessList.cpp">
+      <Filter>Renderer</Filter>
+    </ClCompile>
+    <ClCompile Include="Renderer\RenderPass_M2InstancedList.cpp">
+      <Filter>Renderer\PassesList</Filter>
+    </ClCompile>
+    <ClCompile Include="Renderer\RenderPass_M2List.cpp">
+      <Filter>Renderer\PassesList</Filter>
+    </ClCompile>
+    <ClCompile Include="Renderer\RenderPass_LiquidList.cpp">
+      <Filter>Renderer\PassesList</Filter>
+    </ClCompile>
+    <ClCompile Include="Renderer\RenderPass_WDLList.cpp">
+      <Filter>Renderer\PassesList</Filter>
+    </ClCompile>
+    <ClCompile Include="Renderer\RenderPass_SkyList.cpp">
+      <Filter>Renderer\PassesList</Filter>
+    </ClCompile>
+    <ClCompile Include="Liquid\LiquidBaseInstance.cpp">
+      <Filter>Liquid\Instances</Filter>
+    </ClCompile>
+    <ClCompile Include="Liquid\LiquidModel.cpp">
+      <Filter>Liquid\Instances</Filter>
+    </ClCompile>
+    <ClCompile Include="Liquid\LiquidMaterial.cpp">
+      <Filter>Liquid\Instances</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -890,15 +923,6 @@
     <ClInclude Include="Liquid\Liquid.h">
       <Filter>Liquid</Filter>
     </ClInclude>
-    <ClInclude Include="Liquid\LiquidInstance.h">
-      <Filter>Liquid</Filter>
-    </ClInclude>
-    <ClInclude Include="Liquid\LiquidLayer.h">
-      <Filter>Liquid</Filter>
-    </ClInclude>
-    <ClInclude Include="Liquid\LiquidMaterial.h">
-      <Filter>Liquid</Filter>
-    </ClInclude>
     <ClInclude Include="Sky\Sky.h">
       <Filter>Sky</Filter>
     </ClInclude>
@@ -1114,6 +1138,42 @@
     </ClInclude>
     <ClInclude Include="Map\MapWDLTileMaterial.h">
       <Filter>Map\MapWDL</Filter>
+    </ClInclude>
+    <ClInclude Include="Renderer\RenderPass_MapChunkList.h">
+      <Filter>Renderer\PassesList</Filter>
+    </ClInclude>
+    <ClInclude Include="Renderer\RenderPass_WMOList.h">
+      <Filter>Renderer\PassesList</Filter>
+    </ClInclude>
+    <ClInclude Include="Renderer\RenderPassCreateTypelessList.h">
+      <Filter>Renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="Renderer\RenderPassProcessTypelessList.h">
+      <Filter>Renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="Renderer\RenderPass_M2InstancedList.h">
+      <Filter>Renderer\PassesList</Filter>
+    </ClInclude>
+    <ClInclude Include="Renderer\RenderPass_M2List.h">
+      <Filter>Renderer\PassesList</Filter>
+    </ClInclude>
+    <ClInclude Include="Renderer\RenderPass_LiquidList.h">
+      <Filter>Renderer\PassesList</Filter>
+    </ClInclude>
+    <ClInclude Include="Renderer\RenderPass_WDLList.h">
+      <Filter>Renderer\PassesList</Filter>
+    </ClInclude>
+    <ClInclude Include="Renderer\RenderPass_SkyList.h">
+      <Filter>Renderer\PassesList</Filter>
+    </ClInclude>
+    <ClInclude Include="Liquid\LiquidBaseInstance.h">
+      <Filter>Liquid\Instances</Filter>
+    </ClInclude>
+    <ClInclude Include="Liquid\LiquidModel.h">
+      <Filter>Liquid\Instances</Filter>
+    </ClInclude>
+    <ClInclude Include="Liquid\LiquidMaterial.h">
+      <Filter>Liquid\Instances</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -39,14 +39,11 @@ public:
 	std::vector<bool> renderTiles;
 
 public:
-	// Render
 	void InitTextures(DBC_LIQUIDTYPE_Type::List _liquidType);
-
-	
 
 private:
 	ISkyManager* m_SkyManager;
-	std::vector<std::shared_ptr<ITexture>>    m_Textures;
+	std::vector<std::shared_ptr<ITexture>> m_Textures;
 	std::shared_ptr<LiquidMaterial> m_Material;
 
 private:
