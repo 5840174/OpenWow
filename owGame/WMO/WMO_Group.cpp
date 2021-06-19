@@ -116,9 +116,10 @@ void WMO_Group::CreateInsances(const std::shared_ptr<CWMO_Group_Instance>& Paren
 		// Collider
 		if (auto liquidColliderComponent = liquidInstance->GetComponentT<IColliderComponent>())
 		{
-			BoundingBox bbox = Parent->GetComponentT<IColliderComponent>()->GetBounds();
-			bbox.setMin(bbox.getMin() - realPos);
-			bbox.setMax(bbox.getMax() - realPos);
+			BoundingBox bbox(
+				glm::vec3(0.0f,                                    realPos.y - 1.0f, -1.0f * m_WMOLiqiud->GetHeader().Y * C_UnitSize),
+				glm::vec3(m_WMOLiqiud->GetHeader().X * C_UnitSize, realPos.y + 1.0f,  0.0f)
+			);
 			liquidColliderComponent->SetBounds(bbox);
 		}
 

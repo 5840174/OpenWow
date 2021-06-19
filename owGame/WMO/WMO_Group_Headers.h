@@ -142,10 +142,10 @@ struct SWMO_Group_MOBNDef
 
 struct SWMO_Group_MLIQDef
 {
-	uint32    X, Y;
-	uint32    A, B;
-	glm::vec3 pos;
-	uint16    materialID;
+	uint32    X, Y;       // number of vertices (x, y)
+	uint32    A, B;       // number of tiles (ntiles = nverts-1)
+	glm::vec3 pos;        // base coordinates for X and Y
+	uint16    materialID; // material ID (index into MOMT)
 };
 
 #include __PACK_END

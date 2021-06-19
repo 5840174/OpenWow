@@ -58,7 +58,7 @@ void CRendererWoW::Initialize(std::shared_ptr<IRenderTarget> OutputRenderTarget)
 	// Not needed
 
 	//Add3DPass(MakeShared(CRenderPass_MapChunk, GetScene())->ConfigurePipeline(OutputRenderTarget));
-	Add3DPass(MakeShared(CRenderPass_MapChunkList, GetRenderDevice(), m_SceneListTypelessPass)->ConfigurePipeline(OutputRenderTarget));
+	//Add3DPass(MakeShared(CRenderPass_MapChunkList, GetRenderDevice(), m_SceneListTypelessPass)->ConfigurePipeline(OutputRenderTarget));
 
 	//Add3DPass(MakeShared(CRenderPass_WMO, GetScene())->ConfigurePipeline(OutputRenderTarget));
 	Add3DPass(MakeShared(CRenderPass_WMOList, GetRenderDevice(), m_SceneListTypelessPass)->ConfigurePipeline(OutputRenderTarget));

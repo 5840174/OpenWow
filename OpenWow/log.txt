@@ -21,47 +21,45 @@
 ^CMPQFile[ruRU/patch-ruRU.MPQ]: Added!
 ^CMPQFile[ruRU/patch-ruRU-2.MPQ]: Added!
 ^CMPQFile[ruRU/patch-ruRU-3.MPQ]: Added!
-~DBCFile[AnimationData.dbc]: Records count = '-267391176'.
-~DBCFile[GroundEffectDoodad.dbc]: Records count = '-267391176'.
-~DBCFile[GroundEffectTexture.dbc]: Records count = '-267391176'.
-~DBCFile[LoadingScreens.dbc]: Records count = '-267391176'.
-~DBCFile[Material.dbc]: Records count = '-267391176'.
-~DBCFile[Map.dbc]: Records count = '-267391176'.
-~DBCFile[TerrainType.dbc]: Records count = '-267391176'.
-~DBCFile[WMOAreaTable.dbc]: Records count = '-267391176'.
-~DBCFile[WorldSafeLocs.dbc]: Records count = '-267391176'.
-~DBCFile[AreaTable.dbc]: Records count = '-267391176'.
-~DBCFile[CharacterFacialHairStyles.dbc]: Records count = '-267391176'.
-~DBCFile[CharComponentTextureLayouts.dbc]: Records count = '-267391176'.
-~DBCFile[CharComponentTextureSections.dbc]: Records count = '-267391176'.
-~DBCFile[CharHairGeosets.dbc]: Records count = '-267391176'.
-~DBCFile[CharSections.dbc]: Records count = '-267391176'.
-~DBCFile[ChrRaces.dbc]: Records count = '-267391176'.
-~DBCFile[CinematicCamera.dbc]: Records count = '-267391176'.
-~DBCFile[CinematicSequences.dbc]: Records count = '-267391176'.
-~DBCFile[CreatureDisplayInfo.dbc]: Records count = '-267391176'.
-~DBCFile[CreatureDisplayInfoExtra.dbc]: Records count = '-267391176'.
-~DBCFile[CreatureModelData.dbc]: Records count = '-267391176'.
-~DBCFile[HelmetGeosetVisData.dbc]: Records count = '-267391176'.
-~DBCFile[ItemBagFamily.dbc]: Records count = '-267391176'.
-~DBCFile[ItemClass.dbc]: Records count = '-267391176'.
-~DBCFile[ItemDisplayInfo.dbc]: Records count = '-267391176'.
-~DBCFile[ItemVisualEffects.dbc]: Records count = '-267391176'.
-~DBCFile[ItemVisuals.dbc]: Records count = '-267391176'.
-~DBCFile[Light.dbc]: Records count = '-267391176'.
-~DBCFile[LightFloatBand.dbc]: Records count = '-267391176'.
-~DBCFile[LightIntBand.dbc]: Records count = '-267391176'.
-~DBCFile[LightParams.dbc]: Records count = '-267391176'.
-~DBCFile[LightSkybox.dbc]: Records count = '-267391176'.
-~DBCFile[LiquidType.dbc]: Records count = '-267391176'.
-~DBCFile[GameObjectDisplayInfo.dbc]: Records count = '-267391288'.
+~DBCFile[AnimationData.dbc]: Records count = '807005320'.
+~DBCFile[GroundEffectDoodad.dbc]: Records count = '807005320'.
+~DBCFile[GroundEffectTexture.dbc]: Records count = '807005320'.
+~DBCFile[LoadingScreens.dbc]: Records count = '807005320'.
+~DBCFile[Material.dbc]: Records count = '807005320'.
+~DBCFile[Map.dbc]: Records count = '807005320'.
+~DBCFile[TerrainType.dbc]: Records count = '807005320'.
+~DBCFile[WMOAreaTable.dbc]: Records count = '807005320'.
+~DBCFile[WorldSafeLocs.dbc]: Records count = '807005320'.
+~DBCFile[AreaTable.dbc]: Records count = '807005320'.
+~DBCFile[CharacterFacialHairStyles.dbc]: Records count = '807005320'.
+~DBCFile[CharComponentTextureLayouts.dbc]: Records count = '807005320'.
+~DBCFile[CharComponentTextureSections.dbc]: Records count = '807005320'.
+~DBCFile[CharHairGeosets.dbc]: Records count = '807005320'.
+~DBCFile[CharSections.dbc]: Records count = '807005320'.
+~DBCFile[ChrRaces.dbc]: Records count = '807005320'.
+~DBCFile[CinematicCamera.dbc]: Records count = '807005320'.
+~DBCFile[CinematicSequences.dbc]: Records count = '807005320'.
+~DBCFile[CreatureDisplayInfo.dbc]: Records count = '807005320'.
+~DBCFile[CreatureDisplayInfoExtra.dbc]: Records count = '807005320'.
+~DBCFile[CreatureModelData.dbc]: Records count = '807005320'.
+~DBCFile[HelmetGeosetVisData.dbc]: Records count = '807005320'.
+~DBCFile[ItemBagFamily.dbc]: Records count = '807005320'.
+~DBCFile[ItemClass.dbc]: Records count = '807005320'.
+~DBCFile[ItemDisplayInfo.dbc]: Records count = '807005320'.
+~DBCFile[ItemVisualEffects.dbc]: Records count = '807005320'.
+~DBCFile[ItemVisuals.dbc]: Records count = '807005320'.
+~DBCFile[Light.dbc]: Records count = '807005320'.
+~DBCFile[LightFloatBand.dbc]: Records count = '807005320'.
+~DBCFile[LightIntBand.dbc]: Records count = '807005320'.
+~DBCFile[LightParams.dbc]: Records count = '807005320'.
+~DBCFile[LightSkybox.dbc]: Records count = '807005320'.
+~DBCFile[LiquidType.dbc]: Records count = '807005320'.
+~DBCFile[GameObjectDisplayInfo.dbc]: Records count = '807005208'.
 ~FontsManager: Font 'Fonts\consola.ttf' loaded. Size [14].
 ~Loading shader 'shaders_D3D/Sky.hlsl':'VS_main'.
 ~Loading shader 'shaders_D3D/Sky.hlsl':'PS_main'.
 ~Loading shader 'shaders_D3D/MapWDL.hlsl':'VS_main'.
 ~Loading shader 'shaders_D3D/MapWDL.hlsl':'PS_main'.
-~Loading shader 'shaders_D3D/MapChunk.hlsl':'VS_main'.
-~Loading shader 'shaders_D3D/MapChunk.hlsl':'PS_main'.
 ~Loading shader 'shaders_D3D/WMO.hlsl':'VS_main'.
 ~Loading shader 'shaders_D3D/WMO.hlsl':'PS_main'.
 ~Loading shader 'shaders_D3D/M2.hlsl':'VS_main'.
@@ -93,71 +91,111 @@
 ^MapTile[41, 29, World\Maps\Kalimdor\Kalimdor_41_29.adt]: Loaded!
 ^MapTile[41, 30, World\Maps\Kalimdor\Kalimdor_41_30.adt]: Loaded!
 ^MapTile[41, 31, World\Maps\Kalimdor\Kalimdor_41_31.adt]: Loaded!
-^MapTile[38, 29, World\Maps\Kalimdor\Kalimdor_38_29.adt]: Loaded!
+^MapTile[39, 32, World\Maps\Kalimdor\Kalimdor_39_32.adt]: Loaded!
+^MapTile[40, 32, World\Maps\Kalimdor\Kalimdor_40_32.adt]: Loaded!
+^MapTile[41, 32, World\Maps\Kalimdor\Kalimdor_41_32.adt]: Loaded!
 ^MapTile[38, 30, World\Maps\Kalimdor\Kalimdor_38_30.adt]: Loaded!
 ^MapTile[38, 31, World\Maps\Kalimdor\Kalimdor_38_31.adt]: Loaded!
-@M2[WORLD\GENERIC\PASSIVEDOODADS\PARTICLEEMITTERS\BLACKSMITH_SMOKE.M2] don't contain geometry. Skins [1]
-^MapTile[38, 28, World\Maps\Kalimdor\Kalimdor_38_28.adt]: Loaded!
-^MapTile[39, 28, World\Maps\Kalimdor\Kalimdor_39_28.adt]: Loaded!
-^MapTile[40, 28, World\Maps\Kalimdor\Kalimdor_40_28.adt]: Loaded!
-^MapTile[41, 28, World\Maps\Kalimdor\Kalimdor_41_28.adt]: Loaded!
-^MapTile[38, 27, World\Maps\Kalimdor\Kalimdor_38_27.adt]: Loaded!
-^MapTile[39, 27, World\Maps\Kalimdor\Kalimdor_39_27.adt]: Loaded!
-^MapTile[40, 27, World\Maps\Kalimdor\Kalimdor_40_27.adt]: Loaded!
-@CMapTile::~CMapTile: Tile [41, 31] unloaded.
-@CMapTile::~CMapTile: Tile [40, 31] unloaded.
-@CMapTile::~CMapTile: Tile [41, 30] unloaded.
-@M2[WORLD\GENERIC\PASSIVEDOODADS\PARTICLEEMITTERS\BLACKSMITH_SMOKE.M2] don't contain geometry. Skins [1]
-^MapTile[40, 31, World\Maps\Kalimdor\Kalimdor_40_31.adt]: Loaded!
-@CMapTile::~CMapTile: Tile [40, 27] unloaded.
+^MapTile[38, 32, World\Maps\Kalimdor\Kalimdor_38_32.adt]: Loaded!
 @M2[WORLD\AZEROTH\BURNINGSTEPPES\PASSIVEDOODADS\SMOKE\ASHTREESMOKE01.M2] don't contain geometry. Skins [1]
-@M2[WORLD\AZEROTH\BURNINGSTEPPES\PASSIVEDOODADS\SMOKE\ASHTREESMOKE01.M2] don't contain geometry. Skins [1]
-^MapTile[37, 29, World\Maps\Kalimdor\Kalimdor_37_29.adt]: Loaded!
+@M2[WORLD\GENERIC\PASSIVEDOODADS\PARTICLEEMITTERS\BLACKSMITH_SMOKE.M2] don't contain geometry. Skins [1]
 ^MapTile[37, 30, World\Maps\Kalimdor\Kalimdor_37_30.adt]: Loaded!
 ^MapTile[37, 31, World\Maps\Kalimdor\Kalimdor_37_31.adt]: Loaded!
-@CMapTile::~CMapTile: Tile [41, 28] unloaded.
-@CMapTile::~CMapTile: Tile [39, 27] unloaded.
-@CMapTile::~CMapTile: Tile [41, 29] unloaded.
 ^MapTile[37, 32, World\Maps\Kalimdor\Kalimdor_37_32.adt]: Loaded!
-^MapTile[38, 32, World\Maps\Kalimdor\Kalimdor_38_32.adt]: Loaded!
-^MapTile[39, 32, World\Maps\Kalimdor\Kalimdor_39_32.adt]: Loaded!
-@CMapTile::~CMapTile: Tile [40, 28] unloaded.
+@CMapTile::~CMapTile: Tile [41, 29] unloaded.
 @CMapTile::~CMapTile: Tile [40, 29] unloaded.
-@CMapTile::~CMapTile: Tile [38, 27] unloaded.
-^MapTile[36, 30, World\Maps\Kalimdor\Kalimdor_36_30.adt]: Loaded!
+^MapTile[37, 33, World\Maps\Kalimdor\Kalimdor_37_33.adt]: Loaded!
+^MapTile[38, 33, World\Maps\Kalimdor\Kalimdor_38_33.adt]: Loaded!
+^MapTile[39, 33, World\Maps\Kalimdor\Kalimdor_39_33.adt]: Loaded!
+@CMapTile::~CMapTile: Tile [41, 30] unloaded.
+@CMapTile::~CMapTile: Tile [39, 29] unloaded.
+@CMapTile::~CMapTile: Tile [40, 30] unloaded.
 ^MapTile[36, 31, World\Maps\Kalimdor\Kalimdor_36_31.adt]: Loaded!
 @M2[WORLD\GENERIC\ORC\PASSIVE DOODADS\GEYSER\STEAMGEYSER.M2] don't contain geometry. Skins [1]
 ^MapTile[36, 32, World\Maps\Kalimdor\Kalimdor_36_32.adt]: Loaded!
-@CMapTile::~CMapTile: Tile [39, 28] unloaded.
-@CMapTile::~CMapTile: Tile [39, 29] unloaded.
-@CMapTile::~CMapTile: Tile [40, 30] unloaded.
 ^MapTile[36, 33, World\Maps\Kalimdor\Kalimdor_36_33.adt]: Loaded!
-^MapTile[37, 33, World\Maps\Kalimdor\Kalimdor_37_33.adt]: Loaded!
-^MapTile[38, 33, World\Maps\Kalimdor\Kalimdor_38_33.adt]: Loaded!
-@CMapTile::~CMapTile: Tile [38, 28] unloaded.
+@CMapTile::~CMapTile: Tile [41, 31] unloaded.
 @CMapTile::~CMapTile: Tile [39, 30] unloaded.
 @CMapTile::~CMapTile: Tile [40, 31] unloaded.
 ^MapTile[36, 34, World\Maps\Kalimdor\Kalimdor_36_34.adt]: Loaded!
 ^MapTile[37, 34, World\Maps\Kalimdor\Kalimdor_37_34.adt]: Loaded!
 ^MapTile[38, 34, World\Maps\Kalimdor\Kalimdor_38_34.adt]: Loaded!
-@CMapTile::~CMapTile: Tile [38, 29] unloaded.
+@CMapTile::~CMapTile: Tile [41, 32] unloaded.
 @CMapTile::~CMapTile: Tile [39, 31] unloaded.
-@CMapTile::~CMapTile: Tile [38, 30] unloaded.
+@CMapTile::~CMapTile: Tile [40, 32] unloaded.
 ^MapTile[35, 32, World\Maps\Kalimdor\Kalimdor_35_32.adt]: Loaded!
 ^MapTile[35, 33, World\Maps\Kalimdor\Kalimdor_35_33.adt]: Loaded!
 ^MapTile[35, 34, World\Maps\Kalimdor\Kalimdor_35_34.adt]: Loaded!
-@CMapTile::~CMapTile: Tile [37, 29] unloaded.
-@CMapTile::~CMapTile: Tile [37, 30] unloaded.
+@CMapTile::~CMapTile: Tile [38, 30] unloaded.
 @CMapTile::~CMapTile: Tile [39, 32] unloaded.
+@CMapTile::~CMapTile: Tile [38, 31] unloaded.
 ^MapTile[34, 32, World\Maps\Kalimdor\Kalimdor_34_32.adt]: Loaded!
 ^MapTile[34, 33, World\Maps\Kalimdor\Kalimdor_34_33.adt]: Loaded!
 ^MapTile[34, 34, World\Maps\Kalimdor\Kalimdor_34_34.adt]: Loaded!
-@CMapTile::~CMapTile: Tile [38, 31] unloaded.
-@CMapTile::~CMapTile: Tile [38, 32] unloaded.
+@CMapTile::~CMapTile: Tile [37, 30] unloaded.
+@CMapTile::~CMapTile: Tile [39, 33] unloaded.
 @CMapTile::~CMapTile: Tile [37, 31] unloaded.
+^MapTile[35, 31, World\Maps\Kalimdor\Kalimdor_35_31.adt]: Loaded!
+^MapTile[37, 31, World\Maps\Kalimdor\Kalimdor_37_31.adt]: Loaded!
+@CMapTile::~CMapTile: Tile [34, 34] unloaded.
+@CMapTile::~CMapTile: Tile [38, 34] unloaded.
+^MapTile[38, 31, World\Maps\Kalimdor\Kalimdor_38_31.adt]: Loaded!
+@CMapTile::~CMapTile: Tile [34, 33] unloaded.
+^MapTile[35, 30, World\Maps\Kalimdor\Kalimdor_35_30.adt]: Loaded!
+^MapTile[36, 30, World\Maps\Kalimdor\Kalimdor_36_30.adt]: Loaded!
+@M2[WORLD\AZEROTH\BURNINGSTEPPES\PASSIVEDOODADS\SMOKE\ASHTREESMOKE01.M2] don't contain geometry. Skins [1]
+^MapTile[37, 30, World\Maps\Kalimdor\Kalimdor_37_30.adt]: Loaded!
+@CMapTile::~CMapTile: Tile [38, 33] unloaded.
+@CMapTile::~CMapTile: Tile [37, 34] unloaded.
+@CMapTile::~CMapTile: Tile [35, 34] unloaded.
+^MapTile[35, 34, World\Maps\Kalimdor\Kalimdor_35_34.adt]: Loaded!
+^MapTile[37, 34, World\Maps\Kalimdor\Kalimdor_37_34.adt]: Loaded!
+@CMapTile::~CMapTile: Tile [38, 31] unloaded.
+@CMapTile::~CMapTile: Tile [35, 30] unloaded.
 ^MapTile[35, 35, World\Maps\Kalimdor\Kalimdor_35_35.adt]: Loaded!
 ^MapTile[36, 35, World\Maps\Kalimdor\Kalimdor_36_35.adt]: Loaded!
 ^MapTile[37, 35, World\Maps\Kalimdor\Kalimdor_37_35.adt]: Loaded!
+@CMapTile::~CMapTile: Tile [37, 30] unloaded.
 @CMapTile::~CMapTile: Tile [36, 30] unloaded.
+@CMapTile::~CMapTile: Tile [35, 31] unloaded.
+^MapTile[38, 33, World\Maps\Kalimdor\Kalimdor_38_33.adt]: Loaded!
+^MapTile[38, 34, World\Maps\Kalimdor\Kalimdor_38_34.adt]: Loaded!
+^MapTile[38, 35, World\Maps\Kalimdor\Kalimdor_38_35.adt]: Loaded!
+@CMapTile::~CMapTile: Tile [34, 32] unloaded.
 @CMapTile::~CMapTile: Tile [36, 31] unloaded.
+@CMapTile::~CMapTile: Tile [35, 32] unloaded.
+^MapTile[36, 31, World\Maps\Kalimdor\Kalimdor_36_31.adt]: Loaded!
+^MapTile[38, 31, World\Maps\Kalimdor\Kalimdor_38_31.adt]: Loaded!
+@CMapTile::~CMapTile: Tile [35, 35] unloaded.
+@CMapTile::~CMapTile: Tile [35, 34] unloaded.
+^MapTile[39, 31, World\Maps\Kalimdor\Kalimdor_39_31.adt]: Loaded!
+^MapTile[39, 32, World\Maps\Kalimdor\Kalimdor_39_32.adt]: Loaded!
+^MapTile[39, 33, World\Maps\Kalimdor\Kalimdor_39_33.adt]: Loaded!
+@CMapTile::~CMapTile: Tile [36, 35] unloaded.
+@CMapTile::~CMapTile: Tile [37, 35] unloaded.
+@CMapTile::~CMapTile: Tile [35, 33] unloaded.
+^MapTile[36, 35, World\Maps\Kalimdor\Kalimdor_36_35.adt]: Loaded!
+^MapTile[37, 35, World\Maps\Kalimdor\Kalimdor_37_35.adt]: Loaded!
+@CMapTile::~CMapTile: Tile [39, 31] unloaded.
+@CMapTile::~CMapTile: Tile [38, 31] unloaded.
+@M2[WORLD\GENERIC\PASSIVEDOODADS\PARTICLEEMITTERS\BLACKSMITH_SMOKE.M2] don't contain geometry. Skins [1]
+^MapTile[35, 32, World\Maps\Kalimdor\Kalimdor_35_32.adt]: Loaded!
+^MapTile[35, 33, World\Maps\Kalimdor\Kalimdor_35_33.adt]: Loaded!
+^MapTile[35, 34, World\Maps\Kalimdor\Kalimdor_35_34.adt]: Loaded!
+@CMapTile::~CMapTile: Tile [39, 32] unloaded.
+@CMapTile::~CMapTile: Tile [38, 35] unloaded.
+@CMapTile::~CMapTile: Tile [37, 35] unloaded.
+^MapTile[34, 32, World\Maps\Kalimdor\Kalimdor_34_32.adt]: Loaded!
+^MapTile[34, 33, World\Maps\Kalimdor\Kalimdor_34_33.adt]: Loaded!
+^MapTile[34, 34, World\Maps\Kalimdor\Kalimdor_34_34.adt]: Loaded!
+@CMapTile::~CMapTile: Tile [38, 34] unloaded.
+@CMapTile::~CMapTile: Tile [39, 33] unloaded.
+@CMapTile::~CMapTile: Tile [37, 31] unloaded.
+^MapTile[35, 35, World\Maps\Kalimdor\Kalimdor_35_35.adt]: Loaded!
+^MapTile[37, 35, World\Maps\Kalimdor\Kalimdor_37_35.adt]: Loaded!
+@CMapTile::~CMapTile: Tile [38, 32] unloaded.
+@CMapTile::~CMapTile: Tile [34, 32] unloaded.
+^MapTile[34, 32, World\Maps\Kalimdor\Kalimdor_34_32.adt]: Loaded!
+@CMapTile::~CMapTile: Tile [37, 35] unloaded.
+^MapTile[37, 35, World\Maps\Kalimdor\Kalimdor_37_35.adt]: Loaded!
 @CMapTile::~CMapTile: Tile [34, 32] unloaded.
