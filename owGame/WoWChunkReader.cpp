@@ -6,20 +6,27 @@
 WoWChunkReader::WoWChunkReader(const IBaseManager& BaseManager, std::string FileName)
 {
 	m_ByteBuffer = BaseManager.GetManager<IFilesManager>()->Open(FileName);
-	_ASSERT(m_ByteBuffer != nullptr);
+	if (m_ByteBuffer == nullptr)
+		throw CException("WoWChunkReader: Unable to initialize WoWChunkReader. ByteBuffer is nullptr. Filename = '%s'.", FileName.c_str());
 
 	InitMaps();
 }
 
 WoWChunkReader::WoWChunkReader(const IBaseManager& BaseManager, const std::shared_ptr<IByteBuffer>& ByteBuffer)
-	: m_ByteBuffer(ByteBuffer)
 {
+	m_ByteBuffer = ByteBuffer;
+	if (m_ByteBuffer == nullptr)
+		throw CException("WoWChunkReader: Unable to initialize WoWChunkReader. ByteBuffer is nullptr.");
+
 	InitMaps();
 }
 
 WoWChunkReader::WoWChunkReader(const IBaseManager& BaseManager, const void* DataPtr, size_t DataSize)
-	: m_ByteBuffer(std::make_shared<CByteBuffer>(DataPtr, DataSize))
 {
+	m_ByteBuffer = MakeShared(CByteBuffer, DataPtr, DataSize);
+	if (m_ByteBuffer == nullptr)
+		throw CException("WoWChunkReader: Unable to initialize WoWChunkReader. ByteBuffer is nullptr.");
+	
 	InitMaps();
 }
 
@@ -29,14 +36,14 @@ WoWChunkReader::~WoWChunkReader()
 
 std::shared_ptr<IByteBuffer> WoWChunkReader::OpenChunk(const char * _name)
 {
-	_ASSERT(m_ByteBuffer != nullptr);
-
-	auto chunkIterator = m_ChunksMap.find(_name);
+	const auto& chunkIterator = m_ChunksMap.find(_name);
 	if (chunkIterator == m_ChunksMap.end())
-		return std::shared_ptr<IByteBuffer>();
+		return nullptr;
 
 	const auto& chunkInfos = chunkIterator->second;
-	_ASSERT(chunkInfos.size() == 1);
+	if (chunkInfos.size() != 1)
+		throw CException("WoWChunkReader::OpenChunk: Reader don't contain single chunk '%s'. Count = '%d'.", _name, chunkInfos.size());
+
 	return GetChunk(chunkInfos[0]);
 }
 
@@ -44,30 +51,23 @@ std::vector<std::shared_ptr<IByteBuffer>> WoWChunkReader::OpenChunks(const char 
 {
 	std::vector<std::shared_ptr<IByteBuffer>> result;
 
-	auto chunkIterator = m_ChunksMap.find(_name);
+	const auto& chunkIterator = m_ChunksMap.find(_name);
 	if (chunkIterator == m_ChunksMap.end())
-	{
 		return result;
-	}
 
 	auto& chunkOffsets = chunkIterator->second;
 	_ASSERT(!chunkOffsets.empty());
 	for (auto& subChunk : chunkOffsets)
-	{
 		result.push_back(GetChunk(subChunk));
-	}
 
 	return result;
 }
 
 void WoWChunkReader::InitMaps()
 {
-	if (m_ByteBuffer == nullptr)
-		throw CException("Unable to initialize WoWChunkReader.");
-
 	char fourcc[5] = { 0 };
 	uint32 size = 0;
-	while (!m_ByteBuffer->isEof())
+	while (false == m_ByteBuffer->isEof())
 	{
 		memset(fourcc, 0x00, 4);
 		m_ByteBuffer->readBytes(fourcc, 4);
@@ -79,10 +79,10 @@ void WoWChunkReader::InitMaps()
 		if (size == 0)
 			continue;
 
-		uint32_t nextpos = m_ByteBuffer->getPos() + size;
+		size_t nextpos = m_ByteBuffer->getPos() + static_cast<size_t>(size);
+		if (size > m_ByteBuffer->getSize() || nextpos > m_ByteBuffer->getSize())
+			throw CException("WoWChunkReader: Unable to initialize WoWChunkReader. Incorrect chunk size. Name = '%s'. Size = '%d'. NextPos = '%d'. BufferSize = '%d'.", fourcc, size, nextpos, m_ByteBuffer->getSize());
 
-		_ASSERT(nextpos <= m_ByteBuffer->getSize());
-		_ASSERT(size <= m_ByteBuffer->getSize());
 		m_ChunksMap[fourcc].push_back(std::make_pair(m_ByteBuffer->getPos(), size));
 
 		m_ByteBuffer->seek(nextpos);

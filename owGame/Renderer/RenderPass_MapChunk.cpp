@@ -11,7 +11,7 @@ CRenderPass_ADT_MCNK::CRenderPass_ADT_MCNK(IScene& Scene)
 {
 	SetPassName("MapChunk");
 
-	m_ADT_MCNK_Distance = GetBaseManager().GetManager<ISettings>()->GetGroup("WoWSettings")->GetPropertyT<float>("ADT_MCNK_Distance");
+	m_MapChunkRenderDistance = GetBaseManager().GetManager<ISettings>()->GetGroup("WoWSettings")->GetPropertyT<float>("MapChunkRenderDistance");
 }
 
 CRenderPass_ADT_MCNK::~CRenderPass_ADT_MCNK()

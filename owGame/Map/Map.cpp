@@ -183,7 +183,6 @@ void CMap::Update(const UpdateEventArgs& e)
 		m_WDL->UpdateCamera(camera);
 }
 
-
 void CMap::EnterMap(glm::vec3 CameraPosition)
 {
 	EnterMap(CameraPosition.x / C_TileSize, CameraPosition.z / C_TileSize);

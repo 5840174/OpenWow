@@ -65,6 +65,7 @@
     <ClCompile Include="DBC\DBC__Storage.cpp" />
     <ClCompile Include="Formats\ImageBLP.cpp" />
     <ClCompile Include="Formats\MPQFilesStorage.cpp" />
+    <ClCompile Include="Interfaces\Managers.cpp" />
     <ClCompile Include="Liquid\Liquid.cpp" />
     <ClCompile Include="Liquid\LiquidInstance.cpp" />
     <ClCompile Include="Liquid\LiquidLayer.cpp" />
@@ -247,7 +248,6 @@
     <ClInclude Include="Interfaces\ILiquid.h" />
     <ClInclude Include="Interfaces\M2Interfaces.h" />
     <ClInclude Include="Interfaces\Managers.h" />
-    <ClInclude Include="Interfaces\SkyManager.h" />
     <ClInclude Include="Liquid\Liquid.h" />
     <ClInclude Include="Liquid\LiquidInstance.h" />
     <ClInclude Include="Liquid\LiquidLayer.h" />

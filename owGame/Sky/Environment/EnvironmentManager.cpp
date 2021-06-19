@@ -84,7 +84,7 @@ void EnvironmentManager::SetFog()
 	else
 	{
 		//glDisable(GL_FOG);
-		m_QualitySettings.culldistance = m_QualitySettings.ADT_MCNK_Distance;
+		m_QualitySettings.culldistance = m_QualitySettings.MapChunkRenderDistance;
 	}*/
 }
 

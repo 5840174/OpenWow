@@ -24,7 +24,7 @@ namespace
 	}
 }
 
-CMapChunk::CMapChunk(IScene& Scene, const CMapTile& MapTileParent, const ADT_MCIN& Chunk, const std::shared_ptr<IByteBuffer>& Bytes)
+CMapChunk::CMapChunk(IScene& Scene, CMapTile& MapTileParent, const ADT_MCIN& Chunk, const std::shared_ptr<IByteBuffer>& Bytes)
 	: CSceneNode(Scene)
 	, m_MapTile(MapTileParent)
 	, m_Map(m_MapTile.GetMap())
@@ -72,23 +72,21 @@ void CMapChunk::Initialize()
 	// Scene node params
 	{
 		// Set translate
-		SetLocalPosition(glm::vec3(m_Header.xpos * (-1.0f) + C_ZeroPoint, m_Header.ypos, m_Header.zpos * (-1.0f) + C_ZeroPoint));
+		//SetLocalPosition(glm::vec3(- m_Header.xpos + C_ZeroPoint, m_Header.ypos, - m_Header.zpos + C_ZeroPoint));
 	}
 
 	{
-		glm::vec3 translate = GetPosition();
-
-		// Bounds
 		BoundingBox bbox
 		(
-			glm::vec3(0.0f, Math::MaxFloat, 0.0f),
-			glm::vec3(0.0f + C_ChunkSize, Math::MinFloat, 0.0f + C_ChunkSize)
+			glm::vec3(-m_Header.xpos + C_ZeroPoint,               Math::MaxFloat, -m_Header.zpos + C_ZeroPoint),
+			glm::vec3(-m_Header.xpos + C_ZeroPoint + C_ChunkSize, Math::MinFloat, -m_Header.zpos + C_ZeroPoint + C_ChunkSize)
 		);
 
 		GetComponentT<IColliderComponent>()->SetCullStrategy(IColliderComponent::ECullStrategy::ByFrustrumAndDistance2D);
-		GetComponentT<IColliderComponent>()->SetCullDistance(GetBaseManager().GetManager<ISettings>()->GetGroup("WoWSettings")->GetPropertyT<float>("ADT_MCNK_Distance")->Get());
+		GetComponentT<IColliderComponent>()->SetCullDistance(GetBaseManager().GetManager<ISettings>()->GetGroup("WoWSettings")->GetPropertyT<float>("MapChunkRenderDistance")->Get());
 		GetComponentT<IColliderComponent>()->SetBounds(bbox);
 		GetComponentT<IColliderComponent>()->SetDebugDrawMode(false);
+		GetComponentT<IColliderComponent>()->SetDebugDrawColor(ColorRGBA(0.3f, 1.0f, 0.3f, 0.8f));
 	}
 }
 
@@ -179,11 +177,11 @@ bool CMapChunk::Load()
 					xpos += C_UnitSize * 0.5f;
 				}
 
-				glm::vec3 v(xpos, h, zpos);
+				glm::vec3 v(- m_Header.xpos + C_ZeroPoint + xpos, m_Header.ypos + h, - m_Header.zpos + C_ZeroPoint + zpos);
 				*ttv++ = v;
 
-				minHeight = std::min(h, minHeight);
-				maxHeight = std::max(h, maxHeight);
+				minHeight = std::min(m_Header.ypos + h, minHeight);
+				maxHeight = std::max(m_Header.ypos + h, maxHeight);
 			}
 		}
 
@@ -365,22 +363,11 @@ bool CMapChunk::Load()
 			// Transform
 			liquidInstance->SetLocalPosition(glm::vec3(0.0f, -GetPosition().y, 0.0f));
 
-			// IColliderComponent
-			{
-				BoundingBox bbox = GetComponentT<IColliderComponent>()->GetBounds();
-
-				auto min = bbox.getMin();
-				min.y = height.min;
-				bbox.setMin(min);
-
-				auto max = bbox.getMin();
-				max.y = height.max;
-				bbox.setMax(max);
-
-				liquidInstance->GetComponentT<IColliderComponent>()->SetCullStrategy(IColliderComponent::ECullStrategy::ByFrustrumAndDistance2D);
-				liquidInstance->GetComponentT<IColliderComponent>()->SetBounds(bbox);
-				liquidInstance->GetComponentT<IColliderComponent>()->SetDebugDrawMode(false);
-			}
+			// Collide liquid with chunk
+			liquidInstance->GetComponentT<IColliderComponent>()->SetCullStrategy(IColliderComponent::ECullStrategy::ByFrustrumAndDistance2D);
+			liquidInstance->GetComponentT<IColliderComponent>()->SetBounds(GetComponentT<IColliderComponent>()->GetBounds());
+			liquidInstance->GetComponentT<IColliderComponent>()->SetDebugDrawMode(true);
+			liquidInstance->GetComponentT<IColliderComponent>()->SetDebugDrawColor(ColorRGBA(0.3f, 0.3f, 0.8f, 0.8f));
 		}
 	}
 
@@ -420,6 +407,10 @@ bool CMapChunk::Load()
 	}
 
 	m_Bytes.reset();
+
+
+	// Update map tile bounds
+	m_MapTile.ExtendMapTileBounds(GetComponentT<IColliderComponent>()->GetBounds());
 
 	// All chunk is holes
 	if (m_Header.holes == UINT16_MAX)

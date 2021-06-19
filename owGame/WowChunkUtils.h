@@ -1,33 +1,37 @@
 #pragma once
 
-#define WOWCHUNK_READ_STRINGS_BEGIN \
-char* __tbuf = new char[size + 1]; \
-f->readBytes(__tbuf, size); \
-__tbuf[size] = 0; \
-char* __tp = __tbuf; \
-while (__tp < __tbuf + size) \
-{ \
-	std::string _string(__tp); \
-	__tp += _string.length() + 1; \
+/**
+  * Some WoW chunks is sequence of string with '\0' delimeter.
+*/
+inline void PasreChunkAsStringArray(const std::shared_ptr<IByteBuffer>& Bytes, std::vector<std::string> * StringsArray)
+{
+	if (Bytes == nullptr)
+		throw CException("PasreChunkAsStringArray: Bytes is nullptr.");
 
-#define WOWCHUNK_READ_STRINGS_END \
-} \
-delete[] __tbuf;
+	if (Bytes->getSize() == 0)
+		return;
 
+	if (StringsArray == nullptr)
+		throw CException("PasreChunkAsStringArray: StringsArray is nullptr.");
 
-#define WOWCHUNK_READ_STRINGS2_BEGIN \
-char* p = (char*)(f->getDataFromCurrent()); \
-char* end = p + size; \
-int t = 0; \
-while (p < end) \
-{ \
-	std::string _string(p); \
-	p += strlen(p) + 1; \
-	while ((p < end) && (*p == 0)) p++; \
+	if (false == StringsArray->empty())
+		throw CException("PasreChunkAsStringArray: StringsArray is not empty.");
 
-#define WOWCHUNK_READ_STRINGS2_END \
-} \
-f->seekRelative(size);
+	std::vector<char> buffer;
+	buffer.resize(Bytes->getSize() + 1);
+	buffer[Bytes->getSize()] = '\0';
+
+	if (false == Bytes->readBytes(buffer.data(), Bytes->getSize()))
+		throw CException("PasreChunkAsStringArray: IByteBuffer::readBytes error. Pos = '%d'. Size = '%d'.", Bytes->getPos(), Bytes->getSize());
+
+	char* tempBuffer = buffer.data();
+	while (tempBuffer < buffer.data() + Bytes->getSize())
+	{
+		std::string string(tempBuffer);
+		StringsArray->push_back(string);
+		tempBuffer += string.length() + 1;
+	}
+}
 
 
 static glm::vec3 fromRealToGame(glm::vec3 p)
@@ -43,7 +47,6 @@ static glm::vec3 fromRealToGame(glm::vec3 p)
 //-618.518, -4251.67, 38.718, 0
 // X			Y        Z
 //-4251.67, -618.518, 38.718, 0
-
 static glm::vec3 fromGameToReal(glm::vec3 p)
 {
 	return glm::vec3(

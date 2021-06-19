@@ -11,7 +11,7 @@ inline std::vector<T> WoWChunkReader::OpenChunkT(const char * _name)
 		return list;
 	}
 
-	uint32 count = buffer->getSize() / sizeof(T);
+	size_t count = buffer->getSize() / sizeof(T);
 	T* listT = (T*)buffer->getDataFromCurrent();
 
 	list.assign(listT, listT + count);

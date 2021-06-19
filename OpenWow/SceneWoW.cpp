@@ -84,19 +84,19 @@ void CSceneWoW::Initialize()
 
 
 
-	//const float x = 40; //0 barrens
-	//const float y = 30; //0 barrens
+	const float x = 40; //0 barrens
+	const float y = 30; //0 barrens
 
 	//const float x = 26; //530 outland
 	//const float y = 32; //530 outland
 
-	const float x = 30; //571 nortrend
-	const float y = 21; //571 nortrend
+	//const float x = 30; //571 nortrend
+	//const float y = 21; //571 nortrend
 
 
 	glm::vec3 position = glm::vec3(x * C_TileSize + C_TileSize / 2.0f, 100.0f, y * C_TileSize + C_TileSize / 2.0f);
 
-	map->MapPreLoad(GetBaseManager().GetManager<CDBCStorage>()->DBC_Map()[571]);
+	map->MapPreLoad(GetBaseManager().GetManager<CDBCStorage>()->DBC_Map()[1]);
 	map->MapLoad();
 	map->EnterMap(position);
 

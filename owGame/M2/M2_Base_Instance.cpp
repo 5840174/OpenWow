@@ -116,9 +116,8 @@ void CM2_Base_Instance::Update(const UpdateEventArgs & e)
 	if (GetState() != ILoadable::ELoadableState::Loaded)
 		return;
 
-	if (m_ColliderComponent)
-		if (m_ColliderComponent->IsCulled(e.Camera))
-			return;
+	if (GetComponentT<IColliderComponent>()->IsCulled(e.Camera))
+		return;
 
 	if (m_Animator)
 		m_Animator->Update(e.TotalTime, e.DeltaTime);

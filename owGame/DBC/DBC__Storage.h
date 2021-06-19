@@ -64,6 +64,8 @@ class ZN_API __declspec(uuid("1E65D52E-5137-4B9E-8B3A-9D111F398742")) CDBCStorag
 	: public IManager
 {
 public:
+	ZN_OBJECTCLASS(cWowDBCManagerCustom)
+
 	CDBCStorage(IBaseManager& BaseManager);
 	virtual ~CDBCStorage();
 

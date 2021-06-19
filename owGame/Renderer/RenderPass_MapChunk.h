@@ -14,5 +14,5 @@ public:
     EVisitResult Visit(const std::shared_ptr<ISceneNode>& node) override final;
 
 private:
-	std::shared_ptr<IPropertyT<float>> m_ADT_MCNK_Distance;
+	std::shared_ptr<IPropertyT<float>> m_MapChunkRenderDistance;
 };

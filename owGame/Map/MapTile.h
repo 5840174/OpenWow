@@ -13,15 +13,17 @@ class ZN_API CMapTile
 	, public CLoadableObject
 {
 public:
-	CMapTile(IScene& Scene, const CMap& MapParent, uint32 IndexX, uint32 IndexZ);
+	CMapTile(IScene& Scene, CMap& MapParent, uint32 IndexX, uint32 IndexZ);
 	virtual ~CMapTile();
 
-	const CMap&                                     GetMap() const;
+	CMap&                                           GetMap() const;
 	int                                             getIndexX() const;
 	int                                             getIndexZ() const;
 	const CMapChunk*                                getChunk(int32 x, int32 z) const;
 	bool                                            IsNortrend() const;
 	std::shared_ptr<ADT_TextureInfo>                GetTextureInfo(size_t Index) const;
+
+	void                                            ExtendMapTileBounds(const BoundingBox& OtherBBox);
 
 	// CSceneNode
 	void											Initialize() override;
@@ -31,7 +33,7 @@ public:
 	bool                                            Delete() override;
 
 private:
-	const CMap&                                     m_MapParent;
+	CMap&                                           m_MapParent;
 	const int                                       m_IndexX;
 	const int                                       m_IndexZ;
 
@@ -40,10 +42,10 @@ private:
 
 	// Instances
 #ifdef USE_WMO_MODELS
-	std::vector<CMapWMOInstance*>	m_WMOsInstances;
+	std::vector<CMapWMOInstance*>	                m_WMOsInstances;
 #endif
 #ifdef USE_M2_MODELS
-	std::vector<CMapM2Instance*>	m_MDXsInstances;
+	std::vector<CMapM2Instance*>	                m_MDXsInstances;
 #endif
-	std::vector<CMapChunk*>			m_Chunks;
+	std::vector<CMapChunk*>			                m_Chunks;
 };

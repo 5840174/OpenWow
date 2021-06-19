@@ -64,7 +64,7 @@ EVisitResult CRenderPass_WMO::Visit(const std::shared_ptr<ISceneNode>& SceneNode
 	if (std::dynamic_pointer_cast<CWMO_Base_Instance>(SceneNode))
 	{
 		if (auto colliderComponent = SceneNode->GetComponentT<IColliderComponent>())
-			if (false == colliderComponent->IsCulled(GetRenderEventArgs().Camera))
+			if (colliderComponent->IsCulled(GetRenderEventArgs().Camera))
 				return EVisitResult::Block;
 
 		return __super::Visit(SceneNode);
@@ -72,7 +72,7 @@ EVisitResult CRenderPass_WMO::Visit(const std::shared_ptr<ISceneNode>& SceneNode
 	else if (std::dynamic_pointer_cast<CWMO_Group_Instance>(SceneNode))
 	{
 		if (auto colliderComponent = SceneNode->GetComponentT<IColliderComponent>())
-			if (false == colliderComponent->IsCulled(GetRenderEventArgs().Camera))
+			if (colliderComponent->IsCulled(GetRenderEventArgs().Camera))
 				return EVisitResult::Block;
 
 		return __super::Visit(SceneNode);

@@ -10,7 +10,6 @@ public:
 	SkyManager(IScene& Scene);
 	virtual ~SkyManager();
 
-	// ILoadableObject
 	bool                                            Load(uint32 MapID);
 
 	// SceneNode3D

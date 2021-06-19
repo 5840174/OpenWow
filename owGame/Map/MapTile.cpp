@@ -9,7 +9,7 @@
 // Additional
 #include "MapTileLiquid.h"
 
-CMapTile::CMapTile(IScene& Scene, const CMap& MapParent, uint32 IndexX, uint32 IndexZ)
+CMapTile::CMapTile(IScene& Scene, CMap& MapParent, uint32 IndexX, uint32 IndexZ)
 	: CSceneNode(Scene)
 	, m_MapParent(MapParent)
 	, m_IndexX(IndexX)
@@ -20,10 +20,10 @@ CMapTile::CMapTile(IScene& Scene, const CMap& MapParent, uint32 IndexX, uint32 I
 
 CMapTile::~CMapTile()
 {
-	Log::Warn("MapTile[%d, %d] unloaded.", m_IndexX, m_IndexZ);
+	Log::Warn("CMapTile::~CMapTile: Tile [%d, %d] unloaded.", m_IndexX, m_IndexZ);
 }
 
-const CMap& CMapTile::GetMap() const
+CMap& CMapTile::GetMap() const
 {
 	return m_MapParent;
 }
@@ -58,6 +58,11 @@ std::shared_ptr<ADT_TextureInfo> CMapTile::GetTextureInfo(size_t Index) const
 	return m_Textures[Index];
 }
 
+void CMapTile::ExtendMapTileBounds(const BoundingBox & OtherBBox)
+{
+	GetComponentT<IColliderComponent>()->ExtendBounds(OtherBBox);
+}
+
 
 
 //
@@ -67,20 +72,22 @@ void CMapTile::Initialize()
 {
 	__super::Initialize();
 
-	// CColliderComponent
-	if (false)
-	{
-		std::shared_ptr<IColliderComponent> colliderComponent = GetComponentT<IColliderComponent>();
-		glm::vec3 translate = GetPosition();
+	// Do not set local transform
+	//SetLocalPosition(glm::vec3(m_IndexX * C_TileSize, 0.0f, m_IndexZ * C_TileSize));
 
-		BoundingBox bbox
-		(
-			glm::vec3(translate.x, Math::MaxFloat, translate.z),
-			glm::vec3(translate.x + C_TileSize, Math::MinFloat, translate.z + C_TileSize)
-		);
-		colliderComponent->SetBounds(bbox);
-		colliderComponent->SetCullStrategy(IColliderComponent::ECullStrategy::ByFrustrumAndDistance2D);
-	}
+	// CColliderComponent
+	std::shared_ptr<IColliderComponent> colliderComponent = GetComponentT<IColliderComponent>();
+	glm::vec3 translate = GetPosition();
+
+	BoundingBox bbox
+	(
+		glm::vec3((getIndexX() * C_TileSize),              Math::MaxFloat, (getIndexZ() * C_TileSize)),
+		glm::vec3((getIndexX() * C_TileSize) + C_TileSize, Math::MinFloat, (getIndexZ() * C_TileSize) + C_TileSize)
+	);
+	colliderComponent->SetBounds(bbox);
+	colliderComponent->SetCullStrategy(IColliderComponent::ECullStrategy::ByFrustrumAndDistance2D);
+	colliderComponent->SetDebugDrawMode(true);
+	colliderComponent->SetDebugDrawColor(ColorRGBA(0.5f, 0.8f, 0.2f, 0.8f));
 }
 
 //
@@ -88,10 +95,13 @@ void CMapTile::Initialize()
 //
 bool CMapTile::Load()
 {
-	char filename[256];
-	sprintf_s(filename, "%s_%d_%d.adt", GetMap().GetMapFolder().c_str(), m_IndexX, m_IndexZ);
+	std::string mapTileFilename = GetMap().GetMapFolder() + "_" + std::to_string(m_IndexX) + "_" + std::to_string(m_IndexZ) + ".adt";
 
-	std::shared_ptr<IFile> f = GetBaseManager().GetManager<IFilesManager>()->Open(filename);
+	auto f = GetBaseManager().GetManager<IFilesManager>()->Open(mapTileFilename);
+	if (f == nullptr)
+		//throw CException("CMapTile::Load: Unable to load tile. Filename = '%s'. IndexX = '%d'. IndexZ = '%d'.", mapTileFilename.c_str(), m_IndexX, m_IndexZ);
+		return false;
+
 	uint32_t startPos = f->getPos() + 20;
 	
 	// MVER + size (8)
@@ -145,7 +155,19 @@ bool CMapTile::Load()
 						liquidObject.CreateInsances(liquidInstance);
 
 						// Transform
-						liquidInstance->SetLocalPosition(glm::vec3((m_IndexX * C_TileSize) + (j * C_ChunkSize), 0.0f, (m_IndexZ * C_TileSize) + (i * C_ChunkSize)));
+						liquidInstance->SetLocalPosition(glm::vec3((getIndexX() * C_TileSize) + (j * C_ChunkSize), 0.0f, (getIndexZ() * C_TileSize) + (i * C_ChunkSize)));
+
+						// Collider
+						auto colliderComponent = liquidInstance->GetComponentT<IColliderComponent>();
+						colliderComponent->SetCullStrategy(IColliderComponent::ECullStrategy::ByFrustrumAndDistance2D);
+						colliderComponent->SetBounds(BoundingBox(
+							glm::vec3(0.0f, liquidObject.getMinHeight() - 1.0f, 0.0f),
+							glm::vec3(C_ChunkSize, liquidObject.getMaxHeight() + 1.0f, C_ChunkSize)
+						));
+						colliderComponent->SetDebugDrawMode(true);
+						colliderComponent->SetDebugDrawColor(ColorRGBA(0.3f, 0.3f, 0.8f, 0.8f));
+
+						ExtendMapTileBounds(colliderComponent->GetWorldBounds());
 					}
 					abuf += sizeof(MH2O_Header);
 				}
@@ -160,37 +182,40 @@ bool CMapTile::Load()
 		uint32_t size;
 		f->readBytes(&size, sizeof(uint32_t));
 
-		WOWCHUNK_READ_STRINGS_BEGIN
+		std::vector<std::string> strings;
+		PasreChunkAsStringArray(MakeShared(CByteBufferOnlyPointer, f->getDataFromCurrent(), size), &strings);
 
-		std::shared_ptr<ADT_TextureInfo> textureInfo = std::make_shared<ADT_TextureInfo>();
-		textureInfo->textureName = _string;
+		for (const auto& stringsIt : strings)
+		{
 
-		// PreLoad diffuse texture
+			std::shared_ptr<ADT_TextureInfo> textureInfo = std::make_shared<ADT_TextureInfo>();
+			textureInfo->textureName = stringsIt;
+
+			// PreLoad diffuse texture
 #if 0
-		textureInfo->diffuseTexture = GetBaseManager().GetManager<IImagesFactory>()->CreateImage(_string);
+			textureInfo->diffuseTexture = GetBaseManager().GetManager<IImagesFactory>()->CreateImage(_string);
 #else
-		textureInfo->diffuseTexture = GetBaseManager().GetManager<IznTexturesFactory>()->LoadTexture2D(_string);
+			textureInfo->diffuseTexture = GetBaseManager().GetManager<IznTexturesFactory>()->LoadTexture2D(textureInfo->textureName);
 #endif
 
-		// PreLoad specular texture
-		try
-		{
-			std::string specularTextureName = _string;
-			specularTextureName = specularTextureName.insert(specularTextureName.length() - 4, "_s");
+			// PreLoad specular texture
+			try
+			{
+				std::string specularTextureName = textureInfo->textureName;
+				specularTextureName = specularTextureName.insert(specularTextureName.length() - 4, "_s");
 #if 0
-			textureInfo->specularTexture = GetBaseManager().GetManager<IImagesFactory>()->CreateImage(specularTextureName);
+				textureInfo->specularTexture = GetBaseManager().GetManager<IImagesFactory>()->CreateImage(specularTextureName);
 #else
-			textureInfo->specularTexture = GetBaseManager().GetManager<IznTexturesFactory>()->LoadTexture2D(specularTextureName);
+				textureInfo->specularTexture = GetBaseManager().GetManager<IznTexturesFactory>()->LoadTexture2D(specularTextureName);
 #endif
+			}
+			catch (const CException& e)
+			{
+			}
+
+			m_Textures.push_back(textureInfo);
+
 		}
-		catch (const CException& e)
-		{
-		}
-
-
-		m_Textures.push_back(textureInfo);
-
-		WOWCHUNK_READ_STRINGS_END
 	}
 
 	// M2 names
@@ -201,10 +226,7 @@ bool CMapTile::Load()
 		uint32_t size;
 		f->readBytes(&size, sizeof(uint32_t));
 
-		WOWCHUNK_READ_STRINGS_BEGIN
-			m_MDXsNames.push_back(_string);
-		WOWCHUNK_READ_STRINGS_END
-		
+		PasreChunkAsStringArray(MakeShared(CByteBufferOnlyPointer, f->getDataFromCurrent(), size), &m_MDXsNames);
 	}
 
 	// M2 Offsets
@@ -233,9 +255,7 @@ bool CMapTile::Load()
 		uint32_t size;
 		f->readBytes(&size, sizeof(uint32_t));
 
-		WOWCHUNK_READ_STRINGS_BEGIN
-			m_WMOsNames.push_back(_string);
-		WOWCHUNK_READ_STRINGS_END
+		PasreChunkAsStringArray(MakeShared(CByteBufferOnlyPointer, f->getDataFromCurrent(), size), &m_WMOsNames);
 	}
 
 	// WMO Offsets
@@ -342,7 +362,7 @@ bool CMapTile::Load()
 	//---------------------------------------------------------------------------------
 #endif
 
-	Log::Green("MapTile[%d, %d, %s]: Loaded!", m_IndexX, m_IndexZ, filename);
+	Log::Green("MapTile[%d, %d, %s]: Loaded!", m_IndexX, m_IndexZ, mapTileFilename.c_str());
 
 	return true;
 }

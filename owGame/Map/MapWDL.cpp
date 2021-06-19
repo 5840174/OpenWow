@@ -29,12 +29,9 @@ void CMapWDL::CreateInsances(const std::shared_ptr<ISceneNode>& Parent) const
 	std::string fileName = m_Map.GetMapFolder() + ".wdl";
 
 	// Low-resolution tiles
-	std::shared_ptr<IFile> f = m_Map.GetBaseManager().GetManager<IFilesManager>()->Open(fileName);
+	auto f = m_Map.GetBaseManager().GetManager<IFilesManager>()->Open(fileName);
 	if (f == nullptr)
-	{
-		Log::Error("World[%s]: WDL: Error opening.", fileName.c_str());
-		return;
-	}
+		throw CException("World[%s]: WDL: Error opening.", fileName.c_str());
 
 	// Material
 	m_LowResilutionTileMaterial = std::make_shared<CMapWDLTileMaterial>(m_Map.GetBaseManager().GetApplication().GetRenderDevice());
@@ -92,14 +89,15 @@ void CMapWDL::CreateInsances(const std::shared_ptr<ISceneNode>& Parent) const
 				}
 
 				// Vertex buffer
-				std::shared_ptr<IBuffer> __vb = m_Map.GetBaseManager().GetApplication().GetRenderDevice().GetObjectsFactory().CreateVertexBuffer(vecrtices);
+				std::shared_ptr<IBuffer> vertices = m_Map.GetBaseManager().GetApplication().GetRenderDevice().GetObjectsFactory().CreateVertexBuffer(vecrtices);
 
 				std::shared_ptr<IGeometry> geometry = m_Map.GetBaseManager().GetApplication().GetRenderDevice().GetObjectsFactory().CreateGeometry();
-				geometry->SetVertexBuffer(__vb);
+				geometry->SetVertexBuffer(vertices);
 
-				std::shared_ptr<CMapWDLTileModel> lowResTile = std::make_shared<CMapWDLTileModel>(m_Map.GetBaseManager().GetApplication().GetRenderDevice(), m_Map, i, j);
-				lowResTile->AddConnection(m_LowResilutionTileMaterial, geometry);
-				Parent->GetComponentT<IModelComponent>()->AddModel(lowResTile);
+				std::shared_ptr<CMapWDLTileModel> model = std::make_shared<CMapWDLTileModel>(m_Map.GetBaseManager().GetApplication().GetRenderDevice(), m_Map, i, j);
+				model->AddConnection(m_LowResilutionTileMaterial, geometry);
+
+				Parent->GetComponentT<IModelComponent>()->AddModel(model);
 			}
 		}
 	}
@@ -107,20 +105,28 @@ void CMapWDL::CreateInsances(const std::shared_ptr<ISceneNode>& Parent) const
 
 	// Load low-resolution WMOs
 #ifdef USE_WMO_MODELS
-	Log::Green("Map_GlobalWMOs[]: Low WMOs count [%d].", m_LowResolutionWMOsPlacementInfo.size());
-	for (auto it : m_LowResolutionWMOsPlacementInfo)
+	Log::Green("CMapWDL: Low WMOs count [%d].", m_LowResolutionWMOsPlacementInfo.size());
+	for (const auto& it : m_LowResolutionWMOsPlacementInfo)
 	{
-		//_ASSERT(false);
-		//CMapWMOInstance* wmoInstance = _parent->CreateSceneNode<CMapWMOInstance>(m_LowResolutionWMOsNames[it.nameIndex], it);
-		//m_LowResolutionWMOs.push_back(wmoInstance);
+		if (std::shared_ptr<CWMO> wmo = m_Map.GetBaseManager().GetManager<IWoWObjectsCreator>()->LoadWMO(m_Map.GetBaseManager().GetApplication().GetRenderDevice(), m_LowResolutionWMOsNames[it.nameIndex], true))
+		{
+			auto wmoInstance = Parent->CreateSceneNode<CMapWMOInstance>(wmo, it);
+			m_Map.GetBaseManager().GetManager<ILoader>()->AddToLoadQueue(wmoInstance);
+
+			m_LowResolutionWMOs.push_back(wmoInstance.get());
+		}
+		else
+		{
+			Log::Warn("CMapWDL: WMO model '%s' is nullptr.", m_LowResolutionWMOsNames[it.nameIndex].c_str());
+		}
 	}
 #endif
 }
 
 void CMapWDL::UpdateCamera(const ICameraComponent3D * camera)
 {
-	//if (m_LowResilutionTileMaterial)
-	//	m_LowResilutionTileMaterial->SetDiffuseColor(vec4(GetManager<ISkyManager>()->GetColor(LightColors::LIGHT_COLOR_FOG), 1.0f));
+	if (m_LowResilutionTileMaterial)
+		m_LowResilutionTileMaterial->SetDiffuseColor(glm::vec4(m_Map.GetBaseManager().GetManager<ISkyManager>()->GetColor(LightColors::LIGHT_COLOR_FOG), 1.0f));
 }
 
 void CMapWDL::Load()
@@ -141,9 +147,7 @@ void CMapWDL::Load()
 
 	if (auto buffer = reader.OpenChunk("MWMO")) // Filenames for WMO that appear in the low resolution map. Zero terminated strings.
 	{
-		//WOWCHUNK_READ_STRINGS_BEGIN
-		//	m_LowResolutionWMOsNames.push_back(_string);
-		//WOWCHUNK_READ_STRINGS_END;
+		PasreChunkAsStringArray(buffer, &m_LowResolutionWMOsNames);
 	}
 
 	if (auto buffer = reader.OpenChunk("MWID")) // List of indexes into the MWMO chunk.

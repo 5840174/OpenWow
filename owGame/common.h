@@ -43,6 +43,31 @@
 //#define USE_M2_RIBBONS
 
 
+//
+// Managers
+// 50 - 99 Managers custom
+//
+ZN_MAKE_OBJECTCLASS(cWowDBCManagerCustom, 50);
+ZN_MAKE_OBJECTCLASS(cWowWorldCreatorManagerCustom, 51);
+ZN_MAKE_OBJECTCLASS(cWowSkyManagerCustom, 52);
+
+//
+// 3D
+// 300 - 399 SceneNode custom
+//
+//ZN_MAKE_OBJECTCLASS(cSceneNodeRTSTower, 200);
+
+//
+// UIControl
+// 500 - 599 UIControls custom
+//
+//ZN_MAKE_OBJECTCLASS(cUIControlRTSTowerBtn, 400);
+
+//
+// SceneNode components
+// 700 - 799 UIControls custom
+//
+//ZN_MAKE_OBJECTCLASS(cUIControlRTSTowerBtn, 700);
 
 
 
@@ -54,7 +79,6 @@ struct ISceneNodeProvider
 
 // Interfaces
 #include "Interfaces/ILiquid.h"
-#include "Interfaces/SkyManager.h"
 #include "Interfaces/Managers.h"
 
 // Wow types

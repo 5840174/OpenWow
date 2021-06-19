@@ -25,13 +25,17 @@ CRenderPass_MapTile::~CRenderPass_MapTile()
 //
 EVisitResult CRenderPass_MapTile::Visit(const std::shared_ptr<ISceneNode>& node)
 {	
-	//if (const auto map = std::dynamic_pointer_cast<CMapTile>(node))
-	//{
-	//	if (false == map->GetMap().getTileIsCurrent(map->getIndexX(), map->getIndexZ()))
-	//		return EVisitResult::AllowVisitChilds;
-	//
-	//	return __super::Visit(map);
-	//}
+	if (const auto map = std::dynamic_pointer_cast<CMapTile>(node))
+	{
+		if (false == map->GetMap().getTileIsCurrent(map->getIndexX(), map->getIndexZ()))
+			return EVisitResult::Block;
+
+		if (auto colliderComponent = node->GetComponentT<IColliderComponent>())
+			if (false == colliderComponent->IsCulled(GetRenderEventArgs().Camera))
+				return EVisitResult::Block;
+	
+		return __super::Visit(map);
+	}
 
 	return EVisitResult::AllowVisitChilds;
 }

@@ -24,11 +24,34 @@ void CLiquid::CreateInsances(const std::shared_ptr<ISceneNode>& Parent) const
 {
 	_ASSERT(Parent != nullptr);
 
-	std::shared_ptr<IModelComponent> meshes = Parent->GetComponentT<IModelComponent>();
+	auto modelsComponent = Parent->GetComponentT<IModelComponent>();
 	for (const auto& it : m_WaterLayers)
-	{
-		meshes->AddModel(it);
-	}
+		modelsComponent->AddModel(it);
+}
+
+float CLiquid::getMinHeight() const
+{
+	float minHeight = Math::MaxFloat;
+	for (const auto& waterLayer : m_WaterLayers)
+		for (const auto& heightsIt : waterLayer->heights)
+			if (heightsIt < minHeight)
+				minHeight = heightsIt;
+
+	if (minHeight == Math::MaxFloat)
+		minHeight = 0.0f;
+	return minHeight;
+}
+
+float CLiquid::getMaxHeight() const
+{
+	float maxHeight = Math::MinFloat;
+	for (const auto& waterLayer : m_WaterLayers)
+		for (const auto& heightsIt : waterLayer->heights)
+			if (heightsIt > maxHeight)
+				maxHeight = heightsIt;
+	if (maxHeight == Math::MinFloat)
+		maxHeight = 0.0f;
+	return maxHeight;
 }
 
 

@@ -55,6 +55,9 @@ public:
 	// ISceneNodeProvider
 	void CreateInsances(const std::shared_ptr<ISceneNode>& Parent) const override;
 
+	float getMinHeight() const;
+	float getMaxHeight() const;
+
 protected:
 	void createLayers(const DBC_LiquidTypeRecord* _type, const std::shared_ptr<IByteBuffer>& Bytes);
 	

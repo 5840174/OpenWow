@@ -82,9 +82,6 @@
     <Filter Include="WMO\Parts">
       <UniqueIdentifier>{7f7bb52b-8998-4243-a061-21f8d98111c3}</UniqueIdentifier>
     </Filter>
-    <Filter Include="WoW Specific">
-      <UniqueIdentifier>{e5bf550a-5a51-4482-87bc-533a4e241f7c}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Formats">
       <UniqueIdentifier>{da43f205-a364-4a50-8561-0abb24dabc5d}</UniqueIdentifier>
     </Filter>
@@ -165,6 +162,9 @@
     </Filter>
     <Filter Include="Map\MapWDL">
       <UniqueIdentifier>{bb76c07f-90a6-4966-a672-a5060771da06}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Utils">
+      <UniqueIdentifier>{e5bf550a-5a51-4482-87bc-533a4e241f7c}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -313,7 +313,7 @@
       <Filter>WMO\Parts</Filter>
     </ClCompile>
     <ClCompile Include="WoWChunkReader.cpp">
-      <Filter>WoW Specific</Filter>
+      <Filter>Utils</Filter>
     </ClCompile>
     <ClCompile Include="WMO\WMO_Liquid.cpp">
       <Filter>WMO\Parts</Filter>
@@ -424,7 +424,7 @@
       <Filter>WMO\Instances</Filter>
     </ClCompile>
     <ClCompile Include="Settings\WoWSettingsGroup.cpp">
-      <Filter>WoW Specific</Filter>
+      <Filter>Utils</Filter>
     </ClCompile>
     <ClCompile Include="Client\WorldLocation.cpp">
       <Filter>Client\Objects</Filter>
@@ -533,6 +533,9 @@
     </ClCompile>
     <ClCompile Include="Map\MapWDLTileMaterial.cpp">
       <Filter>Map\MapWDL</Filter>
+    </ClCompile>
+    <ClCompile Include="Interfaces\Managers.cpp">
+      <Filter>Interfaces</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -701,9 +704,6 @@
     <ClInclude Include="Interfaces\Managers.h">
       <Filter>Interfaces</Filter>
     </ClInclude>
-    <ClInclude Include="Interfaces\SkyManager.h">
-      <Filter>Interfaces</Filter>
-    </ClInclude>
     <ClInclude Include="Interfaces\ILiquid.h">
       <Filter>Interfaces</Filter>
     </ClInclude>
@@ -831,19 +831,19 @@
       <Filter>WMO\Parts</Filter>
     </ClInclude>
     <ClInclude Include="WoWChunkReader.h">
-      <Filter>WoW Specific</Filter>
+      <Filter>Utils</Filter>
     </ClInclude>
     <ClInclude Include="WowChunkUtils.h">
-      <Filter>WoW Specific</Filter>
+      <Filter>Utils</Filter>
     </ClInclude>
     <ClInclude Include="WowConsts.h">
-      <Filter>WoW Specific</Filter>
+      <Filter>Utils</Filter>
     </ClInclude>
     <ClInclude Include="WowTime.h">
-      <Filter>WoW Specific</Filter>
+      <Filter>Utils</Filter>
     </ClInclude>
     <ClInclude Include="WowTypes.h">
-      <Filter>WoW Specific</Filter>
+      <Filter>Utils</Filter>
     </ClInclude>
     <ClInclude Include="WMO\WMO_Liquid.h">
       <Filter>WMO\Parts</Filter>
@@ -981,7 +981,7 @@
       <Filter>WMO\Instances</Filter>
     </ClInclude>
     <ClInclude Include="Settings\WoWSettingsGroup.h">
-      <Filter>WoW Specific</Filter>
+      <Filter>Utils</Filter>
     </ClInclude>
     <ClInclude Include="Client\ClientCache.h">
       <Filter>Client</Filter>
@@ -1118,7 +1118,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="WoWChunkReader.inl">
-      <Filter>WoW Specific</Filter>
+      <Filter>Utils</Filter>
     </None>
     <None Include="Sky\Sky.inl">
       <Filter>Sky</Filter>

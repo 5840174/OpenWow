@@ -72,7 +72,6 @@ private:
 
 	// Animtion
 	std::shared_ptr<CM2_Animator>           m_Animator;
-	std::shared_ptr<IColliderComponent>     m_ColliderComponent;
 	std::shared_ptr<CM2SkeletonComponent3D> m_SkeletonComponent;
 #ifdef USE_M2_PARTICLES
 	std::shared_ptr<CM2ParticlesComponent3D>m_ParticleComponent;
