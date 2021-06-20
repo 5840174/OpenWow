@@ -57,9 +57,6 @@ glm::mat4 CMapM2Instance::CalculateLocalTransform() const
 	glm::mat4 localTransform(1.0f);
 	localTransform = glm::translate(localTransform, GetLocalPosition());
 	localTransform *= glm::eulerAngleYZX(glm::radians(m_PlacementInfo.rotation.y - 90.0f), glm::radians(-m_PlacementInfo.rotation.x), glm::radians(m_PlacementInfo.rotation.z));
-	//localTransform = glm::rotate(localTransform, glm::radians( m_PlacementInfo.rotation.y - 90.0f), glm::vec3(0, 1, 0));
-	//localTransform = glm::rotate(localTransform, glm::radians(-m_PlacementInfo.rotation.x)       , glm::vec3(0, 0, 1));
-	//localTransform = glm::rotate(localTransform, glm::radians(m_PlacementInfo.rotation.z)        , glm::vec3(1, 0, 0));
 	localTransform = glm::scale(localTransform, GetLocalScale());
 	return localTransform;
 }

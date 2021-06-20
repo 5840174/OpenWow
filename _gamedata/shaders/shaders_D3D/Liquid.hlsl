@@ -14,19 +14,29 @@ struct VertexShaderOutput
 };
 
 
+static const uint LiquidType_Water = 0u;
+static const uint LiquidType_Ocean = 1u;
+static const uint LiquidType_Magma = 2u;
+static const uint LiquidType_Slime = 3u;
+
+
 // Uniforms
-cbuffer Material : register(b2)
+cbuffer Material : register(b4)
 {
 	float3 gColorLight;
 	float gShallowAlpha;
 	
 	float3 gColorDark;
 	float gDeepAlpha;
+	
+	uint gLiquidType;
+	float3 __padding;
 };
 
-// Textures and samples
+
+// Textures
 Texture2D DiffuseTexture        : register(t0);
-sampler   DiffuseTextureSampler : register(s0);
+
 
 VertexShaderOutput VS_main(VertexShaderInput IN)
 {
@@ -41,13 +51,24 @@ VertexShaderOutput VS_main(VertexShaderInput IN)
 
 float4 PS_main(VertexShaderOutput IN) : SV_TARGET
 {
-	float alpha = DiffuseTexture.Sample(DiffuseTextureSampler, IN.texCoord.xy).w;
+	if ((gLiquidType == LiquidType_Water) || (gLiquidType == LiquidType_Ocean))
+	{	
+		float2 texCoord = float2(IN.texCoord.x, 1.0f - IN.texCoord.y);
+		float waterDepth = DiffuseTexture.Sample(LinearRepeatSampler, texCoord).a;
 
-	float4 resultColor = float4(gColorLight, (1.0 - IN.texCoord.z) * gShallowAlpha) + float4(gColorDark, IN.texCoord.z * gDeepAlpha);
-	resultColor *= (1.0 - alpha);
-	resultColor += float4(1.0f, 1.0f, 1.0f, 1.0f) * alpha;
-
-	return resultColor;
+		float3 resultColor = float3(1.0f, 1.0f, 1.0f) * waterDepth;
+		resultColor += gColorDark * (1.0f - waterDepth);
+		
+		return float4(resultColor, 0.5f + IN.texCoord.z);
+	}
+	else if ((gLiquidType == LiquidType_Magma) || (gLiquidType == LiquidType_Slime))
+	{
+		return DiffuseTexture.Sample(LinearRepeatSampler, float2(IN.texCoord.x, 1.0f - IN.texCoord.y));
+	}
+	else
+	{
+		return float4(0.0f, 0.3f, 1.0f, 1.0f);
+	}
 	
 	//DefferedRenderPSOut OUT;
 	//OUT.Diffuse = resultColor;

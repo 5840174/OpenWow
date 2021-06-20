@@ -4,47 +4,58 @@
 
 #include "DBC/DBC__Storage.h"
 
-class ZN_API CLiquidLayer 
+
+struct SLiquidLayerDefinition
+{
+	SLiquidLayerDefinition()
+		: NeedInvertY(false)
+	{}
+
+	//const DBC_LiquidTypeRecord* LiquidType;
+	//uint16                      VertexFormat;
+	bool                        NeedInvertY;
+
+	//float                       MinHeightLevel;
+	//float                       MaxHeightLevel;
+
+	uint8                       TileStartX;
+	uint8                       TileStartY;
+	uint8                       TileWidth;
+	uint8                       TileHeight;
+
+	bool                        hasmask;
+	uint8                       mask[8];
+	
+	std::vector<float>          heights;
+	std::vector<uint8>          depths;
+	std::vector<std::pair<float, float>> textureCoords;
+
+	std::vector<bool>           renderTiles;
+};
+
+
+
+class ZN_API CLiquidModel 
 	: public ModelProxie
 {
 public:
-	CLiquidLayer(IRenderDevice& RenderDevice);
-	virtual ~CLiquidLayer();
+	CLiquidModel(IRenderDevice& RenderDevice);
+	virtual ~CLiquidModel();
 
-	std::shared_ptr<IGeometry> CreateGeometry(float YDir);
+	void Initialize(const SLiquidLayerDefinition& LiquidLayerDefinition, const DBC_LiquidTypeRecord* LiquidTypeRecord);
+	
 	std::shared_ptr<IMaterial> GetMaterial() const;
 
 	// IModel
 	bool Render(const ShaderMap& Shaders) const override;
 
-public:
-	const DBC_LiquidTypeRecord* LiquidType;
-	uint16 VertexFormat;
-
-	float MinHeightLevel;
-	float MaxHeightLevel;
-
-	uint8 x;
-	uint8 y;
-	uint8 Width;
-	uint8 Height;
-
-	bool hasmask;
-	uint8 mask[8];
-
-	std::vector<float> heights;
-	std::vector<uint8> depths;
-	std::vector<std::pair<float, float>> textureCoords;
-
-	std::vector<bool> renderTiles;
-
-public:
-	void InitTextures(DBC_LIQUIDTYPE_Type::List _liquidType);
+private:
+	std::shared_ptr<IGeometry> CreateGeometryByDefinition(const SLiquidLayerDefinition& LiquidLayerDefinition);
 
 private:
 	ISkyManager* m_SkyManager;
-	std::vector<std::shared_ptr<ITexture>> m_Textures;
-	std::shared_ptr<LiquidMaterial> m_Material;
+	std::shared_ptr<CLiquidMaterial> m_Material;
+	DBC_LIQUIDTYPE_Type m_LiquidType;
 
 private:
 	IRenderDevice& m_RenderDevice;

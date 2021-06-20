@@ -48,6 +48,8 @@ std::shared_ptr<IRenderPassPipelined> CRenderPass_WMOList::ConfigurePipeline(std
 	// PIPELINES
 	GetPipeline().GetDepthStencilState()->SetDepthMode(enableDepthWrites);
 	GetPipeline().SetRenderTarget(RenderTarget);
+	//GetPipeline().GetRasterizerState()->SetCullMode(IRasterizerState::CullMode::Back);
+	//GetPipeline().GetRasterizerState()->SetFillMode(IRasterizerState::FillMode::Wireframe, IRasterizerState::FillMode::Wireframe);
 	GetPipeline().SetShader(g_pVertexShader);
 	GetPipeline().SetShader(g_pPixelShader);
 

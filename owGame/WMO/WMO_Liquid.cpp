@@ -5,14 +5,16 @@
 // General
 #include "WMO_Liquid.h"
 
-CWMO_Liquid::CWMO_Liquid(IRenderDevice& RenderDevice, const CWMO& WMOObject, const WMO_Group& WMOGroupObject, const std::shared_ptr<IByteBuffer>& Bytes, const SWMO_Group_MLIQDef& LiquidHeader)
+CWMO_Liquid::CWMO_Liquid(IRenderDevice& RenderDevice, const CWMO& WMOObject, const WMO_Group& WMOGroupObject, const std::shared_ptr<IByteBuffer>& Bytes, const SWMO_Group_MLIQDef& LiquidHeader, const DBC_LiquidTypeRecord* LiquidType)
 	: CLiquid(RenderDevice, LiquidHeader.A, LiquidHeader.B)
 	, m_WMOObject(WMOObject)
 	, m_WMOGroupObject(WMOGroupObject)
 	, m_LiquidHeader(LiquidHeader)
 {
-	ydir = -1.0f; // Magic for WMO
-	createLayers(RenderDevice.GetBaseManager().GetManager<CDBCStorage>()->DBC_LiquidType()[1], Bytes);
+	m_MinHeight = Math::MinFloat;
+	m_MaxHeight = Math::MaxFloat;
+
+	createLayers(LiquidType, Bytes, true);
 
 	/*if (_indoor)
 	{

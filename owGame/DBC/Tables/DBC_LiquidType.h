@@ -2,15 +2,12 @@
 
 #include "DBC/DBC__File.h"
 
-struct DBC_LIQUIDTYPE_Type
+enum class DBC_LIQUIDTYPE_Type : uint32
 {
-	enum List : uint32_t
-	{
-		water = 0,
-		ocean,
-		magma,
-		slime
-	};
+	water = 0,
+	ocean,
+	magma,
+	slime
 };
 
 #if WOW_CLIENT_VERSION < WOW_WOTLK_3_3_5
@@ -30,7 +27,7 @@ DBC_DEF_BEGIN(DBC_LiquidType)
 
 __DBC_STRING(Name, 2);
 __DBC_TVALUE(uint32, Flags, 3);
-__DBC_TVALUE(DBC_LIQUIDTYPE_Type::List, Type, 4);
+__DBC_TVALUE(DBC_LIQUIDTYPE_Type, Type, 4);
 __DBC_TVALUE(uint32, SoundEntriesID, 5);
 __DBC_TVALUE(uint32, SpellID, 6);
 

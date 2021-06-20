@@ -341,9 +341,6 @@ bool CMapChunk::Load()
 	{
 		if (m_Header.sizeLiquid > 8)
 		{
-			CRange height;
-			m_Bytes->read(&height);
-
 			auto liquidInstance = CreateSceneNode<CLiquidBaseInstance>();
 
 			CMapChunkLiquid liquidObject(GetRenderDevice(), m_Bytes, m_Header);
@@ -355,10 +352,9 @@ bool CMapChunk::Load()
 			// Collider
 			if (auto liquidColliderComponent = liquidInstance->GetComponentT<IColliderComponent>())
 			{
-				BoundingBox bbox
-				(
-					glm::vec3(0.0f,        height.min - 1.0f, 0.0f),
-					glm::vec3(C_ChunkSize, height.max + 1.0f, C_ChunkSize)
+				BoundingBox bbox(
+					glm::vec3(0.0f,        liquidObject.getMinHeight() - 1.0f, 0.0f),
+					glm::vec3(C_ChunkSize, liquidObject.getMaxHeight() + 1.0f, C_ChunkSize)
 				);
 				liquidInstance->GetComponentT<IColliderComponent>()->SetBounds(bbox);
 

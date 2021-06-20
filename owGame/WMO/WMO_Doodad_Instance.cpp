@@ -16,7 +16,7 @@ CWMO_Doodad_Instance::CWMO_Doodad_Instance(IScene& Scene, const std::shared_ptr<
 	, m_Placement(_placement)
 	, m_PortalVisibilityState(true)
 {
-	
+	setColor(glm::vec4(_placement.getColor()));
 }
 
 CWMO_Doodad_Instance::~CWMO_Doodad_Instance()

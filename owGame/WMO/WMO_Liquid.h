@@ -16,7 +16,7 @@ class ZN_API CWMO_Liquid
 	: public CLiquid
 {
 public:
-	CWMO_Liquid(IRenderDevice& RenderDevice, const CWMO& WMOObject, const WMO_Group& WMOGroupObject, const std::shared_ptr<IByteBuffer>& Bytes, const SWMO_Group_MLIQDef& LiquidHeader);
+	CWMO_Liquid(IRenderDevice& RenderDevice, const CWMO& WMOObject, const WMO_Group& WMOGroupObject, const std::shared_ptr<IByteBuffer>& Bytes, const SWMO_Group_MLIQDef& LiquidHeader, const DBC_LiquidTypeRecord* LiquidType);
 	virtual ~CWMO_Liquid();
 
 	const SWMO_Group_MLIQDef& GetHeader() const { return m_LiquidHeader; }

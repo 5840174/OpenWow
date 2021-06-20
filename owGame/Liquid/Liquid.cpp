@@ -7,7 +7,8 @@
 CLiquid::CLiquid(IRenderDevice& RenderDevice, uint32 x, uint32 y)
 	: m_TilesX(x)
 	, m_TilesY(y)
-	, ydir(1.0f)
+	, m_MinHeight(Math::MaxFloat)
+	, m_MaxHeight(Math::MinFloat)
 	, m_RenderDevice(RenderDevice)
 {}
 
@@ -31,99 +32,56 @@ void CLiquid::CreateInsances(const std::shared_ptr<ISceneNode>& Parent) const
 
 float CLiquid::getMinHeight() const
 {
-	float minHeight = Math::MaxFloat;
-	for (const auto& waterLayer : m_WaterLayers)
-		for (const auto& heightsIt : waterLayer->heights)
-			if (heightsIt < minHeight)
-				minHeight = heightsIt;
-
-	if (minHeight == Math::MaxFloat)
-		minHeight = 0.0f;
-	return minHeight;
+	return m_MinHeight;
 }
 
 float CLiquid::getMaxHeight() const
 {
-	float maxHeight = Math::MinFloat;
-	for (const auto& waterLayer : m_WaterLayers)
-		for (const auto& heightsIt : waterLayer->heights)
-			if (heightsIt > maxHeight)
-				maxHeight = heightsIt;
-	if (maxHeight == Math::MinFloat)
-		maxHeight = 0.0f;
-	return maxHeight;
+	return m_MaxHeight;
 }
 
 
 
-void CLiquid::createLayers(const DBC_LiquidTypeRecord* _type, const std::shared_ptr<IByteBuffer>& Bytes)
+void CLiquid::createLayers(const DBC_LiquidTypeRecord* LiquidTypeRecord, const std::shared_ptr<IByteBuffer>& Bytes, bool NeedInvertY)
 {
-	SLiquidVertex* map = (SLiquidVertex*)(Bytes->getDataFromCurrent());
-	SLiquidFlag* flags = (SLiquidFlag*)(Bytes->getDataFromCurrent() + ((m_TilesX + 1) * (m_TilesY + 1)) * sizeof(SLiquidVertex));
+	const SLiquidVertex* map = (const SLiquidVertex*)(Bytes->getDataFromCurrent());
+	const SLiquidFlag* flags = (const SLiquidFlag*)(Bytes->getDataFromCurrent() + ((m_TilesX + 1) * (m_TilesY + 1)) * sizeof(SLiquidVertex));
 
-	std::shared_ptr<CLiquidLayer> layer = std::make_shared<CLiquidLayer>(m_RenderDevice);
-	layer->LiquidType = _type;
-	layer->InitTextures(_type->Get_Type());
-
-	layer->x = 0;
-	layer->y = 0;
-	layer->Width = m_TilesX;
-	layer->Height = m_TilesY;
+	SLiquidLayerDefinition layerDefinition;
+	layerDefinition.NeedInvertY = NeedInvertY;
+	layerDefinition.TileStartX = 0;
+	layerDefinition.TileStartY = 0;
+	layerDefinition.TileWidth = m_TilesX;
+	layerDefinition.TileHeight = m_TilesY;
 	
-    for (uint32 j = 0; j < m_TilesY + 1; j++)
+    for (uint32 y = 0; y < m_TilesY + 1; y++)
     {
-        for (uint32 i = 0; i < m_TilesX + 1; i++)
+        for (uint32 x = 0; x < m_TilesX + 1; x++)
         {
-            uint32 p = j * (m_TilesX + 1) + i;
+			uint32 p = x + y * (m_TilesX + 1);
+			bool isNeedDraw = ! ((flags[p].liquid & 0x08) != 0);
 
-            if (flags[p].liquid & 0x08)
-            {
-                layer->renderTiles.push_back(false);
-            }
-            else
-            {
-                layer->renderTiles.push_back(true);
-            }
+			layerDefinition.renderTiles.push_back(isNeedDraw);
 
-            layer->heights.push_back(map[p].magmaVert.height);
-            //layer.depths.push_back((map[p].magmaVert.s / 255.0f) * 0.5f + 0.5f);
+
+			if (LiquidTypeRecord->Get_Type() == DBC_LIQUIDTYPE_Type::water)
+			{
+				layerDefinition.depths.push_back(map[p].waterVert.depth);
+				layerDefinition.heights.push_back(map[p].waterVert.height);
+			}
+			else if (LiquidTypeRecord->Get_Type() == DBC_LIQUIDTYPE_Type::ocean)
+			{
+				layerDefinition.depths.push_back(map[p].oceanVert.depth);
+			}
+			else // magma and slime
+			{
+				layerDefinition.textureCoords.push_back(std::make_pair(static_cast<float>(map[p].magmaVert.s) / 255.0f, static_cast<float>(map[p].magmaVert.t) / 255.0f));
+				layerDefinition.heights.push_back(map[p].magmaVert.height);
+			}
         }
     }
 
-
-	/*for (uint32 j = 0; j < m_TilesY + 1; j++)
-	{
-		for (uint32 i = 0; i < m_TilesX + 1; i++)
-		{
-			uint32 p = j * (m_TilesX + 1) + i;
-
-			layer->renderTiles.push_back((flags[p].liquid & 0x08) == 0);
-
-			if (layer->VertexFormat == 0)
-			{
-				layer->heights.push_back(map[p].waterVert.height);
-				layer->depths.push_back(map[p].waterVert.depth);
-			}
-			else if (layer->VertexFormat == 1)
-			{
-				layer->heights.push_back(map[p].magmaVert.height);
-				layer->textureCoords.push_back
-				(
-					std::make_pair
-					(
-						static_cast<float>(map[p].magmaVert.s) / 8.0f,
-						static_cast<float>(map[p].magmaVert.t) / 8.0f
-					)
-				);
-			}
-			else if (layer->VertexFormat == 2)
-			{
-				layer->depths.push_back(map[p].oceanVert.depth);
-			}
-		}
-	}*/
-
-	auto geometry = layer->CreateGeometry(ydir);
-	layer->AddConnection(layer->GetMaterial(), geometry);
-	m_WaterLayers.push_back(layer);
+	std::shared_ptr<CLiquidModel> liquidModel = MakeShared(CLiquidModel, m_RenderDevice);
+	liquidModel->Initialize(layerDefinition, LiquidTypeRecord);
+	m_WaterLayers.push_back(liquidModel);
 }

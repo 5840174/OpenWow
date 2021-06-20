@@ -26,6 +26,7 @@ class ZN_API CWMO
 	, public std::enable_shared_from_this<CWMO>
 {
 	friend CWMO_Part_Portal;
+
 public:
 	CWMO(IBaseManager& BaseManager, IRenderDevice& RenderDevice, const std::string& FileName);
 	virtual ~CWMO();
@@ -41,6 +42,9 @@ public:
 	std::string GetFilename() const { return m_FileName; }
 	BoundingBox	GetBounds() const { return m_Bounds; }
 	const SWMO_HeaderDef& GetHeader() const { return m_Header; }
+#ifdef USE_WMO_PORTALS_CULLING
+	const std::shared_ptr<CWMO_PortalsController>& GetPortalController() const { return m_PortalController; }
+#endif
 
 	std::string GetTextureName(size_t Offset) const { return std::string(m_TexturesNames.get() + Offset); }
 	const std::shared_ptr<WMO_Part_Material>& GetMaterial(size_t Index) const { return m_Materials.at(Index); }

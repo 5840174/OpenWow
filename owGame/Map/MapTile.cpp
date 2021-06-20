@@ -139,6 +139,7 @@ bool CMapTile::Load()
 		f->seek(startPos + m_Header.MH20);
 		{
 			f->seekRelative(4);
+
 			uint32_t size;
 			f->readBytes(&size, sizeof(uint32_t));
 			_ASSERT(size > 0);

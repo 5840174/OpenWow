@@ -88,9 +88,9 @@ void CWMO_Base_Instance::Update(const UpdateEventArgs& e)
 		return;
 
 #ifdef USE_WMO_PORTALS_CULLING
-	if (m_WMOObject->m_PortalController)
+	if (auto portalsController = m_WMOObject->GetPortalController())
 	{
-		m_WMOObject->m_PortalController->Update(this, e.CameraForCulling);
+		portalsController->Update(this, e.CameraForCulling);
 	}
 #endif
 }

@@ -110,10 +110,10 @@ void CMapWDL::CreateInsances(const std::shared_ptr<ISceneNode>& Parent) const
 	{
 		if (std::shared_ptr<CWMO> wmo = m_Map.GetBaseManager().GetManager<IWoWObjectsCreator>()->LoadWMO(m_Map.GetBaseManager().GetApplication().GetRenderDevice(), m_LowResolutionWMOsNames[it.nameIndex], true))
 		{
-			auto wmoInstance = Parent->CreateSceneNode<CMapWMOInstance>(wmo, it);
-			m_Map.GetBaseManager().GetManager<ILoader>()->AddToLoadQueue(wmoInstance);
+			//auto wmoInstance = Parent->CreateSceneNode<CMapWMOInstance>(wmo, it);
+			//m_Map.GetBaseManager().GetManager<ILoader>()->AddToLoadQueue(wmoInstance);
 
-			m_LowResolutionWMOs.push_back(wmoInstance.get());
+			//m_LowResolutionWMOs.push_back(wmoInstance.get());
 		}
 		else
 		{

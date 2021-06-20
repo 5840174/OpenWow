@@ -7,7 +7,13 @@ CMapChunkLiquid::CMapChunkLiquid(IRenderDevice& RenderDevice, const std::shared_
 	: CLiquid(RenderDevice, 8, 8)
 {
 	const DBC_LiquidTypeRecord* liquidTypeRecord = GetLiquidType(header, m_RenderDevice.GetBaseManager().GetManager<CDBCStorage>());
-	createLayers(liquidTypeRecord, Bytes);
+
+	CRange height;
+	Bytes->read(&height);
+	m_MinHeight = height.min;
+	m_MaxHeight = height.max;
+
+	createLayers(liquidTypeRecord, Bytes, false);
 }
 
 CMapChunkLiquid::~CMapChunkLiquid()
@@ -38,6 +44,5 @@ const DBC_LiquidTypeRecord * CMapChunkLiquid::GetLiquidType(const ADT_MCNK_Heade
 		return DBCStorage->DBC_LiquidType()[4];
 	}
 
-	_ASSERT(false);
-	return nullptr;
+	throw CException("Unknown liquid type.");
 }

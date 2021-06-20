@@ -21,40 +21,40 @@
 ^CMPQFile[ruRU/patch-ruRU.MPQ]: Added!
 ^CMPQFile[ruRU/patch-ruRU-2.MPQ]: Added!
 ^CMPQFile[ruRU/patch-ruRU-3.MPQ]: Added!
-~DBCFile[AnimationData.dbc]: Records count = '1643114248'.
-~DBCFile[GroundEffectDoodad.dbc]: Records count = '1643114248'.
-~DBCFile[GroundEffectTexture.dbc]: Records count = '1643114248'.
-~DBCFile[LoadingScreens.dbc]: Records count = '1643114248'.
-~DBCFile[Material.dbc]: Records count = '1643114248'.
-~DBCFile[Map.dbc]: Records count = '1643114248'.
-~DBCFile[TerrainType.dbc]: Records count = '1643114248'.
-~DBCFile[WMOAreaTable.dbc]: Records count = '1643114248'.
-~DBCFile[WorldSafeLocs.dbc]: Records count = '1643114248'.
-~DBCFile[AreaTable.dbc]: Records count = '1643114248'.
-~DBCFile[CharacterFacialHairStyles.dbc]: Records count = '1643114248'.
-~DBCFile[CharComponentTextureLayouts.dbc]: Records count = '1643114248'.
-~DBCFile[CharComponentTextureSections.dbc]: Records count = '1643114248'.
-~DBCFile[CharHairGeosets.dbc]: Records count = '1643114248'.
-~DBCFile[CharSections.dbc]: Records count = '1643114248'.
-~DBCFile[ChrRaces.dbc]: Records count = '1643114248'.
-~DBCFile[CinematicCamera.dbc]: Records count = '1643114248'.
-~DBCFile[CinematicSequences.dbc]: Records count = '1643114248'.
-~DBCFile[CreatureDisplayInfo.dbc]: Records count = '1643114248'.
-~DBCFile[CreatureDisplayInfoExtra.dbc]: Records count = '1643114248'.
-~DBCFile[CreatureModelData.dbc]: Records count = '1643114248'.
-~DBCFile[HelmetGeosetVisData.dbc]: Records count = '1643114248'.
-~DBCFile[ItemBagFamily.dbc]: Records count = '1643114248'.
-~DBCFile[ItemClass.dbc]: Records count = '1643114248'.
-~DBCFile[ItemDisplayInfo.dbc]: Records count = '1643114248'.
-~DBCFile[ItemVisualEffects.dbc]: Records count = '1643114248'.
-~DBCFile[ItemVisuals.dbc]: Records count = '1643114248'.
-~DBCFile[Light.dbc]: Records count = '1643114248'.
-~DBCFile[LightFloatBand.dbc]: Records count = '1643114248'.
-~DBCFile[LightIntBand.dbc]: Records count = '1643114248'.
-~DBCFile[LightParams.dbc]: Records count = '1643114248'.
-~DBCFile[LightSkybox.dbc]: Records count = '1643114248'.
-~DBCFile[LiquidType.dbc]: Records count = '1643114248'.
-~DBCFile[GameObjectDisplayInfo.dbc]: Records count = '1643114136'.
+~DBCFile[AnimationData.dbc]: Records count = '-2003375944'.
+~DBCFile[GroundEffectDoodad.dbc]: Records count = '-2003375944'.
+~DBCFile[GroundEffectTexture.dbc]: Records count = '-2003375944'.
+~DBCFile[LoadingScreens.dbc]: Records count = '-2003375944'.
+~DBCFile[Material.dbc]: Records count = '-2003375944'.
+~DBCFile[Map.dbc]: Records count = '-2003375944'.
+~DBCFile[TerrainType.dbc]: Records count = '-2003375944'.
+~DBCFile[WMOAreaTable.dbc]: Records count = '-2003375944'.
+~DBCFile[WorldSafeLocs.dbc]: Records count = '-2003375944'.
+~DBCFile[AreaTable.dbc]: Records count = '-2003375944'.
+~DBCFile[CharacterFacialHairStyles.dbc]: Records count = '-2003375944'.
+~DBCFile[CharComponentTextureLayouts.dbc]: Records count = '-2003375944'.
+~DBCFile[CharComponentTextureSections.dbc]: Records count = '-2003375944'.
+~DBCFile[CharHairGeosets.dbc]: Records count = '-2003375944'.
+~DBCFile[CharSections.dbc]: Records count = '-2003375944'.
+~DBCFile[ChrRaces.dbc]: Records count = '-2003375944'.
+~DBCFile[CinematicCamera.dbc]: Records count = '-2003375944'.
+~DBCFile[CinematicSequences.dbc]: Records count = '-2003375944'.
+~DBCFile[CreatureDisplayInfo.dbc]: Records count = '-2003375944'.
+~DBCFile[CreatureDisplayInfoExtra.dbc]: Records count = '-2003375944'.
+~DBCFile[CreatureModelData.dbc]: Records count = '-2003375944'.
+~DBCFile[HelmetGeosetVisData.dbc]: Records count = '-2003375944'.
+~DBCFile[ItemBagFamily.dbc]: Records count = '-2003375944'.
+~DBCFile[ItemClass.dbc]: Records count = '-2003375944'.
+~DBCFile[ItemDisplayInfo.dbc]: Records count = '-2003375944'.
+~DBCFile[ItemVisualEffects.dbc]: Records count = '-2003375944'.
+~DBCFile[ItemVisuals.dbc]: Records count = '-2003375944'.
+~DBCFile[Light.dbc]: Records count = '-2003375944'.
+~DBCFile[LightFloatBand.dbc]: Records count = '-2003375944'.
+~DBCFile[LightIntBand.dbc]: Records count = '-2003375944'.
+~DBCFile[LightParams.dbc]: Records count = '-2003375944'.
+~DBCFile[LightSkybox.dbc]: Records count = '-2003375944'.
+~DBCFile[LiquidType.dbc]: Records count = '-2003375944'.
+~DBCFile[GameObjectDisplayInfo.dbc]: Records count = '-2003376056'.
 ~FontsManager: Font 'Fonts\consola.ttf' loaded. Size [14].
 ~Loading shader 'shaders_D3D/Sky.hlsl':'VS_main'.
 ~Loading shader 'shaders_D3D/Sky.hlsl':'PS_main'.
@@ -70,1106 +70,146 @@
 ~Loading shader 'shaders_D3D/M2.hlsl':'PS_main'.
 ~Loading shader 'shaders_D3D/Liquid.hlsl':'VS_main'.
 ~Loading shader 'shaders_D3D/Liquid.hlsl':'PS_main'.
+~Loading shader '3D/BondingBox.hlsl':'VS_main_Inst'.
+~Loading shader '3D/BondingBox.hlsl':'PS_main'.
 ~Loading shader 'UI/UIControlCommon.hlsl':'VS_main'.
 ~Loading shader 'UI/UIControlCommon.hlsl':'PS_main'.
 ~Loading shader 'UI/UI_Font.hlsl':'VS_main'.
 ~Loading shader 'UI/UI_Font.hlsl':'PS_main'.
-~Sky: [1] is global sky.
+~Sky: [752] is global sky.
+~Sky: Skybox name = ''.
+~Sky: Skybox name = ''.
+~Sky: Skybox name = '€ï(„¡'.
+~Sky: Skybox name = 'Àö(„¡'.
+~Sky: Skybox name = '@ú(„¡'.
+~Sky: Skybox name = ''.
+~Sky: Skybox name = '€ð(„¡'.
+~Sky: Skybox name = 'Àú(„¡'.
+~Sky: Skybox name = '€ø(„¡'.
+~Sky: Skybox name = '€÷(„¡'.
+~Sky: Skybox name = '@ñ(„¡'.
+~Sky: Skybox name = ''.
+~Sky: Skybox name = '@í(„¡'.
+~Sky: Skybox name = '€ö(„¡'.
+~Sky: Skybox name = ''.
+~Sky: Skybox name = '€ï(„¡'.
+~Sky: Skybox name = '@æüƒ¡'.
+~Sky: Skybox name = '°ðC„¡'.
+~Sky: Skybox name = '°ïC„¡'.
+~Sky: Skybox name = 'pìC„¡'.
+~Sky: Skybox name = '°îC„¡'.
+~Sky: Skybox name = '0âC„¡'.
+~Sky: Skybox name = 'píC„¡'.
+~Sky: Skybox name = 'pðC„¡'.
+~Sky: Skybox name = '°ïC„¡'.
+~Sky: Skybox name = 'pãC„¡'.
+~Sky: Skybox name = 'ðîC„¡'.
+~Sky: Skybox name = 'ðäC„¡'.
+~Sky: Skybox name = '0ìC„¡'.
+~Sky: Skybox name = 'ðîC„¡'.
+~Sky: Skybox name = 'ðåC„¡'.
+~Sky: Skybox name = 'päC„¡'.
+~Sky: Skybox name = '°áC„¡'.
+~Sky: Skybox name = 'pðC„¡'.
+~Sky: Skybox name = '0âC„¡'.
+~Sky: Skybox name = '@@„¡'.
+~Sky: Skybox name = '°ðC„¡'.
+~Sky: Skybox name = 'pãC„¡'.
+~Sky: Skybox name = '0âC„¡'.
+~Sky: Skybox name = '°âC„¡'.
+~Sky: Skybox name = 'pãC„¡'.
+~Sky: Skybox name = 'pãC„¡'.
+~Sky: Skybox name = 'pãC„¡'.
+~Sky: Skybox name = 'pãC„¡'.
+~Sky: Skybox name = 'pãC„¡'.
+~Sky: Skybox name = 'ð÷C„¡'.
+~Sky: Skybox name = 'pùC„¡'.
+~Sky: Skybox name = 'ðóC„¡'.
+~Sky: Skybox name = 'pÿC„¡'.
+~Sky: Skybox name = 'pÿC„¡'.
+~Sky: Skybox name = '°üC„¡'.
+~Sky: Skybox name = 'ðøC„¡'.
+~Sky: Skybox name = 'pøC„¡'.
+~Sky: Skybox name = '°üC„¡'.
+~Sky: Skybox name = 'pöC„¡'.
+~Sky: Skybox name = '°òC„¡'.
+~Sky: Skybox name = '0õC„¡'.
+~Sky: Skybox name = 'ðóC„¡'.
+~Sky: Skybox name = 'ðóC„¡'.
+~Sky: Skybox name = 'põC„¡'.
+~Sky: Skybox name = '0ùC„¡'.
+~Sky: Skybox name = '°øC„¡'.
+~Sky: Skybox name = 'püC„¡'.
+~Sky: Skybox name = 'ðüC„¡'.
+~Sky: Skybox name = '°÷C„¡'.
+~Sky: Skybox name = '°÷C„¡'.
+~Sky: Skybox name = '°÷C„¡'.
+~Sky: Skybox name = 'ðúC„¡'.
+~Sky: Skybox name = '0­E„¡'.
+~Sky: Skybox name = '0ùC„¡'.
+~Sky: Skybox name = '0ùC„¡'.
+~Sky: Skybox name = '0ùC„¡'.
+~Sky: Skybox name = '0úC„¡'.
+~Sky: Skybox name = 'pùC„¡'.
+~Sky: Skybox name = '0üC„¡'.
+~Sky: Skybox name = '0ýC„¡'.
+~Sky: Skybox name = 'ðþC„¡'.
+~Sky: Skybox name = '°úC„¡'.
+~Sky: Skybox name = '0üC„¡'.
+~Sky: Skybox name = 'pD„¡'.
+~Sky: Skybox name = 'ðD„¡'.
+~Sky: Skybox name = '0D„¡'.
+~Sky: Skybox name = 'pD„¡'.
+~Sky: Skybox name = 'ðD„¡'.
  Map[Northrend]: Id [571]. Preloading...
  Map[Northrend]: Id [571]. Loading...
 ^CMapWDL: Low WMOs count [4].
 ~MapWDT: Global WMO exists [false].
 ^MapTile[30, 20, World\Maps\Northrend\Northrend_30_20.adt]: Loaded!
 !File 'TILESET\Terrain Cube Maps\TCB_CrystalSong_B_s.blp' not exists.
-^MapTile[29, 20, World\Maps\Northrend\Northrend_29_20.adt]: Loaded!
 ^MapTile[29, 22, World\Maps\Northrend\Northrend_29_22.adt]: Loaded!
 !File 'TILESET\Terrain Cube Maps\TCB_CrystalSong_B_s.blp' not exists.
+^MapTile[29, 20, World\Maps\Northrend\Northrend_29_20.adt]: Loaded!
 ^MapTile[30, 22, World\Maps\Northrend\Northrend_30_22.adt]: Loaded!
 ^MapTile[30, 21, World\Maps\Northrend\Northrend_30_21.adt]: Loaded!
 ^MapTile[31, 21, World\Maps\Northrend\Northrend_31_21.adt]: Loaded!
 ^MapTile[29, 21, World\Maps\Northrend\Northrend_29_21.adt]: Loaded!
 ^MapTile[31, 20, World\Maps\Northrend\Northrend_31_20.adt]: Loaded!
 ^MapTile[31, 22, World\Maps\Northrend\Northrend_31_22.adt]: Loaded!
+^WMO[WORLD\WMO\NORTHREND\ICECROWN\SCOURGEWALLS\ICECROWN_CITADEL_EXTERIOR.WMO]: Liq: headerID [5] headerFlag [1] MatID: [54]
 @M2[WORLD\EXPANSION02\DOODADS\CRYSTALSONGFOREST\SPARKLES\CRYSTALSONG_SPARKLES03.M2] don't contain geometry. Skins [1]
 @M2[WORLD\GENERIC\PASSIVEDOODADS\PARTICLEEMITTERS\BLACKSMITH_SMOKE.M2] don't contain geometry. Skins [1]
 @M2[WORLD\LORDAERON\STRATHOLME\PASSIVEDOODADS\FX\STRATHOLMEFIRESMOKEEMBERM.M2] don't contain geometry. Skins [1]
-@M2[WORLD\EXPANSION01\DOODADS\SILVERMYST\SMOKE\D_SMOKE.M2] don't contain geometry. Skins [1]
+^WMO[WORLD\WMO\NORTHREND\DALARAN\ND_DALARAN.WMO]: Liq: headerID [5] headerFlag [1] MatID: [190]
+^WMO[WORLD\WMO\NORTHREND\DALARAN\ND_DALARAN.WMO]: Liq: headerID [5] headerFlag [1] MatID: [190]
+^WMO[WORLD\WMO\NORTHREND\DALARAN\ND_DALARAN.WMO]: Liq: headerID [5] headerFlag [1] MatID: [205]
+^WMO[WORLD\WMO\NORTHREND\DALARAN\ND_DALARAN.WMO]: Liq: headerID [5] headerFlag [1] MatID: [205]
+^WMO[WORLD\WMO\NORTHREND\DALARAN\ND_DALARAN.WMO]: Liq: headerID [5] headerFlag [1] MatID: [205]
+^WMO[WORLD\WMO\NORTHREND\DALARAN\ND_DALARAN.WMO]: Liq: headerID [5] headerFlag [1] MatID: [205]
+^WMO[WORLD\WMO\NORTHREND\DALARAN\ND_DALARAN.WMO]: Liq: headerID [5] headerFlag [1] MatID: [205]
 @M2[WORLD\GENERIC\PASSIVEDOODADS\PARTICLEEMITTERS\BLACKSMITH_SMOKE.M2] don't contain geometry. Skins [1]
+@M2[WORLD\EXPANSION01\DOODADS\SILVERMYST\SMOKE\D_SMOKE.M2] don't contain geometry. Skins [1]
 ^MapTile[31, 19, World\Maps\Northrend\Northrend_31_19.adt]: Loaded!
 ^MapTile[29, 19, World\Maps\Northrend\Northrend_29_19.adt]: Loaded!
 ^MapTile[30, 19, World\Maps\Northrend\Northrend_30_19.adt]: Loaded!
 @M2[WORLD\AZEROTH\BURNINGSTEPPES\PASSIVEDOODADS\SMOKE\ASHTREESMOKE01.M2] don't contain geometry. Skins [1]
 @M2[WORLD\EXPANSION01\DOODADS\SHADOWMOON\SMOKE\SHADOWMOONCRACKSMOKE01.M2] don't contain geometry. Skins [1]
+^WMO[WORLD\WMO\LORDERON\BUILDINGS\EASTERNPLAGUELANDS\UNDEADZIGGURAT\UNDEADZIGGURAT.WMO]: Liq: headerID [8] headerFlag [1] MatID: [10]
 @M2[WORLD\GENERIC\UNDEAD\PASSIVE DOODADS\UNDERCITYSLIMEFALLS\SKULLSPOUTSPLASH.M2] don't contain geometry. Skins [1]
-!File 'TILESET\Terrain Cube Maps\TCB_CrystalSong_B_s.blp' not exists.
-!File 'TILESET\Terrain Cube Maps\TCB_CrystalSong_B_s.blp' not exists.
-!File 'TILESET\Generic\tgatest_s.blp' not exists.
-^MapTile[32, 22, World\Maps\Northrend\Northrend_32_22.adt]: Loaded!
-^MapTile[32, 21, World\Maps\Northrend\Northrend_32_21.adt]: Loaded!
-^MapTile[32, 20, World\Maps\Northrend\Northrend_32_20.adt]: Loaded!
-@CMapTile::~CMapTile: Tile [29, 19] unloaded.
-@CMapTile::~CMapTile: Tile [29, 20] unloaded.
-!File 'TILESET\Terrain Cube Maps\TCB_CrystalSong_B_s.blp' not exists.
-!File 'TILESET\Terrain Cube Maps\TCB_CrystalSong_B_s.blp' not exists.
-!File 'TILESET\Generic\tgatest_s.blp' not exists.
-^MapTile[33, 20, World\Maps\Northrend\Northrend_33_20.adt]: Loaded!
-^MapTile[33, 22, World\Maps\Northrend\Northrend_33_22.adt]: Loaded!
-^MapTile[33, 21, World\Maps\Northrend\Northrend_33_21.adt]: Loaded!
-@M2[WORLD\LORDAERON\STRATHOLME\PASSIVEDOODADS\FX\STRATHOLMEFIRESMOKEEMBERS.M2] don't contain geometry. Skins [1]
-@CMapTile::~CMapTile: Tile [29, 22] unloaded.
-!File 'TILESET\Terrain Cube Maps\TCB_CrystalSong_B_s.blp' not exists.
-@CMapTile::~CMapTile: Tile [30, 19] unloaded.
-@CMapTile::~CMapTile: Tile [29, 21] unloaded.
-^MapTile[34, 20, World\Maps\Northrend\Northrend_34_20.adt]: Loaded!
-^MapTile[34, 21, World\Maps\Northrend\Northrend_34_21.adt]: Loaded!
-^MapTile[34, 22, World\Maps\Northrend\Northrend_34_22.adt]: Loaded!
-@CMapTile::~CMapTile: Tile [30, 20] unloaded.
-@M2[WORLD\EXPANSION02\DOODADS\DRAGONBLIGHT\DRAGONBLIGHT_LEAVESLARGE.M2] don't contain geometry. Skins [1]
-@CMapTile::~CMapTile: Tile [31, 19] unloaded.
-@CMapTile::~CMapTile: Tile [30, 21] unloaded.
-^MapTile[32, 23, World\Maps\Northrend\Northrend_32_23.adt]: Loaded!
-^MapTile[33, 23, World\Maps\Northrend\Northrend_33_23.adt]: Loaded!
-^MapTile[34, 23, World\Maps\Northrend\Northrend_34_23.adt]: Loaded!
-@M2[WORLD\EXPANSION02\DOODADS\DRAGONBLIGHT\DRAGONBLIGHT_LEAVES_01.M2] don't contain geometry. Skins [1]
-@CMapTile::~CMapTile: Tile [31, 20] unloaded.
-^MapTile[35, 21, World\Maps\Northrend\Northrend_35_21.adt]: Loaded!
-^MapTile[35, 22, World\Maps\Northrend\Northrend_35_22.adt]: Loaded!
-@CMapTile::~CMapTile: Tile [30, 22] unloaded.
-^MapTile[35, 23, World\Maps\Northrend\Northrend_35_23.adt]: Loaded!
-@M2[WORLD\GENERIC\TAUREN\PASSIVE DOODADS\SMOKE\TAURENCOLOREDSMOKE01.M2] don't contain geometry. Skins [1]
-@CMapTile::~CMapTile: Tile [31, 21] unloaded.
-@CMapTile::~CMapTile: Tile [32, 20] unloaded.
-@CMapTile::~CMapTile: Tile [31, 22] unloaded.
-@M2[WORLD\EXPANSION01\DOODADS\SILVERMOON\FLOATINGDANDELIONS\FLOATINGDANDELIONS01.M2] don't contain geometry. Skins [1]
-^MapTile[35, 24, World\Maps\Northrend\Northrend_35_24.adt]: Loaded!
-@CMapTile::~CMapTile: Tile [32, 21] unloaded.
-^MapTile[34, 24, World\Maps\Northrend\Northrend_34_24.adt]: Loaded!
-^MapTile[33, 24, World\Maps\Northrend\Northrend_33_24.adt]: Loaded!
-@CMapTile::~CMapTile: Tile [34, 20] unloaded.
-@CMapTile::~CMapTile: Tile [33, 21] unloaded.
-@CMapTile::~CMapTile: Tile [33, 20] unloaded.
-^MapTile[36, 23, World\Maps\Northrend\Northrend_36_23.adt]: Loaded!
-^MapTile[36, 24, World\Maps\Northrend\Northrend_36_24.adt]: Loaded!
-^MapTile[36, 22, World\Maps\Northrend\Northrend_36_22.adt]: Loaded!
-@M2[WORLD\EXPANSION02\DOODADS\GRIZZLYHILLS\TERMITES\TERMITEDUST.M2] don't contain geometry. Skins [1]
-@CMapTile::~CMapTile: Tile [32, 22] unloaded.
-@CMapTile::~CMapTile: Tile [33, 22] unloaded.
-@CMapTile::~CMapTile: Tile [32, 23] unloaded.
-^MapTile[37, 23, World\Maps\Northrend\Northrend_37_23.adt]: Loaded!
-^MapTile[37, 22, World\Maps\Northrend\Northrend_37_22.adt]: Loaded!
-^MapTile[37, 24, World\Maps\Northrend\Northrend_37_24.adt]: Loaded!
-@M2[WORLD\AZEROTH\BURNINGSTEPPES\PASSIVEDOODADS\SMOKE\ASHTREESMOKE01.M2] don't contain geometry. Skins [1]
-@M2[WORLD\GENERIC\PASSIVEDOODADS\PARTICLEEMITTERS\BLACKSMITH_SMOKE.M2] don't contain geometry. Skins [1]
-@CMapTile::~CMapTile: Tile [34, 21] unloaded.
-@CMapTile::~CMapTile: Tile [34, 22] unloaded.
-@CMapTile::~CMapTile: Tile [35, 21] unloaded.
-^MapTile[35, 25, World\Maps\Northrend\Northrend_35_25.adt]: Loaded!
-^MapTile[37, 25, World\Maps\Northrend\Northrend_37_25.adt]: Loaded!
-^MapTile[36, 25, World\Maps\Northrend\Northrend_36_25.adt]: Loaded!
-@CMapTile::~CMapTile: Tile [33, 23] unloaded.
-@CMapTile::~CMapTile: Tile [34, 23] unloaded.
-@CMapTile::~CMapTile: Tile [35, 22] unloaded.
-^MapTile[38, 23, World\Maps\Northrend\Northrend_38_23.adt]: Loaded!
-^MapTile[38, 25, World\Maps\Northrend\Northrend_38_25.adt]: Loaded!
-^MapTile[38, 24, World\Maps\Northrend\Northrend_38_24.adt]: Loaded!
-@CMapTile::~CMapTile: Tile [33, 24] unloaded.
-@M2[WORLD\LORDAERON\STRATHOLME\PASSIVEDOODADS\FX\STRATHOLMEFIRESMOKEEMBERM.M2] don't contain geometry. Skins [1]
-@M2[WORLD\LORDAERON\STRATHOLME\PASSIVEDOODADS\FX\STRATHOLMESMOKEEMITTER.M2] don't contain geometry. Skins [1]
-^MapTile[38, 22, World\Maps\Northrend\Northrend_38_22.adt]: Loaded!
-@CMapTile::~CMapTile: Tile [38, 25] unloaded.
-^MapTile[35, 22, World\Maps\Northrend\Northrend_35_22.adt]: Loaded!
-!File 'TILESET\Terrain Cube Maps\TCB_CrystalSong_B_s.blp' not exists.
-@CMapTile::~CMapTile: Tile [37, 24] unloaded.
-^MapTile[34, 22, World\Maps\Northrend\Northrend_34_22.adt]: Loaded!
-^MapTile[35, 21, World\Maps\Northrend\Northrend_35_21.adt]: Loaded!
-^MapTile[34, 23, World\Maps\Northrend\Northrend_34_23.adt]: Loaded!
-@CMapTile::~CMapTile: Tile [38, 23] unloaded.
-^MapTile[34, 21, World\Maps\Northrend\Northrend_34_21.adt]: Loaded!
-@CMapTile::~CMapTile: Tile [38, 24] unloaded.
-^MapTile[36, 21, World\Maps\Northrend\Northrend_36_21.adt]: Loaded!
-@M2[WORLD\EXPANSION02\DOODADS\DRAGONBLIGHT\DRAGONBLIGHT_LEAVESLARGE.M2] don't contain geometry. Skins [1]
-@M2[WORLD\EXPANSION02\DOODADS\DRAGONBLIGHT\DRAGONBLIGHT_LEAVES_01.M2] don't contain geometry. Skins [1]
-@CMapTile::~CMapTile: Tile [37, 25] unloaded.
-@M2[WORLD\GENERIC\TAUREN\PASSIVE DOODADS\SMOKE\TAURENCOLOREDSMOKE01.M2] don't contain geometry. Skins [1]
-@M2[WORLD\AZEROTH\BURNINGSTEPPES\PASSIVEDOODADS\SMOKE\ASHTREESMOKE01.M2] don't contain geometry. Skins [1]
-@CMapTile::~CMapTile: Tile [36, 25] unloaded.
-!File 'TILESET\Terrain Cube Maps\TCB_CrystalSong_B_s.blp' not exists.
-!File 'TILESET\Terrain Cube Maps\TCB_CrystalSong_B_s.blp' not exists.
-@CMapTile::~CMapTile: Tile [36, 24] unloaded.
-@CMapTile::~CMapTile: Tile [35, 25] unloaded.
-^MapTile[33, 23, World\Maps\Northrend\Northrend_33_23.adt]: Loaded!
-^MapTile[33, 22, World\Maps\Northrend\Northrend_33_22.adt]: Loaded!
-^MapTile[33, 21, World\Maps\Northrend\Northrend_33_21.adt]: Loaded!
-@CMapTile::~CMapTile: Tile [37, 23] unloaded.
-!File 'TILESET\Terrain Cube Maps\TCB_CrystalSong_B_s.blp' not exists.
-!File 'TILESET\Terrain Cube Maps\TCB_CrystalSong_B_s.blp' not exists.
-@CMapTile::~CMapTile: Tile [36, 23] unloaded.
-@CMapTile::~CMapTile: Tile [36, 21] unloaded.
-^MapTile[32, 22, World\Maps\Northrend\Northrend_32_22.adt]: Loaded!
-^MapTile[32, 23, World\Maps\Northrend\Northrend_32_23.adt]: Loaded!
-^MapTile[32, 21, World\Maps\Northrend\Northrend_32_21.adt]: Loaded!
-@CMapTile::~CMapTile: Tile [38, 22] unloaded.
-!File 'TILESET\Generic\tgatest_s.blp' not exists.
-!File 'TILESET\Generic\tgatest_s.blp' not exists.
-@CMapTile::~CMapTile: Tile [35, 23] unloaded.
-@CMapTile::~CMapTile: Tile [35, 24] unloaded.
-@CMapTile::~CMapTile: Tile [36, 22] unloaded.
-^MapTile[33, 20, World\Maps\Northrend\Northrend_33_20.adt]: Loaded!
-^MapTile[34, 20, World\Maps\Northrend\Northrend_34_20.adt]: Loaded!
-^MapTile[32, 20, World\Maps\Northrend\Northrend_32_20.adt]: Loaded!
-@CMapTile::~CMapTile: Tile [37, 22] unloaded.
-^MapTile[31, 22, World\Maps\Northrend\Northrend_31_22.adt]: Loaded!
-@CMapTile::~CMapTile: Tile [34, 24] unloaded.
-^MapTile[31, 21, World\Maps\Northrend\Northrend_31_21.adt]: Loaded!
-@CMapTile::~CMapTile: Tile [34, 23] unloaded.
-@CMapTile::~CMapTile: Tile [35, 21] unloaded.
-@M2[WORLD\GENERIC\PASSIVEDOODADS\PARTICLEEMITTERS\BLACKSMITH_SMOKE.M2] don't contain geometry. Skins [1]
-^MapTile[31, 20, World\Maps\Northrend\Northrend_31_20.adt]: Loaded!
 ^MapTile[31, 23, World\Maps\Northrend\Northrend_31_23.adt]: Loaded!
-@M2[WORLD\LORDAERON\STRATHOLME\PASSIVEDOODADS\FX\STRATHOLMEFIRESMOKEEMBERM.M2] don't contain geometry. Skins [1]
-@CMapTile::~CMapTile: Tile [35, 22] unloaded.
-@CMapTile::~CMapTile: Tile [34, 20] unloaded.
-@CMapTile::~CMapTile: Tile [34, 21] unloaded.
-@M2[WORLD\EXPANSION01\DOODADS\SILVERMYST\SMOKE\D_SMOKE.M2] don't contain geometry. Skins [1]
-!File 'TILESET\Terrain Cube Maps\TCB_CrystalSong_B_s.blp' not exists.
-!File 'TILESET\Terrain Cube Maps\TCB_CrystalSong_B_s.blp' not exists.
-^MapTile[30, 22, World\Maps\Northrend\Northrend_30_22.adt]: Loaded!
-^MapTile[30, 23, World\Maps\Northrend\Northrend_30_23.adt]: Loaded!
-^MapTile[30, 21, World\Maps\Northrend\Northrend_30_21.adt]: Loaded!
 @M2[WORLD\EXPANSION01\DOODADS\ZANGAR\POLLEN\ZM_BLUEPOLLEN.M2] don't contain geometry. Skins [1]
-@CMapTile::~CMapTile: Tile [34, 22] unloaded.
-@M2[WORLD\EXPANSION02\DOODADS\CRYSTALSONGFOREST\SPARKLES\CRYSTALSONG_SPARKLES03.M2] don't contain geometry. Skins [1]
-@CMapTile::~CMapTile: Tile [33, 20] unloaded.
-@CMapTile::~CMapTile: Tile [33, 21] unloaded.
-^MapTile[31, 24, World\Maps\Northrend\Northrend_31_24.adt]: Loaded!
-^MapTile[32, 24, World\Maps\Northrend\Northrend_32_24.adt]: Loaded!
-^MapTile[30, 24, World\Maps\Northrend\Northrend_30_24.adt]: Loaded!
-@M2[WORLD\LORDAERON\SILVERMOON\PASSIVEDOODADS\TREES\SM_LEAVES_FALL_PURPLE.M2] don't contain geometry. Skins [1]
-@M2[WORLD\LORDAERON\SILVERMOON\PASSIVEDOODADS\TREES\SM_LEAVES_FALL.M2] don't contain geometry. Skins [1]
-@M2[WORLD\EXPANSION02\DOODADS\DRAGONBLIGHT\DB_LEAVES_FALL.M2] don't contain geometry. Skins [1]
-@CMapTile::~CMapTile: Tile [32, 20] unloaded.
-@CMapTile::~CMapTile: Tile [31, 20] unloaded.
-@M2[WORLD\GENERIC\PASSIVEDOODADS\PARTICLEEMITTERS\BLACKSMITH_SMOKE.M2] don't contain geometry. Skins [1]
-@CMapTile::~CMapTile: Tile [33, 22] unloaded.
+^MapTile[30, 23, World\Maps\Northrend\Northrend_30_23.adt]: Loaded!
 ^MapTile[29, 23, World\Maps\Northrend\Northrend_29_23.adt]: Loaded!
+^WMO[WORLD\WMO\NORTHREND\DRAGONBLIGHT\DRAGONSHRINE\BD_SHRINE.WMO]: Liq: headerID [3] headerFlag [1] MatID: [12]
+^WMO[WORLD\WMO\NORTHREND\DRAGONBLIGHT\DRAGONSHRINE\BD_SHRINE.WMO]: Liq: headerID [3] headerFlag [1] MatID: [12]
 @M2[WORLD\EXPANSION02\DOODADS\HOWLINGFJORD\FIREFX\BURNTSTONETREEFIREFLIES_VFX.M2] don't contain geometry. Skins [1]
-^MapTile[29, 24, World\Maps\Northrend\Northrend_29_24.adt]: Loaded!
 @M2[WORLD\LORDAERON\STRATHOLME\PASSIVEDOODADS\FX\STRATHOLMEFLOATINGEMBERS.M2] don't contain geometry. Skins [1]
-^MapTile[29, 22, World\Maps\Northrend\Northrend_29_22.adt]: Loaded!
-@CMapTile::~CMapTile: Tile [32, 24] unloaded.
-^MapTile[29, 21, World\Maps\Northrend\Northrend_29_21.adt]: Loaded!
-@CMapTile::~CMapTile: Tile [33, 23] unloaded.
-@CMapTile::~CMapTile: Tile [31, 24] unloaded.
-@CMapTile::~CMapTile: Tile [32, 23] unloaded.
+@CMapTile::~CMapTile: Tile [31, 23] unloaded.
+@CMapTile::~CMapTile: Tile [31, 19] unloaded.
 ^MapTile[28, 21, World\Maps\Northrend\Northrend_28_21.adt]: Loaded!
 ^MapTile[28, 22, World\Maps\Northrend\Northrend_28_22.adt]: Loaded!
-^MapTile[28, 23, World\Maps\Northrend\Northrend_28_23.adt]: Loaded!
-@CMapTile::~CMapTile: Tile [32, 21] unloaded.
-^MapTile[28, 24, World\Maps\Northrend\Northrend_28_24.adt]: Loaded!
-@CMapTile::~CMapTile: Tile [32, 22] unloaded.
-@CMapTile::~CMapTile: Tile [31, 23] unloaded.
-@CMapTile::~CMapTile: Tile [30, 24] unloaded.
-!File 'TILESET\Terrain Cube Maps\TCB_SkyBlue_A_s.blp' not exists.
-!File 'TILESET\Terrain Cube Maps\TCB_SkyBlue_A_s.blp' not exists.
-^MapTile[27, 21, World\Maps\Northrend\Northrend_27_21.adt]: Loaded!
-^MapTile[27, 23, World\Maps\Northrend\Northrend_27_23.adt]: Loaded!
-^MapTile[27, 22, World\Maps\Northrend\Northrend_27_22.adt]: Loaded!
-@M2[WORLD\AZEROTH\BURNINGSTEPPES\PASSIVEDOODADS\SMOKE\ASHTREESMOKE01.M2] don't contain geometry. Skins [1]
-@M2[WORLD\GENERIC\PVP\FIRES\LOWPOLYFIRE.M2] don't contain geometry. Skins [1]
-@M2[WORLD\GENERIC\PASSIVEDOODADS\PARTICLEEMITTERS\STEAM03.M2] don't contain geometry. Skins [1]
-@M2[WORLD\GENERIC\PASSIVEDOODADS\PARTICLEEMITTERS\STEAM02.M2] don't contain geometry. Skins [1]
-@CMapTile::~CMapTile: Tile [31, 21] unloaded.
-!File 'TILESET\Terrain Cube Maps\TCB_SkyBlue_A_s.blp' not exists.
-!File 'TILESET\Terrain Cube Maps\TCB_SkyBlue_A_s.blp' not exists.
-^MapTile[26, 23, World\Maps\Northrend\Northrend_26_23.adt]: Loaded!
-^MapTile[26, 22, World\Maps\Northrend\Northrend_26_22.adt]: Loaded!
-@CMapTile::~CMapTile: Tile [31, 22] unloaded.
-^MapTile[26, 21, World\Maps\Northrend\Northrend_26_21.adt]: Loaded!
-@CMapTile::~CMapTile: Tile [30, 23] unloaded.
-@CMapTile::~CMapTile: Tile [29, 24] unloaded.
-@CMapTile::~CMapTile: Tile [30, 22] unloaded.
-!File 'TILESET\Terrain Cube Maps\TCB_CrystalSong_A_s.blp' not exists.
-^MapTile[26, 20, World\Maps\Northrend\Northrend_26_20.adt]: Loaded!
-^MapTile[27, 20, World\Maps\Northrend\Northrend_27_20.adt]: Loaded!
 ^MapTile[28, 20, World\Maps\Northrend\Northrend_28_20.adt]: Loaded!
-@CMapTile::~CMapTile: Tile [29, 23] unloaded.
-@CMapTile::~CMapTile: Tile [28, 23] unloaded.
-@CMapTile::~CMapTile: Tile [28, 24] unloaded.
-!File 'TILESET\Terrain Cube Maps\TCB_SkyBlue_A_s.blp' not exists.
-@CMapTile::~CMapTile: Tile [30, 21] unloaded.
-^MapTile[25, 20, World\Maps\Northrend\Northrend_25_20.adt]: Loaded!
-^MapTile[25, 22, World\Maps\Northrend\Northrend_25_22.adt]: Loaded!
-^MapTile[25, 21, World\Maps\Northrend\Northrend_25_21.adt]: Loaded!
-^MapTile[27, 19, World\Maps\Northrend\Northrend_27_19.adt]: Loaded!
-@CMapTile::~CMapTile: Tile [29, 22] unloaded.
-^MapTile[26, 19, World\Maps\Northrend\Northrend_26_19.adt]: Loaded!
-@CMapTile::~CMapTile: Tile [28, 22] unloaded.
-^MapTile[25, 19, World\Maps\Northrend\Northrend_25_19.adt]: Loaded!
-@CMapTile::~CMapTile: Tile [29, 21] unloaded.
-@CMapTile::~CMapTile: Tile [26, 23] unloaded.
-@CMapTile::~CMapTile: Tile [27, 23] unloaded.
-@CMapTile::~CMapTile: Tile [27, 22] unloaded.
-^MapTile[24, 20, World\Maps\Northrend\Northrend_24_20.adt]: Loaded!
-^MapTile[24, 19, World\Maps\Northrend\Northrend_24_19.adt]: Loaded!
-^MapTile[24, 21, World\Maps\Northrend\Northrend_24_21.adt]: Loaded!
-@CMapTile::~CMapTile: Tile [28, 21] unloaded.
-@CMapTile::~CMapTile: Tile [26, 22] unloaded.
-@CMapTile::~CMapTile: Tile [27, 21] unloaded.
-@CMapTile::~CMapTile: Tile [28, 20] unloaded.
-^MapTile[23, 19, World\Maps\Northrend\Northrend_23_19.adt]: Loaded!
-@CMapTile::~CMapTile: Tile [27, 20] unloaded.
-^MapTile[23, 20, World\Maps\Northrend\Northrend_23_20.adt]: Loaded!
-@CMapTile::~CMapTile: Tile [25, 22] unloaded.
-^MapTile[23, 18, World\Maps\Northrend\Northrend_23_18.adt]: Loaded!
-^MapTile[23, 21, World\Maps\Northrend\Northrend_23_21.adt]: Loaded!
-^MapTile[24, 18, World\Maps\Northrend\Northrend_24_18.adt]: Loaded!
-^MapTile[25, 18, World\Maps\Northrend\Northrend_25_18.adt]: Loaded!
-@CMapTile::~CMapTile: Tile [26, 21] unloaded.
-@CMapTile::~CMapTile: Tile [27, 19] unloaded.
-@M2[WORLD\GENERIC\PASSIVEDOODADS\PARTICLEEMITTERS\BLACKSMITH_SMOKE.M2] don't contain geometry. Skins [1]
-@CMapTile::~CMapTile: Tile [25, 21] unloaded.
-^MapTile[22, 18, World\Maps\Northrend\Northrend_22_18.adt]: Loaded!
-^MapTile[22, 19, World\Maps\Northrend\Northrend_22_19.adt]: Loaded!
-^MapTile[22, 20, World\Maps\Northrend\Northrend_22_20.adt]: Loaded!
-@CMapTile::~CMapTile: Tile [26, 20] unloaded.
-@CMapTile::~CMapTile: Tile [26, 19] unloaded.
-@CMapTile::~CMapTile: Tile [24, 21] unloaded.
-^MapTile[24, 17, World\Maps\Northrend\Northrend_24_17.adt]: Loaded!
-^MapTile[23, 17, World\Maps\Northrend\Northrend_23_17.adt]: Loaded!
-^MapTile[22, 17, World\Maps\Northrend\Northrend_22_17.adt]: Loaded!
-@CMapTile::~CMapTile: Tile [25, 20] unloaded.
-@CMapTile::~CMapTile: Tile [23, 21] unloaded.
-^MapTile[21, 18, World\Maps\Northrend\Northrend_21_18.adt]: Loaded!
-^MapTile[21, 17, World\Maps\Northrend\Northrend_21_17.adt]: Loaded!
-@CMapTile::~CMapTile: Tile [24, 20] unloaded.
-^MapTile[21, 19, World\Maps\Northrend\Northrend_21_19.adt]: Loaded!
-@CMapTile::~CMapTile: Tile [25, 19] unloaded.
-^MapTile[21, 16, World\Maps\Northrend\Northrend_21_16.adt]: Loaded!
-@CMapTile::~CMapTile: Tile [23, 20] unloaded.
-^MapTile[22, 16, World\Maps\Northrend\Northrend_22_16.adt]: Loaded!
-^MapTile[23, 16, World\Maps\Northrend\Northrend_23_16.adt]: Loaded!
-@CMapTile::~CMapTile: Tile [25, 18] unloaded.
-@CMapTile::~CMapTile: Tile [21, 19] unloaded.
-@CMapTile::~CMapTile: Tile [24, 18] unloaded.
-^MapTile[22, 15, World\Maps\Northrend\Northrend_22_15.adt]: Loaded!
-^MapTile[21, 15, World\Maps\Northrend\Northrend_21_15.adt]: Loaded!
-@CMapTile::~CMapTile: Tile [24, 19] unloaded.
-^MapTile[23, 15, World\Maps\Northrend\Northrend_23_15.adt]: Loaded!
-@CMapTile::~CMapTile: Tile [23, 19] unloaded.
-^MapTile[21, 14, World\Maps\Northrend\Northrend_21_14.adt]: Loaded!
-^MapTile[22, 14, World\Maps\Northrend\Northrend_22_14.adt]: Loaded!
-^MapTile[23, 14, World\Maps\Northrend\Northrend_23_14.adt]: Loaded!
-@CMapTile::~CMapTile: Tile [21, 18] unloaded.
-@CMapTile::~CMapTile: Tile [22, 20] unloaded.
-@CMapTile::~CMapTile: Tile [23, 18] unloaded.
-^MapTile[20, 15, World\Maps\Northrend\Northrend_20_15.adt]: Loaded!
-^MapTile[20, 14, World\Maps\Northrend\Northrend_20_14.adt]: Loaded!
-^MapTile[20, 16, World\Maps\Northrend\Northrend_20_16.adt]: Loaded!
-@CMapTile::~CMapTile: Tile [24, 17] unloaded.
-@CMapTile::~CMapTile: Tile [22, 19] unloaded.
-@CMapTile::~CMapTile: Tile [23, 17] unloaded.
-@CMapTile::~CMapTile: Tile [22, 18] unloaded.
-^MapTile[19, 15, World\Maps\Northrend\Northrend_19_15.adt]: Loaded!
-^MapTile[19, 14, World\Maps\Northrend\Northrend_19_14.adt]: Loaded!
-^MapTile[19, 16, World\Maps\Northrend\Northrend_19_16.adt]: Loaded!
-@CMapTile::~CMapTile: Tile [23, 14] unloaded.
-@CMapTile::~CMapTile: Tile [22, 14] unloaded.
-@CMapTile::~CMapTile: Tile [23, 15] unloaded.
-^MapTile[19, 17, World\Maps\Northrend\Northrend_19_17.adt]: Loaded!
-^MapTile[20, 17, World\Maps\Northrend\Northrend_20_17.adt]: Loaded!
-@CMapTile::~CMapTile: Tile [19, 17] unloaded.
-@CMapTile::~CMapTile: Tile [19, 14] unloaded.
-^MapTile[23, 15, World\Maps\Northrend\Northrend_23_15.adt]: Loaded!
-@CMapTile::~CMapTile: Tile [20, 14] unloaded.
-@CMapTile::~CMapTile: Tile [19, 15] unloaded.
-@CMapTile::~CMapTile: Tile [19, 16] unloaded.
-^MapTile[23, 17, World\Maps\Northrend\Northrend_23_17.adt]: Loaded!
-^MapTile[22, 18, World\Maps\Northrend\Northrend_22_18.adt]: Loaded!
-^MapTile[21, 18, World\Maps\Northrend\Northrend_21_18.adt]: Loaded!
-^MapTile[23, 18, World\Maps\Northrend\Northrend_23_18.adt]: Loaded!
-@CMapTile::~CMapTile: Tile [20, 15] unloaded.
-@CMapTile::~CMapTile: Tile [21, 14] unloaded.
-@CMapTile::~CMapTile: Tile [23, 15] unloaded.
-@M2[WORLD\GENERIC\PASSIVEDOODADS\PARTICLEEMITTERS\BLACKSMITH_SMOKE.M2] don't contain geometry. Skins [1]
-^MapTile[23, 19, World\Maps\Northrend\Northrend_23_19.adt]: Loaded!
-^MapTile[22, 19, World\Maps\Northrend\Northrend_22_19.adt]: Loaded!
-^MapTile[21, 19, World\Maps\Northrend\Northrend_21_19.adt]: Loaded!
-@CMapTile::~CMapTile: Tile [20, 16] unloaded.
-@CMapTile::~CMapTile: Tile [21, 15] unloaded.
-@CMapTile::~CMapTile: Tile [21, 19] unloaded.
-^MapTile[24, 17, World\Maps\Northrend\Northrend_24_17.adt]: Loaded!
-^MapTile[24, 16, World\Maps\Northrend\Northrend_24_16.adt]: Loaded!
-^MapTile[24, 18, World\Maps\Northrend\Northrend_24_18.adt]: Loaded!
-@CMapTile::~CMapTile: Tile [22, 15] unloaded.
-@CMapTile::~CMapTile: Tile [21, 18] unloaded.
-@CMapTile::~CMapTile: Tile [22, 19] unloaded.
-^MapTile[25, 16, World\Maps\Northrend\Northrend_25_16.adt]: Loaded!
-^MapTile[25, 17, World\Maps\Northrend\Northrend_25_17.adt]: Loaded!
-^MapTile[25, 18, World\Maps\Northrend\Northrend_25_18.adt]: Loaded!
-@CMapTile::~CMapTile: Tile [20, 17] unloaded.
-@CMapTile::~CMapTile: Tile [23, 19] unloaded.
-@CMapTile::~CMapTile: Tile [21, 17] unloaded.
-^MapTile[23, 15, World\Maps\Northrend\Northrend_23_15.adt]: Loaded!
-^MapTile[25, 15, World\Maps\Northrend\Northrend_25_15.adt]: Loaded!
-@CMapTile::~CMapTile: Tile [22, 18] unloaded.
-^MapTile[24, 15, World\Maps\Northrend\Northrend_24_15.adt]: Loaded!
-@CMapTile::~CMapTile: Tile [23, 18] unloaded.
-@CMapTile::~CMapTile: Tile [22, 17] unloaded.
-^MapTile[26, 15, World\Maps\Northrend\Northrend_26_15.adt]: Loaded!
-^MapTile[26, 16, World\Maps\Northrend\Northrend_26_16.adt]: Loaded!
-^MapTile[26, 17, World\Maps\Northrend\Northrend_26_17.adt]: Loaded!
-@CMapTile::~CMapTile: Tile [22, 16] unloaded.
-@CMapTile::~CMapTile: Tile [23, 17] unloaded.
-^MapTile[24, 14, World\Maps\Northrend\Northrend_24_14.adt]: Loaded!
-@CMapTile::~CMapTile: Tile [21, 16] unloaded.
-^MapTile[26, 14, World\Maps\Northrend\Northrend_26_14.adt]: Loaded!
-^MapTile[25, 14, World\Maps\Northrend\Northrend_25_14.adt]: Loaded!
-@CMapTile::~CMapTile: Tile [24, 17] unloaded.
-@CMapTile::~CMapTile: Tile [24, 18] unloaded.
-^MapTile[27, 15, World\Maps\Northrend\Northrend_27_15.adt]: Loaded!
-@CMapTile::~CMapTile: Tile [25, 18] unloaded.
-^MapTile[27, 16, World\Maps\Northrend\Northrend_27_16.adt]: Loaded!
-^MapTile[27, 14, World\Maps\Northrend\Northrend_27_14.adt]: Loaded!
-@M2[WORLD\LORDAERON\STRATHOLME\PASSIVEDOODADS\FX\STRATHOLMEFIRESMOKEEMBERM.M2] don't contain geometry. Skins [1]
-@CMapTile::~CMapTile: Tile [23, 15] unloaded.
-^MapTile[27, 17, World\Maps\Northrend\Northrend_27_17.adt]: Loaded!
-@CMapTile::~CMapTile: Tile [24, 14] unloaded.
-@CMapTile::~CMapTile: Tile [24, 15] unloaded.
-@CMapTile::~CMapTile: Tile [25, 14] unloaded.
-^MapTile[25, 18, World\Maps\Northrend\Northrend_25_18.adt]: Loaded!
-^MapTile[27, 18, World\Maps\Northrend\Northrend_27_18.adt]: Loaded!
-@CMapTile::~CMapTile: Tile [23, 16] unloaded.
-@CMapTile::~CMapTile: Tile [26, 14] unloaded.
-@CMapTile::~CMapTile: Tile [24, 16] unloaded.
-^MapTile[28, 16, World\Maps\Northrend\Northrend_28_16.adt]: Loaded!
-^MapTile[28, 17, World\Maps\Northrend\Northrend_28_17.adt]: Loaded!
-^MapTile[26, 18, World\Maps\Northrend\Northrend_26_18.adt]: Loaded!
-^MapTile[28, 18, World\Maps\Northrend\Northrend_28_18.adt]: Loaded!
-@M2[WORLD\GENERIC\PASSIVEDOODADS\PARTICLEEMITTERS\BLACKSMITH_SMOKE.M2] don't contain geometry. Skins [1]
-@CMapTile::~CMapTile: Tile [25, 15] unloaded.
-@CMapTile::~CMapTile: Tile [25, 16] unloaded.
-@CMapTile::~CMapTile: Tile [25, 18] unloaded.
-!File 'TILESET\Terrain Cube Maps\TCB_CrystalSong_A_s.blp' not exists.
-^MapTile[29, 17, World\Maps\Northrend\Northrend_29_17.adt]: Loaded!
-^MapTile[29, 16, World\Maps\Northrend\Northrend_29_16.adt]: Loaded!
-^MapTile[29, 18, World\Maps\Northrend\Northrend_29_18.adt]: Loaded!
-@CMapTile::~CMapTile: Tile [27, 14] unloaded.
-@CMapTile::~CMapTile: Tile [26, 15] unloaded.
-@CMapTile::~CMapTile: Tile [26, 18] unloaded.
-!File 'TILESET\Terrain Cube Maps\TCB_CrystalSong_A_s.blp' not exists.
-!File 'TILESET\Terrain Cube Maps\TCB_CrystalSong_A_s.blp' not exists.
-!File 'TILESET\Generic\tgatest_s.blp' not exists.
-!File 'Tileset\Generic\WaterBlue_s.blp' not exists.
-^MapTile[30, 17, World\Maps\Northrend\Northrend_30_17.adt]: Loaded!
-^MapTile[30, 18, World\Maps\Northrend\Northrend_30_18.adt]: Loaded!
-@M2[WORLD\GENERIC\TAUREN\PASSIVE DOODADS\SMOKE\TAURENCOLOREDSMOKE01.M2] don't contain geometry. Skins [1]
-^MapTile[30, 16, World\Maps\Northrend\Northrend_30_16.adt]: Loaded!
-@CMapTile::~CMapTile: Tile [26, 16] unloaded.
-@CMapTile::~CMapTile: Tile [25, 17] unloaded.
-@CMapTile::~CMapTile: Tile [27, 15] unloaded.
-^MapTile[31, 16, World\Maps\Northrend\Northrend_31_16.adt]: Loaded!
-^MapTile[31, 17, World\Maps\Northrend\Northrend_31_17.adt]: Loaded!
-^MapTile[31, 18, World\Maps\Northrend\Northrend_31_18.adt]: Loaded!
-@CMapTile::~CMapTile: Tile [27, 18] unloaded.
-@CMapTile::~CMapTile: Tile [26, 17] unloaded.
-@CMapTile::~CMapTile: Tile [28, 18] unloaded.
-@CMapTile::~CMapTile: Tile [28, 17] unloaded.
-@CMapTile::~CMapTile: Tile [27, 16] unloaded.
-@CMapTile::~CMapTile: Tile [27, 17] unloaded.
-^MapTile[31, 15, World\Maps\Northrend\Northrend_31_15.adt]: Loaded!
-^MapTile[29, 15, World\Maps\Northrend\Northrend_29_15.adt]: Loaded!
-^MapTile[32, 15, World\Maps\Northrend\Northrend_32_15.adt]: Loaded!
-^MapTile[32, 16, World\Maps\Northrend\Northrend_32_16.adt]: Loaded!
-^MapTile[30, 15, World\Maps\Northrend\Northrend_30_15.adt]: Loaded!
-^MapTile[32, 17, World\Maps\Northrend\Northrend_32_17.adt]: Loaded!
-@CMapTile::~CMapTile: Tile [29, 18] unloaded.
-@CMapTile::~CMapTile: Tile [30, 18] unloaded.
-@CMapTile::~CMapTile: Tile [29, 15] unloaded.
-!File 'TILESET\Generic\tgatest_s.blp' not exists.
-!File 'TILESET\Generic\tgatest_s.blp' not exists.
-^MapTile[33, 16, World\Maps\Northrend\Northrend_33_16.adt]: Loaded!
-^MapTile[33, 15, World\Maps\Northrend\Northrend_33_15.adt]: Loaded!
-^MapTile[33, 17, World\Maps\Northrend\Northrend_33_17.adt]: Loaded!
-@M2[WORLD\LORDAERON\STRATHOLME\PASSIVEDOODADS\FX\STRATHOLMESMOKEEMITTER.M2] don't contain geometry. Skins [1]
-@CMapTile::~CMapTile: Tile [29, 17] unloaded.
-@CMapTile::~CMapTile: Tile [28, 16] unloaded.
-^MapTile[33, 14, World\Maps\Northrend\Northrend_33_14.adt]: Loaded!
-^MapTile[32, 14, World\Maps\Northrend\Northrend_32_14.adt]: Loaded!
-@CMapTile::~CMapTile: Tile [31, 18] unloaded.
-^MapTile[31, 14, World\Maps\Northrend\Northrend_31_14.adt]: Loaded!
-@CMapTile::~CMapTile: Tile [29, 16] unloaded.
-@CMapTile::~CMapTile: Tile [30, 17] unloaded.
-@CMapTile::~CMapTile: Tile [31, 17] unloaded.
-!File 'TILESET\Generic\tgatest_s.blp' not exists.
-!File 'TILESET\Generic\tgatest_s.blp' not exists.
-!File 'TILESET\Generic\tgatest_s.blp' not exists.
-^MapTile[34, 14, World\Maps\Northrend\Northrend_34_14.adt]: Loaded!
-^MapTile[34, 15, World\Maps\Northrend\Northrend_34_15.adt]: Loaded!
-^MapTile[34, 16, World\Maps\Northrend\Northrend_34_16.adt]: Loaded!
-@CMapTile::~CMapTile: Tile [30, 16] unloaded.
-^MapTile[35, 14, World\Maps\Northrend\Northrend_35_14.adt]: Loaded!
-@CMapTile::~CMapTile: Tile [31, 16] unloaded.
-^MapTile[35, 15, World\Maps\Northrend\Northrend_35_15.adt]: Loaded!
-^MapTile[35, 16, World\Maps\Northrend\Northrend_35_16.adt]: Loaded!
-@CMapTile::~CMapTile: Tile [31, 14] unloaded.
-@CMapTile::~CMapTile: Tile [32, 17] unloaded.
-^MapTile[33, 13, World\Maps\Northrend\Northrend_33_13.adt]: Loaded!
-@CMapTile::~CMapTile: Tile [30, 15] unloaded.
-^MapTile[34, 13, World\Maps\Northrend\Northrend_34_13.adt]: Loaded!
-^MapTile[35, 13, World\Maps\Northrend\Northrend_35_13.adt]: Loaded!
-@CMapTile::~CMapTile: Tile [33, 17] unloaded.
-@CMapTile::~CMapTile: Tile [32, 16] unloaded.
-@CMapTile::~CMapTile: Tile [31, 15] unloaded.
-!File 'TILESET\Generic\tgatest_s.blp' not exists.
-^MapTile[36, 15, World\Maps\Northrend\Northrend_36_15.adt]: Loaded!
-@CMapTile::~CMapTile: Tile [33, 13] unloaded.
-^MapTile[36, 14, World\Maps\Northrend\Northrend_36_14.adt]: Loaded!
-^MapTile[36, 16, World\Maps\Northrend\Northrend_36_16.adt]: Loaded!
-@CMapTile::~CMapTile: Tile [35, 13] unloaded.
-^MapTile[32, 16, World\Maps\Northrend\Northrend_32_16.adt]: Loaded!
-@CMapTile::~CMapTile: Tile [32, 16] unloaded.
-^MapTile[33, 13, World\Maps\Northrend\Northrend_33_13.adt]: Loaded!
-@CMapTile::~CMapTile: Tile [36, 16] unloaded.
-^MapTile[35, 13, World\Maps\Northrend\Northrend_35_13.adt]: Loaded!
-@CMapTile::~CMapTile: Tile [33, 16] unloaded.
-@CMapTile::~CMapTile: Tile [35, 16] unloaded.
-@CMapTile::~CMapTile: Tile [36, 15] unloaded.
-^MapTile[35, 12, World\Maps\Northrend\Northrend_35_12.adt]: Loaded!
-^MapTile[34, 12, World\Maps\Northrend\Northrend_34_12.adt]: Loaded!
-^MapTile[33, 12, World\Maps\Northrend\Northrend_33_12.adt]: Loaded!
-@CMapTile::~CMapTile: Tile [32, 15] unloaded.
-@CMapTile::~CMapTile: Tile [34, 16] unloaded.
-^MapTile[36, 12, World\Maps\Northrend\Northrend_36_12.adt]: Loaded!
-^MapTile[36, 13, World\Maps\Northrend\Northrend_36_13.adt]: Loaded!
-@CMapTile::~CMapTile: Tile [33, 12] unloaded.
-^MapTile[36, 15, World\Maps\Northrend\Northrend_36_15.adt]: Loaded!
-@CMapTile::~CMapTile: Tile [33, 13] unloaded.
-@CMapTile::~CMapTile: Tile [34, 12] unloaded.
-^MapTile[37, 15, World\Maps\Northrend\Northrend_37_15.adt]: Loaded!
-@CMapTile::~CMapTile: Tile [32, 14] unloaded.
-^MapTile[37, 13, World\Maps\Northrend\Northrend_37_13.adt]: Loaded!
-^MapTile[37, 14, World\Maps\Northrend\Northrend_37_14.adt]: Loaded!
-@CMapTile::~CMapTile: Tile [33, 15] unloaded.
-@CMapTile::~CMapTile: Tile [35, 12] unloaded.
-@CMapTile::~CMapTile: Tile [33, 14] unloaded.
-^MapTile[38, 13, World\Maps\Northrend\Northrend_38_13.adt]: Loaded!
-^MapTile[38, 14, World\Maps\Northrend\Northrend_38_14.adt]: Loaded!
-^MapTile[38, 15, World\Maps\Northrend\Northrend_38_15.adt]: Loaded!
-@CMapTile::~CMapTile: Tile [36, 12] unloaded.
-@CMapTile::~CMapTile: Tile [34, 13] unloaded.
-!File 'TILESET\Generic\tgatest_s.blp' not exists.
-@CMapTile::~CMapTile: Tile [35, 13] unloaded.
-^MapTile[38, 16, World\Maps\Northrend\Northrend_38_16.adt]: Loaded!
-^MapTile[37, 16, World\Maps\Northrend\Northrend_37_16.adt]: Loaded!
-^MapTile[36, 16, World\Maps\Northrend\Northrend_36_16.adt]: Loaded!
-@CMapTile::~CMapTile: Tile [36, 13] unloaded.
-@CMapTile::~CMapTile: Tile [38, 13] unloaded.
-@CMapTile::~CMapTile: Tile [34, 14] unloaded.
-!File 'TILESET\Generic\tgatest_s.blp' not exists.
-!File 'TILESET\Generic\tgatest_s.blp' not exists.
-!File 'TILESET\Terrain Cube Maps\TCB_CrystalSong_A_s.blp' not exists.
-!File 'TILESET\Terrain Cube Maps\TCB_CrystalSong_A_s.blp' not exists.
-^MapTile[36, 17, World\Maps\Northrend\Northrend_36_17.adt]: Loaded!
-^MapTile[38, 17, World\Maps\Northrend\Northrend_38_17.adt]: Loaded!
-^MapTile[37, 17, World\Maps\Northrend\Northrend_37_17.adt]: Loaded!
-@CMapTile::~CMapTile: Tile [35, 14] unloaded.
-@CMapTile::~CMapTile: Tile [34, 15] unloaded.
-!File 'TILESET\Generic\tgatest_s.blp' not exists.
-!File 'TILESET\Generic\tgatest_s.blp' not exists.
-@CMapTile::~CMapTile: Tile [37, 13] unloaded.
-^MapTile[37, 18, World\Maps\Northrend\Northrend_37_18.adt]: Loaded!
-^MapTile[38, 18, World\Maps\Northrend\Northrend_38_18.adt]: Loaded!
-^MapTile[36, 18, World\Maps\Northrend\Northrend_36_18.adt]: Loaded!
-@CMapTile::~CMapTile: Tile [35, 15] unloaded.
-@CMapTile::~CMapTile: Tile [36, 14] unloaded.
-@CMapTile::~CMapTile: Tile [38, 14] unloaded.
-^MapTile[37, 19, World\Maps\Northrend\Northrend_37_19.adt]: Loaded!
-^MapTile[36, 19, World\Maps\Northrend\Northrend_36_19.adt]: Loaded!
-^MapTile[38, 19, World\Maps\Northrend\Northrend_38_19.adt]: Loaded!
-@M2[WORLD\AZEROTH\BURNINGSTEPPES\PASSIVEDOODADS\FALLINGEMBERS\FALLINGEMBERS.M2] don't contain geometry. Skins [1]
-@CMapTile::~CMapTile: Tile [37, 14] unloaded.
-@CMapTile::~CMapTile: Tile [38, 15] unloaded.
-!File 'TILESET\Generic\tgatest_s.blp' not exists.
-@CMapTile::~CMapTile: Tile [38, 16] unloaded.
-^MapTile[35, 17, World\Maps\Northrend\Northrend_35_17.adt]: Loaded!
-^MapTile[35, 19, World\Maps\Northrend\Northrend_35_19.adt]: Loaded!
-^MapTile[35, 18, World\Maps\Northrend\Northrend_35_18.adt]: Loaded!
-@CMapTile::~CMapTile: Tile [36, 15] unloaded.
-@CMapTile::~CMapTile: Tile [35, 17] unloaded.
-@CMapTile::~CMapTile: Tile [36, 16] unloaded.
-^MapTile[39, 18, World\Maps\Northrend\Northrend_39_18.adt]: Loaded!
-^MapTile[39, 17, World\Maps\Northrend\Northrend_39_17.adt]: Loaded!
-^MapTile[39, 19, World\Maps\Northrend\Northrend_39_19.adt]: Loaded!
-@CMapTile::~CMapTile: Tile [37, 15] unloaded.
-@CMapTile::~CMapTile: Tile [35, 18] unloaded.
-@CMapTile::~CMapTile: Tile [37, 16] unloaded.
-^MapTile[37, 20, World\Maps\Northrend\Northrend_37_20.adt]: Loaded!
-^MapTile[39, 20, World\Maps\Northrend\Northrend_39_20.adt]: Loaded!
-^MapTile[38, 20, World\Maps\Northrend\Northrend_38_20.adt]: Loaded!
-@CMapTile::~CMapTile: Tile [37, 17] unloaded.
-@CMapTile::~CMapTile: Tile [36, 17] unloaded.
-@CMapTile::~CMapTile: Tile [39, 17] unloaded.
-^MapTile[39, 21, World\Maps\Northrend\Northrend_39_21.adt]: Loaded!
-^MapTile[38, 21, World\Maps\Northrend\Northrend_38_21.adt]: Loaded!
-^MapTile[37, 21, World\Maps\Northrend\Northrend_37_21.adt]: Loaded!
-@M2[WORLD\AZEROTH\BURNINGSTEPPES\PASSIVEDOODADS\SMOKE\ASHTREESMOKE01.M2] don't contain geometry. Skins [1]
-@CMapTile::~CMapTile: Tile [35, 19] unloaded.
-@CMapTile::~CMapTile: Tile [36, 18] unloaded.
-^MapTile[40, 20, World\Maps\Northrend\Northrend_40_20.adt]: Loaded!
-@CMapTile::~CMapTile: Tile [36, 19] unloaded.
-^MapTile[40, 21, World\Maps\Northrend\Northrend_40_21.adt]: Loaded!
-^MapTile[40, 19, World\Maps\Northrend\Northrend_40_19.adt]: Loaded!
-@CMapTile::~CMapTile: Tile [38, 17] unloaded.
-@CMapTile::~CMapTile: Tile [37, 18] unloaded.
-@CMapTile::~CMapTile: Tile [38, 18] unloaded.
-^MapTile[39, 22, World\Maps\Northrend\Northrend_39_22.adt]: Loaded!
-@M2[WORLD\LORDAERON\STRATHOLME\PASSIVEDOODADS\FX\STRATHOLMEFIRESMOKEEMBERM.M2] don't contain geometry. Skins [1]
-^MapTile[38, 22, World\Maps\Northrend\Northrend_38_22.adt]: Loaded!
-^MapTile[40, 22, World\Maps\Northrend\Northrend_40_22.adt]: Loaded!
-@M2[WORLD\GENERIC\PASSIVEDOODADS\PARTICLEEMITTERS\BLACKSMITH_SMOKE.M2] don't contain geometry. Skins [1]
-@M2[WORLD\LORDAERON\STRATHOLME\PASSIVEDOODADS\FX\STRATHOLMESMOKEEMITTER.M2] don't contain geometry. Skins [1]
-@CMapTile::~CMapTile: Tile [37, 19] unloaded.
-@CMapTile::~CMapTile: Tile [39, 18] unloaded.
-@CMapTile::~CMapTile: Tile [38, 19] unloaded.
-^MapTile[41, 22, World\Maps\Northrend\Northrend_41_22.adt]: Loaded!
-^MapTile[41, 20, World\Maps\Northrend\Northrend_41_20.adt]: Loaded!
-^MapTile[41, 21, World\Maps\Northrend\Northrend_41_21.adt]: Loaded!
-@CMapTile::~CMapTile: Tile [38, 20] unloaded.
-@CMapTile::~CMapTile: Tile [39, 19] unloaded.
-@CMapTile::~CMapTile: Tile [37, 20] unloaded.
-@M2[WORLD\EXPANSION01\DOODADS\SILVERMOON\FLOATINGDANDELIONS\FLOATINGDANDELIONS01.M2] don't contain geometry. Skins [1]
-^MapTile[41, 23, World\Maps\Northrend\Northrend_41_23.adt]: Loaded!
-^MapTile[40, 23, World\Maps\Northrend\Northrend_40_23.adt]: Loaded!
-^MapTile[39, 23, World\Maps\Northrend\Northrend_39_23.adt]: Loaded!
-@CMapTile::~CMapTile: Tile [37, 21] unloaded.
-@CMapTile::~CMapTile: Tile [38, 21] unloaded.
-@CMapTile::~CMapTile: Tile [41, 20] unloaded.
-^MapTile[41, 24, World\Maps\Northrend\Northrend_41_24.adt]: Loaded!
-@M2[WORLD\GENERIC\PASSIVEDOODADS\PARTICLEEMITTERS\BLACKSMITH_SMOKE.M2] don't contain geometry. Skins [1]
-^MapTile[39, 24, World\Maps\Northrend\Northrend_39_24.adt]: Loaded!
-^MapTile[40, 24, World\Maps\Northrend\Northrend_40_24.adt]: Loaded!
-@CMapTile::~CMapTile: Tile [39, 20] unloaded.
-@CMapTile::~CMapTile: Tile [40, 19] unloaded.
-@CMapTile::~CMapTile: Tile [41, 21] unloaded.
-@CMapTile::~CMapTile: Tile [39, 21] unloaded.
-@CMapTile::~CMapTile: Tile [38, 22] unloaded.
-^MapTile[41, 25, World\Maps\Northrend\Northrend_41_25.adt]: Loaded!
-^MapTile[39, 25, World\Maps\Northrend\Northrend_39_25.adt]: Loaded!
-@CMapTile::~CMapTile: Tile [40, 20] unloaded.
-^MapTile[40, 25, World\Maps\Northrend\Northrend_40_25.adt]: Loaded!
-^MapTile[42, 25, World\Maps\Northrend\Northrend_42_25.adt]: Loaded!
-^MapTile[42, 23, World\Maps\Northrend\Northrend_42_23.adt]: Loaded!
-^MapTile[42, 24, World\Maps\Northrend\Northrend_42_24.adt]: Loaded!
-@CMapTile::~CMapTile: Tile [40, 21] unloaded.
-@CMapTile::~CMapTile: Tile [39, 22] unloaded.
-^MapTile[41, 26, World\Maps\Northrend\Northrend_41_26.adt]: Loaded!
-@CMapTile::~CMapTile: Tile [40, 22] unloaded.
-^MapTile[42, 26, World\Maps\Northrend\Northrend_42_26.adt]: Loaded!
-^MapTile[40, 26, World\Maps\Northrend\Northrend_40_26.adt]: Loaded!
-@CMapTile::~CMapTile: Tile [42, 23] unloaded.
-^MapTile[39, 26, World\Maps\Northrend\Northrend_39_26.adt]: Loaded!
-@CMapTile::~CMapTile: Tile [41, 22] unloaded.
-@CMapTile::~CMapTile: Tile [41, 23] unloaded.
-@CMapTile::~CMapTile: Tile [39, 23] unloaded.
-^MapTile[39, 27, World\Maps\Northrend\Northrend_39_27.adt]: Loaded!
-^MapTile[40, 27, World\Maps\Northrend\Northrend_40_27.adt]: Loaded!
-^MapTile[41, 27, World\Maps\Northrend\Northrend_41_27.adt]: Loaded!
-@CMapTile::~CMapTile: Tile [42, 24] unloaded.
-@CMapTile::~CMapTile: Tile [41, 24] unloaded.
-@CMapTile::~CMapTile: Tile [40, 23] unloaded.
-^MapTile[40, 28, World\Maps\Northrend\Northrend_40_28.adt]: Loaded!
-^MapTile[39, 28, World\Maps\Northrend\Northrend_39_28.adt]: Loaded!
-^MapTile[41, 28, World\Maps\Northrend\Northrend_41_28.adt]: Loaded!
-@CMapTile::~CMapTile: Tile [39, 24] unloaded.
-@CMapTile::~CMapTile: Tile [42, 25] unloaded.
-@CMapTile::~CMapTile: Tile [40, 24] unloaded.
-@M2[WORLD\LORDAERON\STRATHOLME\PASSIVEDOODADS\FX\STRATHOLMEFLOATINGEMBERS.M2] don't contain geometry. Skins [1]
-@M2[WORLD\LORDAERON\STRATHOLME\PASSIVEDOODADS\FX\STRATHOLMEFIRESMOKEEMBERM.M2] don't contain geometry. Skins [1]
-@CMapTile::~CMapTile: Tile [39, 25] unloaded.
-^MapTile[39, 29, World\Maps\Northrend\Northrend_39_29.adt]: Loaded!
-@CMapTile::~CMapTile: Tile [40, 25] unloaded.
-@CMapTile::~CMapTile: Tile [39, 26] unloaded.
-^MapTile[42, 27, World\Maps\Northrend\Northrend_42_27.adt]: Loaded!
-^MapTile[41, 29, World\Maps\Northrend\Northrend_41_29.adt]: Loaded!
-^MapTile[40, 29, World\Maps\Northrend\Northrend_40_29.adt]: Loaded!
-^MapTile[42, 28, World\Maps\Northrend\Northrend_42_28.adt]: Loaded!
-^MapTile[42, 29, World\Maps\Northrend\Northrend_42_29.adt]: Loaded!
-@M2[WORLD\EXPANSION02\DOODADS\HOWLINGFJORD\FIREFX\BURNTSTONETREEFIREFLIES_VFX.M2] don't contain geometry. Skins [1]
-@M2[WORLD\AZEROTH\BURNINGSTEPPES\PASSIVEDOODADS\SMOKE\ASHTREESMOKE01.M2] don't contain geometry. Skins [1]
-@M2[WORLD\GENERIC\PVP\FIRES\LOWPOLYFIRE.M2] don't contain geometry. Skins [1]
-@CMapTile::~CMapTile: Tile [41, 25] unloaded.
-@CMapTile::~CMapTile: Tile [42, 26] unloaded.
-@CMapTile::~CMapTile: Tile [40, 26] unloaded.
-^MapTile[42, 30, World\Maps\Northrend\Northrend_42_30.adt]: Loaded!
-^MapTile[40, 30, World\Maps\Northrend\Northrend_40_30.adt]: Loaded!
-^MapTile[41, 30, World\Maps\Northrend\Northrend_41_30.adt]: Loaded!
-@CMapTile::~CMapTile: Tile [42, 27] unloaded.
-@CMapTile::~CMapTile: Tile [40, 27] unloaded.
-@CMapTile::~CMapTile: Tile [39, 27] unloaded.
-^MapTile[41, 31, World\Maps\Northrend\Northrend_41_31.adt]: Loaded!
-^MapTile[42, 31, World\Maps\Northrend\Northrend_42_31.adt]: Loaded!
-^MapTile[40, 31, World\Maps\Northrend\Northrend_40_31.adt]: Loaded!
-@M2[WORLD\LORDAERON\STRATHOLME\PASSIVEDOODADS\FX\STRATHOLMEFIRESMOKEEMBERM.M2] don't contain geometry. Skins [1]
-@CMapTile::~CMapTile: Tile [39, 28] unloaded.
-@CMapTile::~CMapTile: Tile [41, 26] unloaded.
-@CMapTile::~CMapTile: Tile [40, 28] unloaded.
-^MapTile[43, 30, World\Maps\Northrend\Northrend_43_30.adt]: Loaded!
-^MapTile[43, 31, World\Maps\Northrend\Northrend_43_31.adt]: Loaded!
-^MapTile[43, 29, World\Maps\Northrend\Northrend_43_29.adt]: Loaded!
-@CMapTile::~CMapTile: Tile [42, 28] unloaded.
-@CMapTile::~CMapTile: Tile [41, 27] unloaded.
-@CMapTile::~CMapTile: Tile [39, 29] unloaded.
-^MapTile[41, 32, World\Maps\Northrend\Northrend_41_32.adt]: Loaded!
-^MapTile[40, 32, World\Maps\Northrend\Northrend_40_32.adt]: Loaded!
-^MapTile[42, 32, World\Maps\Northrend\Northrend_42_32.adt]: Loaded!
-@CMapTile::~CMapTile: Tile [43, 29] unloaded.
-@CMapTile::~CMapTile: Tile [41, 28] unloaded.
-@CMapTile::~CMapTile: Tile [42, 29] unloaded.
-@CMapTile::~CMapTile: Tile [43, 30] unloaded.
-^MapTile[39, 31, World\Maps\Northrend\Northrend_39_31.adt]: Loaded!
-@CMapTile::~CMapTile: Tile [41, 29] unloaded.
-^MapTile[39, 32, World\Maps\Northrend\Northrend_39_32.adt]: Loaded!
-^MapTile[39, 33, World\Maps\Northrend\Northrend_39_33.adt]: Loaded!
-^MapTile[39, 30, World\Maps\Northrend\Northrend_39_30.adt]: Loaded!
-@CMapTile::~CMapTile: Tile [42, 30] unloaded.
-^MapTile[40, 33, World\Maps\Northrend\Northrend_40_33.adt]: Loaded!
-@M2[WORLD\LORDAERON\STRATHOLME\PASSIVEDOODADS\FX\STRATHOLMEFLOATINGEMBERS.M2] don't contain geometry. Skins [1]
-@M2[WORLD\LORDAERON\STRATHOLME\PASSIVEDOODADS\FX\STRATHOLMEFIRESMOKEEMBERM.M2] don't contain geometry. Skins [1]
-^MapTile[41, 33, World\Maps\Northrend\Northrend_41_33.adt]: Loaded!
-@CMapTile::~CMapTile: Tile [41, 33] unloaded.
-@CMapTile::~CMapTile: Tile [43, 31] unloaded.
-^MapTile[39, 29, World\Maps\Northrend\Northrend_39_29.adt]: Loaded!
-^MapTile[41, 29, World\Maps\Northrend\Northrend_41_29.adt]: Loaded!
-@CMapTile::~CMapTile: Tile [42, 32] unloaded.
-@CMapTile::~CMapTile: Tile [40, 33] unloaded.
-@CMapTile::~CMapTile: Tile [42, 31] unloaded.
-!File 'TILESET\Terrain Cube Maps\TCB_SkyBlue_A_s.blp' not exists.
-^MapTile[38, 31, World\Maps\Northrend\Northrend_38_31.adt]: Loaded!
-^MapTile[38, 30, World\Maps\Northrend\Northrend_38_30.adt]: Loaded!
-@M2[WORLD\GENERIC\HUMAN\PASSIVE DOODADS\WATERDROPS\DEADMINEWATERDROPS.M2] don't contain geometry. Skins [1]
-^MapTile[38, 29, World\Maps\Northrend\Northrend_38_29.adt]: Loaded!
-@CMapTile::~CMapTile: Tile [38, 31] unloaded.
-@CMapTile::~CMapTile: Tile [39, 32] unloaded.
-@CMapTile::~CMapTile: Tile [39, 33] unloaded.
-^MapTile[39, 28, World\Maps\Northrend\Northrend_39_28.adt]: Loaded!
-^MapTile[40, 28, World\Maps\Northrend\Northrend_40_28.adt]: Loaded!
-^MapTile[41, 28, World\Maps\Northrend\Northrend_41_28.adt]: Loaded!
-@M2[WORLD\EXPANSION01\DOODADS\SILVERMOON\FLOATINGDANDELIONS\FLOATINGDANDELIONS01.M2] don't contain geometry. Skins [1]
-@CMapTile::~CMapTile: Tile [38, 30] unloaded.
-@CMapTile::~CMapTile: Tile [40, 32] unloaded.
-@CMapTile::~CMapTile: Tile [39, 31] unloaded.
-^MapTile[42, 28, World\Maps\Northrend\Northrend_42_28.adt]: Loaded!
-@M2[WORLD\GENERIC\PVP\FIRES\LOWPOLYFIRE.M2] don't contain geometry. Skins [1]
-^MapTile[42, 30, World\Maps\Northrend\Northrend_42_30.adt]: Loaded!
-^MapTile[42, 29, World\Maps\Northrend\Northrend_42_29.adt]: Loaded!
-^MapTile[39, 31, World\Maps\Northrend\Northrend_39_31.adt]: Loaded!
-@CMapTile::~CMapTile: Tile [42, 28] unloaded.
-@CMapTile::~CMapTile: Tile [41, 32] unloaded.
-@CMapTile::~CMapTile: Tile [39, 31] unloaded.
-@CMapTile::~CMapTile: Tile [42, 30] unloaded.
-^MapTile[40, 27, World\Maps\Northrend\Northrend_40_27.adt]: Loaded!
-^MapTile[41, 27, World\Maps\Northrend\Northrend_41_27.adt]: Loaded!
-^MapTile[39, 27, World\Maps\Northrend\Northrend_39_27.adt]: Loaded!
-^MapTile[39, 26, World\Maps\Northrend\Northrend_39_26.adt]: Loaded!
-^MapTile[41, 26, World\Maps\Northrend\Northrend_41_26.adt]: Loaded!
-^MapTile[40, 26, World\Maps\Northrend\Northrend_40_26.adt]: Loaded!
-@CMapTile::~CMapTile: Tile [41, 30] unloaded.
-@CMapTile::~CMapTile: Tile [42, 29] unloaded.
-@CMapTile::~CMapTile: Tile [41, 31] unloaded.
-@CMapTile::~CMapTile: Tile [40, 31] unloaded.
-^MapTile[41, 25, World\Maps\Northrend\Northrend_41_25.adt]: Loaded!
-@CMapTile::~CMapTile: Tile [38, 29] unloaded.
-^MapTile[39, 25, World\Maps\Northrend\Northrend_39_25.adt]: Loaded!
-^MapTile[40, 25, World\Maps\Northrend\Northrend_40_25.adt]: Loaded!
-@CMapTile::~CMapTile: Tile [39, 30] unloaded.
-^MapTile[38, 26, World\Maps\Northrend\Northrend_38_26.adt]: Loaded!
-^MapTile[38, 25, World\Maps\Northrend\Northrend_38_25.adt]: Loaded!
-@CMapTile::~CMapTile: Tile [40, 30] unloaded.
-^MapTile[38, 27, World\Maps\Northrend\Northrend_38_27.adt]: Loaded!
-@CMapTile::~CMapTile: Tile [41, 29] unloaded.
-@M2[WORLD\EXPANSION02\DOODADS\GRIZZLYHILLS\TERMITES\TERMITEDUST.M2] don't contain geometry. Skins [1]
-@CMapTile::~CMapTile: Tile [41, 28] unloaded.
-@CMapTile::~CMapTile: Tile [40, 29] unloaded.
-@CMapTile::~CMapTile: Tile [39, 29] unloaded.
-@CMapTile::~CMapTile: Tile [38, 27] unloaded.
-@M2[WORLD\GENERIC\PASSIVEDOODADS\PARTICLEEMITTERS\BLACKSMITH_SMOKE.M2] don't contain geometry. Skins [1]
-^MapTile[39, 24, World\Maps\Northrend\Northrend_39_24.adt]: Loaded!
-^MapTile[40, 24, World\Maps\Northrend\Northrend_40_24.adt]: Loaded!
-^MapTile[41, 24, World\Maps\Northrend\Northrend_41_24.adt]: Loaded!
-@CMapTile::~CMapTile: Tile [39, 28] unloaded.
-@CMapTile::~CMapTile: Tile [38, 26] unloaded.
-^MapTile[42, 26, World\Maps\Northrend\Northrend_42_26.adt]: Loaded!
-^MapTile[42, 25, World\Maps\Northrend\Northrend_42_25.adt]: Loaded!
-@CMapTile::~CMapTile: Tile [40, 28] unloaded.
-^MapTile[42, 24, World\Maps\Northrend\Northrend_42_24.adt]: Loaded!
-@CMapTile::~CMapTile: Tile [38, 25] unloaded.
-@CMapTile::~CMapTile: Tile [39, 27] unloaded.
-@M2[WORLD\EXPANSION01\DOODADS\SILVERMOON\FLOATINGDANDELIONS\FLOATINGDANDELIONS01.M2] don't contain geometry. Skins [1]
-@CMapTile::~CMapTile: Tile [40, 27] unloaded.
-^MapTile[40, 23, World\Maps\Northrend\Northrend_40_23.adt]: Loaded!
-^MapTile[41, 23, World\Maps\Northrend\Northrend_41_23.adt]: Loaded!
-^MapTile[42, 23, World\Maps\Northrend\Northrend_42_23.adt]: Loaded!
-@CMapTile::~CMapTile: Tile [39, 26] unloaded.
-@CMapTile::~CMapTile: Tile [40, 26] unloaded.
-@CMapTile::~CMapTile: Tile [39, 25] unloaded.
-@CMapTile::~CMapTile: Tile [39, 24] unloaded.
-^MapTile[43, 24, World\Maps\Northrend\Northrend_43_24.adt]: Loaded!
-^MapTile[43, 23, World\Maps\Northrend\Northrend_43_23.adt]: Loaded!
-^MapTile[43, 25, World\Maps\Northrend\Northrend_43_25.adt]: Loaded!
-^MapTile[43, 26, World\Maps\Northrend\Northrend_43_26.adt]: Loaded!
-@CMapTile::~CMapTile: Tile [40, 23] unloaded.
-@CMapTile::~CMapTile: Tile [41, 23] unloaded.
-^MapTile[44, 24, World\Maps\Northrend\Northrend_44_24.adt]: Loaded!
-^MapTile[44, 25, World\Maps\Northrend\Northrend_44_25.adt]: Loaded!
-@CMapTile::~CMapTile: Tile [41, 27] unloaded.
-^MapTile[44, 26, World\Maps\Northrend\Northrend_44_26.adt]: Loaded!
-@CMapTile::~CMapTile: Tile [40, 25] unloaded.
-@CMapTile::~CMapTile: Tile [40, 24] unloaded.
-^MapTile[44, 27, World\Maps\Northrend\Northrend_44_27.adt]: Loaded!
-^MapTile[42, 27, World\Maps\Northrend\Northrend_42_27.adt]: Loaded!
-@CMapTile::~CMapTile: Tile [42, 23] unloaded.
-^MapTile[43, 27, World\Maps\Northrend\Northrend_43_27.adt]: Loaded!
-@M2[WORLD\LORDAERON\STRATHOLME\PASSIVEDOODADS\FX\STRATHOLMEFIRESMOKEEMBERS.M2] don't contain geometry. Skins [1]
-@CMapTile::~CMapTile: Tile [43, 23] unloaded.
-^MapTile[41, 27, World\Maps\Northrend\Northrend_41_27.adt]: Loaded!
-@CMapTile::~CMapTile: Tile [44, 24] unloaded.
-@CMapTile::~CMapTile: Tile [44, 25] unloaded.
-@CMapTile::~CMapTile: Tile [43, 24] unloaded.
-^MapTile[40, 26, World\Maps\Northrend\Northrend_40_26.adt]: Loaded!
-^MapTile[40, 27, World\Maps\Northrend\Northrend_40_27.adt]: Loaded!
-^MapTile[40, 25, World\Maps\Northrend\Northrend_40_25.adt]: Loaded!
-@CMapTile::~CMapTile: Tile [43, 27] unloaded.
-@CMapTile::~CMapTile: Tile [43, 25] unloaded.
-@CMapTile::~CMapTile: Tile [44, 27] unloaded.
-^MapTile[39, 27, World\Maps\Northrend\Northrend_39_27.adt]: Loaded!
-^MapTile[39, 25, World\Maps\Northrend\Northrend_39_25.adt]: Loaded!
-^MapTile[39, 26, World\Maps\Northrend\Northrend_39_26.adt]: Loaded!
-@CMapTile::~CMapTile: Tile [44, 26] unloaded.
-@CMapTile::~CMapTile: Tile [42, 24] unloaded.
-@CMapTile::~CMapTile: Tile [43, 26] unloaded.
-@M2[WORLD\EXPANSION01\DOODADS\SILVERMOON\FLOATINGDANDELIONS\FLOATINGDANDELIONS01.M2] don't contain geometry. Skins [1]
-^MapTile[40, 28, World\Maps\Northrend\Northrend_40_28.adt]: Loaded!
-^MapTile[41, 28, World\Maps\Northrend\Northrend_41_28.adt]: Loaded!
-^MapTile[39, 28, World\Maps\Northrend\Northrend_39_28.adt]: Loaded!
-@CMapTile::~CMapTile: Tile [42, 25] unloaded.
-@CMapTile::~CMapTile: Tile [41, 24] unloaded.
-@CMapTile::~CMapTile: Tile [42, 26] unloaded.
-^MapTile[38, 26, World\Maps\Northrend\Northrend_38_26.adt]: Loaded!
-^MapTile[38, 27, World\Maps\Northrend\Northrend_38_27.adt]: Loaded!
-^MapTile[38, 28, World\Maps\Northrend\Northrend_38_28.adt]: Loaded!
-@CMapTile::~CMapTile: Tile [41, 25] unloaded.
-@CMapTile::~CMapTile: Tile [41, 26] unloaded.
-@CMapTile::~CMapTile: Tile [42, 27] unloaded.
-@M2[WORLD\LORDAERON\STRATHOLME\PASSIVEDOODADS\FX\STRATHOLMEFLOATINGEMBERS.M2] don't contain geometry. Skins [1]
-@M2[WORLD\LORDAERON\STRATHOLME\PASSIVEDOODADS\FX\STRATHOLMEFIRESMOKEEMBERM.M2] don't contain geometry. Skins [1]
-^MapTile[39, 29, World\Maps\Northrend\Northrend_39_29.adt]: Loaded!
-^MapTile[38, 29, World\Maps\Northrend\Northrend_38_29.adt]: Loaded!
-^MapTile[40, 29, World\Maps\Northrend\Northrend_40_29.adt]: Loaded!
-@CMapTile::~CMapTile: Tile [40, 25] unloaded.
-@CMapTile::~CMapTile: Tile [40, 26] unloaded.
-@CMapTile::~CMapTile: Tile [41, 27] unloaded.
-@CMapTile::~CMapTile: Tile [39, 25] unloaded.
-@CMapTile::~CMapTile: Tile [39, 26] unloaded.
-!File 'TILESET\Terrain Cube Maps\TCB_SkyBlue_A_s.blp' not exists.
-!File 'TILESET\Terrain Cube Maps\TCB_SkyBlue_A_s.blp' not exists.
-^MapTile[37, 28, World\Maps\Northrend\Northrend_37_28.adt]: Loaded!
-^MapTile[38, 30, World\Maps\Northrend\Northrend_38_30.adt]: Loaded!
-^MapTile[37, 29, World\Maps\Northrend\Northrend_37_29.adt]: Loaded!
-^MapTile[37, 30, World\Maps\Northrend\Northrend_37_30.adt]: Loaded!
-^MapTile[39, 30, World\Maps\Northrend\Northrend_39_30.adt]: Loaded!
-@CMapTile::~CMapTile: Tile [41, 28] unloaded.
-@CMapTile::~CMapTile: Tile [38, 26] unloaded.
-@CMapTile::~CMapTile: Tile [40, 27] unloaded.
-!File 'TILESET\Terrain Cube Maps\TCB_SkyBlue_A_s.blp' not exists.
-^MapTile[37, 31, World\Maps\Northrend\Northrend_37_31.adt]: Loaded!
-^MapTile[38, 31, World\Maps\Northrend\Northrend_38_31.adt]: Loaded!
-@M2[WORLD\GENERIC\HUMAN\PASSIVE DOODADS\WATERDROPS\DEADMINEWATERDROPS.M2] don't contain geometry. Skins [1]
-^MapTile[39, 31, World\Maps\Northrend\Northrend_39_31.adt]: Loaded!
-@CMapTile::~CMapTile: Tile [40, 28] unloaded.
-@CMapTile::~CMapTile: Tile [39, 28] unloaded.
-@CMapTile::~CMapTile: Tile [39, 27] unloaded.
-^MapTile[39, 32, World\Maps\Northrend\Northrend_39_32.adt]: Loaded!
-^MapTile[37, 32, World\Maps\Northrend\Northrend_37_32.adt]: Loaded!
-^MapTile[38, 32, World\Maps\Northrend\Northrend_38_32.adt]: Loaded!
-@CMapTile::~CMapTile: Tile [38, 27] unloaded.
-@CMapTile::~CMapTile: Tile [39, 29] unloaded.
-@CMapTile::~CMapTile: Tile [40, 29] unloaded.
-^MapTile[36, 31, World\Maps\Northrend\Northrend_36_31.adt]: Loaded!
-^MapTile[36, 32, World\Maps\Northrend\Northrend_36_32.adt]: Loaded!
-^MapTile[36, 30, World\Maps\Northrend\Northrend_36_30.adt]: Loaded!
-@CMapTile::~CMapTile: Tile [39, 32] unloaded.
-^MapTile[36, 29, World\Maps\Northrend\Northrend_36_29.adt]: Loaded!
-@CMapTile::~CMapTile: Tile [39, 31] unloaded.
-^MapTile[36, 28, World\Maps\Northrend\Northrend_36_28.adt]: Loaded!
-@CMapTile::~CMapTile: Tile [36, 32] unloaded.
-@CMapTile::~CMapTile: Tile [37, 32] unloaded.
-^MapTile[39, 29, World\Maps\Northrend\Northrend_39_29.adt]: Loaded!
-^MapTile[39, 28, World\Maps\Northrend\Northrend_39_28.adt]: Loaded!
-@CMapTile::~CMapTile: Tile [36, 31] unloaded.
-@CMapTile::~CMapTile: Tile [37, 31] unloaded.
-@CMapTile::~CMapTile: Tile [36, 30] unloaded.
-^MapTile[39, 27, World\Maps\Northrend\Northrend_39_27.adt]: Loaded!
-^MapTile[37, 27, World\Maps\Northrend\Northrend_37_27.adt]: Loaded!
-^MapTile[38, 27, World\Maps\Northrend\Northrend_38_27.adt]: Loaded!
-@CMapTile::~CMapTile: Tile [38, 32] unloaded.
-@CMapTile::~CMapTile: Tile [39, 30] unloaded.
-@CMapTile::~CMapTile: Tile [38, 31] unloaded.
-^MapTile[38, 26, World\Maps\Northrend\Northrend_38_26.adt]: Loaded!
-^MapTile[39, 26, World\Maps\Northrend\Northrend_39_26.adt]: Loaded!
-^MapTile[37, 26, World\Maps\Northrend\Northrend_37_26.adt]: Loaded!
-@CMapTile::~CMapTile: Tile [36, 29] unloaded.
-@CMapTile::~CMapTile: Tile [37, 30] unloaded.
-@CMapTile::~CMapTile: Tile [37, 29] unloaded.
-^MapTile[38, 25, World\Maps\Northrend\Northrend_38_25.adt]: Loaded!
-^MapTile[39, 25, World\Maps\Northrend\Northrend_39_25.adt]: Loaded!
-@M2[WORLD\EXPANSION02\DOODADS\GRIZZLYHILLS\TERMITES\TERMITEDUST.M2] don't contain geometry. Skins [1]
-^MapTile[37, 25, World\Maps\Northrend\Northrend_37_25.adt]: Loaded!
-@CMapTile::~CMapTile: Tile [39, 29] unloaded.
-@CMapTile::~CMapTile: Tile [38, 30] unloaded.
-@CMapTile::~CMapTile: Tile [36, 28] unloaded.
-^MapTile[38, 24, World\Maps\Northrend\Northrend_38_24.adt]: Loaded!
-^MapTile[37, 24, World\Maps\Northrend\Northrend_37_24.adt]: Loaded!
-@M2[WORLD\GENERIC\PASSIVEDOODADS\PARTICLEEMITTERS\BLACKSMITH_SMOKE.M2] don't contain geometry. Skins [1]
-^MapTile[39, 24, World\Maps\Northrend\Northrend_39_24.adt]: Loaded!
-@CMapTile::~CMapTile: Tile [38, 29] unloaded.
-@CMapTile::~CMapTile: Tile [38, 28] unloaded.
-@CMapTile::~CMapTile: Tile [37, 28] unloaded.
-^MapTile[40, 26, World\Maps\Northrend\Northrend_40_26.adt]: Loaded!
-^MapTile[40, 25, World\Maps\Northrend\Northrend_40_25.adt]: Loaded!
-^MapTile[40, 24, World\Maps\Northrend\Northrend_40_24.adt]: Loaded!
-@CMapTile::~CMapTile: Tile [38, 27] unloaded.
-@CMapTile::~CMapTile: Tile [39, 28] unloaded.
-@CMapTile::~CMapTile: Tile [37, 27] unloaded.
-^MapTile[38, 23, World\Maps\Northrend\Northrend_38_23.adt]: Loaded!
-@M2[WORLD\EXPANSION01\DOODADS\SILVERMOON\FLOATINGDANDELIONS\FLOATINGDANDELIONS01.M2] don't contain geometry. Skins [1]
-^MapTile[39, 23, World\Maps\Northrend\Northrend_39_23.adt]: Loaded!
-^MapTile[40, 23, World\Maps\Northrend\Northrend_40_23.adt]: Loaded!
-@CMapTile::~CMapTile: Tile [40, 26] unloaded.
-@M2[WORLD\AZEROTH\BURNINGSTEPPES\PASSIVEDOODADS\SMOKE\ASHTREESMOKE01.M2] don't contain geometry. Skins [1]
-@M2[WORLD\GENERIC\PASSIVEDOODADS\PARTICLEEMITTERS\BLACKSMITH_SMOKE.M2] don't contain geometry. Skins [1]
-^MapTile[37, 23, World\Maps\Northrend\Northrend_37_23.adt]: Loaded!
-@CMapTile::~CMapTile: Tile [37, 26] unloaded.
-@CMapTile::~CMapTile: Tile [38, 26] unloaded.
-@CMapTile::~CMapTile: Tile [37, 25] unloaded.
-^MapTile[40, 22, World\Maps\Northrend\Northrend_40_22.adt]: Loaded!
-^MapTile[39, 22, World\Maps\Northrend\Northrend_39_22.adt]: Loaded!
-^MapTile[38, 22, World\Maps\Northrend\Northrend_38_22.adt]: Loaded!
-@M2[WORLD\AZEROTH\BURNINGSTEPPES\PASSIVEDOODADS\FALLINGEMBERS\FALLINGEMBERS.M2] don't contain geometry. Skins [1]
-@M2[WORLD\AZEROTH\BURNINGSTEPPES\PASSIVEDOODADS\FALLINGEMBERS\FALLINGEMBERS.M2] don't contain geometry. Skins [1]
-@M2[WORLD\LORDAERON\STRATHOLME\PASSIVEDOODADS\FX\STRATHOLMEFIRESMOKEEMBERM.M2] don't contain geometry. Skins [1]
-@M2[WORLD\LORDAERON\STRATHOLME\PASSIVEDOODADS\FX\STRATHOLMEFIRESMOKEEMBERM.M2] don't contain geometry. Skins [1]
-@M2[WORLD\LORDAERON\STRATHOLME\PASSIVEDOODADS\FX\STRATHOLMESMOKEEMITTER.M2] don't contain geometry. Skins [1]
-@CMapTile::~CMapTile: Tile [39, 26] unloaded.
-@CMapTile::~CMapTile: Tile [37, 24] unloaded.
-^MapTile[39, 21, World\Maps\Northrend\Northrend_39_21.adt]: Loaded!
-@CMapTile::~CMapTile: Tile [39, 27] unloaded.
-^MapTile[38, 21, World\Maps\Northrend\Northrend_38_21.adt]: Loaded!
-^MapTile[40, 21, World\Maps\Northrend\Northrend_40_21.adt]: Loaded!
-@CMapTile::~CMapTile: Tile [38, 25] unloaded.
-@CMapTile::~CMapTile: Tile [40, 25] unloaded.
-@CMapTile::~CMapTile: Tile [39, 25] unloaded.
-^MapTile[40, 20, World\Maps\Northrend\Northrend_40_20.adt]: Loaded!
-^MapTile[38, 20, World\Maps\Northrend\Northrend_38_20.adt]: Loaded!
-^MapTile[39, 20, World\Maps\Northrend\Northrend_39_20.adt]: Loaded!
-@CMapTile::~CMapTile: Tile [38, 24] unloaded.
-^MapTile[38, 19, World\Maps\Northrend\Northrend_38_19.adt]: Loaded!
-@CMapTile::~CMapTile: Tile [37, 23] unloaded.
-^MapTile[39, 19, World\Maps\Northrend\Northrend_39_19.adt]: Loaded!
-@CMapTile::~CMapTile: Tile [40, 24] unloaded.
-^MapTile[40, 19, World\Maps\Northrend\Northrend_40_19.adt]: Loaded!
-@CMapTile::~CMapTile: Tile [40, 23] unloaded.
-@CMapTile::~CMapTile: Tile [39, 24] unloaded.
-^MapTile[37, 19, World\Maps\Northrend\Northrend_37_19.adt]: Loaded!
-^MapTile[37, 20, World\Maps\Northrend\Northrend_37_20.adt]: Loaded!
-@CMapTile::~CMapTile: Tile [39, 23] unloaded.
-^MapTile[37, 21, World\Maps\Northrend\Northrend_37_21.adt]: Loaded!
-@M2[WORLD\AZEROTH\BURNINGSTEPPES\PASSIVEDOODADS\SMOKE\ASHTREESMOKE01.M2] don't contain geometry. Skins [1]
-@CMapTile::~CMapTile: Tile [39, 22] unloaded.
-@CMapTile::~CMapTile: Tile [40, 21] unloaded.
-!File 'TILESET\Generic\tgatest_s.blp' not exists.
-^MapTile[39, 18, World\Maps\Northrend\Northrend_39_18.adt]: Loaded!
-@CMapTile::~CMapTile: Tile [40, 22] unloaded.
-^MapTile[37, 18, World\Maps\Northrend\Northrend_37_18.adt]: Loaded!
-^MapTile[38, 18, World\Maps\Northrend\Northrend_38_18.adt]: Loaded!
-@CMapTile::~CMapTile: Tile [38, 23] unloaded.
-!File 'TILESET\Terrain Cube Maps\TCB_CrystalSong_A_s.blp' not exists.
-!File 'TILESET\Generic\tgatest_s.blp' not exists.
-!File 'TILESET\Terrain Cube Maps\TCB_CrystalSong_A_s.blp' not exists.
-^MapTile[39, 17, World\Maps\Northrend\Northrend_39_17.adt]: Loaded!
-@CMapTile::~CMapTile: Tile [40, 20] unloaded.
-@CMapTile::~CMapTile: Tile [37, 21] unloaded.
-^MapTile[38, 17, World\Maps\Northrend\Northrend_38_17.adt]: Loaded!
-^MapTile[37, 17, World\Maps\Northrend\Northrend_37_17.adt]: Loaded!
-@CMapTile::~CMapTile: Tile [39, 17] unloaded.
-@M2[WORLD\AZEROTH\BURNINGSTEPPES\PASSIVEDOODADS\SMOKE\ASHTREESMOKE01.M2] don't contain geometry. Skins [1]
-^MapTile[37, 21, World\Maps\Northrend\Northrend_37_21.adt]: Loaded!
-@CMapTile::~CMapTile: Tile [37, 17] unloaded.
-@CMapTile::~CMapTile: Tile [38, 17] unloaded.
-^MapTile[40, 20, World\Maps\Northrend\Northrend_40_20.adt]: Loaded!
-^MapTile[40, 21, World\Maps\Northrend\Northrend_40_21.adt]: Loaded!
-@CMapTile::~CMapTile: Tile [37, 18] unloaded.
-@CMapTile::~CMapTile: Tile [38, 18] unloaded.
-^MapTile[39, 22, World\Maps\Northrend\Northrend_39_22.adt]: Loaded!
-^MapTile[40, 22, World\Maps\Northrend\Northrend_40_22.adt]: Loaded!
-@CMapTile::~CMapTile: Tile [37, 21] unloaded.
-@CMapTile::~CMapTile: Tile [37, 19] unloaded.
-@CMapTile::~CMapTile: Tile [38, 22] unloaded.
-^MapTile[41, 19, World\Maps\Northrend\Northrend_41_19.adt]: Loaded!
-^MapTile[41, 21, World\Maps\Northrend\Northrend_41_21.adt]: Loaded!
-^MapTile[41, 20, World\Maps\Northrend\Northrend_41_20.adt]: Loaded!
-@CMapTile::~CMapTile: Tile [38, 19] unloaded.
-@CMapTile::~CMapTile: Tile [39, 22] unloaded.
-@CMapTile::~CMapTile: Tile [39, 18] unloaded.
-^MapTile[42, 20, World\Maps\Northrend\Northrend_42_20.adt]: Loaded!
-^MapTile[42, 21, World\Maps\Northrend\Northrend_42_21.adt]: Loaded!
-^MapTile[42, 19, World\Maps\Northrend\Northrend_42_19.adt]: Loaded!
-@CMapTile::~CMapTile: Tile [38, 21] unloaded.
-@CMapTile::~CMapTile: Tile [37, 20] unloaded.
-^MapTile[40, 18, World\Maps\Northrend\Northrend_40_18.adt]: Loaded!
-^MapTile[41, 18, World\Maps\Northrend\Northrend_41_18.adt]: Loaded!
-@CMapTile::~CMapTile: Tile [40, 22] unloaded.
-^MapTile[42, 18, World\Maps\Northrend\Northrend_42_18.adt]: Loaded!
-@CMapTile::~CMapTile: Tile [38, 20] unloaded.
-@CMapTile::~CMapTile: Tile [40, 21] unloaded.
-@CMapTile::~CMapTile: Tile [39, 21] unloaded.
-^MapTile[43, 18, World\Maps\Northrend\Northrend_43_18.adt]: Loaded!
-^MapTile[43, 20, World\Maps\Northrend\Northrend_43_20.adt]: Loaded!
-^MapTile[43, 19, World\Maps\Northrend\Northrend_43_19.adt]: Loaded!
-@CMapTile::~CMapTile: Tile [43, 20] unloaded.
-^MapTile[39, 18, World\Maps\Northrend\Northrend_39_18.adt]: Loaded!
-@CMapTile::~CMapTile: Tile [43, 19] unloaded.
-@CMapTile::~CMapTile: Tile [42, 21] unloaded.
-@CMapTile::~CMapTile: Tile [42, 20] unloaded.
-^MapTile[39, 17, World\Maps\Northrend\Northrend_39_17.adt]: Loaded!
-^MapTile[41, 17, World\Maps\Northrend\Northrend_41_17.adt]: Loaded!
-^MapTile[40, 17, World\Maps\Northrend\Northrend_40_17.adt]: Loaded!
-@CMapTile::~CMapTile: Tile [43, 18] unloaded.
-@CMapTile::~CMapTile: Tile [42, 19] unloaded.
-@CMapTile::~CMapTile: Tile [41, 21] unloaded.
-!File 'TILESET\Terrain Cube Maps\TCB_CrystalSong_A_s.blp' not exists.
-@M2[WORLD\AZEROTH\BURNINGSTEPPES\PASSIVEDOODADS\FALLINGEMBERS\FALLINGEMBERS.M2] don't contain geometry. Skins [1]
-^MapTile[38, 19, World\Maps\Northrend\Northrend_38_19.adt]: Loaded!
-^MapTile[38, 18, World\Maps\Northrend\Northrend_38_18.adt]: Loaded!
-^MapTile[38, 17, World\Maps\Northrend\Northrend_38_17.adt]: Loaded!
-@CMapTile::~CMapTile: Tile [41, 20] unloaded.
-!File 'TILESET\Generic\tgatest_s.blp' not exists.
-!File 'TILESET\Generic\tgatest_s.blp' not exists.
-!File 'TILESET\Terrain Cube Maps\TCB_CrystalSong_A_s.blp' not exists.
-@CMapTile::~CMapTile: Tile [42, 18] unloaded.
-^MapTile[37, 19, World\Maps\Northrend\Northrend_37_19.adt]: Loaded!
-^MapTile[37, 18, World\Maps\Northrend\Northrend_37_18.adt]: Loaded!
-@CMapTile::~CMapTile: Tile [41, 19] unloaded.
-^MapTile[37, 17, World\Maps\Northrend\Northrend_37_17.adt]: Loaded!
-@CMapTile::~CMapTile: Tile [40, 17] unloaded.
-@CMapTile::~CMapTile: Tile [41, 17] unloaded.
-^MapTile[38, 20, World\Maps\Northrend\Northrend_38_20.adt]: Loaded!
-^MapTile[37, 20, World\Maps\Northrend\Northrend_37_20.adt]: Loaded!
-@CMapTile::~CMapTile: Tile [41, 18] unloaded.
-@CMapTile::~CMapTile: Tile [39, 17] unloaded.
-@CMapTile::~CMapTile: Tile [40, 18] unloaded.
-!File 'TILESET\Generic\tgatest_s.blp' not exists.
-^MapTile[36, 19, World\Maps\Northrend\Northrend_36_19.adt]: Loaded!
-^MapTile[36, 20, World\Maps\Northrend\Northrend_36_20.adt]: Loaded!
-^MapTile[36, 18, World\Maps\Northrend\Northrend_36_18.adt]: Loaded!
-@CMapTile::~CMapTile: Tile [40, 20] unloaded.
-@CMapTile::~CMapTile: Tile [39, 18] unloaded.
-@CMapTile::~CMapTile: Tile [40, 19] unloaded.
-^MapTile[35, 20, World\Maps\Northrend\Northrend_35_20.adt]: Loaded!
-^MapTile[35, 19, World\Maps\Northrend\Northrend_35_19.adt]: Loaded!
-^MapTile[35, 18, World\Maps\Northrend\Northrend_35_18.adt]: Loaded!
-@CMapTile::~CMapTile: Tile [35, 18] unloaded.
-@CMapTile::~CMapTile: Tile [38, 17] unloaded.
-@CMapTile::~CMapTile: Tile [35, 19] unloaded.
-^MapTile[38, 21, World\Maps\Northrend\Northrend_38_21.adt]: Loaded!
-^MapTile[37, 21, World\Maps\Northrend\Northrend_37_21.adt]: Loaded!
-^MapTile[36, 21, World\Maps\Northrend\Northrend_36_21.adt]: Loaded!
-@M2[WORLD\AZEROTH\BURNINGSTEPPES\PASSIVEDOODADS\SMOKE\ASHTREESMOKE01.M2] don't contain geometry. Skins [1]
-@CMapTile::~CMapTile: Tile [37, 17] unloaded.
-@CMapTile::~CMapTile: Tile [38, 18] unloaded.
-^MapTile[35, 21, World\Maps\Northrend\Northrend_35_21.adt]: Loaded!
-^MapTile[35, 19, World\Maps\Northrend\Northrend_35_19.adt]: Loaded!
-@M2[WORLD\GENERIC\TAUREN\PASSIVE DOODADS\SMOKE\TAURENCOLOREDSMOKE01.M2] don't contain geometry. Skins [1]
-@CMapTile::~CMapTile: Tile [38, 19] unloaded.
-@CMapTile::~CMapTile: Tile [39, 19] unloaded.
-@CMapTile::~CMapTile: Tile [37, 18] unloaded.
-^MapTile[37, 22, World\Maps\Northrend\Northrend_37_22.adt]: Loaded!
-^MapTile[35, 22, World\Maps\Northrend\Northrend_35_22.adt]: Loaded!
-^MapTile[36, 22, World\Maps\Northrend\Northrend_36_22.adt]: Loaded!
-@CMapTile::~CMapTile: Tile [39, 20] unloaded.
-@CMapTile::~CMapTile: Tile [37, 19] unloaded.
-@CMapTile::~CMapTile: Tile [35, 19] unloaded.
-^MapTile[35, 23, World\Maps\Northrend\Northrend_35_23.adt]: Loaded!
-^MapTile[37, 23, World\Maps\Northrend\Northrend_37_23.adt]: Loaded!
-^MapTile[36, 23, World\Maps\Northrend\Northrend_36_23.adt]: Loaded!
-@M2[WORLD\GENERIC\PASSIVEDOODADS\PARTICLEEMITTERS\BLACKSMITH_SMOKE.M2] don't contain geometry. Skins [1]
-@CMapTile::~CMapTile: Tile [38, 20] unloaded.
-@CMapTile::~CMapTile: Tile [36, 18] unloaded.
-!File 'TILESET\Terrain Cube Maps\TCB_CrystalSong_B_s.blp' not exists.
-@CMapTile::~CMapTile: Tile [38, 21] unloaded.
-^MapTile[34, 22, World\Maps\Northrend\Northrend_34_22.adt]: Loaded!
-@M2[WORLD\EXPANSION02\DOODADS\DRAGONBLIGHT\DRAGONBLIGHT_LEAVESLARGE.M2] don't contain geometry. Skins [1]
-^MapTile[34, 23, World\Maps\Northrend\Northrend_34_23.adt]: Loaded!
-^MapTile[34, 21, World\Maps\Northrend\Northrend_34_21.adt]: Loaded!
-@CMapTile::~CMapTile: Tile [37, 23] unloaded.
-@M2[WORLD\EXPANSION02\DOODADS\DRAGONBLIGHT\DRAGONBLIGHT_LEAVES_01.M2] don't contain geometry. Skins [1]
-@M2[WORLD\AZEROTH\BURNINGSTEPPES\PASSIVEDOODADS\SMOKE\ASHTREESMOKE01.M2] don't contain geometry. Skins [1]
-@M2[WORLD\LORDAERON\STRATHOLME\PASSIVEDOODADS\FX\STRATHOLMEFIRESMOKEEMBERS.M2] don't contain geometry. Skins [1]
-^MapTile[34, 20, World\Maps\Northrend\Northrend_34_20.adt]: Loaded!
-@CMapTile::~CMapTile: Tile [36, 23] unloaded.
-@CMapTile::~CMapTile: Tile [37, 22] unloaded.
-!File 'TILESET\Generic\tgatest_s.blp' not exists.
-!File 'TILESET\Terrain Cube Maps\TCB_CrystalSong_B_s.blp' not exists.
-!File 'TILESET\Terrain Cube Maps\TCB_CrystalSong_B_s.blp' not exists.
-@CMapTile::~CMapTile: Tile [36, 19] unloaded.
-^MapTile[33, 20, World\Maps\Northrend\Northrend_33_20.adt]: Loaded!
-^MapTile[33, 22, World\Maps\Northrend\Northrend_33_22.adt]: Loaded!
-^MapTile[33, 21, World\Maps\Northrend\Northrend_33_21.adt]: Loaded!
-!File 'TILESET\Generic\tgatest_s.blp' not exists.
-@CMapTile::~CMapTile: Tile [37, 20] unloaded.
-@CMapTile::~CMapTile: Tile [36, 22] unloaded.
-!File 'TILESET\Terrain Cube Maps\TCB_CrystalSong_B_s.blp' not exists.
-!File 'TILESET\Terrain Cube Maps\TCB_CrystalSong_B_s.blp' not exists.
-@CMapTile::~CMapTile: Tile [36, 20] unloaded.
-^MapTile[32, 22, World\Maps\Northrend\Northrend_32_22.adt]: Loaded!
-^MapTile[32, 21, World\Maps\Northrend\Northrend_32_21.adt]: Loaded!
-^MapTile[32, 20, World\Maps\Northrend\Northrend_32_20.adt]: Loaded!
-@CMapTile::~CMapTile: Tile [37, 21] unloaded.
-@CMapTile::~CMapTile: Tile [34, 23] unloaded.
-@CMapTile::~CMapTile: Tile [35, 23] unloaded.
-^MapTile[31, 22, World\Maps\Northrend\Northrend_31_22.adt]: Loaded!
-^MapTile[31, 21, World\Maps\Northrend\Northrend_31_21.adt]: Loaded!
-@M2[WORLD\GENERIC\PASSIVEDOODADS\PARTICLEEMITTERS\BLACKSMITH_SMOKE.M2] don't contain geometry. Skins [1]
-@M2[WORLD\LORDAERON\STRATHOLME\PASSIVEDOODADS\FX\STRATHOLMEFIRESMOKEEMBERM.M2] don't contain geometry. Skins [1]
-^MapTile[31, 20, World\Maps\Northrend\Northrend_31_20.adt]: Loaded!
-@M2[WORLD\EXPANSION01\DOODADS\SILVERMYST\SMOKE\D_SMOKE.M2] don't contain geometry. Skins [1]
-@CMapTile::~CMapTile: Tile [36, 21] unloaded.
-!File 'TILESET\Terrain Cube Maps\TCB_CrystalSong_B_s.blp' not exists.
-@CMapTile::~CMapTile: Tile [35, 22] unloaded.
-!File 'TILESET\Terrain Cube Maps\TCB_CrystalSong_B_s.blp' not exists.
-^MapTile[30, 22, World\Maps\Northrend\Northrend_30_22.adt]: Loaded!
-@CMapTile::~CMapTile: Tile [35, 20] unloaded.
-^MapTile[30, 20, World\Maps\Northrend\Northrend_30_20.adt]: Loaded!
-^MapTile[30, 21, World\Maps\Northrend\Northrend_30_21.adt]: Loaded!
-@M2[WORLD\EXPANSION02\DOODADS\CRYSTALSONGFOREST\SPARKLES\CRYSTALSONG_SPARKLES03.M2] don't contain geometry. Skins [1]
-@CMapTile::~CMapTile: Tile [34, 22] unloaded.
-@CMapTile::~CMapTile: Tile [34, 20] unloaded.
-^MapTile[29, 20, World\Maps\Northrend\Northrend_29_20.adt]: Loaded!
-@CMapTile::~CMapTile: Tile [35, 21] unloaded.
-^MapTile[29, 22, World\Maps\Northrend\Northrend_29_22.adt]: Loaded!
-^MapTile[29, 21, World\Maps\Northrend\Northrend_29_21.adt]: Loaded!
-@M2[WORLD\GENERIC\PASSIVEDOODADS\PARTICLEEMITTERS\BLACKSMITH_SMOKE.M2] don't contain geometry. Skins [1]
-@CMapTile::~CMapTile: Tile [34, 21] unloaded.
-@CMapTile::~CMapTile: Tile [33, 22] unloaded.
-@CMapTile::~CMapTile: Tile [33, 21] unloaded.
-^MapTile[31, 19, World\Maps\Northrend\Northrend_31_19.adt]: Loaded!
-^MapTile[29, 19, World\Maps\Northrend\Northrend_29_19.adt]: Loaded!
-^MapTile[30, 19, World\Maps\Northrend\Northrend_30_19.adt]: Loaded!
-@M2[WORLD\EXPANSION01\DOODADS\SHADOWMOON\SMOKE\SHADOWMOONCRACKSMOKE01.M2] don't contain geometry. Skins [1]
-@M2[WORLD\GENERIC\UNDEAD\PASSIVE DOODADS\UNDERCITYSLIMEFALLS\SKULLSPOUTSPLASH.M2] don't contain geometry. Skins [1]
-@CMapTile::~CMapTile: Tile [32, 22] unloaded.
 @CMapTile::~CMapTile: Tile [31, 22] unloaded.
-^MapTile[28, 21, World\Maps\Northrend\Northrend_28_21.adt]: Loaded!
-@CMapTile::~CMapTile: Tile [32, 21] unloaded.
-^MapTile[28, 20, World\Maps\Northrend\Northrend_28_20.adt]: Loaded!
+^WMO[WORLD\WMO\DUNGEON\MD_MOUNTAINCAVE\MD_CORRUPTCAVE02.WMO]: Liq: headerID [5] headerFlag [1] MatID: [11]
 ^MapTile[28, 19, World\Maps\Northrend\Northrend_28_19.adt]: Loaded!
 @M2[WORLD\EXPANSION02\DOODADS\GENERIC\SCOURGE\SC_SPIRITEFFECT_01.M2] don't contain geometry. Skins [1]

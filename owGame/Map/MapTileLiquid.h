@@ -5,7 +5,7 @@
 struct MH2O_Header
 {
 	uint32 offsetInstances; // This is an Offset to the first Water Layer, it has tobe an offset because there can be multiple layers.
-	uint32 layersCount;    // 0 if the chunk has no liquids. If > 1, the offsets will point to arrays.
+	uint32 layersCount;     // 0 if the chunk has no liquids. If > 1, the offsets will point to arrays.
 
 						   /*
 						   This field requires some explanation.

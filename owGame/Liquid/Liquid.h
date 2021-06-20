@@ -19,10 +19,10 @@ struct SLiquidVertex
 
 		struct SOceanVert
 		{
-			uint8_t depth;
-			uint8_t foam;
-			uint8_t wet;
-			uint8_t unk0;
+			uint8 depth;
+			uint8 foam;
+			uint8 wet;
+			uint8 unk0;
 		} oceanVert;
 
 		struct SMagmaVert
@@ -36,7 +36,14 @@ struct SLiquidVertex
 
 struct SLiquidFlag
 {
-	uint8 liquid : 6;    // 0x01 - 0x20
+	uint8 liquid : 6;
+	// 0x01
+	// 0x02
+	// 0x04
+	// 0x08 // no render
+	// 0x10
+	// 0x20
+
 	uint8 fishable : 1;  // 0x40
 	uint8 shared : 1;    // 0x80
 };
@@ -62,18 +69,18 @@ public:
 	float getMaxHeight() const;
 
 protected:
-	void createLayers(const DBC_LiquidTypeRecord* _type, const std::shared_ptr<IByteBuffer>& Bytes);
+	void createLayers(const DBC_LiquidTypeRecord* LiquidTypeRecord, const std::shared_ptr<IByteBuffer>& Bytes, bool NeedInvertY);
 	
+protected:
+	float m_MinHeight;
+	float m_MaxHeight;
+
 public:
 	uint32 m_TilesX;
 	uint32 m_TilesY;
-	std::vector<std::shared_ptr<CLiquidLayer>> m_WaterLayers;
 
-	float ydir;
+	std::vector<std::shared_ptr<CLiquidModel>> m_WaterLayers;
 
 protected:
 	IRenderDevice& m_RenderDevice;
-
-private:
-	const glm::vec3 defaultNormal = glm::vec3(0.0f, 1.0f, 0.0f);
 };

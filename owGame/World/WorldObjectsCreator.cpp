@@ -253,6 +253,10 @@ std::shared_ptr<CWMO> CWorldObjectCreator::LoadWMO(IRenderDevice& RenderDevice, 
 		}
 	}
 
+	//std::string newName = Utils::ToLower(Filename);
+	//if (newName.find(Utils::ToLower("WORLD\\WMO\\DUNGEON\\AZ_BLACKROCK\\BLACKROCK.WMO")) == std::string::npos)
+	//	return nullptr;
+
 	std::shared_ptr<CWMO> wmoObject = std::make_shared<CWMO>(m_BaseManager, RenderDevice, Filename);
 
 	{

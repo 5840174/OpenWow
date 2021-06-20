@@ -1,34 +1,48 @@
 #pragma once
 
+#include "DBC/Tables/DBC_LiquidType.h"
+
 namespace
 {
-	__declspec(align(16)) struct MaterialProperties
+	__declspec(align(16)) struct SLiquidMaterialProperties
 	{
-		MaterialProperties()
+		SLiquidMaterialProperties()
 			: gColorLight(1.0f, 1.0f, 1.0f)
 			, gColorDark(1.0f, 1.0f, 1.0f)
 			, gShallowAlpha(1.0f)
 			, gDeepAlpha(1.0f)
+			, gLiquidType(0)
 		{}
+
 		glm::vec3 gColorLight;
 		float gShallowAlpha;
 
 		glm::vec3 gColorDark;
 		float gDeepAlpha;
-		//-------------------------- ( 32 bytes )
+
+		uint32 gLiquidType;
+		glm::vec3 __padding;
+		//-------------------------- ( 48 bytes )
 	};
 }
 
-class ZN_API LiquidMaterial
-	: public MaterialProxieT<MaterialProperties>
+class ZN_API CLiquidMaterial
+	: public MaterialProxieT<SLiquidMaterialProperties>
 {
 public:
-	LiquidMaterial(IRenderDevice& RenderDevice);
-	virtual ~LiquidMaterial();
+	CLiquidMaterial(IRenderDevice& RenderDevice);
+	virtual ~CLiquidMaterial();
 
-	// LiquidMaterial
+	// CLiquidMaterial
 	void SetShallowAlpha(float value);
 	void SetDeepAlpha(float value);
 	void SetColorLight(glm::vec3 value);
 	void SetColorDark(glm::vec3 value);
+
+	void InitializeTextures(const DBC_LiquidTypeRecord* LiquidTypeRecord);
+	void Update();
+
+private:
+	IRenderDevice& m_RenderDevice;
+	std::vector<std::shared_ptr<ITexture>> m_Textures;
 };

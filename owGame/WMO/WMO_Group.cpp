@@ -161,7 +161,7 @@ void WMO_Group::CreateInsances(const std::shared_ptr<CWMO_Group_Instance>& Paren
 
 uint32 to_wmo_liquid(const SWMO_Group_HeaderDef& Header, int x)
 {
-	DBC_LIQUIDTYPE_Type::List basic = (DBC_LIQUIDTYPE_Type::List)(x & 3);
+	DBC_LIQUIDTYPE_Type basic = (DBC_LIQUIDTYPE_Type)(x & 3);
 	switch (basic)
 	{
 	case DBC_LIQUIDTYPE_Type::water:
@@ -174,8 +174,49 @@ uint32 to_wmo_liquid(const SWMO_Group_HeaderDef& Header, int x)
 		return 20;
 	}
 
-	return UINT32_MAX;
+	throw CException("Unexpected behaviour");
 }
+
+const DBC_LiquidTypeRecord* ResolveLiquidType(const CDBCStorage* DBCStorage, const SWMO_HeaderDef& WMOHeader, const SWMO_Group_HeaderDef& WMOGroupHeader)
+{
+	uint32 liquid_type = UINT32_MAX;
+
+	if (WMOHeader.flags.use_liquid_type_dbc_id != 0)
+	{
+		if (WMOGroupHeader.liquidType < 21)
+		{
+			liquid_type = to_wmo_liquid(WMOGroupHeader, WMOGroupHeader.liquidType - 1);
+		}
+		else
+		{
+			liquid_type = WMOGroupHeader.liquidType;
+		}
+	}
+	else
+	{
+		if (WMOGroupHeader.liquidType == 15 /*Liquid green lava*/)
+		{
+			//return nullptr;
+			liquid_type = 1;  // use to_wmo_liquid(SMOLTile->liquid) ? It seems to work alright.
+		}
+		else
+		{
+			if (WMOGroupHeader.liquidType < 20)
+			{
+				liquid_type = to_wmo_liquid(WMOGroupHeader, WMOGroupHeader.liquidType);
+			}
+			else
+			{
+				liquid_type = WMOGroupHeader.liquidType + 1;
+			}
+		}
+	}
+
+	return DBCStorage->DBC_LiquidType()[liquid_type];
+}
+
+
+
 
 bool WMO_Group::Load()
 {
@@ -341,40 +382,18 @@ bool WMO_Group::Load()
 		SWMO_Group_MLIQDef liquidHeader;
 		buffer->read(&liquidHeader);
 
-		//Log::Green
-		//(
-		//	"WMO[%s]: Liq: headerID [%d] headerFlag [%d] MatID: [%d] MatShader[%d]", 
-		//	m_WMOModel.getFilename().c_str(),
-		//	m_GroupHeader.liquidType,
-		//	m_WMOModel.m_Header.flags.use_liquid_type_dbc_id, 
-		//	liquidHeader.materialID
-		//);
+		Log::Green
+		(
+			"WMO[%s]: Liq: headerID [%d] headerFlag [%d] MatID: [%d]", 
+			m_WMOModel.GetFilename().c_str(),
+			m_GroupHeader.liquidType,
+			m_WMOModel.GetHeader().flags.use_liquid_type_dbc_id, 
+			liquidHeader.materialID
+		);
 
-		uint32 liquid_type;
-		if (m_WMOModel.GetHeader().flags.use_liquid_type_dbc_id != 0)
-		{
-			if (m_GroupHeader.liquidType < 21)
-			{
-				liquid_type = to_wmo_liquid(m_GroupHeader, m_GroupHeader.liquidType - 1);
-			}
-			else
-			{
-				liquid_type = m_GroupHeader.liquidType;
-			}
-		}
-		else
-		{
-			if (m_GroupHeader.liquidType < 20)
-			{
-				liquid_type = to_wmo_liquid(m_GroupHeader, m_GroupHeader.liquidType);
-			}
-			else
-			{
-				liquid_type = m_GroupHeader.liquidType + 1;
-			}
-		}
 
-		m_WMOLiqiud = std::make_shared<CWMO_Liquid>(m_RenderDevice, m_WMOModel, *this, buffer, liquidHeader);
+
+		m_WMOLiqiud = std::make_shared<CWMO_Liquid>(m_RenderDevice, m_WMOModel, *this, buffer, liquidHeader, ResolveLiquidType(m_BaseManager.GetManager<CDBCStorage>(), m_WMOModel.GetHeader(), m_GroupHeader));
 	}
 
 	for (const auto& WMOGroupBatchProto : WMOBatchs)

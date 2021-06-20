@@ -78,14 +78,12 @@ void CSceneWoW::Initialize()
 	skyManager = GetRootSceneNode()->CreateSceneNode<SkyManager>();
 	GetBaseManager().AddManager<ISkyManager>(skyManager);
 
-	skyManager->Load(0);
+	//const float x = 34; //0 fire
+	//const float y = 47; //0 fire
+	//const uint32 mapID = 0;
 
-	map = GetRootSceneNode()->CreateSceneNode<CMap>();
-
-
-
-	//const float x = 40; //0 barrens
-	//const float y = 30; //0 barrens
+	//const float x = 40; //1 barrens
+	//const float y = 30; //1 barrens
 	//const uint32 mapID = 1;
 
 	//const float x = 26; //530 outland
@@ -96,6 +94,10 @@ void CSceneWoW::Initialize()
 	const float y = 21; //571 nortrend
 	const uint32 mapID = 571;
 
+	skyManager->Load(mapID);
+	map = GetRootSceneNode()->CreateSceneNode<CMap>();
+
+
 	glm::vec3 position = glm::vec3(x * C_TileSize + C_TileSize / 2.0f, 100.0f, y * C_TileSize + C_TileSize / 2.0f);
 
 	map->MapPreLoad(GetBaseManager().GetManager<CDBCStorage>()->DBC_Map()[mapID]);
@@ -104,6 +106,8 @@ void CSceneWoW::Initialize()
 
 
 	GetCameraController()->GetCamera()->SetPosition(position);
+
+	//GetCameraController()->GetCamera()->SetPosition(glm::vec3(14300, 150, 20500));
 
 }
 
