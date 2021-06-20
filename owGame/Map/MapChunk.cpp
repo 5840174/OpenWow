@@ -46,6 +46,11 @@ uint32 CMapChunk::GetAreaID() const
     return m_Header.areaid;
 }
 
+void CMapChunk::ExtendMapChunkBounds(const BoundingBox & OtherBBox)
+{
+	GetComponentT<IColliderComponent>()->ExtendBounds(OtherBBox);
+}
+
 
 
 //
@@ -79,8 +84,8 @@ void CMapChunk::Initialize()
 	{
 		BoundingBox bbox
 		(
-			glm::vec3(-m_Header.xpos + C_ZeroPoint,               Math::MaxFloat, -m_Header.zpos + C_ZeroPoint),
-			glm::vec3(-m_Header.xpos + C_ZeroPoint + C_ChunkSize, Math::MinFloat, -m_Header.zpos + C_ZeroPoint + C_ChunkSize)
+			glm::vec3(- m_Header.xpos + C_ZeroPoint,               Math::MaxFloat, - m_Header.zpos + C_ZeroPoint),
+			glm::vec3(- m_Header.xpos + C_ZeroPoint + C_ChunkSize, Math::MinFloat, - m_Header.zpos + C_ZeroPoint + C_ChunkSize)
 		);
 
 		colliderComponent->SetCullStrategy(IColliderComponent::ECullStrategy::ByFrustrumAndDistance2D);
@@ -339,33 +344,26 @@ bool CMapChunk::Load()
 			CRange height;
 			m_Bytes->read(&height);
 
-			// Set this chunk BBOX
-			/*{
-				BoundingBox bbox = GetComponentT<IColliderComponent>()->GetBounds();
-				float bboxMinHeight = std::min(bbox.getMin().y, (height.min - GetPosition().y));
-				float bboxMaxHeight = std::max(bbox.getMax().y, (height.max - GetPosition().y));
-
-				auto min = bbox.getMin();
-				min.y = bboxMinHeight;
-				bbox.setMin(min);
-
-				auto max = bbox.getMax();
-				max.y = bboxMaxHeight;
-				bbox.setMax(max);
-
-				GetComponentT<IColliderComponent>()->SetBounds(bbox);
-			}*/
-
 			auto liquidInstance = CreateSceneNode<CLiquidBaseInstance>();
 
 			CMapChunkLiquid liquidObject(GetRenderDevice(), m_Bytes, m_Header);
 			liquidObject.CreateInsances(liquidInstance);
 
 			// Transform
-			liquidInstance->SetLocalPosition(glm::vec3(0.0f, -GetPosition().y, 0.0f));
+			liquidInstance->SetLocalPosition(glm::vec3(- m_Header.xpos + C_ZeroPoint, 0.0f, - m_Header.zpos + C_ZeroPoint));
 
-			// Collide liquid with chunk
-			liquidInstance->GetComponentT<IColliderComponent>()->SetBounds(GetComponentT<IColliderComponent>()->GetBounds());
+			// Collider
+			if (auto liquidColliderComponent = liquidInstance->GetComponentT<IColliderComponent>())
+			{
+				BoundingBox bbox
+				(
+					glm::vec3(0.0f,        height.min - 1.0f, 0.0f),
+					glm::vec3(C_ChunkSize, height.max + 1.0f, C_ChunkSize)
+				);
+				liquidInstance->GetComponentT<IColliderComponent>()->SetBounds(bbox);
+
+				ExtendMapChunkBounds(liquidColliderComponent->GetWorldBounds());
+			}
 		}
 	}
 
@@ -464,9 +462,6 @@ bool CMapChunk::Load()
 #else
 	for (uint32 i = 0; i < m_Header.nLayers; i++)
 	{
-		if (m_MapTile.GetState() != ILoadable::ELoadableState::Loaded)
-			return false;
-
 		mapChunkMaterial->SetTexture(i + 0, m_MapTile.GetTextureInfo(mcly[i].textureIndex)->diffuseTexture);
 		//mat->SetTexture(i + 5, m_MapTile.m_Textures.at(mcly[i].textureIndex)->specularTexture);
 	}

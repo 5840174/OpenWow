@@ -183,39 +183,42 @@ bool CMapTile::Load()
 		uint32_t size;
 		f->readBytes(&size, sizeof(uint32_t));
 
-		std::vector<std::string> strings;
-		PasreChunkAsStringArray(MakeShared(CByteBufferOnlyPointer, f->getDataFromCurrent(), size), &strings);
-
-		for (const auto& stringsIt : strings)
+		if (size > 0)
 		{
+			std::vector<std::string> strings;
+			PasreChunkAsStringArray(MakeShared(CByteBufferOnlyPointer, f->getDataFromCurrent(), size), &strings);
 
-			std::shared_ptr<ADT_TextureInfo> textureInfo = std::make_shared<ADT_TextureInfo>();
-			textureInfo->textureName = stringsIt;
+			for (const auto& stringsIt : strings)
+			{
 
-			// PreLoad diffuse texture
+				std::shared_ptr<ADT_TextureInfo> textureInfo = std::make_shared<ADT_TextureInfo>();
+				textureInfo->textureName = stringsIt;
+
+				// PreLoad diffuse texture
 #if 0
-			textureInfo->diffuseTexture = GetBaseManager().GetManager<IImagesFactory>()->CreateImage(_string);
+				textureInfo->diffuseTexture = GetBaseManager().GetManager<IImagesFactory>()->CreateImage(_string);
 #else
-			textureInfo->diffuseTexture = GetBaseManager().GetManager<IznTexturesFactory>()->LoadTexture2D(textureInfo->textureName);
+				textureInfo->diffuseTexture = GetBaseManager().GetManager<IznTexturesFactory>()->LoadTexture2D(textureInfo->textureName);
 #endif
 
-			// PreLoad specular texture
-			try
-			{
-				std::string specularTextureName = textureInfo->textureName;
-				specularTextureName = specularTextureName.insert(specularTextureName.length() - 4, "_s");
+				// PreLoad specular texture
+				try
+				{
+					std::string specularTextureName = textureInfo->textureName;
+					specularTextureName = specularTextureName.insert(specularTextureName.length() - 4, "_s");
 #if 0
-				textureInfo->specularTexture = GetBaseManager().GetManager<IImagesFactory>()->CreateImage(specularTextureName);
+					textureInfo->specularTexture = GetBaseManager().GetManager<IImagesFactory>()->CreateImage(specularTextureName);
 #else
-				textureInfo->specularTexture = GetBaseManager().GetManager<IznTexturesFactory>()->LoadTexture2D(specularTextureName);
+					textureInfo->specularTexture = GetBaseManager().GetManager<IznTexturesFactory>()->LoadTexture2D(specularTextureName);
 #endif
-			}
-			catch (const CException& e)
-			{
-			}
+				}
+				catch (const CException& e)
+				{
+				}
 
-			m_Textures.push_back(textureInfo);
+				m_Textures.push_back(textureInfo);
 
+			}
 		}
 	}
 
@@ -224,10 +227,12 @@ bool CMapTile::Load()
 	f->seek(startPos + m_Header.MMDX);
 	{
 		f->seekRelative(4);
+
 		uint32_t size;
 		f->readBytes(&size, sizeof(uint32_t));
 
-		PasreChunkAsStringArray(MakeShared(CByteBufferOnlyPointer, f->getDataFromCurrent(), size), &m_MDXsNames);
+		if (size > 0)
+			PasreChunkAsStringArray(MakeShared(CByteBufferOnlyPointer, f->getDataFromCurrent(), size), &m_MDXsNames);
 	}
 
 	// M2 Offsets
@@ -253,10 +258,12 @@ bool CMapTile::Load()
 	f->seek(startPos + m_Header.MWMO);
 	{
 		f->seekRelative(4);
+
 		uint32_t size;
 		f->readBytes(&size, sizeof(uint32_t));
 
-		PasreChunkAsStringArray(MakeShared(CByteBufferOnlyPointer, f->getDataFromCurrent(), size), &m_WMOsNames);
+		if (size > 0)
+			PasreChunkAsStringArray(MakeShared(CByteBufferOnlyPointer, f->getDataFromCurrent(), size), &m_WMOsNames);
 	}
 
 	// WMO Offsets
@@ -313,7 +320,7 @@ bool CMapTile::Load()
 	}
 #endif
 
-	SetState(ILoadable::ELoadableState::Loaded);
+	//SetState(ILoadable::ELoadableState::Loaded);
 
 	//-- Load Chunks ---------------------------------------------------------------------
 	for (uint32_t i = 0; i < C_ChunksInTileGlobal; i++)

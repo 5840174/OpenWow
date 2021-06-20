@@ -17,6 +17,7 @@ public:
 
 	// CMapChunk
 	uint32 GetAreaID() const;
+	void ExtendMapChunkBounds(const BoundingBox& OtherBBox);
 
 	// SceneNode3D
 	void Initialize() override;
