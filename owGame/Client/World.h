@@ -1,6 +1,6 @@
 #pragma once
 
-#if 0
+#ifdef ENABLE_WOW_CLIENT
 
 #include "ServerPacket.h"
 #include "WorldSocket.h"
@@ -17,7 +17,7 @@
 class ZN_API WoWWorld
 {
 public:
-	WoWWorld(IBaseManager& BaseManager, IRenderDevice& RenderDevice, IScene* Scene, const std::shared_ptr<CWorldSocket>& Socket);
+	WoWWorld(IScene& Scene, const std::shared_ptr<CWorldSocket>& Socket);
 	virtual ~WoWWorld();
 
 	void S_SMSG_CHAR_ENUM(CServerPacket& Bytes);
@@ -57,9 +57,7 @@ private: // Cache
 	std::unordered_map<uint32, SCreatureQueryResult> m_CacheCreatures;
 
 private:
-	IBaseManager& m_BaseManager;
-	IRenderDevice& m_RenderDevice;
-	IScene* m_Scene;
+	IScene& m_Scene;
 
 	std::shared_ptr<SkyManager> skyManager;
 	std::shared_ptr<CMap> map;

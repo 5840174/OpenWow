@@ -1,6 +1,6 @@
 #include "stdafx.h"
 
-#if 0
+#ifdef ENABLE_WOW_CLIENT
 
 // General
 #include "WoWGameObject.h"
@@ -9,8 +9,8 @@
 #include "World/WorldObjectsCreator.h"
 #include "..\World\GameObject\GameObject.h"
 
-WoWGameObject::WoWGameObject(ObjectGuid Guid)
-	: WorldObject(Guid)
+WoWGameObject::WoWGameObject(IScene& Scene, ObjectGuid Guid)
+	: WorldObject(Scene, Guid)
 {
 	m_ObjectType |= TYPEMASK_GAMEOBJECT;
 	m_ObjectTypeId = TYPEID_GAMEOBJECT;
@@ -26,14 +26,14 @@ WoWGameObject::~WoWGameObject()
 //
 // Protected
 //
-std::shared_ptr<WoWGameObject> WoWGameObject::Create(IBaseManager& BaseManager, IRenderDevice& RenderDevice, IScene * Scene, ObjectGuid Guid)
+std::shared_ptr<WoWGameObject> WoWGameObject::Create(IScene& Scene, ObjectGuid Guid)
 {
-	std::shared_ptr<WoWGameObject> thisObj = Scene->GetRootNode3D()->CreateSceneNode<WoWGameObject>(Guid);
+	std::shared_ptr<WoWGameObject> thisObj = Scene.GetRootSceneNode()->CreateSceneNode<WoWGameObject>(Guid);
 	Log::Green("WoWGameObject created!");
 
 	// For test only
-	BoundingBox bbox(glm::vec3(-2.0f), glm::vec3(2.0f));
-	bbox.calculateCenter();
+	//BoundingBox bbox(glm::vec3(-2.0f), glm::vec3(2.0f));
+	//bbox.calculateCenter();
 	//thisObj->GetComponentT<IColliderComponent>()->SetBounds(bbox);
 
 	return thisObj;

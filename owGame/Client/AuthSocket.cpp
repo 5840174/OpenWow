@@ -1,6 +1,6 @@
 #include "stdafx.h"
 
-#if 0
+#ifdef ENABLE_WOW_CLIENT
 
 // Include
 #include "Client.h"

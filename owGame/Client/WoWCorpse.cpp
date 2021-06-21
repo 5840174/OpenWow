@@ -1,6 +1,6 @@
 #include "stdafx.h"
 
-#if 0
+#ifdef ENABLE_WOW_CLIENT
 
 // General
 #include "WoWCorpse.h"
@@ -17,7 +17,7 @@ WoWCorpse::~WoWCorpse()
 {
 }
 
-std::shared_ptr<WoWCorpse> WoWCorpse::Create(IBaseManager & BaseManager, IRenderDevice & RenderDevice, IScene * Scene, ObjectGuid Guid)
+std::shared_ptr<WoWCorpse> WoWCorpse::Create(IScene& Scene, ObjectGuid Guid)
 {
 	std::shared_ptr<WoWCorpse> thisObj = std::make_shared<WoWCorpse>(Guid);
 	return thisObj;

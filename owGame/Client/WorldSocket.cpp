@@ -1,6 +1,6 @@
 #include "stdafx.h"
 
-#if 0
+#ifdef ENABLE_WOW_CLIENT
 
 // Include
 #include "Client.h"
@@ -9,7 +9,7 @@
 #include "WorldSocket.h"
 
 // Additional
-#include <zlib\\zlib.h>
+#include <zlib/source/zlib.h>
 #include "OpcodesNames.h"
 #include "HMACSHA1.h"
 
@@ -114,7 +114,7 @@ void CWorldSocket::OnRawData(const char * buf, size_t len)
 
         //
         bool needMess = true;
-        for (uint32 i = 0; i < OW_COUNT_ELEMENTS(IgnoredOpcodes); i++)
+        for (uint32 i = 0; i < sizeof(IgnoredOpcodes) / sizeof(IgnoredOpcodes[0]); i++)
         {
             if (IgnoredOpcodes[i] == cmd)
             {

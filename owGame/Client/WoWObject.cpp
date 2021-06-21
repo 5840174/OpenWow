@@ -1,6 +1,6 @@
 #include "stdafx.h"
 
-#if 0
+#ifdef ENABLE_WOW_CLIENT
 
 // General
 #include "WoWObject.h"
@@ -180,7 +180,7 @@ void WoWObject::ProcessMovementUpdate(CByteBuffer& Bytes)
 	{
 		glm::vec3 position = fromGameToReal(glm::vec3(object->PositionX, object->PositionY, object->PositionZ));
 		object->SetLocalPosition(position);
-		object->SetLocalRotation(glm::vec3(0.0f, object->Orientation + glm::half_pi<float>(), 0.0f));
+		object->SetLocalRotationEuler(glm::vec3(0.0f, object->Orientation + glm::half_pi<float>(), 0.0f));
 	}
 }
 
@@ -205,13 +205,13 @@ void WoWObject::UpdateValues(CByteBuffer& Bytes)
 //
 // Protected
 //
-std::shared_ptr<WoWObject> WoWObject::Create(IBaseManager& BaseManager, IRenderDevice& RenderDevice, IScene * Scene, ObjectGuid Guid)
+std::shared_ptr<WoWObject> WoWObject::Create(IScene& Scene, ObjectGuid Guid)
 {
 	std::shared_ptr<WoWObject> thisObj = std::make_shared<WoWObject>(Guid);
 	return thisObj;
 }
 
-void WoWObject::AfterCreate(IBaseManager& BaseManager, IRenderDevice& RenderDevice, IScene * Scene)
+void WoWObject::AfterCreate(IScene& Scene)
 {
 }
 

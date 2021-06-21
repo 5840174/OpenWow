@@ -1,6 +1,6 @@
 #include "stdafx.h"
 
-#if 0
+#ifdef ENABLE_WOW_CLIENT
 
 // General
 #include "World.h"
@@ -18,19 +18,17 @@
 #include "WoWUnit.h"
 
 // zlib
-#include "zlib/zlib.h"
+#include "zlib/source/zlib.h"
 #pragma comment(lib, "zlib.lib")
 
-WoWWorld::WoWWorld(IBaseManager& BaseManager, IRenderDevice& RenderDevice, IScene* Scene, const std::shared_ptr<CWorldSocket>& Socket)
+WoWWorld::WoWWorld(IScene& Scene, const std::shared_ptr<CWorldSocket>& Socket)
 	: m_Scene(Scene)
-	, m_BaseManager(BaseManager)
-	, m_RenderDevice(RenderDevice)
 	, m_Socket(Socket)
 {
 	m_Socket->SetExternalHandler(std::bind(&WoWWorld::ProcessHandler, this, std::placeholders::_1, std::placeholders::_2));
 
-	skyManager = Scene->GetRootNode3D()->CreateSceneNode<SkyManager>(m_RenderDevice);
-	map = Scene->GetRootNode3D()->CreateSceneNode<CMap>(m_BaseManager, m_RenderDevice);
+	skyManager = Scene.GetRootSceneNode()->CreateSceneNode<SkyManager>();
+	map = Scene.GetRootSceneNode()->CreateSceneNode<CMap>();
 
 	// Handlers
 	AddHandler(SMSG_CHAR_ENUM, std::bind(&WoWWorld::S_SMSG_CHAR_ENUM, this, std::placeholders::_1));
@@ -90,14 +88,14 @@ void WoWWorld::S_SMSG_LOGIN_VERIFY_WORLD(CServerPacket& Buffer)
 	skyManager->Load(mapID);
 
 	// Map
-	map->MapPreLoad(m_BaseManager.GetManager<CDBCStorage>()->DBC_Map()[mapID]);
+	map->MapPreLoad(m_Scene.GetBaseManager().GetManager<CDBCStorage>()->DBC_Map()[mapID]);
 	map->MapLoad();
 	map->EnterMap(position);
 
 	// Camera
-	m_Scene->GetCameraController()->GetCamera()->SetTranslation(position);
-	m_Scene->GetCameraController()->GetCamera()->SetYaw(48.8);
-	m_Scene->GetCameraController()->GetCamera()->SetPitch(-27.8);
+	m_Scene.GetCameraController()->GetCamera()->SetPosition(position);
+	m_Scene.GetCameraController()->GetCamera()->SetYaw(48.8);
+	m_Scene.GetCameraController()->GetCamera()->SetPitch(-27.8);
 }
 
 void WoWWorld::S_SMSG_COMPRESSED_UPDATE_OBJECT(CServerPacket& Buffer)
@@ -152,7 +150,7 @@ void WoWWorld::S_SMSG_MONSTER_MOVE(CServerPacket & Buffer)
 	if (objIterator != m_Objects.end())
 	{
 		auto objAsUnit = std::dynamic_pointer_cast<WoWUnit>(objIterator->second);
-		objAsUnit->LocalSetPosition(fromGameToReal(glm::vec3(positionX, positionY, positionZ)));
+		objAsUnit->SetLocalPosition(fromGameToReal(glm::vec3(positionX, positionY, positionZ)));
 	}
 
 	if (isStopped == 0)
@@ -194,7 +192,7 @@ void WoWWorld::S_SMSG_MONSTER_MOVE(CServerPacket & Buffer)
 		if (objIterator != m_Objects.end())
 		{
 			auto objAsUnit = std::dynamic_pointer_cast<WoWUnit>(objIterator->second);
-			objAsUnit->SetRotation(glm::vec3(0.0f, -planeRightX, 0.0f));
+			objAsUnit->SetLocalRotationEuler(glm::vec3(0.0f, -planeRightX, 0.0f));
 		}
 	}
 }
@@ -304,7 +302,7 @@ void WoWWorld::ProcessUpdatePacket(CByteBuffer& Bytes)
 				std::shared_ptr<WoWObject> object = GetWoWObject(guid);
 				object->ProcessMovementUpdate(Bytes);
 				object->UpdateValues(Bytes);
-				object->AfterCreate(m_BaseManager, m_RenderDevice, m_Scene);
+				object->AfterCreate(m_Scene);
 
 				Log::Warn("UPDATETYPE_CREATE_OBJECT");
 			}
@@ -330,28 +328,28 @@ std::shared_ptr<WoWObject> WoWWorld::CreateObjectByType(ObjectGuid guid, ObjectT
 	switch (ObjectTypeID)
 	{
 	case ObjectTypeID::TYPEID_OBJECT:
-		return WoWObject::Create(m_BaseManager, m_RenderDevice, m_Scene, guid);
+		return WoWObject::Create(m_Scene, guid);
 
 	case ObjectTypeID::TYPEID_ITEM:
-		return WoWItem::Create(m_BaseManager, m_RenderDevice, m_Scene, guid);
+		return WoWItem::Create(m_Scene, guid);
 
 	case ObjectTypeID::TYPEID_CONTAINER:
-		return WoWBag::Create(m_BaseManager, m_RenderDevice, m_Scene, guid);
+		return WoWBag::Create(m_Scene, guid);
 
 	case ObjectTypeID::TYPEID_UNIT:
-		return WoWUnit::Create(m_BaseManager, m_RenderDevice, m_Scene, guid);
+		return WoWUnit::Create(m_Scene, guid);
 
 	case ObjectTypeID::TYPEID_PLAYER:
-		return WoWPlayer::Create(m_BaseManager, m_RenderDevice, m_Scene, guid);
+		return WoWPlayer::Create(m_Scene, guid);
 
 	case ObjectTypeID::TYPEID_GAMEOBJECT:
-		return WoWGameObject::Create(m_BaseManager, m_RenderDevice, m_Scene, guid);
+		return WoWGameObject::Create(m_Scene, guid);
 
 	case ObjectTypeID::TYPEID_DYNAMICOBJECT:
-		return WoWDynamicObject::Create(m_BaseManager, m_RenderDevice, m_Scene, guid);
+		return WoWDynamicObject::Create(m_Scene, guid);
 
 	case ObjectTypeID::TYPEID_CORPSE:
-		return WoWCorpse::Create(m_BaseManager, m_RenderDevice, m_Scene, guid);
+		return WoWCorpse::Create(m_Scene, guid);
 	}
 
 	_ASSERT(false);

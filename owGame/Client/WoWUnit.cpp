@@ -1,6 +1,6 @@
 #include "stdafx.h"
 
-#if 0
+#ifdef ENABLE_WOW_CLIENT
 
 // General
 #include "WoWUnit.h"
@@ -8,8 +8,8 @@
 // Additional
 #include "World/WorldObjectsCreator.h"
 
-WoWUnit::WoWUnit(ObjectGuid Guid)
-	: WorldObject(Guid)
+WoWUnit::WoWUnit(IScene& Scene, ObjectGuid Guid)
+	: WorldObject(Scene, Guid)
 {
 	m_ObjectType |= TYPEMASK_UNIT;
 	m_ObjectTypeId = TYPEID_UNIT;
@@ -87,26 +87,26 @@ void WoWUnit::SetSpeed(UnitMoveType MoveType, float Speed)
 //
 // Protected
 //
-std::shared_ptr<WoWUnit> WoWUnit::Create(IBaseManager& BaseManager, IRenderDevice& RenderDevice, IScene * Scene, ObjectGuid Guid)
+std::shared_ptr<WoWUnit> WoWUnit::Create(IScene& Scene, ObjectGuid Guid)
 {
-	std::shared_ptr<WoWUnit> thisObj = Scene->GetRootNode3D()->CreateSceneNode<WoWUnit>(Guid);
+	std::shared_ptr<WoWUnit> thisObj = Scene.GetRootSceneNode()->CreateSceneNode<WoWUnit>(Guid);
 	Log::Green("WoWUnit created!");
 
 	// For test only
-	BoundingBox bbox(glm::vec3(-2.0f), glm::vec3(2.0f));
-	bbox.calculateCenter();
+	//BoundingBox bbox(glm::vec3(-2.0f), glm::vec3(2.0f));
+	//bbox.calculateCenter();
 	//thisObj->GetComponentT<IColliderComponent>()->SetBounds(bbox);
 
 	return thisObj;
 }
 
-void WoWUnit::AfterCreate(IBaseManager& BaseManager, IRenderDevice& RenderDevice, IScene * Scene)
+void WoWUnit::AfterCreate(IScene& Scene)
 {
 	uint32 displayInfo = GetUInt32Value(UNIT_FIELD_DISPLAYID);
 	if (displayInfo != 0)
 	{
-		CWorldObjectCreator creator(BaseManager);
-		m_HiddenNode = creator.BuildCreatureFromDisplayInfo(RenderDevice, Scene, displayInfo, shared_from_this());
+		CWorldObjectCreator creator(Scene.GetBaseManager());
+		m_HiddenNode = creator.BuildCreatureFromDisplayInfo(Scene.GetBaseManager().GetApplication().GetRenderDevice(), &Scene, displayInfo, shared_from_this());
 	}
 	else
 	{

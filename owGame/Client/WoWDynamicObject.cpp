@@ -1,6 +1,6 @@
 #include "stdafx.h"
 
-#if 0
+#ifdef ENABLE_WOW_CLIENT
 
 // General
 #include "WoWDynamicObject.h"
@@ -17,7 +17,7 @@ WoWDynamicObject::~WoWDynamicObject()
 {
 }
 
-std::shared_ptr<WoWDynamicObject> WoWDynamicObject::Create(IBaseManager & BaseManager, IRenderDevice & RenderDevice, IScene * Scene, ObjectGuid Guid)
+std::shared_ptr<WoWDynamicObject> WoWDynamicObject::Create(IScene& Scene, ObjectGuid Guid)
 {
 	std::shared_ptr<WoWDynamicObject> thisObj = std::make_shared<WoWDynamicObject>(Guid);
 	return thisObj;

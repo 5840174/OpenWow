@@ -1,6 +1,6 @@
 #pragma once
 
-#if 0
+#ifdef ENABLE_WOW_CLIENT
 
 #include "WoWWorldObject.h"
 #include "World/GameObject/GameObject.h"
@@ -57,11 +57,11 @@ class ZN_API WoWGameObject
 	: public WorldObject
 {
 public:
-	WoWGameObject(ObjectGuid Guid);
+	WoWGameObject(IScene& Scene, ObjectGuid Guid);
 	virtual ~WoWGameObject();
 
 public:
-	static std::shared_ptr<WoWGameObject> Create(IBaseManager& BaseManager, IRenderDevice& RenderDevice, IScene * Scene, ObjectGuid Guid);
+	static std::shared_ptr<WoWGameObject> Create(IScene& Scene, ObjectGuid Guid);
 	virtual void AfterCreate(IBaseManager& BaseManager, IRenderDevice& RenderDevice, IScene * Scene);
 
 private:

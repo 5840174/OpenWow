@@ -1,6 +1,6 @@
 #pragma once
 
-#if 0
+#ifdef ENABLE_WOW_CLIENT
 
 #include "ObjectGUID.h"
 #include "UpdateMask.h"
@@ -82,8 +82,8 @@ public:
 	
 
 public: // Creation
-	static std::shared_ptr<WoWObject> Create(IBaseManager& BaseManager, IRenderDevice& RenderDevice, IScene* Scene, ObjectGuid Guid);
-	virtual void AfterCreate(IBaseManager& BaseManager, IRenderDevice& RenderDevice, IScene * Scene);
+	static std::shared_ptr<WoWObject> Create(IScene& Scene, ObjectGuid Guid);
+	virtual void AfterCreate(IScene& Scene);
 
 public: // Values system
 	const int32& GetInt32Value(uint16 index) const;

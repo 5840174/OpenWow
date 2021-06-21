@@ -1,6 +1,6 @@
 #pragma once
 
-#if 0
+#ifdef ENABLE_WOW_CLIENT
 
 #include "WoWObject.h"
 #include "WorldLocation.h"
@@ -10,7 +10,7 @@ class ZN_API WorldObject
 	, public WorldLocation
 {
 public:
-	WorldObject(ObjectGuid Guid);
+	WorldObject(IScene& Scene, ObjectGuid Guid);
 	virtual ~WorldObject();
 
 private:

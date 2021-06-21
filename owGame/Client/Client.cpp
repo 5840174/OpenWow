@@ -1,6 +1,6 @@
 #include "stdafx.h"
 
-#if 0
+#ifdef ENABLE_WOW_CLIENT
 
 // General
 #include "Client.h"
@@ -71,7 +71,7 @@ void CWoWClient::OnSuccessConnect(BigNumber Key)
 
 	m_SocketsHandlerThread->Handler().Add(m_WorldSocket.get());
 
-	m_World = std::make_unique<WoWWorld>(m_BaseManager, m_RenderDevice, m_Scene, m_WorldSocket);
+	m_World = std::make_unique<WoWWorld>(*m_Scene, m_WorldSocket);
 }
 
 WoWWorld& CWoWClient::GetWorld() const

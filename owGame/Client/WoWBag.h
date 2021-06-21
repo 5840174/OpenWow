@@ -1,6 +1,6 @@
 #pragma once
 
-#if 0
+#ifdef ENABLE_WOW_CLIENT
 
 #include "WoWItem.h"
 
@@ -12,7 +12,7 @@ public:
 	virtual ~WoWBag();
 
 public:
-	static std::shared_ptr<WoWBag> Create(IBaseManager& BaseManager, IRenderDevice& RenderDevice, IScene * Scene, ObjectGuid Guid);
+	static std::shared_ptr<WoWBag> Create(IScene& Scene, ObjectGuid Guid);
 
 private:
 

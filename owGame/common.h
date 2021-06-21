@@ -25,12 +25,10 @@
 */
 //#define USE_WMO_PORTALS_CULLING
 
-
 /**
   * Enable or disable M2 models support
 */
 #define USE_M2_MODELS
-
 
 /**
   * Enable or disable M2 models support
@@ -41,6 +39,12 @@
   * Enable or disable M2 models support
 */
 //#define USE_M2_RIBBONS
+
+/**
+  * Enable client
+*/
+#define ENABLE_WOW_CLIENT
+
 
 
 //

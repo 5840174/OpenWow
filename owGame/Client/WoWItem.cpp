@@ -1,6 +1,6 @@
 #include "stdafx.h"
 
-#if 0
+#ifdef ENABLE_WOW_CLIENT
 
 // General
 #include "WoWItem.h"
@@ -17,7 +17,7 @@ WoWItem::~WoWItem()
 {
 }
 
-std::shared_ptr<WoWItem> WoWItem::Create(IBaseManager & BaseManager, IRenderDevice & RenderDevice, IScene * Scene, ObjectGuid Guid)
+std::shared_ptr<WoWItem> WoWItem::Create(IScene& Scene, ObjectGuid Guid)
 {
 	std::shared_ptr<WoWItem> thisObj = std::make_shared<WoWItem>(Guid);
 	return thisObj;

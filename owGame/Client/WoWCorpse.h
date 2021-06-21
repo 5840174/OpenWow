@@ -1,6 +1,6 @@
 #pragma once
 
-#if 0
+#ifdef ENABLE_WOW_CLIENT
 
 #include "WoWObject.h"
 
@@ -12,7 +12,7 @@ public:
 	virtual ~WoWCorpse();
 
 public:
-	static std::shared_ptr<WoWCorpse> Create(IBaseManager& BaseManager, IRenderDevice& RenderDevice, IScene * Scene, ObjectGuid Guid);
+	static std::shared_ptr<WoWCorpse> Create(IScene& Scene, ObjectGuid Guid);
 
 private:
 

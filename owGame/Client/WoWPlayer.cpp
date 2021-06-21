@@ -1,12 +1,12 @@
 #include "stdafx.h"
 
-#if 0
+#ifdef ENABLE_WOW_CLIENT
 
 // General
 #include "WoWPlayer.h"
 
-WoWPlayer::WoWPlayer(ObjectGuid Guid)
-	: WoWUnit(Guid)
+WoWPlayer::WoWPlayer(IScene& Scene, ObjectGuid Guid)
+	: WoWUnit(Scene, Guid)
 {
 	m_ObjectType |= TYPEMASK_PLAYER;
 	m_ObjectTypeId = TYPEID_PLAYER;
@@ -22,13 +22,13 @@ WoWPlayer::~WoWPlayer()
 //
 // Protected
 //
-std::shared_ptr<WoWPlayer> WoWPlayer::Create(IBaseManager& BaseManager, IRenderDevice& RenderDevice, IScene * Scene, ObjectGuid Guid)
+std::shared_ptr<WoWPlayer> WoWPlayer::Create(IScene& Scene, ObjectGuid Guid)
 {
-	std::shared_ptr<WoWPlayer> thisObj = Scene->GetRootNode3D()->CreateSceneNode<WoWPlayer>(Guid);
+	std::shared_ptr<WoWPlayer> thisObj = Scene.GetRootSceneNode()->CreateSceneNode<WoWPlayer>(Guid);
 
 	// For test only
-	BoundingBox bbox(glm::vec3(-2.0f), glm::vec3(2.0f));
-	bbox.calculateCenter();
+	//BoundingBox bbox(glm::vec3(-2.0f), glm::vec3(2.0f));
+	//bbox.calculateCenter();
 	//thisObj->GetComponentT<IColliderComponent>()->SetBounds(bbox);
 
 	return thisObj;

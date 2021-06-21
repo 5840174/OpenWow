@@ -1,6 +1,6 @@
 #pragma once
 
-#if 0
+#ifdef ENABLE_WOW_CLIENT
 
 #include "WoWWorldObject.h"
 
@@ -182,7 +182,7 @@ class ZN_API WoWUnit
 	: public WorldObject
 {
 public:
-	WoWUnit(ObjectGuid Guid);
+	WoWUnit(IScene& Scene, ObjectGuid Guid);
 	virtual ~WoWUnit();
 
 	virtual void ProcessMovementPacket(CByteBuffer& Bytes);
@@ -201,8 +201,8 @@ public:
 	bool HasExtraMovementFlag(uint16 flag) const { return (m_MovementFlagsExtra & flag) != 0; }
 
 public:
-	static std::shared_ptr<WoWUnit> Create(IBaseManager& BaseManager, IRenderDevice& RenderDevice, IScene * Scene, ObjectGuid Guid);
-	virtual void AfterCreate(IBaseManager& BaseManager, IRenderDevice& RenderDevice, IScene * Scene) override;
+	static std::shared_ptr<WoWUnit> Create(IScene& Scene, ObjectGuid Guid);
+	virtual void AfterCreate(IScene& Scene) override;
 
 protected:
 	uint32 m_MovementFlags;

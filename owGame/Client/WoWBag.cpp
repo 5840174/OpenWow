@@ -1,6 +1,6 @@
 #include "stdafx.h"
 
-#if 0
+#ifdef ENABLE_WOW_CLIENT
 
 // General
 #include "WoWBag.h"
@@ -22,7 +22,7 @@ WoWBag::~WoWBag()
 //
 // Public
 //
-std::shared_ptr<WoWBag> WoWBag::Create(IBaseManager & BaseManager, IRenderDevice & RenderDevice, IScene * Scene, ObjectGuid Guid)
+std::shared_ptr<WoWBag> WoWBag::Create(IScene& Scene, ObjectGuid Guid)
 {
 	std::shared_ptr<WoWBag> thisObj = std::make_shared<WoWBag>(Guid);
 	return thisObj;
