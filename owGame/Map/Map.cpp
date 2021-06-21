@@ -104,7 +104,15 @@ void CMap::MapPreLoad(const DBC_MapRecord* DBCMapRecord)
 {
 	m_MapDBCRecord = DBCMapRecord;
 
-	Log::Print("Map[%s]: Id [%d]. Preloading...", m_MapDBCRecord->Get_Directory().c_str(), m_MapDBCRecord->Get_ID());
+	Log::Print("Map[%s]: Id = '%d'. Preloading...",  m_MapDBCRecord->Get_Directory().c_str(), m_MapDBCRecord->Get_ID());
+	Log::Print("Map[%s]: InstanceType = '%d'.",      m_MapDBCRecord->Get_Directory().c_str(), m_MapDBCRecord->Get_InstanceType());
+	Log::Print("Map[%s]: MapType = '%d'.",           m_MapDBCRecord->Get_Directory().c_str(), m_MapDBCRecord->Get_MapType());
+	Log::Print("Map[%s]: IsBattleGround = '%d'.",    m_MapDBCRecord->Get_Directory().c_str(), m_MapDBCRecord->Get_IsBattleGround());
+	Log::Print("Map[%s]: Name = '%s'.",              m_MapDBCRecord->Get_Directory().c_str(), m_MapDBCRecord->Get_Name().c_str());
+	Log::Print("Map[%s]: AreaTableID = '%d'.",       m_MapDBCRecord->Get_Directory().c_str(), m_MapDBCRecord->Get_AreaTableID());
+	Log::Print("Map[%s]: AllianceDescr = '%s'.",     m_MapDBCRecord->Get_Directory().c_str(), m_MapDBCRecord->Get_MapDescriptionAllicane().c_str());
+	Log::Print("Map[%s]: HordeDescr = '%s'.",        m_MapDBCRecord->Get_Directory().c_str(), m_MapDBCRecord->Get_MapDescriptionHorde().c_str());
+	Log::Print("Map[%s]: CorpseMapID = '%d'.",       m_MapDBCRecord->Get_Directory().c_str(), m_MapDBCRecord->Get_CorpseMap());
 
 	m_WDL = std::make_unique<CMapWDL>(*this);
 	m_WDL->Load();

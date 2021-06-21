@@ -60,7 +60,7 @@ void CSceneWoW::Initialize()
 
 		SetCameraController(MakeShared(CFreeCameraController));
 		GetCameraController()->SetCamera(cameraNode->GetComponentT<ICameraComponent3D>());
-		GetCameraController()->GetCamera()->SetPerspectiveProjection(75.0f, static_cast<float>(GetRenderWindow().GetWindowWidth()) / static_cast<float>(GetRenderWindow().GetWindowHeight()), 1.0f, 15000.0f);
+		GetCameraController()->GetCamera()->SetPerspectiveProjection(75.0f, static_cast<float>(GetRenderWindow().GetWindowWidth()) / static_cast<float>(GetRenderWindow().GetWindowHeight()), 1.0f, 2500.0f);
 		GetCameraController()->GetCamera()->SetPosition(glm::vec3(100.0f));
 		GetCameraController()->GetCamera()->SetYaw(225);
 		GetCameraController()->GetCamera()->SetPitch(-45);
@@ -86,13 +86,13 @@ void CSceneWoW::Initialize()
 	//const float y = 30; //1 barrens
 	//const uint32 mapID = 1;
 
-	//const float x = 26; //530 outland
-	//const float y = 32; //530 outland
-	//const uint32 mapID = 530;
+	const float x = 26; //530 outland
+	const float y = 32; //530 outland
+	const uint32 mapID = 530;
 
-	const float x = 30; //571 nortrend
-	const float y = 21; //571 nortrend
-	const uint32 mapID = 571;
+	//const float x = 30; //571 nortrend
+	//const float y = 21; //571 nortrend
+	//const uint32 mapID = 571;
 
 	skyManager->Load(mapID);
 	map = GetRootSceneNode()->CreateSceneNode<CMap>();
@@ -108,7 +108,6 @@ void CSceneWoW::Initialize()
 	GetCameraController()->GetCamera()->SetPosition(position);
 
 	//GetCameraController()->GetCamera()->SetPosition(glm::vec3(14300, 150, 20500));
-
 }
 
 void CSceneWoW::Finalize()

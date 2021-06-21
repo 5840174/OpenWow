@@ -4,7 +4,7 @@
 #include "MapTileLiquid.h"
 
 // Additional
-#include "DBC/Tables/DBC_LiquidType.h"
+#include "DBC/Tables/DBC_LiquidType_Wotlk.h"
 #include "Liquid/LiquidModel.h"
 
 #include __PACK_BEGIN

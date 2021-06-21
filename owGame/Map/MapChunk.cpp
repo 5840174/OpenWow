@@ -409,7 +409,7 @@ bool CMapChunk::Load()
 		return true;
 
 	// Material
-	std::shared_ptr<ADT_MCNK_Material> mapChunkMaterial = std::make_shared<ADT_MCNK_Material>(GetRenderDevice());
+	std::shared_ptr<CMapChunkMaterial> mapChunkMaterial = std::make_shared<CMapChunkMaterial>(GetRenderDevice());
 
 #if 0
 	// Create chunk texture
@@ -474,7 +474,7 @@ bool CMapChunk::Load()
 	mapChunkMaterial->SetIsNortrend(m_Map.IsNortrend());
 
 	// Geom High
-	{ 
+	/*{ 
 		const std::vector<uint16>& mapArrayHigh = m_Map.GenarateHighMapArray(m_Header.holes);
 		std::shared_ptr<IBuffer> __ibHigh = GetRenderDevice().GetObjectsFactory().CreateIndexBuffer(mapArrayHigh);
 
@@ -488,28 +488,32 @@ bool CMapChunk::Load()
 
 		defaultGeometry->SetIndexBuffer(__ibHigh);
 
-		std::shared_ptr<IModel> mapChunkModel = GetRenderDevice().GetObjectsFactory().CreateModel();
+		auto mapChunkModel = GetRenderDevice().GetObjectsFactory().CreateModel();
+		mapChunkModel->AddConnection(mapChunkMaterial, defaultGeometry);
+
+		GetComponentT<IModelComponent>()->SetModel(mapChunkModel);
+	}*/
+
+	// Geom Default
+	{
+		const std::vector<uint16>& mapArrayHigh = m_Map.GenarateDefaultMapArray(m_Header.holes);
+		std::shared_ptr<IBuffer> __ibDefault = GetRenderDevice().GetObjectsFactory().CreateIndexBuffer(mapArrayHigh);
+
+		std::shared_ptr<IGeometry> defaultGeometry = GetRenderDevice().GetObjectsFactory().CreateGeometry();
+
+		defaultGeometry->AddVertexBuffer(BufferBinding("POSITION", 0), verticesBuffer);
+		defaultGeometry->AddVertexBuffer(BufferBinding("NORMAL", 0), normalsBuffer);
+		defaultGeometry->AddVertexBuffer(BufferBinding("TEXCOORD", 0), m_Map.GetBufferTextureCoordDetailAndAlpha());
+		if (mccvBuffer)
+			defaultGeometry->AddVertexBuffer(BufferBinding("COLOR", 0), mccvBuffer);
+
+		defaultGeometry->SetIndexBuffer(__ibDefault);
+
+		auto mapChunkModel = GetRenderDevice().GetObjectsFactory().CreateModel();
 		mapChunkModel->AddConnection(mapChunkMaterial, defaultGeometry);
 
 		GetComponentT<IModelComponent>()->SetModel(mapChunkModel);
 	}
-
-
-	/*{ // Geom Default
-		std::vector<uint16>& mapArrayDefault = _MapShared->GenarateDefaultMapArray(m_Header.holes);
-		std::shared_ptr<IBuffer> __ibDefault = GetManager<IRenderDevice>(GetBaseManager())->CreateIndexBuffer(mapArrayDefault);
-
-		__geomDefault = GetManager<IRenderDevice>(GetBaseManager())->CreateMesh();
-		__geomDefault->AddVertexBuffer(BufferBinding("POSITION", 0), verticesBuffer);
-		__geomDefault->AddVertexBuffer(BufferBinding("NORMAL", 0), normalsBuffer);
-		__geomDefault->AddVertexBuffer(BufferBinding("TEXCOORD", 0), _MapShared->BufferTextureCoordDetail);
-		__geomDefault->AddVertexBuffer(BufferBinding("TEXCOORD", 1), _MapShared->BufferTextureCoordAlpha);
-		__geomDefault->SetIndexBuffer(__ibDefault);
-		__geomDefault->SetMaterial(mat);
-		__geomDefault->SetType(SN_TYPE_ADT_CHUNK);
-
-		AddMesh(__geomDefault);
-	}*/
 
 	return true;
 }

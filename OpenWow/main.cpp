@@ -2,7 +2,10 @@
 
 #include "SceneWoW.h"
 
-#include "BugTrap/BugTrap.h"
+// Additional
+#include <BugTrap/BugTrap.h>
+#include <clocale>
+
 
 void main_internal(int argumentCount, char* arguments[])
 {
@@ -17,7 +20,7 @@ void main_internal(int argumentCount, char* arguments[])
 
 		{
 			glm::ivec2 windowSize = app.GetBaseManager().GetManager<ISettings>()->GetGroup("Video")->GetPropertyT<glm::vec2>("WindowSize")->Get();
-			std::unique_ptr<IznNativeWindow> nativeWindow = app.CreateNativeWindow("Zenon Engine", windowSize);
+			std::unique_ptr<IznNativeWindow> nativeWindow = app.CreateNativeWindow("OpenWoW", windowSize);
 
 			const auto& renderWindow = renderDevice.GetObjectsFactory().CreateRenderWindow(std::move(nativeWindow), true);
 			app.AddRenderWindow(renderWindow);
@@ -27,18 +30,6 @@ void main_internal(int argumentCount, char* arguments[])
 			renderWindow->SetNativeWindowEventListener(std::dynamic_pointer_cast<IznNativeWindowEventListener>(scene));
 			scene->Initialize();
 		}
-
-		/*{
-			std::unique_ptr<IznNativeWindow> nativeWindow2 = nativeWindowFactory.CreateWindowInstance(L"Zenon Engine", windowWidth, windowHeight);
-
-			const auto& renderWindow2 = renderDevice.GetObjectsFactory().CreateRenderWindow(std::move(nativeWindow2), false);
-			app.AddRenderWindow(renderWindow2);
-
-			std::shared_ptr<IScene> scene2 = MakeShared(CSceneDefault, *BaseManager, *renderWindow2);
-			renderWindow2->SetRenderWindowEventListener(std::dynamic_pointer_cast<IRenderWindowEventListener>(scene2));
-			renderWindow2->SetNativeWindowEventListener(std::dynamic_pointer_cast<IznNativeWindowEventListener>(scene2));
-			scene2->Initialize();
-		}*/
 	}
 
 	app.Run();
@@ -53,6 +44,9 @@ int main(int argumentCount, char* arguments[])
 	_CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
 	_CrtSetReportMode(_CRT_ERROR, _CRTDBG_MODE_DEBUG);
 #endif
+
+	auto locale = std::setlocale(LC_ALL, "ru_RU.UTF-8");
+	printf("Locale '%s' setted.", locale);
 
 	BT_InstallSehFilter();
 	BT_SetAppName(L"ZenonEngine");

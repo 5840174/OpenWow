@@ -7,33 +7,33 @@
 #include "MapChunkMaterial.h"
 
 
-ADT_MCNK_Material::ADT_MCNK_Material(IRenderDevice& RenderDevice) 
-	: MaterialProxieT(RenderDevice.GetObjectsFactory().CreateMaterial("ADT_MCNK_Material"))
+CMapChunkMaterial::CMapChunkMaterial(IRenderDevice& RenderDevice) 
+	: MaterialProxieT(RenderDevice.GetObjectsFactory().CreateMaterial("CMapChunkMaterial"))
 {
 }
 
-ADT_MCNK_Material::~ADT_MCNK_Material()
+CMapChunkMaterial::~CMapChunkMaterial()
 {
 }
 
 //--
 
-void ADT_MCNK_Material::SetLayersCnt(uint32 value)
+void CMapChunkMaterial::SetLayersCnt(uint32 value)
 {
 	MaterialData().LayersCnt = value;
 }
 
-void ADT_MCNK_Material::SetIsShadowMapExists(uint32 value)
+void CMapChunkMaterial::SetIsShadowMapExists(uint32 value)
 {
 	MaterialData().IsShadowMapExists = value;
 }
 
-void ADT_MCNK_Material::SetIsMCCVExists(uint32 value)
+void CMapChunkMaterial::SetIsMCCVExists(uint32 value)
 {
 	MaterialData().IsMCCVExists = value;
 }
 
-void ADT_MCNK_Material::SetIsNortrend(uint32 value)
+void CMapChunkMaterial::SetIsNortrend(uint32 value)
 {
 	MaterialData().IsNortrend = value;
 }

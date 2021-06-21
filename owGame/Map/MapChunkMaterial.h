@@ -22,12 +22,12 @@ __declspec(align(16)) struct ADT_MCNK_MaterialMaterialProperties
 };
 }
 
-class ADT_MCNK_Material 
+class CMapChunkMaterial 
 	: public MaterialProxieT<ADT_MCNK_MaterialMaterialProperties>
 {
 public:
-	ADT_MCNK_Material(IRenderDevice& RenderDevice);
-	virtual ~ADT_MCNK_Material();
+	CMapChunkMaterial(IRenderDevice& RenderDevice);
+	virtual ~CMapChunkMaterial();
 
 	void SetLayersCnt(uint32 value);
 	void SetIsShadowMapExists(uint32 value);

@@ -348,6 +348,7 @@ bool WMO_Group::Load()
 
 
 	// Vertex colors
+	uint32 ccccccccc = 0;
 	for (const auto& buffer : m_ChunkReader->OpenChunks("MOCV"))
 	{
 		_ASSERT(m_GroupHeader.flags.HAS_VERTEX_COLORS);
@@ -355,8 +356,11 @@ bool WMO_Group::Load()
 		uint32 vertexColorsCount = buffer->getSize() / sizeof(CBgra);
 		CBgra* vertexColors = (CBgra*)buffer->getDataFromCurrent();
 
+		ccccccccc = vertexColorsCount;
+
 #if WOW_CLIENT_VERSION >= WOW_WOTLK_3_3_5
-		//FixColors(vertexColors, vertexColorsCount, WMOBatchs.data());
+		//if (false == m_WMOModel.GetHeader().flags.lighten_interiors)
+		//	FixColors(vertexColors, vertexColorsCount, WMOBatchs.data());
 #endif
 
 		// Convert
@@ -396,6 +400,30 @@ bool WMO_Group::Load()
 		m_WMOLiqiud = std::make_shared<CWMO_Liquid>(m_RenderDevice, m_WMOModel, *this, buffer, liquidHeader, ResolveLiquidType(m_BaseManager.GetManager<CDBCStorage>(), m_WMOModel.GetHeader(), m_GroupHeader));
 	}
 
+	/*Log::Info("WMO '%s': Batch count '%d'. Trans: '%d' (%d - %d). Int: '%d' (%d - %d). Ext: '%d' (%d - %d).", 
+		m_WMOModel.GetFilename().c_str(), 
+		WMOBatchs.size(), 
+
+		m_GroupHeader.transBatchCount,
+		m_GroupHeader.transBatchCount > 0 ? WMOBatchs[0].vertexStart : -1,
+		m_GroupHeader.transBatchCount > 0 ? WMOBatchs[0].vertexEnd : -1,
+
+		m_GroupHeader.intBatchCount,
+		m_GroupHeader.intBatchCount > 0 ? WMOBatchs[m_GroupHeader.transBatchCount].vertexStart : -1,
+		m_GroupHeader.intBatchCount > 0 ? WMOBatchs[m_GroupHeader.transBatchCount].vertexEnd : -1,
+
+		m_GroupHeader.extBatchCount,
+		m_GroupHeader.extBatchCount > 0 ? WMOBatchs[m_GroupHeader.transBatchCount + m_GroupHeader.intBatchCount].vertexStart : -1,
+		m_GroupHeader.extBatchCount > 0 ? WMOBatchs[m_GroupHeader.transBatchCount + m_GroupHeader.intBatchCount].vertexEnd : -1
+	);
+	Log::Info("WMO '%s': MOCV count '%d'.", m_WMOModel.GetFilename().c_str(), ccccccccc);*/
+	
+	
+	
+	
+	if (m_GroupHeader.transBatchCount + m_GroupHeader.intBatchCount + m_GroupHeader.extBatchCount != WMOBatchs.size())
+		throw CException("dick");
+
 	for (const auto& WMOGroupBatchProto : WMOBatchs)
 	{
 		std::shared_ptr<WMO_Group_Part_Batch> batch = std::make_shared<WMO_Group_Part_Batch>(m_RenderDevice, m_WMOModel, WMOGroupBatchProto);
@@ -404,6 +432,8 @@ bool WMO_Group::Load()
 
 		m_WMOBatchIndexes.push_back(batch);
 	}
+
+
 	// TODO: enable me std::sort(m_WMOBatchIndexes.begin(), m_WMOBatchIndexes.end(), WMO_Group_Part_BatchCompare());
 	WMOBatchs.clear();
 
@@ -417,6 +447,60 @@ bool WMO_Group::Delete()
 	return false;
 }
 
+
+void WMO_Group::FixColors(CBgra* mocv, uint32 mocv_count, const SWMO_Group_BatchDef* moba)
+{
+	int32_t intBatchStart;
+
+	if (m_GroupHeader.transBatchCount > 0)
+	{
+		intBatchStart = moba[(uint16)m_GroupHeader.transBatchCount].vertexStart;
+	}
+	else
+	{
+		intBatchStart = 0;
+	}
+
+	if (mocv_count > 0)
+	{
+		for (int32_t i = 0; i < mocv_count; i++)
+		{
+			auto* color = &mocv[i];
+
+			// Int / ext batches
+			if (i >= intBatchStart)
+			{
+				int32_t v6 = (color->r + (color->a * color->r / 64)) / 2;
+				int32_t v7 = (color->g + (color->a * color->g / 64)) / 2;
+				int32_t v8 = (color->b + (color->a * color->b / 64)) / 2;
+
+				v6 = v6 > 255 ? 255 : v6;
+				v7 = v7 > 255 ? 255 : v7;
+				v8 = v8 > 255 ? 255 : v8;
+
+				color->r = v6;
+				color->g = v7;
+				color->b = v8;
+
+				color->a = 255;
+				// Trans batches
+			}
+			else
+			{
+				color->r /= 2;
+				color->g /= 2;
+				color->b /= 2;
+			}
+
+			color->r = 255;
+			color->g = 255;
+			color->b = 255;
+		}
+	}
+}
+
+
+/*
 void WMO_Group::FixColors(CBgra* mocv, uint32 mocv_count, const SWMO_Group_BatchDef* moba)
 {
 	uint32 begin_second_fixup = 0;
@@ -481,6 +565,6 @@ void WMO_Group::FixColors(CBgra* mocv, uint32 mocv_count, const SWMO_Group_Batch
 			mocv[i].a = m_GroupHeader.flags.IS_OUTDOOR ? 0xFF : 0x00;
 		}
 	}
-}
+}*/
 
 #endif

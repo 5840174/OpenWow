@@ -39,6 +39,7 @@ private:
 
 	ADT_MHDR                                        m_Header;
 	std::vector<std::shared_ptr<ADT_TextureInfo>>	m_Textures;
+	std::shared_ptr<ITexture>                       m_ArrayTexture;
 
 	// Instances
 #ifdef USE_WMO_MODELS

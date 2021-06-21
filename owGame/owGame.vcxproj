@@ -220,6 +220,7 @@
     <ClInclude Include="DBC\DBC__Storage.h" />
     <ClInclude Include="DBC\Tables\DBC_AnimationData.h" />
     <ClInclude Include="DBC\Tables\DBC_AreaTable.h" />
+    <ClInclude Include="DBC\Tables\DBC_AreaTable_Wotlk.h" />
     <ClInclude Include="DBC\Tables\DBC_CharacterFacialHairStyles.h" />
     <ClInclude Include="DBC\Tables\DBC_CharComponentTextureLayouts.h" />
     <ClInclude Include="DBC\Tables\DBC_CharComponentTextureSections.h" />
@@ -245,6 +246,7 @@
     <ClInclude Include="DBC\Tables\DBC_LightParams.h" />
     <ClInclude Include="DBC\Tables\DBC_LightSkyBox.h" />
     <ClInclude Include="DBC\Tables\DBC_LiquidType.h" />
+    <ClInclude Include="DBC\Tables\DBC_LiquidType_Wotlk.h" />
     <ClInclude Include="DBC\Tables\DBC_LoadingScreen.h" />
     <ClInclude Include="DBC\Tables\DBC_Map.h" />
     <ClInclude Include="DBC\Tables\DBC_Map_WotLK.h" />

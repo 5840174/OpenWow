@@ -63,11 +63,11 @@ std::shared_ptr<IRenderPassPipelined> CRenderPass_WMOList::ConfigurePipeline(std
 //
 EVisitResult CRenderPass_WMOList::Visit(const std::shared_ptr<ISceneNode>& SceneNode)
 {
-	if (std::dynamic_pointer_cast<CWMO_Base_Instance>(SceneNode))
-	{
-		return __super::Visit(SceneNode);
-	}
-	else if (std::dynamic_pointer_cast<CWMO_Group_Instance>(SceneNode))
+	//if (std::dynamic_pointer_cast<CWMO_Base_Instance>(SceneNode))
+	//{
+	//	return __super::Visit(SceneNode);
+	//}
+	if (std::dynamic_pointer_cast<CWMO_Group_Instance>(SceneNode))
 	{
 		return __super::Visit(SceneNode);
 	}

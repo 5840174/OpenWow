@@ -1,4 +1,6 @@
 ^Log created
+!Unable to load settings file.
+!--->StringToValue: Unable to read value 'struct glm::vec<2,float,0>' from string '1280.000, 1024.000'
 ^Plugin 'D:\OpenWow\bin_x64\Release\znRenderDX11.dll' loaded.
 ^Plugin 'D:\OpenWow\bin_x64\Release\znRenderDX11.dll' successfully added.
 ^Plugin 'D:\OpenWow\bin_x64\Release\owGame.dll' loaded.
@@ -21,40 +23,40 @@
 ^CMPQFile[ruRU/patch-ruRU.MPQ]: Added!
 ^CMPQFile[ruRU/patch-ruRU-2.MPQ]: Added!
 ^CMPQFile[ruRU/patch-ruRU-3.MPQ]: Added!
-~DBCFile[AnimationData.dbc]: Records count = '-2003375944'.
-~DBCFile[GroundEffectDoodad.dbc]: Records count = '-2003375944'.
-~DBCFile[GroundEffectTexture.dbc]: Records count = '-2003375944'.
-~DBCFile[LoadingScreens.dbc]: Records count = '-2003375944'.
-~DBCFile[Material.dbc]: Records count = '-2003375944'.
-~DBCFile[Map.dbc]: Records count = '-2003375944'.
-~DBCFile[TerrainType.dbc]: Records count = '-2003375944'.
-~DBCFile[WMOAreaTable.dbc]: Records count = '-2003375944'.
-~DBCFile[WorldSafeLocs.dbc]: Records count = '-2003375944'.
-~DBCFile[AreaTable.dbc]: Records count = '-2003375944'.
-~DBCFile[CharacterFacialHairStyles.dbc]: Records count = '-2003375944'.
-~DBCFile[CharComponentTextureLayouts.dbc]: Records count = '-2003375944'.
-~DBCFile[CharComponentTextureSections.dbc]: Records count = '-2003375944'.
-~DBCFile[CharHairGeosets.dbc]: Records count = '-2003375944'.
-~DBCFile[CharSections.dbc]: Records count = '-2003375944'.
-~DBCFile[ChrRaces.dbc]: Records count = '-2003375944'.
-~DBCFile[CinematicCamera.dbc]: Records count = '-2003375944'.
-~DBCFile[CinematicSequences.dbc]: Records count = '-2003375944'.
-~DBCFile[CreatureDisplayInfo.dbc]: Records count = '-2003375944'.
-~DBCFile[CreatureDisplayInfoExtra.dbc]: Records count = '-2003375944'.
-~DBCFile[CreatureModelData.dbc]: Records count = '-2003375944'.
-~DBCFile[HelmetGeosetVisData.dbc]: Records count = '-2003375944'.
-~DBCFile[ItemBagFamily.dbc]: Records count = '-2003375944'.
-~DBCFile[ItemClass.dbc]: Records count = '-2003375944'.
-~DBCFile[ItemDisplayInfo.dbc]: Records count = '-2003375944'.
-~DBCFile[ItemVisualEffects.dbc]: Records count = '-2003375944'.
-~DBCFile[ItemVisuals.dbc]: Records count = '-2003375944'.
-~DBCFile[Light.dbc]: Records count = '-2003375944'.
-~DBCFile[LightFloatBand.dbc]: Records count = '-2003375944'.
-~DBCFile[LightIntBand.dbc]: Records count = '-2003375944'.
-~DBCFile[LightParams.dbc]: Records count = '-2003375944'.
-~DBCFile[LightSkybox.dbc]: Records count = '-2003375944'.
-~DBCFile[LiquidType.dbc]: Records count = '-2003375944'.
-~DBCFile[GameObjectDisplayInfo.dbc]: Records count = '-2003376056'.
+~DBCFile[AnimationData.dbc]: Fields count = '8'. Records count = '506'.
+~DBCFile[GroundEffectDoodad.dbc]: Fields count = '3'. Records count = '580'.
+~DBCFile[GroundEffectTexture.dbc]: Fields count = '11'. Records count = '24981'.
+~DBCFile[LoadingScreens.dbc]: Fields count = '4'. Records count = '91'.
+~DBCFile[Material.dbc]: Fields count = '5'. Records count = '8'.
+~DBCFile[Map.dbc]: Fields count = '66'. Records count = '135'.
+~DBCFile[TerrainType.dbc]: Fields count = '6'. Records count = '12'.
+~DBCFile[WMOAreaTable.dbc]: Fields count = '28'. Records count = '22550'.
+~DBCFile[WorldSafeLocs.dbc]: Fields count = '22'. Records count = '685'.
+~DBCFile[AreaTable.dbc]: Fields count = '36'. Records count = '2307'.
+~DBCFile[CharacterFacialHairStyles.dbc]: Fields count = '8'. Records count = '222'.
+~DBCFile[CharComponentTextureLayouts.dbc]: Fields count = '3'. Records count = '2'.
+~DBCFile[CharComponentTextureSections.dbc]: Fields count = '7'. Records count = '21'.
+~DBCFile[CharHairGeosets.dbc]: Fields count = '6'. Records count = '339'.
+~DBCFile[CharSections.dbc]: Fields count = '10'. Records count = '8958'.
+~DBCFile[ChrRaces.dbc]: Fields count = '69'. Records count = '21'.
+~DBCFile[CinematicCamera.dbc]: Fields count = '7'. Records count = '14'.
+~DBCFile[CinematicSequences.dbc]: Fields count = '10'. Records count = '14'.
+~DBCFile[CreatureDisplayInfo.dbc]: Fields count = '16'. Records count = '24262'.
+~DBCFile[CreatureDisplayInfoExtra.dbc]: Fields count = '21'. Records count = '15475'.
+~DBCFile[CreatureModelData.dbc]: Fields count = '28'. Records count = '1331'.
+~DBCFile[HelmetGeosetVisData.dbc]: Fields count = '8'. Records count = '21'.
+~DBCFile[ItemBagFamily.dbc]: Fields count = '18'. Records count = '16'.
+~DBCFile[ItemClass.dbc]: Fields count = '20'. Records count = '17'.
+~DBCFile[ItemDisplayInfo.dbc]: Fields count = '25'. Records count = '57986'.
+~DBCFile[ItemVisualEffects.dbc]: Fields count = '2'. Records count = '93'.
+~DBCFile[ItemVisuals.dbc]: Fields count = '6'. Records count = '80'.
+~DBCFile[Light.dbc]: Fields count = '15'. Records count = '715'.
+~DBCFile[LightFloatBand.dbc]: Fields count = '34'. Records count = '5100'.
+~DBCFile[LightIntBand.dbc]: Fields count = '34'. Records count = '15300'.
+~DBCFile[LightParams.dbc]: Fields count = '9'. Records count = '850'.
+~DBCFile[LightSkybox.dbc]: Fields count = '3'. Records count = '124'.
+~DBCFile[LiquidType.dbc]: Fields count = '45'. Records count = '26'.
+~DBCFile[GameObjectDisplayInfo.dbc]: Fields count = '19'. Records count = '3790'.
 ~FontsManager: Font 'Fonts\consola.ttf' loaded. Size [14].
 ~Loading shader 'shaders_D3D/Sky.hlsl':'VS_main'.
 ~Loading shader 'shaders_D3D/Sky.hlsl':'PS_main'.
@@ -76,140 +78,387 @@
 ~Loading shader 'UI/UIControlCommon.hlsl':'PS_main'.
 ~Loading shader 'UI/UI_Font.hlsl':'VS_main'.
 ~Loading shader 'UI/UI_Font.hlsl':'PS_main'.
-~Sky: [752] is global sky.
-~Sky: Skybox name = ''.
-~Sky: Skybox name = ''.
-~Sky: Skybox name = 'ÄÔ(Ñ°'.
-~Sky: Skybox name = '¿ˆ(Ñ°'.
-~Sky: Skybox name = '@˙(Ñ°'.
-~Sky: Skybox name = ''.
-~Sky: Skybox name = 'Ä(Ñ°'.
-~Sky: Skybox name = '¿˙(Ñ°'.
-~Sky: Skybox name = 'Ä¯(Ñ°'.
-~Sky: Skybox name = 'Ä˜(Ñ°'.
-~Sky: Skybox name = '@Ò(Ñ°'.
-~Sky: Skybox name = ''.
-~Sky: Skybox name = '@Ì(Ñ°'.
-~Sky: Skybox name = 'Äˆ(Ñ°'.
-~Sky: Skybox name = ''.
-~Sky: Skybox name = 'ÄÔ(Ñ°'.
-~Sky: Skybox name = '@Ê¸É°'.
-~Sky: Skybox name = '∞CÑ°'.
-~Sky: Skybox name = '∞ÔCÑ°'.
-~Sky: Skybox name = 'pÏCÑ°'.
-~Sky: Skybox name = '∞ÓCÑ°'.
-~Sky: Skybox name = '0‚CÑ°'.
-~Sky: Skybox name = 'pÌCÑ°'.
-~Sky: Skybox name = 'pCÑ°'.
-~Sky: Skybox name = '∞ÔCÑ°'.
-~Sky: Skybox name = 'p„CÑ°'.
-~Sky: Skybox name = 'ÓCÑ°'.
-~Sky: Skybox name = '‰CÑ°'.
-~Sky: Skybox name = '0ÏCÑ°'.
-~Sky: Skybox name = 'ÓCÑ°'.
-~Sky: Skybox name = 'ÂCÑ°'.
-~Sky: Skybox name = 'p‰CÑ°'.
-~Sky: Skybox name = '∞·CÑ°'.
-~Sky: Skybox name = 'pCÑ°'.
-~Sky: Skybox name = '0‚CÑ°'.
-~Sky: Skybox name = '@@Ñ°'.
-~Sky: Skybox name = '∞CÑ°'.
-~Sky: Skybox name = 'p„CÑ°'.
-~Sky: Skybox name = '0‚CÑ°'.
-~Sky: Skybox name = '∞‚CÑ°'.
-~Sky: Skybox name = 'p„CÑ°'.
-~Sky: Skybox name = 'p„CÑ°'.
-~Sky: Skybox name = 'p„CÑ°'.
-~Sky: Skybox name = 'p„CÑ°'.
-~Sky: Skybox name = 'p„CÑ°'.
-~Sky: Skybox name = '˜CÑ°'.
-~Sky: Skybox name = 'p˘CÑ°'.
-~Sky: Skybox name = 'ÛCÑ°'.
-~Sky: Skybox name = 'pˇCÑ°'.
-~Sky: Skybox name = 'pˇCÑ°'.
-~Sky: Skybox name = '∞¸CÑ°'.
-~Sky: Skybox name = '¯CÑ°'.
-~Sky: Skybox name = 'p¯CÑ°'.
-~Sky: Skybox name = '∞¸CÑ°'.
-~Sky: Skybox name = 'pˆCÑ°'.
-~Sky: Skybox name = '∞ÚCÑ°'.
-~Sky: Skybox name = '0ıCÑ°'.
-~Sky: Skybox name = 'ÛCÑ°'.
-~Sky: Skybox name = 'ÛCÑ°'.
-~Sky: Skybox name = 'pıCÑ°'.
-~Sky: Skybox name = '0˘CÑ°'.
-~Sky: Skybox name = '∞¯CÑ°'.
-~Sky: Skybox name = 'p¸CÑ°'.
-~Sky: Skybox name = '¸CÑ°'.
-~Sky: Skybox name = '∞˜CÑ°'.
-~Sky: Skybox name = '∞˜CÑ°'.
-~Sky: Skybox name = '∞˜CÑ°'.
-~Sky: Skybox name = '˙CÑ°'.
-~Sky: Skybox name = '0≠EÑ°'.
-~Sky: Skybox name = '0˘CÑ°'.
-~Sky: Skybox name = '0˘CÑ°'.
-~Sky: Skybox name = '0˘CÑ°'.
-~Sky: Skybox name = '0˙CÑ°'.
-~Sky: Skybox name = 'p˘CÑ°'.
-~Sky: Skybox name = '0¸CÑ°'.
-~Sky: Skybox name = '0˝CÑ°'.
-~Sky: Skybox name = '˛CÑ°'.
-~Sky: Skybox name = '∞˙CÑ°'.
-~Sky: Skybox name = '0¸CÑ°'.
-~Sky: Skybox name = 'pDÑ°'.
-~Sky: Skybox name = 'DÑ°'.
-~Sky: Skybox name = '0DÑ°'.
-~Sky: Skybox name = 'pDÑ°'.
-~Sky: Skybox name = 'DÑ°'.
- Map[Northrend]: Id [571]. Preloading...
- Map[Northrend]: Id [571]. Loading...
-^CMapWDL: Low WMOs count [4].
+~Sky: [374] is global sky.
+~Sky: Skybox name = '}ŸÄ]'.
+~Sky: Skybox name = 'pyŸÄ]'.
+~Sky: Skybox name = 'vŸÄ]'.
+~Sky: Skybox name = 'ÑŸÄ]'.
+~Sky: Skybox name = 'pÑŸÄ]'.
+~Sky: Skybox name = 'pxŸÄ]'.
+~Sky: Skybox name = 'pyŸÄ]'.
+~Sky: Skybox name = 'pÄŸÄ]'.
+~Sky: Skybox name = '∞xŸÄ]'.
+~Sky: Skybox name = '∞wŸÄ]'.
+~Sky: Skybox name = '∞ÑŸÄ]'.
+~Sky: Skybox name = 'xŸÄ]'.
+~Sky: Skybox name = '∞ÇŸÄ]'.
+~Sky: Skybox name = '0ÅŸÄ]'.
+~Sky: Skybox name = 'p|ŸÄ]'.
+~Sky: Skybox name = 'pzŸÄ]'.
+~Sky: Skybox name = 'zŸÄ]'.
+~Sky: Skybox name = 'vŸÄ]'.
+~Sky: Skybox name = '0ÅŸÄ]'.
+~Sky: Skybox name = 'pzŸÄ]'.
+~Sky: Skybox name = '∞yŸÄ]'.
+~Sky: Skybox name = '∞wŸÄ]'.
+~Sky: Skybox name = 'ÑŸÄ]'.
+~Sky: Skybox name = 'pxŸÄ]'.
+~Sky: Skybox name = 'pxŸÄ]'.
+~Sky: Skybox name = '∞xŸÄ]'.
+~Sky: Skybox name = '∞}ŸÄ]'.
+~Sky: Skybox name = 'xŸÄ]'.
+~Sky: Skybox name = 'xŸÄ]'.
+~Sky: Skybox name = '∞}ŸÄ]'.
+~Sky: Skybox name = '0{ŸÄ]'.
+~Sky: Skybox name = 'p{ŸÄ]'.
+~Sky: Skybox name = 'xŸÄ]'.
+~Sky: Skybox name = 'xŸÄ]'.
+~Sky: Skybox name = 'xŸÄ]'.
+~Sky: Skybox name = 'xŸÄ]'.
+~Sky: Skybox name = '0{ŸÄ]'.
+~Sky: Skybox name = 'xŸÄ]'.
+~Sky: Skybox name = 'xŸÄ]'.
+~Sky: Skybox name = 'xŸÄ]'.
+~Sky: Skybox name = 'xŸÄ]'.
+~Sky: Skybox name = '0{ŸÄ]'.
+~Sky: Skybox name = 'p{ŸÄ]'.
+~Sky: Skybox name = '∞}ŸÄ]'.
+~Sky: Skybox name = '0ìŸÄ]'.
+~Sky: Skybox name = '∞’˜Ä]'.
+~Sky: Skybox name = 'p»˜Ä]'.
+~Sky: Skybox name = '∞ ˜Ä]'.
+~Sky: Skybox name = '“˜Ä]'.
+~Sky: Skybox name = 'pÃ˜Ä]'.
+~Sky: Skybox name = '∞ ˜Ä]'.
+~Sky: Skybox name = '∞ ˜Ä]'.
+~Sky: Skybox name = 'p”˜Ä]'.
+~Sky: Skybox name = 'p”˜Ä]'.
+~Sky: Skybox name = ' ˜Ä]'.
+~Sky: Skybox name = '0‚˜Ä]'.
+~Sky: Skybox name = 'p‹˜Ä]'.
+~Sky: Skybox name = '‚˜Ä]'.
+~Sky: Skybox name = '0ﬂ˜Ä]'.
+~Sky: Skybox name = '·˜Ä]'.
+~Sky: Skybox name = '‡˜Ä]'.
+~Sky: Skybox name = '0‚˜Ä]'.
+~Sky: Skybox name = '0Â˜Ä]'.
+~Sky: Skybox name = '0‚˜Ä]'.
+~Sky: Skybox name = '0ﬁ˜Ä]'.
+~Sky: Skybox name = '∞‡˜Ä]'.
+~Sky: Skybox name = '0ﬂ˜Ä]'.
+~Sky: Skybox name = '∞Â˜Ä]'.
+~Sky: Skybox name = '0‚˜Ä]'.
+~Sky: Skybox name = '0€˜Ä]'.
+~Sky: Skybox name = '∞ﬂ˜Ä]'.
+~Sky: Skybox name = '0ﬁ˜Ä]'.
+~Sky: Skybox name = '‡˜Ä]'.
+~Sky: Skybox name = '‡˜Ä]'.
+~Sky: Skybox name = 'pﬂ˜Ä]'.
+~Sky: Skybox name = 'pﬁ˜Ä]'.
+~Sky: Skybox name = '∞◊˜Ä]'.
+~Sky: Skybox name = 'pﬁ˜Ä]'.
+~Sky: Skybox name = '∞⁄˜Ä]'.
+~Sky: Skybox name = '∞€˜Ä]'.
+~Sky: Skybox name = 'p„˜Ä]'.
+~Sky: Skybox name = '0€˜Ä]'.
+~Sky: Skybox name = '∞◊˜Ä]'.
+~Sky: Skybox name = '0‹˜Ä]'.
+~Sky: Skybox name = '‰˜Ä]'.
+~Sky: Skybox name = '∞ﬂ˜Ä]'.
+~Sky: Skybox name = '0‹˜Ä]'.
+~Sky: Skybox name = '∞Â˜Ä]'.
+~Sky: Skybox name = '∞ﬂ˜Ä]'.
+~Sky: Skybox name = '„˜Ä]'.
+~Sky: Skybox name = '0ﬁ˜Ä]'.
+~Sky: Skybox name = '0÷˜Ä]'.
+~Sky: Skybox name = '0ﬁ˜Ä]'.
+~Sky: Skybox name = '0·˜Ä]'.
+~Sky: Skybox name = '0ÿ˜Ä]'.
+~Sky: Skybox name = '∞·˜Ä]'.
+~Sky: Skybox name = 'pŸ˜Ä]'.
+~Sky: Skybox name = '‡˜Ä]'.
+~Sky: Skybox name = '∞Ÿ˜Ä]'.
+~Sky: Skybox name = '0÷˜Ä]'.
+~Sky: Skybox name = '∞€˜Ä]'.
+~Sky: Skybox name = '∞ﬂ˜Ä]'.
+~Sky: Skybox name = 'pﬁ˜Ä]'.
+~Sky: Skybox name = '∞ﬁ˜Ä]'.
+~Sky: Skybox name = '∞„˜Ä]'.
+~Sky: Skybox name = '∞ﬁ˜Ä]'.
+ Map[Expansion01]: Id = '530'. Preloading...
+ Map[Expansion01]: InstanceType = '0'.
+ Map[Expansion01]: MapType = '1'.
+ Map[Expansion01]: IsBattleGround = '0'.
+ Map[Expansion01]: Name = '–ó–∞–ø—Ä–µ–¥–µ–ª—å–µ'.
+ Map[Expansion01]: AreaTableID = '0'.
+ Map[Expansion01]: AllianceDescr = ''.
+ Map[Expansion01]: HordeDescr = ''.
+ Map[Expansion01]: CorpseMapID = '0'.
+ Map[Expansion01]: Id [530]. Loading...
+^CMapWDL: Low WMOs count [0].
 ~MapWDT: Global WMO exists [false].
-^MapTile[30, 20, World\Maps\Northrend\Northrend_30_20.adt]: Loaded!
-!File 'TILESET\Terrain Cube Maps\TCB_CrystalSong_B_s.blp' not exists.
-^MapTile[29, 22, World\Maps\Northrend\Northrend_29_22.adt]: Loaded!
-!File 'TILESET\Terrain Cube Maps\TCB_CrystalSong_B_s.blp' not exists.
-^MapTile[29, 20, World\Maps\Northrend\Northrend_29_20.adt]: Loaded!
-^MapTile[30, 22, World\Maps\Northrend\Northrend_30_22.adt]: Loaded!
-^MapTile[30, 21, World\Maps\Northrend\Northrend_30_21.adt]: Loaded!
-^MapTile[31, 21, World\Maps\Northrend\Northrend_31_21.adt]: Loaded!
-^MapTile[29, 21, World\Maps\Northrend\Northrend_29_21.adt]: Loaded!
-^MapTile[31, 20, World\Maps\Northrend\Northrend_31_20.adt]: Loaded!
-^MapTile[31, 22, World\Maps\Northrend\Northrend_31_22.adt]: Loaded!
-^WMO[WORLD\WMO\NORTHREND\ICECROWN\SCOURGEWALLS\ICECROWN_CITADEL_EXTERIOR.WMO]: Liq: headerID [5] headerFlag [1] MatID: [54]
-@M2[WORLD\EXPANSION02\DOODADS\CRYSTALSONGFOREST\SPARKLES\CRYSTALSONG_SPARKLES03.M2] don't contain geometry. Skins [1]
-@M2[WORLD\GENERIC\PASSIVEDOODADS\PARTICLEEMITTERS\BLACKSMITH_SMOKE.M2] don't contain geometry. Skins [1]
-@M2[WORLD\LORDAERON\STRATHOLME\PASSIVEDOODADS\FX\STRATHOLMEFIRESMOKEEMBERM.M2] don't contain geometry. Skins [1]
-^WMO[WORLD\WMO\NORTHREND\DALARAN\ND_DALARAN.WMO]: Liq: headerID [5] headerFlag [1] MatID: [190]
-^WMO[WORLD\WMO\NORTHREND\DALARAN\ND_DALARAN.WMO]: Liq: headerID [5] headerFlag [1] MatID: [190]
-^WMO[WORLD\WMO\NORTHREND\DALARAN\ND_DALARAN.WMO]: Liq: headerID [5] headerFlag [1] MatID: [205]
-^WMO[WORLD\WMO\NORTHREND\DALARAN\ND_DALARAN.WMO]: Liq: headerID [5] headerFlag [1] MatID: [205]
-^WMO[WORLD\WMO\NORTHREND\DALARAN\ND_DALARAN.WMO]: Liq: headerID [5] headerFlag [1] MatID: [205]
-^WMO[WORLD\WMO\NORTHREND\DALARAN\ND_DALARAN.WMO]: Liq: headerID [5] headerFlag [1] MatID: [205]
-^WMO[WORLD\WMO\NORTHREND\DALARAN\ND_DALARAN.WMO]: Liq: headerID [5] headerFlag [1] MatID: [205]
-@M2[WORLD\GENERIC\PASSIVEDOODADS\PARTICLEEMITTERS\BLACKSMITH_SMOKE.M2] don't contain geometry. Skins [1]
-@M2[WORLD\EXPANSION01\DOODADS\SILVERMYST\SMOKE\D_SMOKE.M2] don't contain geometry. Skins [1]
-^MapTile[31, 19, World\Maps\Northrend\Northrend_31_19.adt]: Loaded!
-^MapTile[29, 19, World\Maps\Northrend\Northrend_29_19.adt]: Loaded!
-^MapTile[30, 19, World\Maps\Northrend\Northrend_30_19.adt]: Loaded!
+~Textures count = '6'.
+~Textures count = '5'.
+~Textures count = '6'.
+~Textures count = '6'.
+^MapTile[25, 31, World\Maps\Expansion01\Expansion01_25_31.adt]: Loaded!
+^MapTile[25, 33, World\Maps\Expansion01\Expansion01_25_33.adt]: Loaded!
+~Textures count = '7'.
+~Textures count = '7'.
+^MapTile[25, 32, World\Maps\Expansion01\Expansion01_25_32.adt]: Loaded!
+~Textures count = '6'.
+^MapTile[26, 32, World\Maps\Expansion01\Expansion01_26_32.adt]: Loaded!
+~Textures count = '6'.
+^MapTile[27, 31, World\Maps\Expansion01\Expansion01_27_31.adt]: Loaded!
+~Textures count = '7'.
+^MapTile[26, 31, World\Maps\Expansion01\Expansion01_26_31.adt]: Loaded!
+^MapTile[27, 32, World\Maps\Expansion01\Expansion01_27_32.adt]: Loaded!
+^MapTile[27, 33, World\Maps\Expansion01\Expansion01_27_33.adt]: Loaded!
+^MapTile[26, 33, World\Maps\Expansion01\Expansion01_26_33.adt]: Loaded!
+@M2[WORLD\EXPANSION01\DOODADS\HELLFIREPENINSULA\FIREWALL\HELLFIRE_FIREWALL_01.M2] don't contain geometry. Skins [1]
 @M2[WORLD\AZEROTH\BURNINGSTEPPES\PASSIVEDOODADS\SMOKE\ASHTREESMOKE01.M2] don't contain geometry. Skins [1]
-@M2[WORLD\EXPANSION01\DOODADS\SHADOWMOON\SMOKE\SHADOWMOONCRACKSMOKE01.M2] don't contain geometry. Skins [1]
-^WMO[WORLD\WMO\LORDERON\BUILDINGS\EASTERNPLAGUELANDS\UNDEADZIGGURAT\UNDEADZIGGURAT.WMO]: Liq: headerID [8] headerFlag [1] MatID: [10]
-@M2[WORLD\GENERIC\UNDEAD\PASSIVE DOODADS\UNDERCITYSLIMEFALLS\SKULLSPOUTSPLASH.M2] don't contain geometry. Skins [1]
-^MapTile[31, 23, World\Maps\Northrend\Northrend_31_23.adt]: Loaded!
-@M2[WORLD\EXPANSION01\DOODADS\ZANGAR\POLLEN\ZM_BLUEPOLLEN.M2] don't contain geometry. Skins [1]
-^MapTile[30, 23, World\Maps\Northrend\Northrend_30_23.adt]: Loaded!
-^MapTile[29, 23, World\Maps\Northrend\Northrend_29_23.adt]: Loaded!
-^WMO[WORLD\WMO\NORTHREND\DRAGONBLIGHT\DRAGONSHRINE\BD_SHRINE.WMO]: Liq: headerID [3] headerFlag [1] MatID: [12]
-^WMO[WORLD\WMO\NORTHREND\DRAGONBLIGHT\DRAGONSHRINE\BD_SHRINE.WMO]: Liq: headerID [3] headerFlag [1] MatID: [12]
-@M2[WORLD\EXPANSION02\DOODADS\HOWLINGFJORD\FIREFX\BURNTSTONETREEFIREFLIES_VFX.M2] don't contain geometry. Skins [1]
+@M2[WORLD\LORDAERON\STRATHOLME\PASSIVEDOODADS\FX\STRATHOLMEFIRESMOKEEMBERS.M2] don't contain geometry. Skins [1]
 @M2[WORLD\LORDAERON\STRATHOLME\PASSIVEDOODADS\FX\STRATHOLMEFLOATINGEMBERS.M2] don't contain geometry. Skins [1]
-@CMapTile::~CMapTile: Tile [31, 23] unloaded.
-@CMapTile::~CMapTile: Tile [31, 19] unloaded.
-^MapTile[28, 21, World\Maps\Northrend\Northrend_28_21.adt]: Loaded!
-^MapTile[28, 22, World\Maps\Northrend\Northrend_28_22.adt]: Loaded!
-^MapTile[28, 20, World\Maps\Northrend\Northrend_28_20.adt]: Loaded!
-@CMapTile::~CMapTile: Tile [31, 22] unloaded.
-^WMO[WORLD\WMO\DUNGEON\MD_MOUNTAINCAVE\MD_CORRUPTCAVE02.WMO]: Liq: headerID [5] headerFlag [1] MatID: [11]
-^MapTile[28, 19, World\Maps\Northrend\Northrend_28_19.adt]: Loaded!
-@M2[WORLD\EXPANSION02\DOODADS\GENERIC\SCOURGE\SC_SPIRITEFFECT_01.M2] don't contain geometry. Skins [1]
+@M2[WORLD\EXPANSION01\DOODADS\HELLFIREPENINSULA\FIREWALL\HELLFIRE_FEL_FIREWALL_01.M2] don't contain geometry. Skins [1]
+@M2[WORLD\EXPANSION01\DOODADS\SHADOWMOON\SMOKE\SHADOWMOONCRACKSMOKE01.M2] don't contain geometry. Skins [1]
+@M2[WORLD\LORDAERON\STRATHOLME\PASSIVEDOODADS\FX\STRATHOLMEFIRESMOKEEMBERM.M2] don't contain geometry. Skins [1]
+@M2[WORLD\GENERIC\PASSIVEDOODADS\PARTICLEEMITTERS\BLACKSMITH_SMOKE.M2] don't contain geometry. Skins [1]
+@M2[WORLD\GENERIC\PASSIVEDOODADS\PARTICLEEMITTERS\BLACKSMITH_SMOKE.M2] don't contain geometry. Skins [1]
+@M2[WORLD\GENERIC\PASSIVEDOODADS\PARTICLEEMITTERS\BLACKSMITH_SMOKE.M2] don't contain geometry. Skins [1]
+~Textures count = '6'.
+~Textures count = '6'.
+~Textures count = '6'.
+^MapTile[24, 32, World\Maps\Expansion01\Expansion01_24_32.adt]: Loaded!
+^MapTile[24, 31, World\Maps\Expansion01\Expansion01_24_31.adt]: Loaded!
+^MapTile[24, 33, World\Maps\Expansion01\Expansion01_24_33.adt]: Loaded!
+~Textures count = '5'.
+~Textures count = '7'.
+~Textures count = '7'.
+^MapTile[23, 32, World\Maps\Expansion01\Expansion01_23_32.adt]: Loaded!
+^MapTile[23, 33, World\Maps\Expansion01\Expansion01_23_33.adt]: Loaded!
+^MapTile[23, 31, World\Maps\Expansion01\Expansion01_23_31.adt]: Loaded!
+@CMapTile::~CMapTile: Tile [27, 31] unloaded.
+@CMapTile::~CMapTile: Tile [26, 31] unloaded.
+~Textures count = '5'.
+~Textures count = '8'.
+~Textures count = '11'.
+^MapTile[25, 34, World\Maps\Expansion01\Expansion01_25_34.adt]: Loaded!
+^MapTile[24, 34, World\Maps\Expansion01\Expansion01_24_34.adt]: Loaded!
+^MapTile[23, 34, World\Maps\Expansion01\Expansion01_23_34.adt]: Loaded!
+@CMapTile::~CMapTile: Tile [25, 34] unloaded.
+@CMapTile::~CMapTile: Tile [26, 33] unloaded.
+~Textures count = '12'.
+~Textures count = '15'.
+~Textures count = '12'.
+@CMapTile::~CMapTile: Tile [27, 33] unloaded.
+^MapTile[22, 32, World\Maps\Expansion01\Expansion01_22_32.adt]: Loaded!
+@M2[WORLD\EXPANSION01\DOODADS\ZANGAR\POLLEN\ZM_BLUEPOLLEN.M2] don't contain geometry. Skins [1]
+^MapTile[22, 33, World\Maps\Expansion01\Expansion01_22_33.adt]: Loaded!
+^MapTile[22, 31, World\Maps\Expansion01\Expansion01_22_31.adt]: Loaded!
+@CMapTile::~CMapTile: Tile [27, 32] unloaded.
+~Textures count = '11'.
+@CMapTile::~CMapTile: Tile [25, 31] unloaded.
+~Textures count = '13'.
+~Textures count = '16'.
+@CMapTile::~CMapTile: Tile [25, 33] unloaded.
+^MapTile[21, 31, World\Maps\Expansion01\Expansion01_21_31.adt]: Loaded!
+^MapTile[21, 33, World\Maps\Expansion01\Expansion01_21_33.adt]: Loaded!
+^MapTile[21, 32, World\Maps\Expansion01\Expansion01_21_32.adt]: Loaded!
+~Textures count = '9'.
+@CMapTile::~CMapTile: Tile [26, 32] unloaded.
+~Textures count = '6'.
+@CMapTile::~CMapTile: Tile [24, 34] unloaded.
+~Textures count = '17'.
+@CMapTile::~CMapTile: Tile [25, 32] unloaded.
+^MapTile[20, 33, World\Maps\Expansion01\Expansion01_20_33.adt]: Loaded!
+^MapTile[20, 32, World\Maps\Expansion01\Expansion01_20_32.adt]: Loaded!
+^MapTile[20, 31, World\Maps\Expansion01\Expansion01_20_31.adt]: Loaded!
+@M2[WORLD\EXPANSION01\DOODADS\ZANGAR\POLLEN\ZM_BLUEPOLLEN.M2] don't contain geometry. Skins [1]
+@CMapTile::~CMapTile: Tile [24, 31] unloaded.
+~Textures count = '10'.
+@CMapTile::~CMapTile: Tile [24, 32] unloaded.
+~Textures count = '13'.
+@CMapTile::~CMapTile: Tile [23, 31] unloaded.
+~Textures count = '16'.
+^MapTile[22, 34, World\Maps\Expansion01\Expansion01_22_34.adt]: Loaded!
+^MapTile[21, 34, World\Maps\Expansion01\Expansion01_21_34.adt]: Loaded!
+^MapTile[20, 34, World\Maps\Expansion01\Expansion01_20_34.adt]: Loaded!
+^WMO[WORLD\WMO\OUTLAND\TEROKKAR\SHATTRATHCITY.WMO]: Liq: headerID [15] headerFlag [0] MatID: [41]
+^WMO[WORLD\WMO\OUTLAND\TEROKKAR\SHATTRATHCITY.WMO]: Liq: headerID [15] headerFlag [0] MatID: [65]
+@M2[WORLD\GENERIC\PASSIVEDOODADS\PARTICLEEMITTERS\BLACKSMITH_SMOKE.M2] don't contain geometry. Skins [1]
+@M2[WORLD\GENERIC\PASSIVEDOODADS\PARTICLEEMITTERS\BLACKSMITH_SMOKE.M2] don't contain geometry. Skins [1]
+@CMapTile::~CMapTile: Tile [24, 33] unloaded.
+~Textures count = '8'.
+~Textures count = '11'.
+~Textures count = '11'.
+^MapTile[21, 35, World\Maps\Expansion01\Expansion01_21_35.adt]: Loaded!
+@CMapTile::~CMapTile: Tile [20, 31] unloaded.
+@CMapTile::~CMapTile: Tile [22, 31] unloaded.
+^MapTile[22, 35, World\Maps\Expansion01\Expansion01_22_35.adt]: Loaded!
+^MapTile[20, 35, World\Maps\Expansion01\Expansion01_20_35.adt]: Loaded!
+@CMapTile::~CMapTile: Tile [23, 32] unloaded.
+@CMapTile::~CMapTile: Tile [22, 32] unloaded.
+~Textures count = '12'.
+@CMapTile::~CMapTile: Tile [21, 31] unloaded.
+^MapTile[19, 33, World\Maps\Expansion01\Expansion01_19_33.adt]: Loaded!
+~Textures count = '7'.
+~Textures count = '8'.
+^MapTile[19, 34, World\Maps\Expansion01\Expansion01_19_34.adt]: Loaded!
+@M2[WORLD\AZEROTH\BURNINGSTEPPES\PASSIVEDOODADS\FALLINGEMBERS\FALLINGEMBERS.M2] don't contain geometry. Skins [1]
+@M2[WORLD\AZEROTH\BURNINGSTEPPES\PASSIVEDOODADS\SMOKE\ASHTREESMOKE01.M2] don't contain geometry. Skins [1]
+^MapTile[19, 35, World\Maps\Expansion01\Expansion01_19_35.adt]: Loaded!
+~Textures count = '7'.
+@CMapTile::~CMapTile: Tile [23, 33] unloaded.
+~Textures count = '7'.
+@CMapTile::~CMapTile: Tile [21, 32] unloaded.
+~Textures count = '8'.
+^MapTile[18, 35, World\Maps\Expansion01\Expansion01_18_35.adt]: Loaded!
+@CMapTile::~CMapTile: Tile [22, 33] unloaded.
+^MapTile[18, 33, World\Maps\Expansion01\Expansion01_18_33.adt]: Loaded!
+^MapTile[18, 34, World\Maps\Expansion01\Expansion01_18_34.adt]: Loaded!
+~Textures count = '8'.
+@CMapTile::~CMapTile: Tile [20, 32] unloaded.
+~Textures count = '9'.
+~Textures count = '7'.
+@CMapTile::~CMapTile: Tile [23, 34] unloaded.
+@CMapTile::~CMapTile: Tile [21, 33] unloaded.
+^MapTile[20, 36, World\Maps\Expansion01\Expansion01_20_36.adt]: Loaded!
+^MapTile[19, 36, World\Maps\Expansion01\Expansion01_19_36.adt]: Loaded!
+^MapTile[18, 36, World\Maps\Expansion01\Expansion01_18_36.adt]: Loaded!
+@M2[WORLD\EXPANSION01\DOODADS\SILVERMYST\SMOKE\D_SMOKE.M2] don't contain geometry. Skins [1]
+@CMapTile::~CMapTile: Tile [22, 34] unloaded.
+~Textures count = '6'.
+~Textures count = '9'.
+~Textures count = '8'.
+^MapTile[17, 36, World\Maps\Expansion01\Expansion01_17_36.adt]: Loaded!
+^MapTile[17, 34, World\Maps\Expansion01\Expansion01_17_34.adt]: Loaded!
+@CMapTile::~CMapTile: Tile [20, 33] unloaded.
+^MapTile[17, 35, World\Maps\Expansion01\Expansion01_17_35.adt]: Loaded!
+@CMapTile::~CMapTile: Tile [21, 34] unloaded.
+~Textures count = '11'.
+@CMapTile::~CMapTile: Tile [22, 35] unloaded.
+~Textures count = '8'.
+~Textures count = '11'.
+^MapTile[17, 37, World\Maps\Expansion01\Expansion01_17_37.adt]: Loaded!
+^MapTile[18, 37, World\Maps\Expansion01\Expansion01_18_37.adt]: Loaded!
+@CMapTile::~CMapTile: Tile [21, 35] unloaded.
+@CMapTile::~CMapTile: Tile [20, 34] unloaded.
+^MapTile[19, 37, World\Maps\Expansion01\Expansion01_19_37.adt]: Loaded!
+@CMapTile::~CMapTile: Tile [19, 33] unloaded.
+~Textures count = '9'.
+@CMapTile::~CMapTile: Tile [19, 34] unloaded.
+~Textures count = '9'.
+~Textures count = '5'.
+@CMapTile::~CMapTile: Tile [20, 35] unloaded.
+^MapTile[16, 36, World\Maps\Expansion01\Expansion01_16_36.adt]: Loaded!
+^MapTile[16, 37, World\Maps\Expansion01\Expansion01_16_37.adt]: Loaded!
+^MapTile[16, 35, World\Maps\Expansion01\Expansion01_16_35.adt]: Loaded!
+~Textures count = '9'.
+@CMapTile::~CMapTile: Tile [20, 36] unloaded.
+~Textures count = '9'.
+~Textures count = '9'.
+^MapTile[15, 37, World\Maps\Expansion01\Expansion01_15_37.adt]: Loaded!
+^MapTile[15, 36, World\Maps\Expansion01\Expansion01_15_36.adt]: Loaded!
+^MapTile[15, 35, World\Maps\Expansion01\Expansion01_15_35.adt]: Loaded!
+@CMapTile::~CMapTile: Tile [18, 33] unloaded.
+@CMapTile::~CMapTile: Tile [18, 34] unloaded.
+@CMapTile::~CMapTile: Tile [19, 35] unloaded.
+~Textures count = '1'.
+~Textures count = '3'.
+~Textures count = '4'.
+^MapTile[15, 38, World\Maps\Expansion01\Expansion01_15_38.adt]: Loaded!
+^MapTile[16, 38, World\Maps\Expansion01\Expansion01_16_38.adt]: Loaded!
+^MapTile[17, 38, World\Maps\Expansion01\Expansion01_17_38.adt]: Loaded!
+@CMapTile::~CMapTile: Tile [19, 36] unloaded.
+@CMapTile::~CMapTile: Tile [18, 35] unloaded.
+@CMapTile::~CMapTile: Tile [17, 38] unloaded.
+@CMapTile::~CMapTile: Tile [19, 37] unloaded.
+~Textures count = '13'.
+~Textures count = '11'.
+^MapTile[16, 34, World\Maps\Expansion01\Expansion01_16_34.adt]: Loaded!
+^MapTile[15, 34, World\Maps\Expansion01\Expansion01_15_34.adt]: Loaded!
+@M2[WORLD\AZEROTH\BURNINGSTEPPES\PASSIVEDOODADS\SMOKE\ASHTREESMOKE01.M2] don't contain geometry. Skins [1]
+@CMapTile::~CMapTile: Tile [15, 38] unloaded.
+@CMapTile::~CMapTile: Tile [18, 37] unloaded.
+~Textures count = '10'.
+~Textures count = '7'.
+~Textures count = '10'.
+@CMapTile::~CMapTile: Tile [16, 38] unloaded.
+^MapTile[16, 33, World\Maps\Expansion01\Expansion01_16_33.adt]: Loaded!
+^WMO[WORLD\WMO\DUNGEON\MD_OGREMOUND\NAGRAND_OGREMOUND01.WMO]: Liq: headerID [15] headerFlag [0] MatID: [12]
+^MapTile[15, 33, World\Maps\Expansion01\Expansion01_15_33.adt]: Loaded!
+^MapTile[17, 33, World\Maps\Expansion01\Expansion01_17_33.adt]: Loaded!
+@CMapTile::~CMapTile: Tile [15, 37] unloaded.
+@CMapTile::~CMapTile: Tile [17, 37] unloaded.
+~Textures count = '13'.
+@CMapTile::~CMapTile: Tile [18, 36] unloaded.
+~Textures count = '12'.
+~Textures count = '14'.
+^MapTile[15, 32, World\Maps\Expansion01\Expansion01_15_32.adt]: Loaded!
+^MapTile[17, 32, World\Maps\Expansion01\Expansion01_17_32.adt]: Loaded!
+^MapTile[16, 32, World\Maps\Expansion01\Expansion01_16_32.adt]: Loaded!
+@M2[WORLD\EXPANSION01\DOODADS\ZANGAR\POLLEN\ZM_BLUEPOLLEN.M2] don't contain geometry. Skins [1]
+@CMapTile::~CMapTile: Tile [16, 37] unloaded.
+~Textures count = '11'.
+@CMapTile::~CMapTile: Tile [17, 36] unloaded.
+~Textures count = '10'.
+~Textures count = '12'.
+@CMapTile::~CMapTile: Tile [15, 36] unloaded.
+^MapTile[15, 31, World\Maps\Expansion01\Expansion01_15_31.adt]: Loaded!
+^MapTile[16, 31, World\Maps\Expansion01\Expansion01_16_31.adt]: Loaded!
+^MapTile[17, 31, World\Maps\Expansion01\Expansion01_17_31.adt]: Loaded!
+~Textures count = '5'.
+@CMapTile::~CMapTile: Tile [17, 34] unloaded.
+~Textures count = '4'.
+~Textures count = '7'.
+^MapTile[14, 32, World\Maps\Expansion01\Expansion01_14_32.adt]: Loaded!
+^MapTile[14, 31, World\Maps\Expansion01\Expansion01_14_31.adt]: Loaded!
+^MapTile[14, 33, World\Maps\Expansion01\Expansion01_14_33.adt]: Loaded!
+@CMapTile::~CMapTile: Tile [17, 35] unloaded.
+@CMapTile::~CMapTile: Tile [16, 36] unloaded.
+~Textures count = '12'.
+@CMapTile::~CMapTile: Tile [17, 31] unloaded.
+^MapTile[14, 34, World\Maps\Expansion01\Expansion01_14_34.adt]: Loaded!
+~Textures count = '10'.
+@CMapTile::~CMapTile: Tile [14, 31] unloaded.
+^MapTile[14, 35, World\Maps\Expansion01\Expansion01_14_35.adt]: Loaded!
+~Textures count = '2'.
+~Textures count = '9'.
+~Textures count = '3'.
+^MapTile[13, 32, World\Maps\Expansion01\Expansion01_13_32.adt]: Loaded!
+^MapTile[13, 33, World\Maps\Expansion01\Expansion01_13_33.adt]: Loaded!
+@CMapTile::~CMapTile: Tile [16, 35] unloaded.
+^MapTile[13, 34, World\Maps\Expansion01\Expansion01_13_34.adt]: Loaded!
+@CMapTile::~CMapTile: Tile [17, 32] unloaded.
+@CMapTile::~CMapTile: Tile [16, 31] unloaded.
+~Textures count = '6'.
+^MapTile[13, 35, World\Maps\Expansion01\Expansion01_13_35.adt]: Loaded!
+@CMapTile::~CMapTile: Tile [15, 31] unloaded.
+~Textures count = '9'.
+@CMapTile::~CMapTile: Tile [13, 32] unloaded.
+^MapTile[16, 35, World\Maps\Expansion01\Expansion01_16_35.adt]: Loaded!
+@CMapTile::~CMapTile: Tile [13, 35] unloaded.
+@CMapTile::~CMapTile: Tile [14, 32] unloaded.
+~Textures count = '8'.
+~Textures count = '9'.
+^MapTile[17, 35, World\Maps\Expansion01\Expansion01_17_35.adt]: Loaded!
+^MapTile[17, 34, World\Maps\Expansion01\Expansion01_17_34.adt]: Loaded!
+@CMapTile::~CMapTile: Tile [15, 32] unloaded.
+@CMapTile::~CMapTile: Tile [13, 33] unloaded.
+@CMapTile::~CMapTile: Tile [14, 35] unloaded.
+~Textures count = '7'.
+~Textures count = '7'.
+~Textures count = '8'.
+^MapTile[18, 35, World\Maps\Expansion01\Expansion01_18_35.adt]: Loaded!
+^MapTile[18, 33, World\Maps\Expansion01\Expansion01_18_33.adt]: Loaded!
+^MapTile[18, 34, World\Maps\Expansion01\Expansion01_18_34.adt]: Loaded!
+@CMapTile::~CMapTile: Tile [15, 33] unloaded.
+~Textures count = '7'.
+~Textures count = '8'.
+@CMapTile::~CMapTile: Tile [14, 33] unloaded.
+~Textures count = '12'.
+^MapTile[19, 34, World\Maps\Expansion01\Expansion01_19_34.adt]: Loaded!
+@CMapTile::~CMapTile: Tile [13, 34] unloaded.
+^MapTile[19, 33, World\Maps\Expansion01\Expansion01_19_33.adt]: Loaded!
+^MapTile[19, 35, World\Maps\Expansion01\Expansion01_19_35.adt]: Loaded!
+@M2[WORLD\AZEROTH\BURNINGSTEPPES\PASSIVEDOODADS\FALLINGEMBERS\FALLINGEMBERS.M2] don't contain geometry. Skins [1]

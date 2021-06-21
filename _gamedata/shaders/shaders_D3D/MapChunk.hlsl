@@ -43,7 +43,7 @@ sampler   AlphaMapSampler : register(s1);
 
 VertexShaderOutput VS_main(VertexShaderInput IN)
 {
-	const float4x4 mvp = mul(PF.Projection, mul(PF.View, PO.Model));
+	const float4x4 mvp = mul(PF.Projection, PF.View/*mul(PF.View, PO.Model)*/);
 
 	VertexShaderOutput OUT;
 	OUT.positionVS = mul(mvp, float4(IN.position, 1.0f));

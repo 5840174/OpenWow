@@ -188,6 +188,10 @@ bool CMapTile::Load()
 		{
 			std::vector<std::string> strings;
 			PasreChunkAsStringArray(MakeShared(CByteBufferOnlyPointer, f->getDataFromCurrent(), size), &strings);
+			Log::Info("Textures count = '%d'.", strings.size());
+
+			uint32 textureSizeX = -1;
+			uint32 textureSizeY = -1;
 
 			for (const auto& stringsIt : strings)
 			{
@@ -201,6 +205,16 @@ bool CMapTile::Load()
 #else
 				textureInfo->diffuseTexture = GetBaseManager().GetManager<IznTexturesFactory>()->LoadTexture2D(textureInfo->textureName);
 #endif
+				/*if (textureSizeX == -1)
+					textureSizeX = textureInfo->diffuseTexture->GetWidth();
+				if (textureSizeX != textureInfo->diffuseTexture->GetWidth())
+					throw CException("TextureX size error. Stored '%d'. New '%d'.", textureSizeX, textureInfo->diffuseTexture->GetWidth());
+
+				if (textureSizeY == -1)
+					textureSizeY = textureInfo->diffuseTexture->GetHeight();
+				if (textureSizeY != textureInfo->diffuseTexture->GetHeight())
+					throw CException("TextureY size error. Stored '%d'. New '%d'.", textureSizeY, textureInfo->diffuseTexture->GetHeight());*/
+
 
 				// PreLoad specular texture
 				try
@@ -220,6 +234,9 @@ bool CMapTile::Load()
 				m_Textures.push_back(textureInfo);
 
 			}
+
+			m_ArrayTexture = GetRenderDevice().GetObjectsFactory().CreateEmptyTexture();
+			//m_ArrayTexture->LoadTexture2DArrayFromBytes();
 		}
 	}
 

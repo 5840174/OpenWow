@@ -18,7 +18,11 @@
 // Achivement
 
 // Area
+#if WOW_CLIENT_VERSION < WOW_WOTLK_3_3_5
 #include "Tables/DBC_AreaTable.h"
+#else 
+#include "Tables/DBC_AreaTable_WotLK.h"
+#endif
 
 // Character
 #include "Tables/DBC_CharacterFacialHairStyles.h"
@@ -54,7 +58,11 @@
 #include "Tables/DBC_LightSkyBox.h"
 
 // Liquid
+#if WOW_CLIENT_VERSION < WOW_WOTLK_3_3_5
 #include "Tables/DBC_LiquidType.h"
+#else 
+#include "Tables/DBC_LiquidType_WotLK.h"
+#endif
 
 // GameObject
 #include "Tables/DBC_GameObjectDisplayInfo.h"

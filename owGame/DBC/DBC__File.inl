@@ -22,7 +22,7 @@ inline DBCFile<RECORD_T>::DBCFile(IFilesManager* FilesManager, const std::string
 	file->readBytes(&recordSize, 4); // Size of a record
 	file->readBytes(&stringSize, 4); // String size
 
-	Log::Info("DBCFile[%s]: Records count = '%d'.", FileName.c_str(), header, recordCount);
+	Log::Info("DBCFile[%s]: Fields count = '%d'. Records count = '%d'.", FileName.c_str(), fieldCount, recordCount);
 
 	_ASSERT(fieldCount * 4 == recordSize);
 

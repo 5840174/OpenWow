@@ -1,6 +1,6 @@
 #pragma once
 
-#include "DBC/Tables/DBC_LiquidType.h"
+#include "DBC/Tables/DBC_LiquidType_Wotlk.h"
 
 namespace
 {

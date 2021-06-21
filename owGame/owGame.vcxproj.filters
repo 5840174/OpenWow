@@ -1175,6 +1175,12 @@
     <ClInclude Include="Liquid\LiquidMaterial.h">
       <Filter>Liquid\Instances</Filter>
     </ClInclude>
+    <ClInclude Include="DBC\Tables\DBC_AreaTable_Wotlk.h">
+      <Filter>DBC\Tables\Area</Filter>
+    </ClInclude>
+    <ClInclude Include="DBC\Tables\DBC_LiquidType_Wotlk.h">
+      <Filter>DBC\Tables\Liquids</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="WoWChunkReader.inl">

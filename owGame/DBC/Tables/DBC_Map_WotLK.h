@@ -8,21 +8,22 @@ __DBC_STRING(						Directory,					2);		// std::string
 __DBC_TVALUE(uint32,				InstanceType,				3);		// uint (0-none, 1-party, 2-raid, 4-arena, >=5-none)
 __DBC_TVALUE(uint32,				MapType,					4);		// uint (1-normal, 2-test, 3-internal)
 
-__DBC_LOCSTR(						Name,						5 /* + 8 = 13*/);
-__DBC_TVALUE(uint32_t,				MinLevel,					14);
-__DBC_TVALUE(uint32_t,				MaxLevel,					15);
-__DBC_TVALUE(uint32_t,				MaxPlayers,					16);
+__DBC_TVALUE(uint32,                IsBattleGround,             5);
+__DBC_LOCSTR(						Name,						6);
 
-// 9 - ?
-// 10 - ?
-// 11 - ?
+__DBC_TVALUE(uint32,                AreaTableID,                23);
 
-__DBC_REF_ID(DBC_Map,				parentMapID,				20);
-__DBC_LOCSTR(						MapDescriptionAllicane,		21 /* + 8 = 29*/);
-__DBC_LOCSTR(						MapDescriptionHorde,		30);
+__DBC_LOCSTR(						MapDescriptionAllicane,		24);
+__DBC_LOCSTR(						MapDescriptionHorde,		41);
 
-__DBC_TVALUE(uint32_t,				LoadingScreenID,			39);
+__DBC_TVALUE(uint32,				LoadingScreenID,			58);
+__DBC_TVALUE(float,                 MinimapScale,               59);
 
-__DBC_TVALUE(uint32_t,				Expansion,					64);
+__DBC_REF_ID(DBC_Map,               CorpseMap,                  60);
+__DBC_TVALUE(float,                 CorpseX,                    61);
+__DBC_TVALUE(float,                 CorpseY,                    62);
+
+__DBC_TVALUE(uint32,				TimeOfDayOverride,			63);
+__DBC_TVALUE(uint32,				Expansion,					64);
 
 DBC_DEF_END

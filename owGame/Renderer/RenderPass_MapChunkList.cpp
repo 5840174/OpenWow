@@ -62,7 +62,7 @@ EVisitResult CRenderPass_MapChunkList::Visit(const std::shared_ptr<ISceneNode>& 
 {
 	if (const auto adtMCNKInstance = std::dynamic_pointer_cast<CMapChunk>(SceneNode3D))
 	{
-		return __super::Visit(SceneNode3D);
+		return EVisitResult::AllowAll;
 	}
 
 	return EVisitResult::Block;

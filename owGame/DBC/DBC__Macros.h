@@ -33,7 +33,7 @@ std::string CONCAT_GET(_name)(uint8 _index) const                \
 }
 
 #define __DBC_LOCSTR(_name, _field)                              \
-std::wstring CONCAT_GET(_name)(int8 _locale = -1) const           \
+std::string CONCAT_GET(_name)(int8 _locale = -1) const           \
 {                                                                \
 	return getLocalizedString(static_cast<uint32>(_field - 1));  \
 }

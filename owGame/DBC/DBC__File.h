@@ -82,7 +82,7 @@ protected:
 		return std::string(reinterpret_cast<char*>(const_cast<uint8*>(m_DBC_Stats->GetStringsTable()) + stringOffset));
 	}
 
-	std::wstring getLocalizedString(uint32 field, int8 locale = 0) const
+	std::string getLocalizedString(uint32 field, int8 locale = 0) const
 	{
 		uint32 stringOffset = field + locale;
 		if (locale == 0)
@@ -93,14 +93,14 @@ protected:
 				stringOffset = getValue<uint32>(field + loc);
 				if (stringOffset != 0)
 				{
-					stringOffset = field + loc;
-					break;
+					_ASSERT((field + loc) < m_DBC_Stats->getFieldCount());
+					return /*Resources::utf8_to_utf16(*/getString(field + loc)/*)*/;
 				}
 			}
 		}
 
-		_ASSERT(stringOffset < m_DBC_Stats->getFieldCount());
-		return Resources::utf8_to_utf16(getString(field + stringOffset));
+		// string empty or not found
+		return "";
 	}
 
 protected:
