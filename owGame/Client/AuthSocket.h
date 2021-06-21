@@ -11,12 +11,15 @@
 class CWoWClient;
 // FORWARD END
 
-class CAuthSocket : public sockets::TcpSocket
+class CAuthSocket 
 {
 	typedef bool (CAuthSocket::* HandlerFunc)(CByteBuffer&);
 public:
-	CAuthSocket(sockets::ISocketHandler& SocketHandler, CWoWClient& WoWClient, const std::string& Login, const std::string& Password);
+	CAuthSocket(CWoWClient& WoWClient, const std::string& Login, const std::string& Password);
 	virtual ~CAuthSocket();
+
+	void Open(std::string Host, port_t Port);
+	void Update();
 
 	void SendData(const IByteBuffer& _bb);
 	void SendData(const uint8* _data, uint32 _count);
@@ -32,11 +35,12 @@ public:
 
 protected:
 	// TcpSocket
-	virtual void OnConnect() override final;
-	virtual void OnDisconnect() override final;
-	virtual void OnRawData(const char *buf, size_t len) override final;
+	virtual void OnConnect() final;
+	virtual void OnDisconnect() final;
+	virtual void OnRawData(const char *buf, size_t len) final;
 
 private:
+	CTCPSocket m_TCPSocket;
 	std::unordered_map<eAuthCmd, HandlerFunc> m_Handlers;
 
 	BigNumber Key;

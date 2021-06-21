@@ -1,6 +1,7 @@
 #include "stdafx.h"
 
 #include "SceneWoW.h"
+#include "SceneWoWClient.h"
 
 // Additional
 #include <BugTrap/BugTrap.h>
@@ -25,7 +26,7 @@ void main_internal(int argumentCount, char* arguments[])
 			const auto& renderWindow = renderDevice.GetObjectsFactory().CreateRenderWindow(std::move(nativeWindow), true);
 			app.AddRenderWindow(renderWindow);
 
-			std::shared_ptr<IScene> scene = MakeShared(CSceneWoW, app.GetBaseManager(), *renderWindow);
+			std::shared_ptr<IScene> scene = MakeShared(CSceneWoWClient, app.GetBaseManager(), *renderWindow);
 			renderWindow->SetRenderWindowEventListener(std::dynamic_pointer_cast<IRenderWindowEventListener>(scene));
 			renderWindow->SetNativeWindowEventListener(std::dynamic_pointer_cast<IznNativeWindowEventListener>(scene));
 			scene->Initialize();

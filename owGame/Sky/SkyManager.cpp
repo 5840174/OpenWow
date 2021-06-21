@@ -81,6 +81,9 @@ void SkyManager::Calculate(const ICameraComponent3D* camera, uint32 _time)
 	//if (GetState() != ILoadable::ELoadableState::Loaded)
 	//	return;
 
+	if (skies.empty())
+		return;
+
 	CalculateSkiesWeights(camera->GetPosition());
 
 	// interpolation

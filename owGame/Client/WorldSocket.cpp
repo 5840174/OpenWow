@@ -35,9 +35,8 @@ const Opcodes IgnoredOpcodes[] =
 	Opcodes::SMSG_SPELL_GO
 };
 
-CWorldSocket::CWorldSocket(sockets::ISocketHandler& SocketHandler, const std::string& Login, BigNumber Key)
-	: TcpSocket(SocketHandler)
-	, m_CurrentPacket(nullptr)
+CWorldSocket::CWorldSocket(const std::string& Login, BigNumber Key)
+	: m_CurrentPacket(nullptr)
 	, m_Login(Login)
 	, m_Key(Key)
 {}
@@ -45,6 +44,63 @@ CWorldSocket::CWorldSocket(sockets::ISocketHandler& SocketHandler, const std::st
 CWorldSocket::~CWorldSocket()
 {
 	Log::Info("[WorldSocket]: All threads stopped.");
+}
+
+void CWorldSocket::Open(std::string Host, port_t Port)
+{
+	bool result = false;
+
+	if (::isdigit(Host.at(0)))
+	{
+		IPAddress addr(Host);
+
+		result = m_TCPSocket.Connect(addr, Port);
+	}
+	else
+	{
+		for (auto addr : Dns::Resolve(Host))
+		{
+			result = m_TCPSocket.Connect(addr, Port);
+			if (result)
+				break;
+		}
+	}
+
+	if (false == result)
+	{
+		Log::Error("CWorldSocket: Unable to connect to '%s:%d'", Host.c_str(), Port);
+		return;
+	}
+
+	m_TCPSocket.SetBlocking(false);
+}
+
+void CWorldSocket::Update()
+{
+	while (true)
+	{
+		CByteBuffer buffer;
+
+		m_TCPSocket.Receive(buffer, 4096);
+
+		if (buffer.getSize() == 0)
+		{
+			if (m_TCPSocket.GetStatus() != CSocket::Connected)
+			{
+				//NotifyListeners(&ConnectionListener::OnSocketStateChange, m_TCPSocket.GetStatus());
+			}
+			return;
+		}
+
+		//Log::Green("CWorldSocket::Update: Received '%d' bytes.", buffer.getSize());
+
+		OnRawData((char*)buffer.getData(), buffer.getSize());
+
+		if (m_TCPSocket.GetStatus() != CSocket::Connected)
+		{
+			//NotifyListeners(&ConnectionListener::OnSocketStateChange, m_TCPSocket.GetStatus());
+		}
+	}
 }
 
 
@@ -58,7 +114,7 @@ void CWorldSocket::OnConnect()
 
 void CWorldSocket::OnDisconnect()
 {
-    SetErasedByHandler();
+    //SetErasedByHandler();
 }
 
 void CWorldSocket::OnRawData(const char * buf, size_t len)
@@ -124,7 +180,7 @@ void CWorldSocket::OnRawData(const char * buf, size_t len)
         }
 
         // DEBUG
-        _ASSERT(cmd < Opcodes::NUM_MSG_TYPES);
+        //_ASSERT(cmd < Opcodes::NUM_MSG_TYPES);
         //Log::Green("CWorldSocket: Command '%s' (0x%X) size=%d", OpcodesNames[cmd], cmd, size);
 
         // Seek to data
@@ -146,7 +202,7 @@ void CWorldSocket::SendPacket(CClientPacket& Packet)
 
     m_WoWCryptoUtils.EncryptSend(Packet.getDataEx(), sizeof(uint16) /*Size*/ + sizeof(uint32) /*Opcode*/);
 
-    SendBuf(reinterpret_cast<const char*>(Packet.getDataEx()), Packet.getSize());
+    m_TCPSocket.Send(Packet.getDataEx(), Packet.getSize());
 }
 
 void CWorldSocket::SetExternalHandler(std::function<bool(Opcodes, CServerPacket&)> Handler)
@@ -193,8 +249,17 @@ void CWorldSocket::Packet2(CByteBuffer& _buf)
     // Check if we read full packet
     if (m_CurrentPacket->IsComplete())
     {
-        if (! ProcessPacket(*m_CurrentPacket))
-			Log::Green("Opcode: '%s' (0x%X). Size: '%d'", OpcodesNames[m_CurrentPacket->GetPacketOpcode()], m_CurrentPacket->GetPacketOpcode(), m_CurrentPacket->GetPacketSize());
+		if (false == ProcessPacket(*m_CurrentPacket))
+		{
+			if (m_CurrentPacket->GetPacketOpcode() >= NUM_MSG_TYPES)
+			{
+				Log::Error("Opcode: ID '%d' (0x%X) is bigger then maximum opcode ID. Size: '%d'.", m_CurrentPacket->GetPacketOpcode(), m_CurrentPacket->GetPacketOpcode(), m_CurrentPacket->GetPacketSize());
+			}
+			else
+			{
+				Log::Green("Opcode: '%s' (0x%X). Size: '%d'", OpcodesNames[m_CurrentPacket->GetPacketOpcode()], m_CurrentPacket->GetPacketOpcode(), m_CurrentPacket->GetPacketSize());
+			}
+		}
 
         m_CurrentPacket.reset();
     }
@@ -203,29 +268,6 @@ void CWorldSocket::Packet2(CByteBuffer& _buf)
         //Log::Info("Packet[%s] is incomplete. Size '%d' of %d'.", OpcodesNames[m_CurrentPacket->GetPacketOpcode()].c_str(), m_CurrentPacket->getSize(), m_CurrentPacket->GetPacketSize());
     }
 }
-
-/*void CWorldSocket::InitHandlers()
-{
-	m_Handlers[SMSG_AUTH_CHALLENGE] = std::bind(&CWorldSocket::S_AuthChallenge, this, std::placeholders::_1);
-	m_Handlers[SMSG_AUTH_RESPONSE] = std::bind(&CWorldSocket::S_AuthResponse, this, std::placeholders::_1);
-
-	// Dummy
-	m_Handlers[SMSG_SET_PROFICIENCY] = nullptr;
-	m_Handlers[SMSG_ACCOUNT_DATA_TIMES] = nullptr;
-	m_Handlers[SMSG_FEATURE_SYSTEM_STATUS] = nullptr;
-	m_Handlers[SMSG_BINDPOINTUPDATE] = nullptr;
-	m_Handlers[SMSG_INITIAL_SPELLS] = nullptr;
-	m_Handlers[SMSG_SEND_UNLEARN_SPELLS] = nullptr;
-	m_Handlers[SMSG_ACTION_BUTTONS] = nullptr;
-	m_Handlers[SMSG_INITIALIZE_FACTIONS] = nullptr;
-	m_Handlers[SMSG_LOGIN_SETTIMESPEED] = nullptr;
-	m_Handlers[SMSG_SET_FORCED_REACTIONS] = nullptr;
-
-	m_Handlers[Opcodes::SMSG_EMOTE] = nullptr;
-	m_Handlers[Opcodes::SMSG_TIME_SYNC_REQ] = nullptr;
-	m_Handlers[Opcodes::SMSG_SPELL_START] = nullptr;
-	m_Handlers[Opcodes::SMSG_SPELL_GO] = nullptr;
-}*/
 
 bool CWorldSocket::ProcessPacket(CServerPacket ServerPacket)
 {

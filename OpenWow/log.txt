@@ -78,387 +78,1241 @@
 ~Loading shader 'UI/UIControlCommon.hlsl':'PS_main'.
 ~Loading shader 'UI/UI_Font.hlsl':'VS_main'.
 ~Loading shader 'UI/UI_Font.hlsl':'PS_main'.
-~Sky: [374] is global sky.
-~Sky: Skybox name = '�}ـ]'.
-~Sky: Skybox name = 'pyـ]'.
-~Sky: Skybox name = '�vـ]'.
-~Sky: Skybox name = '��ـ]'.
-~Sky: Skybox name = 'p�ـ]'.
-~Sky: Skybox name = 'pxـ]'.
-~Sky: Skybox name = 'pyـ]'.
-~Sky: Skybox name = 'p�ـ]'.
-~Sky: Skybox name = '�xـ]'.
-~Sky: Skybox name = '�wـ]'.
-~Sky: Skybox name = '��ـ]'.
-~Sky: Skybox name = '�xـ]'.
-~Sky: Skybox name = '��ـ]'.
-~Sky: Skybox name = '0�ـ]'.
-~Sky: Skybox name = 'p|ـ]'.
-~Sky: Skybox name = 'pzـ]'.
-~Sky: Skybox name = '�zـ]'.
-~Sky: Skybox name = '�vـ]'.
-~Sky: Skybox name = '0�ـ]'.
-~Sky: Skybox name = 'pzـ]'.
-~Sky: Skybox name = '�yـ]'.
-~Sky: Skybox name = '�wـ]'.
-~Sky: Skybox name = '��ـ]'.
-~Sky: Skybox name = 'pxـ]'.
-~Sky: Skybox name = 'pxـ]'.
-~Sky: Skybox name = '�xـ]'.
-~Sky: Skybox name = '�}ـ]'.
-~Sky: Skybox name = '�xـ]'.
-~Sky: Skybox name = '�xـ]'.
-~Sky: Skybox name = '�}ـ]'.
-~Sky: Skybox name = '0{ـ]'.
-~Sky: Skybox name = 'p{ـ]'.
-~Sky: Skybox name = '�xـ]'.
-~Sky: Skybox name = '�xـ]'.
-~Sky: Skybox name = '�xـ]'.
-~Sky: Skybox name = '�xـ]'.
-~Sky: Skybox name = '0{ـ]'.
-~Sky: Skybox name = '�xـ]'.
-~Sky: Skybox name = '�xـ]'.
-~Sky: Skybox name = '�xـ]'.
-~Sky: Skybox name = '�xـ]'.
-~Sky: Skybox name = '0{ـ]'.
-~Sky: Skybox name = 'p{ـ]'.
-~Sky: Skybox name = '�}ـ]'.
-~Sky: Skybox name = '0�ـ]'.
-~Sky: Skybox name = '����]'.
-~Sky: Skybox name = 'p���]'.
-~Sky: Skybox name = '����]'.
-~Sky: Skybox name = '����]'.
-~Sky: Skybox name = 'p���]'.
-~Sky: Skybox name = '����]'.
-~Sky: Skybox name = '����]'.
-~Sky: Skybox name = 'p���]'.
-~Sky: Skybox name = 'p���]'.
-~Sky: Skybox name = '����]'.
-~Sky: Skybox name = '0���]'.
-~Sky: Skybox name = 'p���]'.
-~Sky: Skybox name = '����]'.
-~Sky: Skybox name = '0���]'.
-~Sky: Skybox name = '����]'.
-~Sky: Skybox name = '����]'.
-~Sky: Skybox name = '0���]'.
-~Sky: Skybox name = '0���]'.
-~Sky: Skybox name = '0���]'.
-~Sky: Skybox name = '0���]'.
-~Sky: Skybox name = '����]'.
-~Sky: Skybox name = '0���]'.
-~Sky: Skybox name = '����]'.
-~Sky: Skybox name = '0���]'.
-~Sky: Skybox name = '0���]'.
-~Sky: Skybox name = '����]'.
-~Sky: Skybox name = '0���]'.
-~Sky: Skybox name = '����]'.
-~Sky: Skybox name = '����]'.
-~Sky: Skybox name = 'p���]'.
-~Sky: Skybox name = 'p���]'.
-~Sky: Skybox name = '����]'.
-~Sky: Skybox name = 'p���]'.
-~Sky: Skybox name = '����]'.
-~Sky: Skybox name = '����]'.
-~Sky: Skybox name = 'p���]'.
-~Sky: Skybox name = '0���]'.
-~Sky: Skybox name = '����]'.
-~Sky: Skybox name = '0���]'.
-~Sky: Skybox name = '����]'.
-~Sky: Skybox name = '����]'.
-~Sky: Skybox name = '0���]'.
-~Sky: Skybox name = '����]'.
-~Sky: Skybox name = '����]'.
-~Sky: Skybox name = '����]'.
-~Sky: Skybox name = '0���]'.
-~Sky: Skybox name = '0���]'.
-~Sky: Skybox name = '0���]'.
-~Sky: Skybox name = '0���]'.
-~Sky: Skybox name = '0���]'.
-~Sky: Skybox name = '����]'.
-~Sky: Skybox name = 'p���]'.
-~Sky: Skybox name = '����]'.
-~Sky: Skybox name = '����]'.
-~Sky: Skybox name = '0���]'.
-~Sky: Skybox name = '����]'.
-~Sky: Skybox name = '����]'.
-~Sky: Skybox name = 'p���]'.
-~Sky: Skybox name = '����]'.
-~Sky: Skybox name = '����]'.
-~Sky: Skybox name = '����]'.
- Map[Expansion01]: Id = '530'. Preloading...
- Map[Expansion01]: InstanceType = '0'.
- Map[Expansion01]: MapType = '1'.
- Map[Expansion01]: IsBattleGround = '0'.
- Map[Expansion01]: Name = 'Запределье'.
- Map[Expansion01]: AreaTableID = '0'.
- Map[Expansion01]: AllianceDescr = ''.
- Map[Expansion01]: HordeDescr = ''.
- Map[Expansion01]: CorpseMapID = '0'.
- Map[Expansion01]: Id [530]. Loading...
+^SENDED: 38 bytes.
+^AuthSocket::OnRawData: Received '119' bytes.
+^SENDED: 75 bytes.
+^AuthSocket::OnRawData: Received '32' bytes.
+^All ok! Server proof equal client calculated server proof!
+^Successfully logined!!!
+^AuthSocket::OnRawData: Received '44' bytes.
+^S_Realmlist: Count [1]
+^Realm 'rinity', addres '127.0.0.1:8085'
+^CWoWClient::OnSuccessConnect: Realm name 'rinity'.
+^Succes access to server!!!
+^Opcode: 'SMSG_ADDON_INFO' (0x2EF). Size: '139'
+^Opcode: 'SMSG_CLIENTCACHE_VERSION' (0x4AB). Size: '4'
+^Opcode: 'SMSG_TUTORIAL_FLAGS' (0xFD). Size: '32'
+^Process update type 2
+^WoWGameObject created!
+^OBJECT Gameobject 5 38492 created.
+@UPDATETYPE_CREATE_OBJECT
+^Process update type 2
+^WoWGameObject created!
+^OBJECT Gameobject 5 38495 created.
+@UPDATETYPE_CREATE_OBJECT
+^Process update type 2
+^WoWGameObject created!
+^OBJECT Gameobject 5 38494 created.
+@UPDATETYPE_CREATE_OBJECT
+^Process update type 2
+^WoWGameObject created!
+^OBJECT Gameobject 5 38493 created.
+@UPDATETYPE_CREATE_OBJECT
+^Process update type 2
+^WoWGameObject created!
+^OBJECT Gameobject 5 38491 created.
+@UPDATETYPE_CREATE_OBJECT
+^Process update type 2
+^WoWUnit created!
+^OBJECT Creature 3 4075 created.
+!File 'BlackSkin.blp' not exists.
+@UPDATETYPE_CREATE_OBJECT
+^Process update type 2
+^WoWUnit created!
+^OBJECT Creature 3 4075 created.
+!File 'BlackSkin.blp' not exists.
+@UPDATETYPE_CREATE_OBJECT
+^Process update type 2
+^WoWUnit created!
+^OBJECT Creature 3 33996 created.
+@UPDATETYPE_CREATE_OBJECT
+^Process update type 2
+^WoWUnit created!
+^OBJECT Creature 3 34238 created.
+!File 'UndeadHorseSkinBlueBlack.blp' not exists.
+@UPDATETYPE_CREATE_OBJECT
+^Process update type 2
+^WoWUnit created!
+^OBJECT Creature 3 35169 created.
+!File 'MountedDeathKnightCrimson_01.blp' not exists.
+@UPDATETYPE_CREATE_OBJECT
+^Process update type 2
+^WoWUnit created!
+^OBJECT Creature 3 620 created.
+!File 'ChickenSkin.blp' not exists.
+@UPDATETYPE_CREATE_OBJECT
+^Process update type 2
+^WoWUnit created!
+^OBJECT Creature 3 2134 created.
+@UPDATETYPE_CREATE_OBJECT
+^Process update type 2
+^WoWUnit created!
+^OBJECT Creature 3 2136 created.
+@UPDATETYPE_CREATE_OBJECT
+^Process update type 2
+^WoWUnit created!
+^OBJECT Creature 3 2135 created.
+@UPDATETYPE_CREATE_OBJECT
+^Process update type 2
+^WoWUnit created!
+^OBJECT Creature 3 4773 created.
+@UPDATETYPE_CREATE_OBJECT
+^Process update type 2
+^WoWUnit created!
+^OBJECT Creature 3 2309 created.
+@UPDATETYPE_CREATE_OBJECT
+^Process update type 2
+^WoWUnit created!
+^OBJECT Creature 3 2311 created.
+@UPDATETYPE_CREATE_OBJECT
+^Process update type 2
+^WoWUnit created!
+^OBJECT Creature 3 14558 created.
+!File 'MountedDeathKnightPurple_01.blp' not exists.
+@UPDATETYPE_CREATE_OBJECT
+^Process update type 2
+^WoWUnit created!
+^OBJECT Creature 3 12343 created.
+!File 'UndeadHorseSkinRed.blp' not exists.
+@UPDATETYPE_CREATE_OBJECT
+^Process update type 2
+^WoWUnit created!
+^OBJECT Creature 3 12341 created.
+!File 'UndeadHorseSkinBlue.blp' not exists.
+@UPDATETYPE_CREATE_OBJECT
+^Process update type 2
+^WoWUnit created!
+^OBJECT Creature 3 12342 created.
+!File 'UndeadHorseSkinYellow.blp' not exists.
+@UPDATETYPE_CREATE_OBJECT
+^Process update type 2
+^WoWUnit created!
+^OBJECT Creature 3 1745 created.
+@UPDATETYPE_CREATE_OBJECT
+^Process update type 2
+^WoWUnit created!
+^OBJECT Creature 3 10055 created.
+@UPDATETYPE_CREATE_OBJECT
+^Process update type 2
+^WoWUnit created!
+^OBJECT Creature 3 2137 created.
+@UPDATETYPE_CREATE_OBJECT
+^Process update type 2
+^WoWUnit created!
+^OBJECT Creature 3 4731 created.
+@UPDATETYPE_CREATE_OBJECT
+^Process update type 2
+^WoWUnit created!
+^OBJECT Creature 3 2118 created.
+@UPDATETYPE_CREATE_OBJECT
+^Process update type 2
+^WoWUnit created!
+^OBJECT Creature 3 1547 created.
+!File 'HoundSkinBlue.blp' not exists.
+@UPDATETYPE_CREATE_OBJECT
+^Process update type 2
+^WoWUnit created!
+^OBJECT Creature 3 1547 created.
+!File 'HoundSkinBlue.blp' not exists.
+@UPDATETYPE_CREATE_OBJECT
+^Process update type 2
+^WoWUnit created!
+^OBJECT Creature 3 4075 created.
+!File 'BlackSkin.blp' not exists.
+@UPDATETYPE_CREATE_OBJECT
+^Process update type 2
+^WoWGameObject created!
+^OBJECT Gameobject 5 22709 created.
+@UPDATETYPE_CREATE_OBJECT
+^Process update type 2
+^WoWGameObject created!
+^OBJECT Gameobject 5 2061 created.
+@UPDATETYPE_CREATE_OBJECT
+^Process update type 2
+^WoWGameObject created!
+^OBJECT Gameobject 5 22748 created.
+@UPDATETYPE_CREATE_OBJECT
+^Process update type 2
+^WoWGameObject created!
+^OBJECT Gameobject 5 22747 created.
+@UPDATETYPE_CREATE_OBJECT
+^Process update type 2
+^WoWGameObject created!
+^OBJECT Gameobject 5 22710 created.
+@UPDATETYPE_CREATE_OBJECT
+^Process update type 2
+^WoWGameObject created!
+^OBJECT Gameobject 5 2061 created.
+@UPDATETYPE_CREATE_OBJECT
+^Process update type 2
+^WoWGameObject created!
+^OBJECT Gameobject 5 22707 created.
+@UPDATETYPE_CREATE_OBJECT
+^Process update type 2
+^WoWGameObject created!
+^OBJECT Gameobject 5 2061 created.
+@UPDATETYPE_CREATE_OBJECT
+^Process update type 2
+^WoWGameObject created!
+^OBJECT Gameobject 5 22746 created.
+@UPDATETYPE_CREATE_OBJECT
+^Process update type 2
+^WoWGameObject created!
+^OBJECT Gameobject 5 22738 created.
+@UPDATETYPE_CREATE_OBJECT
+^Process update type 2
+^WoWGameObject created!
+^OBJECT Gameobject 5 22743 created.
+@UPDATETYPE_CREATE_OBJECT
+^Process update type 2
+^WoWGameObject created!
+^OBJECT Gameobject 5 22753 created.
+@UPDATETYPE_CREATE_OBJECT
+^Process update type 2
+^WoWGameObject created!
+^OBJECT Gameobject 5 22749 created.
+@UPDATETYPE_CREATE_OBJECT
+^Process update type 2
+^WoWGameObject created!
+^OBJECT Gameobject 5 22745 created.
+@UPDATETYPE_CREATE_OBJECT
+^Process update type 2
+^WoWGameObject created!
+^OBJECT Gameobject 5 22712 created.
+@UPDATETYPE_CREATE_OBJECT
+^Process update type 2
+^WoWGameObject created!
+^OBJECT Gameobject 5 2061 created.
+@UPDATETYPE_CREATE_OBJECT
+^Process update type 2
+^WoWGameObject created!
+^OBJECT Gameobject 5 22750 created.
+@UPDATETYPE_CREATE_OBJECT
+^Process update type 2
+^WoWGameObject created!
+^OBJECT Gameobject 5 1646 created.
+@UPDATETYPE_CREATE_OBJECT
+^Process update type 2
+^WoWGameObject created!
+^OBJECT Gameobject 5 1647 created.
+@UPDATETYPE_CREATE_OBJECT
+^Process update type 2
+^WoWGameObject created!
+^OBJECT Gameobject 5 143990 created.
+@UPDATETYPE_CREATE_OBJECT
+^Process update type 2
+^WoWGameObject created!
+^OBJECT Gameobject 5 1648 created.
+@UPDATETYPE_CREATE_OBJECT
+^Process update type 2
+^WoWGameObject created!
+^OBJECT Gameobject 5 1663 created.
+@UPDATETYPE_CREATE_OBJECT
+^Process update type 2
+^WoWUnit created!
+^OBJECT Creature 3 2127 created.
+@UPDATETYPE_CREATE_OBJECT
+^Process update type 2
+^WoWUnit created!
+^OBJECT Creature 3 5759 created.
+@UPDATETYPE_CREATE_OBJECT
+^Process update type 2
+^WoWUnit created!
+^OBJECT Creature 3 2131 created.
+@UPDATETYPE_CREATE_OBJECT
+^Process update type 2
+^WoWUnit created!
+^OBJECT Creature 3 6785 created.
+@UPDATETYPE_CREATE_OBJECT
+^Process update type 2
+^WoWUnit created!
+^OBJECT Creature 3 5724 created.
+@UPDATETYPE_CREATE_OBJECT
+^Process update type 2
+^WoWUnit created!
+^OBJECT Creature 3 1500 created.
+@UPDATETYPE_CREATE_OBJECT
+^Process update type 2
+^WoWUnit created!
+^OBJECT Creature 3 1560 created.
+@UPDATETYPE_CREATE_OBJECT
+^Process update type 2
+^WoWUnit created!
+^OBJECT Creature 3 1521 created.
+@UPDATETYPE_CREATE_OBJECT
+^Process update type 2
+^WoWUnit created!
+^OBJECT Creature 3 2129 created.
+@UPDATETYPE_CREATE_OBJECT
+^Process update type 2
+^WoWUnit created!
+^OBJECT Creature 3 2128 created.
+@UPDATETYPE_CREATE_OBJECT
+^Process update type 2
+^WoWUnit created!
+^OBJECT Creature 3 5750 created.
+@UPDATETYPE_CREATE_OBJECT
+^Process update type 2
+^WoWGameObject created!
+^OBJECT Gameobject 5 3797 created.
+@UPDATETYPE_CREATE_OBJECT
+^Process update type 2
+^WoWGameObject created!
+^OBJECT Gameobject 5 3798 created.
+@UPDATETYPE_CREATE_OBJECT
+^Process update type 2
+^WoWUnit created!
+^OBJECT Creature 3 4075 created.
+!File 'BlackSkin.blp' not exists.
+@UPDATETYPE_CREATE_OBJECT
+^Process update type 2
+^WoWUnit created!
+^OBJECT Creature 3 4075 created.
+!File 'BlackSkin.blp' not exists.
+@UPDATETYPE_CREATE_OBJECT
+^Process update type 2
+^WoWUnit created!
+^OBJECT Creature 3 1518 created.
+@UPDATETYPE_CREATE_OBJECT
+^Process update type 2
+^WoWUnit created!
+^OBJECT Creature 3 2132 created.
+@UPDATETYPE_CREATE_OBJECT
+^Process update type 2
+^WoWUnit created!
+^OBJECT Creature 3 11156 created.
+!File 'MountedDeathKnightGreen_01.blp' not exists.
+@UPDATETYPE_CREATE_OBJECT
+^Process update type 2
+^WoWGameObject created!
+^OBJECT Gameobject 5 153472 created.
+@UPDATETYPE_CREATE_OBJECT
+^Process update type 2
+^WoWGameObject created!
+^OBJECT Gameobject 5 175738 created.
+@UPDATETYPE_CREATE_OBJECT
+^Process update type 2
+^WoWGameObject created!
+^OBJECT Gameobject 5 22737 created.
+@UPDATETYPE_CREATE_OBJECT
+^Process update type 2
+^WoWGameObject created!
+^OBJECT Gameobject 5 22742 created.
+@UPDATETYPE_CREATE_OBJECT
+^Process update type 2
+^WoWGameObject created!
+^OBJECT Gameobject 5 22752 created.
+@UPDATETYPE_CREATE_OBJECT
+^Process update type 2
+^WoWGameObject created!
+^OBJECT Gameobject 5 22740 created.
+@UPDATETYPE_CREATE_OBJECT
+^Process update type 2
+^WoWGameObject created!
+^OBJECT Gameobject 5 22739 created.
+@UPDATETYPE_CREATE_OBJECT
+^Process update type 2
+^WoWGameObject created!
+^OBJECT Gameobject 5 22711 created.
+@UPDATETYPE_CREATE_OBJECT
+^Process update type 2
+^WoWGameObject created!
+^OBJECT Gameobject 5 2061 created.
+@UPDATETYPE_CREATE_OBJECT
+^Process update type 2
+^WoWGameObject created!
+^OBJECT Gameobject 5 22708 created.
+@UPDATETYPE_CREATE_OBJECT
+^Process update type 2
+^WoWGameObject created!
+^OBJECT Gameobject 5 2061 created.
+@UPDATETYPE_CREATE_OBJECT
+^Process update type 2
+^WoWGameObject created!
+^OBJECT Gameobject 5 22732 created.
+@UPDATETYPE_CREATE_OBJECT
+^Process update type 2
+^WoWGameObject created!
+^OBJECT Gameobject 5 22735 created.
+@UPDATETYPE_CREATE_OBJECT
+^Process update type 2
+^WoWGameObject created!
+^OBJECT Gameobject 5 22733 created.
+@UPDATETYPE_CREATE_OBJECT
+^Process update type 2
+^WoWGameObject created!
+^OBJECT Gameobject 5 112061 created.
+@UPDATETYPE_CREATE_OBJECT
+^Process update type 2
+^WoWUnit created!
+^OBJECT Creature 3 2211 created.
+@UPDATETYPE_CREATE_OBJECT
+^Process update type 2
+^WoWUnit created!
+^OBJECT Creature 3 1931 created.
+@UPDATETYPE_CREATE_OBJECT
+^Process update type 2
+^WoWUnit created!
+^OBJECT Creature 3 1499 created.
+@UPDATETYPE_CREATE_OBJECT
+^Process update type 2
+^WoWUnit created!
+^OBJECT Creature 3 5695 created.
+@UPDATETYPE_CREATE_OBJECT
+^Process update type 2
+^WoWUnit created!
+^OBJECT Creature 3 11945 created.
+@UPDATETYPE_CREATE_OBJECT
+^Process update type 2
+^WoWUnit created!
+^OBJECT Creature 3 2210 created.
+@UPDATETYPE_CREATE_OBJECT
+^Process update type 2
+^WoWUnit created!
+^OBJECT Creature 3 2209 created.
+@UPDATETYPE_CREATE_OBJECT
+^Process update type 2
+^WoWUnit created!
+^OBJECT Creature 3 2130 created.
+@UPDATETYPE_CREATE_OBJECT
+^Process update type 2
+^WoWUnit created!
+^OBJECT Creature 3 5688 created.
+@UPDATETYPE_CREATE_OBJECT
+^Process update type 2
+^WoWGameObject created!
+^OBJECT Gameobject 5 175726 created.
+@UPDATETYPE_CREATE_OBJECT
+^Process update type 2
+^WoWGameObject created!
+^OBJECT Gameobject 5 112043 created.
+@UPDATETYPE_CREATE_OBJECT
+^Process update type 2
+^WoWGameObject created!
+^OBJECT Gameobject 5 170059 created.
+@UPDATETYPE_CREATE_OBJECT
+^Process update type 2
+^WoWGameObject created!
+^OBJECT Gameobject 5 170060 created.
+@UPDATETYPE_CREATE_OBJECT
+^Process update type 2
+^WoWGameObject created!
+^OBJECT Gameobject 5 112050 created.
+@UPDATETYPE_CREATE_OBJECT
+^Process update type 2
+^WoWGameObject created!
+^OBJECT Gameobject 5 112079 created.
+@UPDATETYPE_CREATE_OBJECT
+^Process update type 2
+^WoWGameObject created!
+^OBJECT Gameobject 5 112042 created.
+@UPDATETYPE_CREATE_OBJECT
+^Process update type 2
+^WoWGameObject created!
+^OBJECT Gameobject 5 112073 created.
+@UPDATETYPE_CREATE_OBJECT
+^Process update type 2
+^WoWGameObject created!
+^OBJECT Gameobject 5 170065 created.
+@UPDATETYPE_CREATE_OBJECT
+^Process update type 2
+^WoWGameObject created!
+^OBJECT Gameobject 5 112045 created.
+@UPDATETYPE_CREATE_OBJECT
+^Process update type 2
+^WoWGameObject created!
+^OBJECT Gameobject 5 170064 created.
+@UPDATETYPE_CREATE_OBJECT
+^Process update type 2
+^WoWGameObject created!
+^OBJECT Gameobject 5 112049 created.
+@UPDATETYPE_CREATE_OBJECT
+^Process update type 2
+^WoWGameObject created!
+^OBJECT Gameobject 5 112074 created.
+@UPDATETYPE_CREATE_OBJECT
+^Process update type 2
+^WoWGameObject created!
+^OBJECT Gameobject 5 170058 created.
+@UPDATETYPE_CREATE_OBJECT
+^Process update type 2
+^WoWGameObject created!
+^OBJECT Gameobject 5 170057 created.
+@UPDATETYPE_CREATE_OBJECT
+^Process update type 2
+^WoWGameObject created!
+^OBJECT Gameobject 5 170056 created.
+@UPDATETYPE_CREATE_OBJECT
+^Process update type 2
+^WoWGameObject created!
+^OBJECT Gameobject 5 170055 created.
+@UPDATETYPE_CREATE_OBJECT
+^Process update type 2
+^WoWGameObject created!
+^OBJECT Gameobject 5 112048 created.
+@UPDATETYPE_CREATE_OBJECT
+^Process update type 2
+^WoWGameObject created!
+^OBJECT Gameobject 5 112044 created.
+@UPDATETYPE_CREATE_OBJECT
+^Process update type 2
+^WoWGameObject created!
+^OBJECT Gameobject 5 170061 created.
+@UPDATETYPE_CREATE_OBJECT
+^Process update type 2
+^WoWGameObject created!
+^OBJECT Gameobject 5 170062 created.
+@UPDATETYPE_CREATE_OBJECT
+^Process update type 2
+^WoWGameObject created!
+^OBJECT Gameobject 5 170066 created.
+@UPDATETYPE_CREATE_OBJECT
+^Process update type 2
+^WoWGameObject created!
+^OBJECT Gameobject 5 170063 created.
+@UPDATETYPE_CREATE_OBJECT
+^Process update type 2
+^WoWGameObject created!
+^OBJECT Gameobject 5 711 created.
+@UPDATETYPE_CREATE_OBJECT
+^Process update type 2
+^WoWUnit created!
+^OBJECT Creature 3 620 created.
+!File 'ChickenSkin.blp' not exists.
+@UPDATETYPE_CREATE_OBJECT
+^Process update type 2
+^WoWUnit created!
+^OBJECT Creature 3 1746 created.
+@UPDATETYPE_CREATE_OBJECT
+^Process update type 2
+^WoWUnit created!
+^OBJECT Creature 3 2310 created.
+@UPDATETYPE_CREATE_OBJECT
+^Process update type 2
+^WoWUnit created!
+^OBJECT Creature 3 1652 created.
+@UPDATETYPE_CREATE_OBJECT
+^Process update type 2
+^WoWUnit created!
+^OBJECT Creature 3 1515 created.
+@UPDATETYPE_CREATE_OBJECT
+^Process update type 2
+^WoWUnit created!
+^OBJECT Creature 3 2114 created.
+@UPDATETYPE_CREATE_OBJECT
+^Process update type 2
+^WoWUnit created!
+^OBJECT Creature 3 2314 created.
+@UPDATETYPE_CREATE_OBJECT
+^Process update type 2
+^WoWUnit created!
+^OBJECT Creature 3 1743 created.
+@UPDATETYPE_CREATE_OBJECT
+^Process update type 2
+^WoWGameObject created!
+^OBJECT Gameobject 5 188021 created.
+@UPDATETYPE_CREATE_OBJECT
+^Process update type 2
+^WoWUnit created!
+^OBJECT Creature 3 1547 created.
+!File 'HoundSkinBlue.blp' not exists.
+@UPDATETYPE_CREATE_OBJECT
+^Process update type 2
+^WoWUnit created!
+^OBJECT Creature 3 4075 created.
+!File 'BlackSkin.blp' not exists.
+@UPDATETYPE_CREATE_OBJECT
+^Process update type 2
+^WoWGameObject created!
+^OBJECT Gameobject 5 176594 created.
+@UPDATETYPE_CREATE_OBJECT
+^Opcode: 'SMSG_POWER_UPDATE' (0x480). Size: '7'
+^Opcode: 'SMSG_SET_PROFICIENCY' (0x127). Size: '5'
+^Opcode: 'SMSG_SET_PROFICIENCY' (0x127). Size: '5'
+^Opcode: 'SMSG_SET_PROFICIENCY' (0x127). Size: '5'
+^Opcode: 'SMSG_SET_PROFICIENCY' (0x127). Size: '5'
+^Opcode: 'SMSG_SET_PROFICIENCY' (0x127). Size: '5'
+^Opcode: 'SMSG_SET_PROFICIENCY' (0x127). Size: '5'
+^Opcode: 'SMSG_CANCEL_COMBAT' (0x14E). Size: '0'
+^Opcode: 'MSG_SET_DUNGEON_DIFFICULTY' (0x329). Size: '12'
+~Sky: [1] is global sky.
+ Map[Azeroth]: Id = '0'. Preloading...
+ Map[Azeroth]: InstanceType = '0'.
+ Map[Azeroth]: MapType = '0'.
+ Map[Azeroth]: IsBattleGround = '0'.
+ Map[Azeroth]: Name = 'Восточные королевства'.
+ Map[Azeroth]: AreaTableID = '0'.
+ Map[Azeroth]: AllianceDescr = ''.
+ Map[Azeroth]: HordeDescr = ''.
+ Map[Azeroth]: CorpseMapID = '-1'.
+ Map[Azeroth]: Id [0]. Loading...
 ^CMapWDL: Low WMOs count [0].
 ~MapWDT: Global WMO exists [false].
-~Textures count = '6'.
-~Textures count = '5'.
-~Textures count = '6'.
-~Textures count = '6'.
-^MapTile[25, 31, World\Maps\Expansion01\Expansion01_25_31.adt]: Loaded!
-^MapTile[25, 33, World\Maps\Expansion01\Expansion01_25_33.adt]: Loaded!
-~Textures count = '7'.
-~Textures count = '7'.
-^MapTile[25, 32, World\Maps\Expansion01\Expansion01_25_32.adt]: Loaded!
-~Textures count = '6'.
-^MapTile[26, 32, World\Maps\Expansion01\Expansion01_26_32.adt]: Loaded!
-~Textures count = '6'.
-^MapTile[27, 31, World\Maps\Expansion01\Expansion01_27_31.adt]: Loaded!
-~Textures count = '7'.
-^MapTile[26, 31, World\Maps\Expansion01\Expansion01_26_31.adt]: Loaded!
-^MapTile[27, 32, World\Maps\Expansion01\Expansion01_27_32.adt]: Loaded!
-^MapTile[27, 33, World\Maps\Expansion01\Expansion01_27_33.adt]: Loaded!
-^MapTile[26, 33, World\Maps\Expansion01\Expansion01_26_33.adt]: Loaded!
-@M2[WORLD\EXPANSION01\DOODADS\HELLFIREPENINSULA\FIREWALL\HELLFIRE_FIREWALL_01.M2] don't contain geometry. Skins [1]
-@M2[WORLD\AZEROTH\BURNINGSTEPPES\PASSIVEDOODADS\SMOKE\ASHTREESMOKE01.M2] don't contain geometry. Skins [1]
-@M2[WORLD\LORDAERON\STRATHOLME\PASSIVEDOODADS\FX\STRATHOLMEFIRESMOKEEMBERS.M2] don't contain geometry. Skins [1]
-@M2[WORLD\LORDAERON\STRATHOLME\PASSIVEDOODADS\FX\STRATHOLMEFLOATINGEMBERS.M2] don't contain geometry. Skins [1]
-@M2[WORLD\EXPANSION01\DOODADS\HELLFIREPENINSULA\FIREWALL\HELLFIRE_FEL_FIREWALL_01.M2] don't contain geometry. Skins [1]
-@M2[WORLD\EXPANSION01\DOODADS\SHADOWMOON\SMOKE\SHADOWMOONCRACKSMOKE01.M2] don't contain geometry. Skins [1]
-@M2[WORLD\LORDAERON\STRATHOLME\PASSIVEDOODADS\FX\STRATHOLMEFIRESMOKEEMBERM.M2] don't contain geometry. Skins [1]
-@M2[WORLD\GENERIC\PASSIVEDOODADS\PARTICLEEMITTERS\BLACKSMITH_SMOKE.M2] don't contain geometry. Skins [1]
-@M2[WORLD\GENERIC\PASSIVEDOODADS\PARTICLEEMITTERS\BLACKSMITH_SMOKE.M2] don't contain geometry. Skins [1]
-@M2[WORLD\GENERIC\PASSIVEDOODADS\PARTICLEEMITTERS\BLACKSMITH_SMOKE.M2] don't contain geometry. Skins [1]
-~Textures count = '6'.
-~Textures count = '6'.
-~Textures count = '6'.
-^MapTile[24, 32, World\Maps\Expansion01\Expansion01_24_32.adt]: Loaded!
-^MapTile[24, 31, World\Maps\Expansion01\Expansion01_24_31.adt]: Loaded!
-^MapTile[24, 33, World\Maps\Expansion01\Expansion01_24_33.adt]: Loaded!
-~Textures count = '5'.
-~Textures count = '7'.
-~Textures count = '7'.
-^MapTile[23, 32, World\Maps\Expansion01\Expansion01_23_32.adt]: Loaded!
-^MapTile[23, 33, World\Maps\Expansion01\Expansion01_23_33.adt]: Loaded!
-^MapTile[23, 31, World\Maps\Expansion01\Expansion01_23_31.adt]: Loaded!
-@CMapTile::~CMapTile: Tile [27, 31] unloaded.
-@CMapTile::~CMapTile: Tile [26, 31] unloaded.
-~Textures count = '5'.
-~Textures count = '8'.
-~Textures count = '11'.
-^MapTile[25, 34, World\Maps\Expansion01\Expansion01_25_34.adt]: Loaded!
-^MapTile[24, 34, World\Maps\Expansion01\Expansion01_24_34.adt]: Loaded!
-^MapTile[23, 34, World\Maps\Expansion01\Expansion01_23_34.adt]: Loaded!
-@CMapTile::~CMapTile: Tile [25, 34] unloaded.
-@CMapTile::~CMapTile: Tile [26, 33] unloaded.
-~Textures count = '12'.
-~Textures count = '15'.
-~Textures count = '12'.
-@CMapTile::~CMapTile: Tile [27, 33] unloaded.
-^MapTile[22, 32, World\Maps\Expansion01\Expansion01_22_32.adt]: Loaded!
-@M2[WORLD\EXPANSION01\DOODADS\ZANGAR\POLLEN\ZM_BLUEPOLLEN.M2] don't contain geometry. Skins [1]
-^MapTile[22, 33, World\Maps\Expansion01\Expansion01_22_33.adt]: Loaded!
-^MapTile[22, 31, World\Maps\Expansion01\Expansion01_22_31.adt]: Loaded!
-@CMapTile::~CMapTile: Tile [27, 32] unloaded.
-~Textures count = '11'.
-@CMapTile::~CMapTile: Tile [25, 31] unloaded.
-~Textures count = '13'.
-~Textures count = '16'.
-@CMapTile::~CMapTile: Tile [25, 33] unloaded.
-^MapTile[21, 31, World\Maps\Expansion01\Expansion01_21_31.adt]: Loaded!
-^MapTile[21, 33, World\Maps\Expansion01\Expansion01_21_33.adt]: Loaded!
-^MapTile[21, 32, World\Maps\Expansion01\Expansion01_21_32.adt]: Loaded!
-~Textures count = '9'.
-@CMapTile::~CMapTile: Tile [26, 32] unloaded.
-~Textures count = '6'.
-@CMapTile::~CMapTile: Tile [24, 34] unloaded.
-~Textures count = '17'.
-@CMapTile::~CMapTile: Tile [25, 32] unloaded.
-^MapTile[20, 33, World\Maps\Expansion01\Expansion01_20_33.adt]: Loaded!
-^MapTile[20, 32, World\Maps\Expansion01\Expansion01_20_32.adt]: Loaded!
-^MapTile[20, 31, World\Maps\Expansion01\Expansion01_20_31.adt]: Loaded!
-@M2[WORLD\EXPANSION01\DOODADS\ZANGAR\POLLEN\ZM_BLUEPOLLEN.M2] don't contain geometry. Skins [1]
-@CMapTile::~CMapTile: Tile [24, 31] unloaded.
+^Opcode: 'SMSG_ACCOUNT_DATA_TIMES' (0x209). Size: '29'
+^Opcode: 'SMSG_FEATURE_SYSTEM_STATUS' (0x3C9). Size: '2'
+^Opcode: 'SMSG_MOTD' (0x33D). Size: '38'
+^Opcode: 'SMSG_LEARNED_DANCE_MOVES' (0x455). Size: '8'
+^Opcode: 'SMSG_CONTACT_LIST' (0x67). Size: '8'
+^Opcode: 'SMSG_BIND_POINT_UPDATE' (0x155). Size: '20'
+^Opcode: 'SMSG_TALENTS_INFO' (0x4C0). Size: '21'
+^Opcode: 'SMSG_INSTANCE_DIFFICULTY' (0x33B). Size: '8'
+^Opcode: 'SMSG_INITIAL_SPELLS' (0x12A). Size: '269'
+^Opcode: 'SMSG_SEND_UNLEARN_SPELLS' (0x41E). Size: '4'
+^Opcode: 'SMSG_ACTION_BUTTONS' (0x129). Size: '577'
+^Opcode: 'SMSG_INITIALIZE_FACTIONS' (0x122). Size: '644'
+^Opcode: 'SMSG_ALL_ACHIEVEMENT_DATA' (0x47D). Size: '939'
+^Opcode: 'SMSG_EQUIPMENT_SET_LIST' (0x4BC). Size: '4'
+^Opcode: 'SMSG_LOGIN_SET_TIME_SPEED' (0x42). Size: '12'
+^Opcode: 'SMSG_SET_FORCED_REACTIONS' (0x2A5). Size: '4'
+^Process update type 2
+^OBJECT Item 1 0 created.
+@UPDATETYPE_CREATE_OBJECT
+^Process update type 2
+^OBJECT Item 1 0 created.
+@UPDATETYPE_CREATE_OBJECT
+^Process update type 2
+^OBJECT Item 1 0 created.
+@UPDATETYPE_CREATE_OBJECT
+^Process update type 2
+^OBJECT Item 1 0 created.
+@UPDATETYPE_CREATE_OBJECT
+^Process update type 2
+^OBJECT Item 1 0 created.
+@UPDATETYPE_CREATE_OBJECT
+^Process update type 2
+^OBJECT Item 1 0 created.
+@UPDATETYPE_CREATE_OBJECT
+^Process update type 2
+^OBJECT Item 1 0 created.
+@UPDATETYPE_CREATE_OBJECT
+^Process update type 2
+^OBJECT Player 4 0 created.
+@UPDATETYPE_CREATE_OBJECT
+^Process update type 2
+^WoWGameObject created!
+^OBJECT MoTransport 5 0 created.
+@UPDATETYPE_CREATE_OBJECT
+^Process update type 2
+^WoWGameObject created!
+^OBJECT MoTransport 5 0 created.
+@UPDATETYPE_CREATE_OBJECT
+^Process update type 2
+^WoWGameObject created!
+^OBJECT MoTransport 5 0 created.
+@UPDATETYPE_CREATE_OBJECT
+^Process update type 2
+^WoWGameObject created!
+^OBJECT MoTransport 5 0 created.
+@UPDATETYPE_CREATE_OBJECT
+^Process update type 2
+^WoWGameObject created!
+^OBJECT MoTransport 5 0 created.
+@UPDATETYPE_CREATE_OBJECT
+^Process update type 2
+^WoWGameObject created!
+^OBJECT MoTransport 5 0 created.
+@UPDATETYPE_CREATE_OBJECT
+^Process update type 2
+@UPDATETYPE_CREATE_OBJECT
+^Process update type 2
+@UPDATETYPE_CREATE_OBJECT
+^Process update type 2
+@UPDATETYPE_CREATE_OBJECT
+^Process update type 2
+@UPDATETYPE_CREATE_OBJECT
+^Process update type 2
+@UPDATETYPE_CREATE_OBJECT
+^Process update type 2
+!File 'BlackSkin.blp' not exists.
+@UPDATETYPE_CREATE_OBJECT
+^Process update type 2
+!File 'BlackSkin.blp' not exists.
+@UPDATETYPE_CREATE_OBJECT
+^Process update type 2
+@UPDATETYPE_CREATE_OBJECT
+^Process update type 2
+!File 'UndeadHorseSkinBlueBlack.blp' not exists.
+@UPDATETYPE_CREATE_OBJECT
+^Process update type 2
+!File 'MountedDeathKnightCrimson_01.blp' not exists.
+@UPDATETYPE_CREATE_OBJECT
+^Process update type 2
+!File 'ChickenSkin.blp' not exists.
+@UPDATETYPE_CREATE_OBJECT
+^Process update type 2
+@UPDATETYPE_CREATE_OBJECT
+^Process update type 2
+@UPDATETYPE_CREATE_OBJECT
+^Process update type 2
+@UPDATETYPE_CREATE_OBJECT
+^Process update type 2
 ~Textures count = '10'.
-@CMapTile::~CMapTile: Tile [24, 32] unloaded.
-~Textures count = '13'.
-@CMapTile::~CMapTile: Tile [23, 31] unloaded.
-~Textures count = '16'.
-^MapTile[22, 34, World\Maps\Expansion01\Expansion01_22_34.adt]: Loaded!
-^MapTile[21, 34, World\Maps\Expansion01\Expansion01_21_34.adt]: Loaded!
-^MapTile[20, 34, World\Maps\Expansion01\Expansion01_20_34.adt]: Loaded!
-^WMO[WORLD\WMO\OUTLAND\TEROKKAR\SHATTRATHCITY.WMO]: Liq: headerID [15] headerFlag [0] MatID: [41]
-^WMO[WORLD\WMO\OUTLAND\TEROKKAR\SHATTRATHCITY.WMO]: Liq: headerID [15] headerFlag [0] MatID: [65]
-@M2[WORLD\GENERIC\PASSIVEDOODADS\PARTICLEEMITTERS\BLACKSMITH_SMOKE.M2] don't contain geometry. Skins [1]
-@M2[WORLD\GENERIC\PASSIVEDOODADS\PARTICLEEMITTERS\BLACKSMITH_SMOKE.M2] don't contain geometry. Skins [1]
-@CMapTile::~CMapTile: Tile [24, 33] unloaded.
-~Textures count = '8'.
-~Textures count = '11'.
-~Textures count = '11'.
-^MapTile[21, 35, World\Maps\Expansion01\Expansion01_21_35.adt]: Loaded!
-@CMapTile::~CMapTile: Tile [20, 31] unloaded.
-@CMapTile::~CMapTile: Tile [22, 31] unloaded.
-^MapTile[22, 35, World\Maps\Expansion01\Expansion01_22_35.adt]: Loaded!
-^MapTile[20, 35, World\Maps\Expansion01\Expansion01_20_35.adt]: Loaded!
-@CMapTile::~CMapTile: Tile [23, 32] unloaded.
-@CMapTile::~CMapTile: Tile [22, 32] unloaded.
-~Textures count = '12'.
-@CMapTile::~CMapTile: Tile [21, 31] unloaded.
-^MapTile[19, 33, World\Maps\Expansion01\Expansion01_19_33.adt]: Loaded!
-~Textures count = '7'.
-~Textures count = '8'.
-^MapTile[19, 34, World\Maps\Expansion01\Expansion01_19_34.adt]: Loaded!
-@M2[WORLD\AZEROTH\BURNINGSTEPPES\PASSIVEDOODADS\FALLINGEMBERS\FALLINGEMBERS.M2] don't contain geometry. Skins [1]
-@M2[WORLD\AZEROTH\BURNINGSTEPPES\PASSIVEDOODADS\SMOKE\ASHTREESMOKE01.M2] don't contain geometry. Skins [1]
-^MapTile[19, 35, World\Maps\Expansion01\Expansion01_19_35.adt]: Loaded!
-~Textures count = '7'.
-@CMapTile::~CMapTile: Tile [23, 33] unloaded.
-~Textures count = '7'.
-@CMapTile::~CMapTile: Tile [21, 32] unloaded.
-~Textures count = '8'.
-^MapTile[18, 35, World\Maps\Expansion01\Expansion01_18_35.adt]: Loaded!
-@CMapTile::~CMapTile: Tile [22, 33] unloaded.
-^MapTile[18, 33, World\Maps\Expansion01\Expansion01_18_33.adt]: Loaded!
-^MapTile[18, 34, World\Maps\Expansion01\Expansion01_18_34.adt]: Loaded!
-~Textures count = '8'.
-@CMapTile::~CMapTile: Tile [20, 32] unloaded.
+@UPDATETYPE_CREATE_OBJECT
+^Process update type 2
+@UPDATETYPE_CREATE_OBJECT
+^Process update type 2
+@UPDATETYPE_CREATE_OBJECT
+^Process update type 2
+!File 'MountedDeathKnightPurple_01.blp' not exists.
 ~Textures count = '9'.
-~Textures count = '7'.
-@CMapTile::~CMapTile: Tile [23, 34] unloaded.
-@CMapTile::~CMapTile: Tile [21, 33] unloaded.
-^MapTile[20, 36, World\Maps\Expansion01\Expansion01_20_36.adt]: Loaded!
-^MapTile[19, 36, World\Maps\Expansion01\Expansion01_19_36.adt]: Loaded!
-^MapTile[18, 36, World\Maps\Expansion01\Expansion01_18_36.adt]: Loaded!
-@M2[WORLD\EXPANSION01\DOODADS\SILVERMYST\SMOKE\D_SMOKE.M2] don't contain geometry. Skins [1]
-@CMapTile::~CMapTile: Tile [22, 34] unloaded.
+@UPDATETYPE_CREATE_OBJECT
+^Process update type 2
 ~Textures count = '6'.
-~Textures count = '9'.
-~Textures count = '8'.
-^MapTile[17, 36, World\Maps\Expansion01\Expansion01_17_36.adt]: Loaded!
-^MapTile[17, 34, World\Maps\Expansion01\Expansion01_17_34.adt]: Loaded!
-@CMapTile::~CMapTile: Tile [20, 33] unloaded.
-^MapTile[17, 35, World\Maps\Expansion01\Expansion01_17_35.adt]: Loaded!
-@CMapTile::~CMapTile: Tile [21, 34] unloaded.
-~Textures count = '11'.
-@CMapTile::~CMapTile: Tile [22, 35] unloaded.
-~Textures count = '8'.
-~Textures count = '11'.
-^MapTile[17, 37, World\Maps\Expansion01\Expansion01_17_37.adt]: Loaded!
-^MapTile[18, 37, World\Maps\Expansion01\Expansion01_18_37.adt]: Loaded!
-@CMapTile::~CMapTile: Tile [21, 35] unloaded.
-@CMapTile::~CMapTile: Tile [20, 34] unloaded.
-^MapTile[19, 37, World\Maps\Expansion01\Expansion01_19_37.adt]: Loaded!
-@CMapTile::~CMapTile: Tile [19, 33] unloaded.
-~Textures count = '9'.
-@CMapTile::~CMapTile: Tile [19, 34] unloaded.
-~Textures count = '9'.
-~Textures count = '5'.
-@CMapTile::~CMapTile: Tile [20, 35] unloaded.
-^MapTile[16, 36, World\Maps\Expansion01\Expansion01_16_36.adt]: Loaded!
-^MapTile[16, 37, World\Maps\Expansion01\Expansion01_16_37.adt]: Loaded!
-^MapTile[16, 35, World\Maps\Expansion01\Expansion01_16_35.adt]: Loaded!
-~Textures count = '9'.
-@CMapTile::~CMapTile: Tile [20, 36] unloaded.
-~Textures count = '9'.
-~Textures count = '9'.
-^MapTile[15, 37, World\Maps\Expansion01\Expansion01_15_37.adt]: Loaded!
-^MapTile[15, 36, World\Maps\Expansion01\Expansion01_15_36.adt]: Loaded!
-^MapTile[15, 35, World\Maps\Expansion01\Expansion01_15_35.adt]: Loaded!
-@CMapTile::~CMapTile: Tile [18, 33] unloaded.
-@CMapTile::~CMapTile: Tile [18, 34] unloaded.
-@CMapTile::~CMapTile: Tile [19, 35] unloaded.
-~Textures count = '1'.
-~Textures count = '3'.
-~Textures count = '4'.
-^MapTile[15, 38, World\Maps\Expansion01\Expansion01_15_38.adt]: Loaded!
-^MapTile[16, 38, World\Maps\Expansion01\Expansion01_16_38.adt]: Loaded!
-^MapTile[17, 38, World\Maps\Expansion01\Expansion01_17_38.adt]: Loaded!
-@CMapTile::~CMapTile: Tile [19, 36] unloaded.
-@CMapTile::~CMapTile: Tile [18, 35] unloaded.
-@CMapTile::~CMapTile: Tile [17, 38] unloaded.
-@CMapTile::~CMapTile: Tile [19, 37] unloaded.
-~Textures count = '13'.
-~Textures count = '11'.
-^MapTile[16, 34, World\Maps\Expansion01\Expansion01_16_34.adt]: Loaded!
-^MapTile[15, 34, World\Maps\Expansion01\Expansion01_15_34.adt]: Loaded!
-@M2[WORLD\AZEROTH\BURNINGSTEPPES\PASSIVEDOODADS\SMOKE\ASHTREESMOKE01.M2] don't contain geometry. Skins [1]
-@CMapTile::~CMapTile: Tile [15, 38] unloaded.
-@CMapTile::~CMapTile: Tile [18, 37] unloaded.
+!File 'UndeadHorseSkinRed.blp' not exists.
+@UPDATETYPE_CREATE_OBJECT
+^Process update type 2
 ~Textures count = '10'.
-~Textures count = '7'.
-~Textures count = '10'.
-@CMapTile::~CMapTile: Tile [16, 38] unloaded.
-^MapTile[16, 33, World\Maps\Expansion01\Expansion01_16_33.adt]: Loaded!
-^WMO[WORLD\WMO\DUNGEON\MD_OGREMOUND\NAGRAND_OGREMOUND01.WMO]: Liq: headerID [15] headerFlag [0] MatID: [12]
-^MapTile[15, 33, World\Maps\Expansion01\Expansion01_15_33.adt]: Loaded!
-^MapTile[17, 33, World\Maps\Expansion01\Expansion01_17_33.adt]: Loaded!
-@CMapTile::~CMapTile: Tile [15, 37] unloaded.
-@CMapTile::~CMapTile: Tile [17, 37] unloaded.
-~Textures count = '13'.
-@CMapTile::~CMapTile: Tile [18, 36] unloaded.
-~Textures count = '12'.
-~Textures count = '14'.
-^MapTile[15, 32, World\Maps\Expansion01\Expansion01_15_32.adt]: Loaded!
-^MapTile[17, 32, World\Maps\Expansion01\Expansion01_17_32.adt]: Loaded!
-^MapTile[16, 32, World\Maps\Expansion01\Expansion01_16_32.adt]: Loaded!
-@M2[WORLD\EXPANSION01\DOODADS\ZANGAR\POLLEN\ZM_BLUEPOLLEN.M2] don't contain geometry. Skins [1]
-@CMapTile::~CMapTile: Tile [16, 37] unloaded.
-~Textures count = '11'.
-@CMapTile::~CMapTile: Tile [17, 36] unloaded.
-~Textures count = '10'.
-~Textures count = '12'.
-@CMapTile::~CMapTile: Tile [15, 36] unloaded.
-^MapTile[15, 31, World\Maps\Expansion01\Expansion01_15_31.adt]: Loaded!
-^MapTile[16, 31, World\Maps\Expansion01\Expansion01_16_31.adt]: Loaded!
-^MapTile[17, 31, World\Maps\Expansion01\Expansion01_17_31.adt]: Loaded!
-~Textures count = '5'.
-@CMapTile::~CMapTile: Tile [17, 34] unloaded.
-~Textures count = '4'.
-~Textures count = '7'.
-^MapTile[14, 32, World\Maps\Expansion01\Expansion01_14_32.adt]: Loaded!
-^MapTile[14, 31, World\Maps\Expansion01\Expansion01_14_31.adt]: Loaded!
-^MapTile[14, 33, World\Maps\Expansion01\Expansion01_14_33.adt]: Loaded!
-@CMapTile::~CMapTile: Tile [17, 35] unloaded.
-@CMapTile::~CMapTile: Tile [16, 36] unloaded.
-~Textures count = '12'.
-@CMapTile::~CMapTile: Tile [17, 31] unloaded.
-^MapTile[14, 34, World\Maps\Expansion01\Expansion01_14_34.adt]: Loaded!
-~Textures count = '10'.
-@CMapTile::~CMapTile: Tile [14, 31] unloaded.
-^MapTile[14, 35, World\Maps\Expansion01\Expansion01_14_35.adt]: Loaded!
-~Textures count = '2'.
-~Textures count = '9'.
-~Textures count = '3'.
-^MapTile[13, 32, World\Maps\Expansion01\Expansion01_13_32.adt]: Loaded!
-^MapTile[13, 33, World\Maps\Expansion01\Expansion01_13_33.adt]: Loaded!
-@CMapTile::~CMapTile: Tile [16, 35] unloaded.
-^MapTile[13, 34, World\Maps\Expansion01\Expansion01_13_34.adt]: Loaded!
-@CMapTile::~CMapTile: Tile [17, 32] unloaded.
-@CMapTile::~CMapTile: Tile [16, 31] unloaded.
+!File 'UndeadHorseSkinBlue.blp' not exists.
+@UPDATETYPE_CREATE_OBJECT
+^Process update type 2
+!File 'UndeadHorseSkinYellow.blp' not exists.
+@UPDATETYPE_CREATE_OBJECT
+^Process update type 2
+@UPDATETYPE_CREATE_OBJECT
+^Process update type 2
+@UPDATETYPE_CREATE_OBJECT
+^Process update type 2
+@UPDATETYPE_CREATE_OBJECT
+^Process update type 2
+@UPDATETYPE_CREATE_OBJECT
+^Process update type 2
+@UPDATETYPE_CREATE_OBJECT
+^Process update type 2
+!File 'HoundSkinBlue.blp' not exists.
+@UPDATETYPE_CREATE_OBJECT
+^Process update type 2
+!File 'HoundSkinBlue.blp' not exists.
+@UPDATETYPE_CREATE_OBJECT
+^Process update type 2
+!File 'BlackSkin.blp' not exists.
+@UPDATETYPE_CREATE_OBJECT
+^Process update type 2
+@UPDATETYPE_CREATE_OBJECT
+^Process update type 2
+@UPDATETYPE_CREATE_OBJECT
+^Process update type 2
+@UPDATETYPE_CREATE_OBJECT
+^Process update type 2
+@UPDATETYPE_CREATE_OBJECT
+^Process update type 2
+@UPDATETYPE_CREATE_OBJECT
+^Process update type 2
+@UPDATETYPE_CREATE_OBJECT
+^Process update type 2
+@UPDATETYPE_CREATE_OBJECT
+^Process update type 2
+@UPDATETYPE_CREATE_OBJECT
+^Process update type 2
+@UPDATETYPE_CREATE_OBJECT
+^Process update type 2
+@UPDATETYPE_CREATE_OBJECT
+^Process update type 2
+@UPDATETYPE_CREATE_OBJECT
+^Process update type 2
+@UPDATETYPE_CREATE_OBJECT
+^Process update type 2
+@UPDATETYPE_CREATE_OBJECT
+^Process update type 2
+@UPDATETYPE_CREATE_OBJECT
+^Process update type 2
+@UPDATETYPE_CREATE_OBJECT
+^Process update type 2
+@UPDATETYPE_CREATE_OBJECT
+^Process update type 2
+@UPDATETYPE_CREATE_OBJECT
+^Process update type 2
+@UPDATETYPE_CREATE_OBJECT
+^Process update type 2
+@UPDATETYPE_CREATE_OBJECT
+^Process update type 2
+@UPDATETYPE_CREATE_OBJECT
+^Process update type 2
+@UPDATETYPE_CREATE_OBJECT
+^Process update type 2
+^MapTile[31, 26, World\Maps\Azeroth\Azeroth_31_26.adt]: Loaded!
+@UPDATETYPE_CREATE_OBJECT
+^Process update type 2
 ~Textures count = '6'.
-^MapTile[13, 35, World\Maps\Expansion01\Expansion01_13_35.adt]: Loaded!
-@CMapTile::~CMapTile: Tile [15, 31] unloaded.
-~Textures count = '9'.
-@CMapTile::~CMapTile: Tile [13, 32] unloaded.
-^MapTile[16, 35, World\Maps\Expansion01\Expansion01_16_35.adt]: Loaded!
-@CMapTile::~CMapTile: Tile [13, 35] unloaded.
-@CMapTile::~CMapTile: Tile [14, 32] unloaded.
-~Textures count = '8'.
-~Textures count = '9'.
-^MapTile[17, 35, World\Maps\Expansion01\Expansion01_17_35.adt]: Loaded!
-^MapTile[17, 34, World\Maps\Expansion01\Expansion01_17_34.adt]: Loaded!
-@CMapTile::~CMapTile: Tile [15, 32] unloaded.
-@CMapTile::~CMapTile: Tile [13, 33] unloaded.
-@CMapTile::~CMapTile: Tile [14, 35] unloaded.
+@UPDATETYPE_CREATE_OBJECT
+^Process update type 2
+@UPDATETYPE_CREATE_OBJECT
+^Process update type 2
+@UPDATETYPE_CREATE_OBJECT
+^Process update type 2
+@UPDATETYPE_CREATE_OBJECT
+^Process update type 2
+@UPDATETYPE_CREATE_OBJECT
+^Process update type 2
+^MapTile[30, 26, World\Maps\Azeroth\Azeroth_30_26.adt]: Loaded!
+~Textures count = '6'.
+@UPDATETYPE_CREATE_OBJECT
+^Process update type 2
+@UPDATETYPE_CREATE_OBJECT
+^Process update type 2
+@UPDATETYPE_CREATE_OBJECT
+^Process update type 2
+^MapTile[30, 27, World\Maps\Azeroth\Azeroth_30_27.adt]: Loaded!
+@UPDATETYPE_CREATE_OBJECT
+^Process update type 2
+~Textures count = '10'.
+@UPDATETYPE_CREATE_OBJECT
+^Process update type 2
+@UPDATETYPE_CREATE_OBJECT
+^Process update type 2
+@UPDATETYPE_CREATE_OBJECT
+^Process update type 2
+@UPDATETYPE_CREATE_OBJECT
+^Process update type 2
+!File 'BlackSkin.blp' not exists.
+@UPDATETYPE_CREATE_OBJECT
+^Process update type 2
+!File 'BlackSkin.blp' not exists.
+@UPDATETYPE_CREATE_OBJECT
+^Process update type 2
+@UPDATETYPE_CREATE_OBJECT
+^Process update type 2
+^MapTile[32, 26, World\Maps\Azeroth\Azeroth_32_26.adt]: Loaded!
+@UPDATETYPE_CREATE_OBJECT
+^Process update type 2
+!File 'MountedDeathKnightGreen_01.blp' not exists.
+@UPDATETYPE_CREATE_OBJECT
+^Process update type 2
 ~Textures count = '7'.
-~Textures count = '7'.
+@UPDATETYPE_CREATE_OBJECT
+^Process update type 2
+@UPDATETYPE_CREATE_OBJECT
+^Process update type 2
+@UPDATETYPE_CREATE_OBJECT
+^Process update type 2
+@UPDATETYPE_CREATE_OBJECT
+^Process update type 2
+@UPDATETYPE_CREATE_OBJECT
+^Process update type 2
+@UPDATETYPE_CREATE_OBJECT
+^Process update type 2
+@UPDATETYPE_CREATE_OBJECT
+^Process update type 2
+@UPDATETYPE_CREATE_OBJECT
+^Process update type 2
+@UPDATETYPE_CREATE_OBJECT
+^Process update type 2
+@UPDATETYPE_CREATE_OBJECT
+^Process update type 2
+@UPDATETYPE_CREATE_OBJECT
+^Process update type 2
+@UPDATETYPE_CREATE_OBJECT
+^Process update type 2
+@UPDATETYPE_CREATE_OBJECT
+^Process update type 2
+@UPDATETYPE_CREATE_OBJECT
+^Process update type 2
+@UPDATETYPE_CREATE_OBJECT
+^Process update type 2
+@UPDATETYPE_CREATE_OBJECT
+^Process update type 2
+@UPDATETYPE_CREATE_OBJECT
+^Process update type 2
+@UPDATETYPE_CREATE_OBJECT
+^Process update type 2
+@UPDATETYPE_CREATE_OBJECT
+^Process update type 2
+@UPDATETYPE_CREATE_OBJECT
+^Process update type 2
+@UPDATETYPE_CREATE_OBJECT
+^Process update type 2
+@UPDATETYPE_CREATE_OBJECT
+^Process update type 2
+@UPDATETYPE_CREATE_OBJECT
+^Process update type 2
+^MapTile[31, 28, World\Maps\Azeroth\Azeroth_31_28.adt]: Loaded!
+@UPDATETYPE_CREATE_OBJECT
+^Process update type 2
+@UPDATETYPE_CREATE_OBJECT
+^Process update type 2
+^MapTile[32, 27, World\Maps\Azeroth\Azeroth_32_27.adt]: Loaded!
+@UPDATETYPE_CREATE_OBJECT
+^Process update type 2
+@UPDATETYPE_CREATE_OBJECT
+^Process update type 2
+@UPDATETYPE_CREATE_OBJECT
+^Process update type 2
 ~Textures count = '8'.
-^MapTile[18, 35, World\Maps\Expansion01\Expansion01_18_35.adt]: Loaded!
-^MapTile[18, 33, World\Maps\Expansion01\Expansion01_18_33.adt]: Loaded!
-^MapTile[18, 34, World\Maps\Expansion01\Expansion01_18_34.adt]: Loaded!
-@CMapTile::~CMapTile: Tile [15, 33] unloaded.
-~Textures count = '7'.
-~Textures count = '8'.
-@CMapTile::~CMapTile: Tile [14, 33] unloaded.
-~Textures count = '12'.
-^MapTile[19, 34, World\Maps\Expansion01\Expansion01_19_34.adt]: Loaded!
-@CMapTile::~CMapTile: Tile [13, 34] unloaded.
-^MapTile[19, 33, World\Maps\Expansion01\Expansion01_19_33.adt]: Loaded!
-^MapTile[19, 35, World\Maps\Expansion01\Expansion01_19_35.adt]: Loaded!
-@M2[WORLD\AZEROTH\BURNINGSTEPPES\PASSIVEDOODADS\FALLINGEMBERS\FALLINGEMBERS.M2] don't contain geometry. Skins [1]
+@UPDATETYPE_CREATE_OBJECT
+^Process update type 2
+@UPDATETYPE_CREATE_OBJECT
+^Process update type 2
+@UPDATETYPE_CREATE_OBJECT
+^Process update type 2
+@UPDATETYPE_CREATE_OBJECT
+^Process update type 2
+@UPDATETYPE_CREATE_OBJECT
+^Process update type 2
+@UPDATETYPE_CREATE_OBJECT
+^Process update type 2
+@UPDATETYPE_CREATE_OBJECT
+^Process update type 2
+@UPDATETYPE_CREATE_OBJECT
+^Process update type 2
+@UPDATETYPE_CREATE_OBJECT
+^Process update type 2
+@UPDATETYPE_CREATE_OBJECT
+^Process update type 2
+@UPDATETYPE_CREATE_OBJECT
+^Process update type 2
+@UPDATETYPE_CREATE_OBJECT
+^Process update type 2
+@UPDATETYPE_CREATE_OBJECT
+^Process update type 2
+@UPDATETYPE_CREATE_OBJECT
+^Process update type 2
+@UPDATETYPE_CREATE_OBJECT
+^Process update type 2
+@UPDATETYPE_CREATE_OBJECT
+^Process update type 2
+@UPDATETYPE_CREATE_OBJECT
+^Process update type 2
+@UPDATETYPE_CREATE_OBJECT
+^Process update type 2
+^MapTile[31, 27, World\Maps\Azeroth\Azeroth_31_27.adt]: Loaded!
+@UPDATETYPE_CREATE_OBJECT
+^Process update type 2
+@UPDATETYPE_CREATE_OBJECT
+^Process update type 2
+!File 'ChickenSkin.blp' not exists.
+@UPDATETYPE_CREATE_OBJECT
+^Process update type 2
+@UPDATETYPE_CREATE_OBJECT
+^Process update type 2
+@UPDATETYPE_CREATE_OBJECT
+^Process update type 2
+@UPDATETYPE_CREATE_OBJECT
+^Process update type 2
+@UPDATETYPE_CREATE_OBJECT
+^Process update type 2
+@UPDATETYPE_CREATE_OBJECT
+^Process update type 2
+@UPDATETYPE_CREATE_OBJECT
+^Process update type 2
+@UPDATETYPE_CREATE_OBJECT
+^Process update type 2
+@UPDATETYPE_CREATE_OBJECT
+^Process update type 2
+^MapTile[32, 28, World\Maps\Azeroth\Azeroth_32_28.adt]: Loaded!
+!File 'HoundSkinBlue.blp' not exists.
+@UPDATETYPE_CREATE_OBJECT
+^Process update type 2
+!File 'BlackSkin.blp' not exists.
+@UPDATETYPE_CREATE_OBJECT
+^Process update type 2
+@UPDATETYPE_CREATE_OBJECT
+^Opcode: 'SMSG_WEATHER' (0x2F4). Size: '9'
+^Opcode: 'SMSG_INIT_WORLD_STATES' (0x2C2). Size: '78'
+^Opcode: 'SMSG_UPDATE_WORLD_STATE' (0x2C3). Size: '8'
+^Opcode: 'SMSG_UPDATE_WORLD_STATE' (0x2C3). Size: '8'
+^Opcode: 'SMSG_UPDATE_WORLD_STATE' (0x2C3). Size: '8'
+^Opcode: 'SMSG_UPDATE_WORLD_STATE' (0x2C3). Size: '8'
+^Opcode: 'SMSG_UPDATE_WORLD_STATE' (0x2C3). Size: '8'
+^Opcode: 'SMSG_UPDATE_WORLD_STATE' (0x2C3). Size: '8'
+^Opcode: 'SMSG_TIME_SYNC_REQ' (0x390). Size: '4'
+^Opcode: 'SMSG_SPELL_GO' (0x132). Size: '36'
+^Opcode: 'SMSG_QUESTGIVER_STATUS_MULTIPLE' (0x418). Size: '211'
+^Opcode: 'SMSG_NOTIFICATION' (0x1CB). Size: '14'
+~GameObject query: ID '38492', Type '8', Name 'Наковальня'
+~GameObject query: ID '38495', Type '8', Name 'Наковальня'
+~GameObject query: ID '38494', Type '8', Name 'Наковальня'
+~GameObject query: ID '38493', Type '8', Name 'Наковальня'
+~GameObject query: ID '38491', Type '8', Name 'Горн'
+~Creature query: ID '4075', Name 'Крыса', SubName ''
+~Creature query: ID '33996', Name 'Вильям Сальден', SubName 'Зерно и хлеб'
+^Process update type 0
+~Creature query: ID '34238', Name 'Черный конь-скелет', SubName ''
+~Creature query: ID '35169', Name 'Коричневый боевой конь-скелет', SubName ''
+~Creature query: ID '620', Name 'Курица', SubName ''
+~Creature query: ID '2134', Name 'Миссис Винтерс', SubName 'Сто мелочей'
+~Creature query: ID '2136', Name 'Оливье Дворр', SubName 'Ученик оружейника'
+~Creature query: ID '2135', Name 'Эйб Винтерс', SubName 'Ученик бронника'
+~Creature query: ID '4773', Name 'Вельма Варнам', SubName 'Учитель верховой езды'
+~Creature query: ID '2309', Name 'Томас Арленто', SubName ''
+~Creature query: ID '2311', Name 'Дорин Белтис', SubName ''
+~Creature query: ID '14558', Name 'Лиловый боевой конь-скелет', SubName ''
+~Creature query: ID '12343', Name 'Красный конь-скелет', SubName ''
+~Creature query: ID '12341', Name 'Синий конь-скелет', SubName ''
+~Creature query: ID '12342', Name 'Гнедой конь-скелет', SubName ''
+~Creature query: ID '1745', Name 'Страж смерти Моррис', SubName ''
+~Creature query: ID '10055', Name 'Морганус', SubName 'Смотритель стойл'
+~Creature query: ID '2137', Name 'Элиза Каллен', SubName 'Торговец кожаными доспехами'
+~Creature query: ID '4731', Name 'Захария Пост', SubName 'Торговец конями нежити'
+~Creature query: ID '2118', Name 'Эбигейл Шиль', SubName 'Хозяйственные товары'
+~Creature query: ID '1547', Name 'Дряхлый пес Тьмы', SubName ''
+~GameObject query: ID '22709', Type '8', Name 'Приветливый очаг'
+~GameObject query: ID '2061', Type '6', Name 'Костер'
+~GameObject query: ID '22748', Type '7', Name 'Деревянный стул'
+~GameObject query: ID '22747', Type '7', Name 'Деревянный стул'
+~GameObject query: ID '22710', Type '8', Name 'Приветливый очаг'
+~GameObject query: ID '22707', Type '8', Name 'Приветливый очаг'
+~GameObject query: ID '22746', Type '7', Name 'Деревянный стул'
+~GameObject query: ID '22738', Type '7', Name 'Стул с высокой спинкой'
+~GameObject query: ID '22743', Type '7', Name 'Деревянный стул'
+~GameObject query: ID '22753', Type '7', Name 'Стул с высокой спинкой'
+~GameObject query: ID '22749', Type '7', Name 'Деревянный стул'
+~GameObject query: ID '22745', Type '7', Name 'Деревянный стул'
+~GameObject query: ID '22712', Type '8', Name 'Приветливый очаг'
+~GameObject query: ID '22750', Type '7', Name 'Деревянный стул'
+~GameObject query: ID '1646', Type '5', Name 'Серебряный бор'
+~GameObject query: ID '1647', Type '5', Name 'Похоронный Звон'
+~GameObject query: ID '143990', Type '19', Name 'Mailbox'
+~GameObject query: ID '1648', Type '5', Name 'Мельницы Агамондов'
+~GameObject query: ID '1663', Type '5', Name 'Подгород'
+~Creature query: ID '2127', Name 'Руперт Бош', SubName 'Наставник чернокнижников'
+^Process update type 2
+^WoWUnit created!
+^OBJECT Creature 3 25077 created.
+@UPDATETYPE_CREATE_OBJECT
+^Process update type 2
+^WoWUnit created!
+^OBJECT Creature 3 31650 created.
+@UPDATETYPE_CREATE_OBJECT
+~Creature query: ID '5759', Name 'Сиделка Нила', SubName 'Учитель первой помощи'
+~Creature query: ID '2131', Name 'Остил де Мон', SubName 'Наставник воинов'
+~Creature query: ID '6785', Name 'Растлин Майм', SubName ''
+~Creature query: ID '5724', Name 'Агерон Каргал', SubName ''
+~Creature query: ID '1500', Name 'Колман Фартинг', SubName ''
+~Creature query: ID '1560', Name 'Иветта Фартинг', SubName ''
+~Creature query: ID '1521', Name 'Гретхен Дедмар', SubName ''
+~Creature query: ID '2129', Name 'Темный священник Берил', SubName 'Наставник жрецов'
+^MapTile[30, 28, World\Maps\Azeroth\Azeroth_30_28.adt]: Loaded!
+~Creature query: ID '2128', Name 'Кейн Песнь Пламени', SubName 'Наставник магов'
+~Creature query: ID '5750', Name 'Джина Ланг', SubName 'Наставница демонов'
+~GameObject query: ID '3797', Type '8', Name 'Приветливый очаг'
+~GameObject query: ID '3798', Type '8', Name 'Приветливый очаг'
+~Creature query: ID '1518', Name 'Аптекарь Юхан', SubName 'Королевское фармацевтическое общество'
+~Creature query: ID '2132', Name 'Каролай Аниса', SubName 'Учитель алхимии'
+~Creature query: ID '11156', Name 'Зеленый боевой конь-скелет', SubName ''
+~GameObject query: ID '153472', Type '3', Name 'Ящик со съестными припасами'
+~GameObject query: ID '175738', Type '9', Name 'Эгвин и Драконья Охота'
+~GameObject query: ID '22737', Type '7', Name 'Стул с высокой спинкой'
+~GameObject query: ID '22742', Type '7', Name 'Деревянный стул'
+~GameObject query: ID '22752', Type '7', Name 'Деревянный стул'
+~GameObject query: ID '22740', Type '7', Name 'Деревянный стул'
+~GameObject query: ID '22739', Type '7', Name 'Деревянный стул'
+~GameObject query: ID '22711', Type '8', Name 'Приветливый очаг'
+~GameObject query: ID '22708', Type '8', Name 'Приветливый очаг'
+~GameObject query: ID '22732', Type '7', Name 'Деревянный стул'
+~GameObject query: ID '22735', Type '7', Name 'Деревянный стул'
+~GameObject query: ID '22733', Type '7', Name 'Деревянный стул'
+~GameObject query: ID '112061', Type '7', Name 'Деревянный стул'
+~Creature query: ID '2211', Name 'Пленный горный пехотинец', SubName ''
+~Creature query: ID '1931', Name 'Пленный ревнитель Алого ордена', SubName ''
+~Creature query: ID '1499', Name 'Мировой судья Севрен', SubName ''
+~Creature query: ID '5695', Name 'Ванс Мрачнейший', SubName 'Учитель наложения чар'
+~Creature query: ID '11945', Name 'Клэр Вилловер', SubName ''
+~Creature query: ID '2210', Name 'Страж смерти Ройанна', SubName ''
+~Creature query: ID '2209', Name 'Страж смерти Гевин', SubName ''
+~Creature query: ID '2130', Name 'Марион Зов', SubName 'Наставница разбойников'
+~Creature query: ID '5688', Name 'Трактирщица Ренни', SubName 'Хозяйка таверны'
+~GameObject query: ID '175726', Type '9', Name 'Создание Драконов'
+~GameObject query: ID '112043', Type '7', Name 'Деревянный стул'
+~GameObject query: ID '170059', Type '7', Name 'Деревянный стул'
+~GameObject query: ID '170060', Type '7', Name 'Деревянный стул'
+~GameObject query: ID '112050', Type '7', Name 'Деревянный стул'
+~GameObject query: ID '112079', Type '7', Name 'Деревянный стул'
+~GameObject query: ID '112042', Type '7', Name 'Деревянный стул'
+~GameObject query: ID '112073', Type '7', Name 'Деревянный стул'
+~GameObject query: ID '170065', Type '7', Name 'Деревянный стул'
+~GameObject query: ID '112045', Type '7', Name 'Деревянный стул'
+~GameObject query: ID '170064', Type '7', Name 'Деревянный стул'
+~GameObject query: ID '112049', Type '7', Name 'Деревянный стул'
+~GameObject query: ID '112074', Type '7', Name 'Деревянный стул'
+~GameObject query: ID '170058', Type '7', Name 'Деревянный стул'
+~GameObject query: ID '170057', Type '7', Name 'Деревянный стул'
+~GameObject query: ID '170056', Type '7', Name 'Деревянный стул'
+~GameObject query: ID '170055', Type '7', Name 'Деревянный стул'
+~GameObject query: ID '112048', Type '7', Name 'Деревянный стул'
+~GameObject query: ID '112044', Type '7', Name 'Деревянный стул'
+~GameObject query: ID '170061', Type '7', Name 'Деревянный стул'
+~GameObject query: ID '170062', Type '7', Name 'Деревянный стул'
+~GameObject query: ID '170066', Type '7', Name 'Деревянный стул'
+~GameObject query: ID '170063', Type '7', Name 'Деревянный стул'
+~GameObject query: ID '711', Type '2', Name 'Wanted!'
+~Creature query: ID '1746', Name 'Страж смерти Сирус', SubName ''
+~Creature query: ID '2310', Name 'Джейми Нор', SubName ''
+~Creature query: ID '1652', Name 'Страж смерти Буржес', SubName ''
+~Creature query: ID '1515', Name 'Палач Зуганд', SubName ''
+~Creature query: ID '2114', Name 'Фаруза', SubName 'Учитель травничества'
+~Creature query: ID '2314', Name 'Сахван Кровавая Тень', SubName ''
+~Creature query: ID '1743', Name 'Страж смерти Лоренс', SubName ''
+~GameObject query: ID '188021', Type '5', Name 'Бивачная палатка'
+~GameObject query: ID '176594', Type '0', Name 'Двери'
+^Process update type 2
+^WoWUnit created!
+^OBJECT Creature 3 25075 created.
+@UPDATETYPE_CREATE_OBJECT
+^Process update type 2
+^WoWUnit created!
+^OBJECT Creature 3 25075 created.
+@UPDATETYPE_CREATE_OBJECT
+^Process update type 2
+^WoWUnit created!
+^OBJECT Creature 3 24934 created.
+@UPDATETYPE_CREATE_OBJECT
+^Opcode: 'SMSG_AURA_UPDATE_ALL' (0x495). Size: '15'
+^Process update type 2
+^WoWUnit created!
+^OBJECT Creature 3 25083 created.
+@UPDATETYPE_CREATE_OBJECT
+^Process update type 2
+^WoWUnit created!
+^OBJECT Creature 3 25079 created.
+@UPDATETYPE_CREATE_OBJECT
+^Process update type 2
+^WoWUnit created!
+^OBJECT Creature 3 24935 created.
+@UPDATETYPE_CREATE_OBJECT
+^Opcode: 'SMSG_AURA_UPDATE_ALL' (0x495). Size: '15'
+^Process update type 2
+^WoWUnit created!
+^OBJECT Creature 3 25075 created.
+@UPDATETYPE_CREATE_OBJECT
+^Process update type 2
+^WoWUnit created!
+^OBJECT Creature 3 25171 created.
+!File 'InfernalSkin.blp' not exists.
+@UPDATETYPE_CREATE_OBJECT
+^Process update type 2
+^WoWUnit created!
+^OBJECT Creature 3 25070 created.
+@UPDATETYPE_CREATE_OBJECT
+~Creature query: ID '25077', Name 'Небесный капитан Пниоблако', SubName 'Призыватель грома'
+~Creature query: ID '31650', Name 'Тралл', SubName 'Вождь'
+~Creature query: ID '25075', Name 'Панель управления дирижаблем', SubName ''
+~Creature query: ID '24934', Name 'Вкусоматик IV', SubName ''
+~Creature query: ID '25083', Name 'Страж смерти Лоусон', SubName 'Призыватель грома'
+~Creature query: ID '25079', Name 'Страж смерти Фаулз', SubName 'Призыватель грома'
+~Creature query: ID '24935', Name 'Торг-о-трон делюкс', SubName ''
+~Creature query: ID '25171', Name 'Невидимый охотник (шкала x0.5)', SubName ''
+~Creature query: ID '25070', Name 'Старший офицер Медношайб', SubName 'Призыватель грома'
+^Process update type 2
+^WoWUnit created!
+^OBJECT Creature 3 25075 created.
+@UPDATETYPE_CREATE_OBJECT
+^Process update type 2
+^WoWUnit created!
+^OBJECT Creature 3 25075 created.
+@UPDATETYPE_CREATE_OBJECT
+^Process update type 2
+^WoWUnit created!
+^OBJECT Creature 3 25075 created.
+@UPDATETYPE_CREATE_OBJECT
+^Process update type 2
+^WoWUnit created!
+^OBJECT Creature 3 25072 created.
+@UPDATETYPE_CREATE_OBJECT
+^Process update type 2
+^WoWUnit created!
+^OBJECT Creature 3 25071 created.
+@UPDATETYPE_CREATE_OBJECT
+^Process update type 2
+^WoWUnit created!
+^OBJECT Creature 3 15214 created.
+!File 'InfernalSkin.blp' not exists.
+@UPDATETYPE_CREATE_OBJECT
+^Process update type 2
+^WoWUnit created!
+^OBJECT Creature 3 25075 created.
+@UPDATETYPE_CREATE_OBJECT
+^Process update type 2
+^WoWUnit created!
+^OBJECT Creature 3 25074 created.
+@UPDATETYPE_CREATE_OBJECT
+^Process update type 2
+^WoWUnit created!
+^OBJECT Creature 3 25075 created.
+@UPDATETYPE_CREATE_OBJECT
+^Process update type 2
+^WoWUnit created!
+^OBJECT Creature 3 25075 created.
+@UPDATETYPE_CREATE_OBJECT
+^Process update type 2
+^WoWUnit created!
+^OBJECT Creature 3 25076 created.
+@UPDATETYPE_CREATE_OBJECT
+~Creature query: ID '25072', Name 'Техник Тяпляпер', SubName 'Призыватель грома'
+~Creature query: ID '25071', Name 'Техник Ржавомолот', SubName 'Призыватель грома'
+~Creature query: ID '15214', Name 'Невидимый охотник', SubName ''
+~Creature query: ID '25074', Name 'Техник Зажигаер', SubName 'Призыватель грома'
+~Creature query: ID '25076', Name 'Штурман Чистонеббс', SubName 'Призыватель грома'
+^WMO[WORLD\WMO\LORDERON\UNDERCITY\UNDERCITY.WMO]: Liq: headerID [4] headerFlag [1] MatID: [8]
+^WMO[WORLD\WMO\LORDERON\UNDERCITY\UNDERCITY.WMO]: Liq: headerID [4] headerFlag [1] MatID: [70]
+^WMO[WORLD\WMO\LORDERON\UNDERCITY\UNDERCITY.WMO]: Liq: headerID [4] headerFlag [1] MatID: [70]
+^WMO[WORLD\WMO\LORDERON\UNDERCITY\UNDERCITY.WMO]: Liq: headerID [4] headerFlag [1] MatID: [70]
+^WMO[WORLD\WMO\LORDERON\UNDERCITY\UNDERCITY.WMO]: Liq: headerID [4] headerFlag [1] MatID: [70]
+^WMO[WORLD\WMO\LORDERON\UNDERCITY\UNDERCITY.WMO]: Liq: headerID [4] headerFlag [1] MatID: [70]
+^WMO[WORLD\WMO\LORDERON\UNDERCITY\UNDERCITY.WMO]: Liq: headerID [4] headerFlag [1] MatID: [70]
+^WMO[WORLD\WMO\LORDERON\UNDERCITY\UNDERCITY.WMO]: Liq: headerID [4] headerFlag [1] MatID: [70]
+^WMO[WORLD\WMO\LORDERON\UNDERCITY\UNDERCITY.WMO]: Liq: headerID [4] headerFlag [1] MatID: [70]
+^WMO[WORLD\WMO\LORDERON\UNDERCITY\UNDERCITY.WMO]: Liq: headerID [4] headerFlag [1] MatID: [70]
+^WMO[WORLD\WMO\LORDERON\UNDERCITY\UNDERCITY.WMO]: Liq: headerID [4] headerFlag [1] MatID: [8]
+^WMO[WORLD\WMO\LORDERON\UNDERCITY\UNDERCITY.WMO]: Liq: headerID [4] headerFlag [1] MatID: [8]
+^WMO[WORLD\WMO\LORDERON\UNDERCITY\UNDERCITY.WMO]: Liq: headerID [4] headerFlag [1] MatID: [8]
+^WMO[WORLD\WMO\LORDERON\UNDERCITY\UNDERCITY.WMO]: Liq: headerID [4] headerFlag [1] MatID: [8]
+^WMO[WORLD\WMO\LORDERON\UNDERCITY\UNDERCITY.WMO]: Liq: headerID [4] headerFlag [1] MatID: [8]
+^WMO[WORLD\WMO\LORDERON\UNDERCITY\UNDERCITY.WMO]: Liq: headerID [4] headerFlag [1] MatID: [8]
+^WMO[WORLD\WMO\LORDERON\UNDERCITY\UNDERCITY.WMO]: Liq: headerID [4] headerFlag [1] MatID: [8]
+^WMO[WORLD\WMO\LORDERON\UNDERCITY\UNDERCITY.WMO]: Liq: headerID [4] headerFlag [1] MatID: [8]
+^WMO[WORLD\WMO\LORDERON\UNDERCITY\UNDERCITY.WMO]: Liq: headerID [4] headerFlag [1] MatID: [8]
+^WMO[WORLD\WMO\LORDERON\UNDERCITY\UNDERCITY.WMO]: Liq: headerID [4] headerFlag [1] MatID: [8]
+^WMO[WORLD\WMO\LORDERON\UNDERCITY\UNDERCITY.WMO]: Liq: headerID [4] headerFlag [1] MatID: [8]
+^WMO[WORLD\WMO\LORDERON\UNDERCITY\UNDERCITY.WMO]: Liq: headerID [4] headerFlag [1] MatID: [8]
+^WMO[WORLD\WMO\LORDERON\UNDERCITY\UNDERCITY.WMO]: Liq: headerID [4] headerFlag [1] MatID: [8]
+^WMO[WORLD\WMO\LORDERON\UNDERCITY\UNDERCITY.WMO]: Liq: headerID [4] headerFlag [1] MatID: [8]
+^WMO[WORLD\WMO\LORDERON\UNDERCITY\UNDERCITY.WMO]: Liq: headerID [4] headerFlag [1] MatID: [8]
+^WMO[WORLD\WMO\LORDERON\UNDERCITY\UNDERCITY.WMO]: Liq: headerID [4] headerFlag [1] MatID: [8]
+^WMO[WORLD\WMO\LORDERON\UNDERCITY\UNDERCITY.WMO]: Liq: headerID [4] headerFlag [1] MatID: [8]
+^WMO[WORLD\WMO\LORDERON\UNDERCITY\UNDERCITY.WMO]: Liq: headerID [4] headerFlag [1] MatID: [8]
+^WMO[WORLD\WMO\LORDERON\UNDERCITY\UNDERCITY.WMO]: Liq: headerID [4] headerFlag [1] MatID: [8]
+^WMO[WORLD\WMO\LORDERON\UNDERCITY\UNDERCITY.WMO]: Liq: headerID [4] headerFlag [1] MatID: [8]
+^WMO[WORLD\WMO\LORDERON\UNDERCITY\UNDERCITY.WMO]: Liq: headerID [4] headerFlag [1] MatID: [8]
+^WMO[WORLD\WMO\LORDERON\UNDERCITY\UNDERCITY.WMO]: Liq: headerID [4] headerFlag [1] MatID: [8]
+^WMO[WORLD\WMO\LORDERON\UNDERCITY\UNDERCITY.WMO]: Liq: headerID [4] headerFlag [1] MatID: [8]
+^WMO[WORLD\WMO\LORDERON\UNDERCITY\UNDERCITY.WMO]: Liq: headerID [4] headerFlag [1] MatID: [8]
+^WMO[WORLD\WMO\LORDERON\UNDERCITY\UNDERCITY.WMO]: Liq: headerID [4] headerFlag [1] MatID: [8]
+^WMO[WORLD\WMO\LORDERON\UNDERCITY\UNDERCITY.WMO]: Liq: headerID [4] headerFlag [1] MatID: [8]
+^WMO[WORLD\WMO\LORDERON\UNDERCITY\UNDERCITY.WMO]: Liq: headerID [4] headerFlag [1] MatID: [8]
+^WMO[WORLD\WMO\LORDERON\UNDERCITY\UNDERCITY.WMO]: Liq: headerID [4] headerFlag [1] MatID: [8]
+@M2[WORLD\GENERIC\PASSIVEDOODADS\PARTICLEEMITTERS\BLACKSMITH_SMOKE.M2] don't contain geometry. Skins [1]
+^Opcode: 'SMSG_DESTROY_OBJECT' (0xAA). Size: '9'
+^Opcode: 'SMSG_TIME_SYNC_REQ' (0x390). Size: '4'
+^Opcode: 'SMSG_DESTROY_OBJECT' (0xAA). Size: '9'
+^Process update type 4
+@UPDATETYPE_OUT_OF_RANGE_OBJECTS
+^Process update type 4
+@UPDATETYPE_OUT_OF_RANGE_OBJECTS
+^Opcode: 'SMSG_DESTROY_OBJECT' (0xAA). Size: '9'
+^Opcode: 'SMSG_DESTROY_OBJECT' (0xAA). Size: '9'
+^Opcode: 'SMSG_DESTROY_OBJECT' (0xAA). Size: '9'
+^Opcode: 'SMSG_DESTROY_OBJECT' (0xAA). Size: '9'
+^Opcode: 'SMSG_DESTROY_OBJECT' (0xAA). Size: '9'
+^Opcode: 'SMSG_DESTROY_OBJECT' (0xAA). Size: '9'
+^Opcode: 'SMSG_DESTROY_OBJECT' (0xAA). Size: '9'
+^Opcode: 'SMSG_DESTROY_OBJECT' (0xAA). Size: '9'
+^Opcode: 'SMSG_DESTROY_OBJECT' (0xAA). Size: '9'
+^Opcode: 'SMSG_DESTROY_OBJECT' (0xAA). Size: '9'
+^Opcode: 'SMSG_DESTROY_OBJECT' (0xAA). Size: '9'
+^Opcode: 'SMSG_DESTROY_OBJECT' (0xAA). Size: '9'
+^Opcode: 'SMSG_DESTROY_OBJECT' (0xAA). Size: '9'
+^Opcode: 'SMSG_DESTROY_OBJECT' (0xAA). Size: '9'
+^Opcode: 'SMSG_DESTROY_OBJECT' (0xAA). Size: '9'
+^Opcode: 'SMSG_DESTROY_OBJECT' (0xAA). Size: '9'
+^Opcode: 'SMSG_DESTROY_OBJECT' (0xAA). Size: '9'
+^Opcode: 'SMSG_DESTROY_OBJECT' (0xAA). Size: '9'
+^Opcode: 'SMSG_DESTROY_OBJECT' (0xAA). Size: '9'
+^Opcode: 'SMSG_DESTROY_OBJECT' (0xAA). Size: '9'
+^Opcode: 'SMSG_DESTROY_OBJECT' (0xAA). Size: '9'
+^Process update type 2
+^WoWGameObject created!
+^OBJECT MoTransport 5 0 created.
+@UPDATETYPE_CREATE_OBJECT
+^Opcode: 'SMSG_TIME_SYNC_REQ' (0x390). Size: '4'
+^Process update type 4
+@UPDATETYPE_OUT_OF_RANGE_OBJECTS
+^Opcode: 'SMSG_TIME_SYNC_REQ' (0x390). Size: '4'

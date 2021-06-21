@@ -73,7 +73,7 @@ public:
 
 	uint64 GetGUID() const { return m_GUID; }
 	uint16 GetObjectType() const { return m_ObjectType; }
-	bool IsType(uint16 mask) const { return (mask & m_ObjectType) != 0; }
+	bool IsWoWType(uint16 mask) const { return (mask & m_ObjectType) != 0; }
 	ObjectTypeID GetObjectTypeID() const { return m_ObjectTypeId; }
 
 	void ProcessMovementUpdate(CByteBuffer& Bytes);

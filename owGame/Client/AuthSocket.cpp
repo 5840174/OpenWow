@@ -8,9 +8,9 @@
 // General
 #include "AuthSocket.h"
 
-CAuthSocket::CAuthSocket(sockets::ISocketHandler& SocketHandler, CWoWClient& WoWClient, const std::string& Login, const std::string& Password)
-    : sockets::TcpSocket(SocketHandler)
-    , m_WoWClient(WoWClient)
+CAuthSocket::CAuthSocket(CWoWClient& WoWClient, const std::string& Login, const std::string& Password)
+    : m_TCPSocket()
+	, m_WoWClient(WoWClient)
 	, m_Login(Login)
 {
 	char loginPasswordUpperCase[256];
@@ -24,6 +24,10 @@ CAuthSocket::CAuthSocket(sockets::ISocketHandler& SocketHandler, CWoWClient& WoW
 	m_Handlers[AUTH_LOGON_CHALLENGE] = &CAuthSocket::S_LoginChallenge;
 	m_Handlers[AUTH_LOGON_PROOF] = &CAuthSocket::S_LoginProof;
 	m_Handlers[REALM_LIST] = &CAuthSocket::S_Realmlist;
+
+
+
+
 }
 
 CAuthSocket::~CAuthSocket()
@@ -31,15 +35,77 @@ CAuthSocket::~CAuthSocket()
     Log::Info("[AuthSocket]: Deleted.");
 }
 
+void CAuthSocket::Open(std::string Host, port_t Port)
+{
+	bool result = false;
+
+	if (::isdigit(Host.at(0)))
+	{
+		IPAddress addr(Host);
+
+		result = m_TCPSocket.Connect(addr, Port);
+	}
+	else
+	{
+		for (auto addr : Dns::Resolve(Host))
+		{
+			result = m_TCPSocket.Connect(addr, Port);
+			if (result)
+				break;
+		}
+	}
+
+	if (false == result)
+	{
+		Log::Error("CAuthSocket: Unable to connect to '%s:%d'", Host.c_str(), Port);
+		return;
+	}
+
+	m_TCPSocket.SetBlocking(false);
+
+	C_SendLogonChallenge();
+}
+
+void CAuthSocket::Update()
+{
+	while (true)
+	{
+		CByteBuffer buffer;
+
+		m_TCPSocket.Receive(buffer, 4096);
+
+		if (buffer.getSize() == 0)
+		{
+			if (m_TCPSocket.GetStatus() != CSocket::Connected)
+			{
+				//NotifyListeners(&ConnectionListener::OnSocketStateChange, m_TCPSocket.GetStatus());
+			}
+			return;
+		}
+
+		Log::Green("AuthSocket::OnRawData: Received '%d' bytes.", buffer.getSize());
+
+		eAuthCmd currHandler;
+		buffer.readBytes(&currHandler, sizeof(uint8));
+
+		ProcessHandler(currHandler, buffer);
+
+		if (m_TCPSocket.GetStatus() != CSocket::Connected)
+		{
+			//NotifyListeners(&ConnectionListener::OnSocketStateChange, m_TCPSocket.GetStatus());
+		}
+	}
+}
+
 //--
 
 void CAuthSocket::SendData(const IByteBuffer& _bb)
 {
-    SendBuf(reinterpret_cast<const char*>(_bb.getData()), _bb.getSize());
+	m_TCPSocket.Send(_bb.getData(), _bb.getSize());
 }
 void CAuthSocket::SendData(const uint8* _data, uint32 _count)
 {
-    SendBuf(reinterpret_cast<const char*>(_data), _count);
+	m_TCPSocket.Send(_data, _count);
 }
 
 
@@ -68,6 +134,18 @@ void CAuthSocket::ProcessHandler(eAuthCmd AuthCmd, CByteBuffer& _buffer)
 
 namespace
 {
+	unsigned long GetMyIP(CSocket* socket)
+	{
+		struct sockaddr_in sa;
+		socklen_t sockaddr_length = sizeof(struct sockaddr_in);
+		if (getsockname(socket->GetHandle(), (struct sockaddr *)&sa, (socklen_t*)&sockaddr_length) == -1)
+			memset(&sa, 0, sizeof(sa));
+		unsigned long a;
+		memcpy(&a, &sa.sin_addr, 4);
+		return a;
+	}
+
+
 	struct AuthChallenge_C
 	{
 		AuthChallenge_C(std::string Login, uint32 IPv4)
@@ -75,7 +153,7 @@ namespace
 			, IPv4(IPv4)
 		{}
 
-		void Send(sockets::TcpSocket* _socket)
+		void Send(CSocket * _socket)
 		{
 			CByteBuffer bb;
 			bb << (uint8)AUTH_LOGON_CHALLENGE;
@@ -94,9 +172,9 @@ namespace
 			bb << (uint32)180;
 			bb << IPv4;
 			bb << (uint8)Login.size();
-			bb.writeString(Login);
+			bb.writeBytes(Login.c_str(), Login.length());
 
-			_socket->SendBuf(reinterpret_cast<const char*>(bb.getData()), bb.getSize());
+			_socket->Send(bb);
 		}
 
 		//--
@@ -113,8 +191,8 @@ namespace
 
 void CAuthSocket::C_SendLogonChallenge()
 {
-    AuthChallenge_C challenge(m_Login, sockets::TcpSocket::GetSockIP4());
-    challenge.Send(this);
+    AuthChallenge_C challenge(m_Login, GetMyIP(&m_TCPSocket));
+    challenge.Send(&m_TCPSocket);
 }
 
 //-- Server to client
@@ -129,7 +207,7 @@ namespace
 			std::memcpy(M1, _MClient, SHA_DIGEST_LENGTH);
 		}
 
-		void Send(sockets::TcpSocket* _socket)
+		void Send(CSocket * _socket)
 		{
 			CByteBuffer bb;
 			bb << (uint8)AUTH_LOGON_PROOF;
@@ -139,7 +217,7 @@ namespace
 			bb << (uint8)0;
 			bb << (uint8)0;
 
-			_socket->SendBuf(reinterpret_cast<const char*>(bb.getData()), bb.getSize());
+			_socket->Send(bb);
 		}
 
 		uint8 A[32];
@@ -305,7 +383,7 @@ bool CAuthSocket::S_LoginChallenge(CByteBuffer& _buff)
 #pragma endregion
 
     AuthProof_C authProof(A.AsByteArray(32).get(), MClient.GetDigest());
-    authProof.Send(this);
+    authProof.Send(&m_TCPSocket);
 
     // Expected proof for server
     MServer.Initialize();
@@ -404,6 +482,8 @@ void CAuthSocket::OnDisconnect()
 
 void CAuthSocket::OnRawData(const char * buf, size_t len)
 {
+	Log::Info("AuthSocket::OnRawData: Received '%d' bytes.", len);
+
 	CByteBuffer bb(buf, len);
 
 	eAuthCmd currHandler;

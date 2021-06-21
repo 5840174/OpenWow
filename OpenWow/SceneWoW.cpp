@@ -9,12 +9,7 @@
 
 CSceneWoW::CSceneWoW(IBaseManager& BaseManager, IRenderWindow& RenderWindow)
 	: SceneBase(BaseManager, RenderWindow)
-	//, m_World(rp3d::Vector3(0.0f, -9.81f, 0.0f))
 {
-	// Change the number of iterations of the velocity solver
-	//m_World.setNbIterationsVelocitySolver(15);
-	// Change the number of iterations of the position solver
-	//m_World.setNbIterationsPositionSolver(8);
 
 }
 

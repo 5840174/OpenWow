@@ -14,11 +14,12 @@ class ZN_API CWoWClient
 	: public std::enable_shared_from_this<CWoWClient>
 {
 public:
-	CWoWClient(IBaseManager& BaseManager, IRenderDevice& RenderDevice, const std::string& AuthServerHost, uint16 AuthServerPort = 3724);
+	CWoWClient(IBaseManager& BaseManager, IRenderDevice& RenderDevice, IScene& Scene, const std::string& AuthServerHost, uint16 AuthServerPort = 3724);
 	virtual ~CWoWClient();
 
+	void Update(UpdateEventArgs& e);
+
     // CWoWClient
-	void SetScene(const std::shared_ptr<IScene>& Scene);
 	void BeginConnect(const std::string& Username, const std::string& Password);
 	void AddRealm(RealmInfo& _realm);
 	void OnSuccessConnect(BigNumber Key);
@@ -34,18 +35,18 @@ private:
 	std::vector<RealmInfo>          m_Realms;
 
     // Sockets controller
-	sockets::StdoutLog                       m_SocketLog;
-    std::shared_ptr<sockets::SocketHandler>  m_SocketsHandler;
-	sockets::SocketHandlerThread* m_SocketsHandlerThread;
+	//sockets::StdoutLog                       m_SocketLog;
+    //std::shared_ptr<sockets::SocketHandler>  m_SocketsHandler;
+	//sockets::SocketHandlerThread* m_SocketsHandlerThread;
 
     // Sockets
-	std::shared_ptr<CAuthSocket>    m_AuthSocket;
+	CAuthSocket* m_AuthSocket;
 	std::shared_ptr<CWorldSocket>   m_WorldSocket;
 
 	// World & General
 	IBaseManager& m_BaseManager;
 	IRenderDevice& m_RenderDevice;
-	IScene* m_Scene;
+	IScene& m_Scene;
 	std::unique_ptr<WoWWorld> m_World;
 };
 

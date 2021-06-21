@@ -26,16 +26,19 @@ struct ClientPktHeader
 };
 
 
-class CWorldSocket : public sockets::TcpSocket
+class CWorldSocket
 {
 public:
-	CWorldSocket(sockets::ISocketHandler& SocketHandler, const std::string& Login, BigNumber Key);
+	CWorldSocket(const std::string& Login, BigNumber Key);
 	virtual ~CWorldSocket();
 
+	void Open(std::string Host, port_t Port);
+	void Update();
+
     // TcpSocket
-    void OnConnect() override final;
-    void OnDisconnect() override final;
-    void OnRawData(const char *buf, size_t len) override final;
+    void OnConnect();
+    void OnDisconnect();
+    void OnRawData(const char *buf, size_t len);
 
 	// CWorldSocket
     void SendPacket(CClientPacket& Packet);
@@ -52,6 +55,7 @@ private: // Used while connect to world
     void CreateAddonsBuffer(CByteBuffer& AddonsBuffer);
 
 private:
+	CTCPSocket m_TCPSocket;
 	AuthCrypt m_WoWCryptoUtils;
     std::unique_ptr<CServerPacket> m_CurrentPacket;
 	std::function<bool(Opcodes, CServerPacket&)> m_ExternalHandler;

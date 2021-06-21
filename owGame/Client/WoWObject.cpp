@@ -26,7 +26,7 @@ void WoWObject::ProcessMovementUpdate(CByteBuffer& Bytes)
 	WoWUnit* unit = nullptr;
 	WorldObject* object = nullptr;
 
-	if (IsType(TYPEMASK_UNIT))
+	if (IsWoWType(TYPEMASK_UNIT))
 		unit = dynamic_cast<WoWUnit*>(this);
 	else
 		object = dynamic_cast<WorldObject*>(this);
@@ -121,7 +121,7 @@ void WoWObject::ProcessMovementUpdate(CByteBuffer& Bytes)
 			}
 			else
 			{
-				Bytes.seekRelative(4);
+				Bytes.seekRelative(4); // 0
 			}
 		}
 		else
@@ -134,6 +134,8 @@ void WoWObject::ProcessMovementUpdate(CByteBuffer& Bytes)
 				object->Orientation = Bytes.ReadFloat();
 			}
 		}
+
+		
 	}
 
 	// 0x8
@@ -146,13 +148,39 @@ void WoWObject::ProcessMovementUpdate(CByteBuffer& Bytes)
 	if (updateFlags & UPDATEFLAG_LOWGUID)
 	{
 		Bytes.seekRelative(4);
+
+		/*switch (GetGUID().GetTypeId())
+		{
+			case TYPEID_OBJECT:
+			case TYPEID_ITEM:
+			case TYPEID_CONTAINER:
+			case TYPEID_GAMEOBJECT:
+			case TYPEID_DYNAMICOBJECT:
+			case TYPEID_CORPSE:
+				*data << uint32(GetGUID().GetCounter());              // GetGUID().GetCounter()
+				break;
+				//! Unit, Player and default here are sending wrong values.
+				/// @todo Research the proper formula
+			case TYPEID_UNIT:
+				*data << uint32(0x0000000B);                // unk
+				break;
+			case TYPEID_PLAYER:
+				if (flags & UPDATEFLAG_SELF)
+					*data << uint32(0x0000002F);            // unk
+				else
+					*data << uint32(0x00000008);            // unk
+				break;
+			default:
+				*data << uint32(0x00000000);                // unk
+				break;
+		}*/
 	}
 
 	// 0x4
 	if (updateFlags & UPDATEFLAG_HAS_TARGET)
 	{
 		uint64 victimGuid;
-		Bytes.ReadPackedUInt64(victimGuid);
+		Bytes.ReadPackedUInt64(victimGuid); // MAYBE 0
 	}
 
 	// 0x2
@@ -170,7 +198,28 @@ void WoWObject::ProcessMovementUpdate(CByteBuffer& Bytes)
 	// 0x200
 	if (updateFlags & UPDATEFLAG_ROTATION)
 	{
-		Bytes.seekRelative(8);
+		/*static const int32 PACK_YZ = 1 << 20;
+		static const int32 PACK_X = PACK_YZ << 1;
+
+		static const int32 PACK_YZ_MASK = (PACK_YZ << 1) - 1;
+		static const int32 PACK_X_MASK = (PACK_X << 1) - 1;
+
+		int8 w_sign = (m_localRotation.w >= 0.f ? 1 : -1);
+		int64 x = int32(m_localRotation.x * PACK_X)  * w_sign & PACK_X_MASK;
+		int64 y = int32(m_localRotation.y * PACK_YZ) * w_sign & PACK_YZ_MASK;
+		int64 z = int32(m_localRotation.z * PACK_YZ) * w_sign & PACK_YZ_MASK;
+		m_packedRotation = z | (y << 21) | (x << 42);*/
+
+
+
+		int64 packedRotation;
+		Bytes << packedRotation;
+
+		//x = packedRotation 
+
+		//object->Orientation = rand() % 360; // packedRotation;
+
+		//Bytes.seekRelative(8);
 	}
 
 	if (unit)
@@ -180,7 +229,7 @@ void WoWObject::ProcessMovementUpdate(CByteBuffer& Bytes)
 	{
 		glm::vec3 position = fromGameToReal(glm::vec3(object->PositionX, object->PositionY, object->PositionZ));
 		object->SetLocalPosition(position);
-		object->SetLocalRotationEuler(glm::vec3(0.0f, object->Orientation + glm::half_pi<float>(), 0.0f));
+		object->SetLocalRotationEuler(glm::vec3(0.0f, glm::degrees(object->Orientation + glm::half_pi<float>()), 0.0f));
 	}
 }
 

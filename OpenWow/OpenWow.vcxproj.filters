@@ -5,7 +5,7 @@
       <Filter>Common</Filter>
     </ClInclude>
     <ClInclude Include="SceneWoW.h" />
-    <ClInclude Include="SceneWoW2.h" />
+    <ClInclude Include="SceneWoWClient.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
@@ -13,7 +13,7 @@
       <Filter>Common</Filter>
     </ClCompile>
     <ClCompile Include="SceneWoW.cpp" />
-    <ClCompile Include="SceneWoW2.cpp" />
+    <ClCompile Include="SceneWoWClient.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Common">
