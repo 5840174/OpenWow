@@ -172,6 +172,9 @@
     <Filter Include="Liquid\Instances">
       <UniqueIdentifier>{5a9d94b7-58a4-4951-adbd-dde2c8952320}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Client\CharacterSelection">
+      <UniqueIdentifier>{e8b9984d-7548-4b83-995d-da2926cba7dd}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -429,9 +432,6 @@
     <ClCompile Include="Client\World.cpp">
       <Filter>Client\World</Filter>
     </ClCompile>
-    <ClCompile Include="World\GameObject\GameObject.cpp">
-      <Filter>World\GameObject</Filter>
-    </ClCompile>
     <ClCompile Include="Client\WoWGameObject.cpp">
       <Filter>Client\Objects</Filter>
     </ClCompile>
@@ -569,6 +569,21 @@
     </ClCompile>
     <ClCompile Include="Liquid\LiquidMaterial.cpp">
       <Filter>Liquid\Instances</Filter>
+    </ClCompile>
+    <ClCompile Include="Client\ClientCache.cpp">
+      <Filter>Client</Filter>
+    </ClCompile>
+    <ClCompile Include="World\GameObject\GameObjectM2.cpp">
+      <Filter>World\GameObject</Filter>
+    </ClCompile>
+    <ClCompile Include="World\GameObject\GameObjectWMO.cpp">
+      <Filter>World\GameObject</Filter>
+    </ClCompile>
+    <ClCompile Include="Client\CharacterSelection.cpp">
+      <Filter>Client\CharacterSelection</Filter>
+    </ClCompile>
+    <ClCompile Include="Renderer\RenderPass_Path.cpp">
+      <Filter>Renderer\Passes</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -1019,9 +1034,6 @@
     <ClInclude Include="DBC\Tables\DBC_GameObjectDisplayInfo.h">
       <Filter>DBC\Tables\GameObject</Filter>
     </ClInclude>
-    <ClInclude Include="World\GameObject\GameObject.h">
-      <Filter>World\GameObject</Filter>
-    </ClInclude>
     <ClInclude Include="Client\WoWGameObject.h">
       <Filter>Client\Objects</Filter>
     </ClInclude>
@@ -1180,6 +1192,18 @@
     </ClInclude>
     <ClInclude Include="DBC\Tables\DBC_LiquidType_Wotlk.h">
       <Filter>DBC\Tables\Liquids</Filter>
+    </ClInclude>
+    <ClInclude Include="World\GameObject\GameObjectM2.h">
+      <Filter>World\GameObject</Filter>
+    </ClInclude>
+    <ClInclude Include="World\GameObject\GameObjectWMO.h">
+      <Filter>World\GameObject</Filter>
+    </ClInclude>
+    <ClInclude Include="Client\CharacterSelection.h">
+      <Filter>Client\CharacterSelection</Filter>
+    </ClInclude>
+    <ClInclude Include="Renderer\RenderPass_Path.h">
+      <Filter>Renderer\Passes</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

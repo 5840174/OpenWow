@@ -16,6 +16,23 @@ CServerPacket::~CServerPacket()
 
 
 //
+// IByteBuffer
+//
+bool CServerPacket::readBytes(void * Destination, size_t Size)
+{
+	if (false == __super::readBytes(Destination, Size))
+		throw CException("CServerPacket: readBytes error. ByteBuffer ended. Opcode: '%d'.", m_Opcode);
+	return true;
+}
+
+//void CServerPacket::writeBytes(const void * /*Source*/, size_t /*BytesCount*/)
+//{
+//	throw CException("CServerPacket: writeBytes is not allowed.");
+//}
+
+
+
+//
 // CServerPacket
 //
 uint16 CServerPacket::GetPacketSize() const

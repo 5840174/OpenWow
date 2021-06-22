@@ -87,7 +87,7 @@ void CMapTile::Initialize()
 		colliderComponent->SetBounds(bbox);
 		colliderComponent->SetCullStrategy(IColliderComponent::ECullStrategy::ByFrustrumAndDistance2D);
 		colliderComponent->SetCullDistance(GetBaseManager().GetManager<ISettings>()->GetGroup("WoWSettings")->GetPropertyT<float>("MapChunkRenderDistance")->Get());
-		colliderComponent->SetDebugDrawMode(true);
+		colliderComponent->SetDebugDrawMode(false);
 		colliderComponent->SetDebugDrawColor(ColorRGBA(0.5f, 0.8f, 0.2f, 0.8f));
 	}
 }
@@ -188,7 +188,7 @@ bool CMapTile::Load()
 		{
 			std::vector<std::string> strings;
 			PasreChunkAsStringArray(MakeShared(CByteBufferOnlyPointer, f->getDataFromCurrent(), size), &strings);
-			Log::Info("Textures count = '%d'.", strings.size());
+			//Log::Info("Textures count = '%d'.", strings.size());
 
 			uint32 textureSizeX = -1;
 			uint32 textureSizeY = -1;

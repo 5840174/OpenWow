@@ -37,11 +37,14 @@ struct ZN_API CInet_CharacterTemplate
 	uint32						GuildId;
 	// Flags
 	CharacterFlags				Flags;
-	bool						IsFirstLogin;
+	CharacterCustomizeFlags     CustomizationFlags;
+	uint8						IsFirstLogin; // == 1 or == 0
+
 	// Pet
 	uint32						PetInfoId;
 	uint32						PetLevel;
 	uint32						PetFamilyId;
+
 	// Items
 	CInet_ItemTemplate			ItemsTemplates[INVENTORY_SLOT_BAG_END];
 };

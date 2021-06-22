@@ -8,32 +8,72 @@
 
 #include "MoveSplineFlag.h"
 
-enum ZN_API CreatureType : uint32
+enum ZN_API CreatureType : uint32   // CreatureType.dbc
 {
-	CREATURE_TYPE_BEAST = 1,
-	CREATURE_TYPE_DRAGONKIN = 2,
-	CREATURE_TYPE_DEMON = 3,
-	CREATURE_TYPE_ELEMENTAL = 4,
-	CREATURE_TYPE_GIANT = 5,
-	CREATURE_TYPE_UNDEAD = 6,
-	CREATURE_TYPE_HUMANOID = 7,
-	CREATURE_TYPE_CRITTER = 8,
-	CREATURE_TYPE_MECHANICAL = 9,
-	CREATURE_TYPE_NOT_SPECIFIED = 10,
-	CREATURE_TYPE_TOTEM = 11,
-	CREATURE_TYPE_NON_COMBAT_PET = 12,
-	CREATURE_TYPE_GAS_CLOUD = 13
+    CREATURE_TYPE_BEAST            = 1,
+    CREATURE_TYPE_DRAGONKIN        = 2,
+    CREATURE_TYPE_DEMON            = 3,
+    CREATURE_TYPE_ELEMENTAL        = 4,
+    CREATURE_TYPE_GIANT            = 5,
+    CREATURE_TYPE_UNDEAD           = 6,
+    CREATURE_TYPE_HUMANOID         = 7,
+    CREATURE_TYPE_CRITTER          = 8,
+    CREATURE_TYPE_MECHANICAL       = 9,
+    CREATURE_TYPE_NOT_SPECIFIED    = 10,
+    CREATURE_TYPE_TOTEM            = 11,
+    CREATURE_TYPE_NON_COMBAT_PET   = 12,
+    CREATURE_TYPE_GAS_CLOUD        = 13
 };
 
-enum ZN_API CreatureTypeFlags : uint32
+enum CreatureTypeFlags : uint32
 {
-	CREATURE_TYPEFLAGS_TAMEABLE = 0x0001,
-	CREATURE_TYPEFLAGS_HERBLOOT = 0x0100,
-	CREATURE_TYPEFLAGS_MININGLOOT = 0x0200
+    CREATURE_TYPE_FLAG_TAMEABLE_PET                         = 0x00000001,   // Makes the mob tameable (must also be a beast and have family set)
+    CREATURE_TYPE_FLAG_GHOST_VISIBLE                        = 0x00000002,   // Creature are also visible for not alive player. Allow gossip interaction if npcflag allow?
+    CREATURE_TYPE_FLAG_BOSS_MOB                             = 0x00000004,   // Changes creature's visible level to "??" in the creature's portrait - Immune Knockback.
+    CREATURE_TYPE_FLAG_DO_NOT_PLAY_WOUND_PARRY_ANIMATION    = 0x00000008,
+    CREATURE_TYPE_FLAG_HIDE_FACTION_TOOLTIP                 = 0x00000010,
+    CREATURE_TYPE_FLAG_UNK5                                 = 0x00000020,   // Sound related
+    CREATURE_TYPE_FLAG_SPELL_ATTACKABLE                     = 0x00000040,
+    CREATURE_TYPE_FLAG_CAN_INTERACT_WHILE_DEAD              = 0x00000080,   // Player can interact with the creature if its dead (not player dead)
+    CREATURE_TYPE_FLAG_HERB_SKINNING_SKILL                  = 0x00000100,   // Can be looted by herbalist
+    CREATURE_TYPE_FLAG_MINING_SKINNING_SKILL                = 0x00000200,   // Can be looted by miner
+    CREATURE_TYPE_FLAG_DO_NOT_LOG_DEATH                     = 0x00000400,   // Death event will not show up in combat log
+    CREATURE_TYPE_FLAG_MOUNTED_COMBAT_ALLOWED               = 0x00000800,   // Creature can remain mounted when entering combat
+    CREATURE_TYPE_FLAG_CAN_ASSIST                           = 0x00001000,   // ? Can aid any player in combat if in range?
+    CREATURE_TYPE_FLAG_IS_PET_BAR_USED                      = 0x00002000,
+    CREATURE_TYPE_FLAG_MASK_UID                             = 0x00004000,
+    CREATURE_TYPE_FLAG_ENGINEERING_SKINNING_SKILL           = 0x00008000,   // Can be looted by engineer
+    CREATURE_TYPE_FLAG_EXOTIC_PET                           = 0x00010000,   // Can be tamed by hunter as exotic pet
+    CREATURE_TYPE_FLAG_USE_DEFAULT_COLLISION_BOX            = 0x00020000,   // Collision related. (always using default collision box?)
+    CREATURE_TYPE_FLAG_IS_SIEGE_WEAPON                      = 0x00040000,
+    CREATURE_TYPE_FLAG_CAN_COLLIDE_WITH_MISSILES            = 0x00080000,   // Projectiles can collide with this creature - interacts with TARGET_DEST_TRAJ
+    CREATURE_TYPE_FLAG_HIDE_NAME_PLATE                      = 0x00100000,
+    CREATURE_TYPE_FLAG_DO_NOT_PLAY_MOUNTED_ANIMATIONS       = 0x00200000,
+    CREATURE_TYPE_FLAG_IS_LINK_ALL                          = 0x00400000,
+    CREATURE_TYPE_FLAG_INTERACT_ONLY_WITH_CREATOR           = 0x00800000,
+    CREATURE_TYPE_FLAG_DO_NOT_PLAY_UNIT_EVENT_SOUNDS        = 0x01000000,
+    CREATURE_TYPE_FLAG_HAS_NO_SHADOW_BLOB                   = 0x02000000,
+    CREATURE_TYPE_FLAG_TREAT_AS_RAID_UNIT                   = 0x04000000,   // ! Creature can be targeted by spells that require target to be in caster's party/raid
+    CREATURE_TYPE_FLAG_FORCE_GOSSIP                         = 0x08000000,   // Allows the creature to display a single gossip option.
+    CREATURE_TYPE_FLAG_DO_NOT_SHEATHE                       = 0x10000000,
+    CREATURE_TYPE_FLAG_DO_NOT_TARGET_ON_INTERACTION         = 0x20000000,
+    CREATURE_TYPE_FLAG_DO_NOT_RENDER_OBJECT_NAME            = 0x40000000,
+    CREATURE_TYPE_FLAG_UNIT_IS_QUEST_BOSS                   = 0x80000000    // Not verified
+};
+
+enum CreatureEliteType : uint32
+{
+	CREATURE_ELITE_NORMAL = 0,
+	CREATURE_ELITE_ELITE = 1,
+	CREATURE_ELITE_RAREELITE = 2,
+	CREATURE_ELITE_WORLDBOSS = 3,
+	CREATURE_ELITE_RARE = 4,
+	CREATURE_UNKNOWN = 5                      // found in 2.2.3 for 2 mobs
 };
 
 enum ZN_API CreatureFamily : uint32
 {
+	CREATURE_FAMILY_NONE = 0,
 	CREATURE_FAMILY_WOLF = 1,
 	CREATURE_FAMILY_CAT = 2,
 	CREATURE_FAMILY_SPIDER = 3,
@@ -43,6 +83,7 @@ enum ZN_API CreatureFamily : uint32
 	CREATURE_FAMILY_CARRION_BIRD = 7,
 	CREATURE_FAMILY_CRAB = 8,
 	CREATURE_FAMILY_GORILLA = 9,
+	CREATURE_FAMILY_HORSE_CUSTOM = 10,   // Does not exist in DBC but used for horse like beasts in DB
 	CREATURE_FAMILY_RAPTOR = 11,
 	CREATURE_FAMILY_TALLSTRIDER = 12,
 	CREATURE_FAMILY_FELHUNTER = 15,
@@ -54,9 +95,8 @@ enum ZN_API CreatureFamily : uint32
 	CREATURE_FAMILY_IMP = 23,
 	CREATURE_FAMILY_BAT = 24,
 	CREATURE_FAMILY_HYENA = 25,
-	CREATURE_FAMILY_OWL = 26,
+	CREATURE_FAMILY_BIRD_OF_PREY = 26,
 	CREATURE_FAMILY_WIND_SERPENT = 27,
-	// [TZERO] tbc enumerations [?]
 	CREATURE_FAMILY_REMOTE_CONTROL = 28,
 	CREATURE_FAMILY_FELGUARD = 29,
 	CREATURE_FAMILY_DRAGONHAWK = 30,
@@ -65,7 +105,16 @@ enum ZN_API CreatureFamily : uint32
 	CREATURE_FAMILY_SPOREBAT = 33,
 	CREATURE_FAMILY_NETHER_RAY = 34,
 	CREATURE_FAMILY_SERPENT = 35,
-	CREATURE_FAMILY_SEA_LION = 36
+	CREATURE_FAMILY_MOTH = 37,
+	CREATURE_FAMILY_CHIMAERA = 38,
+	CREATURE_FAMILY_DEVILSAUR = 39,
+	CREATURE_FAMILY_GHOUL = 40,
+	CREATURE_FAMILY_SILITHID = 41,
+	CREATURE_FAMILY_WORM = 42,
+	CREATURE_FAMILY_RHINO = 43,
+	CREATURE_FAMILY_WASP = 44,
+	CREATURE_FAMILY_CORE_HOUND = 45,
+	CREATURE_FAMILY_SPIRIT_BEAST = 46
 };
 
 enum MoveFlags
@@ -127,24 +176,18 @@ enum MovementFlags : uint32
 	MOVEMENTFLAG_FALLING_SLOW = 0x20000000,               // active rogue safe fall spell (passive)
 	MOVEMENTFLAG_HOVER = 0x40000000,               // hover, cannot jump
 
-	MOVEMENTFLAG_MASK_MOVING =
-	MOVEMENTFLAG_FORWARD | MOVEMENTFLAG_BACKWARD | MOVEMENTFLAG_STRAFE_LEFT | MOVEMENTFLAG_STRAFE_RIGHT |
-	MOVEMENTFLAG_FALLING | MOVEMENTFLAG_FALLING_FAR | MOVEMENTFLAG_ASCENDING | MOVEMENTFLAG_DESCENDING |
-	MOVEMENTFLAG_SPLINE_ELEVATION,
+	MOVEMENTFLAG_MASK_MOVING = MOVEMENTFLAG_FORWARD | MOVEMENTFLAG_BACKWARD | MOVEMENTFLAG_STRAFE_LEFT | MOVEMENTFLAG_STRAFE_RIGHT | MOVEMENTFLAG_FALLING | MOVEMENTFLAG_FALLING_FAR | MOVEMENTFLAG_ASCENDING | MOVEMENTFLAG_DESCENDING | MOVEMENTFLAG_SPLINE_ELEVATION,
 
-	MOVEMENTFLAG_MASK_TURNING =
-	MOVEMENTFLAG_LEFT | MOVEMENTFLAG_RIGHT | MOVEMENTFLAG_PITCH_UP | MOVEMENTFLAG_PITCH_DOWN,
+	MOVEMENTFLAG_MASK_TURNING = MOVEMENTFLAG_LEFT | MOVEMENTFLAG_RIGHT | MOVEMENTFLAG_PITCH_UP | MOVEMENTFLAG_PITCH_DOWN,
 
 	MOVEMENTFLAG_MASK_MOVING_FLY =
 	MOVEMENTFLAG_FLYING | MOVEMENTFLAG_ASCENDING | MOVEMENTFLAG_DESCENDING,
 
 	/// @todo if needed: add more flags to this masks that are exclusive to players
-	MOVEMENTFLAG_MASK_PLAYER_ONLY =
-	MOVEMENTFLAG_FLYING,
+	MOVEMENTFLAG_MASK_PLAYER_ONLY = MOVEMENTFLAG_FLYING,
 
 	/// Movement flags that have change status opcodes associated for players
-	MOVEMENTFLAG_MASK_HAS_PLAYER_STATUS_OPCODE = MOVEMENTFLAG_DISABLE_GRAVITY | MOVEMENTFLAG_ROOT |
-	MOVEMENTFLAG_CAN_FLY | MOVEMENTFLAG_WATERWALKING | MOVEMENTFLAG_FALLING_SLOW | MOVEMENTFLAG_HOVER
+	MOVEMENTFLAG_MASK_HAS_PLAYER_STATUS_OPCODE = MOVEMENTFLAG_DISABLE_GRAVITY | MOVEMENTFLAG_ROOT | MOVEMENTFLAG_CAN_FLY | MOVEMENTFLAG_WATERWALKING | MOVEMENTFLAG_FALLING_SLOW | MOVEMENTFLAG_HOVER
 };
 
 enum MovementFlags2 : uint32
@@ -187,22 +230,29 @@ public:
 
 	virtual void ProcessMovementPacket(CByteBuffer& Bytes);
 
+	// Speed
 	float GetSpeed(UnitMoveType MoveType) const;
 	void SetSpeed(UnitMoveType MoveType, float Speed);
 
+	// MovementFlags
 	uint32 GetMovementFlags() const { return m_MovementFlags; }
 	void SetMovementFlags(uint32 flag) { m_MovementFlags = flag; }
 	void AddMovementFlag(uint32 flag) { m_MovementFlags |= flag; }
 	void RemoveMovementFlag(uint32 flag) { m_MovementFlags &= ~flag; }
 	bool HasMovementFlag(uint32 flag) const { return (m_MovementFlags & flag) != 0; }
 
+	// MovementFlags2
 	uint16 GetExtraMovementFlags() const { return m_MovementFlagsExtra; }
 	void AddExtraMovementFlag(uint16 flag) { m_MovementFlagsExtra |= flag; }
 	bool HasExtraMovementFlag(uint16 flag) const { return (m_MovementFlagsExtra & flag) != 0; }
 
+	// ISceneNode
+	void Update(const UpdateEventArgs& e) override;
+
 public:
 	static std::shared_ptr<WoWUnit> Create(IScene& Scene, ObjectGuid Guid);
 	virtual void AfterCreate(IScene& Scene) override;
+	virtual void Destroy() override;
 
 protected:
 	uint32 m_MovementFlags;

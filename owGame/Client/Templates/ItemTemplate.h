@@ -12,6 +12,6 @@ struct CInet_ItemTemplate
 	void TemplatePrint();
 
 	uint32					m_DisplayId;
-	EInventoryType		    m_InventoryType;
+	uint8 		            m_InventoryType;
 	uint32					m_EnchantAuraID;
 };

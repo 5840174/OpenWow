@@ -13,6 +13,8 @@ public:
 	WorldObject(IScene& Scene, ObjectGuid Guid);
 	virtual ~WorldObject();
 
+	glm::vec3 DestinationPoint;
+
 private:
 	std::string m_name;
 };

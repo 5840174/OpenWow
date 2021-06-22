@@ -157,18 +157,41 @@ std::shared_ptr<Character> CWorldObjectCreator::BuildCharactedFromDisplayInfo(IR
 	return newCharacter;
 }
 
-std::shared_ptr<GameObject> CWorldObjectCreator::BuildGameObjectFromDisplayInfo(IRenderDevice & RenderDevice, IScene * Scene, uint32 _id, const std::shared_ptr<ISceneNode>& Parent)
+std::shared_ptr<ISceneNode> CWorldObjectCreator::BuildGameObjectFromDisplayInfo(IRenderDevice & RenderDevice, IScene * Scene, uint32 _id, const std::shared_ptr<ISceneNode>& Parent)
 {
-	std::shared_ptr<CM2> m2Model = nullptr;
+	const DBC_GameObjectDisplayInfoRecord* record = m_DBCs->DBC_GameObjectDisplayInfo()[_id];
+
+	std::string modelName = record->Get_ModelName();
+	modelName = Utils::ToLower(modelName);
+
+	if (::strstr(modelName.c_str(), ".wmo") == NULL)
 	{
-		m2Model = CreateGameObjectModel(RenderDevice, m_DBCs->DBC_GameObjectDisplayInfo()[_id]);
-		if (m2Model == nullptr)
-			return nullptr;
+		std::shared_ptr<CM2> m2Model = nullptr;
+		{
+			m2Model = CreateGameObjectM2Model(RenderDevice, m_DBCs->DBC_GameObjectDisplayInfo()[_id]);
+			if (m2Model == nullptr)
+				return nullptr;
+		}
+
+		std::shared_ptr<GameObjectM2> newGameObject = Parent->CreateSceneNode<GameObjectM2>(m2Model);
+		m_BaseManager.GetManager<ILoader>()->AddToLoadQueue(newGameObject);
+		return newGameObject;
+	}
+	else
+	{
+		std::shared_ptr<CWMO> wmoModel = nullptr;
+		{
+			wmoModel = CreateGameObjectWMOModel(RenderDevice, m_DBCs->DBC_GameObjectDisplayInfo()[_id]);
+			if (wmoModel == nullptr)
+				return nullptr;
+		}
+
+		std::shared_ptr<GameObjectWMO> newGameObject = Parent->CreateSceneNode<GameObjectWMO>(wmoModel);
+		m_BaseManager.GetManager<ILoader>()->AddToLoadQueue(newGameObject);
+		return newGameObject;
 	}
 
-	std::shared_ptr<GameObject> newGameObject = Parent->CreateSceneNode<GameObject>(m2Model);
-	m_BaseManager.GetManager<ILoader>()->AddToLoadQueue(newGameObject);
-	return newGameObject;
+
 }
 #endif
 
@@ -320,7 +343,7 @@ std::shared_ptr<CM2> CWorldObjectCreator::CreateCharacterModel(IRenderDevice& Re
 	return LoadM2(RenderDevice, fullModelName);
 }
 
-std::shared_ptr<CM2> CWorldObjectCreator::CreateGameObjectModel(IRenderDevice & RenderDevice, const DBC_GameObjectDisplayInfoRecord * GameObjectDisplayInfoRecord)
+std::shared_ptr<CM2> CWorldObjectCreator::CreateGameObjectM2Model(IRenderDevice & RenderDevice, const DBC_GameObjectDisplayInfoRecord * GameObjectDisplayInfoRecord)
 {
 	if (GameObjectDisplayInfoRecord == nullptr)
 		return nullptr;
@@ -331,6 +354,15 @@ std::shared_ptr<CM2> CWorldObjectCreator::CreateGameObjectModel(IRenderDevice & 
 #endif
 
 
+
+std::shared_ptr<CWMO> CWorldObjectCreator::CreateGameObjectWMOModel(IRenderDevice & RenderDevice, const DBC_GameObjectDisplayInfoRecord * GameObjectDisplayInfoRecord)
+{
+	if (GameObjectDisplayInfoRecord == nullptr)
+		return nullptr;
+
+	std::string modelName = GameObjectDisplayInfoRecord->Get_ModelName();
+	return LoadWMO(RenderDevice, modelName);
+}
 
 IBlendState::BlendMode CWorldObjectCreator::GetEGxBlendMode(uint32 Index)
 {

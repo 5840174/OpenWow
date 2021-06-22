@@ -98,7 +98,7 @@ CItem_VisualData::~CItem_VisualData()
 
 bool CItem_VisualData::Load()
 {
-	if (m_DisplayId == 0 || m_InventoryType == EInventoryType::NON_EQUIP)
+	if (m_DisplayId == 0 || m_InventoryType == (uint8)EInventoryType::NON_EQUIP)
 	{
 		return false;
 	}
@@ -134,12 +134,12 @@ void CItem_VisualData::InitObjectComponents()
 		std::string objectFileName = displayInfo->Get_ObjectModelName(i);
 		std::string objectTextureName = displayInfo->Get_ObjectTextureName(i);
 
-		if (objectFileName.empty() && m_InventoryType != EInventoryType::CLOAK)
+		if (objectFileName.empty() && m_InventoryType != (uint8)EInventoryType::CLOAK)
 		{
 			continue;
 		}
 
-		if (m_InventoryType == EInventoryType::HEAD)
+		if (m_InventoryType == (uint8)EInventoryType::HEAD)
 		{
 			char modelPostfix[64];
 			sprintf_s(modelPostfix, "_%s%c", m_DBCs->DBC_ChrRaces()[static_cast<size_t>(m_ParentCharacter.GetTemplate().Race)]->Get_ClientPrefix().c_str(), getGenderLetter(m_ParentCharacter.GetTemplate().Gender));
@@ -148,16 +148,16 @@ void CItem_VisualData::InitObjectComponents()
 			_ASSERT(dotPosition != -1);
 			objectFileName.insert(dotPosition, modelPostfix);
 		}
-		else if (m_InventoryType == EInventoryType::CLOAK)
+		else if (m_InventoryType == (uint8)EInventoryType::CLOAK)
 		{
-			std::shared_ptr<ITexture> texture = LoadObjectTexture(m_InventoryType, objectTextureName);
+			std::shared_ptr<ITexture> texture = LoadObjectTexture((EInventoryType)m_InventoryType, objectTextureName);
 			m_ObjectComponents.push_back({ nullptr, texture, M2_AttachmentType::NotAttached });
 			continue;
 		}
 
 		// Fill data
-		std::string modelName = GetObjectModelName(m_InventoryType, objectFileName);
-		std::shared_ptr<ITexture> itemObjectTexture = LoadObjectTexture(m_InventoryType, objectTextureName);
+		std::string modelName = GetObjectModelName((EInventoryType)m_InventoryType, objectFileName);
+		std::shared_ptr<ITexture> itemObjectTexture = LoadObjectTexture((EInventoryType)m_InventoryType, objectTextureName);
 		auto itemObjectAttach = m_ParentCharacter.getM2().getMiscellaneous().getAttachment(ItemObjectComponents[static_cast<size_t>(m_InventoryType)].attach[i]);
 
 		// Create instance

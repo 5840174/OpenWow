@@ -38,6 +38,8 @@
     <ClCompile Include="Client\ARC4.cpp" />
     <ClCompile Include="Client\AuthCrypt.cpp" />
     <ClCompile Include="Client\AuthSocket.cpp" />
+    <ClCompile Include="Client\CharacterSelection.cpp" />
+    <ClCompile Include="Client\ClientCache.cpp" />
     <ClCompile Include="Client\ObjectGUID.cpp" />
     <ClCompile Include="Client\WoWBag.cpp" />
     <ClCompile Include="Client\BigNumber.cpp" />
@@ -124,6 +126,7 @@
     <ClCompile Include="Renderer\RenderPass_MapChunk.cpp" />
     <ClCompile Include="Renderer\RenderPass_MapChunkList.cpp" />
     <ClCompile Include="Renderer\RenderPass_MapTile.cpp" />
+    <ClCompile Include="Renderer\RenderPass_Path.cpp" />
     <ClCompile Include="Renderer\RenderPass_Sky.cpp" />
     <ClCompile Include="Renderer\RenderPass_SkyList.cpp" />
     <ClCompile Include="Renderer\RenderPass_WDL.cpp" />
@@ -159,7 +162,8 @@
     <ClCompile Include="World\Character\Character_SectionWrapper.cpp" />
     <ClCompile Include="World\Character\Character_SkinTextureBaker.cpp" />
     <ClCompile Include="World\Creature\Creature.cpp" />
-    <ClCompile Include="World\GameObject\GameObject.cpp" />
+    <ClCompile Include="World\GameObject\GameObjectM2.cpp" />
+    <ClCompile Include="World\GameObject\GameObjectWMO.cpp" />
     <ClCompile Include="World\Items\Item_M2Instance.cpp" />
     <ClCompile Include="World\Items\Item_VisualData.cpp" />
     <ClCompile Include="World\WorldObjectsCreator.cpp" />
@@ -182,6 +186,7 @@
     <ClInclude Include="Client\AuthCodes.h" />
     <ClInclude Include="Client\AuthCrypt.h" />
     <ClInclude Include="Client\AuthSocket.h" />
+    <ClInclude Include="Client\CharacterSelection.h" />
     <ClInclude Include="Client\MovementTypedefs.h" />
     <ClInclude Include="Client\MoveSplineFlag.h" />
     <ClInclude Include="Client\ObjectGUID.h" />
@@ -324,6 +329,7 @@
     <ClInclude Include="Renderer\RenderPass_MapChunk.h" />
     <ClInclude Include="Renderer\RenderPass_MapChunkList.h" />
     <ClInclude Include="Renderer\RenderPass_MapTile.h" />
+    <ClInclude Include="Renderer\RenderPass_Path.h" />
     <ClInclude Include="Renderer\RenderPass_Sky.h" />
     <ClInclude Include="Renderer\RenderPass_SkyList.h" />
     <ClInclude Include="Renderer\RenderPass_WDL.h" />
@@ -359,7 +365,8 @@
     <ClInclude Include="World\Character\Character_SectionWrapper.h" />
     <ClInclude Include="World\Character\Character_SkinTextureBaker.h" />
     <ClInclude Include="World\Creature\Creature.h" />
-    <ClInclude Include="World\GameObject\GameObject.h" />
+    <ClInclude Include="World\GameObject\GameObjectM2.h" />
+    <ClInclude Include="World\GameObject\GameObjectWMO.h" />
     <ClInclude Include="World\Items\Item_M2Instance.h" />
     <ClInclude Include="World\Items\Item_VisualData.h" />
     <ClInclude Include="World\MeshIDEnums.h" />

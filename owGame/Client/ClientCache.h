@@ -5,7 +5,9 @@
 #include "WoWGameObject.h"
 #include "WoWUnit.h"
 
-#pragma region GameObject
+#include "ServerPacket.h"
+
+#define MAX_GAMEOBJECT_QUEST_ITEMS 6
 
 struct ZN_API SGameObjectQueryResult
 {
@@ -17,9 +19,9 @@ struct ZN_API SGameObjectQueryResult
 	GameobjectTypes type;
 	uint32          displayId;
 	std::string     Name;
-	std::string     Name2;
-	std::string     Name3;
-	std::string     Name4;
+	std::string     IconName;
+	std::string     CastBarCaption;
+	std::string     UnkString;
 
 	union                                                   // different GO types have different data field
 	{
@@ -32,6 +34,8 @@ struct ZN_API SGameObjectQueryResult
 			uint32 noDamageImmune;                          //3 break opening whenever you recieve damage?
 			uint32 openTextID;                              //4 can be used to replace castBarCaption?
 			uint32 closeTextID;                             //5
+			uint32 ignoredByPathing;                        //6
+			uint32 conditionID1;                            //7
 		} door;
 		//1 GAMEOBJECT_TYPE_BUTTON
 		struct
@@ -45,6 +49,7 @@ struct ZN_API SGameObjectQueryResult
 			uint32 openTextID;                              //6 can be used to replace castBarCaption?
 			uint32 closeTextID;                             //7
 			uint32 losOK;                                   //8
+			uint32 conditionID1;                            //9
 		} button;
 		//2 GAMEOBJECT_TYPE_QUESTGIVER
 		struct
@@ -57,8 +62,9 @@ struct ZN_API SGameObjectQueryResult
 			uint32 noDamageImmune;                          //5
 			uint32 openTextID;                              //6 can be used to replace castBarCaption?
 			uint32 losOK;                                   //7
-			uint32 allowMounted;                            //8
+			uint32 allowMounted;                            //8 Is usable while on mount/vehicle. (0/1)
 			uint32 large;                                   //9
+			uint32 conditionID1;                            //10
 		} questgiver;
 		//3 GAMEOBJECT_TYPE_CHEST
 		struct
@@ -67,8 +73,8 @@ struct ZN_API SGameObjectQueryResult
 			uint32 lootId;                                  //1
 			uint32 chestRestockTime;                        //2
 			uint32 consumable;                              //3
-			uint32 minSuccessOpens;                         //4
-			uint32 maxSuccessOpens;                         //5
+			uint32 minSuccessOpens;                         //4 Deprecated, pre 3.0 was used for mining nodes but since WotLK all mining nodes are usable once and grant all loot with a single use
+			uint32 maxSuccessOpens;                         //5 Deprecated, pre 3.0 was used for mining nodes but since WotLK all mining nodes are usable once and grant all loot with a single use
 			uint32 eventId;                                 //6 lootedEvent
 			uint32 linkedTrapId;                            //7
 			uint32 questId;                                 //8 not used currently but store quest required for GO activation for player
@@ -79,7 +85,10 @@ struct ZN_API SGameObjectQueryResult
 			uint32 logLoot;                                 //13
 			uint32 openTextID;                              //14 can be used to replace castBarCaption?
 			uint32 groupLootRules;                          //15
+			uint32 floatingTooltip;                         //16
+			uint32 conditionID1;                            //17
 		} chest;
+		//4 GAMEOBJECT_TYPE_BINDER - empty
 		//5 GAMEOBJECT_TYPE_GENERIC
 		struct
 		{
@@ -88,25 +97,28 @@ struct ZN_API SGameObjectQueryResult
 			uint32 serverOnly;                              //2
 			uint32 large;                                   //3
 			uint32 floatOnWater;                            //4
-			uint32 questID;                                 //5
+			int32 questID;                                  //5
+			uint32 conditionID1;                            //6
 		} _generic;
 		//6 GAMEOBJECT_TYPE_TRAP
 		struct
 		{
 			uint32 lockId;                                  //0 -> Lock.dbc
 			uint32 level;                                   //1
-			uint32 radius;                                  //2 radius for trap activation
+			uint32 diameter;                                //2 diameter for trap activation
 			uint32 spellId;                                 //3
-			uint32 charges;                                 //4 need respawn (if > 0)
+			uint32 type;                                    //4 0 trap with no despawn after cast. 1 trap despawns after cast. 2 bomb casts on spawn.
 			uint32 cooldown;                                //5 time in secs
-			uint32 autoCloseTime;                           //6
+			int32 autoCloseTime;                            //6
 			uint32 startDelay;                              //7
 			uint32 serverOnly;                              //8
 			uint32 stealthed;                               //9
 			uint32 large;                                   //10
-			uint32 stealthAffected;                         //11
+			uint32 invisible;                               //11
 			uint32 openTextID;                              //12 can be used to replace castBarCaption?
 			uint32 closeTextID;                             //13
+			uint32 ignoreTotems;                            //14
+			uint32 conditionID1;                            //15
 		} trap;
 		//7 GAMEOBJECT_TYPE_CHAIR
 		struct
@@ -114,6 +126,8 @@ struct ZN_API SGameObjectQueryResult
 			uint32 slots;                                   //0
 			uint32 height;                                  //1
 			uint32 onlyCreatorUse;                          //2
+			uint32 triggeredEvent;                          //3
+			uint32 conditionID1;                            //4
 		} chair;
 		//8 GAMEOBJECT_TYPE_SPELL_FOCUS
 		struct
@@ -124,6 +138,9 @@ struct ZN_API SGameObjectQueryResult
 			uint32 serverOnly;                              //3
 			uint32 questID;                                 //4
 			uint32 large;                                   //5
+			uint32 floatingTooltip;                         //6
+			uint32 floatOnWater;                            //7
+			uint32 conditionID1;                            //8
 		} spellFocus;
 		//9 GAMEOBJECT_TYPE_TEXT
 		struct
@@ -131,13 +148,14 @@ struct ZN_API SGameObjectQueryResult
 			uint32 pageID;                                  //0
 			uint32 language;                                //1
 			uint32 pageMaterial;                            //2
-			uint32 allowMounted;                            //3
+			uint32 allowMounted;                            //3 Is usable while on mount/vehicle. (0/1)
+			uint32 conditionID1;                            //4
 		} text;
 		//10 GAMEOBJECT_TYPE_GOOBER
 		struct
 		{
 			uint32 lockId;                                  //0 -> Lock.dbc
-			uint32 questId;                                 //1
+			int32 questId;                                  //1
 			uint32 eventId;                                 //2
 			uint32 autoCloseTime;                           //3
 			uint32 customAnim;                              //4
@@ -153,7 +171,12 @@ struct ZN_API SGameObjectQueryResult
 			uint32 openTextID;                              //14 can be used to replace castBarCaption?
 			uint32 closeTextID;                             //15
 			uint32 losOK;                                   //16 isBattlegroundObject
-			uint32 allowMounted;                            //17
+			uint32 allowMounted;                            //17 Is usable while on mount/vehicle. (0/1)
+			uint32 floatingTooltip;                         //18
+			uint32 gossipID;                                //19
+			uint32 WorldStateSetsState;                     //20
+			uint32 floatOnWater;                            //21
+			uint32 conditionID1;                            //22
 		} goober;
 		//11 GAMEOBJECT_TYPE_TRANSPORT
 		struct
@@ -161,6 +184,9 @@ struct ZN_API SGameObjectQueryResult
 			uint32 pause;                                   //0
 			uint32 startOpen;                               //1
 			uint32 autoCloseTime;                           //2 secs till autoclose = autoCloseTime / 0x10000
+			uint32 pause1EventID;                           //3
+			uint32 pause2EventID;                           //4
+			uint32 mapID;                                   //5
 		} transport;
 		//12 GAMEOBJECT_TYPE_AREADAMAGE
 		struct
@@ -181,7 +207,9 @@ struct ZN_API SGameObjectQueryResult
 			uint32 cinematicId;                             //1
 			uint32 eventID;                                 //2
 			uint32 openTextID;                              //3 can be used to replace castBarCaption?
+			uint32 conditionID1;                            //4
 		} camera;
+		//14 GAMEOBJECT_TYPE_MAPOBJECT - empty
 		//15 GAMEOBJECT_TYPE_MO_TRANSPORT
 		struct
 		{
@@ -192,13 +220,11 @@ struct ZN_API SGameObjectQueryResult
 			uint32 stopEventID;                             //4
 			uint32 transportPhysics;                        //5
 			uint32 mapID;                                   //6
+			uint32 worldState1;                             //7
+			uint32 canBeStopped;                            //8
 		} moTransport;
-		//17 GAMEOBJECT_TYPE_FISHINGNODE
-		struct
-		{
-			uint32 _data0;                                  //0
-			uint32 lootId;                                  //1
-		} fishnode;
+		//16 GAMEOBJECT_TYPE_DUELFLAG - empty
+		//17 GAMEOBJECT_TYPE_FISHINGNODE - empty
 		//18 GAMEOBJECT_TYPE_SUMMONING_RITUAL
 		struct
 		{
@@ -210,12 +236,14 @@ struct ZN_API SGameObjectQueryResult
 			uint32 casterTargetSpellTargets;                //5
 			uint32 castersGrouped;                          //6
 			uint32 ritualNoTargetCheck;                     //7
+			uint32 conditionID1;                            //8
 		} summoningRitual;
-		//20 GAMEOBJECT_TYPE_AUCTIONHOUSE
+		//19 GAMEOBJECT_TYPE_MAILBOX
 		struct
 		{
-			uint32 actionHouseID;                           //0
-		} auctionhouse;
+			uint32 conditionID1;                            //0
+		} mailbox;
+		//20 GAMEOBJECT_TYPE_DO_NOT_USE - empty
 		//21 GAMEOBJECT_TYPE_GUARDPOST
 		struct
 		{
@@ -228,6 +256,9 @@ struct ZN_API SGameObjectQueryResult
 			uint32 spellId;                                 //0
 			uint32 charges;                                 //1
 			uint32 partyOnly;                               //2
+			uint32 allowMounted;                            //3 Is usable while on mount/vehicle. (0/1)
+			uint32 large;                                   //4
+			uint32 conditionID1;                            //5
 		} spellcaster;
 		//23 GAMEOBJECT_TYPE_MEETINGSTONE
 		struct
@@ -247,8 +278,9 @@ struct ZN_API SGameObjectQueryResult
 			uint32 noDamageImmune;                          //5
 			uint32 openTextID;                              //6
 			uint32 losOK;                                   //7
+			uint32 conditionID1;                            //8
 		} flagstand;
-		//25 GAMEOBJECT_TYPE_FISHINGHOLE                    // not implemented yet
+		//25 GAMEOBJECT_TYPE_FISHINGHOLE
 		struct
 		{
 			uint32 radius;                                  //0 how close bobber must land for sending loot
@@ -271,6 +303,7 @@ struct ZN_API SGameObjectQueryResult
 		{
 			uint32 gameType;                                //0
 		} miniGame;
+		//28 GAMEOBJECT_TYPE_DO_NOT_USE_2 - empty
 		//29 GAMEOBJECT_TYPE_CAPTURE_POINT
 		struct
 		{
@@ -294,6 +327,8 @@ struct ZN_API SGameObjectQueryResult
 			uint32 maxTime;                                 //17
 			uint32 large;                                   //18
 			uint32 highlight;                               //19
+			uint32 startingValue;                           //20
+			uint32 unidirectional;                          //21
 		} capturePoint;
 		//30 GAMEOBJECT_TYPE_AURA_GENERATOR
 		struct
@@ -306,6 +341,58 @@ struct ZN_API SGameObjectQueryResult
 			uint32 conditionID2;                            //5
 			uint32 serverOnly;                              //6
 		} auraGenerator;
+		//31 GAMEOBJECT_TYPE_DUNGEON_DIFFICULTY
+		struct
+		{
+			uint32 mapID;                                   //0
+			uint32 difficulty;                              //1
+		} dungeonDifficulty;
+		//32 GAMEOBJECT_TYPE_BARBER_CHAIR
+		struct
+		{
+			uint32 chairheight;                             //0
+			uint32 heightOffset;                            //1
+		} barberChair;
+		//33 GAMEOBJECT_TYPE_DESTRUCTIBLE_BUILDING
+		struct
+		{
+			uint32 intactNumHits;                           //0
+			uint32 creditProxyCreature;                     //1
+			uint32 empty1;                                  //2
+			uint32 intactEvent;                             //3
+			uint32 empty2;                                  //4
+			uint32 damagedNumHits;                          //5
+			uint32 empty3;                                  //6
+			uint32 empty4;                                  //7
+			uint32 empty5;                                  //8
+			uint32 damagedEvent;                            //9
+			uint32 empty6;                                  //10
+			uint32 empty7;                                  //11
+			uint32 empty8;                                  //12
+			uint32 empty9;                                  //13
+			uint32 destroyedEvent;                          //14
+			uint32 empty10;                                 //15
+			uint32 rebuildingTimeSecs;                      //16
+			uint32 empty11;                                 //17
+			uint32 destructibleData;                        //18
+			uint32 rebuildingEvent;                         //19
+			uint32 empty12;                                 //20
+			uint32 empty13;                                 //21
+			uint32 damageEvent;                             //22
+			uint32 empty14;                                 //23
+		} building;
+		//34 GAMEOBJECT_TYPE_GUILDBANK
+		struct
+		{
+			uint32 conditionID1;                            //0
+		} guildbank;
+		//35 GAMEOBJECT_TYPE_TRAPDOOR
+		struct
+		{
+			uint32 whenToPause;                             // 0
+			uint32 startOpen;                               // 1
+			uint32 autoClose;                               // 2
+		} trapDoor;
 
 		// not use for specific field access (only for output with loop by all filed), also this determinate max union size
 		struct                                              // GAMEOBJECT_TYPE_SPELLCASTER
@@ -314,28 +401,45 @@ struct ZN_API SGameObjectQueryResult
 		} raw;
 	};
 
+	uint32 QuestItems[MAX_GAMEOBJECT_QUEST_ITEMS] = {};
+
 	void Fill(CByteBuffer& Bytes)
 	{
 		Bytes >> entryID;
 		Bytes.read(&type);
 		Bytes >> displayId;
 		Bytes >> &Name;
-		Bytes >> &Name2;
-		Bytes >> &Name3;
-		Bytes >> &Name4;
+		Bytes.seekRelative(1); // Name2
+		Bytes.seekRelative(1); // Name3
+		Bytes.seekRelative(1); // Name4
+
+		Bytes.readString(&IconName);
+		Bytes.readString(&CastBarCaption);
+		Bytes.readString(&UnkString);
+
 		Bytes.readBytes(&raw.data, sizeof(raw.data));
+
+		float Size;
+		Bytes >> Size;
+
+		Bytes.readBytes(&QuestItems, sizeof(QuestItems));
 	}
 
 	void Print()
 	{
-		Log::Info("GameObject query: ID '%d', Type '%d', Name '%s'", entryID, type, Name.c_str());
+		if (type == GAMEOBJECT_TYPE_MO_TRANSPORT || type == GAMEOBJECT_TYPE_TRANSPORT)
+		{
+			Log::Warn("TRANSPORT");
+		}
+
+		//Log::Info("GameObject query: ID '%d', Type '%d', Name '%s'", entryID, type, Name.c_str());
 	}
 };
 
-#pragma endregion
-
-
-#pragma region Creatures
+static const uint8 MAX_KILL_CREDIT = 2;
+static const uint32 MAX_CREATURE_MODELS = 4;
+static const uint32 MAX_CREATURE_QUEST_ITEMS = 6;
+static const uint32 MAX_CREATURE_SPELLS = 8;
 
 struct ZN_API SCreatureQueryResult
 {
@@ -345,53 +449,74 @@ struct ZN_API SCreatureQueryResult
 
 	uint32 entry;                          // creature entry
 	std::string Name;
-	std::string Name2;
-	std::string Name3;
-	std::string Name4;
 	std::string SubName;
+	std::string CursorName;
 	CreatureTypeFlags type_flags;          // flags          wdbFeild7=wad flags1
 	CreatureType type;
 	CreatureFamily family;                 // family         wdbFeild9
-	uint32 rank;                           // rank           wdbFeild10
-	uint32 unk0;                           // unknown        wdbFeild11
-	uint32 PetSpellDataId;                 // Id from CreatureSpellData.dbc    wdbField12
-	uint32 Modelid_A1;                     // Modelid_A1
-	uint32 Modelid_A2;                     // Modelid_A2
-	uint32 Modelid_H1;                     // Modelid_H1
-	uint32 Modelid_H2;                     // Modelid_H2
-	float unk1;                            // unk
-	float unk2;                            // unk
-	uint8 RacialLeader;
+	CreatureEliteType Classification;                           // rank           wdbFeild10
+
+	uint32 ProxyCreatureID[MAX_KILL_CREDIT] = { }; // new in 3.1, kill credit
+	uint32 CreatureDisplayID[MAX_CREATURE_MODELS] = { }; // Modelid
+	float HpMulti = 0.0f; // dmg/hp modifier
+	float EnergyMulti = 0.0f; // dmg/mana modifier
+	bool Leader = false;
+	uint32 QuestItems[MAX_CREATURE_QUEST_ITEMS] = { };
+	uint32 CreatureMovementInfoID = 0;    // CreatureMovementInfo.dbc
 
 	void Fill(CByteBuffer& Bytes)
 	{
 		Bytes >> entry;
 		Bytes >> &Name;
-		Bytes >> &Name2;
-		Bytes >> &Name3;
-		Bytes >> &Name4;
+		Bytes.seekRelative(1); // Name2
+		Bytes.seekRelative(1); // Name3
+		Bytes.seekRelative(1); // Name3
 		Bytes >> &SubName;
+		Bytes >> &CursorName;
+
 		Bytes.read(&type_flags);
-		Bytes.read(&type);
-		Bytes.read(&family);
-		Bytes >> rank;
-		Bytes >> unk0;
-		Bytes >> PetSpellDataId;
-		Bytes >> Modelid_A1;
-		Bytes >> Modelid_A2;
-		Bytes >> Modelid_H1;
-		Bytes >> Modelid_H2;
-		Bytes >> unk1;
-		Bytes >> unk2;
-		Bytes >> RacialLeader;
+		Bytes.read(&type);           // CreatureType.dbc
+		Bytes.read(&family);         // CreatureFamily.dbc
+		Bytes.read(&Classification); // Creature Rank (elite, boss, etc)
+
+		Bytes.readBytes(&ProxyCreatureID, sizeof(ProxyCreatureID));
+		Bytes.readBytes(&CreatureDisplayID, sizeof(CreatureDisplayID));
+		
+		Bytes >> HpMulti;
+		Bytes >> EnergyMulti;
+		
+		Bytes.read(&Leader);
+
+		Bytes.readBytes(&QuestItems, sizeof(QuestItems));
+
+		Bytes >> CreatureMovementInfoID;
 	}
 
 	void Print()
 	{
-		Log::Info("Creature query: ID '%d', Name '%s', SubName '%s'", entry, Name.c_str(), SubName.c_str());
+		//Log::Info("SCreatureQueryResult: ID '%d', Name '%s', SubName '%s'", entry, Name.c_str(), SubName.c_str());
 	}
 };
 
-#pragma endregion
+// FORWARD BEGIN
+class CWoWWorld;
+// FORWARD END
+
+class CClientCache
+{
+public:
+	CClientCache(CWoWWorld& world);
+
+	void SendQueryResponce(ObjectGuid Guid);
+
+	bool On_SMSG_GAMEOBJECT_QUERY_RESPONSE(CServerPacket& Bytes);
+	bool On_SMSG_CREATURE_QUERY_RESPONSE(CServerPacket& Bytes);
+
+private:
+	std::unordered_map<uint32, SGameObjectQueryResult> m_CacheGameObjects;
+	std::unordered_map<uint32, SCreatureQueryResult> m_CacheCreatures;
+
+	CWoWWorld& m_World;
+};
 
 #endif

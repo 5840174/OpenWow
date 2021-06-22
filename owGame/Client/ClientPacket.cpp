@@ -14,6 +14,20 @@ CClientPacket::~CClientPacket()
 }
 
 
+//
+// IByteBuffer
+//
+bool CClientPacket::readBytes(void * Destination, size_t Size)
+{
+	throw CException("CClientPacket: readBytes is not allowed.");
+}
+
+void CClientPacket::writeBytes(const void * Source, size_t BytesCount)
+{
+	__super::writeBytes(Source, BytesCount);
+}
+
+
 
 //
 // CClientPacket

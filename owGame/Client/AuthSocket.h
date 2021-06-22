@@ -11,7 +11,8 @@
 class CWoWClient;
 // FORWARD END
 
-class CAuthSocket 
+class CAuthSocket
+	: public CTCPSocket
 {
 	typedef bool (CAuthSocket::* HandlerFunc)(CByteBuffer&);
 public:
@@ -33,14 +34,7 @@ public:
 	bool S_LoginProof(CByteBuffer& _buff);
 	bool S_Realmlist(CByteBuffer& _buff);
 
-protected:
-	// TcpSocket
-	virtual void OnConnect() final;
-	virtual void OnDisconnect() final;
-	virtual void OnRawData(const char *buf, size_t len) final;
-
 private:
-	CTCPSocket m_TCPSocket;
 	std::unordered_map<eAuthCmd, HandlerFunc> m_Handlers;
 
 	BigNumber Key;

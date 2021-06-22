@@ -3,15 +3,12 @@
 #ifdef ENABLE_WOW_CLIENT
 
 #include "AuthCrypt.h"
-#include "Opcodes.h"
 #include "ServerPacket.h"
 #include "ClientPacket.h"
-#include "RealmInfo.h"
 
 // FORWARD BEGIN
 class CWoWClient;
 // FORWARD END
-
 
 struct ServerPktHeader
 {
@@ -27,6 +24,7 @@ struct ClientPktHeader
 
 
 class CWorldSocket
+	: public CTCPSocket
 {
 public:
 	CWorldSocket(const std::string& Login, BigNumber Key);
@@ -34,11 +32,6 @@ public:
 
 	void Open(std::string Host, port_t Port);
 	void Update();
-
-    // TcpSocket
-    void OnConnect();
-    void OnDisconnect();
-    void OnRawData(const char *buf, size_t len);
 
 	// CWorldSocket
     void SendPacket(CClientPacket& Packet);
@@ -50,15 +43,18 @@ private: // Packets contructor
 	bool ProcessPacket(CServerPacket ServerPacket);
 
 private: // Used while connect to world
+	void AddHandler(Opcodes Opcode, std::function<void(CServerPacket&)> Handler);
+	
 	void S_AuthChallenge(CByteBuffer& Buffer);
 	void S_AuthResponse(CByteBuffer& Buffer);
     void CreateAddonsBuffer(CByteBuffer& AddonsBuffer);
 
 private:
-	CTCPSocket m_TCPSocket;
-	AuthCrypt m_WoWCryptoUtils;
-    std::unique_ptr<CServerPacket> m_CurrentPacket;
-	std::function<bool(Opcodes, CServerPacket&)> m_ExternalHandler;
+	AuthCrypt                                     m_WoWCryptoUtils;
+    std::unique_ptr<CServerPacket>                m_CurrentPacket;
+
+	std::unordered_map<Opcodes, std::function<void(CServerPacket&)>> m_Handlers;
+	std::function<bool(Opcodes, CServerPacket&)>  m_ExternalHandler;
 
 private:
 	std::string m_Login;

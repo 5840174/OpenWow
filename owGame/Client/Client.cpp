@@ -12,35 +12,19 @@ CWoWClient::CWoWClient(IBaseManager& BaseManager, IRenderDevice& RenderDevice, I
 {
 	m_Host = AuthServerHost;
 	m_Port = AuthServerPort;
-
-    //m_SocketsHandler = std::make_shared<sockets::SocketHandler>();
-	//m_SocketsHandlerThread = new sockets::SocketHandlerThread(*m_SocketsHandler);
-	//m_SocketsHandlerThread->SetDeleteOnExit();
-	//m_SocketsHandlerThread->Start();
-	//m_SocketsHandlerThread->Wait();
-
-	// Wait for thread initialized
-	//while (&m_SocketsHandlerThread->Handler() == nullptr)
-	//	Sleep(1);
-
-	//m_SocketsHandlerThread->Handler().RegStdLog(&m_SocketLog);
 }
 
 CWoWClient::~CWoWClient()
 {
-	//delete m_SocketsHandlerThread;
-	//m_SocketsHandler.reset();
-	//m_SocketsHandlerThread->Stop();
-	//while (m_SocketsHandlerThread->Handler().GetCount() != 0);
-	//m_World.reset();
+
 }
 
 void CWoWClient::Update(UpdateEventArgs & e)
 {
-	if (m_AuthSocket)
+	if (m_AuthSocket && m_AuthSocket->GetStatus() == CSocket::Connected)
 		m_AuthSocket->Update();
 
-	if (m_WorldSocket)
+	if (m_WorldSocket && m_WorldSocket->GetStatus() == CSocket::Connected)
 		m_WorldSocket->Update();
 }
 
@@ -54,33 +38,36 @@ void CWoWClient::BeginConnect(const std::string& Username, const std::string& Pa
 	m_Login = Utils::ToUpper(Username);
 	std::string password = Utils::ToUpper(Password);
 
-    m_AuthSocket = new CAuthSocket(*this, m_Login, password);
+    m_AuthSocket = std::make_unique<CAuthSocket>(*this, m_Login, password);
     m_AuthSocket->Open(m_Host, m_Port);
-	//m_AuthSocket->SetDeleteByHandler();
-	//m_SocketsHandlerThread->Handler().Add(m_AuthSocket);
 }
 
-void CWoWClient::AddRealm(RealmInfo& _realm)
+void CWoWClient::OnRealmListSelected(const RealmInfo& SelectedRealm, BigNumber Key)
 {
-	m_Realms.push_back(_realm);
-	_realm.print();
-}
+	Log::Green("CWoWClient::OnRealmListSelected: Realm name '%s'.", SelectedRealm.Name.c_str());
 
-void CWoWClient::OnSuccessConnect(BigNumber Key)
-{
-    RealmInfo* currRealm = &(m_Realms[0]);
-	Log::Green("CWoWClient::OnSuccessConnect: Realm name '%s'.", currRealm->Name.c_str());
+	m_AuthSocket->Disconnect();
 
 	m_WorldSocket = std::make_shared<CWorldSocket>(m_Login, Key);
-	m_WorldSocket->Open(currRealm->getIP(), currRealm->getPort());
-	//m_WorldSocket->SetDeleteByHandler();
+	m_WorldSocket->Open(SelectedRealm.getIP(), SelectedRealm.getPort());
 
-	//m_SocketsHandlerThread->Handler().Add(m_WorldSocket.get());
-
-	m_World = std::make_unique<WoWWorld>(m_Scene, m_WorldSocket);
+	m_CharacterSelection = std::make_unique<CWoWClientCharactedSelection>(*this, m_Scene, m_WorldSocket);
+	m_WorldSocket->SetExternalHandler(std::bind(&CWoWClientCharactedSelection::ProcessHandler, m_CharacterSelection.get(), std::placeholders::_1, std::placeholders::_2));
 }
 
-WoWWorld& CWoWClient::GetWorld() const
+void CWoWClient::OnCharacterSelected(const CInet_CharacterTemplate & SelectedCharacter)
+{
+	Log::Green("CWoWClient::OnCharacterSelected: Character name '%s'.", SelectedCharacter.Name.c_str());
+
+	m_CharacterSelection.reset();
+
+	m_World = std::make_unique<CWoWWorld>(m_Scene, m_WorldSocket);
+	m_WorldSocket->SetExternalHandler(std::bind(&CWoWWorld::ProcessHandler, m_World.get(), std::placeholders::_1, std::placeholders::_2));
+
+	m_World->EnterWorld(SelectedCharacter);
+}
+
+CWoWWorld& CWoWClient::GetWorld() const
 {
 	_ASSERT(m_World != nullptr);
 	return *m_World;

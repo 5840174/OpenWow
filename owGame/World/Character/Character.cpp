@@ -14,6 +14,8 @@ Character::Character(IScene& Scene, const std::shared_ptr<CM2>& M2Object)
 {
 	//setMeshEnabled(MeshIDType::Ears, EarsStyles::Enabled);
 	//setMeshEnabled(MeshIDType::Eyeglows, EyeglowsStyles::Racial);
+
+
 }
 
 Character::~Character()
@@ -85,7 +87,7 @@ void Character::RefreshTextures(const Character_SectionWrapper& SectionWrapper, 
 
 	// Cloak
 	std::shared_ptr<const CItem_VisualData> item = m_VisualItems[static_cast<EInventoryType>(EQUIPMENT_SLOT_BACK)];
-	if (item->m_InventoryType != EInventoryType::NON_EQUIP)
+	if (item->m_InventoryType != (uint8)EInventoryType::NON_EQUIP)
 	{
 		_ASSERT(item->getObjectComponents().size() == 1);
 		std::shared_ptr<ITexture> cloackTexttre = item->getObjectComponents()[0].texture;
@@ -115,6 +117,9 @@ void Character::RefreshMeshIDs(const Character_SectionWrapper& SectionWrapper)
 void Character::Initialize()
 {
 	__super::Initialize();
+
+	GetColliderComponent()->SetDebugDrawColor(ColorRGBA(1.0f, 0.0f, 0.0f, 1.0f));
+	GetColliderComponent()->SetDebugDrawMode(true);
 
 	for (uint32 slot = 0; slot < INVENTORY_SLOT_BAG_END; slot++) // TODO: Move to constuctor
 		m_VisualItems[static_cast<EInventoryType>(slot)] = std::make_shared<CItem_VisualData>(getM2().GetBaseManager(), getM2().GetRenderDevice(), std::dynamic_pointer_cast<Character>(shared_from_this()));

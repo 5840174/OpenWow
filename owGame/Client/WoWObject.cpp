@@ -23,19 +23,17 @@ WoWObject::~WoWObject()
 
 void WoWObject::ProcessMovementUpdate(CByteBuffer& Bytes)
 {
-	WoWUnit* unit = nullptr;
-	WorldObject* object = nullptr;
-
-	if (IsWoWType(TYPEMASK_UNIT))
-		unit = dynamic_cast<WoWUnit*>(this);
-	else
-		object = dynamic_cast<WorldObject*>(this);
+	WorldObject* object = dynamic_cast<WorldObject*>(this);;
 
 	uint16 updateFlags;
 	Bytes >> (uint16)updateFlags;
 
 	if (updateFlags & UPDATEFLAG_LIVING)
 	{
+		WoWUnit* unit = nullptr;
+		if (IsWoWType(TYPEMASK_UNIT))
+			unit = dynamic_cast<WoWUnit*>(this);
+
 		unit->ProcessMovementPacket(Bytes);
 
 		unit->SetSpeed(MOVE_WALK, Bytes.ReadFloat());
@@ -86,8 +84,10 @@ void WoWObject::ProcessMovementUpdate(CByteBuffer& Bytes)
 				Bytes.seekRelative(12);
 			}
 
-			Bytes.seekRelative(1 + 12);
+			Bytes.seekRelative(1);
 			//Bytes << uint8(move_spline.spline.mode());       // added in 3.1
+
+			Bytes.seekRelative(12);
 			//Bytes << (move_spline.isCyclic() ? G3D::Vector3::zero() : move_spline.FinalDestination());
 		}
 	}
@@ -135,7 +135,7 @@ void WoWObject::ProcessMovementUpdate(CByteBuffer& Bytes)
 			}
 		}
 
-		
+
 	}
 
 	// 0x8
@@ -210,20 +210,9 @@ void WoWObject::ProcessMovementUpdate(CByteBuffer& Bytes)
 		int64 z = int32(m_localRotation.z * PACK_YZ) * w_sign & PACK_YZ_MASK;
 		m_packedRotation = z | (y << 21) | (x << 42);*/
 
-
-
 		int64 packedRotation;
-		Bytes << packedRotation;
-
-		//x = packedRotation 
-
-		//object->Orientation = rand() % 360; // packedRotation;
-
-		//Bytes.seekRelative(8);
+		Bytes >> packedRotation;
 	}
-
-	if (unit)
-		object = (WorldObject*)unit;
 
 	if (object)
 	{
@@ -263,6 +252,9 @@ std::shared_ptr<WoWObject> WoWObject::Create(IScene& Scene, ObjectGuid Guid)
 void WoWObject::AfterCreate(IScene& Scene)
 {
 }
+
+void WoWObject::Destroy()
+{}
 
 
 
@@ -346,10 +338,7 @@ void WoWObject::SetByteValue(uint16 index, uint8 offset, uint8 value)
 	_ASSERT(index < m_valuesCount || PrintIndexError(index, true));
 
 	if (offset > 4)
-	{
-		Log::Error("WoWObject::SetByteValue: wrong offset %u", offset);
-		return;
-	}
+		throw CException("WoWObject::SetByteValue: wrong offset %u", offset);
 
 	if (uint8(m_uint32Values[index] >> (offset * 8)) != value)
 	{
@@ -363,10 +352,7 @@ void WoWObject::SetUInt16Value(uint16 index, uint8 offset, uint16 value)
 	_ASSERT(index < m_valuesCount || PrintIndexError(index, true));
 
 	if (offset > 2)
-	{
-		Log::Error("WoWObject::SetUInt16Value: wrong offset %u", offset);
-		return;
-	}
+		throw CException("WoWObject::SetUInt16Value: wrong offset %u", offset);
 
 	if (uint8(m_uint32Values[index] >> (offset * 16)) != value)
 	{

@@ -5,20 +5,20 @@
 
 CInet_ItemTemplate::CInet_ItemTemplate() :
 	m_DisplayId(0),
-	m_InventoryType(EInventoryType::NON_EQUIP),
+	m_InventoryType((uint8)EInventoryType::NON_EQUIP),
 	m_EnchantAuraID(0)
 {}
 
 CInet_ItemTemplate::CInet_ItemTemplate(CByteBuffer & b)
 {
-	b.readBytes(&m_DisplayId, 4);
-	b.readBytes(&m_InventoryType, 1);
-	//b.readBytes(&EnchantAuraID, 4);
+	b.read(&m_DisplayId);
+	b.read(&m_InventoryType);
+	b.read(&m_EnchantAuraID);
 }
 
 CInet_ItemTemplate::CInet_ItemTemplate(uint32 _displayId, EInventoryType _inventoryType, uint32 _enchantAuraID) :
 	m_DisplayId(_displayId),
-	m_InventoryType(_inventoryType),
+	m_InventoryType((uint8)_inventoryType),
 	m_EnchantAuraID(_enchantAuraID)
 {}
 

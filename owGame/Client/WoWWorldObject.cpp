@@ -8,6 +8,7 @@
 WorldObject::WorldObject(IScene& Scene, ObjectGuid Guid)
 	: WoWObject(Guid)
 	, WorldLocation(Scene)
+	, DestinationPoint(0.0f)
 {
 }
 

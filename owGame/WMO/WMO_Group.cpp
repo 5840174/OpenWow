@@ -386,14 +386,14 @@ bool WMO_Group::Load()
 		SWMO_Group_MLIQDef liquidHeader;
 		buffer->read(&liquidHeader);
 
-		Log::Green
+		/*Log::Green
 		(
 			"WMO[%s]: Liq: headerID [%d] headerFlag [%d] MatID: [%d]", 
 			m_WMOModel.GetFilename().c_str(),
 			m_GroupHeader.liquidType,
 			m_WMOModel.GetHeader().flags.use_liquid_type_dbc_id, 
 			liquidHeader.materialID
-		);
+		);*/
 
 
 

@@ -16,6 +16,9 @@ public:
 	virtual void setMeshEnabled(MeshIDType::List _type, uint32 _value);
 	virtual bool isMeshEnabled(uint32 _index) const override;
 
+	// ISceneNode
+	void Initialize() override;
+
 private:
 	// Mesh provider
 	uint32				m_MeshID[MeshIDType::Count];

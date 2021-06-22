@@ -9,8 +9,7 @@
 #include "AuthSocket.h"
 
 CAuthSocket::CAuthSocket(CWoWClient& WoWClient, const std::string& Login, const std::string& Password)
-    : m_TCPSocket()
-	, m_WoWClient(WoWClient)
+    : m_WoWClient(WoWClient)
 	, m_Login(Login)
 {
 	char loginPasswordUpperCase[256];
@@ -24,10 +23,6 @@ CAuthSocket::CAuthSocket(CWoWClient& WoWClient, const std::string& Login, const 
 	m_Handlers[AUTH_LOGON_CHALLENGE] = &CAuthSocket::S_LoginChallenge;
 	m_Handlers[AUTH_LOGON_PROOF] = &CAuthSocket::S_LoginProof;
 	m_Handlers[REALM_LIST] = &CAuthSocket::S_Realmlist;
-
-
-
-
 }
 
 CAuthSocket::~CAuthSocket()
@@ -43,13 +38,13 @@ void CAuthSocket::Open(std::string Host, port_t Port)
 	{
 		IPAddress addr(Host);
 
-		result = m_TCPSocket.Connect(addr, Port);
+		result = Connect(addr, Port);
 	}
 	else
 	{
 		for (auto addr : Dns::Resolve(Host))
 		{
-			result = m_TCPSocket.Connect(addr, Port);
+			result = Connect(addr, Port);
 			if (result)
 				break;
 		}
@@ -61,39 +56,36 @@ void CAuthSocket::Open(std::string Host, port_t Port)
 		return;
 	}
 
-	m_TCPSocket.SetBlocking(false);
+	SetBlocking(false);
 
 	C_SendLogonChallenge();
 }
 
 void CAuthSocket::Update()
 {
-	while (true)
+	CByteBuffer buffer;
+
+	Receive(buffer, 4096);
+
+	if (buffer.getSize() == 0)
 	{
-		CByteBuffer buffer;
-
-		m_TCPSocket.Receive(buffer, 4096);
-
-		if (buffer.getSize() == 0)
-		{
-			if (m_TCPSocket.GetStatus() != CSocket::Connected)
-			{
-				//NotifyListeners(&ConnectionListener::OnSocketStateChange, m_TCPSocket.GetStatus());
-			}
-			return;
-		}
-
-		Log::Green("AuthSocket::OnRawData: Received '%d' bytes.", buffer.getSize());
-
-		eAuthCmd currHandler;
-		buffer.readBytes(&currHandler, sizeof(uint8));
-
-		ProcessHandler(currHandler, buffer);
-
-		if (m_TCPSocket.GetStatus() != CSocket::Connected)
+		if (GetStatus() != CSocket::Connected)
 		{
 			//NotifyListeners(&ConnectionListener::OnSocketStateChange, m_TCPSocket.GetStatus());
 		}
+		return;
+	}
+
+	Log::Green("AuthSocket::OnRawData: Received '%d' bytes.", buffer.getSize());
+
+	eAuthCmd currHandler;
+	buffer.readBytes(&currHandler, sizeof(uint8));
+
+	ProcessHandler(currHandler, buffer);
+
+	if (GetStatus() != CSocket::Connected)
+	{
+		//NotifyListeners(&ConnectionListener::OnSocketStateChange, m_TCPSocket.GetStatus());
 	}
 }
 
@@ -101,11 +93,11 @@ void CAuthSocket::Update()
 
 void CAuthSocket::SendData(const IByteBuffer& _bb)
 {
-	m_TCPSocket.Send(_bb.getData(), _bb.getSize());
+	Send(_bb.getData(), _bb.getSize());
 }
 void CAuthSocket::SendData(const uint8* _data, uint32 _count)
 {
-	m_TCPSocket.Send(_data, _count);
+	Send(_data, _count);
 }
 
 
@@ -138,8 +130,9 @@ namespace
 	{
 		struct sockaddr_in sa;
 		socklen_t sockaddr_length = sizeof(struct sockaddr_in);
-		if (getsockname(socket->GetHandle(), (struct sockaddr *)&sa, (socklen_t*)&sockaddr_length) == -1)
+		if (::getsockname(socket->GetHandle(), (struct sockaddr *)&sa, (socklen_t*)&sockaddr_length) == -1)
 			memset(&sa, 0, sizeof(sa));
+
 		unsigned long a;
 		memcpy(&a, &sa.sin_addr, 4);
 		return a;
@@ -191,8 +184,8 @@ namespace
 
 void CAuthSocket::C_SendLogonChallenge()
 {
-    AuthChallenge_C challenge(m_Login, GetMyIP(&m_TCPSocket));
-    challenge.Send(&m_TCPSocket);
+    AuthChallenge_C challenge(m_Login, GetMyIP(this));
+    challenge.Send(this);
 }
 
 //-- Server to client
@@ -383,7 +376,7 @@ bool CAuthSocket::S_LoginChallenge(CByteBuffer& _buff)
 #pragma endregion
 
     AuthProof_C authProof(A.AsByteArray(32).get(), MClient.GetDigest());
-    authProof.Send(&m_TCPSocket);
+    authProof.Send(this);
 
     // Expected proof for server
     MServer.Initialize();
@@ -444,52 +437,27 @@ bool CAuthSocket::S_LoginProof(CByteBuffer& _buff)
 
 bool CAuthSocket::S_Realmlist(CByteBuffer& _buff)
 {
-    uint16 bufferSize;
-    _buff.read(&bufferSize);
+	uint16 packetSize;
+	_buff.read(&packetSize);
 
-    uint32 realmlistBufferSize;
-    _buff.read(&realmlistBufferSize);
+	// RealmListSizeBuffer
+	_buff.seekRelative(4); // uint32 (0)
+	uint16 realmlistSize;
+    _buff.read(&realmlistSize);
 
-    uint8 count;
-    _buff.read(&count);
-    Log::Green("S_Realmlist: Count [%d]", count);
+    Log::Green("S_Realmlist: Count [%d]", realmlistSize);
 
-    for (uint32 i = 0; i < count; i++)
+	std::vector<RealmInfo> realmListInfos;
+    for (uint32 i = 0; i < realmlistSize; i++)
     {
         RealmInfo rinfo(_buff);
-		m_WoWClient.AddRealm(rinfo);
+		rinfo.ToString();
+		realmListInfos.push_back(rinfo);
     }
 
-	m_WoWClient.OnSuccessConnect(Key);
+	m_WoWClient.OnRealmListSelected(*realmListInfos.begin(), Key);
 
     return true;
-}
-
-
-
-//
-// TcpSocket
-//
-void CAuthSocket::OnConnect()
-{
-	C_SendLogonChallenge();
-}
-
-void CAuthSocket::OnDisconnect()
-{
-
-}
-
-void CAuthSocket::OnRawData(const char * buf, size_t len)
-{
-	Log::Info("AuthSocket::OnRawData: Received '%d' bytes.", len);
-
-	CByteBuffer bb(buf, len);
-
-	eAuthCmd currHandler;
-	bb.readBytes(&currHandler, sizeof(uint8));
-
-	ProcessHandler(currHandler, bb);
 }
 
 #endif

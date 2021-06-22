@@ -18,17 +18,9 @@
 #ifndef TRINITYSERVER_TYPEDEFS_H
 #define TRINITYSERVER_TYPEDEFS_H
 
-
-namespace G3D
-{
-    class Vector3;
-    class Vector4;
-}
-
+/*
 namespace Movement
 {
-    using G3D::Vector3;
-    using G3D::Vector4;
 
     inline uint32 SecToMS(float sec)
     {
@@ -70,5 +62,6 @@ namespace Movement
     extern float gravity;
     extern UInt32Counter splineIdGen;
 }
+*/
 
 #endif // TRINITYSERVER_TYPEDEFS_H

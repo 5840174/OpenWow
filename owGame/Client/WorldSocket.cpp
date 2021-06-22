@@ -13,33 +13,14 @@
 #include "OpcodesNames.h"
 #include "HMACSHA1.h"
 
-const Opcodes IgnoredOpcodes[] = 
-{
-	Opcodes::SMSG_SET_PROFICIENCY,
-	Opcodes::SMSG_LOGIN_VERIFY_WORLD,
-	Opcodes::SMSG_ACCOUNT_DATA_TIMES,
-	Opcodes::SMSG_FEATURE_SYSTEM_STATUS,
-	//Opcodes::SMSG_BINDPOINTUPDATE,
-	Opcodes::SMSG_INITIAL_SPELLS,
-	Opcodes::SMSG_SEND_UNLEARN_SPELLS,
-	Opcodes::SMSG_ACTION_BUTTONS,
-	Opcodes::SMSG_INITIALIZE_FACTIONS,
-	//Opcodes::SMSG_LOGIN_SETTIMESPEED,
-	Opcodes::SMSG_SET_FORCED_REACTIONS,
-	Opcodes::SMSG_COMPRESSED_UPDATE_OBJECT,
-	Opcodes::SMSG_MONSTER_MOVE,
-
-	Opcodes::SMSG_EMOTE,
-	Opcodes::SMSG_TIME_SYNC_REQ,
-	Opcodes::SMSG_SPELL_START,
-	Opcodes::SMSG_SPELL_GO
-};
 
 CWorldSocket::CWorldSocket(const std::string& Login, BigNumber Key)
 	: m_CurrentPacket(nullptr)
 	, m_Login(Login)
 	, m_Key(Key)
-{}
+{
+
+}
 
 CWorldSocket::~CWorldSocket()
 {
@@ -54,13 +35,13 @@ void CWorldSocket::Open(std::string Host, port_t Port)
 	{
 		IPAddress addr(Host);
 
-		result = m_TCPSocket.Connect(addr, Port);
+		result = Connect(addr, Port);
 	}
 	else
 	{
 		for (auto addr : Dns::Resolve(Host))
 		{
-			result = m_TCPSocket.Connect(addr, Port);
+			result = Connect(addr, Port);
 			if (result)
 				break;
 		}
@@ -72,7 +53,7 @@ void CWorldSocket::Open(std::string Host, port_t Port)
 		return;
 	}
 
-	m_TCPSocket.SetBlocking(false);
+	SetBlocking(false);
 }
 
 void CWorldSocket::Update()
@@ -81,11 +62,11 @@ void CWorldSocket::Update()
 	{
 		CByteBuffer buffer;
 
-		m_TCPSocket.Receive(buffer, 4096);
+		Receive(buffer, 4096);
 
 		if (buffer.getSize() == 0)
 		{
-			if (m_TCPSocket.GetStatus() != CSocket::Connected)
+			if (GetStatus() != CSocket::Connected)
 			{
 				//NotifyListeners(&ConnectionListener::OnSocketStateChange, m_TCPSocket.GetStatus());
 			}
@@ -94,101 +75,67 @@ void CWorldSocket::Update()
 
 		//Log::Green("CWorldSocket::Update: Received '%d' bytes.", buffer.getSize());
 
-		OnRawData((char*)buffer.getData(), buffer.getSize());
+		 // Append to current packet
+		if (m_CurrentPacket != nullptr)
+		{
+			Packet2(buffer);
+		}
 
-		if (m_TCPSocket.GetStatus() != CSocket::Connected)
+		while (false == buffer.isEof())
+		{
+			uint8* data = buffer.getDataFromCurrentEx();
+			uint8  sizeBytes = sizeof(uint16);
+			uint32 size = 0;
+			uint16 cmd = 0;
+
+#if 0
+			// 1. Decrypt size
+			m_WoWCryptoUtils.DecryptRecv(data + 0, 1);
+			uint8 firstByte = data[0];
+
+			// 2. Decrypt other size
+			if ((firstByte & 0x80) != 0)
+			{
+				sizeBytes = 3;
+				m_WoWCryptoUtils.DecryptRecv(data + 1, 1 + sizeBytes);
+				size = (((data[0] & 0x7F) << 16) | (data[1] << 8) | data[2]);
+				cmd = ((data[4] << 8) | data[3]);
+			}
+			else
+			{
+				sizeBytes = 2;
+				m_WoWCryptoUtils.DecryptRecv(data + 1, 1 + sizeBytes);
+				size = ((data[0] << 8) | data[1]);
+				cmd = ((data[3] << 8) | data[2]);
+			}
+#else
+			// Decrypt size and header
+			m_WoWCryptoUtils.DecryptRecv(data + 0, sizeof(uint16) + sizeof(uint16));
+
+			// Check compressed packets
+			_ASSERT((data[0] & 0x80) == 0);
+
+			// Size and opcode
+			size = ((data[0] << 8) | data[1]);
+			cmd = ((data[3] << 8) | data[2]);
+#endif
+
+			// DEBUG
+			//_ASSERT(cmd < Opcodes::NUM_MSG_TYPES);
+			//Log::Green("CWorldSocket: Command '%s' (0x%X) size=%d", OpcodesNames[cmd], cmd, size);
+
+			// Seek to data
+			buffer.seekRelative(sizeBytes /*Size*/ + sizeof(uint16) /*Opcode*/);
+
+			Packet1(size - sizeof(uint16) /*Opcode*/, static_cast<Opcodes>(cmd));
+			Packet2(buffer);
+		}
+
+		if (GetStatus() != CSocket::Connected)
 		{
 			//NotifyListeners(&ConnectionListener::OnSocketStateChange, m_TCPSocket.GetStatus());
 		}
 	}
-}
-
-
-
-//
-// TcpSocket
-//
-void CWorldSocket::OnConnect()
-{
-}
-
-void CWorldSocket::OnDisconnect()
-{
-    //SetErasedByHandler();
-}
-
-void CWorldSocket::OnRawData(const char * buf, size_t len)
-{
-    //Log::Info("CWorldSocket: Receive data with size=%d", len);
-
-    CByteBuffer bufferFromServer(buf, len);
-	
-    // Append to current packet
-    if (m_CurrentPacket != nullptr)
-    {
-        Packet2(bufferFromServer);
-    }
-
-    while (!bufferFromServer.isEof())
-    {
-        uint8* data = bufferFromServer.getDataFromCurrentEx();
-        uint8  sizeBytes = sizeof(uint16);
-        uint32 size = 0;
-        uint16 cmd = 0;
-
-#if 1
-        // 1. Decrypt size
-        m_WoWCryptoUtils.DecryptRecv(data + 0, 1);
-        uint8 firstByte = data[0];
-
-        // 2. Decrypt other size
-        if ((firstByte & 0x80) != 0)
-        {
-            sizeBytes = 3;
-            m_WoWCryptoUtils.DecryptRecv(data + 1, 1 + sizeBytes);
-            size = (((data[0] & 0x7F) << 16) | (data[1] << 8) | data[2]);
-            cmd = ((data[4] << 8) | data[3]);
-        }
-        else
-        {
-            sizeBytes = 2;
-            m_WoWCryptoUtils.DecryptRecv(data + 1, 1 + sizeBytes);
-            size = ((data[0] << 8) | data[1]);
-            cmd = ((data[3] << 8) | data[2]);
-        }
-#else
-        // Decrypt size and header
-        m_WoWCryptoUtils.DecryptRecv(data + 0, sizeof(uint16) + sizeof(uint16));
-
-        // Check compressed packets
-        _ASSERT((data[0] & 0x80) == 0);
-
-        // Size and opcode
-        size = ((data[0] << 8) | data[1]);
-        cmd = ((data[3] << 8) | data[2]);
-#endif
-
-        //
-        bool needMess = true;
-        for (uint32 i = 0; i < sizeof(IgnoredOpcodes) / sizeof(IgnoredOpcodes[0]); i++)
-        {
-            if (IgnoredOpcodes[i] == cmd)
-            {
-                needMess = false;
-                break;
-            }
-        }
-
-        // DEBUG
-        //_ASSERT(cmd < Opcodes::NUM_MSG_TYPES);
-        //Log::Green("CWorldSocket: Command '%s' (0x%X) size=%d", OpcodesNames[cmd], cmd, size);
-
-        // Seek to data
-        bufferFromServer.seekRelative(sizeBytes /*Size*/ + sizeof(uint16) /*Opcode*/);
-
-        Packet1(size - sizeof(uint16) /*Opcode*/, static_cast<Opcodes>(cmd));
-        Packet2(bufferFromServer);
-    }
 }
 
 
@@ -202,7 +149,7 @@ void CWorldSocket::SendPacket(CClientPacket& Packet)
 
     m_WoWCryptoUtils.EncryptSend(Packet.getDataEx(), sizeof(uint16) /*Size*/ + sizeof(uint32) /*Opcode*/);
 
-    m_TCPSocket.Send(Packet.getDataEx(), Packet.getSize());
+    Send(Packet.getDataEx(), Packet.getSize());
 }
 
 void CWorldSocket::SetExternalHandler(std::function<bool(Opcodes, CServerPacket&)> Handler)
@@ -239,7 +186,7 @@ void CWorldSocket::Packet2(CByteBuffer& _buf)
 		{
 			// Fill data
 			_ASSERT(_buf.getPos() + needToRead <= _buf.getSize());
-			m_CurrentPacket->writeBytes(_buf.getDataFromCurrent(), needToRead);
+			m_CurrentPacket->writeBytes( _buf.getDataFromCurrent(), needToRead);
 
 			_buf.seekRelative(needToRead);
 			//Log::Info("Packet[%s] readed '%d' of %d'.", OpcodesNames[m_CurrentPacket->GetPacketOpcode()].c_str(), m_CurrentPacket->getSize(), m_CurrentPacket->GetPacketSize());
@@ -291,6 +238,14 @@ bool CWorldSocket::ProcessPacket(CServerPacket ServerPacket)
 
 
 
+void CWorldSocket::AddHandler(Opcodes Opcode, std::function<void(CServerPacket&)> Handler)
+{
+	_ASSERT(Handler != nullptr);
+	m_Handlers.insert(std::make_pair(Opcode, Handler));
+}
+
+
+
 //
 // Handlers
 //
@@ -331,6 +286,7 @@ void CWorldSocket::S_AuthChallenge(CByteBuffer& _buff)
     // We must pass addons to connect to private servers
     CByteBuffer addonsBuffer;
 	CreateAddonsBuffer(addonsBuffer);
+
     p.writeBytes(addonsBuffer.getData(), addonsBuffer.getSize());
 
     SendPacket(p);
@@ -423,10 +379,7 @@ void CWorldSocket::CreateAddonsBuffer(CByteBuffer& AddonsBuffer)
 
     uLongf destLen = addonsBuffer.getSize();
     if (compress(AddonsBuffer.getDataFromCurrentEx() + sizeof(uint32), &destLen, addonsBuffer.getData(), addonsBuffer.getSize()) != Z_OK)
-    {
-        Log::Error("Can't compress addons.");
-        _ASSERT(false);
-    }
+		throw CException("CWorldSocket::CreateAddonsBuffer: Unable to compress addons buffer.");
 
     //                  addonsRealSize + compressedSize
     //AddonsBuffer.Resize(sizeof(uint32) + destLen);

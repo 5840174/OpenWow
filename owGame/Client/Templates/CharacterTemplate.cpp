@@ -63,13 +63,15 @@ CInet_CharacterTemplate::CInet_CharacterTemplate(CByteBuffer& b)
 	b.readBytes(&GuildId, 4);
 
 	b.readBytes(&Flags, 4);
+	b.readBytes(&CustomizationFlags, 4);
+
 	b.readBytes(&IsFirstLogin, 1);
 
 	b.readBytes(&PetInfoId, 4);
 	b.readBytes(&PetLevel, 4);
 	b.readBytes(&PetFamilyId, 4);
 
-	for (int i = 0; i < EQUIPMENT_SLOT_END; i++)
+	for (int i = 0; i < INVENTORY_SLOT_BAG_END; i++)
 	{
 		ItemsTemplates[i].TemplateSet(CInet_ItemTemplate(b));
 	}

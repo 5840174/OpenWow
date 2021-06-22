@@ -2,7 +2,7 @@
 <xml>
 	<Settings>
 		<Video>
-			<WindowSize>1280.000, 1024.000</WindowSize>
+			<WindowSize>1280,000, 1024,000</WindowSize>
 			<VSyncEnabled>false</VSyncEnabled>
 			<MultisampleEnabled>false</MultisampleEnabled>
 		</Video>

@@ -7,7 +7,6 @@
 
 // Additional
 #include "World/WorldObjectsCreator.h"
-#include "..\World\GameObject\GameObject.h"
 
 WoWGameObject::WoWGameObject(IScene& Scene, ObjectGuid Guid)
 	: WorldObject(Scene, Guid)
@@ -29,7 +28,6 @@ WoWGameObject::~WoWGameObject()
 std::shared_ptr<WoWGameObject> WoWGameObject::Create(IScene& Scene, ObjectGuid Guid)
 {
 	std::shared_ptr<WoWGameObject> thisObj = Scene.GetRootSceneNode()->CreateSceneNode<WoWGameObject>(Guid);
-	Log::Green("WoWGameObject created!");
 
 	// For test only
 	//BoundingBox bbox(glm::vec3(-2.0f), glm::vec3(2.0f));
@@ -39,14 +37,26 @@ std::shared_ptr<WoWGameObject> WoWGameObject::Create(IScene& Scene, ObjectGuid G
 	return thisObj;
 }
 
-void WoWGameObject::AfterCreate(IBaseManager & BaseManager, IRenderDevice & RenderDevice, IScene * Scene)
+void WoWGameObject::AfterCreate(IScene& Scene)
 {
+	if (m_HiddenNode != nullptr)
+	{
+		Log::Error("WoWGameObject: Try to call 'AfterCreate' for object.");
+		return;
+	}
+
 	uint32 displayInfo = GetUInt32Value(GAMEOBJECT_DISPLAYID);
 	if (displayInfo != 0)
 	{
-		CWorldObjectCreator creator(BaseManager);
-		m_HiddenNode = creator.BuildGameObjectFromDisplayInfo(RenderDevice, Scene, displayInfo, shared_from_this());
+		CWorldObjectCreator creator(Scene.GetBaseManager());
+		m_HiddenNode = creator.BuildGameObjectFromDisplayInfo(Scene.GetBaseManager().GetApplication().GetRenderDevice(), &Scene, displayInfo, shared_from_this());
 	}
+}
+
+void WoWGameObject::Destroy()
+{
+	if (m_HiddenNode)
+		m_HiddenNode->MakeMeOrphan();
 }
 
 #endif

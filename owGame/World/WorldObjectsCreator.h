@@ -7,7 +7,9 @@
 #include "WMO/WMO.h"
 #include "World/Creature/Creature.h"
 #include "World/Character/Character.h"
-#include "World/GameObject/GameObject.h"
+
+#include "World/GameObject/GameObjectM2.h"
+#include "World/GameObject/GameObjectWMO.h"
 
 class ZN_API CWorldObjectCreator
 	: public IWoWObjectsCreator
@@ -20,7 +22,7 @@ public:
 	std::shared_ptr<Creature> BuildCreatureFromDisplayInfo(IRenderDevice& RenderDevice, IScene* Scene, uint32 _id, const std::shared_ptr<ISceneNode>& Parent);
 	std::shared_ptr<Character> BuildCharactedFromTemplate(IRenderDevice& RenderDevice, IScene* Scene, const CInet_CharacterTemplate& b, const std::shared_ptr<ISceneNode>& Parent);
 	std::shared_ptr<Character> BuildCharactedFromDisplayInfo(IRenderDevice& RenderDevice, IScene* Scene, uint32 _id, const std::shared_ptr<ISceneNode>& Parent);
-	std::shared_ptr<GameObject> BuildGameObjectFromDisplayInfo(IRenderDevice& RenderDevice, IScene* Scene, uint32 _id, const std::shared_ptr<ISceneNode>& Parent);
+	std::shared_ptr<ISceneNode> BuildGameObjectFromDisplayInfo(IRenderDevice& RenderDevice, IScene* Scene, uint32 _id, const std::shared_ptr<ISceneNode>& Parent);
 #endif
 
 	// IWoWObjectsCreator
@@ -38,7 +40,11 @@ private:
 #ifdef USE_M2_MODELS
 	std::shared_ptr<CM2> CreateCreatureModel(IRenderDevice& RenderDevice, const DBC_CreatureDisplayInfoRecord* CreatureDisplayInfo);
 	std::shared_ptr<CM2> CreateCharacterModel(IRenderDevice& RenderDevice, const CInet_CharacterTemplate& CharacterTemplate);
-	std::shared_ptr<CM2> CreateGameObjectModel(IRenderDevice& RenderDevice, const DBC_GameObjectDisplayInfoRecord* GameObjectDisplayInfoRecord);
+	std::shared_ptr<CM2> CreateGameObjectM2Model(IRenderDevice& RenderDevice, const DBC_GameObjectDisplayInfoRecord* GameObjectDisplayInfoRecord);
+#endif
+
+#ifdef USE_WMO_MODELS
+	std::shared_ptr<CWMO> CreateGameObjectWMOModel(IRenderDevice& RenderDevice, const DBC_GameObjectDisplayInfoRecord* GameObjectDisplayInfoRecord);
 #endif
 
 	IBlendState::BlendMode GetEGxBlendMode(uint32 Index);

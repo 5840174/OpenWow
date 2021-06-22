@@ -45,44 +45,49 @@ public:
 public:
 	RealmInfo(CByteBuffer& _buff)
 	{
-		_buff.readBytes(&Icon, sizeof(uint32));
-		_buff.readBytes(&Color, sizeof(uint8));
+		_buff.read(&Type);
+		_buff.read(&Locked); // POST_BC_EXP_FLAG
+		_buff.read(&Flag);
+
 		_buff.readString(&Name);
-		_buff.readString(&Addres);
-		_buff.readBytes(&Population, 4);
+		_buff.readString(&Address);
+		_buff.read(&Population);
 		_buff.readBytes(&CharactersCount, sizeof(uint8));
 		_buff.readBytes(&TimeZone, sizeof(uint8));
-		_buff.readBytes(&RealmID, sizeof(uint8));
+		_buff.readBytes(&RealmID, sizeof(uint8)); // POST_BC_EXP_FLAG or 0
 
-		// Calculate ip and port
+		if (Flag & REALM_FLAG_SPECIFYBUILD)
+		{
+			_buff.read(&BuildInfo.MajorVersion);
+			_buff.read(&BuildInfo.MinorVersion);
+			_buff.read(&BuildInfo.BugfixVersion);
+			_buff.read(&BuildInfo.Build);
+		}
 
-		size_t pos = Addres.find(':');
+		size_t pos = Address.find(':');
 		_ASSERT(pos != -1);
-		m_IPAddres = Addres.substr(0, pos);
-		m_Port = atoi(Addres.substr(pos + 1).c_str());
+		m_IPAddres = Address.substr(0, pos);
+		m_Port = atoi(Address.substr(pos + 1).c_str());
 	}
 
 	const std::string& getIP() const { return m_IPAddres; }
 	const uint16& getPort() const { return m_Port; }
 
-	void print()
+	void ToString()
 	{
-		Log::Green("Realm '%s', addres '%s'", Name.c_str(), Addres.c_str());
+		Log::Green("RealmType: '%d', IsLocked: '%d', Flag: '0x%X', Name: '%s', Address '%s', Population: '%f', CharacterCount: '%d'", Type, Locked, Flag, Name.c_str(), Address.c_str(), Population, CharactersCount);
 	}
 
 public:
-	//RealmType Type;
-	//uint8 Locked;
-	//RealmFlags Flag;
-
-    uint32 Icon;
-    uint8 Color;
+	RealmType Type;
+	uint8 Locked;              // POST_BC_EXP_FLAG
+	RealmFlags Flag;
 	std::string Name;
-	std::string Addres;
+	std::string Address;
 	float Population;
 	uint8 CharactersCount;
 	uint8 TimeZone;
-	uint8 RealmID;
+	uint8 RealmID;             // POST_BC_EXP_FLAG or 0
 	RealmBuildInfo BuildInfo;
 
 private:
