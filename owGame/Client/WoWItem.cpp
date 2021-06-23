@@ -5,7 +5,7 @@
 // General
 #include "WoWItem.h"
 
-WoWItem::WoWItem(ObjectGuid Guid)
+WoWItem::WoWItem(CWoWObjectGuid Guid)
 	: WoWObject(Guid)
 {
 	m_ObjectType |= TYPEMASK_ITEM;
@@ -17,7 +17,7 @@ WoWItem::~WoWItem()
 {
 }
 
-std::shared_ptr<WoWItem> WoWItem::Create(IScene& Scene, ObjectGuid Guid)
+std::shared_ptr<WoWItem> WoWItem::Create(IScene& Scene, CWoWObjectGuid Guid)
 {
 	std::shared_ptr<WoWItem> thisObj = std::make_shared<WoWItem>(Guid);
 	return thisObj;

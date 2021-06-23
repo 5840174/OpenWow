@@ -2,17 +2,17 @@
 
 #ifdef ENABLE_WOW_CLIENT
 
-#include "WoWObject.h"
+#include "WoWWorldObject.h"
 
 class ZN_API WoWCorpse
-	: public WoWObject
+	: public WorldObject
 {
 public:
-	WoWCorpse(ObjectGuid Guid);
+	WoWCorpse(IScene& Scene, CWoWObjectGuid Guid);
 	virtual ~WoWCorpse();
 
 public:
-	static std::shared_ptr<WoWCorpse> Create(IScene& Scene, ObjectGuid Guid);
+	static std::shared_ptr<WoWCorpse> Create(IScene& Scene, CWoWObjectGuid Guid);
 
 private:
 

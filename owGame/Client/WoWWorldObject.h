@@ -10,7 +10,7 @@ class ZN_API WorldObject
 	, public WorldLocation
 {
 public:
-	WorldObject(IScene& Scene, ObjectGuid Guid);
+	WorldObject(IScene& Scene, CWoWObjectGuid Guid);
 	virtual ~WorldObject();
 
 	glm::vec3 DestinationPoint;

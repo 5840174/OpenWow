@@ -8,7 +8,7 @@
 // Additional
 #include "World/WorldObjectsCreator.h"
 
-WoWUnit::WoWUnit(IScene& Scene, ObjectGuid Guid)
+WoWUnit::WoWUnit(IScene& Scene, CWoWObjectGuid Guid)
 	: WorldObject(Scene, Guid)
 {
 	m_ObjectType |= TYPEMASK_UNIT;
@@ -99,6 +99,12 @@ void WoWUnit::Update(const UpdateEventArgs & e)
 
 		float speed = GetSpeed(MOVE_WALK) / 1000.0f * e.DeltaTime;
 		SetLocalPosition(GetLocalPosition() + directionVec * speed);
+
+		glm::vec3 rightDirection = glm::normalize(glm::cross(directionVec, glm::vec3(0.0f, 1.0f, 0.0f)));
+		glm::vec3 leftDirection = -rightDirection;
+
+		glm::quat lookAtQuat = glm::quatLookAt(leftDirection, glm::vec3(0.0f, 1.0f, 0.0f));
+		SetLocalRotationQuaternion(lookAtQuat);
 	}
 }
 
@@ -107,7 +113,7 @@ void WoWUnit::Update(const UpdateEventArgs & e)
 //
 // Protected
 //
-std::shared_ptr<WoWUnit> WoWUnit::Create(IScene& Scene, ObjectGuid Guid)
+std::shared_ptr<WoWUnit> WoWUnit::Create(IScene& Scene, CWoWObjectGuid Guid)
 {
 	std::shared_ptr<WoWUnit> thisObj = Scene.GetRootSceneNode()->CreateSceneNode<WoWUnit>(Guid);
 	//Log::Error("WoWUnit created. ID  = %d. HIGH = %d, ENTRY = %d, COUNTER = %d", Guid.GetRawValue(), Guid.GetHigh(), Guid.GetEntry(), Guid.GetCounter());
@@ -133,6 +139,22 @@ void WoWUnit::AfterCreate(IScene& Scene)
 	{
 		CWorldObjectCreator creator(Scene.GetBaseManager());
 		m_HiddenNode = creator.BuildCreatureFromDisplayInfo(Scene.GetBaseManager().GetApplication().GetRenderDevice(), &Scene, displayInfo, shared_from_this());
+
+		const DBC_CreatureDisplayInfoRecord * creatureDisplayInfo = GetBaseManager().GetManager<CDBCStorage>()->DBC_CreatureDisplayInfo()[displayInfo];
+		if (creatureDisplayInfo == nullptr)
+			throw CException("Creature display info '%d' don't found.", displayInfo);
+
+		const DBC_CreatureModelDataRecord* creatureModelDataRecord = GetBaseManager().GetManager<CDBCStorage>()->DBC_CreatureModelData()[creatureDisplayInfo->Get_Model()];
+		if (creatureModelDataRecord == nullptr)
+			throw CException("Creature model data '%d' don't found.", creatureDisplayInfo->Get_Model());
+
+		float scaleFromCreature = creatureDisplayInfo->Get_Scale();
+		float scaleFromModel = creatureModelDataRecord->Get_Scale();
+		float scale = GetFloatValue(OBJECT_FIELD_SCALE_X);
+
+
+
+		//m_HiddenNode->SetScale(glm::vec3(scale));
 	}
 	else
 	{

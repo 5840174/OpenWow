@@ -175,6 +175,12 @@
     <Filter Include="Client\CharacterSelection">
       <UniqueIdentifier>{e8b9984d-7548-4b83-995d-da2926cba7dd}</UniqueIdentifier>
     </Filter>
+    <Filter Include="DBC\Tables\Transport">
+      <UniqueIdentifier>{a721aa6b-0a39-4bab-bb24-b95388494a3e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="DBC\Tables\Taxi">
+      <UniqueIdentifier>{b19f1950-2789-4cb2-ac7a-5604e8767317}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -217,9 +223,6 @@
       <Filter>Client\World</Filter>
     </ClCompile>
     <ClCompile Include="Client\Client.cpp">
-      <Filter>Client</Filter>
-    </ClCompile>
-    <ClCompile Include="Client\RealmInfo.cpp">
       <Filter>Client</Filter>
     </ClCompile>
     <ClCompile Include="owGame.cpp">
@@ -444,9 +447,6 @@
     <ClCompile Include="Client\WoWUnit.cpp">
       <Filter>Client\Objects</Filter>
     </ClCompile>
-    <ClCompile Include="Client\WoWBag.cpp">
-      <Filter>Client\Objects</Filter>
-    </ClCompile>
     <ClCompile Include="Client\WoWObject.cpp">
       <Filter>Client\Objects</Filter>
     </ClCompile>
@@ -584,6 +584,21 @@
     </ClCompile>
     <ClCompile Include="Renderer\RenderPass_Path.cpp">
       <Filter>Renderer\Passes</Filter>
+    </ClCompile>
+    <ClCompile Include="Client\WorldObjectUpdater.cpp">
+      <Filter>Client\World</Filter>
+    </ClCompile>
+    <ClCompile Include="Client\WorldObjects.cpp">
+      <Filter>Client\World</Filter>
+    </ClCompile>
+    <ClCompile Include="Client\WoWContainer.cpp">
+      <Filter>Client\Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="Client\TransportAnimationStorage.cpp">
+      <Filter>Client\World</Filter>
+    </ClCompile>
+    <ClCompile Include="Client\TaxiStorage.cpp">
+      <Filter>Client\World</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -744,9 +759,6 @@
       <Filter>Client\World</Filter>
     </ClInclude>
     <ClInclude Include="Client\Client.h">
-      <Filter>Client</Filter>
-    </ClInclude>
-    <ClInclude Include="Client\RealmInfo.h">
       <Filter>Client</Filter>
     </ClInclude>
     <ClInclude Include="Interfaces\Managers.h">
@@ -1046,9 +1058,6 @@
     <ClInclude Include="Client\WoWUnit.h">
       <Filter>Client\Objects</Filter>
     </ClInclude>
-    <ClInclude Include="Client\WoWBag.h">
-      <Filter>Client\Objects</Filter>
-    </ClInclude>
     <ClInclude Include="Client\WoWObject.h">
       <Filter>Client\Objects</Filter>
     </ClInclude>
@@ -1204,6 +1213,39 @@
     </ClInclude>
     <ClInclude Include="Renderer\RenderPass_Path.h">
       <Filter>Renderer\Passes</Filter>
+    </ClInclude>
+    <ClInclude Include="Client\WorldObjectUpdater.h">
+      <Filter>Client\World</Filter>
+    </ClInclude>
+    <ClInclude Include="Client\WorldObjects.h">
+      <Filter>Client\World</Filter>
+    </ClInclude>
+    <ClInclude Include="Client\WoWContainer.h">
+      <Filter>Client\Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="DBC\Tables\DBC_TransportAnimation.h">
+      <Filter>DBC\Tables\Transport</Filter>
+    </ClInclude>
+    <ClInclude Include="Client\TransportAnimationStorage.h">
+      <Filter>Client\World</Filter>
+    </ClInclude>
+    <ClInclude Include="Client\RealmInfo.h">
+      <Filter>Client\Auth</Filter>
+    </ClInclude>
+    <ClInclude Include="Client\ClientCacheTemplates.h">
+      <Filter>Client</Filter>
+    </ClInclude>
+    <ClInclude Include="DBC\Tables\DBC_TaxiPath.h">
+      <Filter>DBC\Tables\Taxi</Filter>
+    </ClInclude>
+    <ClInclude Include="DBC\Tables\DBC_TaxiPathNode.h">
+      <Filter>DBC\Tables\Taxi</Filter>
+    </ClInclude>
+    <ClInclude Include="Client\TaxiStorage.h">
+      <Filter>Client\World</Filter>
+    </ClInclude>
+    <ClInclude Include="DBC\Tables\DBC_TaxiNodes.h">
+      <Filter>DBC\Tables\Taxi</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

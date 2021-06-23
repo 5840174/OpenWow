@@ -5,7 +5,7 @@
 // General
 #include "WoWWorldObject.h"
 
-WorldObject::WorldObject(IScene& Scene, ObjectGuid Guid)
+WorldObject::WorldObject(IScene& Scene, CWoWObjectGuid Guid)
 	: WoWObject(Guid)
 	, WorldLocation(Scene)
 	, DestinationPoint(0.0f)

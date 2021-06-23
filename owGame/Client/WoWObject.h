@@ -2,7 +2,6 @@
 
 #ifdef ENABLE_WOW_CLIENT
 
-#include "ObjectGUID.h"
 #include "UpdateMask.h"
 #include "UpdateFields.h"
 
@@ -94,19 +93,19 @@ class ZN_API WoWObject
 public:
 
 public:
-	WoWObject(ObjectGuid Guid);
+	WoWObject(CWoWObjectGuid Guid);
 	virtual ~WoWObject();
 
-	uint64 GetGUID() const { return m_GUID; }
+	CWoWObjectGuid GetWoWGUID() const { return m_GUID; }
 	uint16 GetObjectType() const { return m_ObjectType; }
 	bool IsWoWType(uint16 mask) const { return (mask & m_ObjectType) != 0; }
-	ObjectTypeID GetObjectTypeID() const { return m_ObjectTypeId; }
+	EWoWObjectTypeID GetObjectTypeID() const { return m_ObjectTypeId; }
 
-	void ProcessMovementUpdate(CByteBuffer& Bytes);
+	virtual void ProcessMovementUpdate(CByteBuffer& Bytes);
 	void UpdateValues(CByteBuffer& Bytes);
 
 public: // Creation
-	static std::shared_ptr<WoWObject> Create(IScene& Scene, ObjectGuid Guid);
+	static std::shared_ptr<WoWObject> Create(IScene& Scene, CWoWObjectGuid Guid);
 	virtual void AfterCreate(IScene& Scene);
 	virtual void Destroy();
 
@@ -116,7 +115,10 @@ public: // Values system
 	const uint64& GetUInt64Value(uint16 index) const;
 	const float& GetFloatValue(uint16 index) const;
 	uint8 GetByteValue(uint16 index, uint8 offset) const;
-	uint8 GetUInt16Value(uint16 index, uint8 offset) const;
+	int16 GetInt16Value(uint16 index, uint8 offset) const;
+	uint16 GetUInt16Value(uint16 index, uint8 offset) const;
+	CWoWObjectGuid GetGuidValue(uint16 index) const;
+
 	void SetInt32Value(uint16 index, int32  value);
 	void SetUInt32Value(uint16 index, uint32  value);
 	void SetUInt64Value(uint16 index, const uint64 &value);
@@ -130,16 +132,16 @@ public: // Values system
 
 	union
 	{
-		int32  *m_int32Values;
+		int32  *m_int32Values = nullptr;
 		uint32 *m_uint32Values;
 		float  *m_floatValues;
 	};
 	uint16 m_valuesCount;
 
 protected:
-	ObjectGuid m_GUID;
+	CWoWObjectGuid m_GUID;
 	uint16 m_ObjectType;
-	ObjectTypeID m_ObjectTypeId;
+	EWoWObjectTypeID m_ObjectTypeId;
 };
 
 #endif

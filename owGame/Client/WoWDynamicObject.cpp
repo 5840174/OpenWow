@@ -5,7 +5,7 @@
 // General
 #include "WoWDynamicObject.h"
 
-WoWDynamicObject::WoWDynamicObject(ObjectGuid Guid)
+WoWDynamicObject::WoWDynamicObject(CWoWObjectGuid Guid)
 	: WoWObject(Guid)
 {
 	m_ObjectType |= TYPEMASK_DYNAMICOBJECT;
@@ -17,7 +17,7 @@ WoWDynamicObject::~WoWDynamicObject()
 {
 }
 
-std::shared_ptr<WoWDynamicObject> WoWDynamicObject::Create(IScene& Scene, ObjectGuid Guid)
+std::shared_ptr<WoWDynamicObject> WoWDynamicObject::Create(IScene& Scene, CWoWObjectGuid Guid)
 {
 	std::shared_ptr<WoWDynamicObject> thisObj = std::make_shared<WoWDynamicObject>(Guid);
 	return thisObj;

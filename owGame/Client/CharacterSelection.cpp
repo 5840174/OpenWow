@@ -7,10 +7,9 @@
 #include "Client.h"
 #include "Templates/CharacterTemplate.h"
 
-CWoWClientCharactedSelection::CWoWClientCharactedSelection(CWoWClient& WoWClient, IScene & Scene, const std::shared_ptr<CWorldSocket>& Socket)
+CWoWClientCharactedSelection::CWoWClientCharactedSelection(CWoWClient& WoWClient, IScene & Scene)
 	: m_WoWClient(WoWClient)
 	, m_Scene(Scene)
-	, m_Socket(Socket)
 {
 	AddHandler(SMSG_CHAR_ENUM, std::bind(&CWoWClientCharactedSelection::On_SMSG_CHAR_ENUM, this, std::placeholders::_1));
 }

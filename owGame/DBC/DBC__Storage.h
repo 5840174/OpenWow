@@ -50,12 +50,14 @@
 #include "Tables/DBC_ItemVisualEffects.h"
 #include "Tables/DBC_ItemVisuals.h"
 
+
 // Light
 #include "Tables/DBC_Light.h"
 #include "Tables/DBC_LightFloatBand.h"
 #include "Tables/DBC_LightIntBand.h"
 #include "Tables/DBC_LightParams.h"
 #include "Tables/DBC_LightSkyBox.h"
+
 
 // Liquid
 #if WOW_CLIENT_VERSION < WOW_WOTLK_3_3_5
@@ -64,8 +66,19 @@
 #include "Tables/DBC_LiquidType_WotLK.h"
 #endif
 
+
 // GameObject
 #include "Tables/DBC_GameObjectDisplayInfo.h"
+
+
+// Transport
+#include "Tables/DBC_TransportAnimation.h"
+
+
+// Taxi
+#include "Tables/DBC_TaxiNodes.h"
+#include "Tables/DBC_TaxiPath.h"
+#include "Tables/DBC_TaxiPathNode.h"
 
 
 class ZN_API __declspec(uuid("1E65D52E-5137-4B9E-8B3A-9D111F398742")) CDBCStorage
@@ -133,6 +146,14 @@ public:
 
 	// GameObject
 	DBC_DEFINE(DBC_GameObjectDisplayInfo)
+
+	// Transport
+	DBC_DEFINE(DBC_TransportAnimation)
+
+	// Taxi
+	DBC_DEFINE(DBC_TaxiNodes)
+	DBC_DEFINE(DBC_TaxiPath)
+	DBC_DEFINE(DBC_TaxiPathNode)
 
 private:
 	IBaseManager& m_BaseManager;

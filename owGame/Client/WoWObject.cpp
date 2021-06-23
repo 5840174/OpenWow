@@ -7,8 +7,9 @@
 
 // Additional
 #include "WoWUnit.h"
+#include "WoWGameObject.h"
 
-WoWObject::WoWObject(ObjectGuid Guid)
+WoWObject::WoWObject(CWoWObjectGuid Guid)
 	: m_GUID(Guid)
 	, m_ObjectType(0)
 	, m_ObjectTypeId(TYPEID_OBJECT)
@@ -115,7 +116,7 @@ void WoWObject::ProcessMovementUpdate(CByteBuffer& Bytes)
 
 			object->Orientation = Bytes.ReadFloat();
 
-			if (GetObjectTypeID() == ObjectTypeID::TYPEID_CORPSE)
+			if (GetObjectTypeID() == EWoWObjectTypeID::TYPEID_CORPSE)
 			{
 				object->Orientation = Bytes.ReadFloat();
 			}
@@ -147,8 +148,11 @@ void WoWObject::ProcessMovementUpdate(CByteBuffer& Bytes)
 	// 0x10
 	if (updateFlags & UPDATEFLAG_LOWGUID)
 	{
-		Bytes.seekRelative(4);
+		CWoWObjectGuid::CounterType_t newCounter;
+		Bytes.read(&newCounter);
 
+		if (GetWoWGUID().GetCounter() != newCounter)
+			throw CException("Counter error.");
 		/*switch (GetGUID().GetTypeId())
 		{
 			case TYPEID_OBJECT:
@@ -186,7 +190,25 @@ void WoWObject::ProcessMovementUpdate(CByteBuffer& Bytes)
 	// 0x2
 	if (updateFlags & UPDATEFLAG_TRANSPORT)
 	{
-		Bytes.seekRelative(4);
+		WoWGameObject* gameObject = dynamic_cast<WoWGameObject*>(this);;
+		if (gameObject)
+		{
+			uint32 pathProgress;
+			Bytes >> pathProgress;
+			Log::Warn("Path progress = '%d'", pathProgress);
+		}
+		else
+		{
+			Bytes.seekRelative(4);
+		}
+		
+		/*
+		    GameObject const* go = ToGameObject();
+			if (go && go->ToTransport())
+				*data << uint32(go->GetGOValue()->Transport.PathProgress);
+			else
+				*data << uint32(GameTime::GetGameTimeMS());
+		*/
 	}
 
 	// 0x80
@@ -243,7 +265,7 @@ void WoWObject::UpdateValues(CByteBuffer& Bytes)
 //
 // Protected
 //
-std::shared_ptr<WoWObject> WoWObject::Create(IScene& Scene, ObjectGuid Guid)
+std::shared_ptr<WoWObject> WoWObject::Create(IScene& Scene, CWoWObjectGuid Guid)
 {
 	std::shared_ptr<WoWObject> thisObj = std::make_shared<WoWObject>(Guid);
 	return thisObj;
@@ -292,11 +314,24 @@ uint8 WoWObject::GetByteValue(uint16 index, uint8 offset) const
 	return *(((uint8*)&m_uint32Values[index]) + offset);
 }
 
-uint8 WoWObject::GetUInt16Value(uint16 index, uint8 offset) const
+int16 WoWObject::GetInt16Value(uint16 index, uint8 offset) const
+{
+	_ASSERT(index < m_valuesCount || PrintIndexError(index, false));
+	_ASSERT(offset < 2);
+	return *(((int16*)&m_uint32Values[index]) + offset);
+}
+
+uint16 WoWObject::GetUInt16Value(uint16 index, uint8 offset) const
 {
 	_ASSERT(index < m_valuesCount || PrintIndexError(index, false));
 	_ASSERT(offset < 2);
 	return *(((uint16*)&m_uint32Values[index]) + offset);
+}
+
+CWoWObjectGuid WoWObject::GetGuidValue(uint16 index) const
+{
+	_ASSERT(index + 1 < m_valuesCount || PrintIndexError(index, false));
+	return *((CWoWObjectGuid*)&(m_uint32Values[index]));
 }
 
 void WoWObject::SetInt32Value(uint16 index, int32 value)

@@ -353,7 +353,7 @@ bool CMapTile::Load()
 
 	//-- WMOs --------------------------------------------------------------------------
 #ifdef USE_WMO_MODELS
-	for (const auto& it : m_WMOsPlacementInfo)
+	/*for (const auto& it : m_WMOsPlacementInfo)
 	{
 		if (std::shared_ptr<CWMO> wmo = GetBaseManager().GetManager<IWoWObjectsCreator>()->LoadWMO(GetRenderDevice(), m_WMOsNames[it.nameIndex], true))
 		{
@@ -369,12 +369,12 @@ bool CMapTile::Load()
 		{
 			Log::Warn("CMapTile: WMO model '%s' is nullptr.", m_WMOsNames[it.nameIndex].c_str());
 		}
-	}
+	}*/
 #endif
 
 	//-- MDXs -------------------------------------------------------------------------
 #ifdef USE_M2_MODELS
-	for (const auto& it : m_MDXsPlacementInfo)
+	/*for (const auto& it : m_MDXsPlacementInfo)
 	{
 		if (auto m2 = GetBaseManager().GetManager<IWoWObjectsCreator>()->LoadM2(GetRenderDevice(), m_MDXsNames[it.nameIndex]))
 		{
@@ -390,7 +390,7 @@ bool CMapTile::Load()
 		{
 			Log::Warn("CMapTile: M2 model '%s' is nullptr.", m_MDXsNames[it.nameIndex].c_str());
 		}
-	}
+	}*/
 	//---------------------------------------------------------------------------------
 #endif
 

@@ -90,3 +90,6 @@ struct ISceneNodeProvider
 #include "WowConsts.h"
 #include "WowTime.h"
 #include "WowChunkUtils.h"
+
+// Client
+#include "Client/ObjectGUID.h"

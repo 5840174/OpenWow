@@ -65,7 +65,7 @@ void CSceneWoWClient::Initialize()
 
 	GetBaseManager().GetManager<IWoWObjectsCreator>()->InitEGxBlend(GetRenderDevice());
 
-	m_WowClient = std::make_unique<CWoWClient>(GetBaseManager(), GetRenderDevice(), *this, "localhost");
+	m_WowClient = std::make_unique<CWoWClient>(*this, "localhost");
 	m_WowClient->BeginConnect("test", "test");
 }
 
@@ -81,7 +81,7 @@ void CSceneWoWClient::OnUpdate(UpdateEventArgs & e)
 
 	__super::OnUpdate(e);
 
-	m_WowClient->Update(e);
+	m_WowClient->Update();
 
 	m_RendererStatisticText->SetText(GetRenderer()->GetStatisticText());
 }

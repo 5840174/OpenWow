@@ -7,30 +7,30 @@
 #include <sstream>
 #include <iomanip>
 
-ObjectGuid const ObjectGuid::Empty = ObjectGuid();
+CWoWObjectGuid const CWoWObjectGuid::Empty = CWoWObjectGuid();
 
-char const* ObjectGuid::GetTypeName(HighGuid high)
+char const* CWoWObjectGuid::GetTypeName(EWoWObjectHighGuid high)
 {
 	switch (high)
 	{
-	case HighGuid::Item:         return "Item";
-	case HighGuid::Player:       return "Player";
-	case HighGuid::GameObject:   return "Gameobject";
-	case HighGuid::Transport:    return "Transport";
-	case HighGuid::Unit:         return "Creature";
-	case HighGuid::Pet:          return "Pet";
-	case HighGuid::Vehicle:      return "Vehicle";
-	case HighGuid::DynamicObject: return "DynObject";
-	case HighGuid::Corpse:       return "Corpse";
-	case HighGuid::Mo_Transport: return "MoTransport";
-	case HighGuid::Instance:     return "InstanceID";
-	case HighGuid::Group:        return "Group";
+	case EWoWObjectHighGuid::Item:         return "Item";
+	case EWoWObjectHighGuid::Player:       return "Player";
+	case EWoWObjectHighGuid::GameObject:   return "Gameobject";
+	case EWoWObjectHighGuid::Transport:    return "Transport";
+	case EWoWObjectHighGuid::Unit:         return "Creature";
+	case EWoWObjectHighGuid::Pet:          return "Pet";
+	case EWoWObjectHighGuid::Vehicle:      return "Vehicle";
+	case EWoWObjectHighGuid::DynamicObject: return "DynObject";
+	case EWoWObjectHighGuid::Corpse:       return "Corpse";
+	case EWoWObjectHighGuid::Mo_Transport: return "MoTransport";
+	case EWoWObjectHighGuid::Instance:     return "InstanceID";
+	case EWoWObjectHighGuid::Group:        return "Group";
 	default:
 		return "<unknown>";
 	}
 }
 
-std::string ObjectGuid::ToString() const
+std::string CWoWObjectGuid::ToString() const
 {
 	std::ostringstream str;
 	str << "GUID Full: 0x" << std::hex << std::setw(16) << std::setfill('0') << _guid << std::dec;
@@ -42,24 +42,24 @@ std::string ObjectGuid::ToString() const
 	return str.str();
 }
 
-ObjectGuid ObjectGuid::Global(HighGuid type, LowType counter)
+CWoWObjectGuid CWoWObjectGuid::Global(EWoWObjectHighGuid type, CounterType_t counter)
 {
-	return ObjectGuid(type, counter);
+	return CWoWObjectGuid(type, counter);
 }
 
-ObjectGuid ObjectGuid::MapSpecific(HighGuid type, uint32 entry, LowType counter)
+CWoWObjectGuid CWoWObjectGuid::MapSpecific(EWoWObjectHighGuid type, uint32 entry, CounterType_t counter)
 {
-	return ObjectGuid(type, entry, counter);
+	return CWoWObjectGuid(type, entry, counter);
 }
 
 
-CByteBuffer& operator<<(CByteBuffer& buf, const ObjectGuid& guid)
+CByteBuffer& operator<<(CByteBuffer& buf, const CWoWObjectGuid& guid)
 {
 	buf << uint64(guid.GetRawValue());
 	return buf;
 }
 
-CByteBuffer& operator>>(CByteBuffer& buf, ObjectGuid& guid)
+CByteBuffer& operator>>(CByteBuffer& buf, CWoWObjectGuid& guid)
 {
 	uint64 value;
 	buf.readBytes(&value, sizeof(uint64));

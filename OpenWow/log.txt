@@ -1,8 +1,8 @@
 ^Log created
-^Plugin 'D:\OpenWow\bin_x64\Release\znRenderDX11.dll' loaded.
-^Plugin 'D:\OpenWow\bin_x64\Release\znRenderDX11.dll' successfully added.
-^Plugin 'D:\OpenWow\bin_x64\Release\owGame.dll' loaded.
-^Plugin 'D:\OpenWow\bin_x64\Release\owGame.dll' successfully added.
+^Plugin 'D:\OpenWow\bin_x64\Debug\znRenderDX11.dll' loaded.
+^Plugin 'D:\OpenWow\bin_x64\Debug\znRenderDX11.dll' successfully added.
+^Plugin 'D:\OpenWow\bin_x64\Debug\owGame.dll' loaded.
+^Plugin 'D:\OpenWow\bin_x64\Debug\owGame.dll' successfully added.
 ^CMPQFile[common.MPQ]: Added!
 ^CMPQFile[common-2.MPQ]: Added!
 ^CMPQFile[expansion.MPQ]: Added!
@@ -55,6 +55,10 @@
 ~DBCFile[LightSkybox.dbc]: Fields count = '3'. Records count = '124'.
 ~DBCFile[LiquidType.dbc]: Fields count = '45'. Records count = '26'.
 ~DBCFile[GameObjectDisplayInfo.dbc]: Fields count = '19'. Records count = '3790'.
+~DBCFile[TransportAnimation.dbc]: Fields count = '7'. Records count = '5262'.
+~DBCFile[TaxiNodes.dbc]: Fields count = '24'. Records count = '364'.
+~DBCFile[TaxiPath.dbc]: Fields count = '4'. Records count = '915'.
+~DBCFile[TaxiPathNode.dbc]: Fields count = '11'. Records count = '22586'.
 ~FontsManager: Font 'Fonts\consola.ttf' loaded. Size [14].
 ~Loading shader 'shaders_D3D/Sky.hlsl':'VS_main'.
 ~Loading shader 'shaders_D3D/Sky.hlsl':'PS_main'.
@@ -92,8 +96,14 @@
 ^Opcode: 'SMSG_CLIENTCACHE_VERSION' (0x4AB). Size: '4'
 ^Opcode: 'SMSG_TUTORIAL_FLAGS' (0xFD). Size: '32'
  CWoWClientCharactedSelection::On_SMSG_CHAR_ENUM:: Characters count '1'.
- CWoWClientCharactedSelection::On_SMSG_CHAR_ENUM:: Character [0] name '2120019656'.
+ CWoWClientCharactedSelection::On_SMSG_CHAR_ENUM:: Character [0] name '1370472960'.
 ^CWoWClient::OnCharacterSelected: Character name 'Bouzi'.
+ CTransportAnimationStorage::Initialize: Loaded records for '82' transport entries.
+^---Create object with Type 'Gameobject', Entry '195458', Counter '302'
+^---Create object with Type 'Gameobject', Entry '195457', Counter '300'
+^---Create object with Type 'Gameobject', Entry '195459', Counter '303'
+^Opcode: 'SMSG_AURA_UPDATE_ALL' (0x495). Size: '15'
+^Opcode: 'SMSG_AURA_UPDATE_ALL' (0x495). Size: '15'
 ^Opcode: 'SMSG_AURA_UPDATE_ALL' (0x495). Size: '15'
 ^Opcode: 'SMSG_AURA_UPDATE_ALL' (0x495). Size: '15'
 ^Opcode: 'SMSG_AURA_UPDATE_ALL' (0x495). Size: '15'
@@ -121,7 +131,7 @@
  Map[Azeroth]: AllianceDescr = ''.
  Map[Azeroth]: HordeDescr = ''.
  Map[Azeroth]: CorpseMapID = '-1'.
- Map[Azeroth]: Id [0]. Loading...
+ Map[��E]: Id [0]. Loading...
 ^CMapWDL: Low WMOs count [0].
 ~MapWDT: Global WMO exists [false].
 ^Opcode: 'SMSG_ACCOUNT_DATA_TIMES' (0x209). Size: '29'
@@ -140,47 +150,19 @@
 ^Opcode: 'SMSG_EQUIPMENT_SET_LIST' (0x4BC). Size: '4'
 ^Opcode: 'SMSG_LOGIN_SET_TIME_SPEED' (0x42). Size: '12'
 ^Opcode: 'SMSG_SET_FORCED_REACTIONS' (0x2A5). Size: '4'
+^---Create object with Type 'MoTransport', Entry '0', Counter '4'
+@Path progress = '3516255'
+^---Create object with Type 'MoTransport', Entry '0', Counter '6'
+@Path progress = '3516255'
+^---Create object with Type 'MoTransport', Entry '0', Counter '1'
+@Path progress = '3516255'
+^---Create object with Type 'MoTransport', Entry '0', Counter '5'
+@Path progress = '3516255'
 !WoWGameObject: Try to call 'AfterCreate' for object.
-!WoWUnit: Try to call 'AfterCreate' for object.
-!WoWUnit: Try to call 'AfterCreate' for object.
-!WoWUnit: Try to call 'AfterCreate' for object.
-!WoWUnit: Try to call 'AfterCreate' for object.
-!WoWUnit: Try to call 'AfterCreate' for object.
-!WoWUnit: Try to call 'AfterCreate' for object.
-!WoWUnit: Try to call 'AfterCreate' for object.
-!WoWUnit: Try to call 'AfterCreate' for object.
 !WoWGameObject: Try to call 'AfterCreate' for object.
-!WoWUnit: Try to call 'AfterCreate' for object.
-!WoWUnit: Try to call 'AfterCreate' for object.
-!WoWUnit: Try to call 'AfterCreate' for object.
-!WoWUnit: Try to call 'AfterCreate' for object.
-!WoWUnit: Try to call 'AfterCreate' for object.
-!WoWUnit: Try to call 'AfterCreate' for object.
-!WoWUnit: Try to call 'AfterCreate' for object.
-!WoWUnit: Try to call 'AfterCreate' for object.
-!WoWUnit: Try to call 'AfterCreate' for object.
-!WoWUnit: Try to call 'AfterCreate' for object.
-!WoWUnit: Try to call 'AfterCreate' for object.
-!WoWUnit: Try to call 'AfterCreate' for object.
-!WoWUnit: Try to call 'AfterCreate' for object.
-!WoWUnit: Try to call 'AfterCreate' for object.
-!WoWUnit: Try to call 'AfterCreate' for object.
-!WoWUnit: Try to call 'AfterCreate' for object.
-!WoWUnit: Try to call 'AfterCreate' for object.
-!WoWUnit: Try to call 'AfterCreate' for object.
-!WoWUnit: Try to call 'AfterCreate' for object.
-!WoWUnit: Try to call 'AfterCreate' for object.
-!WoWUnit: Try to call 'AfterCreate' for object.
 !WoWGameObject: Try to call 'AfterCreate' for object.
-!WoWUnit: Try to call 'AfterCreate' for object.
-!WoWUnit: Try to call 'AfterCreate' for object.
-!WoWUnit: Try to call 'AfterCreate' for object.
-!WoWUnit: Try to call 'AfterCreate' for object.
-!WoWUnit: Try to call 'AfterCreate' for object.
-!WoWUnit: Try to call 'AfterCreate' for object.
-!WoWUnit: Try to call 'AfterCreate' for object.
-!WoWUnit: Try to call 'AfterCreate' for object.
-!WoWUnit: Try to call 'AfterCreate' for object.
+^Opcode: 'SMSG_AURA_UPDATE_ALL' (0x495). Size: '15'
+^Opcode: 'SMSG_AURA_UPDATE_ALL' (0x495). Size: '15'
 ^Opcode: 'SMSG_AURA_UPDATE_ALL' (0x495). Size: '15'
 ^Opcode: 'SMSG_AURA_UPDATE_ALL' (0x495). Size: '15'
 ^Opcode: 'SMSG_AURA_UPDATE_ALL' (0x495). Size: '15'
@@ -199,66 +181,83 @@
 ^Opcode: 'SMSG_UPDATE_WORLD_STATE' (0x2C3). Size: '8'
 ~On_SMSG_TIME_SYNC_REQ: timeSyncNextCounter = '0'.
 ^Opcode: 'SMSG_SPELL_GO' (0x132). Size: '36'
-^Opcode: 'SMSG_QUESTGIVER_STATUS_MULTIPLE' (0x418). Size: '13'
+^Opcode: 'SMSG_QUESTGIVER_STATUS_MULTIPLE' (0x418). Size: '4'
 ^Opcode: 'SMSG_NOTIFICATION' (0x1CB). Size: '14'
-@TRANSPORT
-@TRANSPORT
-@TRANSPORT
-@TRANSPORT
-@TRANSPORT
-@TRANSPORT
-@TRANSPORT
-@TRANSPORT
-@TRANSPORT
-^MapTile[30, 29, World\Maps\Azeroth\Azeroth_30_29.adt]: Loaded!
-^MapTile[30, 27, World\Maps\Azeroth\Azeroth_30_27.adt]: Loaded!
-^MapTile[31, 29, World\Maps\Azeroth\Azeroth_31_29.adt]: Loaded!
+^---Create object with Type 'Gameobject', Entry '176594', Counter '2835'
+^---Create object with Type 'Gameobject', Entry '20650', Counter '2707'
+@Path progress = '3528897'
+^---Create object with Type 'Gameobject', Entry '20651', Counter '2696'
+@Path progress = '3528897'
+^---Create object with Type 'Gameobject', Entry '20649', Counter '2695'
+@Path progress = '3528897'
+^---Create object with Type 'Gameobject', Entry '20657', Counter '2651'
+@Path progress = '3528897'
+^---Create object with Type 'Gameobject', Entry '20655', Counter '2650'
+@Path progress = '3528897'
+^---Create object with Type 'Gameobject', Entry '20656', Counter '2647'
+@Path progress = '3528897'
+^---Create object with Type 'Gameobject', Entry '20652', Counter '2641'
+@Path progress = '3528897'
+^---Create object with Type 'Gameobject', Entry '20654', Counter '2639'
+@Path progress = '3528897'
+^---Create object with Type 'Gameobject', Entry '20653', Counter '2634'
+@Path progress = '3528897'
+^---Create object with Type 'MoTransport', Entry '0', Counter '2'
+@Path progress = '3516509'
+~GameObject query: EntryID '195458', Type '5', Name 'Дирижабль Оргриммара'
+~GameObject query: EntryID '195457', Type '5', Name 'Дирижабль Гром'гола'
+~GameObject query: EntryID '195459', Type '5', Name 'Дирижабль Лагеря Возмездия'
+~GameObject query: EntryID '176231', Type '15', Name 'Корабль "Леди Мели"'
+ OnTemplateCallback: EWoWObjectHighGuid::Mo_Transport.
+@Pathssssss size '19'.
+~GameObject query: EntryID '164871', Type '15', Name 'Дирижабль'
+ OnTemplateCallback: EWoWObjectHighGuid::Mo_Transport.
+@Pathssssss size '22'.
+~GameObject query: EntryID '176495', Type '15', Name 'Дирижабль (Лиловая Принцесса)'
+ OnTemplateCallback: EWoWObjectHighGuid::Mo_Transport.
+@Pathssssss size '27'.
+~GameObject query: EntryID '175080', Type '15', Name 'Дирижабль'
+ OnTemplateCallback: EWoWObjectHighGuid::Mo_Transport.
+@Pathssssss size '18'.
+~GameObject query: EntryID '176594', Type '0', Name 'Двери'
+~GameObject query: EntryID '20650', Type '11', Name 'Верхняя левая дверь'
+~GameObject query: EntryID '20651', Type '11', Name 'Нижняя левая дверь'
+~GameObject query: EntryID '20649', Type '11', Name 'Подгородский подъемник'
+~GameObject query: EntryID '20657', Type '11', Name 'Нижняя левая дверь'
+~GameObject query: EntryID '20655', Type '11', Name 'Подгородский подъемник'
+~GameObject query: EntryID '20656', Type '11', Name 'Верхняя левая дверь'
+~GameObject query: EntryID '20652', Type '11', Name 'Подгородский подъемник'
+~GameObject query: EntryID '20654', Type '11', Name 'Нижняя левая дверь'
+~GameObject query: EntryID '20653', Type '11', Name 'Верхняя левая дверь'
+~GameObject query: EntryID '176310', Type '15', Name 'Безмятежный берег'
+ OnTemplateCallback: EWoWObjectHighGuid::Mo_Transport.
+@Pathssssss size '22'.
 ^MapTile[31, 28, World\Maps\Azeroth\Azeroth_31_28.adt]: Loaded!
+~On_SMSG_TIME_SYNC_REQ: timeSyncNextCounter = '1'.
 ^MapTile[31, 27, World\Maps\Azeroth\Azeroth_31_27.adt]: Loaded!
 ^MapTile[32, 27, World\Maps\Azeroth\Azeroth_32_27.adt]: Loaded!
-^MapTile[32, 28, World\Maps\Azeroth\Azeroth_32_28.adt]: Loaded!
-^MapTile[32, 29, World\Maps\Azeroth\Azeroth_32_29.adt]: Loaded!
-^MapTile[30, 28, World\Maps\Azeroth\Azeroth_30_28.adt]: Loaded!
-@M2[WORLD\GENERIC\PASSIVEDOODADS\PARTICLEEMITTERS\BLACKSMITH_SMOKE.M2] don't contain geometry. Skins [1]
-^Opcode: 'SMSG_AURA_UPDATE_ALL' (0x495). Size: '15'
-^Opcode: 'SMSG_AURA_UPDATE_ALL' (0x495). Size: '15'
-^Opcode: 'SMSG_HIGHEST_THREAT_UPDATE' (0x482). Size: '29'
-^Opcode: 'SMSG_AI_REACTION' (0x13C). Size: '12'
-^Opcode: 'SMSG_ATTACK_START' (0x143). Size: '16'
-~On_SMSG_TIME_SYNC_REQ: timeSyncNextCounter = '1'.
 ~On_SMSG_TIME_SYNC_REQ: timeSyncNextCounter = '2'.
-^Opcode: 'SMSG_MESSAGECHAT' (0x96). Size: '220'
+^---Create object with Type 'MoTransport', Entry '0', Counter '17'
+@Path progress = '3533688'
+~GameObject query: EntryID '190536', Type '15', Name 'Корабль, ледокол (Гордость Штормграда)'
+ OnTemplateCallback: EWoWObjectHighGuid::Mo_Transport.
+@Pathssssss size '22'.
+@M2[WORLD\GENERIC\PASSIVEDOODADS\PARTICLEEMITTERS\BLACKSMITH_SMOKE.M2] don't contain geometry. Skins [1]
+^---Create object with Type 'MoTransport', Entry '0', Counter '11'
+@Path progress = '3535979'
+~GameObject query: EntryID '181689', Type '15', Name 'Дирижабль Орды ("Поцелуй небес")'
+ OnTemplateCallback: EWoWObjectHighGuid::Mo_Transport.
+@Pathssssss size '17'.
 ~On_SMSG_TIME_SYNC_REQ: timeSyncNextCounter = '3'.
-~On_SMSG_TIME_SYNC_REQ: timeSyncNextCounter = '4'.
-~On_SMSG_TIME_SYNC_REQ: timeSyncNextCounter = '5'.
-~On_SMSG_TIME_SYNC_REQ: timeSyncNextCounter = '6'.
-~On_SMSG_TIME_SYNC_REQ: timeSyncNextCounter = '7'.
-~On_SMSG_TIME_SYNC_REQ: timeSyncNextCounter = '8'.
-~On_SMSG_TIME_SYNC_REQ: timeSyncNextCounter = '9'.
-~On_SMSG_TIME_SYNC_REQ: timeSyncNextCounter = '10'.
-~On_SMSG_TIME_SYNC_REQ: timeSyncNextCounter = '11'.
-^Opcode: 'SMSG_AURA_UPDATE_ALL' (0x495). Size: '15'
-^Opcode: 'SMSG_AURA_UPDATE_ALL' (0x495). Size: '15'
-~On_SMSG_TIME_SYNC_REQ: timeSyncNextCounter = '12'.
-^Opcode: 'SMSG_MESSAGECHAT' (0x96). Size: '186'
-~On_SMSG_TIME_SYNC_REQ: timeSyncNextCounter = '13'.
-!WoWGameObject: Try to call 'AfterCreate' for object.
-~On_SMSG_TIME_SYNC_REQ: timeSyncNextCounter = '14'.
-^Opcode: 'SMSG_HIGHEST_THREAT_UPDATE' (0x482). Size: '29'
-^Opcode: 'SMSG_AI_REACTION' (0x13C). Size: '12'
-^Opcode: 'SMSG_ATTACK_START' (0x143). Size: '16'
-~On_SMSG_TIME_SYNC_REQ: timeSyncNextCounter = '15'.
-~On_SMSG_TIME_SYNC_REQ: timeSyncNextCounter = '16'.
-^Opcode: 'SMSG_MESSAGECHAT' (0x96). Size: '268'
-~On_SMSG_TIME_SYNC_REQ: timeSyncNextCounter = '17'.
 ^Opcode: 'SMSG_HIGHEST_THREAT_UPDATE' (0x482). Size: '29'
 ^Opcode: 'SMSG_HIGHEST_THREAT_UPDATE' (0x482). Size: '29'
 ^Opcode: 'SMSG_AI_REACTION' (0x13C). Size: '12'
 ^Opcode: 'SMSG_ATTACK_START' (0x143). Size: '16'
 ^Opcode: 'SMSG_AI_REACTION' (0x13C). Size: '12'
 ^Opcode: 'SMSG_ATTACK_START' (0x143). Size: '16'
-~On_SMSG_TIME_SYNC_REQ: timeSyncNextCounter = '18'.
 ^Opcode: 'SMSG_SPELL_START' (0x131). Size: '46'
+^Opcode: 'SMSG_SPELL_START' (0x131). Size: '46'
+^Opcode: 'SMSG_SPELL_GO' (0x132). Size: '56'
 ^Opcode: 'SMSG_SPELL_GO' (0x132). Size: '56'
 ^Opcode: 'SMSG_HIGHEST_THREAT_UPDATE' (0x482). Size: '29'
 ^Opcode: 'SMSG_SPELLNONMELEEDAMAGELOG' (0x250). Size: '46'
@@ -268,33 +267,31 @@
 ^Opcode: 'SMSG_THREAT_REMOVE' (0x484). Size: '14'
 ^Opcode: 'SMSG_THREAT_CLEAR' (0x485). Size: '7'
 ^Opcode: 'SMSG_AURA_UPDATE' (0x496). Size: '12'
+^Opcode: 'SMSG_AURA_UPDATE' (0x496). Size: '15'
 ^Opcode: 'SMSG_AURA_UPDATE' (0x496). Size: '12'
 ^Opcode: 'SMSG_AURA_UPDATE' (0x496). Size: '15'
-^Opcode: 'SMSG_AURA_UPDATE' (0x496). Size: '15'
+^Opcode: 'SMSG_SPELLNONMELEEDAMAGELOG' (0x250). Size: '46'
+~On_SMSG_TIME_SYNC_REQ: timeSyncNextCounter = '4'.
 ^Opcode: 'SMSG_SPELL_START' (0x131). Size: '31'
 ^Opcode: 'SMSG_SPELL_GO' (0x132). Size: '42'
 ^Opcode: 'SMSG_SPELL_START' (0x131). Size: '31'
 ^Opcode: 'SMSG_SPELL_GO' (0x132). Size: '42'
 ^Opcode: 'SMSG_AURA_UPDATE' (0x496). Size: '15'
 ^Opcode: 'SMSG_AURA_UPDATE' (0x496). Size: '15'
-~On_SMSG_TIME_SYNC_REQ: timeSyncNextCounter = '19'.
-~On_SMSG_TIME_SYNC_REQ: timeSyncNextCounter = '20'.
-!WoWGameObject: Try to call 'AfterCreate' for object.
-~On_SMSG_TIME_SYNC_REQ: timeSyncNextCounter = '21'.
-^Opcode: 'SMSG_WEATHER' (0x2F4). Size: '9'
-~On_SMSG_TIME_SYNC_REQ: timeSyncNextCounter = '22'.
-!WoWGameObject: Try to call 'AfterCreate' for object.
-!WoWGameObject: Try to call 'AfterCreate' for object.
-~On_SMSG_TIME_SYNC_REQ: timeSyncNextCounter = '23'.
-!WoWGameObject: Try to call 'AfterCreate' for object.
-~On_SMSG_TIME_SYNC_REQ: timeSyncNextCounter = '24'.
-!WoWGameObject: Try to call 'AfterCreate' for object.
-^Opcode: 'SMSG_AURA_UPDATE_ALL' (0x495). Size: '15'
-^Opcode: 'SMSG_AURA_UPDATE_ALL' (0x495). Size: '15'
-~On_SMSG_TIME_SYNC_REQ: timeSyncNextCounter = '25'.
-~On_SMSG_TIME_SYNC_REQ: timeSyncNextCounter = '26'.
-^Opcode: 'SMSG_MESSAGECHAT' (0x96). Size: '220'
-~On_SMSG_TIME_SYNC_REQ: timeSyncNextCounter = '27'.
-^MapTile[31, 26, World\Maps\Azeroth\Azeroth_31_26.adt]: Loaded!
-^MapTile[32, 26, World\Maps\Azeroth\Azeroth_32_26.adt]: Loaded!
-^MapTile[30, 26, World\Maps\Azeroth\Azeroth_30_26.adt]: Loaded!
+^---Create object with Type 'MoTransport', Entry '0', Counter '10'
+@Path progress = '3560456'
+^Opcode: 'SMSG_MESSAGECHAT' (0x96). Size: '268'
+~On_SMSG_TIME_SYNC_REQ: timeSyncNextCounter = '5'.
+~GameObject query: EntryID '181688', Type '15', Name 'Корабль, ледокол (Северное копье)'
+ OnTemplateCallback: EWoWObjectHighGuid::Mo_Transport.
+@Pathssssss size '49'.
+~On_SMSG_TIME_SYNC_REQ: timeSyncNextCounter = '6'.
+@CMapTile::~CMapTile: Tile [31, 28] unloaded.
+^MapTile[30, 28, World\Maps\Azeroth\Azeroth_30_28.adt]: Loaded!
+^MapTile[30, 27, World\Maps\Azeroth\Azeroth_30_27.adt]: Loaded!
+~On_SMSG_TIME_SYNC_REQ: timeSyncNextCounter = '7'.
+^---Create object with Type 'MoTransport', Entry '0', Counter '7'
+@Path progress = '3582296'
+~GameObject query: EntryID '20808', Type '15', Name 'Корабль ("Девичий каприз")'
+ OnTemplateCallback: EWoWObjectHighGuid::Mo_Transport.
+@Pathssssss size '22'.

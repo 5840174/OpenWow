@@ -2,7 +2,7 @@
 
 #define UI64LIT(N) UINT64_C(N)
 
-enum class HighGuid
+enum class EWoWObjectHighGuid : uint16
 {
     Item           = 0x4000,                      // blizz 4000
     Container      = 0x4000,                      // blizz 4000
@@ -19,7 +19,7 @@ enum class HighGuid
     Group          = 0x1F50,
 };
 
-enum ZN_API ObjectTypeID : uint8
+enum ZN_API EWoWObjectTypeID : uint8
 {
     TYPEID_OBJECT        = 0,
     TYPEID_ITEM          = 1,
@@ -32,23 +32,24 @@ enum ZN_API ObjectTypeID : uint8
 };
 
 
-class ObjectGuid
+class CWoWObjectGuid
 {
 public:
-	static const ObjectGuid Empty;
+	static const CWoWObjectGuid Empty;
 
-	typedef uint32 LowType;
+	typedef uint32 EntryType_t;
+	typedef uint32 CounterType_t;
 
-	ObjectGuid()
+	CWoWObjectGuid()
 		: _guid(0)
 	{ }
-	explicit ObjectGuid(uint64 guid)
+	explicit CWoWObjectGuid(uint64 guid)
 		: _guid(guid)
 	{ }
-	ObjectGuid(HighGuid hi, uint32 entry, LowType counter)
+	explicit CWoWObjectGuid(EWoWObjectHighGuid hi, EntryType_t entry, CounterType_t counter)
 		: _guid(counter ? uint64(counter) | (uint64(entry) << 24) | (uint64(hi) << 48) : 0)
 	{ }
-	ObjectGuid(HighGuid hi, LowType counter)
+	explicit CWoWObjectGuid(EWoWObjectHighGuid hi, CounterType_t counter)
 		: _guid(counter ? uint64(counter) | (uint64(hi) << 48) : 0)
 	{ }
 
@@ -57,93 +58,81 @@ public:
 	void Clear() { _guid = 0; }
 
 	uint64   GetRawValue() const { return _guid; }
-	HighGuid GetHigh() const { return HighGuid((_guid >> 48) & 0x0000FFFF); }
-	uint32   GetEntry() const { return HasEntry() ? uint32((_guid >> 24) & UI64LIT(0x0000000000FFFFFF)) : 0; }
-	LowType  GetCounter()  const
-	{
-		return HasEntry()
-			? LowType(_guid & UI64LIT(0x0000000000FFFFFF))
-			: LowType(_guid & UI64LIT(0x00000000FFFFFFFF));
-	}
-
-	static LowType GetMaxCounter(HighGuid high)
-	{
-		return HasEntry(high)
-			? LowType(0x00FFFFFF)
-			: LowType(0xFFFFFFFF);
-	}
-
-	ObjectGuid::LowType GetMaxCounter() const { return GetMaxCounter(GetHigh()); }
+	EWoWObjectHighGuid GetHigh() const { return EWoWObjectHighGuid((_guid >> 48) & 0x0000FFFF); }
+	EntryType_t   GetEntry() const { return HasEntry() ? EntryType_t((_guid >> 24) & UI64LIT(0x0000000000FFFFFF)) : 0; }
+	CounterType_t  GetCounter()  const { return HasEntry() ? CounterType_t(_guid & UI64LIT(0x0000000000FFFFFF)) : CounterType_t(_guid & UI64LIT(0x00000000FFFFFFFF)); }
+	static CounterType_t GetMaxCounter(EWoWObjectHighGuid high) { return HasEntry(high) ? CounterType_t(0x00FFFFFF) : CounterType_t(0xFFFFFFFF); }
+	CWoWObjectGuid::CounterType_t GetMaxCounter() const { return GetMaxCounter(GetHigh()); }
 
 	bool IsEmpty()             const { return _guid == 0; }
-	bool IsCreature()          const { return GetHigh() == HighGuid::Unit; }
-	bool IsPet()               const { return GetHigh() == HighGuid::Pet; }
-	bool IsVehicle()           const { return GetHigh() == HighGuid::Vehicle; }
+	bool IsCreature()          const { return GetHigh() == EWoWObjectHighGuid::Unit; }
+	bool IsPet()               const { return GetHigh() == EWoWObjectHighGuid::Pet; }
+	bool IsVehicle()           const { return GetHigh() == EWoWObjectHighGuid::Vehicle; }
 	bool IsCreatureOrPet()     const { return IsCreature() || IsPet(); }
 	bool IsCreatureOrVehicle() const { return IsCreature() || IsVehicle(); }
 	bool IsAnyTypeCreature()   const { return IsCreature() || IsPet() || IsVehicle(); }
-	bool IsPlayer()            const { return !IsEmpty() && GetHigh() == HighGuid::Player; }
+	bool IsPlayer()            const { return !IsEmpty() && GetHigh() == EWoWObjectHighGuid::Player; }
 	bool IsUnit()              const { return IsAnyTypeCreature() || IsPlayer(); }
-	bool IsItem()              const { return GetHigh() == HighGuid::Item; }
-	bool IsGameObject()        const { return GetHigh() == HighGuid::GameObject; }
-	bool IsDynamicObject()     const { return GetHigh() == HighGuid::DynamicObject; }
-	bool IsCorpse()            const { return GetHigh() == HighGuid::Corpse; }
-	bool IsTransport()         const { return GetHigh() == HighGuid::Transport; }
-	bool IsMOTransport()       const { return GetHigh() == HighGuid::Mo_Transport; }
+	bool IsItem()              const { return GetHigh() == EWoWObjectHighGuid::Item; }
+	bool IsGameObject()        const { return GetHigh() == EWoWObjectHighGuid::GameObject; }
+	bool IsDynamicObject()     const { return GetHigh() == EWoWObjectHighGuid::DynamicObject; }
+	bool IsCorpse()            const { return GetHigh() == EWoWObjectHighGuid::Corpse; }
+	bool IsTransport()         const { return GetHigh() == EWoWObjectHighGuid::Transport; }
+	bool IsMOTransport()       const { return GetHigh() == EWoWObjectHighGuid::Mo_Transport; }
 	bool IsAnyTypeGameObject() const { return IsGameObject() || IsTransport() || IsMOTransport(); }
-	bool IsInstance()          const { return GetHigh() == HighGuid::Instance; }
-	bool IsGroup()             const { return GetHigh() == HighGuid::Group; }
+	bool IsInstance()          const { return GetHigh() == EWoWObjectHighGuid::Instance; }
+	bool IsGroup()             const { return GetHigh() == EWoWObjectHighGuid::Group; }
 
-	static ObjectTypeID GetTypeId(HighGuid high)
+	static EWoWObjectTypeID GetTypeId(EWoWObjectHighGuid high)
 	{
 		switch (high)
 		{
-		case HighGuid::Item:         return ObjectTypeID::TYPEID_ITEM;
-			//case HighGuid::Container:    return TYPEID_CONTAINER; HighGuid::Container == HighGuid::Item currently
-		case HighGuid::Unit:         return ObjectTypeID::TYPEID_UNIT;
-		case HighGuid::Pet:          return ObjectTypeID::TYPEID_UNIT;
-		case HighGuid::Player:       return ObjectTypeID::TYPEID_PLAYER;
-		case HighGuid::GameObject:   return ObjectTypeID::TYPEID_GAMEOBJECT;
-		case HighGuid::DynamicObject: return ObjectTypeID::TYPEID_DYNAMICOBJECT;
-		case HighGuid::Corpse:       return ObjectTypeID::TYPEID_CORPSE;
-		case HighGuid::Mo_Transport: return ObjectTypeID::TYPEID_GAMEOBJECT;
-		case HighGuid::Vehicle:      return ObjectTypeID::TYPEID_UNIT;
-			// unknown
-		case HighGuid::Instance:
-		case HighGuid::Group:
-		default:                    return ObjectTypeID::TYPEID_OBJECT;
+			case EWoWObjectHighGuid::Item:         return EWoWObjectTypeID::TYPEID_ITEM;
+				//case EWoWObjectHighGuid::Container:    return TYPEID_CONTAINER; EWoWObjectHighGuid::Container == EWoWObjectHighGuid::Item currently
+			case EWoWObjectHighGuid::Unit:         return EWoWObjectTypeID::TYPEID_UNIT;
+			case EWoWObjectHighGuid::Pet:          return EWoWObjectTypeID::TYPEID_UNIT;
+			case EWoWObjectHighGuid::Player:       return EWoWObjectTypeID::TYPEID_PLAYER;
+			case EWoWObjectHighGuid::GameObject:   return EWoWObjectTypeID::TYPEID_GAMEOBJECT;
+			case EWoWObjectHighGuid::DynamicObject: return EWoWObjectTypeID::TYPEID_DYNAMICOBJECT;
+			case EWoWObjectHighGuid::Corpse:       return EWoWObjectTypeID::TYPEID_CORPSE;
+			case EWoWObjectHighGuid::Mo_Transport: return EWoWObjectTypeID::TYPEID_GAMEOBJECT;
+			case EWoWObjectHighGuid::Vehicle:      return EWoWObjectTypeID::TYPEID_UNIT;
+				// unknown
+			case EWoWObjectHighGuid::Instance:
+			case EWoWObjectHighGuid::Group:
+			default:                    return EWoWObjectTypeID::TYPEID_OBJECT;
 		}
 	}
 
-	ObjectTypeID GetTypeId() const { return GetTypeId(GetHigh()); }
+	EWoWObjectTypeID GetTypeId() const { return GetTypeId(GetHigh()); }
 
 	bool operator!() const { return IsEmpty(); }
-	bool operator==(ObjectGuid const& guid) const { return GetRawValue() == guid.GetRawValue(); }
-	bool operator!=(ObjectGuid const& guid) const { return GetRawValue() != guid.GetRawValue(); }
-	bool operator< (ObjectGuid const& guid) const { return GetRawValue() < guid.GetRawValue(); }
+	bool operator==(CWoWObjectGuid const& guid) const { return GetRawValue() == guid.GetRawValue(); }
+	bool operator!=(CWoWObjectGuid const& guid) const { return GetRawValue() != guid.GetRawValue(); }
+	bool operator< (CWoWObjectGuid const& guid) const { return GetRawValue() < guid.GetRawValue(); }
 
-	static char const* GetTypeName(HighGuid high);
+	static char const* GetTypeName(EWoWObjectHighGuid high);
 	char const* GetTypeName() const { return !IsEmpty() ? GetTypeName(GetHigh()) : "None"; }
 	std::string ToString() const;
 
 private:
-	static bool HasEntry(HighGuid high)
+	static bool HasEntry(EWoWObjectHighGuid high)
 	{
 		switch (high)
 		{
-		case HighGuid::Item:
-		case HighGuid::Player:
-		case HighGuid::DynamicObject:
-		case HighGuid::Corpse:
-		case HighGuid::Mo_Transport:
-		case HighGuid::Instance:
-		case HighGuid::Group:
+		case EWoWObjectHighGuid::Item:
+		case EWoWObjectHighGuid::Player:
+		case EWoWObjectHighGuid::DynamicObject:
+		case EWoWObjectHighGuid::Corpse:
+		case EWoWObjectHighGuid::Mo_Transport:
+		case EWoWObjectHighGuid::Instance:
+		case EWoWObjectHighGuid::Group:
 			return false;
-		case HighGuid::GameObject:
-		case HighGuid::Transport:
-		case HighGuid::Unit:
-		case HighGuid::Pet:
-		case HighGuid::Vehicle:
+		case EWoWObjectHighGuid::GameObject:
+		case EWoWObjectHighGuid::Transport:
+		case EWoWObjectHighGuid::Unit:
+		case EWoWObjectHighGuid::Pet:
+		case EWoWObjectHighGuid::Vehicle:
 		default:
 			return true;
 		}
@@ -151,27 +140,29 @@ private:
 
 	bool HasEntry() const { return HasEntry(GetHigh()); }
 
-	static ObjectGuid Global(HighGuid type, LowType counter);
-	static ObjectGuid MapSpecific(HighGuid type, uint32 entry, LowType counter);
+	static CWoWObjectGuid Global(EWoWObjectHighGuid type, CounterType_t counter);
+	static CWoWObjectGuid MapSpecific(EWoWObjectHighGuid type, uint32 entry, CounterType_t counter);
 
-	explicit ObjectGuid(uint32 const&) = delete;                 // no implementation, used to catch wrong type assignment
-	ObjectGuid(HighGuid, uint32, uint64 counter) = delete;       // no implementation, used to catch wrong type assignment
-	ObjectGuid(HighGuid, uint64 counter) = delete;               // no implementation, used to catch wrong type assignment
+	explicit CWoWObjectGuid(uint32 const&) = delete;                 // no implementation, used to catch wrong type assignment
+	CWoWObjectGuid(EWoWObjectHighGuid, uint32, uint64 counter) = delete;       // no implementation, used to catch wrong type assignment
+	CWoWObjectGuid(EWoWObjectHighGuid, uint64 counter) = delete;               // no implementation, used to catch wrong type assignment
 
 	uint64 _guid;
 };
 
+
 namespace std
 {
 	template<>
-	struct hash<ObjectGuid>
+	struct hash<CWoWObjectGuid>
 	{
-		size_t operator()(const ObjectGuid& Guid) const noexcept
+		size_t operator()(const CWoWObjectGuid& Guid) const noexcept
 		{
 			return Guid.GetRawValue();
 		}
 	};
 }
 
-CByteBuffer& operator<<(CByteBuffer& buf, ObjectGuid const& guid);
-CByteBuffer& operator>>(CByteBuffer& buf, ObjectGuid&       guid);
+
+CByteBuffer& operator<<(CByteBuffer& buf, CWoWObjectGuid const& guid);
+CByteBuffer& operator>>(CByteBuffer& buf, CWoWObjectGuid&       guid);

@@ -5,10 +5,7 @@ inline DBCFile<RECORD_T>::DBCFile(IFilesManager* FilesManager, const std::string
 {
 	std::shared_ptr<IFile> file = FilesManager->Open(std::string("DBFilesClient\\") + FileName);
 	if (file == nullptr)
-	{
-		Log::Warn("DBCFile[%s]: Not found.", FileName.c_str());
-		_ASSERT(false);
-	}
+		throw CException("DBCFile[%s]: Not found.", FileName.c_str());
 
 	m_File = file;
 

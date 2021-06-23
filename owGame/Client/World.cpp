@@ -8,37 +8,30 @@
 // Additional
 #include "Client/Templates/CharacterTemplate.h"
 
-// Types
-#include "WoWBag.h"
-#include "WoWCorpse.h"
-#include "WoWDynamicObject.h"
-#include "WoWGameObject.h"
-#include "WoWItem.h"
-#include "WoWPlayer.h"
-#include "WoWUnit.h"
 
-// zlib
-#include "zlib/source/zlib.h"
-#pragma comment(lib, "zlib.lib")
+
+
 
 CWoWWorld::CWoWWorld(IScene& Scene, const std::shared_ptr<CWorldSocket>& Socket)
 	: m_Scene(Scene)
 	, m_Socket(Socket)
-	, m_Cache(*this)
+	, m_WorldObjects(*this, m_Scene)
+	, m_WorldObjectUpdater(*this, m_Scene)
+	, m_ClientCache(*this)
+	, m_TaxiStorage(m_Scene.GetBaseManager())
+	, m_TransportAnimationStorage(m_Scene.GetBaseManager())
 {
 	skyManager = Scene.GetRootSceneNode()->CreateSceneNode<SkyManager>();
 	Scene.GetBaseManager().AddManager<ISkyManager>(skyManager);
 
 	map = Scene.GetRootSceneNode()->CreateSceneNode<CMap>();
 
+	m_TaxiStorage.Initialize();
+	m_TransportAnimationStorage.Initialize();
+
 	// Handlers
-	
 	AddHandler(SMSG_LOGIN_VERIFY_WORLD, std::bind(&CWoWWorld::S_SMSG_LOGIN_VERIFY_WORLD, this, std::placeholders::_1));
-
 	AddHandler(SMSG_TIME_SYNC_REQ, std::bind(&CWoWWorld::On_SMSG_TIME_SYNC_REQ, this, std::placeholders::_1));
-
-	AddHandler(SMSG_COMPRESSED_UPDATE_OBJECT, std::bind(&CWoWWorld::S_SMSG_COMPRESSED_UPDATE_OBJECT, this, std::placeholders::_1));
-	AddHandler(SMSG_UPDATE_OBJECT, std::bind(&CWoWWorld::S_SMSG_UPDATE_OBJECT, this, std::placeholders::_1));
 	AddHandler(SMSG_MONSTER_MOVE, std::bind(&CWoWWorld::S_SMSG_MONSTER_MOVE, this, std::placeholders::_1));
 	AddHandler(SMSG_DESTROY_OBJECT, std::bind(&CWoWWorld::S_SMSG_DESTROY_OBJECT, this, std::placeholders::_1));
 }
@@ -96,32 +89,6 @@ void CWoWWorld::On_SMSG_TIME_SYNC_REQ(CServerPacket & Buffer)
 	Log::Info("On_SMSG_TIME_SYNC_REQ: timeSyncNextCounter = '%d'.", timeSyncNextCounter);
 }
 
-void CWoWWorld::S_SMSG_COMPRESSED_UPDATE_OBJECT(CServerPacket& Buffer)
-{
-	uint32 dataSize;
-	Buffer >> dataSize;
-
-	CByteBuffer uncompressed;
-	uncompressed.writeDummy(dataSize);
-
-	uLongf uncompressedSize = dataSize;
-	if (::uncompress(uncompressed.getDataEx(), &uncompressedSize, Buffer.getDataFromCurrent(), Buffer.getSize() - 4) != Z_OK)
-		throw CException("SMSG_COMPRESSED_UPDATE_OBJECT: Error while uncompress object.");
-
-	Buffer.seekRelative(Buffer.getSize() - 4);
-
-	if (dataSize != uncompressedSize)
-		throw CException("SMSG_COMPRESSED_UPDATE_OBJECT: Uncompressed data size (%d bytes) don't match expected data size (%d bytes).", uncompressedSize, dataSize);
-	
-	uncompressed.seek(0);
-
-	ProcessUpdatePacket(uncompressed);
-}
-
-void CWoWWorld::S_SMSG_UPDATE_OBJECT(CServerPacket& Buffer)
-{
-	ProcessUpdatePacket(Buffer);
-}
 
 namespace
 {
@@ -142,7 +109,11 @@ void CWoWWorld::S_SMSG_MONSTER_MOVE(CServerPacket & Buffer)
 
 	Buffer.seekRelative(1);
 
-	ObjectGuid guid(packedGUID);
+	CWoWObjectGuid guid(packedGUID);
+	if (guid.GetTypeId() != EWoWObjectTypeID::TYPEID_UNIT)
+		throw CException("CWoWWorld::S_SMSG_MONSTER_MOVE: Movement packet accept only EWoWObjectTypeID::TYPEID_UNIT.");
+
+	
 
 	float positionX;
 	Buffer >> positionX;
@@ -153,22 +124,17 @@ void CWoWWorld::S_SMSG_MONSTER_MOVE(CServerPacket & Buffer)
 
 	glm::vec3 position = fromGameToReal(glm::vec3(positionX, positionY, positionZ));
 
+	if (auto object = m_WorldObjects.GetWoWObject(guid))
+	{
+		auto objectAsUnit = std::dynamic_pointer_cast<WoWUnit>(object);
+		objectAsUnit->SetLocalPosition(fromGameToReal(glm::vec3(positionX, positionY, positionZ)));
+	}
+
 	uint32 splineID;
 	Buffer >> splineID;
 
 	MonsterMoveType monsterMoveType;
 	Buffer.read(&monsterMoveType);
-
-	const auto& objIterator = m_WoWObjects.find(guid);
-	if (objIterator != m_WoWObjects.end())
-	{
-		auto objAsUnit = std::dynamic_pointer_cast<WoWUnit>(objIterator->second);
-		objAsUnit->SetLocalPosition(fromGameToReal(glm::vec3(positionX, positionY, positionZ)));
-	}
-	else
-	{
-		Log::Warn("S_SMSG_MONSTER_MOVE: OBJECT %s %d %d NOT FOUND.", guid.GetTypeName(), guid.GetTypeId(), guid.GetEntry());
-	}
 
 	switch (monsterMoveType)
 	{
@@ -257,10 +223,10 @@ void CWoWWorld::S_SMSG_MONSTER_MOVE(CServerPacket & Buffer)
 		Buffer >> lastPointY;
 		Buffer >> lastPointZ;
 
-		if (objIterator != m_WoWObjects.end())
+		if (auto object = m_WorldObjects.GetWoWObject(guid))
 		{
-			auto objAsUnit = std::dynamic_pointer_cast<WoWUnit>(objIterator->second);
-			objAsUnit->DestinationPoint = fromGameToReal(glm::vec3(lastPointX, lastPointY, lastPointZ));
+			auto objectAsUnit = std::dynamic_pointer_cast<WoWUnit>(object);
+			objectAsUnit->DestinationPoint = fromGameToReal(glm::vec3(lastPointX, lastPointY, lastPointZ));
 		}
 
 		if (count > 1)
@@ -342,22 +308,17 @@ void CWoWWorld::S_SMSG_DESTROY_OBJECT(CServerPacket & Buffer)
 {
 	uint64 guid;
 	Buffer >> guid;
-	ObjectGuid objectGuid(guid);
+	CWoWObjectGuid objectGuid(guid);
 
 
 	uint8 isOnDeath;
 	Buffer >> isOnDeath;
 
-	const auto& objIterator = m_WoWObjects.find(objectGuid);
-	if (objIterator == m_WoWObjects.end())
+	if (auto object = m_WorldObjects.GetWoWObject(objectGuid))
 	{
-		Log::Warn("CWoWWorld::S_SMSG_DESTROY_OBJECT: Object with guid '%d' don't found.", guid);
-		return;
+		object->Destroy();
+		m_WorldObjects.EraseWoWObject(object);
 	}
-
-	auto wowObject = objIterator->second;
-	wowObject->Destroy();
-	m_WoWObjects.erase(objIterator);
 }
 
 
@@ -393,178 +354,7 @@ void CWoWWorld::SendPacket(CClientPacket & Bytes)
 	m_Socket->SendPacket(Bytes);
 }
 
-namespace
-{
-	struct ZN_API Block_UPDATETYPE_OUT_OF_RANGE_OBJECTS
-	{
-		void Fill(CByteBuffer& ByteBuffer)
-		{
-			uint32 OutOfRangeGUIDsCount;
-			ByteBuffer >> (uint32)OutOfRangeGUIDsCount;
-			OutOfRangeGUIDs.resize(OutOfRangeGUIDsCount);
 
-			for (uint32 i = 0; i < OutOfRangeGUIDsCount; i++)
-			{
-				//ByteBuffer.seekRelative(sizeof(uint8)); // (uint8)0xFF;
-
-				uint64 guid;
-				ByteBuffer.ReadPackedUInt64(guid);
-				OutOfRangeGUIDs[i] = guid;
-			}
-		}
-
-		std::vector<uint64> OutOfRangeGUIDs;
-	};
-}
-
-void CWoWWorld::ProcessUpdatePacket(CByteBuffer& Bytes)
-{
-	uint32 BlocksCount;
-	Bytes >> BlocksCount;
-
-	for (uint32 i = 0u; i < BlocksCount; i++)
-	{
-		OBJECT_UPDATE_TYPE updateType;
-		Bytes.read(&updateType);
-
-		switch (updateType)
-		{
-			case OBJECT_UPDATE_TYPE::UPDATETYPE_VALUES:
-			{
-				uint64 guidValue;
-				Bytes.ReadPackedUInt64(guidValue);
-
-				ObjectGuid guid(guidValue);
-
-				std::shared_ptr<WoWObject> object = GetWoWObject(guid);
-				object->UpdateValues(Bytes);
-			}
-			break;
-
-			case OBJECT_UPDATE_TYPE::UPDATETYPE_MOVEMENT:
-			{
-				uint64 guidValue;
-				Bytes.ReadPackedUInt64(guidValue);
-
-				ObjectGuid guid(guidValue);
-
-				std::shared_ptr<WoWObject> object = GetWoWObject(guid);
-				object->ProcessMovementUpdate(Bytes);
-			}
-			break;
-
-			case OBJECT_UPDATE_TYPE::UPDATETYPE_CREATE_OBJECT:
-			{
-				uint64 guidValue;
-				Bytes.ReadPackedUInt64(guidValue);
-				ObjectGuid guid(guidValue);
-
-				ObjectTypeID typeID;
-				Bytes.read(&typeID);
-
-				//if (false == IsWoWObjectExists(guid))
-				//	throw CException("CWoWWorld::ProcessUpdatePacket: WoWObject '%ull' already exists.", guidValue);
-
-				auto object = GetWoWObject(guid);
-				object->ProcessMovementUpdate(Bytes);
-				object->UpdateValues(Bytes);
-				object->AfterCreate(m_Scene);
-			}
-			break;
-			
-			case OBJECT_UPDATE_TYPE::UPDATETYPE_CREATE_OBJECT2: // isNewObject
-			{
-				uint64 guidValue;
-				Bytes.ReadPackedUInt64(guidValue);
-				ObjectGuid guid(guidValue);
-
-				ObjectTypeID typeID;
-				Bytes.read(&typeID);
-
-				if (IsWoWObjectExists(guid))
-					throw CException("CWoWWorld::ProcessUpdatePacket: WoWObject '%ull' already exists.", guidValue);
-
-				auto object = GetWoWObject(guid);
-				object->ProcessMovementUpdate(Bytes);
-				object->UpdateValues(Bytes);
-
-				object->AfterCreate(m_Scene);
-			}
-			break;
-
-			case OBJECT_UPDATE_TYPE::UPDATETYPE_OUT_OF_RANGE_OBJECTS:
-			{
-				Block_UPDATETYPE_OUT_OF_RANGE_OBJECTS block;
-				block.Fill(Bytes);
-			}
-			break;
-
-			default:
-				throw CException("Unknown update type '%d.'", updateType);
-		}
-	}
-}
-
-std::shared_ptr<WoWObject> CWoWWorld::CreateObjectByType(ObjectGuid guid, ObjectTypeID ObjectTypeID)
-{
-	m_Cache.SendQueryResponce(guid);
-
-	switch (ObjectTypeID)
-	{
-	case ObjectTypeID::TYPEID_OBJECT:
-		return WoWObject::Create(m_Scene, guid);
-
-	case ObjectTypeID::TYPEID_ITEM:
-		return WoWItem::Create(m_Scene, guid);
-
-	case ObjectTypeID::TYPEID_CONTAINER:
-		return WoWBag::Create(m_Scene, guid);
-
-	case ObjectTypeID::TYPEID_UNIT:
-		return WoWUnit::Create(m_Scene, guid);
-
-	case ObjectTypeID::TYPEID_PLAYER:
-		return WoWPlayer::Create(m_Scene, guid);
-
-	case ObjectTypeID::TYPEID_GAMEOBJECT:
-		return WoWGameObject::Create(m_Scene, guid);
-
-	case ObjectTypeID::TYPEID_DYNAMICOBJECT:
-		return WoWDynamicObject::Create(m_Scene, guid);
-
-	case ObjectTypeID::TYPEID_CORPSE:
-		return WoWCorpse::Create(m_Scene, guid);
-	}
-
-	_ASSERT(false);
-	return nullptr;
-}
-
-std::shared_ptr<WoWObject> CWoWWorld::GetWoWObject(ObjectGuid Guid)
-{
-	const auto& objIterator = m_WoWObjects.find(Guid);
-	if (objIterator != m_WoWObjects.end())
-		return objIterator->second;
-
-	HighGuid highGuid = Guid.GetHigh();
-	ObjectTypeID typeID = Guid.GetTypeId();
-
-	_ASSERT(typeID != ObjectTypeID::TYPEID_OBJECT);
-	std::shared_ptr<WoWObject> object = CreateObjectByType(Guid, typeID);
-	m_WoWObjects[Guid] = object;
-	return object;
-}
-
-bool CWoWWorld::IsWoWObjectExists(ObjectGuid Guid)
-{
-	return m_WoWObjects.find(Guid) != m_WoWObjects.end();
-}
-
-
-
-//
-// Cache
-//
 
 
 #endif

@@ -61,6 +61,14 @@ CDBCStorage::CDBCStorage(IBaseManager& BaseManager)
 
 	// GameObject
 	DBC_LOAD(DBC_GameObjectDisplayInfo, filesManager, "GameObjectDisplayInfo.dbc");
+
+	// Transport
+	DBC_LOAD(DBC_TransportAnimation, filesManager, "TransportAnimation.dbc");
+
+	// Taxi
+	DBC_LOAD(DBC_TaxiNodes, filesManager, "TaxiNodes.dbc");
+	DBC_LOAD(DBC_TaxiPath, filesManager, "TaxiPath.dbc");
+	DBC_LOAD(DBC_TaxiPathNode, filesManager, "TaxiPathNode.dbc");
 }
 
 CDBCStorage::~CDBCStorage()

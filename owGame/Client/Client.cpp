@@ -5,27 +5,34 @@
 // General
 #include "Client.h"
 
-CWoWClient::CWoWClient(IBaseManager& BaseManager, IRenderDevice& RenderDevice, IScene& Scene, const std::string& AuthServerHost, uint16 AuthServerPort)
-	: m_BaseManager(BaseManager)
-	, m_RenderDevice(RenderDevice)
-	, m_Scene(Scene)
+CWoWClient::CWoWClient(IScene& Scene, const std::string& AuthServerHost, uint16 AuthServerPort)
+	: m_Scene(Scene)
 {
 	m_Host = AuthServerHost;
 	m_Port = AuthServerPort;
+
+	//std::future<void> futureObj = m_UpdateThreadExiter.get_future();
+	//m_UpdateThread = std::thread(&CWoWClient::Update, this, std::move(futureObj));
+	//m_UpdateThread.detach();
 }
 
 CWoWClient::~CWoWClient()
 {
-
+	//m_UpdateThreadExiter.set_value();
+	//_ASSERT(m_UpdateThread.joinable());
+	//m_UpdateThread.join();
 }
 
-void CWoWClient::Update(UpdateEventArgs & e)
+void CWoWClient::Update(/*std::future<void> PromiseExiter*/)
 {
-	if (m_AuthSocket && m_AuthSocket->GetStatus() == CSocket::Connected)
-		m_AuthSocket->Update();
+	//while (PromiseExiter.wait_for(std::chrono::milliseconds(0)) == std::future_status::timeout)
+	{
+		if (m_AuthSocket && m_AuthSocket->GetStatus() == CSocket::Connected)
+			m_AuthSocket->Update();
 
-	if (m_WorldSocket && m_WorldSocket->GetStatus() == CSocket::Connected)
-		m_WorldSocket->Update();
+		if (m_WorldSocket && m_WorldSocket->GetStatus() == CSocket::Connected)
+			m_WorldSocket->Update();
+	}
 }
 
 
@@ -51,7 +58,7 @@ void CWoWClient::OnRealmListSelected(const RealmInfo& SelectedRealm, BigNumber K
 	m_WorldSocket = std::make_shared<CWorldSocket>(m_Login, Key);
 	m_WorldSocket->Open(SelectedRealm.getIP(), SelectedRealm.getPort());
 
-	m_CharacterSelection = std::make_unique<CWoWClientCharactedSelection>(*this, m_Scene, m_WorldSocket);
+	m_CharacterSelection = std::make_unique<CWoWClientCharactedSelection>(*this, m_Scene);
 	m_WorldSocket->SetExternalHandler(std::bind(&CWoWClientCharactedSelection::ProcessHandler, m_CharacterSelection.get(), std::placeholders::_1, std::placeholders::_2));
 }
 
@@ -65,12 +72,6 @@ void CWoWClient::OnCharacterSelected(const CInet_CharacterTemplate & SelectedCha
 	m_WorldSocket->SetExternalHandler(std::bind(&CWoWWorld::ProcessHandler, m_World.get(), std::placeholders::_1, std::placeholders::_2));
 
 	m_World->EnterWorld(SelectedCharacter);
-}
-
-CWoWWorld& CWoWClient::GetWorld() const
-{
-	_ASSERT(m_World != nullptr);
-	return *m_World;
 }
 
 #endif
