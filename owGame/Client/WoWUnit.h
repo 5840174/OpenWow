@@ -8,7 +8,9 @@
 
 #include "MoveSplineFlag.h"
 
-
+// FORWARD BEGIN
+class CWoWWorld;
+// FORWARD END
 
 enum MoveFlags
 {
@@ -117,7 +119,7 @@ class ZN_API WoWUnit
 	: public CWoWWorldObject
 {
 public:
-	WoWUnit(IScene& Scene, CWoWObjectGuid Guid);
+	WoWUnit(IScene& Scene, CWoWWorld& WoWWorld, CWoWObjectGuid Guid);
 	virtual ~WoWUnit();
 
 	virtual void ProcessMovementPacket(CByteBuffer& Bytes);
@@ -143,7 +145,7 @@ public:
 	void Update(const UpdateEventArgs& e) override;
 
 public:
-	static std::shared_ptr<WoWUnit> Create(IScene& Scene, CWoWObjectGuid Guid);
+	static std::shared_ptr<WoWUnit> Create(CWoWWorld& WoWWorld, IScene& Scene, CWoWObjectGuid Guid);
 	virtual void AfterCreate(IScene& Scene) override;
 	virtual void Destroy() override;
 
@@ -154,7 +156,7 @@ protected:
 	uint16 m_MovementFlagsExtra;
 	
 	// transport
-	struct TransportInfo
+	/*struct TransportInfo
 	{
 		void Reset()
 		{
@@ -170,13 +172,16 @@ protected:
 		int8 seat;
 		uint32 time;
 		uint32 time2;
-	} m_Transport;
+	} m_Transport;*/
+
 
 	// swimming/flying
 	float m_Pitch;
 
+
 	// falling
 	uint32 m_FallTime;
+
 
 	// jumping
 	struct JumpInfo

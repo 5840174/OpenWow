@@ -30,6 +30,12 @@ void CWorldObjects::Update(const UpdateEventArgs & e)
 		wowCorpse.second->Update(e);
 }
 
+void CWorldObjects::Accept(IWoWVisitor * WoWVisitor)
+{
+	for (const auto& wowgameObject : m_WoWGameObject)
+		WoWVisitor->VisitWoW(wowgameObject.second);
+}
+
 std::shared_ptr<WoWObject> CWorldObjects::GetWoWObject(CWoWObjectGuid ObjectGUID)
 {
 	if (ObjectGUID.GetTypeId() == EWoWObjectTypeID::TYPEID_OBJECT)
@@ -68,7 +74,7 @@ std::shared_ptr<WoWObject> CWorldObjects::GetWoWObject(CWoWObjectGuid ObjectGUID
 		if (objIterator != m_WoWUnits.end())
 			return objIterator->second;
 
-		auto object = WoWUnit::Create(m_Scene, ObjectGUID);
+		auto object = WoWUnit::Create(m_WoWWorld, m_Scene, ObjectGUID);
 		m_WoWUnits[ObjectGUID] = object;
 		return object;
 	}
@@ -78,7 +84,7 @@ std::shared_ptr<WoWObject> CWorldObjects::GetWoWObject(CWoWObjectGuid ObjectGUID
 		if (objIterator != m_WoWPlayers.end())
 			return objIterator->second;
 
-		auto object = WoWPlayer::Create(m_Scene, ObjectGUID);
+		auto object = WoWPlayer::Create(m_WoWWorld, m_Scene, ObjectGUID);
 		m_WoWPlayers[ObjectGUID] = object;
 		return object;
 	}
@@ -112,7 +118,7 @@ std::shared_ptr<WoWObject> CWorldObjects::GetWoWObject(CWoWObjectGuid ObjectGUID
 		if (objIterator != m_WoWCorpses.end())
 			return objIterator->second;
 
-		auto object = WoWCorpse::Create(m_Scene, ObjectGUID);
+		auto object = WoWCorpse::Create(m_WoWWorld, m_Scene, ObjectGUID);
 		m_WoWCorpses[ObjectGUID] = object;
 		return object;
 	}

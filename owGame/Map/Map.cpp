@@ -328,9 +328,15 @@ uint32 CMap::GetAreaID(glm::vec3 CameraPosition)
 }
 
 
+
 //
 // Public (Getters)
 //
+uint32 CMap::GetMapID() const
+{
+	return m_MapDBCRecord->Get_ID();
+}
+
 std::string CMap::GetMapFolder() const
 {
 	return "World\\Maps\\" + std::string(m_MapDBCRecord->Get_Directory()) + "\\" + std::string(m_MapDBCRecord->Get_Directory());

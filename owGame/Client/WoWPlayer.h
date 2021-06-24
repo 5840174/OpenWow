@@ -4,22 +4,26 @@
 
 #include "WoWUnit.h"
 
+// FORWARD BEGIN
+class CWoWWorld;
+// FORWARD END
+
 class ZN_API WoWPlayer
 	: public WoWUnit
 {
 public:
-	WoWPlayer(IScene& Scene, CWoWObjectGuid Guid);
+	WoWPlayer(IScene& Scene, CWoWWorld& WoWWorld, CWoWObjectGuid Guid);
 	virtual ~WoWPlayer();
 
 public:
-	static std::shared_ptr<WoWPlayer> Create(IScene& Scene, CWoWObjectGuid Guid);
+	static std::shared_ptr<WoWPlayer> Create(CWoWWorld& WoWWorld, IScene& Scene, CWoWObjectGuid Guid);
 
 private:
-	float transportX;
-	float transportY;
-	float transportZ;
-	float transportO;
-	uint64 transportGUID;
+	//float transportX;
+	//float transportY;
+	//float transportZ;
+	//float transportO;
+	//uint64 transportGUID;
 };
 
 #endif

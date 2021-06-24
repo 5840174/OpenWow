@@ -29,13 +29,6 @@ enum ZN_API GameObjectDynamicLowFlags
 };
 
 
-
-
-// FORWARD BEGIN
-class CWoWWorld;
-// FORWARD END
-
-
 class ZN_API WoWGameObject
 	: public CWoWWorldObject
 {
@@ -54,8 +47,6 @@ public:
 	virtual void Destroy() override;
 
 protected:
-	CWoWWorld& m_WoWWorld;
-	
 	bool templateCreated;
 	std::shared_ptr<SGameObjectQueryResult> m_GameObjectTemplate;
 };

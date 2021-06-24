@@ -28,6 +28,7 @@ public:
 
 
 public: // Getters
+	uint32                                          GetMapID() const;
 	std::string                                     GetMapFolder() const;
 
 	bool                                            IsNortrend() const;

@@ -5,7 +5,6 @@
 
 CSceneWoWClient::CSceneWoWClient(IBaseManager& BaseManager, IRenderWindow& RenderWindow)
 	: SceneBase(BaseManager, RenderWindow)
-	//, m_World(rp3d::Vector3(0.0f, -9.81f, 0.0f))
 {
 }
 
@@ -57,14 +56,12 @@ void CSceneWoWClient::Initialize()
 		GetCameraController()->GetCamera()->SetPitch(-45);
 	}
 
+	GetBaseManager().GetManager<IWoWObjectsCreator>()->InitEGxBlend(GetRenderDevice());
 
 	m_RendererStatisticText = CreateUIControlTCast<IUIControlText>();
 	m_RendererStatisticText->SetLocalPosition(glm::vec2(5.0f, 200.0f));
 	m_RendererStatisticText->SetText("");
-
-
-	GetBaseManager().GetManager<IWoWObjectsCreator>()->InitEGxBlend(GetRenderDevice());
-
+	
 	m_WowClient = std::make_unique<CWoWClient>(*this, "localhost");
 	m_WowClient->BeginConnect("test", "test");
 }

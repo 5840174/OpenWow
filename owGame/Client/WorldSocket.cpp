@@ -199,7 +199,7 @@ void CWorldSocket::Packet2(CByteBuffer& _buf)
 			}
 			else
 			{
-				Log::Green("Opcode: '%s' (0x%X). Size: '%d'", OpcodesNames[m_CurrentPacket->GetPacketOpcode()], m_CurrentPacket->GetPacketOpcode(), m_CurrentPacket->GetPacketSize());
+				Log::Info("Opcode: '%s' (0x%X). Size: '%d' not handled.", OpcodesNames[m_CurrentPacket->GetPacketOpcode()], m_CurrentPacket->GetPacketOpcode(), m_CurrentPacket->GetPacketSize());
 			}
 		}
 

@@ -3,15 +3,33 @@
 // General
 #include "RenderPass_Path.h"
 
+// Additional
+#include "Client/WoWGameObjectMOTransport.h"
+#include "DBC/DBC__Storage.h"
+#include "Client/World.h"
+
 const float cBBoxSizeIncrement = 0.05f;
 
-CRenderPass_Path::CRenderPass_Path(IRenderDevice& RenderDevice, IScene& Scene)
-	: Base3DPass(Scene)
+CRenderPass_Path::CRenderPass_Path(IRenderDevice& RenderDevice, CWoWWorld& WoWWorld)
+	: RenderPassPipelined(RenderDevice)
+	, m_WoWWorld(WoWWorld)
 {
+	m_PerObjectConstantBuffer = GetRenderDevice().GetObjectsFactory().CreateConstantBuffer(PerObject());
 }
 
 CRenderPass_Path::~CRenderPass_Path()
 {}
+
+
+
+//
+// IRenderPass
+//
+void CRenderPass_Path::Render(RenderEventArgs & e)
+{
+	m_WoWWorld.Accept(this);
+}
+
 
 
 //
@@ -45,19 +63,30 @@ std::shared_ptr<IRenderPassPipelined> CRenderPass_Path::ConfigurePipeline(std::s
 	return shared_from_this();
 }
 
-EVisitResult CRenderPass_Path::Visit(const std::shared_ptr<ISceneNode>& node)
+EVisitResult CRenderPass_Path::VisitWoW(const std::shared_ptr<CWoWWorldObject>& WoWWorldObject)
 {
-	auto waypointSceneNode = std::dynamic_pointer_cast<ISceneNodeRTSPath>(node);
-	if (waypointSceneNode == nullptr)
+	auto woWGameObjectMOTransport = std::dynamic_pointer_cast<WoWGameObjectMOTransport>(WoWWorldObject);
+	if (woWGameObjectMOTransport == nullptr)
 		return EVisitResult::AllowVisitChilds;
 
-	const auto& points = waypointSceneNode->GetPoints();
+	const auto& pathID = woWGameObjectMOTransport->GetPathID();
+	if (pathID == 0)
+		return EVisitResult::AllowVisitChilds;
+
+	const auto& wowWorld = woWGameObjectMOTransport->GetWoWWorld();
+
+	uint32 mapID = UINT32_MAX;
+	if (auto map = wowWorld.GetMap())
+		mapID = map->GetMapID();
+
+	const auto& pathRecords = woWGameObjectMOTransport->GetWoWWorld().GetTaxiStorage().GetPathNodes(pathID);
 	std::vector<glm::vec3> pointsXYZ;
-	std::for_each(points.begin(), points.end(), [&pointsXYZ](const std::shared_ptr<ISceneNodeRTSPoint>& Point) {
-		pointsXYZ.push_back(Point->GetPosition());
+	std::for_each(pathRecords.begin(), pathRecords.end(), [&pointsXYZ, mapID](const CTaxiStorage::STaxiPathNode& Point) {
+		if (mapID == Point.MapID)
+			pointsXYZ.push_back(fromGameToReal(Point.Position));
 	});
 
-	if (points.size() < 2)
+	if (pointsXYZ.size() < 2)
 		return EVisitResult::AllowVisitChilds;
 
 	BindPerObjectData(PerObject());
@@ -71,8 +100,21 @@ EVisitResult CRenderPass_Path::Visit(const std::shared_ptr<ISceneNode>& node)
 	return EVisitResult::AllowVisitChilds;
 }
 
-EVisitResult CRenderPass_Path::Visit(const std::shared_ptr<IModel>& Model)
+
+
+//
+// Protected
+//
+void CRenderPass_Path::BindPerObjectData(const PerObject& PerObject)
 {
-	_ASSERT(false);
-	return EVisitResult::Block;
+	m_PerObjectConstantBuffer->Set(PerObject);
+
+	for (const auto& shaderIt : GetPipeline().GetShaders())
+	{
+		if (auto* perObjectParam = shaderIt.second->GetShaderParameterByName("PerObject"))
+		{
+			perObjectParam->SetConstantBuffer(m_PerObjectConstantBuffer);
+			perObjectParam->Bind();
+		}
+	}
 }

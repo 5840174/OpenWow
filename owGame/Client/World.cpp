@@ -8,8 +8,7 @@
 // Additional
 #include "Client/Templates/CharacterTemplate.h"
 
-
-
+#include "Renderer/RenderPass_Path.h"
 
 
 CWoWWorld::CWoWWorld(IScene& Scene, const std::shared_ptr<CWorldSocket>& Socket)
@@ -21,10 +20,10 @@ CWoWWorld::CWoWWorld(IScene& Scene, const std::shared_ptr<CWorldSocket>& Socket)
 	, m_TaxiStorage(m_Scene.GetBaseManager())
 	, m_TransportAnimationStorage(m_Scene.GetBaseManager())
 {
-	skyManager = Scene.GetRootSceneNode()->CreateSceneNode<SkyManager>();
-	Scene.GetBaseManager().AddManager<ISkyManager>(skyManager);
+	m_SkyManager = m_Scene.GetRootSceneNode()->CreateSceneNode<SkyManager>();
+	m_Scene.GetBaseManager().AddManager<ISkyManager>(m_SkyManager);
 
-	map = Scene.GetRootSceneNode()->CreateSceneNode<CMap>();
+	m_Map = m_Scene.GetRootSceneNode()->CreateSceneNode<CMap>();
 
 	m_TaxiStorage.Initialize();
 	m_TransportAnimationStorage.Initialize();
@@ -34,6 +33,8 @@ CWoWWorld::CWoWWorld(IScene& Scene, const std::shared_ptr<CWorldSocket>& Socket)
 	AddHandler(SMSG_TIME_SYNC_REQ, std::bind(&CWoWWorld::On_SMSG_TIME_SYNC_REQ, this, std::placeholders::_1));
 	AddHandler(SMSG_MONSTER_MOVE, std::bind(&CWoWWorld::S_SMSG_MONSTER_MOVE, this, std::placeholders::_1));
 	AddHandler(SMSG_DESTROY_OBJECT, std::bind(&CWoWWorld::S_SMSG_DESTROY_OBJECT, this, std::placeholders::_1));
+
+	m_Scene.GetRenderer()->Add3DPass(MakeShared(CRenderPass_Path, m_Scene.GetBaseManager().GetApplication().GetRenderDevice(), *this)->ConfigurePipeline(m_Scene.GetRenderWindow().GetRenderTarget()));
 }
 
 CWoWWorld::~CWoWWorld()
@@ -50,6 +51,11 @@ void CWoWWorld::EnterWorld(const CInet_CharacterTemplate& SelectedCharacter)
 void CWoWWorld::Update(const UpdateEventArgs & e)
 {
 	m_WorldObjects.Update(e);
+}
+
+void CWoWWorld::Accept(IWoWVisitor * WoWVisitor)
+{
+	m_WorldObjects.Accept(WoWVisitor);
 }
 
 
@@ -76,9 +82,9 @@ void CWoWWorld::S_SMSG_LOGIN_VERIFY_WORLD(CServerPacket& Buffer)
 	//skyManager->Load(mapID);
 
 	// Map
-	map->MapPreLoad(m_Scene.GetBaseManager().GetManager<CDBCStorage>()->DBC_Map()[mapID]);
-	map->MapLoad();
-	map->EnterMap(position);
+	m_Map->MapPreLoad(m_Scene.GetBaseManager().GetManager<CDBCStorage>()->DBC_Map()[mapID]);
+	m_Map->MapLoad();
+	m_Map->EnterMap(position);
 
 	// Camera
 	m_Scene.GetCameraController()->GetCamera()->SetPosition(position);
@@ -117,7 +123,6 @@ void CWoWWorld::S_SMSG_DESTROY_OBJECT(CServerPacket & Buffer)
 	uint64 guid;
 	Buffer >> guid;
 	CWoWObjectGuid objectGuid(guid);
-
 
 	uint8 isOnDeath;
 	Buffer >> isOnDeath;
@@ -161,6 +166,11 @@ void CWoWWorld::SendPacket(CClientPacket & Bytes)
 {
 	if (auto lockedSocket = m_Socket.lock())
 		lockedSocket->SendPacket(Bytes);
+}
+
+std::shared_ptr<CMap> CWoWWorld::GetMap() const
+{
+	return m_Map;
 }
 
 

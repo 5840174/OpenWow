@@ -13,6 +13,8 @@
 #include "TaxiStorage.h"
 #include "TransportAnimationStorage.h"
 
+#include "Renderer/RenderPass_Path.h"
+
 // Visible part
 #include "Sky/SkyManager.h"
 #include "Map/Map.h"
@@ -25,6 +27,7 @@ public:
 
 	void EnterWorld(const CInet_CharacterTemplate& SelectedCharacter);
 	void Update(const UpdateEventArgs& e);
+	void Accept(IWoWVisitor * WoWVisitor);
 
 	void S_SMSG_LOGIN_VERIFY_WORLD(CServerPacket& Buffer);
 	void On_SMSG_TIME_SYNC_REQ(CServerPacket& Buffer);
@@ -37,6 +40,8 @@ public:
 	bool ProcessHandler(Opcodes Opcode, CServerPacket& Bytes);
 	void SendPacket(CClientPacket& Packet);
 
+	std::shared_ptr<CMap> GetMap() const;
+
 	CWorldObjects& GetWorldObjects() { return m_WorldObjects; }
 	CWorldObjectUpdater& GetWorldObjectUpdater() { return m_WorldObjectUpdater; }
 	CClientCache& GetClientCache() { return m_ClientCache; }
@@ -44,8 +49,8 @@ public:
 	const CTransportAnimationStorage& GetTransportAnimationStorage() const { return m_TransportAnimationStorage; }
 
 private: // Game objects and entities
-	std::shared_ptr<SkyManager> skyManager;
-	std::shared_ptr<CMap> map;
+	std::shared_ptr<SkyManager> m_SkyManager;
+	std::shared_ptr<CMap> m_Map;
 	
 private:
 	IScene& m_Scene;

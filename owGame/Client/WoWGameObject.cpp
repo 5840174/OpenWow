@@ -10,8 +10,7 @@
 #include "World/WorldObjectsCreator.h"
 
 WoWGameObject::WoWGameObject(IScene& Scene, CWoWWorld& WoWWorld, CWoWObjectGuid Guid)
-	: CWoWWorldObject(Scene, Guid)
-	, m_WoWWorld(WoWWorld)
+	: CWoWWorldObject(Scene, WoWWorld, Guid)
 	, templateCreated(false)
 {
 	m_ObjectType |= TYPEMASK_GAMEOBJECT;
@@ -37,7 +36,7 @@ void WoWGameObject::Update(const UpdateEventArgs & e)
 	{
 		if (false == templateCreated && m_GameObjectTemplate == nullptr)
 		{
-			m_WoWWorld.GetClientCache().SendQueryResponceWithCallback(obtainedEntry, GetWoWGUID(), std::bind(&WoWGameObject::OnTemplateCallback, this, std::placeholders::_1, std::placeholders::_2));
+			GetWoWWorld().GetClientCache().SendQueryResponceWithCallback(obtainedEntry, GetWoWGUID(), std::bind(&WoWGameObject::OnTemplateCallback, this, std::placeholders::_1, std::placeholders::_2));
 			templateCreated = true;
 
 			return;
@@ -78,8 +77,8 @@ void WoWGameObject::AfterCreate(IScene& Scene)
 		CWorldObjectCreator creator(Scene.GetBaseManager());
 		m_HiddenNode = creator.BuildGameObjectFromDisplayInfo(Scene.GetBaseManager().GetApplication().GetRenderDevice(), &Scene, displayInfo);
 	}
-	else
-		throw CException("GameObject display info is zero.");
+	//else
+	//	throw CException("GameObject display info is zero.");
 }
 
 void WoWGameObject::Destroy()

@@ -6,6 +6,7 @@
 #include "WoWUnit.h"
 
 // Additional
+#include "World.h"
 #include "World/WorldObjectsCreator.h"
 
 namespace
@@ -21,8 +22,8 @@ namespace
 }
 
 
-WoWUnit::WoWUnit(IScene& Scene, CWoWObjectGuid Guid)
-	: CWoWWorldObject(Scene, Guid)
+WoWUnit::WoWUnit(IScene& Scene, CWoWWorld& WoWWorld, CWoWObjectGuid Guid)
+	: CWoWWorldObject(Scene, WoWWorld, Guid)
 	, DestinationPoint(0.0f)
 {
 	m_ObjectType |= TYPEMASK_UNIT;
@@ -55,16 +56,35 @@ void WoWUnit::ProcessMovementPacket(CByteBuffer & Bytes)
 	// 0x00000200
 	if (HasMovementFlag(MOVEMENTFLAG_ONTRANSPORT))
 	{
-		Bytes.ReadPackedUInt64(m_Transport.guid);
-		m_Transport.pos.x = Bytes.ReadFloat();
-		m_Transport.pos.y = Bytes.ReadFloat();
-		m_Transport.pos.z = Bytes.ReadFloat();
-		m_Transport.pos.w = Bytes.ReadFloat();
-		Bytes >> uint32(m_Transport.time);
-		Bytes >> int8(m_Transport.seat);
+		uint64 transportGuid;
+		Bytes.ReadPackedUInt64(transportGuid);
+		TransportID = CWoWObjectGuid(transportGuid);
+
+		glm::vec3 gamePositionTransportOffset;
+		Bytes >> gamePositionTransportOffset.x;
+		Bytes >> gamePositionTransportOffset.y;
+		Bytes >> gamePositionTransportOffset.z;
+		PositionTransportOffset = fromGameToReal(gamePositionTransportOffset);
+
+		float gameOrientationTransportOffset;
+		Bytes >> gameOrientationTransportOffset;
+		OrientationTransportOffset = glm::degrees(gameOrientationTransportOffset + glm::half_pi<float>());
+
+		uint32 transportTime;
+		Bytes >> uint32(transportTime);
+
+		int8 transportSeat;
+		Bytes >> int8(transportSeat);
 
 		if (HasExtraMovementFlag(MOVEMENTFLAG2_INTERPOLATED_MOVEMENT))
-			Bytes >> uint32(m_Transport.time2);
+		{
+			uint32 transportInterpolatedTime;
+			Bytes >> uint32(transportInterpolatedTime);
+		}
+	}
+	else
+	{
+		TransportID = CWoWObjectGuid(0ull);
 	}
 
 	// 0x02200000
@@ -206,9 +226,9 @@ void WoWUnit::ProcessMonsterMove(CByteBuffer & Bytes)
 				//	offset = middle - real_path[i];
 
 				// this is offsets to path
-				float x2 = ((packedPos) & 0x7FF) * 0.25;
-				float y2 = ((packedPos >> 11) & 0x7FF) * 0.25;
-				float z2 = ((packedPos >> 22) & 0x3FF) * 0.25;
+				float x2 = ((packedPos) & 0x7FF) * 0.25f;
+				float y2 = ((packedPos >> 11) & 0x7FF) * 0.25f;
+				float z2 = ((packedPos >> 22) & 0x3FF) * 0.25f;
 			}
 		}
 	}
@@ -265,9 +285,9 @@ void WoWUnit::Update(const UpdateEventArgs & e)
 //
 // Protected
 //
-std::shared_ptr<WoWUnit> WoWUnit::Create(IScene& Scene, CWoWObjectGuid Guid)
+std::shared_ptr<WoWUnit> WoWUnit::Create(CWoWWorld& WoWWorld, IScene& Scene, CWoWObjectGuid Guid)
 {
-	std::shared_ptr<WoWUnit> thisObj = MakeShared(WoWUnit, Scene, Guid);
+	std::shared_ptr<WoWUnit> thisObj = MakeShared(WoWUnit, Scene, WoWWorld, Guid);
 	//Log::Error("WoWUnit created. ID  = %d. HIGH = %d, ENTRY = %d, COUNTER = %d", Guid.GetRawValue(), Guid.GetHigh(), Guid.GetEntry(), Guid.GetCounter());
 	return thisObj;
 }
@@ -276,7 +296,7 @@ void WoWUnit::AfterCreate(IScene& Scene)
 {
 	if (m_HiddenNode != nullptr)
 	{
-		Log::Error("WoWUnit: Try to call 'AfterCreate' for object.");
+		//Log::Error("WoWUnit: Try to call 'AfterCreate' for object.");
 		return;
 	}
 

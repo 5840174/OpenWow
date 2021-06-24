@@ -181,6 +181,9 @@
     <Filter Include="DBC\Tables\Taxi">
       <UniqueIdentifier>{b19f1950-2789-4cb2-ac7a-5604e8767317}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Renderer\WoWClientPasses">
+      <UniqueIdentifier>{e1dfcd46-2119-4a6b-8659-44a73c3d3e0b}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -576,9 +579,6 @@
     <ClCompile Include="World\GameObject\GameObjectWMO.cpp">
       <Filter>World\GameObject</Filter>
     </ClCompile>
-    <ClCompile Include="Renderer\RenderPass_Path.cpp">
-      <Filter>Renderer\Passes</Filter>
-    </ClCompile>
     <ClCompile Include="Client\WorldObjectUpdater.cpp">
       <Filter>Client\World</Filter>
     </ClCompile>
@@ -599,6 +599,9 @@
     </ClCompile>
     <ClCompile Include="Client\CharacterSelection\CharacterSelection.cpp">
       <Filter>Client\CharacterSelection</Filter>
+    </ClCompile>
+    <ClCompile Include="Renderer\RenderPass_Path.cpp">
+      <Filter>Renderer\WoWClientPasses</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -1205,9 +1208,6 @@
     <ClInclude Include="World\GameObject\GameObjectWMO.h">
       <Filter>World\GameObject</Filter>
     </ClInclude>
-    <ClInclude Include="Renderer\RenderPass_Path.h">
-      <Filter>Renderer\Passes</Filter>
-    </ClInclude>
     <ClInclude Include="Client\WorldObjectUpdater.h">
       <Filter>Client\World</Filter>
     </ClInclude>
@@ -1246,6 +1246,9 @@
     </ClInclude>
     <ClInclude Include="Client\CharacterSelection\CharacterSelection.h">
       <Filter>Client\CharacterSelection</Filter>
+    </ClInclude>
+    <ClInclude Include="Renderer\RenderPass_Path.h">
+      <Filter>Renderer\WoWClientPasses</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

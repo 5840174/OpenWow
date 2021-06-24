@@ -28,7 +28,7 @@ void WoWObject::ProcessMovementUpdate(CByteBuffer& Bytes)
 
 	if (GetWoWGUID().GetHigh() == EWoWObjectHighGuid::Mo_Transport)
 	{
-		Log::Error("asdasdasdasd");
+		//Log::Error("asdasdasdasd");
 	}
 
 	uint16 updateFlags;
@@ -70,13 +70,13 @@ void WoWObject::ProcessMovementUpdate(CByteBuffer& Bytes)
 				}
 
 				Bytes.seekRelative(12);
-				//Bytes << move_spline.timePassed();
-				//Bytes << move_spline.Duration();
-				//Bytes << move_spline.GetId();
+				//Bytes >> move_spline.timePassed();
+				//Bytes >> move_spline.Duration();
+				//Bytes >> move_spline.GetId();
 
 				Bytes.seekRelative(8);
-				//Bytes << float(1.f);                             // splineInfo.duration_mod; added in 3.1
-				//Bytes << float(1.f);                             // splineInfo.duration_mod_next; added in 3.1
+				//Bytes >> float(1.f);                             // splineInfo.duration_mod; added in 3.1
+				//Bytes >> float(1.f);                             // splineInfo.duration_mod_next; added in 3.1
 
 				Bytes.seekRelative(8);
 				//Bytes << move_spline.vertical_acceleration;      // added in 3.1
@@ -103,6 +103,7 @@ void WoWObject::ProcessMovementUpdate(CByteBuffer& Bytes)
 		{
 			uint64 transportGuid;
 			Bytes.ReadPackedUInt64(transportGuid);
+			object->TransportID = CWoWObjectGuid(transportGuid);
 
 			glm::vec3 gamePosition;
 			Bytes >> gamePosition.x;
@@ -112,7 +113,12 @@ void WoWObject::ProcessMovementUpdate(CByteBuffer& Bytes)
 
 			if (transportGuid != 0)
 			{
-				Bytes.seekRelative(12);
+				glm::vec3 gamePositionTransportOffset;
+				Bytes >> gamePositionTransportOffset.x;
+				Bytes >> gamePositionTransportOffset.y;
+				Bytes >> gamePositionTransportOffset.z;
+				object->PositionTransportOffset = fromGameToReal(gamePositionTransportOffset);
+				//Log::Error("WoWObject::ProcessMovementUpdate: transportGuid != 0.");
 			}
 			else
 			{
@@ -146,7 +152,7 @@ void WoWObject::ProcessMovementUpdate(CByteBuffer& Bytes)
 				Bytes >> gamePosition3.x;
 				Bytes >> gamePosition3.y;
 				Bytes >> gamePosition3.z;
-				Log::Print("UPDATEFLAG_STATIONARY_POSITION: %f %f %f", gamePosition3.x, gamePosition3.y, gamePosition3.z);
+				//Log::Print("UPDATEFLAG_STATIONARY_POSITION: %f %f %f", gamePosition3.x, gamePosition3.y, gamePosition3.z);
 				object->Position = fromGameToReal(gamePosition3);
 
 				float gameOrientation;
@@ -189,7 +195,7 @@ void WoWObject::ProcessMovementUpdate(CByteBuffer& Bytes)
 		{
 			uint32 pathProgress;
 			Bytes >> pathProgress;
-			Log::Warn("Path progress = '%d'", pathProgress);
+		//	Log::Warn("Path progress = '%d'", pathProgress);
 		}
 		else
 		{

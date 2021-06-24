@@ -160,6 +160,11 @@ std::shared_ptr<Character> CWorldObjectCreator::BuildCharactedFromDisplayInfo(IR
 std::shared_ptr<ISceneNode> CWorldObjectCreator::BuildGameObjectFromDisplayInfo(IRenderDevice & RenderDevice, IScene * Scene, uint32 _id, const std::shared_ptr<ISceneNode>& Parent)
 {
 	const DBC_GameObjectDisplayInfoRecord* record = m_DBCs->DBC_GameObjectDisplayInfo()[_id];
+	if (record == nullptr)
+	{
+		Log::Error("CWorldObjectCreator::BuildGameObjectFromDisplayInfo: Id '%d' not found.", _id);
+		return nullptr;
+	}
 
 	std::string modelName = record->Get_ModelName();
 	modelName = Utils::ToLower(modelName);

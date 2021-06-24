@@ -126,7 +126,7 @@ void WMO_Group::CreateInsances(const std::shared_ptr<CWMO_Group_Instance>& Paren
 		Parent->AddRoomObject(liquidInstance);
 	}
 
-#if 1 && defined(USE_M2_MODELS)
+#if 0 && defined(USE_M2_MODELS)
 	//std::vector<SWMO_Doodad_SetInfo> activeDoodadSets;
 	//activeDoodadSets.push_back(m_WMOModel.m_DoodadsSetInfos[0]);
 

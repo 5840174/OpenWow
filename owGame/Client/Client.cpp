@@ -11,6 +11,8 @@ CWoWClient::CWoWClient(IScene& Scene, const std::string& AuthServerHost, uint16 
 	m_Host = AuthServerHost;
 	m_Port = AuthServerPort;
 
+	
+	
 	//std::future<void> futureObj = m_UpdateThreadExiter.get_future();
 	//m_UpdateThread = std::thread(&CWoWClient::Update, this, std::move(futureObj));
 	//m_UpdateThread.detach();

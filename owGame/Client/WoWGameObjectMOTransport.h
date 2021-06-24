@@ -17,6 +17,8 @@ public:
 	WoWGameObjectMOTransport(IScene& Scene, CWoWWorld& WoWWorld, CWoWObjectGuid Guid);
 	virtual ~WoWGameObjectMOTransport();
 
+	uint32 GetPathID() const;
+
 	// ISceneNode
 	void Update(const UpdateEventArgs& e) override;
 
@@ -27,6 +29,7 @@ public:
 
 private:
 	std::string m_TransportName;
+	uint32 m_PathID;
 	float m_PathProgress;
 };
 

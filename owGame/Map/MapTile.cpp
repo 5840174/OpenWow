@@ -20,7 +20,7 @@ CMapTile::CMapTile(IScene& Scene, CMap& MapParent, uint32 IndexX, uint32 IndexZ)
 
 CMapTile::~CMapTile()
 {
-	Log::Warn("CMapTile::~CMapTile: Tile [%d, %d] unloaded.", m_IndexX, m_IndexZ);
+	//Log::Warn("CMapTile::~CMapTile: Tile [%d, %d] unloaded.", m_IndexX, m_IndexZ);
 }
 
 CMap& CMapTile::GetMap() const
@@ -353,7 +353,7 @@ bool CMapTile::Load()
 
 	//-- WMOs --------------------------------------------------------------------------
 #ifdef USE_WMO_MODELS
-	/*for (const auto& it : m_WMOsPlacementInfo)
+	for (const auto& it : m_WMOsPlacementInfo)
 	{
 		if (std::shared_ptr<CWMO> wmo = GetBaseManager().GetManager<IWoWObjectsCreator>()->LoadWMO(GetRenderDevice(), m_WMOsNames[it.nameIndex], true))
 		{
@@ -369,7 +369,7 @@ bool CMapTile::Load()
 		{
 			Log::Warn("CMapTile: WMO model '%s' is nullptr.", m_WMOsNames[it.nameIndex].c_str());
 		}
-	}*/
+	}
 #endif
 
 	//-- MDXs -------------------------------------------------------------------------
@@ -394,7 +394,7 @@ bool CMapTile::Load()
 	//---------------------------------------------------------------------------------
 #endif
 
-	Log::Green("MapTile[%d, %d, %s]: Loaded!", m_IndexX, m_IndexZ, mapTileFilename.c_str());
+	//Log::Green("MapTile[%d, %d, %s]: Loaded!", m_IndexX, m_IndexZ, mapTileFilename.c_str());
 
 	return true;
 }

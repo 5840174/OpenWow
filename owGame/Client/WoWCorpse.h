@@ -4,15 +4,19 @@
 
 #include "WoWWorldObject.h"
 
+// FORWARD BEGIN
+class CWoWWorld;
+// FORWARD END
+
 class ZN_API WoWCorpse
 	: public CWoWWorldObject
 {
 public:
-	WoWCorpse(IScene& Scene, CWoWObjectGuid Guid);
+	WoWCorpse(IScene& Scene, CWoWWorld& WoWWorld, CWoWObjectGuid Guid);
 	virtual ~WoWCorpse();
 
 public:
-	static std::shared_ptr<WoWCorpse> Create(IScene& Scene, CWoWObjectGuid Guid);
+	static std::shared_ptr<WoWCorpse> Create(CWoWWorld& WoWWorld, IScene& Scene, CWoWObjectGuid Guid);
 
 private:
 

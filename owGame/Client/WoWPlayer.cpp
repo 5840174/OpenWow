@@ -5,8 +5,11 @@
 // General
 #include "WoWPlayer.h"
 
-WoWPlayer::WoWPlayer(IScene& Scene, CWoWObjectGuid Guid)
-	: WoWUnit(Scene, Guid)
+// Additional
+#include "World.h"
+
+WoWPlayer::WoWPlayer(IScene& Scene, CWoWWorld& WoWWorld, CWoWObjectGuid Guid)
+	: WoWUnit(Scene, WoWWorld, Guid)
 {
 	m_ObjectType |= TYPEMASK_PLAYER;
 	m_ObjectTypeId = TYPEID_PLAYER;
@@ -22,9 +25,9 @@ WoWPlayer::~WoWPlayer()
 //
 // Protected
 //
-std::shared_ptr<WoWPlayer> WoWPlayer::Create(IScene& Scene, CWoWObjectGuid Guid)
+std::shared_ptr<WoWPlayer> WoWPlayer::Create(CWoWWorld& WoWWorld, IScene& Scene, CWoWObjectGuid Guid)
 {
-	std::shared_ptr<WoWPlayer> thisObj = MakeShared(WoWPlayer, Scene, Guid);
+	std::shared_ptr<WoWPlayer> thisObj = MakeShared(WoWPlayer, Scene, WoWWorld, Guid);
 	return thisObj;
 }
 

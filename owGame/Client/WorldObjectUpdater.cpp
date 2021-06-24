@@ -11,31 +11,6 @@
 #pragma comment(lib, "zlib.lib")
 
 
-namespace
-{
-struct ZN_API Block_UPDATETYPE_OUT_OF_RANGE_OBJECTS
-{
-	void Fill(CByteBuffer& ByteBuffer)
-	{
-		uint32 OutOfRangeGUIDsCount;
-		ByteBuffer >> (uint32)OutOfRangeGUIDsCount;
-		OutOfRangeGUIDs.resize(OutOfRangeGUIDsCount);
-
-		for (uint32 i = 0; i < OutOfRangeGUIDsCount; i++)
-		{
-			//ByteBuffer.seekRelative(sizeof(uint8)); // (uint8)0xFF;
-
-			uint64 guid;
-			ByteBuffer.ReadPackedUInt64(guid);
-			OutOfRangeGUIDs[i] = guid;
-		}
-	}
-
-	std::vector<uint64> OutOfRangeGUIDs;
-};
-}
-
-
 CWorldObjectUpdater::CWorldObjectUpdater(CWoWWorld& WoWWorld, IScene & Scene)
 	: m_Scene(Scene)
 	, m_WoWWorld(WoWWorld)
@@ -162,8 +137,27 @@ void CWorldObjectUpdater::ProcessUpdatePacket(CByteBuffer& Bytes)
 
 			case OBJECT_UPDATE_TYPE::UPDATETYPE_OUT_OF_RANGE_OBJECTS:
 			{
-				Block_UPDATETYPE_OUT_OF_RANGE_OBJECTS block;
-				block.Fill(Bytes);
+				std::vector<uint64> outOfRangeGUIDs;
+
+				uint32 outOfRangeGUIDsCount;
+				Bytes >> (uint32)outOfRangeGUIDsCount;
+				outOfRangeGUIDs.resize(outOfRangeGUIDsCount);
+				for (uint32 i = 0; i < outOfRangeGUIDsCount; i++)
+				{
+					uint64 guid;
+					Bytes.ReadPackedUInt64(guid);
+					outOfRangeGUIDs[i] = guid;
+				}
+
+				auto& worldObjects = m_WoWWorld.GetWorldObjects();
+				for (const auto& outOfRangeGUID : outOfRangeGUIDs)
+				{
+					if (auto object = worldObjects.GetWoWObject(CWoWObjectGuid(outOfRangeGUID)))
+					{
+						object->Destroy();
+						worldObjects.EraseWoWObject(object);
+					}
+				}
 			}
 			break;
 

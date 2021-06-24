@@ -9,6 +9,8 @@
 #include "WoWDynamicObject.h"
 #include "WoWCorpse.h"
 
+#include "Renderer/RenderPass_Path.h"
+
 // FORWARD BEGIN
 class CWoWWorld;
 // FORWARD END
@@ -20,6 +22,7 @@ public:
 	virtual ~CWorldObjects();
 
 	void Update(const UpdateEventArgs& e);
+	void Accept(IWoWVisitor * WoWVisitor);
 
 	std::shared_ptr<WoWObject> GetWoWObject(CWoWObjectGuid ObjectGUID);
 	bool IsWoWObjectExists(CWoWObjectGuid ObjectGUID);

@@ -27,6 +27,7 @@ public:
 	
 	void OnCharacterSelected(const CInet_CharacterTemplate& SelectedCharacter);
 
+
 private:
 	std::string                                   m_Host;
 	port_t                                        m_Port;
