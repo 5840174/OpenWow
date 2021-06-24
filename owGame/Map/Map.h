@@ -58,6 +58,7 @@ private:
 
 	std::shared_ptr<CMapTile>	                    m_MapTilesCache[C_TilesCacheSize];
 	std::shared_ptr<CMapTile>	                    m_MapTilesCurrent[C_RenderedTiles][C_RenderedTiles];
+
 	int32					                        m_CurrentTileX;
 	int32					                        m_CurrentTileZ;
 	bool					                        m_IsOnInvalidTile;

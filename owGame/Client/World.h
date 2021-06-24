@@ -24,6 +24,7 @@ public:
 	virtual ~CWoWWorld();
 
 	void EnterWorld(const CInet_CharacterTemplate& SelectedCharacter);
+	void Update(const UpdateEventArgs& e);
 
 	void S_SMSG_LOGIN_VERIFY_WORLD(CServerPacket& Buffer);
 	void On_SMSG_TIME_SYNC_REQ(CServerPacket& Buffer);
@@ -48,7 +49,7 @@ private: // Game objects and entities
 	
 private:
 	IScene& m_Scene;
-	std::shared_ptr<CWorldSocket> m_Socket;
+	std::weak_ptr<CWorldSocket> m_Socket;
 	std::unordered_map<Opcodes, std::function<void(CServerPacket&)>> m_Handlers;
 
 	CWorldObjects m_WorldObjects;

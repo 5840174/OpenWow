@@ -32,26 +32,3 @@ inline void PasreChunkAsStringArray(const std::shared_ptr<IByteBuffer>& Bytes, s
 		tempBuffer += string.length() + 1;
 	}
 }
-
-
-static glm::vec3 fromRealToGame(glm::vec3 p)
-{
-	return glm::vec3(
-		-p.x + C_ZeroPoint,
-		-p.z + C_ZeroPoint,
-		(p.y)
-	);
-}
-
-// Y            X        Z			// DBC
-//-618.518, -4251.67, 38.718, 0
-// X			Y        Z
-//-4251.67, -618.518, 38.718, 0
-static glm::vec3 fromGameToReal(glm::vec3 p)
-{
-	return glm::vec3(
-		-p.y + C_ZeroPoint,
-		p.z,
-		-p.x + C_ZeroPoint
-	);
-}

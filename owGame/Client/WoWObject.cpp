@@ -24,72 +24,77 @@ WoWObject::~WoWObject()
 
 void WoWObject::ProcessMovementUpdate(CByteBuffer& Bytes)
 {
-	WorldObject* object = dynamic_cast<WorldObject*>(this);;
+	CWoWWorldObject* object = dynamic_cast<CWoWWorldObject*>(this);;
+
+	if (GetWoWGUID().GetHigh() == EWoWObjectHighGuid::Mo_Transport)
+	{
+		Log::Error("asdasdasdasd");
+	}
 
 	uint16 updateFlags;
 	Bytes >> (uint16)updateFlags;
 
 	if (updateFlags & UPDATEFLAG_LIVING)
 	{
-		WoWUnit* unit = nullptr;
+		WoWUnit* unit = dynamic_cast<WoWUnit*>(this);
 		if (IsWoWType(TYPEMASK_UNIT))
-			unit = dynamic_cast<WoWUnit*>(this);
-
-		unit->ProcessMovementPacket(Bytes);
-
-		unit->SetSpeed(MOVE_WALK, Bytes.ReadFloat());
-		unit->SetSpeed(MOVE_RUN, Bytes.ReadFloat());
-		unit->SetSpeed(MOVE_RUN_BACK, Bytes.ReadFloat());
-		unit->SetSpeed(MOVE_SWIM, Bytes.ReadFloat());
-		unit->SetSpeed(MOVE_SWIM_BACK, Bytes.ReadFloat());
-		unit->SetSpeed(MOVE_FLIGHT, Bytes.ReadFloat());
-		unit->SetSpeed(MOVE_FLIGHT_BACK, Bytes.ReadFloat());
-		unit->SetSpeed(MOVE_TURN_RATE, Bytes.ReadFloat());
-		unit->SetSpeed(MOVE_PITCH_RATE, Bytes.ReadFloat());
-
-		if (unit->GetMovementFlags() & MOVEMENTFLAG_SPLINE_ENABLED)
 		{
-			Movement::MoveSplineFlag splineFlags;
-			splineFlags.raw() = Bytes.ReadUInt32();
+			unit->ProcessMovementPacket(Bytes);
 
-			if (splineFlags.final_angle)
+			unit->SetSpeed(MOVE_WALK, Bytes.ReadFloat());
+			unit->SetSpeed(MOVE_RUN, Bytes.ReadFloat());
+			unit->SetSpeed(MOVE_RUN_BACK, Bytes.ReadFloat());
+			unit->SetSpeed(MOVE_SWIM, Bytes.ReadFloat());
+			unit->SetSpeed(MOVE_SWIM_BACK, Bytes.ReadFloat());
+			unit->SetSpeed(MOVE_FLIGHT, Bytes.ReadFloat());
+			unit->SetSpeed(MOVE_FLIGHT_BACK, Bytes.ReadFloat());
+			unit->SetSpeed(MOVE_TURN_RATE, Bytes.ReadFloat());
+			unit->SetSpeed(MOVE_PITCH_RATE, Bytes.ReadFloat());
+
+			if (unit->GetMovementFlags() & MOVEMENTFLAG_SPLINE_ENABLED)
 			{
-				Bytes.seekRelative(4); // float
-			}
-			else if (splineFlags.final_target)
-			{
-				Bytes.seekRelative(8); // uint64
-			}
-			else if (splineFlags.final_point)
-			{
+				Movement::MoveSplineFlag splineFlags;
+				splineFlags.raw() = Bytes.ReadUInt32();
+
+				if (splineFlags.final_angle)
+				{
+					Bytes.seekRelative(4); // float
+				}
+				else if (splineFlags.final_target)
+				{
+					Bytes.seekRelative(8); // uint64
+				}
+				else if (splineFlags.final_point)
+				{
+					Bytes.seekRelative(12);
+				}
+
 				Bytes.seekRelative(12);
-			}
+				//Bytes << move_spline.timePassed();
+				//Bytes << move_spline.Duration();
+				//Bytes << move_spline.GetId();
 
-			Bytes.seekRelative(12);
-			//Bytes << move_spline.timePassed();
-			//Bytes << move_spline.Duration();
-			//Bytes << move_spline.GetId();
+				Bytes.seekRelative(8);
+				//Bytes << float(1.f);                             // splineInfo.duration_mod; added in 3.1
+				//Bytes << float(1.f);                             // splineInfo.duration_mod_next; added in 3.1
 
-			Bytes.seekRelative(8);
-			//Bytes << float(1.f);                             // splineInfo.duration_mod; added in 3.1
-			//Bytes << float(1.f);                             // splineInfo.duration_mod_next; added in 3.1
+				Bytes.seekRelative(8);
+				//Bytes << move_spline.vertical_acceleration;      // added in 3.1
+				//Bytes << move_spline.effect_start_time;          // added in 3.1
 
-			Bytes.seekRelative(8);
-			//Bytes << move_spline.vertical_acceleration;      // added in 3.1
-			//Bytes << move_spline.effect_start_time;          // added in 3.1
+				uint32 nodes;
+				Bytes >> nodes;
+				for (size_t i = 0; i < nodes; i++)
+				{
+					Bytes.seekRelative(12);
+				}
 
-			uint32 nodes;
-			Bytes >> nodes;
-			for (size_t i = 0; i < nodes; i++)
-			{
+				Bytes.seekRelative(1);
+				//Bytes << uint8(move_spline.spline.mode());       // added in 3.1
+
 				Bytes.seekRelative(12);
+				//Bytes << (move_spline.isCyclic() ? G3D::Vector3::zero() : move_spline.FinalDestination());
 			}
-
-			Bytes.seekRelative(1);
-			//Bytes << uint8(move_spline.spline.mode());       // added in 3.1
-
-			Bytes.seekRelative(12);
-			//Bytes << (move_spline.isCyclic() ? G3D::Vector3::zero() : move_spline.FinalDestination());
 		}
 	}
 	else
@@ -99,9 +104,11 @@ void WoWObject::ProcessMovementUpdate(CByteBuffer& Bytes)
 			uint64 transportGuid;
 			Bytes.ReadPackedUInt64(transportGuid);
 
-			object->PositionX = Bytes.ReadFloat();
-			object->PositionY = Bytes.ReadFloat();
-			object->PositionZ = Bytes.ReadFloat();
+			glm::vec3 gamePosition;
+			Bytes >> gamePosition.x;
+			Bytes >> gamePosition.y;
+			Bytes >> gamePosition.z;
+			object->Position = fromGameToReal(gamePosition);
 
 			if (transportGuid != 0)
 			{
@@ -109,16 +116,22 @@ void WoWObject::ProcessMovementUpdate(CByteBuffer& Bytes)
 			}
 			else
 			{
-				object->PositionX = Bytes.ReadFloat();
-				object->PositionY = Bytes.ReadFloat();
-				object->PositionZ = Bytes.ReadFloat();
+				glm::vec3 gamePosition2;
+				Bytes >> gamePosition2.x;
+				Bytes >> gamePosition2.y;
+				Bytes >> gamePosition2.z;
+				object->Position = fromGameToReal(gamePosition2);
 			}
 
-			object->Orientation = Bytes.ReadFloat();
+			float gameOrientation;
+			Bytes >> gameOrientation;
+			object->Orientation = glm::degrees(gameOrientation + glm::half_pi<float>());
 
 			if (GetObjectTypeID() == EWoWObjectTypeID::TYPEID_CORPSE)
 			{
-				object->Orientation = Bytes.ReadFloat();
+				float gameOrientation2;
+				Bytes >> gameOrientation2;
+				object->Orientation = glm::degrees(gameOrientation2 + glm::half_pi<float>());
 			}
 			else
 			{
@@ -129,10 +142,16 @@ void WoWObject::ProcessMovementUpdate(CByteBuffer& Bytes)
 		{
 			if (updateFlags & UPDATEFLAG_STATIONARY_POSITION)
 			{
-				object->PositionX = Bytes.ReadFloat();
-				object->PositionY = Bytes.ReadFloat();
-				object->PositionZ = Bytes.ReadFloat();
-				object->Orientation = Bytes.ReadFloat();
+				glm::vec3 gamePosition3;
+				Bytes >> gamePosition3.x;
+				Bytes >> gamePosition3.y;
+				Bytes >> gamePosition3.z;
+				Log::Print("UPDATEFLAG_STATIONARY_POSITION: %f %f %f", gamePosition3.x, gamePosition3.y, gamePosition3.z);
+				object->Position = fromGameToReal(gamePosition3);
+
+				float gameOrientation;
+				Bytes >> gameOrientation;
+				object->Orientation = glm::degrees(gameOrientation + glm::half_pi<float>());
 			}
 		}
 
@@ -153,31 +172,6 @@ void WoWObject::ProcessMovementUpdate(CByteBuffer& Bytes)
 
 		if (GetWoWGUID().GetCounter() != newCounter)
 			throw CException("Counter error.");
-		/*switch (GetGUID().GetTypeId())
-		{
-			case TYPEID_OBJECT:
-			case TYPEID_ITEM:
-			case TYPEID_CONTAINER:
-			case TYPEID_GAMEOBJECT:
-			case TYPEID_DYNAMICOBJECT:
-			case TYPEID_CORPSE:
-				*data << uint32(GetGUID().GetCounter());              // GetGUID().GetCounter()
-				break;
-				//! Unit, Player and default here are sending wrong values.
-				/// @todo Research the proper formula
-			case TYPEID_UNIT:
-				*data << uint32(0x0000000B);                // unk
-				break;
-			case TYPEID_PLAYER:
-				if (flags & UPDATEFLAG_SELF)
-					*data << uint32(0x0000002F);            // unk
-				else
-					*data << uint32(0x00000008);            // unk
-				break;
-			default:
-				*data << uint32(0x00000000);                // unk
-				break;
-		}*/
 	}
 
 	// 0x4
@@ -190,7 +184,7 @@ void WoWObject::ProcessMovementUpdate(CByteBuffer& Bytes)
 	// 0x2
 	if (updateFlags & UPDATEFLAG_TRANSPORT)
 	{
-		WoWGameObject* gameObject = dynamic_cast<WoWGameObject*>(this);;
+		WoWGameObject* gameObject = dynamic_cast<WoWGameObject*>(this);
 		if (gameObject)
 		{
 			uint32 pathProgress;
@@ -201,14 +195,6 @@ void WoWObject::ProcessMovementUpdate(CByteBuffer& Bytes)
 		{
 			Bytes.seekRelative(4);
 		}
-		
-		/*
-		    GameObject const* go = ToGameObject();
-			if (go && go->ToTransport())
-				*data << uint32(go->GetGOValue()->Transport.PathProgress);
-			else
-				*data << uint32(GameTime::GetGameTimeMS());
-		*/
 	}
 
 	// 0x80
@@ -237,11 +223,7 @@ void WoWObject::ProcessMovementUpdate(CByteBuffer& Bytes)
 	}
 
 	if (object)
-	{
-		glm::vec3 position = fromGameToReal(glm::vec3(object->PositionX, object->PositionY, object->PositionZ));
-		object->SetLocalPosition(position);
-		object->SetLocalRotationEuler(glm::vec3(0.0f, glm::degrees(object->Orientation + glm::half_pi<float>()), 0.0f));
-	}
+		object->CommitPositionAndRotation();
 }
 
 void WoWObject::UpdateValues(CByteBuffer& Bytes)

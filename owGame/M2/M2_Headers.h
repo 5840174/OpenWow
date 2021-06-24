@@ -2,7 +2,7 @@
 
 #include "M2_Types.h"
 
-#include __PACK_BEGIN
+#pragma pack(push,1)
 
 struct SM2_Header
 {
@@ -124,4 +124,4 @@ struct SM2_Header
     M2Array<SM2_Particle>			particle_emitters;
 };
 
-#include __PACK_END
+#pragma pack(pop)

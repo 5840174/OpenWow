@@ -3,20 +3,32 @@
 #ifdef ENABLE_WOW_CLIENT
 
 #include "WoWObject.h"
-#include "WorldLocation.h"
 
-class ZN_API WorldObject
+class ZN_API CWoWWorldObject
 	: public WoWObject
-	, public WorldLocation
 {
 public:
-	WorldObject(IScene& Scene, CWoWObjectGuid Guid);
-	virtual ~WorldObject();
+	CWoWWorldObject(IScene& Scene, CWoWObjectGuid Guid);
+	virtual ~CWoWWorldObject();
 
-	glm::vec3 DestinationPoint;
+	virtual void Update(const UpdateEventArgs& e);
+
+	
+
+	const IBaseManager& GetBaseManager() const { return m_BaseManager; }
+
+	uint32 MapID;
+	glm::vec3 Position;
+	float Orientation;
+
+	void CommitPositionAndRotation();
+
+protected:
+	std::shared_ptr<ISceneNode> m_HiddenNode;
+	bool m_HiddenNodeDirty;
 
 private:
-	std::string m_name;
+	const IBaseManager& m_BaseManager;
 };
 
 #endif

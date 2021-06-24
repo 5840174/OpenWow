@@ -19,7 +19,8 @@ void CTaxiStorage::Initialize()
 	for (const auto& dbcTaxiPathNodesIt : dbcTaxiPathNodes)
 	{
 		STaxiPathNode pathNode;
-		pathNode.Position = Fix_XZmY(glm::vec3(dbcTaxiPathNodesIt->Get_X(), dbcTaxiPathNodesIt->Get_Y(), dbcTaxiPathNodesIt->Get_Z()));
+		pathNode.MapID = dbcTaxiPathNodesIt->Get_MapID();
+		pathNode.Position = glm::vec3(dbcTaxiPathNodesIt->Get_X(), dbcTaxiPathNodesIt->Get_Y(), dbcTaxiPathNodesIt->Get_Z());
 		pathNode.Delay = dbcTaxiPathNodesIt->Get_Flags() == 2 ? dbcTaxiPathNodesIt->Get_Delay() : 0;
 		m_PathNodes[dbcTaxiPathNodesIt->Get_TaxiPathID()].push_back(pathNode);
 	}

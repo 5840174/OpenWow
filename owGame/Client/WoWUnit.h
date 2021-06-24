@@ -114,13 +114,14 @@ enum UnitDynFlags
 };
 
 class ZN_API WoWUnit
-	: public WorldObject
+	: public CWoWWorldObject
 {
 public:
 	WoWUnit(IScene& Scene, CWoWObjectGuid Guid);
 	virtual ~WoWUnit();
 
 	virtual void ProcessMovementPacket(CByteBuffer& Bytes);
+	void ProcessMonsterMove(CByteBuffer& Bytes);
 
 	// Speed
 	float GetSpeed(UnitMoveType MoveType) const;
@@ -145,6 +146,8 @@ public:
 	static std::shared_ptr<WoWUnit> Create(IScene& Scene, CWoWObjectGuid Guid);
 	virtual void AfterCreate(IScene& Scene) override;
 	virtual void Destroy() override;
+
+	glm::vec3 DestinationPoint;
 
 protected:
 	uint32 m_MovementFlags;
@@ -191,9 +194,6 @@ protected:
 	float m_SplineElevation;
 
 	float m_Speed[9];
-
-private:
-	std::shared_ptr<Creature> m_HiddenNode;
 };
 
 #endif

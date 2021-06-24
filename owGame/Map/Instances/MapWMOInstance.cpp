@@ -43,16 +43,10 @@ void CMapWMOInstance::Initialize()
 
 void CMapWMOInstance::Accept(IVisitor* visitor)
 {
-	const auto& idIter = m_AlreadyDraw.find(m_PlacementInfo.uniqueId);
-	if (idIter != m_AlreadyDraw.end())
-	{
-		if (idIter->second != this)
-			return;
-	}
-	else
-	{
-		m_AlreadyDraw.insert(std::make_pair(m_PlacementInfo.uniqueId, this));
-	}
+	auto& idIter = m_AlreadyDraw[m_PlacementInfo.uniqueId];
+	if (idIter == nullptr)
+		return;
+	idIter = this;
 
 	CWMO_Base_Instance::Accept(visitor);
 }
@@ -75,6 +69,6 @@ void CMapWMOInstance::reset()
 {
 	m_AlreadyDraw.clear();
 }
-std::unordered_map<uint32, const CMapWMOInstance*> CMapWMOInstance::m_AlreadyDraw;
+std::map<uint32, const CMapWMOInstance*> CMapWMOInstance::m_AlreadyDraw;
 
 #endif

@@ -5,6 +5,7 @@ class CTaxiStorage
 public:
 	struct STaxiPathNode
 	{
+		uint32 MapID;
 		glm::vec3 Position;
 		float Delay;
 	};

@@ -128,6 +128,7 @@ public: // Values system
 	void SetInt16Value(uint16 index, uint8 offset, int16 value) { SetUInt16Value(index, offset, (uint16)value); }
 	void SetStatFloatValue(uint16 index, float value);
 	void SetStatInt32Value(uint16 index, int32 value);
+
 	bool PrintIndexError(uint32 index, bool set) const;
 
 	union

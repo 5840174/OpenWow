@@ -47,6 +47,11 @@ void CWoWWorld::EnterWorld(const CInet_CharacterTemplate& SelectedCharacter)
 	SendPacket(p);
 }
 
+void CWoWWorld::Update(const UpdateEventArgs & e)
+{
+	m_WorldObjects.Update(e);
+}
+
 
 
 
@@ -68,7 +73,7 @@ void CWoWWorld::S_SMSG_LOGIN_VERIFY_WORLD(CServerPacket& Buffer)
 	position.y += 5.0f;
 
 	// Skies
-	skyManager->Load(mapID);
+	//skyManager->Load(mapID);
 
 	// Map
 	map->MapPreLoad(m_Scene.GetBaseManager().GetManager<CDBCStorage>()->DBC_Map()[mapID]);
@@ -89,19 +94,6 @@ void CWoWWorld::On_SMSG_TIME_SYNC_REQ(CServerPacket & Buffer)
 	Log::Info("On_SMSG_TIME_SYNC_REQ: timeSyncNextCounter = '%d'.", timeSyncNextCounter);
 }
 
-
-namespace
-{
-	enum MonsterMoveType : uint8
-	{
-		MonsterMoveNormal = 0,
-		MonsterMoveStop = 1,
-		MonsterMoveFacingSpot = 2,
-		MonsterMoveFacingTarget = 3,
-		MonsterMoveFacingAngle = 4
-	};
-}
-
 void CWoWWorld::S_SMSG_MONSTER_MOVE(CServerPacket & Buffer)
 {
 	uint64 packedGUID;
@@ -113,195 +105,11 @@ void CWoWWorld::S_SMSG_MONSTER_MOVE(CServerPacket & Buffer)
 	if (guid.GetTypeId() != EWoWObjectTypeID::TYPEID_UNIT)
 		throw CException("CWoWWorld::S_SMSG_MONSTER_MOVE: Movement packet accept only EWoWObjectTypeID::TYPEID_UNIT.");
 
-	
-
-	float positionX;
-	Buffer >> positionX;
-	float positionY;
-	Buffer >> positionY;
-	float positionZ;
-	Buffer >> positionZ;
-
-	glm::vec3 position = fromGameToReal(glm::vec3(positionX, positionY, positionZ));
-
 	if (auto object = m_WorldObjects.GetWoWObject(guid))
 	{
 		auto objectAsUnit = std::dynamic_pointer_cast<WoWUnit>(object);
-		objectAsUnit->SetLocalPosition(fromGameToReal(glm::vec3(positionX, positionY, positionZ)));
+		objectAsUnit->ProcessMonsterMove(Buffer);
 	}
-
-	uint32 splineID;
-	Buffer >> splineID;
-
-	MonsterMoveType monsterMoveType;
-	Buffer.read(&monsterMoveType);
-
-	switch (monsterMoveType)
-	{
-		case MonsterMoveType::MonsterMoveFacingSpot:
-		{
-			float x, y, z;
-			Buffer >> x;
-			Buffer >> y;
-			Buffer >> z;
-		}
-		break;
-
-		case MonsterMoveType::MonsterMoveFacingTarget:
-		{
-			uint64 targetGUID;
-			Buffer >> targetGUID;
-		}
-		break;
-
-		case MonsterMoveType::MonsterMoveFacingAngle:
-		{
-			float angle;
-			Buffer >> angle;
-		}
-		break;
-
-		case MonsterMoveType::MonsterMoveNormal:
-		{
-			// normal packet
-		}
-		break;
-
-		case MonsterMoveType::MonsterMoveStop:
-			return;
-	}
-
-	Movement::MoveSplineFlag splineflags;
-	Buffer.read(&splineflags);
-
-	if (splineflags.animation)
-	{
-		uint8 animationID;
-		Buffer >> animationID;
-
-		int32 effectStartTime;
-		Buffer >> effectStartTime;
-	}
-
-	int32 duration;
-	Buffer >> duration;
-
-	if (splineflags.parabolic)
-	{
-		float vertical_acceleration;
-		Buffer >> vertical_acceleration;
-
-		int32 effectStartTime;
-		Buffer >> effectStartTime;
-	}
-
-
-	if (splineflags & Movement::MoveSplineFlag::Mask_CatmullRom)
-	{
-		uint32 pathPointsCnt;
-		Buffer >> pathPointsCnt;
-
-		for (uint32 i = 0u; i < pathPointsCnt; i++)
-		{
-			float positionX1;
-			Buffer >> positionX1;
-			float positionY1;
-			Buffer >> positionY1;
-			float positionZ1;
-			Buffer >> positionZ1;
-		}
-
-		//(splineflags.cyclic)
-	}
-	else // linear
-	{
-		uint32 count;
-		Buffer >> count;
-
-		float lastPointX, lastPointY, lastPointZ;
-		Buffer >> lastPointX;
-		Buffer >> lastPointY;
-		Buffer >> lastPointZ;
-
-		if (auto object = m_WorldObjects.GetWoWObject(guid))
-		{
-			auto objectAsUnit = std::dynamic_pointer_cast<WoWUnit>(object);
-			objectAsUnit->DestinationPoint = fromGameToReal(glm::vec3(lastPointX, lastPointY, lastPointZ));
-		}
-
-		if (count > 1)
-		{
-			for (uint32 i = 1; i < count; ++i)
-			{
-				uint32 packedPos;
-				Buffer >> packedPos;
-
-				//G3D::Vector3 middle = (real_path[0] + real_path[last_idx]) / 2.f;
-				//G3D::Vector3 offset;
-				// first and last points already appended
-				//for (uint32 i = 1; i < last_idx; ++i)
-				//{
-				//	offset = middle - real_path[i];
-
-				// this is offsets to path
-				float x2 = ((packedPos      ) & 0x7FF) * 0.25;
-				float y2 = ((packedPos >> 11) & 0x7FF) * 0.25;
-				float z2 = ((packedPos >> 22) & 0x3FF) * 0.25;
-			}
-		}
-	}
-
-
-	/*
-	 uint32 packed = 0;
-            packed |= ((int)(x / 0.25f) & 0x7FF);
-            packed |= ((int)(y / 0.25f) & 0x7FF) << 11;
-            packed |= ((int)(z / 0.25f) & 0x3FF) << 22;
-            *this << packed;
-	*/
-
-	/*
-	if (monsterMoveType != MonsterMoveStop)
-	{
-		uint32 movementsFlags;
-		Buffer >> movementsFlags;
-
-		uint32 timeBetweenPoints;
-		Buffer >> timeBetweenPoints;
-
-		uint32 PointsCnt;
-		Buffer >> PointsCnt;
-
-		glm::vec3 NextPoint;
-		for (size_t i = 0; i < PointsCnt; i++)
-		{
-			float positionX1;
-			Buffer >> positionX1;
-			float positionY1;
-			Buffer >> positionY1;
-			float positionZ1;
-			Buffer >> positionZ1;
-
-			NextPoint = fromGameToReal(glm::vec3(positionX1, positionY1, positionZ1));
-		}
-
-		
-		glm::vec3 direction = glm::normalize(NextPoint - position);
-
-		// Yaw is the bearing of the forward vector's shadow in the xy plane.
-		float yaw = atan2(direction.z, direction.x);
-
-		// Find the vector in the xy plane 90 degrees to the right of our bearing.
-		float planeRightX = glm::sin(yaw);
-		float planeRightZ = -glm::cos(yaw);
-
-		const auto& objIterator = m_WoWObjects.find(guid);
-		if (objIterator != m_WoWObjects.end())
-		{
-			auto objAsUnit = std::dynamic_pointer_cast<WoWUnit>(objIterator->second);
-			objAsUnit->SetLocalRotationEuler(glm::vec3(0.0f, -planeRightX, 0.0f));
-		}
-	}*/
 }
 
 void CWoWWorld::S_SMSG_DESTROY_OBJECT(CServerPacket & Buffer)
@@ -351,7 +159,8 @@ bool CWoWWorld::ProcessHandler(Opcodes Opcode, CServerPacket& Bytes)
 
 void CWoWWorld::SendPacket(CClientPacket & Bytes)
 {
-	m_Socket->SendPacket(Bytes);
+	if (auto lockedSocket = m_Socket.lock())
+		lockedSocket->SendPacket(Bytes);
 }
 
 

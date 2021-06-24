@@ -37,7 +37,7 @@ class CWoWWorld;
 
 
 class ZN_API WoWGameObject
-	: public WorldObject
+	: public CWoWWorldObject
 {
 public:
 	WoWGameObject(IScene& Scene, CWoWWorld& WoWWorld, CWoWObjectGuid Guid);
@@ -48,20 +48,16 @@ public:
 
 	void OnTemplateCallback(CWoWObjectGuid::EntryType_t entry, const std::shared_ptr<SGameObjectQueryResult>& QueryResult);
 
-	void ProcessMovementUpdate(CByteBuffer& Bytes) override;
-
 public:
 	static std::shared_ptr<WoWGameObject> Create(CWoWWorld& WoWWorld, IScene& Scene, CWoWObjectGuid Guid);
 	virtual void AfterCreate(IScene& Scene) override;
 	virtual void Destroy() override;
 
-private:
+protected:
 	CWoWWorld& m_WoWWorld;
-	std::shared_ptr<ISceneNode> m_HiddenNode;
 	
 	bool templateCreated;
 	std::shared_ptr<SGameObjectQueryResult> m_GameObjectTemplate;
-
 };
 
 #endif

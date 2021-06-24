@@ -39,7 +39,7 @@ private:
 public:	// Static
 	static void reset();
 private:
-	static std::unordered_map<uint32, const CMapM2Instance*> m_AlreadyDraw;
+	static std::map<uint32, const CMapM2Instance*> m_AlreadyDraw;
 };
 
 #endif

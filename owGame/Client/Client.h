@@ -5,7 +5,7 @@
 #include "AuthSocket.h"
 #include "WorldSocket.h"
 
-#include "CharacterSelection.h"
+#include "CharacterSelection/CharacterSelection.h"
 #include "World.h"
 
 #include "RealmInfo.h"
@@ -18,7 +18,7 @@ public:
 	CWoWClient(IScene& Scene, const std::string& AuthServerHost, uint16 AuthServerPort = 3724);
 	virtual ~CWoWClient();
 
-	void Update(/*std::future<void> PromiseExiter*/);
+	void Update(const UpdateEventArgs& e/*std::future<void> PromiseExiter*/);
 
     // CWoWClient
 	void BeginConnect(const std::string& Username, const std::string& Password);

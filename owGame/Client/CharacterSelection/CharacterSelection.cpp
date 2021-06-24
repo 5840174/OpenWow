@@ -33,7 +33,7 @@ void CWoWClientCharactedSelection::On_SMSG_CHAR_ENUM(CServerPacket & Bytes)
 		CInet_CharacterTemplate character(Bytes);
 		characters.push_back(character);
 
-		Log::Print("CWoWClientCharactedSelection::On_SMSG_CHAR_ENUM:: Character [%d] name '%d'.", i, character.Name.c_str());
+		Log::Print("CWoWClientCharactedSelection::On_SMSG_CHAR_ENUM:: Character [%d] name '%s'.", i, character.Name.c_str());
 	}
 
 	if (characters.empty())

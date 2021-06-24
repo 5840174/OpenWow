@@ -23,7 +23,7 @@ CWoWClient::~CWoWClient()
 	//m_UpdateThread.join();
 }
 
-void CWoWClient::Update(/*std::future<void> PromiseExiter*/)
+void CWoWClient::Update(const UpdateEventArgs& e/*std::future<void> PromiseExiter*/)
 {
 	//while (PromiseExiter.wait_for(std::chrono::milliseconds(0)) == std::future_status::timeout)
 	{
@@ -32,6 +32,9 @@ void CWoWClient::Update(/*std::future<void> PromiseExiter*/)
 
 		if (m_WorldSocket && m_WorldSocket->GetStatus() == CSocket::Connected)
 			m_WorldSocket->Update();
+
+		if (m_World)
+			m_World->Update(e);
 	}
 }
 

@@ -24,7 +24,7 @@ CWoWContainer::~CWoWContainer()
 //
 std::shared_ptr<CWoWContainer> CWoWContainer::Create(IScene& Scene, CWoWObjectGuid Guid)
 {
-	std::shared_ptr<CWoWContainer> thisObj = std::make_shared<CWoWContainer>(Guid);
+	std::shared_ptr<CWoWContainer> thisObj = MakeShared(CWoWContainer, Guid);
 	return thisObj;
 }
 

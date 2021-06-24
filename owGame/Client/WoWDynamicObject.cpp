@@ -19,7 +19,7 @@ WoWDynamicObject::~WoWDynamicObject()
 
 std::shared_ptr<WoWDynamicObject> WoWDynamicObject::Create(IScene& Scene, CWoWObjectGuid Guid)
 {
-	std::shared_ptr<WoWDynamicObject> thisObj = std::make_shared<WoWDynamicObject>(Guid);
+	std::shared_ptr<WoWDynamicObject> thisObj = MakeShared(WoWDynamicObject, Guid);
 	return thisObj;
 }
 

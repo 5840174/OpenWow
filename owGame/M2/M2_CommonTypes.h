@@ -1,6 +1,6 @@
 #pragma once
 
-#include __PACK_BEGIN
+#pragma pack(push,1)
 
 template<typename T>
 struct M2Array
@@ -62,4 +62,4 @@ struct M2Range
     uint32 maximum;
 };
 
-#include __PACK_END
+#pragma pack(pop)

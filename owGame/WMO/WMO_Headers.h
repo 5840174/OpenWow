@@ -4,7 +4,7 @@
 
 #include "DBC/DBC__Storage.h"
 
-#include __PACK_BEGIN
+#pragma pack(push,1)
 
 struct SWMO_HeaderDef
 {
@@ -206,6 +206,6 @@ struct SWMO_FogDef
 	} underwater_fog;
 };
 
-#include __PACK_END
+#pragma pack(pop)
 
 #endif

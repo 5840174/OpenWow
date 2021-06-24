@@ -58,11 +58,10 @@ void CWorldSocket::Open(std::string Host, port_t Port)
 
 void CWorldSocket::Update()
 {
-	while (true)
+	//while (true)
 	{
 		CByteBuffer buffer;
-
-		Receive(buffer, 4096);
+		Receive(buffer, 4096 * 16);
 
 		if (buffer.getSize() == 0)
 		{
@@ -73,9 +72,7 @@ void CWorldSocket::Update()
 			return;
 		}
 
-		//Log::Green("CWorldSocket::Update: Received '%d' bytes.", buffer.getSize());
-
-		 // Append to current packet
+		// Append to current packet
 		if (m_CurrentPacket != nullptr)
 		{
 			Packet2(buffer);
@@ -178,9 +175,7 @@ void CWorldSocket::Packet2(CByteBuffer& _buf)
         uint32 incomingBufferSize = _buf.getSize() - _buf.getPos();
 
         if (needToRead > incomingBufferSize)
-        {
             needToRead = incomingBufferSize;
-        }
 
 		if (needToRead > 0)
 		{
@@ -251,10 +246,13 @@ void CWorldSocket::AddHandler(Opcodes Opcode, std::function<void(CServerPacket&)
 //
 void CWorldSocket::S_AuthChallenge(CByteBuffer& _buff)
 {
+	// Receive
 	uint32 serverRandomSeed; 
 	_buff.seekRelative(4);
 	_buff.readBytes(&serverRandomSeed, 4);
 	_buff.seekRelative(32);
+
+
 
 	BigNumber clientRandomSeed;
     clientRandomSeed.SetRand(4 * 8);

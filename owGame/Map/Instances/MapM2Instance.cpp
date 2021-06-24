@@ -35,17 +35,10 @@ void CMapM2Instance::Initialize()
 
 void CMapM2Instance::Accept(IVisitor* visitor)
 {
-	const auto& idIter = m_AlreadyDraw.find(m_PlacementInfo.uniqueId);
-	if (idIter != m_AlreadyDraw.end())
-	{
-		if (idIter->second != this)
-			return;
-	}
-	else
-	{
-		m_AlreadyDraw.insert(std::make_pair(m_PlacementInfo.uniqueId, this));
-	}
-
+	auto& idIter = m_AlreadyDraw[m_PlacementInfo.uniqueId];
+	if (idIter == nullptr)
+		return;
+	idIter = this;
 	CM2_Base_Instance::Accept(visitor);
 }
 
@@ -66,6 +59,6 @@ void CMapM2Instance::reset()
 {
 	m_AlreadyDraw.clear();
 }
-std::unordered_map<uint32, const CMapM2Instance*> CMapM2Instance::m_AlreadyDraw;
+std::map<uint32, const CMapM2Instance*> CMapM2Instance::m_AlreadyDraw;
 
 #endif

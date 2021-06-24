@@ -8,8 +8,22 @@
 // Additional
 #include "World/WorldObjectsCreator.h"
 
+namespace
+{
+	enum MonsterMoveType : uint8
+	{
+		MonsterMoveNormal = 0,
+		MonsterMoveStop = 1,
+		MonsterMoveFacingSpot = 2,
+		MonsterMoveFacingTarget = 3,
+		MonsterMoveFacingAngle = 4
+	};
+}
+
+
 WoWUnit::WoWUnit(IScene& Scene, CWoWObjectGuid Guid)
-	: WorldObject(Scene, Guid)
+	: CWoWWorldObject(Scene, Guid)
+	, DestinationPoint(0.0f)
 {
 	m_ObjectType |= TYPEMASK_UNIT;
 	m_ObjectTypeId = TYPEID_UNIT;
@@ -28,10 +42,15 @@ void WoWUnit::ProcessMovementPacket(CByteBuffer & Bytes)
 	uint32 timeMS;
 	Bytes >> timeMS;
 
-	PositionX = Bytes.ReadFloat();
-	PositionY = Bytes.ReadFloat();
-	PositionZ = Bytes.ReadFloat();
-	Orientation = Bytes.ReadFloat();
+	glm::vec3 gamePosition;
+	Bytes >> gamePosition.x;
+	Bytes >> gamePosition.y;
+	Bytes >> gamePosition.z;
+	Position = fromGameToReal(gamePosition);
+
+	float gameOrientation;
+	Bytes >> gameOrientation;
+	Orientation = glm::degrees(gameOrientation + glm::half_pi<float>());
 
 	// 0x00000200
 	if (HasMovementFlag(MOVEMENTFLAG_ONTRANSPORT))
@@ -68,6 +87,133 @@ void WoWUnit::ProcessMovementPacket(CByteBuffer & Bytes)
 	// 0x04000000
 	if (HasMovementFlag(MOVEMENTFLAG_SPLINE_ELEVATION))
 		Bytes >> float(m_SplineElevation);
+
+	CommitPositionAndRotation();
+}
+
+void WoWUnit::ProcessMonsterMove(CByteBuffer & Bytes)
+{
+	glm::vec3 gamePosition;
+	Bytes >> gamePosition.x;
+	Bytes >> gamePosition.y;
+	Bytes >> gamePosition.z;
+	Position = fromGameToReal(gamePosition);
+
+	uint32 splineID;
+	Bytes >> splineID;
+
+	MonsterMoveType monsterMoveType;
+	Bytes.read(&monsterMoveType);
+
+	switch (monsterMoveType)
+	{
+		case MonsterMoveType::MonsterMoveFacingSpot:
+		{
+			float x, y, z;
+			Bytes >> x;
+			Bytes >> y;
+			Bytes >> z;
+		}
+		break;
+
+		case MonsterMoveType::MonsterMoveFacingTarget:
+		{
+			uint64 targetGUID;
+			Bytes >> targetGUID;
+		}
+		break;
+
+		case MonsterMoveType::MonsterMoveFacingAngle:
+		{
+			float angle;
+			Bytes >> angle;
+		}
+		break;
+
+		case MonsterMoveType::MonsterMoveNormal:
+		{
+			// normal packet
+		}
+		break;
+
+		case MonsterMoveType::MonsterMoveStop:
+			return;
+	}
+
+	Movement::MoveSplineFlag splineflags;
+	Bytes.read(&splineflags);
+
+	if (splineflags.animation)
+	{
+		uint8 animationID;
+		Bytes >> animationID;
+
+		int32 effectStartTime;
+		Bytes >> effectStartTime;
+	}
+
+	int32 duration;
+	Bytes >> duration;
+
+	if (splineflags.parabolic)
+	{
+		float vertical_acceleration;
+		Bytes >> vertical_acceleration;
+
+		int32 effectStartTime;
+		Bytes >> effectStartTime;
+	}
+
+
+	if (splineflags & Movement::MoveSplineFlag::Mask_CatmullRom)
+	{
+		uint32 pathPointsCnt;
+		Bytes >> pathPointsCnt;
+
+		for (uint32 i = 0u; i < pathPointsCnt; i++)
+		{
+			glm::vec3 gamePathPoint;
+			Bytes >> gamePathPoint.x;
+			Bytes >> gamePathPoint.y;
+			Bytes >> gamePathPoint.z;
+		}
+
+		//(splineflags.cyclic)
+	}
+	else // linear
+	{
+		uint32 count;
+		Bytes >> count;
+
+		glm::vec3 gameLastPoint;
+		Bytes >> gameLastPoint.x;
+		Bytes >> gameLastPoint.y;
+		Bytes >> gameLastPoint.z;
+		DestinationPoint = fromGameToReal(gameLastPoint);
+
+		if (count > 1)
+		{
+			for (uint32 i = 1; i < count; ++i)
+			{
+				uint32 packedPos;
+				Bytes >> packedPos;
+
+				//G3D::Vector3 middle = (real_path[0] + real_path[last_idx]) / 2.f;
+				//G3D::Vector3 offset;
+				// first and last points already appended
+				//for (uint32 i = 1; i < last_idx; ++i)
+				//{
+				//	offset = middle - real_path[i];
+
+				// this is offsets to path
+				float x2 = ((packedPos) & 0x7FF) * 0.25;
+				float y2 = ((packedPos >> 11) & 0x7FF) * 0.25;
+				float z2 = ((packedPos >> 22) & 0x3FF) * 0.25;
+			}
+		}
+	}
+
+	CommitPositionAndRotation();
 }
 
 
@@ -90,21 +236,27 @@ void WoWUnit::SetSpeed(UnitMoveType MoveType, float Speed)
 //
 void WoWUnit::Update(const UpdateEventArgs & e)
 {
+	__super::Update(e);
+
 	if (DestinationPoint.x == 0.0f || DestinationPoint.y == 0.0f || DestinationPoint.z == 0.0f)
 		return;
 
-	if (glm::distance(GetPosition(), DestinationPoint) > 0.1f)
+	if (m_HiddenNode == nullptr)
+		return;
+
+	if (glm::distance(Position, DestinationPoint) > 0.1f)
 	{
-		glm::vec3 directionVec = glm::normalize(DestinationPoint - GetLocalPosition());
+		glm::vec3 directionVec = glm::normalize(DestinationPoint - Position);
 
 		float speed = GetSpeed(MOVE_WALK) / 1000.0f * e.DeltaTime;
-		SetLocalPosition(GetLocalPosition() + directionVec * speed);
+		Position = Position + directionVec * speed;
+		CommitPositionAndRotation();
 
 		glm::vec3 rightDirection = glm::normalize(glm::cross(directionVec, glm::vec3(0.0f, 1.0f, 0.0f)));
 		glm::vec3 leftDirection = -rightDirection;
 
 		glm::quat lookAtQuat = glm::quatLookAt(leftDirection, glm::vec3(0.0f, 1.0f, 0.0f));
-		SetLocalRotationQuaternion(lookAtQuat);
+		//SetLocalRotationQuaternion(lookAtQuat);
 	}
 }
 
@@ -115,14 +267,8 @@ void WoWUnit::Update(const UpdateEventArgs & e)
 //
 std::shared_ptr<WoWUnit> WoWUnit::Create(IScene& Scene, CWoWObjectGuid Guid)
 {
-	std::shared_ptr<WoWUnit> thisObj = Scene.GetRootSceneNode()->CreateSceneNode<WoWUnit>(Guid);
+	std::shared_ptr<WoWUnit> thisObj = MakeShared(WoWUnit, Scene, Guid);
 	//Log::Error("WoWUnit created. ID  = %d. HIGH = %d, ENTRY = %d, COUNTER = %d", Guid.GetRawValue(), Guid.GetHigh(), Guid.GetEntry(), Guid.GetCounter());
-
-	// For test only
-	//BoundingBox bbox(glm::vec3(-2.0f), glm::vec3(2.0f));
-	//bbox.calculateCenter();
-	//thisObj->GetComponentT<IColliderComponent>()->SetBounds(bbox);
-
 	return thisObj;
 }
 
@@ -138,7 +284,7 @@ void WoWUnit::AfterCreate(IScene& Scene)
 	if (displayInfo != 0)
 	{
 		CWorldObjectCreator creator(Scene.GetBaseManager());
-		m_HiddenNode = creator.BuildCreatureFromDisplayInfo(Scene.GetBaseManager().GetApplication().GetRenderDevice(), &Scene, displayInfo, shared_from_this());
+		m_HiddenNode = creator.BuildCreatureFromDisplayInfo(Scene.GetBaseManager().GetApplication().GetRenderDevice(), &Scene, displayInfo);
 
 		const DBC_CreatureDisplayInfoRecord * creatureDisplayInfo = GetBaseManager().GetManager<CDBCStorage>()->DBC_CreatureDisplayInfo()[displayInfo];
 		if (creatureDisplayInfo == nullptr)
@@ -157,9 +303,7 @@ void WoWUnit::AfterCreate(IScene& Scene)
 		//m_HiddenNode->SetScale(glm::vec3(scale));
 	}
 	else
-	{
-		_ASSERT(false);
-	}
+		throw CException("GameObject display info is zero.");
 }
 
 void WoWUnit::Destroy()

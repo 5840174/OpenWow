@@ -5,7 +5,7 @@
 #include "WoWWorldObject.h"
 
 class ZN_API WoWCorpse
-	: public WorldObject
+	: public CWoWWorldObject
 {
 public:
 	WoWCorpse(IScene& Scene, CWoWObjectGuid Guid);

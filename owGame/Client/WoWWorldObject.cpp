@@ -5,15 +5,30 @@
 // General
 #include "WoWWorldObject.h"
 
-WorldObject::WorldObject(IScene& Scene, CWoWObjectGuid Guid)
+CWoWWorldObject::CWoWWorldObject(IScene& Scene, CWoWObjectGuid Guid)
 	: WoWObject(Guid)
-	, WorldLocation(Scene)
-	, DestinationPoint(0.0f)
+	, m_HiddenNodeDirty(false)
+	, m_BaseManager(Scene.GetBaseManager())
 {
 }
 
-WorldObject::~WorldObject()
+CWoWWorldObject::~CWoWWorldObject()
 {
+}
+
+void CWoWWorldObject::Update(const UpdateEventArgs & e)
+{
+	if (m_HiddenNodeDirty && m_HiddenNode)
+	{
+		m_HiddenNode->SetLocalPosition(Position);
+		m_HiddenNode->SetLocalRotationEuler(glm::vec3(0.0f, Orientation, 0.0f));
+		m_HiddenNodeDirty = false;
+	}
+}
+
+void CWoWWorldObject::CommitPositionAndRotation()
+{
+	m_HiddenNodeDirty = true;
 }
 
 #endif

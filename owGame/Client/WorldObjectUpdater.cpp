@@ -132,7 +132,7 @@ void CWorldObjectUpdater::ProcessUpdatePacket(CByteBuffer& Bytes)
 				object->ProcessMovementUpdate(Bytes);
 				object->UpdateValues(Bytes);
 
-				if (typeID != EWoWObjectTypeID::TYPEID_UNIT)
+				//if (typeID != EWoWObjectTypeID::TYPEID_UNIT)
 					object->AfterCreate(m_Scene);
 			}
 			break;
@@ -154,7 +154,8 @@ void CWorldObjectUpdater::ProcessUpdatePacket(CByteBuffer& Bytes)
 				object->ProcessMovementUpdate(Bytes);
 				object->UpdateValues(Bytes);
 
-				object->AfterCreate(m_Scene);
+				//if (typeID != EWoWObjectTypeID::TYPEID_UNIT)
+					object->AfterCreate(m_Scene);
 			}
 			break;
 

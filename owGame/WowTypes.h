@@ -1,5 +1,7 @@
 #pragma once
 
+#include "WowConsts.h"
+
 static inline glm::vec3 Fix_XZY(const glm::vec3& _vec)
 {
 	return glm::vec3(_vec.x, _vec.z, _vec.y);
@@ -14,6 +16,29 @@ static inline glm::quat Fix_XZmYW(const glm::quat& _quat)
 {
 	return glm::quat(_quat.w, _quat.x, _quat.z, -_quat.y);
 }
+
+static inline glm::vec3 fromRealToGame(glm::vec3 p)
+{
+	return glm::vec3(
+		-p.x + C_ZeroPoint,
+		-p.z + C_ZeroPoint,
+		(p.y)
+	);
+}
+
+// Y            X        Z			// DBC
+//-618.518, -4251.67, 38.718, 0
+// X			Y        Z
+//-4251.67, -618.518, 38.718, 0
+static inline glm::vec3 fromGameToReal(glm::vec3 p)
+{
+	return glm::vec3(
+		-p.y + C_ZeroPoint,
+		p.z,
+		-p.x + C_ZeroPoint
+	);
+}
+
 
 inline glm::vec4 fromARGB(uint32 color)
 {
@@ -50,7 +75,7 @@ static inline glm::vec4 fromABGR(uint32 color)
 	return glm::vec4(r, g, b, a);
 }
 
-#include __PACK_BEGIN
+#pragma pack(push,1)
 
 struct C4Plane
 {
@@ -147,4 +172,4 @@ struct C3Ray
 	glm::vec3 dir;
 };
 
-#include __PACK_END
+#pragma pack(pop)

@@ -429,9 +429,6 @@
     <ClCompile Include="Settings\WoWSettingsGroup.cpp">
       <Filter>Utils</Filter>
     </ClCompile>
-    <ClCompile Include="Client\WorldLocation.cpp">
-      <Filter>Client\Objects</Filter>
-    </ClCompile>
     <ClCompile Include="Client\World.cpp">
       <Filter>Client\World</Filter>
     </ClCompile>
@@ -579,9 +576,6 @@
     <ClCompile Include="World\GameObject\GameObjectWMO.cpp">
       <Filter>World\GameObject</Filter>
     </ClCompile>
-    <ClCompile Include="Client\CharacterSelection.cpp">
-      <Filter>Client\CharacterSelection</Filter>
-    </ClCompile>
     <ClCompile Include="Renderer\RenderPass_Path.cpp">
       <Filter>Renderer\Passes</Filter>
     </ClCompile>
@@ -599,6 +593,12 @@
     </ClCompile>
     <ClCompile Include="Client\TaxiStorage.cpp">
       <Filter>Client\World</Filter>
+    </ClCompile>
+    <ClCompile Include="Client\WoWGameObjectMOTransport.cpp">
+      <Filter>Client\Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="Client\CharacterSelection\CharacterSelection.cpp">
+      <Filter>Client\CharacterSelection</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -1037,9 +1037,6 @@
     <ClInclude Include="Client\ClientCache.h">
       <Filter>Client</Filter>
     </ClInclude>
-    <ClInclude Include="Client\WorldLocation.h">
-      <Filter>Client\Objects</Filter>
-    </ClInclude>
     <ClInclude Include="Client\World.h">
       <Filter>Client\World</Filter>
     </ClInclude>
@@ -1208,9 +1205,6 @@
     <ClInclude Include="World\GameObject\GameObjectWMO.h">
       <Filter>World\GameObject</Filter>
     </ClInclude>
-    <ClInclude Include="Client\CharacterSelection.h">
-      <Filter>Client\CharacterSelection</Filter>
-    </ClInclude>
     <ClInclude Include="Renderer\RenderPass_Path.h">
       <Filter>Renderer\Passes</Filter>
     </ClInclude>
@@ -1246,6 +1240,12 @@
     </ClInclude>
     <ClInclude Include="DBC\Tables\DBC_TaxiNodes.h">
       <Filter>DBC\Tables\Taxi</Filter>
+    </ClInclude>
+    <ClInclude Include="Client\WoWGameObjectMOTransport.h">
+      <Filter>Client\Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="Client\CharacterSelection\CharacterSelection.h">
+      <Filter>Client\CharacterSelection</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

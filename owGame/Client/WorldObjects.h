@@ -19,6 +19,8 @@ public:
 	CWorldObjects(CWoWWorld& WoWWorld, IScene& Scene);
 	virtual ~CWorldObjects();
 
+	void Update(const UpdateEventArgs& e);
+
 	std::shared_ptr<WoWObject> GetWoWObject(CWoWObjectGuid ObjectGUID);
 	bool IsWoWObjectExists(CWoWObjectGuid ObjectGUID);
 	void EraseWoWObject(const std::shared_ptr<WoWObject>& WoWObject);

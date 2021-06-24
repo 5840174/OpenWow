@@ -2,7 +2,7 @@
 
 #include "LiquidModel.h"
 
-#include __PACK_BEGIN
+#pragma pack(push,1)
 
 struct SLiquidVertex
 {
@@ -48,7 +48,7 @@ struct SLiquidFlag
 	uint8 shared : 1;    // 0x80
 };
 
-#include __PACK_END
+#pragma pack(pop)
 
 
 

@@ -6,7 +6,7 @@
 #include "WoWCorpse.h"
 
 WoWCorpse::WoWCorpse(IScene& Scene, CWoWObjectGuid Guid)
-	: WorldObject(Scene, Guid)
+	: CWoWWorldObject(Scene, Guid)
 {
 	m_ObjectType |= TYPEMASK_CORPSE;
 	m_ObjectTypeId = TYPEID_CORPSE;
@@ -19,7 +19,7 @@ WoWCorpse::~WoWCorpse()
 
 std::shared_ptr<WoWCorpse> WoWCorpse::Create(IScene& Scene, CWoWObjectGuid Guid)
 {
-	std::shared_ptr<WoWCorpse> thisObj = Scene.GetRootSceneNode()->CreateSceneNode<WoWCorpse>(Guid);
+	std::shared_ptr<WoWCorpse> thisObj = MakeShared(WoWCorpse, Scene, Guid);
 	return thisObj;
 }
 

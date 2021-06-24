@@ -1,6 +1,6 @@
 #pragma once
 
-#include __PACK_BEGIN
+#pragma pack(push,1)
 
 struct SM2_SkinBones
 {
@@ -79,4 +79,4 @@ struct SM2_SkinProfile
 	// Maximum number of bones per drawcall for each view. Related to (old) GPU numbers of registers. 
 	// Values seen : 256, 64, 53, 21
 };
-#include __PACK_END
+#pragma pack(pop)

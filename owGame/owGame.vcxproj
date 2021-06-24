@@ -38,7 +38,7 @@
     <ClCompile Include="Client\ARC4.cpp" />
     <ClCompile Include="Client\AuthCrypt.cpp" />
     <ClCompile Include="Client\AuthSocket.cpp" />
-    <ClCompile Include="Client\CharacterSelection.cpp" />
+    <ClCompile Include="Client\CharacterSelection\CharacterSelection.cpp" />
     <ClCompile Include="Client\ClientCache.cpp" />
     <ClCompile Include="Client\ObjectGUID.cpp" />
     <ClCompile Include="Client\TaxiStorage.cpp" />
@@ -53,6 +53,7 @@
     <ClCompile Include="Client\WoWDynamicObject.cpp" />
     <ClCompile Include="Client\WoWGameObject.cpp" />
     <ClCompile Include="Client\HMACSHA1.cpp" />
+    <ClCompile Include="Client\WoWGameObjectMOTransport.cpp" />
     <ClCompile Include="Client\WoWItem.cpp" />
     <ClCompile Include="Client\WoWObject.cpp" />
     <ClCompile Include="Client\OpenSSLCrypto.cpp" />
@@ -63,7 +64,6 @@
     <ClCompile Include="Client\Templates\ItemTemplate.cpp" />
     <ClCompile Include="Client\WoWUnit.cpp" />
     <ClCompile Include="Client\World.cpp" />
-    <ClCompile Include="Client\WorldLocation.cpp" />
     <ClCompile Include="Client\WoWWorldObject.cpp" />
     <ClCompile Include="Client\WorldSocket.cpp" />
     <ClCompile Include="DBC\DBC__File.cpp" />
@@ -189,7 +189,7 @@
     <ClInclude Include="Client\AuthCodes.h" />
     <ClInclude Include="Client\AuthCrypt.h" />
     <ClInclude Include="Client\AuthSocket.h" />
-    <ClInclude Include="Client\CharacterSelection.h" />
+    <ClInclude Include="Client\CharacterSelection\CharacterSelection.h" />
     <ClInclude Include="Client\ClientCacheTemplates.h" />
     <ClInclude Include="Client\MovementTypedefs.h" />
     <ClInclude Include="Client\MoveSplineFlag.h" />
@@ -207,6 +207,7 @@
     <ClInclude Include="Client\WoWDynamicObject.h" />
     <ClInclude Include="Client\WoWGameObject.h" />
     <ClInclude Include="Client\HMACSHA1.h" />
+    <ClInclude Include="Client\WoWGameObjectMOTransport.h" />
     <ClInclude Include="Client\WoWItem.h" />
     <ClInclude Include="Client\WoWObject.h" />
     <ClInclude Include="Client\Opcodes.h" />
@@ -224,7 +225,6 @@
     <ClInclude Include="Client\UpdateFields.h" />
     <ClInclude Include="Client\UpdateMask.h" />
     <ClInclude Include="Client\World.h" />
-    <ClInclude Include="Client\WorldLocation.h" />
     <ClInclude Include="Client\WoWWorldObject.h" />
     <ClInclude Include="Client\WorldSocket.h" />
     <ClInclude Include="common.h" />

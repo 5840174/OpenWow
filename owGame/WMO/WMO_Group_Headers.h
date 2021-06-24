@@ -4,7 +4,7 @@
 
 #include "DBC/DBC__Storage.h"
 
-#include __PACK_BEGIN
+#pragma pack(push,1)
 
 struct SWMOGroup_Flags
 {
@@ -148,6 +148,6 @@ struct SWMO_Group_MLIQDef
 	uint16    materialID; // material ID (index into MOMT)
 };
 
-#include __PACK_END
+#pragma pack(pop)
 
 #endif

@@ -34,7 +34,7 @@ std::shared_ptr<Creature> CWorldObjectCreator::BuildCreatureFromDisplayInfo(IRen
 	if (m2Model == nullptr)
 		return nullptr;
 
-	std::shared_ptr<Creature> newCreature = Parent->CreateSceneNode<Creature>(m2Model);
+	std::shared_ptr<Creature> newCreature = ((Parent != nullptr) ? Parent : Scene->GetRootSceneNode())->CreateSceneNode<Creature>(m2Model);
 	m_BaseManager.GetManager<ILoader>()->AddToLoadQueue(newCreature);
 	newCreature->setAlpha(static_cast<float>(rec->Get_Opacity()) / 255.0f);
 	newCreature->SetScale(glm::vec3(rec->Get_Scale()));
@@ -61,7 +61,7 @@ std::shared_ptr<Character> CWorldObjectCreator::BuildCharactedFromTemplate(IRend
 	if (m2Model == nullptr)
 		return nullptr;
 
-	std::shared_ptr<Character> newCharacter = Parent->CreateSceneNode<Character>(m2Model);
+	std::shared_ptr<Character> newCharacter = ((Parent != nullptr) ? Parent : Scene->GetRootSceneNode())->CreateSceneNode<Character>(m2Model);
 	m_BaseManager.GetManager<ILoader>()->AddToLoadQueue(newCharacter);
 
 	// 2. Template
@@ -96,7 +96,7 @@ std::shared_ptr<Character> CWorldObjectCreator::BuildCharactedFromDisplayInfo(IR
 	if (m2Model == nullptr)
 		return nullptr;
 
-	std::shared_ptr<Character> newCharacter = Parent->CreateSceneNode<Character>(m2Model);
+	std::shared_ptr<Character> newCharacter = ((Parent != nullptr) ? Parent : Scene->GetRootSceneNode())->CreateSceneNode<Character>(m2Model);
 	m_BaseManager.GetManager<ILoader>()->AddToLoadQueue(newCharacter);
 
 	// 2. Template
@@ -173,7 +173,7 @@ std::shared_ptr<ISceneNode> CWorldObjectCreator::BuildGameObjectFromDisplayInfo(
 				return nullptr;
 		}
 
-		std::shared_ptr<GameObjectM2> newGameObject = Parent->CreateSceneNode<GameObjectM2>(m2Model);
+		std::shared_ptr<GameObjectM2> newGameObject = ((Parent != nullptr) ? Parent : Scene->GetRootSceneNode())->CreateSceneNode<GameObjectM2>(m2Model);
 		m_BaseManager.GetManager<ILoader>()->AddToLoadQueue(newGameObject);
 		return newGameObject;
 	}
@@ -186,7 +186,7 @@ std::shared_ptr<ISceneNode> CWorldObjectCreator::BuildGameObjectFromDisplayInfo(
 				return nullptr;
 		}
 
-		std::shared_ptr<GameObjectWMO> newGameObject = Parent->CreateSceneNode<GameObjectWMO>(wmoModel);
+		std::shared_ptr<GameObjectWMO> newGameObject = ((Parent != nullptr) ? Parent : Scene->GetRootSceneNode())->CreateSceneNode<GameObjectWMO>(wmoModel);
 		m_BaseManager.GetManager<ILoader>()->AddToLoadQueue(newGameObject);
 		return newGameObject;
 	}

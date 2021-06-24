@@ -4,7 +4,7 @@
 
 #include "M2_CommonTypes.h"
 
-#include __PACK_BEGIN
+#pragma pack(push,1)
 
 struct SM2_Loop
 {
@@ -137,11 +137,11 @@ struct SM2_Vertex_znEngine
 	glm::vec2 tex_coords[2];
 };
 
-#include __PACK_END
+#pragma pack(pop)
 
 #include "M2_SkinTypes.h"
 
-#include __PACK_BEGIN
+#pragma pack(push,1)
 
 
 struct SM2_Color
@@ -462,6 +462,6 @@ struct SM2_Particle
 	M2Track<uint8> enabledIn;       // (boolean) Appears to be used sparely now, probably there's a flag that links particles to animation sets where they are enabled.
 };
 
-#include __PACK_END
+#pragma pack(pop)
 
 #include "M2_Animated.h"

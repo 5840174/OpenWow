@@ -19,7 +19,7 @@ WoWItem::~WoWItem()
 
 std::shared_ptr<WoWItem> WoWItem::Create(IScene& Scene, CWoWObjectGuid Guid)
 {
-	std::shared_ptr<WoWItem> thisObj = std::make_shared<WoWItem>(Guid);
+	std::shared_ptr<WoWItem> thisObj = MakeShared(WoWItem, Guid);
 	return thisObj;
 }
 

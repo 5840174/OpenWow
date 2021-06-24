@@ -24,13 +24,7 @@ WoWPlayer::~WoWPlayer()
 //
 std::shared_ptr<WoWPlayer> WoWPlayer::Create(IScene& Scene, CWoWObjectGuid Guid)
 {
-	std::shared_ptr<WoWPlayer> thisObj = Scene.GetRootSceneNode()->CreateSceneNode<WoWPlayer>(Guid);
-
-	// For test only
-	//BoundingBox bbox(glm::vec3(-2.0f), glm::vec3(2.0f));
-	//bbox.calculateCenter();
-	//thisObj->GetComponentT<IColliderComponent>()->SetBounds(bbox);
-
+	std::shared_ptr<WoWPlayer> thisObj = MakeShared(WoWPlayer, Scene, Guid);
 	return thisObj;
 }
 

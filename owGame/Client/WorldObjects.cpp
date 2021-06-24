@@ -5,6 +5,7 @@
 
 // Additional
 #include "World.h"
+#include "WoWGameObjectMOTransport.h"
 
 CWorldObjects::CWorldObjects(CWoWWorld & WoWWorld, IScene & Scene)
 	: m_WoWWorld(WoWWorld)
@@ -13,6 +14,21 @@ CWorldObjects::CWorldObjects(CWoWWorld & WoWWorld, IScene & Scene)
 
 CWorldObjects::~CWorldObjects()
 {}
+
+void CWorldObjects::Update(const UpdateEventArgs & e)
+{
+	for (const auto& wowUnit : m_WoWUnits)
+		wowUnit.second->Update(e);
+
+	for (const auto& wowPlayer : m_WoWPlayers)
+		wowPlayer.second->Update(e);
+
+	for (const auto& wowgameObject : m_WoWGameObject)
+		wowgameObject.second->Update(e);
+
+	for (const auto& wowCorpse : m_WoWCorpses)
+		wowCorpse.second->Update(e);
+}
 
 std::shared_ptr<WoWObject> CWorldObjects::GetWoWObject(CWoWObjectGuid ObjectGUID)
 {
@@ -72,7 +88,11 @@ std::shared_ptr<WoWObject> CWorldObjects::GetWoWObject(CWoWObjectGuid ObjectGUID
 		if (objIterator != m_WoWGameObject.end())
 			return objIterator->second;
 
-		auto object = WoWGameObject::Create(m_WoWWorld, m_Scene, ObjectGUID);
+		std::shared_ptr<WoWGameObject> object = nullptr;
+		if (ObjectGUID.GetHigh() == EWoWObjectHighGuid::Mo_Transport)
+			object = WoWGameObjectMOTransport::Create(m_WoWWorld, m_Scene, ObjectGUID);
+		else
+			object = WoWGameObject::Create(m_WoWWorld, m_Scene, ObjectGUID);
 		m_WoWGameObject[ObjectGUID] = object;
 		return object;
 	}

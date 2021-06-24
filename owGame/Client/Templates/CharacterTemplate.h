@@ -4,7 +4,7 @@
 #include "CharacterEnums.h"
 #include "ItemTemplate.h"
 
-#include __PACK_BEGIN
+#pragma pack(push,1)
 
 struct ZN_API CInet_CharacterTemplate
 {
@@ -49,4 +49,4 @@ struct ZN_API CInet_CharacterTemplate
 	CInet_ItemTemplate			ItemsTemplates[INVENTORY_SLOT_BAG_END];
 };
 
-#include __PACK_END
+#pragma pack(pop)

@@ -81,7 +81,7 @@ void CSceneWoWClient::OnUpdate(UpdateEventArgs & e)
 
 	__super::OnUpdate(e);
 
-	m_WowClient->Update();
+	m_WowClient->Update(e);
 
 	m_RendererStatisticText->SetText(GetRenderer()->GetStatisticText());
 }

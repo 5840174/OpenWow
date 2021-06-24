@@ -7,7 +7,7 @@
 #include "DBC/Tables/DBC_LiquidType_Wotlk.h"
 #include "Liquid/LiquidModel.h"
 
-#include __PACK_BEGIN
+#pragma pack(push,1)
 
 struct MH2O_Instance
 {
@@ -26,7 +26,7 @@ struct MH2O_Instance
 	uint32 offsetVertexData;
 };
 
-#include __PACK_END
+#pragma pack(pop)
 
 
 CMapTileLiquid::CMapTileLiquid(IRenderDevice & RenderDevice, const std::shared_ptr<IByteBuffer>& Bytes, const MH2O_Header& header)
