@@ -64,7 +64,7 @@ void CWoWClient::OnRealmListSelected(const RealmInfo& SelectedRealm, BigNumber K
 	m_WorldSocket->Open(SelectedRealm.getIP(), SelectedRealm.getPort());
 
 	m_CharacterSelection = std::make_unique<CWoWClientCharactedSelection>(*this, m_Scene);
-	m_WorldSocket->SetExternalHandler(std::bind(&CWoWClientCharactedSelection::ProcessHandler, m_CharacterSelection.get(), std::placeholders::_1, std::placeholders::_2));
+	m_WorldSocket->SetExternalHandler(std::bind(&CWoWClientCharactedSelection::ProcessPacket, m_CharacterSelection.get(), std::placeholders::_1));
 }
 
 void CWoWClient::OnCharacterSelected(const CInet_CharacterTemplate & SelectedCharacter)
@@ -74,7 +74,7 @@ void CWoWClient::OnCharacterSelected(const CInet_CharacterTemplate & SelectedCha
 	m_CharacterSelection.reset();
 
 	m_World = std::make_unique<CWoWWorld>(m_Scene, m_WorldSocket);
-	m_WorldSocket->SetExternalHandler(std::bind(&CWoWWorld::ProcessHandler, m_World.get(), std::placeholders::_1, std::placeholders::_2));
+	m_WorldSocket->SetExternalHandler(std::bind(&CWoWWorld::ProcessPacket, m_World.get(), std::placeholders::_1));
 
 	m_World->EnterWorld(SelectedCharacter);
 }

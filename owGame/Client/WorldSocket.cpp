@@ -19,7 +19,8 @@ CWorldSocket::CWorldSocket(const std::string& Login, BigNumber Key)
 	, m_Login(Login)
 	, m_Key(Key)
 {
-
+	AddHandler(SMSG_AUTH_CHALLENGE, std::bind(&CWorldSocket::On_SMSG_AUTH_CHALLENGE, this, std::placeholders::_1));
+	AddHandler(SMSG_AUTH_RESPONSE, std::bind(&CWorldSocket::On_SMSG_AUTH_RESPONSE, this, std::placeholders::_1));
 }
 
 CWorldSocket::~CWorldSocket()
@@ -149,7 +150,7 @@ void CWorldSocket::SendPacket(CClientPacket& Packet)
     Send(Packet.getDataEx(), Packet.getSize());
 }
 
-void CWorldSocket::SetExternalHandler(std::function<bool(Opcodes, CServerPacket&)> Handler)
+void CWorldSocket::SetExternalHandler(std::function<bool(CServerPacket&)> Handler)
 {
 	_ASSERT(Handler != nullptr);
 	m_ExternalHandler = Handler;
@@ -191,7 +192,8 @@ void CWorldSocket::Packet2(CByteBuffer& _buf)
     // Check if we read full packet
     if (m_CurrentPacket->IsComplete())
     {
-		if (false == ProcessPacket(*m_CurrentPacket))
+		CServerPacket packet(*m_CurrentPacket);
+		if (false == ProcessPacket(packet))
 		{
 			if (m_CurrentPacket->GetPacketOpcode() >= NUM_MSG_TYPES)
 			{
@@ -211,25 +213,7 @@ void CWorldSocket::Packet2(CByteBuffer& _buf)
     }
 }
 
-bool CWorldSocket::ProcessPacket(CServerPacket ServerPacket)
-{
-	if (ServerPacket.GetPacketOpcode() == SMSG_AUTH_CHALLENGE)
-	{
-		S_AuthChallenge(ServerPacket);
-		return true;
-	}
-	else if (ServerPacket.GetPacketOpcode() == SMSG_AUTH_RESPONSE)
-	{
-		S_AuthResponse(ServerPacket);
-		return true;
-	}
-	else if (m_ExternalHandler.operator()(ServerPacket.GetPacketOpcode(), ServerPacket))
-	{
-		return true;
-	}
 
-	return false;
-}
 
 
 
@@ -239,12 +223,35 @@ void CWorldSocket::AddHandler(Opcodes Opcode, std::function<void(CServerPacket&)
 	m_Handlers.insert(std::make_pair(Opcode, Handler));
 }
 
+bool CWorldSocket::ProcessPacket(CServerPacket& ServerPacket)
+{
+	ServerPacket.seek(0);
+
+	const auto& handler = m_Handlers.find(ServerPacket.GetPacketOpcode());
+	if (handler != m_Handlers.end())
+	{
+		_ASSERT(handler->second != nullptr);
+		(handler->second).operator()(ServerPacket);
+
+		if (ServerPacket.getPos() != ServerPacket.getSize())
+			throw CException("CWorldSocket::ProcessPacket: Packet '%d' is not fully readed. %d of %d.", ServerPacket.GetPacketOpcode(), ServerPacket.getPos(), ServerPacket.getSize());
+
+		return true;
+	}
+	else if (m_ExternalHandler.operator()(ServerPacket))
+	{
+		return true;
+	}
+
+	return false;
+}
+
 
 
 //
 // Handlers
 //
-void CWorldSocket::S_AuthChallenge(CByteBuffer& _buff)
+void CWorldSocket::On_SMSG_AUTH_CHALLENGE(CServerPacket& _buff)
 {
 	// Receive
 	uint32 serverRandomSeed; 
@@ -269,17 +276,48 @@ void CWorldSocket::S_AuthChallenge(CByteBuffer& _buff)
 	uSHA.Finalize();
 
 	// Send auth packet to server. 
+
+	/*
+	    uint32 BattlegroupID = 0;
+    uint32 LoginServerType = 0;
+    uint32 RealmID = 0;
+    uint32 Build = 0;
+    uint32 LocalChallenge = 0;
+    uint32 LoginServerID = 0;
+    uint32 RegionID = 0;
+    uint64 DosResponse = 0;
+    uint8 Digest[SHA_DIGEST_LENGTH] = {};
+    std::string Account;
+    ByteBuffer AddonInfo;
+
+
+		// Read the content of the packet
+	recvPacket >> authSession->Build;
+	recvPacket >> authSession->LoginServerID;
+	recvPacket >> authSession->Account;
+	recvPacket >> authSession->LoginServerType;
+	recvPacket >> authSession->LocalChallenge;
+	recvPacket >> authSession->RegionID;
+	recvPacket >> authSession->BattlegroupID;
+	recvPacket >> authSession->RealmID;               // realmId from auth_database.realmlist table
+	recvPacket >> authSession->DosResponse;
+	recvPacket.read(authSession->Digest, 20);
+	authSession->AddonInfo.append(recvPacket.contents() + recvPacket.rpos(), recvPacket.size() - recvPacket.rpos());
+
+	*/
+	
+
     CClientPacket p(CMSG_AUTH_SESSION);
     p << (uint32)12340;
-    p.writeDummy(4);
-    p << m_Login;
-	p.writeDummy(4);
-    p.writeBytes(clientRandomSeed.AsByteArray(4).get(), 4);
-	p.writeDummy(4);
-	p.writeDummy(4);
-	p << 1;
-	p.writeDummy(8);
-    p.writeBytes(uSHA.GetDigest(), SHA_DIGEST_LENGTH);
+    p.writeDummy(4);      // LoginServerID
+    p << m_Login;         // Account
+	p.writeDummy(4);      // LoginServerType
+    p.writeBytes(clientRandomSeed.AsByteArray(4).get(), 4);  // LocalChallenge
+	p.writeDummy(4); // RegionID
+	p.writeDummy(4); // BattlegroupID
+	p << 1;          // RealmID !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+	p.writeDummy(8); // DosResponse
+    p.writeBytes(uSHA.GetDigest(), SHA_DIGEST_LENGTH); // Digest
 
     // We must pass addons to connect to private servers
     CByteBuffer addonsBuffer;
@@ -293,7 +331,7 @@ void CWorldSocket::S_AuthChallenge(CByteBuffer& _buff)
     m_WoWCryptoUtils.Init(&m_Key);
 }
 
-void CWorldSocket::S_AuthResponse(CByteBuffer& _buff)
+void CWorldSocket::On_SMSG_AUTH_RESPONSE(CServerPacket& _buff)
 {
 	enum CommandDetail : uint8
 	{
@@ -324,6 +362,7 @@ void CWorldSocket::S_AuthResponse(CByteBuffer& _buff)
 
 	CommandDetail detail;
 	_buff.readBytes(&detail, sizeof(uint8));
+	_buff.seekRelative(_buff.getSize() - _buff.getPos());
 
 	if (detail == CommandDetail::AUTH_OK)
 	{

@@ -30,6 +30,10 @@ public:
 	void Accept(IWoWVisitor * WoWVisitor);
 
 	void S_SMSG_LOGIN_VERIFY_WORLD(CServerPacket& Buffer);
+	
+	void On_SMSG_MOTD(CServerPacket& Buffer);
+	void On_SMSG_NOTIFICATION(CServerPacket& Buffer);
+
 	void On_SMSG_TIME_SYNC_REQ(CServerPacket& Buffer);
 
 	void S_SMSG_MONSTER_MOVE(CServerPacket& Buffer);
@@ -37,7 +41,7 @@ public:
 
 	// CWoWWorld
 	void AddHandler(Opcodes Opcode, std::function<void(CServerPacket&)> Handler);
-	bool ProcessHandler(Opcodes Opcode, CServerPacket& Bytes);
+	bool ProcessPacket(CServerPacket& ServerPacket);
 	void SendPacket(CClientPacket& Packet);
 
 	std::shared_ptr<CMap> GetMap() const;

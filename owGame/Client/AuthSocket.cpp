@@ -12,22 +12,20 @@ CAuthSocket::CAuthSocket(CWoWClient& WoWClient, const std::string& Login, const 
     : m_WoWClient(WoWClient)
 	, m_Login(Login)
 {
-	char loginPasswordUpperCase[256];
-	std::memset(loginPasswordUpperCase, 0x00, sizeof(loginPasswordUpperCase));
-	sprintf_s(loginPasswordUpperCase, "%s:%s", m_Login.c_str(), Password.c_str());
+	std::string loginPasswordUpperCase = Login + ":" + Password;
 
 	m_LoginPasswordHash.Initialize();
-	m_LoginPasswordHash.UpdateData((const uint8*)loginPasswordUpperCase, strlen(loginPasswordUpperCase));
+	m_LoginPasswordHash.UpdateData((const uint8*)loginPasswordUpperCase.c_str(), loginPasswordUpperCase.length());
 	m_LoginPasswordHash.Finalize();
 
-	m_Handlers[AUTH_LOGON_CHALLENGE] = &CAuthSocket::S_LoginChallenge;
-	m_Handlers[AUTH_LOGON_PROOF] = &CAuthSocket::S_LoginProof;
-	m_Handlers[REALM_LIST] = &CAuthSocket::S_Realmlist;
+	AddHandler(AUTH_LOGON_CHALLENGE, std::bind(&CAuthSocket::S_LoginChallenge, this, std::placeholders::_1));
+	AddHandler(AUTH_LOGON_PROOF, std::bind(&CAuthSocket::S_LoginProof, this, std::placeholders::_1));
+	AddHandler(REALM_LIST, std::bind(&CAuthSocket::S_Realmlist, this, std::placeholders::_1));
 }
 
 CAuthSocket::~CAuthSocket()
 {
-    Log::Info("[AuthSocket]: Deleted.");
+    Log::Info("CAuthSocket: Deleted.");
 }
 
 void CAuthSocket::Open(std::string Host, port_t Port)
@@ -76,11 +74,8 @@ void CAuthSocket::Update()
 		return;
 	}
 
-	Log::Green("AuthSocket::OnRawData: Received '%d' bytes.", buffer.getSize());
-
 	eAuthCmd currHandler;
 	buffer.readBytes(&currHandler, sizeof(uint8));
-
 	ProcessHandler(currHandler, buffer);
 
 	if (GetStatus() != CSocket::Connected)
@@ -107,19 +102,23 @@ void CAuthSocket::SendData(const uint8* _data, uint32 _count)
 
 
 //
-// Handlers
+// Private
 //
+void CAuthSocket::AddHandler(eAuthCmd AuthCmd, std::function<bool(CByteBuffer&)> Handler)
+{
+	_ASSERT(Handler != nullptr);
+	m_Handlers.insert(std::make_pair(AuthCmd, Handler));
+}
+
 void CAuthSocket::ProcessHandler(eAuthCmd AuthCmd, CByteBuffer& _buffer)
 {
-    const std::unordered_map<eAuthCmd, HandlerFunc>::iterator& handler = m_Handlers.find(AuthCmd);
-    if (handler != m_Handlers.end())
-    {
-        ((*this).*(handler->second))(_buffer);
-    }
-    else
-    {
-        _ASSERT(false, "Handler [0x%X] not found!", AuthCmd);
-    }
+    const auto& handler = m_Handlers.find(AuthCmd);
+	if (handler != m_Handlers.end())
+	{
+		handler->second.operator()(_buffer);
+	}
+	else
+		throw CException("CAuthSocket::ProcessHandler: Handler for AuthCmd '0x%X' not found.", AuthCmd);
 }
 
 //-- Client to server

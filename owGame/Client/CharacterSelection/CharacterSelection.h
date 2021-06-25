@@ -16,7 +16,7 @@ public:
 	void On_SMSG_CHAR_ENUM(CServerPacket& Bytes);
 
 	void AddHandler(Opcodes Opcode, std::function<void(CServerPacket&)> Handler);
-	bool ProcessHandler(Opcodes Opcode, CServerPacket& Bytes);
+	bool ProcessPacket(CServerPacket& Bytes);
 
 private:
 	CWoWClient& m_WoWClient;

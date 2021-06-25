@@ -14,7 +14,6 @@ class CWoWClient;
 class CAuthSocket
 	: public CTCPSocket
 {
-	typedef bool (CAuthSocket::* HandlerFunc)(CByteBuffer&);
 public:
 	CAuthSocket(CWoWClient& WoWClient, const std::string& Login, const std::string& Password);
 	virtual ~CAuthSocket();
@@ -26,8 +25,6 @@ public:
 	void SendData(const uint8* _data, uint32 _count);
 
 	// Handlers
-	void ProcessHandler(eAuthCmd AuthCmd, CByteBuffer& _buffer);
-
 	void C_SendLogonChallenge();
 
 	bool S_LoginChallenge(CByteBuffer& _buff);
@@ -35,7 +32,11 @@ public:
 	bool S_Realmlist(CByteBuffer& _buff);
 
 private:
-	std::unordered_map<eAuthCmd, HandlerFunc> m_Handlers;
+	void AddHandler(eAuthCmd AuthCmd, std::function<bool(CByteBuffer&)> Handler);
+	void ProcessHandler(eAuthCmd AuthCmd, CByteBuffer& _buffer);
+
+private:
+	std::unordered_map<eAuthCmd, std::function<void(CByteBuffer&)>> m_Handlers;
 
 	BigNumber Key;
 	SHA1Hash  MServer;

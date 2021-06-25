@@ -166,7 +166,7 @@ void CMPQFilesStorage::AddArchive(std::string filename)
 	}
 
 	m_OpenArchives.push_back(mpq_a);
-	Log::Green("CMPQFile[%s]: Added!", filename.c_str());
+	Log::Info("MPQFile[%s]: Added!", filename.c_str());
 }
 
 SMPQFileLocation CMPQFilesStorage::GetFileLocation(const std::string& filename) const

@@ -49,16 +49,16 @@ void CWoWClientCharactedSelection::AddHandler(Opcodes Opcode, std::function<void
 	m_Handlers.insert(std::make_pair(Opcode, Handler));
 }
 
-bool CWoWClientCharactedSelection::ProcessHandler(Opcodes Opcode, CServerPacket& Bytes)
+bool CWoWClientCharactedSelection::ProcessPacket(CServerPacket& ServerPacket)
 {
-	const auto& handler = m_Handlers.find(Opcode);
+	const auto& handler = m_Handlers.find(ServerPacket.GetPacketOpcode());
 	if (handler != m_Handlers.end())
 	{
 		_ASSERT(handler->second != nullptr);
-		(handler->second).operator()(Bytes);
+		handler->second.operator()(ServerPacket);
 
-		if (Bytes.getPos() != Bytes.getSize())
-			throw CException("CWoWClientCharactedSelection::ProcessHandler: Packet '%d' is not fully readed. %d of %d.", Opcode, Bytes.getPos(), Bytes.getSize());
+		if (ServerPacket.getPos() != ServerPacket.getSize())
+			throw CException("CWoWClientCharactedSelection::ProcessPacket: Packet '%d' is not fully readed. %d of %d.", ServerPacket.GetPacketOpcode(), ServerPacket.getPos(), ServerPacket.getSize());
 
 		return true;
 	}

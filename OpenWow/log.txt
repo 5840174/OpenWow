@@ -3,24 +3,24 @@
 ^Plugin 'D:\OpenWow\bin_x64\Release\znRenderDX11.dll' successfully added.
 ^Plugin 'D:\OpenWow\bin_x64\Release\owGame.dll' loaded.
 ^Plugin 'D:\OpenWow\bin_x64\Release\owGame.dll' successfully added.
-^CMPQFile[common.MPQ]: Added!
-^CMPQFile[common-2.MPQ]: Added!
-^CMPQFile[expansion.MPQ]: Added!
-^CMPQFile[lichking.MPQ]: Added!
-^CMPQFile[patch.MPQ]: Added!
-^CMPQFile[patch-2.MPQ]: Added!
-^CMPQFile[patch-3.MPQ]: Added!
-^CMPQFile[ruRU/backup-ruRU.MPQ]: Added!
-^CMPQFile[ruRU/base-ruRU.MPQ]: Added!
-^CMPQFile[ruRU/expansion-locale-ruRU.MPQ]: Added!
-^CMPQFile[ruRU/expansion-speech-ruRU.MPQ]: Added!
-^CMPQFile[ruRU/lichking-locale-ruRU.MPQ]: Added!
-^CMPQFile[ruRU/lichking-speech-ruRU.MPQ]: Added!
-^CMPQFile[ruRU/locale-ruRU.MPQ]: Added!
-^CMPQFile[ruRU/speech-ruRU.MPQ]: Added!
-^CMPQFile[ruRU/patch-ruRU.MPQ]: Added!
-^CMPQFile[ruRU/patch-ruRU-2.MPQ]: Added!
-^CMPQFile[ruRU/patch-ruRU-3.MPQ]: Added!
+~MPQFile[common.MPQ]: Added!
+~MPQFile[common-2.MPQ]: Added!
+~MPQFile[expansion.MPQ]: Added!
+~MPQFile[lichking.MPQ]: Added!
+~MPQFile[patch.MPQ]: Added!
+~MPQFile[patch-2.MPQ]: Added!
+~MPQFile[patch-3.MPQ]: Added!
+~MPQFile[ruRU/backup-ruRU.MPQ]: Added!
+~MPQFile[ruRU/base-ruRU.MPQ]: Added!
+~MPQFile[ruRU/expansion-locale-ruRU.MPQ]: Added!
+~MPQFile[ruRU/expansion-speech-ruRU.MPQ]: Added!
+~MPQFile[ruRU/lichking-locale-ruRU.MPQ]: Added!
+~MPQFile[ruRU/lichking-speech-ruRU.MPQ]: Added!
+~MPQFile[ruRU/locale-ruRU.MPQ]: Added!
+~MPQFile[ruRU/speech-ruRU.MPQ]: Added!
+~MPQFile[ruRU/patch-ruRU.MPQ]: Added!
+~MPQFile[ruRU/patch-ruRU-2.MPQ]: Added!
+~MPQFile[ruRU/patch-ruRU-3.MPQ]: Added!
 ~DBCFile[AnimationData.dbc]: Fields count = '8'. Records count = '506'.
 ~DBCFile[GroundEffectDoodad.dbc]: Fields count = '3'. Records count = '580'.
 ~DBCFile[GroundEffectTexture.dbc]: Fields count = '11'. Records count = '24981'.
@@ -80,13 +80,8 @@
 ~Loading shader 'UI/UIControlCommon.hlsl':'PS_main'.
 ~Loading shader 'UI/UI_Font.hlsl':'VS_main'.
 ~Loading shader 'UI/UI_Font.hlsl':'PS_main'.
-^SENDED: 38 bytes.
-^AuthSocket::OnRawData: Received '119' bytes.
-^SENDED: 75 bytes.
-^AuthSocket::OnRawData: Received '32' bytes.
 ^All ok! Server proof equal client calculated server proof!
 ^Successfully logined!!!
-^AuthSocket::OnRawData: Received '44' bytes.
 ^S_Realmlist: Count [1]
 ^RealmType: '0', IsLocked: '0', Flag: '0x0', Name: 'Trinity', Address '127.0.0.1:8085', Population: '0,000000', CharacterCount: '1'
 ^CWoWClient::OnRealmListSelected: Realm name 'Trinity'.
@@ -110,21 +105,21 @@
 ~Opcode: 'SMSG_SET_PROFICIENCY' (0x127). Size: '5' not handled.
 ~Opcode: 'SMSG_CANCEL_COMBAT' (0x14E). Size: '0' not handled.
 ~Opcode: 'MSG_SET_DUNGEON_DIFFICULTY' (0x329). Size: '12' not handled.
- Map[Kalimdor]: Id = '1'. Preloading...
- Map[Kalimdor]: InstanceType = '0'.
- Map[Kalimdor]: MapType = '0'.
- Map[Kalimdor]: IsBattleGround = '0'.
- Map[Kalimdor]: Name = 'Калимдор'.
- Map[Kalimdor]: AreaTableID = '0'.
- Map[Kalimdor]: AllianceDescr = ''.
- Map[Kalimdor]: HordeDescr = ''.
- Map[Kalimdor]: CorpseMapID = '-1'.
- Map[Kalimdor]: Id [1]. Loading...
+ Map[Azeroth]: Id = '0'. Preloading...
+ Map[Azeroth]: InstanceType = '0'.
+ Map[Azeroth]: MapType = '0'.
+ Map[Azeroth]: IsBattleGround = '0'.
+ Map[Azeroth]: Name = 'Восточные королевства'.
+ Map[Azeroth]: AreaTableID = '0'.
+ Map[Azeroth]: AllianceDescr = ''.
+ Map[Azeroth]: HordeDescr = ''.
+ Map[Azeroth]: CorpseMapID = '-1'.
+ Map[Azeroth]: Id [0]. Loading...
 ^CMapWDL: Low WMOs count [0].
 ~MapWDT: Global WMO exists [false].
 ~Opcode: 'SMSG_ACCOUNT_DATA_TIMES' (0x209). Size: '29' not handled.
 ~Opcode: 'SMSG_FEATURE_SYSTEM_STATUS' (0x3C9). Size: '2' not handled.
-~Opcode: 'SMSG_MOTD' (0x33D). Size: '38' not handled.
+^MOTD: Welcome to a Trinity Core server.
 ~Opcode: 'SMSG_LEARNED_DANCE_MOVES' (0x455). Size: '8' not handled.
 ~Opcode: 'SMSG_CONTACT_LIST' (0x67). Size: '8' not handled.
 ~Opcode: 'SMSG_BIND_POINT_UPDATE' (0x155). Size: '20' not handled.
@@ -138,16 +133,22 @@
 ~Opcode: 'SMSG_EQUIPMENT_SET_LIST' (0x4BC). Size: '4' not handled.
 ~Opcode: 'SMSG_LOGIN_SET_TIME_SPEED' (0x42). Size: '12' not handled.
 ~Opcode: 'SMSG_SET_FORCED_REACTIONS' (0x2A5). Size: '4' not handled.
+^---Create WoWGameObjectMOTransport with Type 'MoTransport', Entry '0', Counter '1'
+^---Create WoWGameObjectMOTransport with Type 'MoTransport', Entry '0', Counter '2'
+^---Create WoWGameObjectMOTransport with Type 'MoTransport', Entry '0', Counter '10'
+^---Create WoWGameObjectMOTransport with Type 'MoTransport', Entry '0', Counter '4'
+^---Create WoWGameObjectMOTransport with Type 'MoTransport', Entry '0', Counter '17'
 ^---Create WoWGameObjectMOTransport with Type 'MoTransport', Entry '0', Counter '5'
-^---Create WoWGameObjectMOTransport with Type 'MoTransport', Entry '0', Counter '3'
-^---Create WoWGameObjectMOTransport with Type 'MoTransport', Entry '0', Counter '6'
-^---Create WoWGameObjectMOTransport with Type 'MoTransport', Entry '0', Counter '8'
-^---Create WoWGameObjectMOTransport with Type 'MoTransport', Entry '0', Counter '20'
-^---Create WoWGameObjectMOTransport with Type 'MoTransport', Entry '0', Counter '12'
-!WoWGameObject: Try to call 'AfterCreate' for object.
-!WoWGameObject: Try to call 'AfterCreate' for object.
-!WoWGameObject: Try to call 'AfterCreate' for object.
-!WoWGameObject: Try to call 'AfterCreate' for object.
+~Opcode: 'SMSG_AURA_UPDATE_ALL' (0x495). Size: '14' not handled.
+~Opcode: 'SMSG_AURA_UPDATE_ALL' (0x495). Size: '14' not handled.
+~Opcode: 'SMSG_AURA_UPDATE_ALL' (0x495). Size: '14' not handled.
+~Opcode: 'SMSG_AURA_UPDATE_ALL' (0x495). Size: '14' not handled.
+~Opcode: 'SMSG_AURA_UPDATE_ALL' (0x495). Size: '14' not handled.
+~Opcode: 'SMSG_AURA_UPDATE_ALL' (0x495). Size: '14' not handled.
+~Opcode: 'SMSG_AURA_UPDATE_ALL' (0x495). Size: '14' not handled.
+~Opcode: 'SMSG_AURA_UPDATE_ALL' (0x495). Size: '14' not handled.
+~Opcode: 'SMSG_WEATHER' (0x2F4). Size: '9' not handled.
+~Opcode: 'SMSG_WEATHER' (0x2F4). Size: '9' not handled.
 ~Opcode: 'SMSG_INIT_WORLD_STATES' (0x2C2). Size: '78' not handled.
 ~Opcode: 'SMSG_UPDATE_WORLD_STATE' (0x2C3). Size: '8' not handled.
 ~Opcode: 'SMSG_UPDATE_WORLD_STATE' (0x2C3). Size: '8' not handled.
@@ -155,79 +156,55 @@
 ~Opcode: 'SMSG_UPDATE_WORLD_STATE' (0x2C3). Size: '8' not handled.
 ~Opcode: 'SMSG_UPDATE_WORLD_STATE' (0x2C3). Size: '8' not handled.
 ~Opcode: 'SMSG_UPDATE_WORLD_STATE' (0x2C3). Size: '8' not handled.
-~On_SMSG_TIME_SYNC_REQ: timeSyncNextCounter = '0'.
 ~Opcode: 'SMSG_SPELL_GO' (0x132). Size: '36' not handled.
-~Opcode: 'SMSG_QUESTGIVER_STATUS_MULTIPLE' (0x418). Size: '4' not handled.
-~Opcode: 'SMSG_NOTIFICATION' (0x1CB). Size: '14' not handled.
-~Opcode: 'SMSG_AI_REACTION' (0x13C). Size: '12' not handled.
-~Opcode: 'SMSG_ATTACK_START' (0x143). Size: '16' not handled.
-~Opcode: 'SMSG_AI_REACTION' (0x13C). Size: '12' not handled.
-~Opcode: 'SMSG_ATTACK_START' (0x143). Size: '16' not handled.
-~Opcode: 'SMSG_SPELL_START' (0x131). Size: '46' not handled.
-~GameObject query: EntryID '176244', Type '15', Name 'Лунная пыль'
-~GameObject query: EntryID '175080', Type '15', Name 'Дирижабль'
-~GameObject query: EntryID '164871', Type '15', Name 'Дирижабль'
-~GameObject query: EntryID '177233', Type '15', Name 'Переправа Оперенной Луны'
-~GameObject query: EntryID '186238', Type '15', Name 'Дирижабль Орды ("Могучий ветер")'
-~GameObject query: EntryID '190549', Type '15', Name 'Ship (Human Test Ship)'
-~GameObject query: EntryID '1618', Type '3', Name 'Мироцвет'
-~GameObject query: EntryID '1619', Type '3', Name 'Земляной корень'
-~GameObject query: EntryID '1731', Type '3', Name 'Медная жила'
-~Opcode: 'SMSG_SPELL_GO' (0x132). Size: '56' not handled.
-~Opcode: 'SMSG_HIGHEST_THREAT_UPDATE' (0x482). Size: '29' not handled.
-~Opcode: 'SMSG_SPELLNONMELEEDAMAGELOG' (0x250). Size: '46' not handled.
-~Opcode: 'SMSG_ATTACK_STOP' (0x144). Size: '18' not handled.
-~Opcode: 'SMSG_ATTACK_STOP' (0x144). Size: '18' not handled.
-~Opcode: 'SMSG_THREAT_REMOVE' (0x484). Size: '14' not handled.
-~Opcode: 'SMSG_THREAT_REMOVE' (0x484). Size: '14' not handled.
-~Opcode: 'SMSG_THREAT_CLEAR' (0x485). Size: '7' not handled.
-~Opcode: 'SMSG_HIGHEST_THREAT_UPDATE' (0x482). Size: '29' not handled.
-~Opcode: 'SMSG_AI_REACTION' (0x13C). Size: '12' not handled.
-~Opcode: 'SMSG_ATTACK_START' (0x143). Size: '16' not handled.
-~Opcode: 'SMSG_HIGHEST_THREAT_UPDATE' (0x482). Size: '29' not handled.
-~Opcode: 'SMSG_AI_REACTION' (0x13C). Size: '12' not handled.
-~Opcode: 'SMSG_ATTACK_START' (0x143). Size: '16' not handled.
-~Opcode: 'SMSG_SPELL_START' (0x131). Size: '46' not handled.
-~Opcode: 'SMSG_SPELL_GO' (0x132). Size: '56' not handled.
-~Opcode: 'SMSG_HIGHEST_THREAT_UPDATE' (0x482). Size: '29' not handled.
-~Opcode: 'SMSG_SPELLNONMELEEDAMAGELOG' (0x250). Size: '46' not handled.
-~Opcode: 'SMSG_ATTACK_STOP' (0x144). Size: '18' not handled.
-~Opcode: 'SMSG_ATTACK_STOP' (0x144). Size: '18' not handled.
-~Opcode: 'SMSG_THREAT_REMOVE' (0x484). Size: '14' not handled.
-~Opcode: 'SMSG_THREAT_REMOVE' (0x484). Size: '14' not handled.
-~Opcode: 'SMSG_THREAT_CLEAR' (0x485). Size: '7' not handled.
-~On_SMSG_TIME_SYNC_REQ: timeSyncNextCounter = '1'.
-~On_SMSG_TIME_SYNC_REQ: timeSyncNextCounter = '2'.
-~Opcode: 'SMSG_MESSAGECHAT' (0x96). Size: '274' not handled.
-^---Create WoWGameObjectMOTransport with Type 'MoTransport', Entry '0', Counter '2'
+~Opcode: 'SMSG_QUESTGIVER_STATUS_MULTIPLE' (0x418). Size: '13' not handled.
+^NOTIFICATION: GM mode is ON
+~Opcode: 'SMSG_SPELL_START' (0x131). Size: '29' not handled.
+~Opcode: 'SMSG_SPELL_GO' (0x132). Size: '40' not handled.
+~Opcode: 'SMSG_AURA_UPDATE' (0x496). Size: '14' not handled.
+~Opcode: 'SMSG_SPELL_START' (0x131). Size: '29' not handled.
+~Opcode: 'SMSG_SPELL_GO' (0x132). Size: '40' not handled.
+~Opcode: 'SMSG_AURA_UPDATE' (0x496). Size: '14' not handled.
+~Opcode: 'SMSG_SPELL_START' (0x131). Size: '29' not handled.
+~Opcode: 'SMSG_SPELL_GO' (0x132). Size: '40' not handled.
+~Opcode: 'SMSG_AURA_UPDATE' (0x496). Size: '14' not handled.
+~Opcode: 'SMSG_SPELL_START' (0x131). Size: '29' not handled.
+~Opcode: 'SMSG_SPELL_GO' (0x132). Size: '40' not handled.
+~Opcode: 'SMSG_AURA_UPDATE' (0x496). Size: '14' not handled.
+~Opcode: 'SMSG_SPELL_START' (0x131). Size: '29' not handled.
+~Opcode: 'SMSG_SPELL_GO' (0x132). Size: '40' not handled.
+~Opcode: 'SMSG_AURA_UPDATE' (0x496). Size: '14' not handled.
+~Opcode: 'SMSG_SPELL_START' (0x131). Size: '29' not handled.
+~Opcode: 'SMSG_SPELL_GO' (0x132). Size: '40' not handled.
+~Opcode: 'SMSG_AURA_UPDATE' (0x496). Size: '14' not handled.
+~Opcode: 'SMSG_SPELL_START' (0x131). Size: '29' not handled.
+~Opcode: 'SMSG_SPELL_GO' (0x132). Size: '40' not handled.
+~Opcode: 'SMSG_AURA_UPDATE' (0x496). Size: '14' not handled.
+~Opcode: 'SMSG_SPELL_START' (0x131). Size: '29' not handled.
+~Opcode: 'SMSG_SPELL_GO' (0x132). Size: '40' not handled.
+~Opcode: 'SMSG_AURA_UPDATE' (0x496). Size: '14' not handled.
+~GameObject query: EntryID '176495', Type '15', Name 'Дирижабль (Лиловая Принцесса)'
 ~GameObject query: EntryID '176310', Type '15', Name 'Безмятежный берег'
-~On_SMSG_TIME_SYNC_REQ: timeSyncNextCounter = '3'.
-~Opcode: 'SMSG_HIGHEST_THREAT_UPDATE' (0x482). Size: '29' not handled.
-~Opcode: 'SMSG_AI_REACTION' (0x13C). Size: '12' not handled.
-~Opcode: 'SMSG_ATTACK_START' (0x143). Size: '16' not handled.
-^---Create WoWGameObjectMOTransport with Type 'MoTransport', Entry '0', Counter '7'
-~GameObject query: EntryID '20808', Type '15', Name 'Корабль ("Девичий каприз")'
-~Opcode: 'SMSG_HIGHEST_THREAT_UPDATE' (0x482). Size: '29' not handled.
-~Opcode: 'SMSG_AI_REACTION' (0x13C). Size: '12' not handled.
-~Opcode: 'SMSG_ATTACK_START' (0x143). Size: '16' not handled.
-~Opcode: 'SMSG_SPELL_START' (0x131). Size: '46' not handled.
-~Opcode: 'SMSG_SPELL_GO' (0x132). Size: '56' not handled.
-~Opcode: 'SMSG_HIGHEST_THREAT_UPDATE' (0x482). Size: '29' not handled.
-~Opcode: 'SMSG_SPELLNONMELEEDAMAGELOG' (0x250). Size: '46' not handled.
-~Opcode: 'SMSG_ATTACK_STOP' (0x144). Size: '18' not handled.
-~Opcode: 'SMSG_ATTACK_STOP' (0x144). Size: '18' not handled.
-~Opcode: 'SMSG_THREAT_REMOVE' (0x484). Size: '14' not handled.
-~Opcode: 'SMSG_THREAT_REMOVE' (0x484). Size: '14' not handled.
-~Opcode: 'SMSG_THREAT_CLEAR' (0x485). Size: '7' not handled.
-~On_SMSG_TIME_SYNC_REQ: timeSyncNextCounter = '4'.
-~On_SMSG_TIME_SYNC_REQ: timeSyncNextCounter = '5'.
-~On_SMSG_TIME_SYNC_REQ: timeSyncNextCounter = '6'.
-^---Create WoWGameObjectMOTransport with Type 'MoTransport', Entry '0', Counter '4'
 ~GameObject query: EntryID '176231', Type '15', Name 'Корабль "Леди Мели"'
-~On_SMSG_TIME_SYNC_REQ: timeSyncNextCounter = '7'.
-~On_SMSG_TIME_SYNC_REQ: timeSyncNextCounter = '8'.
-^---Create WoWGameObjectMOTransport with Type 'MoTransport', Entry '0', Counter '9'
-~GameObject query: EntryID '181646', Type '15', Name 'Экзодарский корабль'
-~On_SMSG_TIME_SYNC_REQ: timeSyncNextCounter = '9'.
-~On_SMSG_TIME_SYNC_REQ: timeSyncNextCounter = '10'.
-~On_SMSG_TIME_SYNC_REQ: timeSyncNextCounter = '11'.
+~GameObject query: EntryID '175080', Type '15', Name 'Дирижабль'
+~GameObject query: EntryID '181688', Type '15', Name 'Корабль, ледокол (Северное копье)'
+~GameObject query: EntryID '190536', Type '15', Name 'Корабль, ледокол (Гордость Штормграда)'
+~GameObject query: EntryID '1658', Type '5', Name 'Брилл'
+~GameObject query: EntryID '1659', Type '5', Name 'Чумные земли'
+~GameObject query: EntryID '1660', Type '5', Name 'Серебряный бор'
+~GameObject query: EntryID '1666', Type '5', Name 'Подгород'
+~GameObject query: EntryID '165558', Type '5', Name 'Посадочная площадка дирижабля'
+~GameObject query: EntryID '187576', Type '5', Name 'Украшение - висящее - квадратное - маленькое - MFF'
+~GameObject query: EntryID '195457', Type '5', Name 'Дирижабль Гром'гола'
+~GameObject query: EntryID '195458', Type '5', Name 'Дирижабль Оргриммара'
+~GameObject query: EntryID '195459', Type '5', Name 'Дирижабль Лагеря Возмездия'
+~GameObject query: EntryID '20649', Type '11', Name 'Подгородский подъемник'
+~GameObject query: EntryID '20650', Type '11', Name 'Верхняя левая дверь'
+~GameObject query: EntryID '20651', Type '11', Name 'Нижняя левая дверь'
+~GameObject query: EntryID '20652', Type '11', Name 'Подгородский подъемник'
+~GameObject query: EntryID '20653', Type '11', Name 'Верхняя левая дверь'
+~GameObject query: EntryID '20654', Type '11', Name 'Нижняя левая дверь'
+~GameObject query: EntryID '20655', Type '11', Name 'Подгородский подъемник'
+~GameObject query: EntryID '20656', Type '11', Name 'Верхняя левая дверь'
+~GameObject query: EntryID '20657', Type '11', Name 'Нижняя левая дверь'
+~GameObject query: EntryID '176594', Type '0', Name 'Двери'

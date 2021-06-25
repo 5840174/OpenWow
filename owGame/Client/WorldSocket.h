@@ -35,18 +35,20 @@ public:
 
 	// CWorldSocket
     void SendPacket(CClientPacket& Packet);
-	void SetExternalHandler(std::function<bool(Opcodes, CServerPacket&)> Handler);
+	void SetExternalHandler(std::function<bool(CServerPacket&)> Handler);
 	
 private: // Packets contructor
 	void Packet1(uint16 Size, Opcodes Opcode);
 	void Packet2(CByteBuffer& _buf);
-	bool ProcessPacket(CServerPacket ServerPacket);
+	
 
 private: // Used while connect to world
 	void AddHandler(Opcodes Opcode, std::function<void(CServerPacket&)> Handler);
-	
-	void S_AuthChallenge(CByteBuffer& Buffer);
-	void S_AuthResponse(CByteBuffer& Buffer);
+	bool ProcessPacket(CServerPacket& ServerPacket);
+
+	void On_SMSG_AUTH_CHALLENGE(CServerPacket& Buffer);
+	void On_SMSG_AUTH_RESPONSE(CServerPacket& Buffer);
+
     void CreateAddonsBuffer(CByteBuffer& AddonsBuffer);
 
 private:
@@ -54,7 +56,7 @@ private:
     std::unique_ptr<CServerPacket>                m_CurrentPacket;
 
 	std::unordered_map<Opcodes, std::function<void(CServerPacket&)>> m_Handlers;
-	std::function<bool(Opcodes, CServerPacket&)>  m_ExternalHandler;
+	std::function<bool(CServerPacket&)>  m_ExternalHandler;
 
 private:
 	std::string m_Login;

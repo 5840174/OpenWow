@@ -30,6 +30,10 @@ CWoWWorld::CWoWWorld(IScene& Scene, const std::shared_ptr<CWorldSocket>& Socket)
 
 	// Handlers
 	AddHandler(SMSG_LOGIN_VERIFY_WORLD, std::bind(&CWoWWorld::S_SMSG_LOGIN_VERIFY_WORLD, this, std::placeholders::_1));
+
+	AddHandler(SMSG_MOTD, std::bind(&CWoWWorld::On_SMSG_MOTD, this, std::placeholders::_1));
+	AddHandler(SMSG_NOTIFICATION, std::bind(&CWoWWorld::On_SMSG_NOTIFICATION, this, std::placeholders::_1));
+	
 	AddHandler(SMSG_TIME_SYNC_REQ, std::bind(&CWoWWorld::On_SMSG_TIME_SYNC_REQ, this, std::placeholders::_1));
 	AddHandler(SMSG_MONSTER_MOVE, std::bind(&CWoWWorld::S_SMSG_MONSTER_MOVE, this, std::placeholders::_1));
 	AddHandler(SMSG_DESTROY_OBJECT, std::bind(&CWoWWorld::S_SMSG_DESTROY_OBJECT, this, std::placeholders::_1));
@@ -92,12 +96,32 @@ void CWoWWorld::S_SMSG_LOGIN_VERIFY_WORLD(CServerPacket& Buffer)
 	m_Scene.GetCameraController()->GetCamera()->SetPitch(0.0f);
 }
 
+void CWoWWorld::On_SMSG_MOTD(CServerPacket & Buffer)
+{
+	uint32 motdCount;
+	Buffer >> motdCount;
+
+	for (size_t i = 0; i < motdCount; i++)
+	{
+		std::string motdLine;
+		Buffer.readString(&motdLine);
+		Log::Green("MOTD: %s", motdLine.c_str());
+	}
+}
+
+void CWoWWorld::On_SMSG_NOTIFICATION(CServerPacket & Buffer)
+{
+	std::string notification;
+	Buffer.readString(&notification);
+	Log::Green("NOTIFICATION: %s", notification.c_str());
+}
+
 void CWoWWorld::On_SMSG_TIME_SYNC_REQ(CServerPacket & Buffer)
 {
 	uint32 timeSyncNextCounter;
 	Buffer >> timeSyncNextCounter;
 
-	Log::Info("On_SMSG_TIME_SYNC_REQ: timeSyncNextCounter = '%d'.", timeSyncNextCounter);
+	//Log::Info("On_SMSG_TIME_SYNC_REQ: timeSyncNextCounter = '%d'.", timeSyncNextCounter);
 }
 
 void CWoWWorld::S_SMSG_MONSTER_MOVE(CServerPacket & Buffer)
@@ -145,16 +169,16 @@ void CWoWWorld::AddHandler(Opcodes Opcode, std::function<void(CServerPacket&)> H
 	m_Handlers.insert(std::make_pair(Opcode, Handler));
 }
 
-bool CWoWWorld::ProcessHandler(Opcodes Opcode, CServerPacket& Bytes)
+bool CWoWWorld::ProcessPacket(CServerPacket& ServerPacket)
 {
-	const auto& handler = m_Handlers.find(Opcode);
+	const auto& handler = m_Handlers.find(ServerPacket.GetPacketOpcode());
 	if (handler != m_Handlers.end())
 	{
 		_ASSERT(handler->second != nullptr);
-		(handler->second).operator()(Bytes);
+		(handler->second).operator()(ServerPacket);
 
-		if (Bytes.getPos() != Bytes.getSize())
-			throw CException("CWoWWorld::ProcessHandler: Packet '%d' is not fully readed. %d of %d.", Opcode, Bytes.getPos(), Bytes.getSize());
+		if (ServerPacket.getPos() != ServerPacket.getSize())
+			throw CException("CWoWWorld::ProcessPacket: Packet '%d' is not fully readed. %d of %d.", ServerPacket.GetPacketOpcode(), ServerPacket.getPos(), ServerPacket.getSize());
 
 		return true;
 	}
