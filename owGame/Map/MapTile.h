@@ -1,8 +1,8 @@
 #pragma once
 
 #include "MapChunk.h"
-#include "Map/Instances/MapM2Instance.h"
-#include "Map/Instances/MapWMOInstance.h"
+#include "Instances/MapM2Instance.h"
+#include "Instances/MapWMOInstance.h"
 
 // FORWARD BEGIN
 class CMap;

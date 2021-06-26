@@ -1,8 +1,6 @@
 #pragma once
 
-#include "DBC/DBC__Storage.h"
-
-class CSkyParams
+class ZN_API CSkyParams
 {
 public:
 	CSkyParams();

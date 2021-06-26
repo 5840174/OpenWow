@@ -14,6 +14,7 @@ CSceneWoWClient::~CSceneWoWClient()
 }
 
 
+
 //
 // IGameState
 //

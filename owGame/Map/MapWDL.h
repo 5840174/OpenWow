@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Map/Instances/MapWMOInstance.h"
+#include "Instances/MapWMOInstance.h"
 
 // FORWARD BEGIN
 class CMap;

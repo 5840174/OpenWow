@@ -2,13 +2,11 @@
 
 #ifdef USE_M2_MODELS
 
-#include "DBC/DBC__Storage.h"
-
 // FORWARD BEGIN
 class Character;
 // FORWARD END
 
-class Character_SectionWrapper
+class ZN_API Character_SectionWrapper
 {
 public:
 	Character_SectionWrapper(const IBaseManager& BaseManager);

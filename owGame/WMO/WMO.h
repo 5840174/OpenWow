@@ -3,7 +3,7 @@
 #ifdef USE_WMO_MODELS
 
 // OpenWoW
-#include "WoWChunkReader.h"
+#include "../WoWChunkReader.h"
 
 // WMO
 #include "WMO_Headers.h"

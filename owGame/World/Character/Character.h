@@ -2,10 +2,10 @@
 
 #ifdef USE_M2_MODELS
 
-#include "World/Creature/Creature.h"
-#include "World/Items/Item_VisualData.h"
+#include "../Creature/Creature.h"
+#include "../Items/Item_VisualData.h"
 
-#include "Client/Templates/CharacterTemplate.h"
+#include "Types/CharacterTemplate.h"
 #include "Character_SectionWrapper.h"
 #include "Character_SkinTextureBaker.h"
 

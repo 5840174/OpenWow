@@ -2,8 +2,6 @@
 
 #ifdef USE_WMO_MODELS
 
-#include "DBC/DBC__Storage.h"
-
 #pragma pack(push,1)
 
 struct SWMOGroup_Flags

@@ -2,7 +2,7 @@
 
 #include "M2.h"
 
-#include "Interfaces/M2Interfaces.h"
+#include "../Interfaces/M2Interfaces.h"
 
 // Components
 #include "M2_Animator.h"

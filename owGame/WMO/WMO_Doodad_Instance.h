@@ -4,7 +4,8 @@
 
 #ifdef USE_M2_MODELS
 
-#include "M2/M2_Base_Instance.h"
+#include "../M2/M2_Base_Instance.h"
+
 #include "WMO_Headers.h"
 #include "WMO_Group.h"
 

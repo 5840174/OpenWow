@@ -1,6 +1,6 @@
 #pragma once
 
-#include "M2/M2_Part_Bone.h"
+#include "M2_Part_Bone.h"
 
 // FORWARD BEGIN
 class CM2;

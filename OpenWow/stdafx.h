@@ -10,6 +10,9 @@
 #include <owGame.h>
 #pragma comment(lib, "owGame.lib")
 
+#include <owClient.h>
+#pragma comment(lib, "owClient.lib")
+
 #include <znPlatformWindows.h>
 #pragma comment(lib, "znPlatformWindows.lib")
 

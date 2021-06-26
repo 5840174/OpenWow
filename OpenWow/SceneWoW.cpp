@@ -3,15 +3,9 @@
 // Gerenal
 #include "SceneWoW.h"
 
-// Additional
-#include "Client/Client.h"
-
-
 CSceneWoW::CSceneWoW(IBaseManager& BaseManager, IRenderWindow& RenderWindow)
 	: SceneBase(BaseManager, RenderWindow)
-{
-
-}
+{}
 
 CSceneWoW::~CSceneWoW()
 {

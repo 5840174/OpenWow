@@ -46,8 +46,6 @@ __DBC_TVALUE(DBC_CharSections_Flags, Flags, 8);
 __DBC_TVALUE(uint32, Type, 9);
 __DBC_TVALUE(uint32, Color, 10);
 
-
-
 #endif
 
 DBC_DEF_END

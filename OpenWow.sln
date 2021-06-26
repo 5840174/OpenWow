@@ -77,6 +77,11 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "reactphysics3d", "..\ZenonE
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "znPlatformWindows", "..\ZenonEngine\znPlatformWindows\znPlatformWindows.vcxproj", "{C077D800-0DBE-4CDA-A586-0E65821D9AAA}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "owClient", "owClient\owClient.vcxproj", "{B55BA550-E3B6-4756-AA79-6A5C3D28AEFF}"
+	ProjectSection(ProjectDependencies) = postProject
+		{B55BA550-E3B6-4756-AE79-6A5C7D28AEFF} = {B55BA550-E3B6-4756-AE79-6A5C7D28AEFF}
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -174,6 +179,12 @@ Global
 		{C077D800-0DBE-4CDA-A586-0E65821D9AAA}.Mixed|x64.Build.0 = Release|x64
 		{C077D800-0DBE-4CDA-A586-0E65821D9AAA}.Release|x64.ActiveCfg = Release|x64
 		{C077D800-0DBE-4CDA-A586-0E65821D9AAA}.Release|x64.Build.0 = Release|x64
+		{B55BA550-E3B6-4756-AA79-6A5C3D28AEFF}.Debug|x64.ActiveCfg = Debug|x64
+		{B55BA550-E3B6-4756-AA79-6A5C3D28AEFF}.Debug|x64.Build.0 = Debug|x64
+		{B55BA550-E3B6-4756-AA79-6A5C3D28AEFF}.Mixed|x64.ActiveCfg = Release|x64
+		{B55BA550-E3B6-4756-AA79-6A5C3D28AEFF}.Mixed|x64.Build.0 = Release|x64
+		{B55BA550-E3B6-4756-AA79-6A5C3D28AEFF}.Release|x64.ActiveCfg = Release|x64
+		{B55BA550-E3B6-4756-AA79-6A5C3D28AEFF}.Release|x64.Build.0 = Release|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

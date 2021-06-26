@@ -1,7 +1,5 @@
 #pragma once
 
-#include "DBC/DBC__Storage.h"
-
 enum class LightParamsNames : uint32
 {
 	ParamsClear, 	// Used in clear weather.

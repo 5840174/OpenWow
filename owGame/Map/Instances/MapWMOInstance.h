@@ -2,7 +2,7 @@
 
 #ifdef USE_WMO_MODELS
 
-#include "WMO/WMO_Base_Instance.h"
+#include "../../WMO/WMO_Base_Instance.h"
 
 struct ADT_MODF
 {

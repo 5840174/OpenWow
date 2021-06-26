@@ -11,7 +11,6 @@
 
 // Additional 
 #include "WoWChunkReader.h"
-#include "DBC/DBC__Storage.h"
 #include "WMO_Base_Instance.h"
 #include "WMO_Doodad_Instance.h"
 #include "WMO_Liquid_Instance.h"

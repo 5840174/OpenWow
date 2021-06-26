@@ -2,9 +2,9 @@
 
 #ifdef USE_M2_MODELS
 
-#include "World/MeshIDEnums.h"
-#include "Client/Templates/CharacterEnums.h"
-#include "Client/Templates/ItemTemplate.h"
+#include "../MeshIDEnums.h"
+#include "../Character/Types/CharacterEnums.h"
+#include "../Character/Types/ItemTemplate.h"
 
 #include "Item_M2Instance.h"
 

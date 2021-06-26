@@ -81,31 +81,8 @@
 ~Loading shader 'UI/UIControlCommon.hlsl':'PS_main'.
 ~Loading shader 'UI/UI_Font.hlsl':'VS_main'.
 ~Loading shader 'UI/UI_Font.hlsl':'PS_main'.
-^All ok! Server proof equal client calculated server proof!
-^Successfully logined!!!
-^S_Realmlist: Count [1]
-^RealmType: '0', IsLocked: '0', Flag: '0x0', Name: 'Trinity', Address '127.0.0.1:8085', Population: '0,000000', CharacterCount: '1'
-^CWoWClient::OnRealmListSelected: Realm name 'Trinity'.
-@SOCKET DISCONNECTED.
-^Succes access to server!!!
- CWoWClientCharactedSelection::On_SMSG_CHAR_ENUM:: Characters count '1'.
- CWoWClientCharactedSelection::On_SMSG_CHAR_ENUM:: Character [0] name 'Testchar'.
-^CWoWClient::OnCharacterSelected: Character name 'Testchar'.
- CTransportAnimationStorage::Initialize: Loaded records for '82' transport entries.
 ~Loading shader '3D/Debug.hlsl':'VS_main'.
 ~Loading shader '3D/Debug.hlsl':'PS_main'.
-!asd
-!File 'Character\Tauren\TaurenMaleFaceLower04_18.blp' not exists.
-!CImagesFactory: File is nullptr.
-!File 'Character\Tauren\TaurenMaleFaceLower04_18.blp' not exists.
-!CImagesFactory: File is nullptr.
-!File 'Character\Tauren\Hair00_01.blp' not exists.
-!CImagesFactory: File is nullptr.
-!File 'Character\Tauren\Hair00_01.blp' not exists.
-!CImagesFactory: File is nullptr.
-!asd
-!File 'Character\Tauren\TaurenMaleFaceLower04_18.blp' not exists.
-!CImagesFactory: File is nullptr.
 ~Sky: [191] is global sky.
  Map[Kalimdor]: Id = '1'. Preloading...
  Map[Kalimdor]: InstanceType = '0'.
@@ -119,224 +96,17 @@
  Map[Kalimdor]: Id [1]. Loading...
 ^CMapWDL: Low WMOs count [0].
 ~MapWDT: Global WMO exists [false].
-^MOTD: Welcome to a Trinity Core server.
-!asd
-^---Create WoWGameObjectMOTransport with Type 'MoTransport', Entry '0', Counter '8'
-!WoWGameObjectMOTransport: Try to call 'AfterCreate' for object.
-^---Create WoWGameObjectMOTransport with Type 'MoTransport', Entry '0', Counter '5'
-!WoWGameObjectMOTransport: Try to call 'AfterCreate' for object.
-^---Create WoWGameObjectMOTransport with Type 'MoTransport', Entry '0', Counter '6'
-!WoWGameObjectMOTransport: Try to call 'AfterCreate' for object.
-^---Create WoWGameObjectMOTransport with Type 'MoTransport', Entry '0', Counter '7'
-!WoWGameObjectMOTransport: Try to call 'AfterCreate' for object.
-^---Create WoWGameObjectMOTransport with Type 'MoTransport', Entry '0', Counter '3'
-!WoWGameObjectMOTransport: Try to call 'AfterCreate' for object.
-^---Create WoWGameObjectMOTransport with Type 'MoTransport', Entry '0', Counter '12'
-!WoWGameObjectMOTransport: Try to call 'AfterCreate' for object.
-!asd
-^---Create WoWGameObjectMOTransport with Type 'MoTransport', Entry '0', Counter '20'
-!WoWGameObjectMOTransport: Try to call 'AfterCreate' for object.
-@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
-@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
-!asd
-@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
-@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
-@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
-@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
-@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
-@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
-@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
-@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
-@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
-@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
-@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
-@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
-@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
-@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
-@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
-@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
-@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
-@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
-@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
-@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
-@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
-@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
-@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
-@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
-@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
-@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
-@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
-@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
-@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
-@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
-@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
-@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
-@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
-@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
-@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
-@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
-@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
-@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
-@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
-@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
-@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
-@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
-@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
-@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
-@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
-@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
-@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
-@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
-@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
-@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
-@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
-@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
-@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
-@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
-@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
-@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
-@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
-@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
-@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
-@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
-@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
-@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
-@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
-@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
-@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
-@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
-@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
-@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
-@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
-@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
-@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
-@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
-@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
-@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
-@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
-@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
-@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
-@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
-@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
-@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
-@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
-@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
-@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
-@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
-@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
-@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
-@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
-@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
-@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
-@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
-@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
-@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
-@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
-@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
-@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
-@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
-@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
-@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
-@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
-@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
-@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
-@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
-@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
-@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
-@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
-@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
-@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
-@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
-@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
-@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
-@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
-@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
-@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
-@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
-@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
-@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
-@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
-@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
-@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
-@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
-@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
-@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
-@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
-@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
-@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
-@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
-@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
-@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
-@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
-@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
-@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
-@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
-@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
-@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
-@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
-@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
-@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
-@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
-@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
-@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
-@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
-@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
-@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
-@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
-@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
-@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
-@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
-@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
-@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
-@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
-@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
-@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
-@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
-@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
-@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
-@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
-@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
-@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
-@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
-@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
-@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
-@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
-@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
-@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
-@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
-@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
-@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
-@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
-@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
-@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
-@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
-@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
-@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
-@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
-@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
-@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
-@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
-@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
-@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
-@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
-@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
-@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
-@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
-@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
-@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
-@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
-@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
-@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
-^NOTIFICATION: GM mode is ON
+!File 'Character\Tauren\TaurenMaleFaceLower04_18.blp' not exists.
+!CImagesFactory: File is nullptr.
+!File 'Character\Tauren\TaurenMaleFaceLower04_18.blp' not exists.
+!CImagesFactory: File is nullptr.
+!File 'Character\Tauren\Hair00_01.blp' not exists.
+!CImagesFactory: File is nullptr.
+!File 'Character\Tauren\Hair00_01.blp' not exists.
+!CImagesFactory: File is nullptr.
+!File 'Character\Tauren\TaurenMaleFaceLower04_18.blp' not exists.
+!CImagesFactory: File is nullptr.
 !CImagesFactory: Image 'Leather_Blood_A_02Red_Chest_TL_U.blp' not supported.
 !CImagesFactory: Image 'Leather_Blood_A_02Red_Chest_TL_U.blp' not supported.
 !CImagesFactory: Image 'Leather_Blood_A_02Red_Chest_TL_U.blp' not supported.
 !CImagesFactory: Image 'Leather_Blood_A_02Red_Chest_TL_U.blp' not supported.
-^---Create WoWGameObjectMOTransport with Type 'MoTransport', Entry '0', Counter '4'
-!WoWGameObjectMOTransport: Try to call 'AfterCreate' for object.
-^---Create WoWGameObjectMOTransport with Type 'MoTransport', Entry '0', Counter '2'
-!WoWGameObjectMOTransport: Try to call 'AfterCreate' for object.
-^---Create WoWGameObjectMOTransport with Type 'MoTransport', Entry '0', Counter '5'
-!WoWGameObjectMOTransport: Try to call 'AfterCreate' for object.
-^---Create WoWGameObjectMOTransport with Type 'MoTransport', Entry '0', Counter '9'
-!WoWGameObjectMOTransport: Try to call 'AfterCreate' for object.

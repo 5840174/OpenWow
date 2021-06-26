@@ -2,7 +2,7 @@
 
 #ifdef USE_WMO_MODELS
 
-#include "Liquid/LiquidBaseInstance.h"
+#include "../Liquid/LiquidBaseInstance.h"
 #include "WMO_Headers.h"
 #include "WMO_Group.h"
 

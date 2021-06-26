@@ -78,11 +78,10 @@ struct ISceneNodeProvider
 #include "Interfaces/ILiquid.h"
 #include "Interfaces/Managers.h"
 
+#include "DBC/DBC__Storage.h"
+
 // Wow types
 #include "WowTypes.h"
 #include "WowConsts.h"
 #include "WowTime.h"
 #include "WowChunkUtils.h"
-
-// Client
-#include "Client/ObjectGUID.h"

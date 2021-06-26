@@ -1,7 +1,5 @@
 #pragma once
 
-#include "DBC/Tables/DBC_LiquidType_Wotlk.h"
-
 namespace
 {
 	__declspec(align(16)) struct SLiquidMaterialProperties

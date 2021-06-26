@@ -1,15 +1,13 @@
 #pragma once
 
-#include "DBC/DBC__Storage.h"
-
 // Factory
-#include "M2/M2.h"
-#include "WMO/WMO.h"
-#include "World/Creature/Creature.h"
-#include "World/Character/Character.h"
+#include "../M2/M2.h"
+#include "../WMO/WMO.h"
+#include "Creature/Creature.h"
+#include "Character/Character.h"
 
-#include "World/GameObject/GameObjectM2.h"
-#include "World/GameObject/GameObjectWMO.h"
+#include "GameObject/GameObjectM2.h"
+#include "GameObject/GameObjectWMO.h"
 
 class ZN_API CWorldObjectCreator
 	: public IWoWObjectsCreator
@@ -58,9 +56,11 @@ private:
 	std::mutex m_M2Lock;
 	std::unordered_map<std::string, std::weak_ptr<CM2>> m_M2ObjectsWPtrs;
 #endif
+
 #ifdef USE_WMO_MODELS
 	std::mutex m_WMOLock;
 	std::unordered_map<std::string, std::weak_ptr<CWMO>> m_WMOObjectsWPtrs;
 #endif
+
 	std::map<uint32, std::shared_ptr<IBlendState>> m_EGxBlendStates;
 };

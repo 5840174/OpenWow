@@ -1,8 +1,5 @@
 #pragma once
 
-// Additional
-#include "Client/Client.h"
-
 class CSceneWoWClient
 	: public SceneBase
 {

@@ -37,24 +37,6 @@
     <Filter Include="DBC\Tables\Area">
       <UniqueIdentifier>{538a66a7-9a5e-4884-81d1-5cb55031ad1c}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Client">
-      <UniqueIdentifier>{2071b069-f709-4af8-b58e-d1b39a444f6c}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Client\Cryptography">
-      <UniqueIdentifier>{a153d6d5-0078-40e6-b38d-b39125d16a17}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Client\Auth">
-      <UniqueIdentifier>{8968b529-dd6f-408d-930f-f2ac9fbceb4b}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Client\World">
-      <UniqueIdentifier>{c6813846-4e1a-4355-9365-b1eedf62dc0e}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Client\World\Packets">
-      <UniqueIdentifier>{facb61e4-aa5c-42b6-9019-234bcfdb5726}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Client\World\Templates">
-      <UniqueIdentifier>{0a1158d6-10b2-481d-8954-3d112309f968}</UniqueIdentifier>
-    </Filter>
     <Filter Include="M2">
       <UniqueIdentifier>{7bc7386a-273c-4b2d-ab6c-b6e6249d84b1}</UniqueIdentifier>
     </Filter>
@@ -115,9 +97,6 @@
     <Filter Include="World\Item">
       <UniqueIdentifier>{3f559d8e-cf39-443e-bdb7-aee627e19247}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Client\Objects">
-      <UniqueIdentifier>{f1bc6419-bd1c-489f-96a6-08edae45f75f}</UniqueIdentifier>
-    </Filter>
     <Filter Include="DBC\Tables\GameObject">
       <UniqueIdentifier>{c8891ee9-d1af-4d56-b44f-98c30a4c551f}</UniqueIdentifier>
     </Filter>
@@ -145,9 +124,6 @@
     <Filter Include="M2\Parts\Parts_Skeleton">
       <UniqueIdentifier>{0bfa29b5-d676-4e47-a3b2-0c3dbaaa6e25}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Client\Objects\Helpers">
-      <UniqueIdentifier>{3dec4fb3-7334-4f5e-b746-18b6b9bb4f97}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Renderer">
       <UniqueIdentifier>{1e13051f-c332-4b25-bbab-9946eb8efde1}</UniqueIdentifier>
     </Filter>
@@ -172,61 +148,19 @@
     <Filter Include="Liquid\Instances">
       <UniqueIdentifier>{5a9d94b7-58a4-4951-adbd-dde2c8952320}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Client\CharacterSelection">
-      <UniqueIdentifier>{e8b9984d-7548-4b83-995d-da2926cba7dd}</UniqueIdentifier>
-    </Filter>
     <Filter Include="DBC\Tables\Transport">
       <UniqueIdentifier>{a721aa6b-0a39-4bab-bb24-b95388494a3e}</UniqueIdentifier>
     </Filter>
     <Filter Include="DBC\Tables\Taxi">
       <UniqueIdentifier>{b19f1950-2789-4cb2-ac7a-5604e8767317}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Renderer\WoWClientPasses">
-      <UniqueIdentifier>{e1dfcd46-2119-4a6b-8659-44a73c3d3e0b}</UniqueIdentifier>
+    <Filter Include="World\Character\Types">
+      <UniqueIdentifier>{9b33dbe5-de55-4951-a0eb-d06a7a04ed7a}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
       <Filter>Common</Filter>
-    </ClCompile>
-    <ClCompile Include="Client\ARC4.cpp">
-      <Filter>Client\Cryptography</Filter>
-    </ClCompile>
-    <ClCompile Include="Client\AuthCrypt.cpp">
-      <Filter>Client\Cryptography</Filter>
-    </ClCompile>
-    <ClCompile Include="Client\BigNumber.cpp">
-      <Filter>Client\Cryptography</Filter>
-    </ClCompile>
-    <ClCompile Include="Client\HMACSHA1.cpp">
-      <Filter>Client\Cryptography</Filter>
-    </ClCompile>
-    <ClCompile Include="Client\OpenSSLCrypto.cpp">
-      <Filter>Client\Cryptography</Filter>
-    </ClCompile>
-    <ClCompile Include="Client\SHA1.cpp">
-      <Filter>Client\Cryptography</Filter>
-    </ClCompile>
-    <ClCompile Include="Client\AuthSocket.cpp">
-      <Filter>Client\Auth</Filter>
-    </ClCompile>
-    <ClCompile Include="Client\Templates\CharacterTemplate.cpp">
-      <Filter>Client\World\Templates</Filter>
-    </ClCompile>
-    <ClCompile Include="Client\Templates\ItemTemplate.cpp">
-      <Filter>Client\World\Templates</Filter>
-    </ClCompile>
-    <ClCompile Include="Client\ClientPacket.cpp">
-      <Filter>Client\World\Packets</Filter>
-    </ClCompile>
-    <ClCompile Include="Client\ServerPacket.cpp">
-      <Filter>Client\World\Packets</Filter>
-    </ClCompile>
-    <ClCompile Include="Client\WorldSocket.cpp">
-      <Filter>Client\World</Filter>
-    </ClCompile>
-    <ClCompile Include="Client\Client.cpp">
-      <Filter>Client</Filter>
     </ClCompile>
     <ClCompile Include="owGame.cpp">
       <Filter>Common</Filter>
@@ -432,27 +366,6 @@
     <ClCompile Include="Settings\WoWSettingsGroup.cpp">
       <Filter>Utils</Filter>
     </ClCompile>
-    <ClCompile Include="Client\World.cpp">
-      <Filter>Client\World</Filter>
-    </ClCompile>
-    <ClCompile Include="Client\WoWGameObject.cpp">
-      <Filter>Client\Objects</Filter>
-    </ClCompile>
-    <ClCompile Include="Client\WoWItem.cpp">
-      <Filter>Client\Objects</Filter>
-    </ClCompile>
-    <ClCompile Include="Client\WoWPlayer.cpp">
-      <Filter>Client\Objects</Filter>
-    </ClCompile>
-    <ClCompile Include="Client\WoWUnit.cpp">
-      <Filter>Client\Objects</Filter>
-    </ClCompile>
-    <ClCompile Include="Client\WoWObject.cpp">
-      <Filter>Client\Objects</Filter>
-    </ClCompile>
-    <ClCompile Include="Client\WoWWorldObject.cpp">
-      <Filter>Client\Objects</Filter>
-    </ClCompile>
     <ClCompile Include="M2\M2_AnimationSet.cpp">
       <Filter>M2\Animations</Filter>
     </ClCompile>
@@ -476,15 +389,6 @@
     </ClCompile>
     <ClCompile Include="WMO\WMO_Group.cpp">
       <Filter>WMO</Filter>
-    </ClCompile>
-    <ClCompile Include="Client\ObjectGUID.cpp">
-      <Filter>Client</Filter>
-    </ClCompile>
-    <ClCompile Include="Client\WoWDynamicObject.cpp">
-      <Filter>Client\Objects</Filter>
-    </ClCompile>
-    <ClCompile Include="Client\WoWCorpse.cpp">
-      <Filter>Client\Objects</Filter>
     </ClCompile>
     <ClCompile Include="Map\MapTileLiquid.cpp">
       <Filter>Map\MapTile</Filter>
@@ -570,41 +474,17 @@
     <ClCompile Include="Liquid\LiquidMaterial.cpp">
       <Filter>Liquid\Instances</Filter>
     </ClCompile>
-    <ClCompile Include="Client\ClientCache.cpp">
-      <Filter>Client</Filter>
-    </ClCompile>
     <ClCompile Include="World\GameObject\GameObjectM2.cpp">
       <Filter>World\GameObject</Filter>
     </ClCompile>
     <ClCompile Include="World\GameObject\GameObjectWMO.cpp">
       <Filter>World\GameObject</Filter>
     </ClCompile>
-    <ClCompile Include="Client\WorldObjectUpdater.cpp">
-      <Filter>Client\World</Filter>
+    <ClCompile Include="World\Character\Types\CharacterTemplate.cpp">
+      <Filter>World\Character\Types</Filter>
     </ClCompile>
-    <ClCompile Include="Client\WorldObjects.cpp">
-      <Filter>Client\World</Filter>
-    </ClCompile>
-    <ClCompile Include="Client\WoWContainer.cpp">
-      <Filter>Client\Objects</Filter>
-    </ClCompile>
-    <ClCompile Include="Client\TransportAnimationStorage.cpp">
-      <Filter>Client\World</Filter>
-    </ClCompile>
-    <ClCompile Include="Client\TaxiStorage.cpp">
-      <Filter>Client\World</Filter>
-    </ClCompile>
-    <ClCompile Include="Client\WoWGameObjectMOTransport.cpp">
-      <Filter>Client\Objects</Filter>
-    </ClCompile>
-    <ClCompile Include="Client\CharacterSelection\CharacterSelection.cpp">
-      <Filter>Client\CharacterSelection</Filter>
-    </ClCompile>
-    <ClCompile Include="Renderer\RenderPass_Path.cpp">
-      <Filter>Renderer\WoWClientPasses</Filter>
-    </ClCompile>
-    <ClCompile Include="Client\WoWObjectValues.cpp">
-      <Filter>Client\Objects\Helpers</Filter>
+    <ClCompile Include="World\Character\Types\ItemTemplate.cpp">
+      <Filter>World\Character\Types</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -712,60 +592,6 @@
     </ClInclude>
     <ClInclude Include="DBC\Tables\DBC_Map_WotLK.h">
       <Filter>DBC\Tables</Filter>
-    </ClInclude>
-    <ClInclude Include="Client\ARC4.h">
-      <Filter>Client\Cryptography</Filter>
-    </ClInclude>
-    <ClInclude Include="Client\AuthCrypt.h">
-      <Filter>Client\Cryptography</Filter>
-    </ClInclude>
-    <ClInclude Include="Client\BigNumber.h">
-      <Filter>Client\Cryptography</Filter>
-    </ClInclude>
-    <ClInclude Include="Client\HMACSHA1.h">
-      <Filter>Client\Cryptography</Filter>
-    </ClInclude>
-    <ClInclude Include="Client\OpenSSLCrypto.h">
-      <Filter>Client\Cryptography</Filter>
-    </ClInclude>
-    <ClInclude Include="Client\SHA1.h">
-      <Filter>Client\Cryptography</Filter>
-    </ClInclude>
-    <ClInclude Include="Client\AuthCodes.h">
-      <Filter>Client\Auth</Filter>
-    </ClInclude>
-    <ClInclude Include="Client\AuthSocket.h">
-      <Filter>Client\Auth</Filter>
-    </ClInclude>
-    <ClInclude Include="Client\Templates\CharacterEnums.h">
-      <Filter>Client\World\Templates</Filter>
-    </ClInclude>
-    <ClInclude Include="Client\Templates\CharacterTemplate.h">
-      <Filter>Client\World\Templates</Filter>
-    </ClInclude>
-    <ClInclude Include="Client\Templates\ItemTemplate.h">
-      <Filter>Client\World\Templates</Filter>
-    </ClInclude>
-    <ClInclude Include="Client\Templates\Player_Enums.h">
-      <Filter>Client\World\Templates</Filter>
-    </ClInclude>
-    <ClInclude Include="Client\ClientPacket.h">
-      <Filter>Client\World\Packets</Filter>
-    </ClInclude>
-    <ClInclude Include="Client\Opcodes.h">
-      <Filter>Client\World\Packets</Filter>
-    </ClInclude>
-    <ClInclude Include="Client\OpcodesNames.h">
-      <Filter>Client\World\Packets</Filter>
-    </ClInclude>
-    <ClInclude Include="Client\ServerPacket.h">
-      <Filter>Client\World\Packets</Filter>
-    </ClInclude>
-    <ClInclude Include="Client\WorldSocket.h">
-      <Filter>Client\World</Filter>
-    </ClInclude>
-    <ClInclude Include="Client\Client.h">
-      <Filter>Client</Filter>
     </ClInclude>
     <ClInclude Include="Interfaces\Managers.h">
       <Filter>Interfaces</Filter>
@@ -1040,32 +866,8 @@
     <ClInclude Include="Settings\WoWSettingsGroup.h">
       <Filter>Utils</Filter>
     </ClInclude>
-    <ClInclude Include="Client\ClientCache.h">
-      <Filter>Client</Filter>
-    </ClInclude>
-    <ClInclude Include="Client\World.h">
-      <Filter>Client\World</Filter>
-    </ClInclude>
     <ClInclude Include="DBC\Tables\DBC_GameObjectDisplayInfo.h">
       <Filter>DBC\Tables\GameObject</Filter>
-    </ClInclude>
-    <ClInclude Include="Client\WoWGameObject.h">
-      <Filter>Client\Objects</Filter>
-    </ClInclude>
-    <ClInclude Include="Client\WoWItem.h">
-      <Filter>Client\Objects</Filter>
-    </ClInclude>
-    <ClInclude Include="Client\WoWPlayer.h">
-      <Filter>Client\Objects</Filter>
-    </ClInclude>
-    <ClInclude Include="Client\WoWUnit.h">
-      <Filter>Client\Objects</Filter>
-    </ClInclude>
-    <ClInclude Include="Client\WoWObject.h">
-      <Filter>Client\Objects</Filter>
-    </ClInclude>
-    <ClInclude Include="Client\WoWWorldObject.h">
-      <Filter>Client\Objects</Filter>
     </ClInclude>
     <ClInclude Include="M2\M2_AnimationSet.h">
       <Filter>M2\Animations</Filter>
@@ -1093,27 +895,6 @@
     </ClInclude>
     <ClInclude Include="WMO\WMO_Group.h">
       <Filter>WMO</Filter>
-    </ClInclude>
-    <ClInclude Include="Client\MovementTypedefs.h">
-      <Filter>Client\Objects\Helpers</Filter>
-    </ClInclude>
-    <ClInclude Include="Client\MoveSplineFlag.h">
-      <Filter>Client\Objects\Helpers</Filter>
-    </ClInclude>
-    <ClInclude Include="Client\ObjectGUID.h">
-      <Filter>Client</Filter>
-    </ClInclude>
-    <ClInclude Include="Client\UpdateMask.h">
-      <Filter>Client\Objects\Helpers</Filter>
-    </ClInclude>
-    <ClInclude Include="Client\UpdateFields.h">
-      <Filter>Client\Objects\Helpers</Filter>
-    </ClInclude>
-    <ClInclude Include="Client\WoWDynamicObject.h">
-      <Filter>Client\Objects</Filter>
-    </ClInclude>
-    <ClInclude Include="Client\WoWCorpse.h">
-      <Filter>Client\Objects</Filter>
     </ClInclude>
     <ClInclude Include="Map\MapTileLiquid.h">
       <Filter>Map\MapTile</Filter>
@@ -1211,26 +992,8 @@
     <ClInclude Include="World\GameObject\GameObjectWMO.h">
       <Filter>World\GameObject</Filter>
     </ClInclude>
-    <ClInclude Include="Client\WorldObjectUpdater.h">
-      <Filter>Client\World</Filter>
-    </ClInclude>
-    <ClInclude Include="Client\WorldObjects.h">
-      <Filter>Client\World</Filter>
-    </ClInclude>
-    <ClInclude Include="Client\WoWContainer.h">
-      <Filter>Client\Objects</Filter>
-    </ClInclude>
     <ClInclude Include="DBC\Tables\DBC_TransportAnimation.h">
       <Filter>DBC\Tables\Transport</Filter>
-    </ClInclude>
-    <ClInclude Include="Client\TransportAnimationStorage.h">
-      <Filter>Client\World</Filter>
-    </ClInclude>
-    <ClInclude Include="Client\RealmInfo.h">
-      <Filter>Client\Auth</Filter>
-    </ClInclude>
-    <ClInclude Include="Client\ClientCacheTemplates.h">
-      <Filter>Client</Filter>
     </ClInclude>
     <ClInclude Include="DBC\Tables\DBC_TaxiPath.h">
       <Filter>DBC\Tables\Taxi</Filter>
@@ -1238,23 +1001,20 @@
     <ClInclude Include="DBC\Tables\DBC_TaxiPathNode.h">
       <Filter>DBC\Tables\Taxi</Filter>
     </ClInclude>
-    <ClInclude Include="Client\TaxiStorage.h">
-      <Filter>Client\World</Filter>
-    </ClInclude>
     <ClInclude Include="DBC\Tables\DBC_TaxiNodes.h">
       <Filter>DBC\Tables\Taxi</Filter>
     </ClInclude>
-    <ClInclude Include="Client\WoWGameObjectMOTransport.h">
-      <Filter>Client\Objects</Filter>
+    <ClInclude Include="World\Character\Types\CharacterEnums.h">
+      <Filter>World\Character\Types</Filter>
     </ClInclude>
-    <ClInclude Include="Client\CharacterSelection\CharacterSelection.h">
-      <Filter>Client\CharacterSelection</Filter>
+    <ClInclude Include="World\Character\Types\CharacterTemplate.h">
+      <Filter>World\Character\Types</Filter>
     </ClInclude>
-    <ClInclude Include="Renderer\RenderPass_Path.h">
-      <Filter>Renderer\WoWClientPasses</Filter>
+    <ClInclude Include="World\Character\Types\ItemTemplate.h">
+      <Filter>World\Character\Types</Filter>
     </ClInclude>
-    <ClInclude Include="Client\WoWObjectValues.h">
-      <Filter>Client\Objects\Helpers</Filter>
+    <ClInclude Include="World\Character\Types\Player_Enums.h">
+      <Filter>World\Character\Types</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

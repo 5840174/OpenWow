@@ -2,13 +2,11 @@
 
 #ifdef USE_M2_MODELS
 
-#include "DBC/DBC__Storage.h"
-
 // FORWARD BEGIN
 class Character;
 // FORWARD END
 
-class Character_SkinTextureBaker
+class ZN_API Character_SkinTextureBaker
 {
 public:
 	Character_SkinTextureBaker(const IBaseManager& BaseManager, IRenderDevice& RenderDevice);
