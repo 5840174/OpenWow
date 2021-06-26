@@ -47,10 +47,10 @@ int main(int argumentCount, char* arguments[])
 #endif
 
 	auto locale = std::setlocale(LC_ALL, "ru_RU.UTF-8");
-	printf("Locale '%s' setted.", locale);
+	printf("Locale '%s' setted.\n", locale);
 
 	BT_InstallSehFilter();
-	BT_SetAppName(L"ZenonEngine");
+	BT_SetAppName(L"OpenWoW");
 	//BT_SetSupportEMail(L"your@email.com");
 	BT_SetFlags(BTF_DETAILEDMODE /*| BTF_EDITMAIL*/);
 	//BT_SetSupportServer(L"localhost", 9999);

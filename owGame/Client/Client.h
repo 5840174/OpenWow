@@ -30,7 +30,7 @@ public:
 
 private:
 	std::string                                   m_Host;
-	port_t                                        m_Port;
+	uint16                                        m_Port;
 	std::string                                   m_Login;
 
 private:

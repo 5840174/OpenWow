@@ -18,7 +18,7 @@ public:
 	CAuthSocket(CWoWClient& WoWClient, const std::string& Login, const std::string& Password);
 	virtual ~CAuthSocket();
 
-	void Open(std::string Host, port_t Port);
+	void Open(std::string Host, uint16 Port);
 	void Update();
 
 	void SendData(const IByteBuffer& _bb);

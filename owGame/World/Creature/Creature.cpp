@@ -13,7 +13,7 @@ m_FileName="Creature\\Alexstrasza\\Alexstrasza.m2"
 Creature::Creature(IScene& Scene, const std::shared_ptr<CM2>& M2Object)
 	: CM2_Base_Instance(Scene, M2Object)
 {
-	for (uint32 i = 0; i < MeshIDType::Count; i++)
+	for (uint32 i = 0; i < (size_t)MeshIDType::Count; i++)
 		m_MeshID[i] = 1;
 }
 
@@ -23,7 +23,7 @@ Creature::~Creature()
 
 
 
-void Creature::setMeshEnabled(MeshIDType::List _type, uint32 _value)
+void Creature::setMeshEnabled(MeshIDType _type, uint32 _value)
 {
 	_ASSERT(_type < MeshIDType::Count);
 	if (_value == UINT32_MAX)
@@ -31,7 +31,7 @@ void Creature::setMeshEnabled(MeshIDType::List _type, uint32 _value)
 		return;
 	}
 
-	m_MeshID[_type] = _value;
+	m_MeshID[(size_t)_type] = _value;
 }
 
 bool Creature::isMeshEnabled(uint32 _index) const
@@ -47,10 +47,10 @@ bool Creature::isMeshEnabled(uint32 _index) const
 	//if (div100 == 3)
 	//	return true;
 
-	for (uint32 i = 0; i < MeshIDType::Count; i++)
+	for (uint32 i = 0; i < (uint32)MeshIDType::Count; i++)
 	{
 		// Special case for skin
-		if (div100 == MeshIDType::SkinAndHair && mod100 == 0)
+		if (div100 == (uint32)MeshIDType::SkinAndHair && mod100 == 0)
 		{
 			return true;
 		}

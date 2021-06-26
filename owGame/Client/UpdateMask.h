@@ -53,14 +53,14 @@ public:
 		((uint8 *)mUpdateMask)[index >> 3] &= (0xff ^ (1 << (index & 0x7)));
 	}
 
-	inline bool GetBit(uint32 index)
+	inline bool GetBit(uint32 index) const
 	{
 		return (((uint8 *)mUpdateMask)[index >> 3] & (1 << (index & 0x7))) != 0;
 	}
 
-	inline uint32 GetBlockCount() { return mBlocks; }
-	inline uint32 GetLength() { return mBlocks << 2; }
-	inline uint32 GetCount() { return mCount; }
+	inline uint32 GetBlockCount() const { return mBlocks; }
+	inline uint32 GetLength() const { return mBlocks << 2; }
+	inline uint32 GetCount() const { return mCount; }
 	inline uint8* GetMask() { return (uint8*)mUpdateMask; }
 
 	inline void SetCount(uint32 valuesCount)

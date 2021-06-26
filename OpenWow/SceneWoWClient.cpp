@@ -63,7 +63,7 @@ void CSceneWoWClient::Initialize()
 	m_RendererStatisticText->SetText("");
 	
 	m_WowClient = std::make_unique<CWoWClient>(*this, "localhost");
-	m_WowClient->BeginConnect("test", "test");
+	m_WowClient->BeginConnect("test2", "test2");
 }
 
 void CSceneWoWClient::Finalize()

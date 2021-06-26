@@ -225,7 +225,7 @@ bool CMapChunk::Load()
 	}
 
 	// R, G, B - alphas, A - shadow
-	std::shared_ptr<CImageBase> blendBuff = std::make_shared<CImageBase>(64, 64, 32, true);
+	auto blendBuff = std::make_shared<CImageBase>("", 64, 64, 32, true);
 
 	// Shadows (MCSH)
 	if (m_Header.flags.has_mcsh)

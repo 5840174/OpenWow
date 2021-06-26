@@ -43,6 +43,7 @@
 ~DBCFile[CreatureDisplayInfoExtra.dbc]: Fields count = '21'. Records count = '15475'.
 ~DBCFile[CreatureModelData.dbc]: Fields count = '28'. Records count = '1331'.
 ~DBCFile[HelmetGeosetVisData.dbc]: Fields count = '8'. Records count = '21'.
+~DBCFile[Item.dbc]: Fields count = '8'. Records count = '46096'.
 ~DBCFile[ItemBagFamily.dbc]: Fields count = '18'. Records count = '16'.
 ~DBCFile[ItemClass.dbc]: Fields count = '20'. Records count = '17'.
 ~DBCFile[ItemDisplayInfo.dbc]: Fields count = '25'. Records count = '57986'.
@@ -87,124 +88,255 @@
 ^CWoWClient::OnRealmListSelected: Realm name 'Trinity'.
 @SOCKET DISCONNECTED.
 ^Succes access to server!!!
-~Opcode: 'SMSG_ADDON_INFO' (0x2EF). Size: '139' not handled.
-~Opcode: 'SMSG_CLIENTCACHE_VERSION' (0x4AB). Size: '4' not handled.
-~Opcode: 'SMSG_TUTORIAL_FLAGS' (0xFD). Size: '32' not handled.
  CWoWClientCharactedSelection::On_SMSG_CHAR_ENUM:: Characters count '1'.
- CWoWClientCharactedSelection::On_SMSG_CHAR_ENUM:: Character [0] name 'Bouzi'.
-^CWoWClient::OnCharacterSelected: Character name 'Bouzi'.
+ CWoWClientCharactedSelection::On_SMSG_CHAR_ENUM:: Character [0] name 'Testchar'.
+^CWoWClient::OnCharacterSelected: Character name 'Testchar'.
  CTransportAnimationStorage::Initialize: Loaded records for '82' transport entries.
 ~Loading shader '3D/Debug.hlsl':'VS_main'.
 ~Loading shader '3D/Debug.hlsl':'PS_main'.
-~Opcode: 'SMSG_POWER_UPDATE' (0x480). Size: '7' not handled.
-~Opcode: 'SMSG_SET_PROFICIENCY' (0x127). Size: '5' not handled.
-~Opcode: 'SMSG_SET_PROFICIENCY' (0x127). Size: '5' not handled.
-~Opcode: 'SMSG_SET_PROFICIENCY' (0x127). Size: '5' not handled.
-~Opcode: 'SMSG_SET_PROFICIENCY' (0x127). Size: '5' not handled.
-~Opcode: 'SMSG_SET_PROFICIENCY' (0x127). Size: '5' not handled.
-~Opcode: 'SMSG_SET_PROFICIENCY' (0x127). Size: '5' not handled.
-~Opcode: 'SMSG_CANCEL_COMBAT' (0x14E). Size: '0' not handled.
-~Opcode: 'MSG_SET_DUNGEON_DIFFICULTY' (0x329). Size: '12' not handled.
- Map[Azeroth]: Id = '0'. Preloading...
- Map[Azeroth]: InstanceType = '0'.
- Map[Azeroth]: MapType = '0'.
- Map[Azeroth]: IsBattleGround = '0'.
- Map[Azeroth]: Name = 'Восточные королевства'.
- Map[Azeroth]: AreaTableID = '0'.
- Map[Azeroth]: AllianceDescr = ''.
- Map[Azeroth]: HordeDescr = ''.
- Map[Azeroth]: CorpseMapID = '-1'.
- Map[Azeroth]: Id [0]. Loading...
+!asd
+!File 'Character\Tauren\TaurenMaleFaceLower04_18.blp' not exists.
+!CImagesFactory: File is nullptr.
+!File 'Character\Tauren\TaurenMaleFaceLower04_18.blp' not exists.
+!CImagesFactory: File is nullptr.
+!File 'Character\Tauren\Hair00_01.blp' not exists.
+!CImagesFactory: File is nullptr.
+!File 'Character\Tauren\Hair00_01.blp' not exists.
+!CImagesFactory: File is nullptr.
+!asd
+!File 'Character\Tauren\TaurenMaleFaceLower04_18.blp' not exists.
+!CImagesFactory: File is nullptr.
+~Sky: [191] is global sky.
+ Map[Kalimdor]: Id = '1'. Preloading...
+ Map[Kalimdor]: InstanceType = '0'.
+ Map[Kalimdor]: MapType = '0'.
+ Map[Kalimdor]: IsBattleGround = '0'.
+ Map[Kalimdor]: Name = 'Калимдор'.
+ Map[Kalimdor]: AreaTableID = '0'.
+ Map[Kalimdor]: AllianceDescr = ''.
+ Map[Kalimdor]: HordeDescr = ''.
+ Map[Kalimdor]: CorpseMapID = '-1'.
+ Map[Kalimdor]: Id [1]. Loading...
 ^CMapWDL: Low WMOs count [0].
 ~MapWDT: Global WMO exists [false].
-~Opcode: 'SMSG_ACCOUNT_DATA_TIMES' (0x209). Size: '29' not handled.
-~Opcode: 'SMSG_FEATURE_SYSTEM_STATUS' (0x3C9). Size: '2' not handled.
 ^MOTD: Welcome to a Trinity Core server.
-~Opcode: 'SMSG_LEARNED_DANCE_MOVES' (0x455). Size: '8' not handled.
-~Opcode: 'SMSG_CONTACT_LIST' (0x67). Size: '8' not handled.
-~Opcode: 'SMSG_BIND_POINT_UPDATE' (0x155). Size: '20' not handled.
-~Opcode: 'SMSG_TALENTS_INFO' (0x4C0). Size: '21' not handled.
-~Opcode: 'SMSG_INSTANCE_DIFFICULTY' (0x33B). Size: '8' not handled.
-~Opcode: 'SMSG_INITIAL_SPELLS' (0x12A). Size: '269' not handled.
-~Opcode: 'SMSG_SEND_UNLEARN_SPELLS' (0x41E). Size: '4' not handled.
-~Opcode: 'SMSG_ACTION_BUTTONS' (0x129). Size: '577' not handled.
-~Opcode: 'SMSG_INITIALIZE_FACTIONS' (0x122). Size: '644' not handled.
-~Opcode: 'SMSG_ALL_ACHIEVEMENT_DATA' (0x47D). Size: '939' not handled.
-~Opcode: 'SMSG_EQUIPMENT_SET_LIST' (0x4BC). Size: '4' not handled.
-~Opcode: 'SMSG_LOGIN_SET_TIME_SPEED' (0x42). Size: '12' not handled.
-~Opcode: 'SMSG_SET_FORCED_REACTIONS' (0x2A5). Size: '4' not handled.
-^---Create WoWGameObjectMOTransport with Type 'MoTransport', Entry '0', Counter '1'
-^---Create WoWGameObjectMOTransport with Type 'MoTransport', Entry '0', Counter '2'
-^---Create WoWGameObjectMOTransport with Type 'MoTransport', Entry '0', Counter '10'
-^---Create WoWGameObjectMOTransport with Type 'MoTransport', Entry '0', Counter '4'
-^---Create WoWGameObjectMOTransport with Type 'MoTransport', Entry '0', Counter '17'
+!asd
+^---Create WoWGameObjectMOTransport with Type 'MoTransport', Entry '0', Counter '8'
+!WoWGameObjectMOTransport: Try to call 'AfterCreate' for object.
 ^---Create WoWGameObjectMOTransport with Type 'MoTransport', Entry '0', Counter '5'
-~Opcode: 'SMSG_AURA_UPDATE_ALL' (0x495). Size: '14' not handled.
-~Opcode: 'SMSG_AURA_UPDATE_ALL' (0x495). Size: '14' not handled.
-~Opcode: 'SMSG_AURA_UPDATE_ALL' (0x495). Size: '14' not handled.
-~Opcode: 'SMSG_AURA_UPDATE_ALL' (0x495). Size: '14' not handled.
-~Opcode: 'SMSG_AURA_UPDATE_ALL' (0x495). Size: '14' not handled.
-~Opcode: 'SMSG_AURA_UPDATE_ALL' (0x495). Size: '14' not handled.
-~Opcode: 'SMSG_AURA_UPDATE_ALL' (0x495). Size: '14' not handled.
-~Opcode: 'SMSG_AURA_UPDATE_ALL' (0x495). Size: '14' not handled.
-~Opcode: 'SMSG_WEATHER' (0x2F4). Size: '9' not handled.
-~Opcode: 'SMSG_WEATHER' (0x2F4). Size: '9' not handled.
-~Opcode: 'SMSG_INIT_WORLD_STATES' (0x2C2). Size: '78' not handled.
-~Opcode: 'SMSG_UPDATE_WORLD_STATE' (0x2C3). Size: '8' not handled.
-~Opcode: 'SMSG_UPDATE_WORLD_STATE' (0x2C3). Size: '8' not handled.
-~Opcode: 'SMSG_UPDATE_WORLD_STATE' (0x2C3). Size: '8' not handled.
-~Opcode: 'SMSG_UPDATE_WORLD_STATE' (0x2C3). Size: '8' not handled.
-~Opcode: 'SMSG_UPDATE_WORLD_STATE' (0x2C3). Size: '8' not handled.
-~Opcode: 'SMSG_UPDATE_WORLD_STATE' (0x2C3). Size: '8' not handled.
-~Opcode: 'SMSG_SPELL_GO' (0x132). Size: '36' not handled.
-~Opcode: 'SMSG_QUESTGIVER_STATUS_MULTIPLE' (0x418). Size: '13' not handled.
+!WoWGameObjectMOTransport: Try to call 'AfterCreate' for object.
+^---Create WoWGameObjectMOTransport with Type 'MoTransport', Entry '0', Counter '6'
+!WoWGameObjectMOTransport: Try to call 'AfterCreate' for object.
+^---Create WoWGameObjectMOTransport with Type 'MoTransport', Entry '0', Counter '7'
+!WoWGameObjectMOTransport: Try to call 'AfterCreate' for object.
+^---Create WoWGameObjectMOTransport with Type 'MoTransport', Entry '0', Counter '3'
+!WoWGameObjectMOTransport: Try to call 'AfterCreate' for object.
+^---Create WoWGameObjectMOTransport with Type 'MoTransport', Entry '0', Counter '12'
+!WoWGameObjectMOTransport: Try to call 'AfterCreate' for object.
+!asd
+^---Create WoWGameObjectMOTransport with Type 'MoTransport', Entry '0', Counter '20'
+!WoWGameObjectMOTransport: Try to call 'AfterCreate' for object.
+@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
+@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
+!asd
+@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
+@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
+@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
+@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
+@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
+@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
+@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
+@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
+@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
+@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
+@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
+@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
+@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
+@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
+@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
+@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
+@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
+@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
+@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
+@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
+@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
+@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
+@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
+@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
+@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
+@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
+@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
+@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
+@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
+@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
+@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
+@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
+@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
+@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
+@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
+@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
+@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
+@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
+@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
+@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
+@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
+@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
+@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
+@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
+@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
+@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
+@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
+@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
+@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
+@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
+@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
+@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
+@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
+@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
+@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
+@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
+@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
+@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
+@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
+@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
+@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
+@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
+@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
+@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
+@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
+@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
+@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
+@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
+@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
+@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
+@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
+@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
+@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
+@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
+@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
+@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
+@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
+@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
+@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
+@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
+@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
+@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
+@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
+@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
+@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
+@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
+@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
+@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
+@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
+@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
+@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
+@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
+@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
+@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
+@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
+@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
+@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
+@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
+@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
+@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
+@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
+@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
+@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
+@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
+@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
+@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
+@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
+@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
+@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
+@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
+@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
+@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
+@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
+@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
+@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
+@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
+@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
+@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
+@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
+@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
+@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
+@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
+@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
+@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
+@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
+@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
+@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
+@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
+@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
+@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
+@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
+@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
+@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
+@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
+@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
+@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
+@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
+@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
+@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
+@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
+@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
+@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
+@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
+@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
+@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
+@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
+@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
+@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
+@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
+@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
+@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
+@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
+@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
+@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
+@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
+@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
+@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
+@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
+@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
+@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
+@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
+@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
+@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
+@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
+@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
+@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
+@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
+@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
+@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
+@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
+@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
+@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
+@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
+@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
+@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
+@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
+@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
+@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
+@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
+@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
+@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
+@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
+@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
+@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
+@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
+@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
+@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
+@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
 ^NOTIFICATION: GM mode is ON
-~Opcode: 'SMSG_SPELL_START' (0x131). Size: '29' not handled.
-~Opcode: 'SMSG_SPELL_GO' (0x132). Size: '40' not handled.
-~Opcode: 'SMSG_AURA_UPDATE' (0x496). Size: '14' not handled.
-~Opcode: 'SMSG_SPELL_START' (0x131). Size: '29' not handled.
-~Opcode: 'SMSG_SPELL_GO' (0x132). Size: '40' not handled.
-~Opcode: 'SMSG_AURA_UPDATE' (0x496). Size: '14' not handled.
-~Opcode: 'SMSG_SPELL_START' (0x131). Size: '29' not handled.
-~Opcode: 'SMSG_SPELL_GO' (0x132). Size: '40' not handled.
-~Opcode: 'SMSG_AURA_UPDATE' (0x496). Size: '14' not handled.
-~Opcode: 'SMSG_SPELL_START' (0x131). Size: '29' not handled.
-~Opcode: 'SMSG_SPELL_GO' (0x132). Size: '40' not handled.
-~Opcode: 'SMSG_AURA_UPDATE' (0x496). Size: '14' not handled.
-~Opcode: 'SMSG_SPELL_START' (0x131). Size: '29' not handled.
-~Opcode: 'SMSG_SPELL_GO' (0x132). Size: '40' not handled.
-~Opcode: 'SMSG_AURA_UPDATE' (0x496). Size: '14' not handled.
-~Opcode: 'SMSG_SPELL_START' (0x131). Size: '29' not handled.
-~Opcode: 'SMSG_SPELL_GO' (0x132). Size: '40' not handled.
-~Opcode: 'SMSG_AURA_UPDATE' (0x496). Size: '14' not handled.
-~Opcode: 'SMSG_SPELL_START' (0x131). Size: '29' not handled.
-~Opcode: 'SMSG_SPELL_GO' (0x132). Size: '40' not handled.
-~Opcode: 'SMSG_AURA_UPDATE' (0x496). Size: '14' not handled.
-~Opcode: 'SMSG_SPELL_START' (0x131). Size: '29' not handled.
-~Opcode: 'SMSG_SPELL_GO' (0x132). Size: '40' not handled.
-~Opcode: 'SMSG_AURA_UPDATE' (0x496). Size: '14' not handled.
-~GameObject query: EntryID '176495', Type '15', Name 'Дирижабль (Лиловая Принцесса)'
-~GameObject query: EntryID '176310', Type '15', Name 'Безмятежный берег'
-~GameObject query: EntryID '176231', Type '15', Name 'Корабль "Леди Мели"'
-~GameObject query: EntryID '175080', Type '15', Name 'Дирижабль'
-~GameObject query: EntryID '181688', Type '15', Name 'Корабль, ледокол (Северное копье)'
-~GameObject query: EntryID '190536', Type '15', Name 'Корабль, ледокол (Гордость Штормграда)'
-~GameObject query: EntryID '1658', Type '5', Name 'Брилл'
-~GameObject query: EntryID '1659', Type '5', Name 'Чумные земли'
-~GameObject query: EntryID '1660', Type '5', Name 'Серебряный бор'
-~GameObject query: EntryID '1666', Type '5', Name 'Подгород'
-~GameObject query: EntryID '165558', Type '5', Name 'Посадочная площадка дирижабля'
-~GameObject query: EntryID '187576', Type '5', Name 'Украшение - висящее - квадратное - маленькое - MFF'
-~GameObject query: EntryID '195457', Type '5', Name 'Дирижабль Гром'гола'
-~GameObject query: EntryID '195458', Type '5', Name 'Дирижабль Оргриммара'
-~GameObject query: EntryID '195459', Type '5', Name 'Дирижабль Лагеря Возмездия'
-~GameObject query: EntryID '20649', Type '11', Name 'Подгородский подъемник'
-~GameObject query: EntryID '20650', Type '11', Name 'Верхняя левая дверь'
-~GameObject query: EntryID '20651', Type '11', Name 'Нижняя левая дверь'
-~GameObject query: EntryID '20652', Type '11', Name 'Подгородский подъемник'
-~GameObject query: EntryID '20653', Type '11', Name 'Верхняя левая дверь'
-~GameObject query: EntryID '20654', Type '11', Name 'Нижняя левая дверь'
-~GameObject query: EntryID '20655', Type '11', Name 'Подгородский подъемник'
-~GameObject query: EntryID '20656', Type '11', Name 'Верхняя левая дверь'
-~GameObject query: EntryID '20657', Type '11', Name 'Нижняя левая дверь'
-~GameObject query: EntryID '176594', Type '0', Name 'Двери'
+!CImagesFactory: Image 'Leather_Blood_A_02Red_Chest_TL_U.blp' not supported.
+!CImagesFactory: Image 'Leather_Blood_A_02Red_Chest_TL_U.blp' not supported.
+!CImagesFactory: Image 'Leather_Blood_A_02Red_Chest_TL_U.blp' not supported.
+!CImagesFactory: Image 'Leather_Blood_A_02Red_Chest_TL_U.blp' not supported.
+^---Create WoWGameObjectMOTransport with Type 'MoTransport', Entry '0', Counter '4'
+!WoWGameObjectMOTransport: Try to call 'AfterCreate' for object.
+^---Create WoWGameObjectMOTransport with Type 'MoTransport', Entry '0', Counter '2'
+!WoWGameObjectMOTransport: Try to call 'AfterCreate' for object.
+^---Create WoWGameObjectMOTransport with Type 'MoTransport', Entry '0', Counter '5'
+!WoWGameObjectMOTransport: Try to call 'AfterCreate' for object.
+^---Create WoWGameObjectMOTransport with Type 'MoTransport', Entry '0', Counter '9'
+!WoWGameObjectMOTransport: Try to call 'AfterCreate' for object.

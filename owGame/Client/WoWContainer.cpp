@@ -9,8 +9,7 @@ CWoWContainer::CWoWContainer(CWoWObjectGuid Guid)
 	: WoWItem(Guid)
 {
 	m_ObjectType |= TYPEMASK_CONTAINER;
-	m_ObjectTypeId = TYPEID_CONTAINER;
-	m_valuesCount = CONTAINER_END;
+	m_Values.SetValuesCount(CONTAINER_END);
 }
 
 CWoWContainer::~CWoWContainer()

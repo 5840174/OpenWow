@@ -43,6 +43,7 @@ CDBCStorage::CDBCStorage(IBaseManager& BaseManager)
 
 	// Item
 	DBC_LOAD(DBC_HelmetGeosetVisData, filesManager, "HelmetGeosetVisData.dbc");
+	DBC_LOAD(DBC_Item, filesManager, "Item.dbc")
 	DBC_LOAD(DBC_ItemBagFamily, filesManager, "ItemBagFamily.dbc");
 	DBC_LOAD(DBC_ItemClass, filesManager, "ItemClass.dbc");
 	DBC_LOAD(DBC_ItemDisplayInfo, filesManager, "ItemDisplayInfo.dbc");

@@ -117,9 +117,9 @@ bool CM2::Load()
 	else
 	{
 #if WOW_CLIENT_VERSION <= WOW_BC_2_4_3
-		Log::Warn("M2[%s] don't contain geometry. Skins [%d]", getFilename().c_str(), m_Header.skin_profiles.size);
+		//Log::Warn("M2[%s] don't contain geometry. Skins [%d]", getFilename().c_str(), m_Header.skin_profiles.size);
 #else
-		Log::Warn("M2[%s] don't contain geometry. Skins [%d]", getFilename().c_str(), m_Header.num_skin_profiles);
+		//Log::Warn("M2[%s] don't contain geometry. Skins [%d]", getFilename().c_str(), m_Header.num_skin_profiles);
 #endif
 	}
 

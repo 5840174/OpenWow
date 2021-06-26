@@ -75,7 +75,8 @@ void Sky::LoadParams(const CDBCStorage* DBCStorage, LightParamsNames _param)
 
 	if (m_Params.GetSkybox() != nullptr)
 	{
-		Log::Info("Sky: Skybox name = '%s'.", m_Params.GetSkybox()->Get_Filename());
+		// TODO
+		//Log::Info("Sky: Skybox name = '%s'.", m_Params.GetSkybox()->Get_Filename().c_str());
 	}
 
 	//-- Color params

@@ -27,8 +27,7 @@ WoWUnit::WoWUnit(IScene& Scene, CWoWWorld& WoWWorld, CWoWObjectGuid Guid)
 	, DestinationPoint(0.0f)
 {
 	m_ObjectType |= TYPEMASK_UNIT;
-	m_ObjectTypeId = TYPEID_UNIT;
-	m_valuesCount = UNIT_END;
+	m_Values.SetValuesCount(UNIT_END);
 }
 
 WoWUnit::~WoWUnit()
@@ -236,6 +235,75 @@ void WoWUnit::ProcessMonsterMove(CByteBuffer & Bytes)
 	CommitPositionAndRotation();
 }
 
+void WoWUnit::OnValueUpdated(uint16 index)
+{
+	
+
+}
+
+void WoWUnit::OnValuesUpdated(const UpdateMask & Mask)
+{
+	if (Mask.GetBit(UNIT_FIELD_DISPLAYID))
+	{
+		if (m_HiddenNode != nullptr)
+		{
+			Log::Warn("WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.");
+			return;
+		}
+
+		CWorldObjectCreator creator(GetScene().GetBaseManager());
+		m_HiddenNode = creator.BuildCreatureFromDisplayInfo(GetScene().GetBaseManager().GetApplication().GetRenderDevice(), GetScene(), m_Values.GetUInt32Value(UNIT_FIELD_DISPLAYID));
+
+		/*
+		const DBC_CreatureDisplayInfoRecord * creatureDisplayInfo = GetBaseManager().GetManager<CDBCStorage>()->DBC_CreatureDisplayInfo()[displayInfo];
+		if (creatureDisplayInfo == nullptr)
+			throw CException("Creature display info '%d' don't found.", displayInfo);
+
+		const DBC_CreatureModelDataRecord* creatureModelDataRecord = GetBaseManager().GetManager<CDBCStorage>()->DBC_CreatureModelData()[creatureDisplayInfo->Get_Model()];
+		if (creatureModelDataRecord == nullptr)
+			throw CException("Creature model data '%d' don't found.", creatureDisplayInfo->Get_Model());
+
+		float scaleFromCreature = creatureDisplayInfo->Get_Scale();
+		float scaleFromModel = creatureModelDataRecord->Get_Scale();
+		float scale = GetFloatValue(OBJECT_FIELD_SCALE_X);
+		//m_HiddenNode->SetScale(glm::vec3(scale));
+		*/
+	}
+
+	if (Mask.GetBit(UNIT_VIRTUAL_ITEM_SLOT_ID + 0))
+	{
+		uint32 mainHandDisplayID = m_Values.GetUInt32Value(UNIT_VIRTUAL_ITEM_SLOT_ID + 0);
+		if (mainHandDisplayID != 0)
+			if (auto hidderNodeAsCharacter = std::dynamic_pointer_cast<Character>(m_HiddenNode))
+				hidderNodeAsCharacter->GetTemplate().ItemsTemplates[EQUIPMENT_SLOT_MAINHAND] = GetItemDisplayInfoIDByItemID(mainHandDisplayID);
+
+		if (auto hidderNodeAsCharacter = std::dynamic_pointer_cast<Character>(m_HiddenNode))
+			hidderNodeAsCharacter->RefreshItemVisualData();
+	}
+
+	if (Mask.GetBit(UNIT_VIRTUAL_ITEM_SLOT_ID + 1))
+	{
+		uint32 offHandDisplayID = m_Values.GetUInt32Value(UNIT_VIRTUAL_ITEM_SLOT_ID + 1);
+		if (offHandDisplayID != 0)
+			if (auto hidderNodeAsCharacter = std::dynamic_pointer_cast<Character>(m_HiddenNode))
+				hidderNodeAsCharacter->GetTemplate().ItemsTemplates[EQUIPMENT_SLOT_OFFHAND] = GetItemDisplayInfoIDByItemID(offHandDisplayID);
+
+		if (auto hidderNodeAsCharacter = std::dynamic_pointer_cast<Character>(m_HiddenNode))
+			hidderNodeAsCharacter->RefreshItemVisualData();
+	}
+
+	if (Mask.GetBit(UNIT_VIRTUAL_ITEM_SLOT_ID + 2))
+	{
+		uint32 rangedDisplayID = m_Values.GetUInt32Value(UNIT_VIRTUAL_ITEM_SLOT_ID + 2);
+		if (rangedDisplayID != 0)
+			if (auto hidderNodeAsCharacter = std::dynamic_pointer_cast<Character>(m_HiddenNode))
+				hidderNodeAsCharacter->GetTemplate().ItemsTemplates[EQUIPMENT_SLOT_RANGED] = GetItemDisplayInfoIDByItemID(rangedDisplayID);
+
+		if (auto hidderNodeAsCharacter = std::dynamic_pointer_cast<Character>(m_HiddenNode))
+			hidderNodeAsCharacter->RefreshItemVisualData();
+	}
+}
+
 
 
 float WoWUnit::GetSpeed(UnitMoveType MoveType) const
@@ -294,42 +362,25 @@ std::shared_ptr<WoWUnit> WoWUnit::Create(CWoWWorld& WoWWorld, IScene& Scene, CWo
 
 void WoWUnit::AfterCreate(IScene& Scene)
 {
-	if (m_HiddenNode != nullptr)
-	{
-		//Log::Error("WoWUnit: Try to call 'AfterCreate' for object.");
-		return;
-	}
 
-	uint32 displayInfo = GetUInt32Value(UNIT_FIELD_DISPLAYID);
-	if (displayInfo != 0)
-	{
-		CWorldObjectCreator creator(Scene.GetBaseManager());
-		m_HiddenNode = creator.BuildCreatureFromDisplayInfo(Scene.GetBaseManager().GetApplication().GetRenderDevice(), &Scene, displayInfo);
-
-		const DBC_CreatureDisplayInfoRecord * creatureDisplayInfo = GetBaseManager().GetManager<CDBCStorage>()->DBC_CreatureDisplayInfo()[displayInfo];
-		if (creatureDisplayInfo == nullptr)
-			throw CException("Creature display info '%d' don't found.", displayInfo);
-
-		const DBC_CreatureModelDataRecord* creatureModelDataRecord = GetBaseManager().GetManager<CDBCStorage>()->DBC_CreatureModelData()[creatureDisplayInfo->Get_Model()];
-		if (creatureModelDataRecord == nullptr)
-			throw CException("Creature model data '%d' don't found.", creatureDisplayInfo->Get_Model());
-
-		float scaleFromCreature = creatureDisplayInfo->Get_Scale();
-		float scaleFromModel = creatureModelDataRecord->Get_Scale();
-		float scale = GetFloatValue(OBJECT_FIELD_SCALE_X);
-
-
-
-		//m_HiddenNode->SetScale(glm::vec3(scale));
-	}
-	else
-		throw CException("GameObject display info is zero.");
 }
 
 void WoWUnit::Destroy()
 {
 	if (m_HiddenNode)
 		m_HiddenNode->MakeMeOrphan();
+}
+
+CInet_ItemTemplate WoWUnit::GetItemDisplayInfoIDByItemID(uint32 ItemID)
+{
+	auto itemRecord = GetBaseManager().GetManager<CDBCStorage>()->DBC_Item()[ItemID];
+	if (itemRecord == nullptr)
+	{
+		Log::Warn("WoWUnit::GetItemDisplayInfoIDByItemID: Item don't contains id '%d'.", ItemID);
+		return CInet_ItemTemplate();
+	}
+
+	return CInet_ItemTemplate(itemRecord->Get_DisplayInfoID(), itemRecord->Get_InventorySlot(), 0);
 }
 
 #endif

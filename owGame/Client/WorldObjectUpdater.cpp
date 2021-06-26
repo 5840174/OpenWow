@@ -11,6 +11,20 @@
 #pragma comment(lib, "zlib.lib")
 
 
+namespace
+{
+	enum class OBJECT_UPDATE_TYPE : uint8
+	{
+		UPDATETYPE_VALUES = 0,
+		UPDATETYPE_MOVEMENT = 1,
+		UPDATETYPE_CREATE_OBJECT = 2,
+		UPDATETYPE_CREATE_OBJECT2 = 3, // New object
+		UPDATETYPE_OUT_OF_RANGE_OBJECTS = 4,
+		UPDATETYPE_NEAR_OBJECTS = 5
+	};
+}
+
+
 CWorldObjectUpdater::CWorldObjectUpdater(CWoWWorld& WoWWorld, IScene & Scene)
 	: m_Scene(Scene)
 	, m_WoWWorld(WoWWorld)
@@ -73,7 +87,7 @@ void CWorldObjectUpdater::ProcessUpdatePacket(CByteBuffer& Bytes)
 				Bytes.ReadPackedUInt64(guidValue);
 				CWoWObjectGuid guid(guidValue);
 
-				std::shared_ptr<WoWObject> object = m_WoWWorld.GetWorldObjects().GetWoWObject(guid);
+				auto object = m_WoWWorld.GetWorldObjects().GetWoWObject(guid);
 				object->UpdateValues(Bytes);
 			}
 			break;
@@ -85,34 +99,13 @@ void CWorldObjectUpdater::ProcessUpdatePacket(CByteBuffer& Bytes)
 				Bytes.ReadPackedUInt64(guidValue);
 				CWoWObjectGuid guid(guidValue);
 
-				std::shared_ptr<WoWObject> object = m_WoWWorld.GetWorldObjects().GetWoWObject(guid);
+				auto object = m_WoWWorld.GetWorldObjects().GetWoWObject(guid);
 				object->ProcessMovementUpdate(Bytes);
 			}
 			break;
 
 
 			case OBJECT_UPDATE_TYPE::UPDATETYPE_CREATE_OBJECT:
-			{
-				uint64 guidValue;
-				Bytes.ReadPackedUInt64(guidValue);
-				CWoWObjectGuid guid(guidValue);
-
-				EWoWObjectTypeID typeID;
-				Bytes.read(&typeID);
-
-				//if (false == IsWoWObjectExists(guid))
-				//	throw CException("CWoWWorld::ProcessUpdatePacket: WoWObject '%ull' already exists.", guidValue);
-
-				auto object = m_WoWWorld.GetWorldObjects().GetWoWObject(guid);
-				object->ProcessMovementUpdate(Bytes);
-				object->UpdateValues(Bytes);
-
-				//if (typeID != EWoWObjectTypeID::TYPEID_UNIT)
-					object->AfterCreate(m_Scene);
-			}
-			break;
-
-
 			case OBJECT_UPDATE_TYPE::UPDATETYPE_CREATE_OBJECT2: // isNewObject
 			{
 				uint64 guidValue;
@@ -121,9 +114,6 @@ void CWorldObjectUpdater::ProcessUpdatePacket(CByteBuffer& Bytes)
 
 				EWoWObjectTypeID typeID;
 				Bytes.read(&typeID);
-
-				//if (IsWoWObjectExists(guid))
-				//	throw CException("CWoWWorld::ProcessUpdatePacket: WoWObject '%ull' already exists.", guidValue);
 
 				auto object = m_WoWWorld.GetWorldObjects().GetWoWObject(guid);
 				object->ProcessMovementUpdate(Bytes);
@@ -163,7 +153,7 @@ void CWorldObjectUpdater::ProcessUpdatePacket(CByteBuffer& Bytes)
 
 
 			default:
-				throw CException("Unknown update type '%d.'", updateType);
+				throw CException("CWorldObjectUpdater::ProcessUpdatePacket: Unknown update type '%d.'", updateType);
 		}
 	}
 }

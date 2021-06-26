@@ -32,7 +32,7 @@ public:
 	void Initialize() override;
 
 private:
-	CInet_CharacterTemplate			                    m_Template;
+	CInet_CharacterTemplate			                             m_Template;
 	std::map<EInventoryType, std::shared_ptr<CItem_VisualData>>  m_VisualItems;
 };
 

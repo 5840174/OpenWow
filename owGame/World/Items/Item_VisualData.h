@@ -15,15 +15,16 @@ class Character;
 struct ObjectComponent
 {
 	std::shared_ptr<CItem_M2Instance> model;
-	std::shared_ptr<ITexture>         texture;
+	std::shared_ptr<IImage>         texture;
 	M2_AttachmentType	              attach;
 };
 
 struct GeosetComponent
 {
-	MeshIDType::List  mesh;
+	MeshIDType        mesh;
 	uint32            value;
-	uint32 getMeshID() const { return 1 + value; }
+
+	uint32            getMeshID() const { return 1 + value; }
 };
 
 class CItem_VisualData 
@@ -38,19 +39,19 @@ public:
 	bool Load();
 	bool Delete();
 
-	const std::vector<ObjectComponent>&  getObjectComponents() const { return m_ObjectComponents; }
-	const std::vector<GeosetComponent>&  getGeosetComponents() const { return m_GeosetComponents; }
-	const std::shared_ptr<ITexture>&     getTextureComponent(DBC_CharComponent_Sections _type) const { return m_TextureComponents[static_cast<size_t>(_type)]; }
+	const std::vector<ObjectComponent>&  getObjectComponents()                                 const { return m_ObjectComponents; }
+	const std::vector<GeosetComponent>&  getGeosetComponents()                                 const { return m_GeosetComponents; }
+	const std::shared_ptr<IImage>&       getTextureComponent(DBC_CharComponent_Sections _type) const { return m_TextureComponents[static_cast<size_t>(_type)]; }
 
 private:
-	void InitObjectComponents();
-	void InitGeosetComponents();
-	void InitTextureComponents();
+	void                                 InitObjectComponents();
+	void                                 InitGeosetComponents();
+	void                                 InitTextureComponents();
 
 	std::string				 GetObjectModelName(EInventoryType _objectType, std::string _modelName);
 	//std::shared_ptr<M2>      LoadObjectModel   (EInventoryType::List _objectType, std::string _modelName);
-	std::shared_ptr<ITexture> LoadObjectTexture (EInventoryType _objectType, std::string _textureName);
-	std::shared_ptr<ITexture> LoadSkinTexture   (DBC_CharComponent_Sections _type, std::string _textureName);
+	std::shared_ptr<IImage> LoadObjectTexture (EInventoryType _objectType, std::string _textureName);
+	std::shared_ptr<IImage> LoadSkinTexture   (DBC_CharComponent_Sections _type, std::string _textureName);
 	
 	// Helpers
 	std::string getTextureComponentName(DBC_CharComponent_Sections _type, std::string _textureName, Gender _gender);
@@ -59,7 +60,7 @@ private:
 private:
 	std::vector<ObjectComponent>  m_ObjectComponents;
 	std::vector<GeosetComponent>  m_GeosetComponents;
-	std::shared_ptr<ITexture>     m_TextureComponents[static_cast<size_t>(DBC_CharComponent_Sections::ITEMS_COUNT)];
+	std::shared_ptr<IImage>       m_TextureComponents[static_cast<size_t>(DBC_CharComponent_Sections::ITEMS_COUNT)];
 	
 private: 
 	IBaseManager& m_BaseManager;

@@ -374,7 +374,7 @@ bool CMapTile::Load()
 
 	//-- MDXs -------------------------------------------------------------------------
 #ifdef USE_M2_MODELS
-	/*for (const auto& it : m_MDXsPlacementInfo)
+	for (const auto& it : m_MDXsPlacementInfo)
 	{
 		if (auto m2 = GetBaseManager().GetManager<IWoWObjectsCreator>()->LoadM2(GetRenderDevice(), m_MDXsNames[it.nameIndex]))
 		{
@@ -390,7 +390,7 @@ bool CMapTile::Load()
 		{
 			Log::Warn("CMapTile: M2 model '%s' is nullptr.", m_MDXsNames[it.nameIndex].c_str());
 		}
-	}*/
+	}
 	//---------------------------------------------------------------------------------
 #endif
 

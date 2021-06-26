@@ -13,7 +13,7 @@ public:
     virtual ~Creature();
 
     // Mesh & textures provider
-	virtual void setMeshEnabled(MeshIDType::List _type, uint32 _value);
+	virtual void setMeshEnabled(MeshIDType _type, uint32 _value);
 	virtual bool isMeshEnabled(uint32 _index) const override;
 
 	// ISceneNode
@@ -21,7 +21,7 @@ public:
 
 private:
 	// Mesh provider
-	uint32				m_MeshID[MeshIDType::Count];
+	uint32 m_MeshID[(size_t)MeshIDType::Count];
 };
 
 #endif

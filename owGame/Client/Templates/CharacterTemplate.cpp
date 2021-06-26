@@ -34,7 +34,12 @@ CInet_CharacterTemplate::CInet_CharacterTemplate() :
 	PetInfoId(0),
 	PetLevel(0),
 	PetFamilyId(0)
-{}
+{
+	for (int i = 0; i < INVENTORY_SLOT_BAG_END; i++)
+	{
+		ItemsTemplates[i] = CInet_ItemTemplate();
+	}
+}
 
 CInet_CharacterTemplate::CInet_CharacterTemplate(CByteBuffer& b)
 {

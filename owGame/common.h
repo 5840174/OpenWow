@@ -1,12 +1,5 @@
 #pragma once
 
-#include <sockets\\StdoutLog.h>
-#include <sockets\\TcpSocket.h>
-#include <sockets\\SocketThread.h>
-#include <sockets\\SocketHandler.h>
-#include <sockets\\SocketHandlerThread.h>
-
-
 #define WOW_CLASSIC_1_12_1 1
 #define WOW_BC_2_4_3       2  
 #define WOW_WOTLK_3_3_5    3

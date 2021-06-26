@@ -32,6 +32,8 @@ void WoWGameObjectMOTransport::Update(const UpdateEventArgs & e)
 {
 	__super::Update(e);
 
+#if 0
+
 	GameobjectTypes type = GameobjectTypes(GetByteValue(GAMEOBJECT_BYTES_1, 1));
 	if (type != GameobjectTypes::GAMEOBJECT_TYPE_MO_TRANSPORT)
 		throw CException("WoWGameObjectMOTransport::Update: Object type must be GAMEOBJECT_TYPE_MO_TRANSPORT.");
@@ -70,6 +72,7 @@ void WoWGameObjectMOTransport::Update(const UpdateEventArgs & e)
 		//CommitPositionAndRotation();
 	}
 
+#endif
 	//Log::Print("GAMEOBJECT_DYNAMIC: %s - (uint %d) (float %f) Nodes %d", m_GameObjectTemplate->Name.c_str(), pathProgress, pathProgressFloat, taxiNodes.size());
 }
 
@@ -90,9 +93,9 @@ void WoWGameObjectMOTransport::AfterCreate(IScene& Scene)
 
 	__super::AfterCreate(Scene);
 
-	uint16 pathProgress = GetUInt16Value(GAMEOBJECT_DYNAMIC, 1);
-	float pathProgressFloat = float(pathProgress) / 65535.0f;
-	m_PathProgress = pathProgressFloat;
+	//uint16 pathProgress = GetUInt16Value(GAMEOBJECT_DYNAMIC, 1);
+	//float pathProgressFloat = float(pathProgress) / 65535.0f;
+	//m_PathProgress = pathProgressFloat;
 }
 
 void WoWGameObjectMOTransport::Destroy()

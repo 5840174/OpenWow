@@ -10,6 +10,7 @@
 
 // FORWARD BEGIN
 class CWoWWorld;
+struct CInet_ItemTemplate;
 // FORWARD END
 
 enum MoveFlags
@@ -115,6 +116,33 @@ enum UnitDynFlags
 	UNIT_DYNFLAG_DEAD = 0x0020
 };
 
+
+// FLAGS FOR VALUES
+enum UnitBytes0Offsets : uint8
+{
+	UNIT_BYTES_0_OFFSET_RACE = 0,
+	UNIT_BYTES_0_OFFSET_CLASS = 1,
+	UNIT_BYTES_0_OFFSET_GENDER = 2,
+	UNIT_BYTES_0_OFFSET_POWER_TYPE = 3,
+};
+
+enum UnitBytes1Offsets : uint8
+{
+	UNIT_BYTES_1_OFFSET_STAND_STATE = 0,
+	UNIT_BYTES_1_OFFSET_PET_TALENTS = 1,
+	UNIT_BYTES_1_OFFSET_VIS_FLAG = 2,
+	UNIT_BYTES_1_OFFSET_ANIM_TIER = 3
+};
+
+enum UnitBytes2Offsets : uint8
+{
+	UNIT_BYTES_2_OFFSET_SHEATH_STATE = 0,
+	UNIT_BYTES_2_OFFSET_PVP_FLAG = 1,
+	UNIT_BYTES_2_OFFSET_PET_FLAGS = 2,
+	UNIT_BYTES_2_OFFSET_SHAPESHIFT_FORM = 3
+};
+
+
 class ZN_API WoWUnit
 	: public CWoWWorldObject
 {
@@ -122,8 +150,17 @@ public:
 	WoWUnit(IScene& Scene, CWoWWorld& WoWWorld, CWoWObjectGuid Guid);
 	virtual ~WoWUnit();
 
-	virtual void ProcessMovementPacket(CByteBuffer& Bytes);
+	void ProcessMovementPacket(CByteBuffer& Bytes);
 	void ProcessMonsterMove(CByteBuffer& Bytes);
+
+	virtual void OnValueUpdated(uint16 index) override;
+	virtual void OnValuesUpdated(const UpdateMask & Mask) override;
+
+	uint8 GetRace() const { return m_Values.GetByteValue(UNIT_FIELD_BYTES_0, UNIT_BYTES_0_OFFSET_RACE); }
+	uint32 GetRaceMask() const { return 1 << (GetRace() - 1); }
+	uint8 GetClass() const { return m_Values.GetByteValue(UNIT_FIELD_BYTES_0, UNIT_BYTES_0_OFFSET_CLASS); }
+	uint32 GetClassMask() const { return 1 << (GetClass() - 1); }
+	uint8 GetGender() const { return m_Values.GetByteValue(UNIT_FIELD_BYTES_0, UNIT_BYTES_0_OFFSET_GENDER); }
 
 	// Speed
 	float GetSpeed(UnitMoveType MoveType) const;
@@ -151,37 +188,18 @@ public:
 
 	glm::vec3 DestinationPoint;
 
+
+	CInet_ItemTemplate GetItemDisplayInfoIDByItemID(uint32 ItemID);
+
 protected:
 	uint32 m_MovementFlags;
 	uint16 m_MovementFlagsExtra;
-	
-	// transport
-	/*struct TransportInfo
-	{
-		void Reset()
-		{
-			guid = 0x00;
-			pos = glm::vec4(0.0f, 0.0f, 0.0f, 0.0f);
-			seat = -1;
-			time = 0;
-			time2 = 0;
-		}
-
-		uint64 guid;
-		glm::vec4 pos;
-		int8 seat;
-		uint32 time;
-		uint32 time2;
-	} m_Transport;*/
-
 
 	// swimming/flying
 	float m_Pitch;
 
-
 	// falling
 	uint32 m_FallTime;
-
 
 	// jumping
 	struct JumpInfo

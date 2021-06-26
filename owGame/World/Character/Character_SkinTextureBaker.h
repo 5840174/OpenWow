@@ -2,14 +2,7 @@
 
 #ifdef USE_M2_MODELS
 
-struct CharacterSkinLayout
-{
-	enum List : uint32
-	{
-		LAYOUT_1 = 1,
-		LAYOUT_2 = 2
-	};
-};
+#include "DBC/DBC__Storage.h"
 
 // FORWARD BEGIN
 class Character;
@@ -18,13 +11,13 @@ class Character;
 class Character_SkinTextureBaker
 {
 public:
-	Character_SkinTextureBaker(IBaseManager& BaseManager, IRenderDevice& RenderDevice);
+	Character_SkinTextureBaker(const IBaseManager& BaseManager, IRenderDevice& RenderDevice);
 
 	std::shared_ptr<ITexture> createTexture(const Character* _character) const;
 
 private:
-	void FillWithSkin(std::shared_ptr<ITexture> _texture) const;
-	void FillPixels(DBC_CharComponent_Sections _type, std::shared_ptr<ITexture> _texture) const;
+	void FillWithSkin(std::shared_ptr<IImage> Image) const;
+	void FillPixels(DBC_CharComponent_Sections _type, std::shared_ptr<IImage> Image) const;
 
 private:
 	struct PixelData
@@ -44,7 +37,7 @@ private:
 	std::unordered_map<DBC_CharComponent_Sections, CharacterSkinRegion> m_Regions;
 
 private:
-	IBaseManager& m_BaseManager;
+	const IBaseManager& m_BaseManager;
 	IRenderDevice& m_RenderDevice;
 	CDBCStorage* m_DBCs;
 };

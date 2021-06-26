@@ -36,6 +36,9 @@ public:
 	WoWGameObject(IScene& Scene, CWoWWorld& WoWWorld, CWoWObjectGuid Guid);
 	virtual ~WoWGameObject();
 
+	virtual void OnValueUpdated(uint16 index) override;
+	virtual void OnValuesUpdated(const UpdateMask & Mask) override;
+
 	// ISceneNode
 	void Update(const UpdateEventArgs& e) override;
 

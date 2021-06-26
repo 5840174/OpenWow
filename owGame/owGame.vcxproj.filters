@@ -603,6 +603,9 @@
     <ClCompile Include="Renderer\RenderPass_Path.cpp">
       <Filter>Renderer\WoWClientPasses</Filter>
     </ClCompile>
+    <ClCompile Include="Client\WoWObjectValues.cpp">
+      <Filter>Client\Objects\Helpers</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="common.h">
@@ -1249,6 +1252,9 @@
     </ClInclude>
     <ClInclude Include="Renderer\RenderPass_Path.h">
       <Filter>Renderer\WoWClientPasses</Filter>
+    </ClInclude>
+    <ClInclude Include="Client\WoWObjectValues.h">
+      <Filter>Client\Objects\Helpers</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

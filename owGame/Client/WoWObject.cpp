@@ -9,14 +9,33 @@
 #include "WoWUnit.h"
 #include "WoWGameObject.h"
 
+
+namespace
+{
+enum OBJECT_UPDATE_FLAGS
+{
+	UPDATEFLAG_NONE = 0x0000,
+	UPDATEFLAG_SELF = 0x0001,
+	UPDATEFLAG_TRANSPORT = 0x0002,
+	UPDATEFLAG_HAS_TARGET = 0x0004,
+	UPDATEFLAG_UNKNOWN = 0x0008,
+	UPDATEFLAG_LOWGUID = 0x0010,
+	UPDATEFLAG_LIVING = 0x0020,
+	UPDATEFLAG_STATIONARY_POSITION = 0x0040,
+	UPDATEFLAG_VEHICLE = 0x0080,
+	UPDATEFLAG_POSITION = 0x0100,
+	UPDATEFLAG_ROTATION = 0x0200
+};
+}
+
+
 WoWObject::WoWObject(CWoWObjectGuid Guid)
 	: m_GUID(Guid)
+	, m_Values(*this)
 	, m_ObjectType(0)
-	, m_ObjectTypeId(TYPEID_OBJECT)
 {
 	m_ObjectType |= TYPEMASK_OBJECT;
-	m_ObjectTypeId = TYPEID_OBJECT;
-	m_valuesCount = OBJECT_END;
+	m_Values.SetValuesCount(OBJECT_END);
 }
 
 WoWObject::~WoWObject()
@@ -26,13 +45,8 @@ void WoWObject::ProcessMovementUpdate(CByteBuffer& Bytes)
 {
 	CWoWWorldObject* object = dynamic_cast<CWoWWorldObject*>(this);;
 
-	if (GetWoWGUID().GetHigh() == EWoWObjectHighGuid::Mo_Transport)
-	{
-		//Log::Error("asdasdasdasd");
-	}
-
 	uint16 updateFlags;
-	Bytes >> (uint16)updateFlags;
+	Bytes >> updateFlags;
 
 	if (updateFlags & UPDATEFLAG_LIVING)
 	{
@@ -133,7 +147,7 @@ void WoWObject::ProcessMovementUpdate(CByteBuffer& Bytes)
 			Bytes >> gameOrientation;
 			object->Orientation = glm::degrees(gameOrientation + glm::half_pi<float>());
 
-			if (GetObjectTypeID() == EWoWObjectTypeID::TYPEID_CORPSE)
+			if (GetWoWGUID().GetTypeId() == EWoWObjectTypeID::TYPEID_CORPSE)
 			{
 				float gameOrientation2;
 				Bytes >> gameOrientation2;
@@ -234,19 +248,14 @@ void WoWObject::ProcessMovementUpdate(CByteBuffer& Bytes)
 
 void WoWObject::UpdateValues(CByteBuffer& Bytes)
 {
-	uint8 blocksCnt;
-	Bytes >> (uint8)blocksCnt;
-
-	UpdateMask mask;
-	mask.SetCount(m_valuesCount);
-	Bytes.readBytes(mask.GetMask(), mask.GetLength());
-	_ASSERT(blocksCnt == mask.GetBlockCount());
-
-	m_uint32Values = new uint32[m_valuesCount];
-	for (uint16 index = 0; index < m_valuesCount; index++)
-		if (mask.GetBit(index))
-			Bytes >> m_uint32Values[index];
+	m_Values.UpdateValues(Bytes);
 }
+
+void WoWObject::OnValueUpdated(uint16 index)
+{}
+
+void WoWObject::OnValuesUpdated(const UpdateMask & Mask)
+{}
 
 
 
@@ -268,140 +277,5 @@ void WoWObject::Destroy()
 
 
 
-//
-// Values system
-//
-const int32& WoWObject::GetInt32Value(uint16 index) const
-{
-	_ASSERT(index < m_valuesCount || PrintIndexError(index, false));
-	return m_int32Values[index];
-}
-
-const uint32& WoWObject::GetUInt32Value(uint16 index) const
-{
-	_ASSERT(index < m_valuesCount || PrintIndexError(index, false));
-	return m_uint32Values[index];
-}
-
-const uint64& WoWObject::GetUInt64Value(uint16 index) const
-{
-	_ASSERT(index + 1 < m_valuesCount || PrintIndexError(index, false));
-	return *((uint64*)&(m_uint32Values[index]));
-}
-
-const float& WoWObject::GetFloatValue(uint16 index) const
-{
-	_ASSERT(index < m_valuesCount || PrintIndexError(index, false));
-	return m_floatValues[index];
-}
-
-uint8 WoWObject::GetByteValue(uint16 index, uint8 offset) const
-{
-	_ASSERT(index < m_valuesCount || PrintIndexError(index, false));
-	_ASSERT(offset < 4);
-	return *(((uint8*)&m_uint32Values[index]) + offset);
-}
-
-int16 WoWObject::GetInt16Value(uint16 index, uint8 offset) const
-{
-	_ASSERT(index < m_valuesCount || PrintIndexError(index, false));
-	_ASSERT(offset < 2);
-	return *(((int16*)&m_uint32Values[index]) + offset);
-}
-
-uint16 WoWObject::GetUInt16Value(uint16 index, uint8 offset) const
-{
-	_ASSERT(index < m_valuesCount || PrintIndexError(index, false));
-	_ASSERT(offset < 2);
-	return *(((uint16*)&m_uint32Values[index]) + offset);
-}
-
-CWoWObjectGuid WoWObject::GetGuidValue(uint16 index) const
-{
-	_ASSERT(index + 1 < m_valuesCount || PrintIndexError(index, false));
-	return *((CWoWObjectGuid*)&(m_uint32Values[index]));
-}
-
-void WoWObject::SetInt32Value(uint16 index, int32 value)
-{
-	_ASSERT(index < m_valuesCount || PrintIndexError(index, true));
-
-	if (m_int32Values[index] != value)
-	{
-		m_int32Values[index] = value;
-	}
-}
-
-void WoWObject::SetUInt32Value(uint16 index, uint32 value)
-{
-	_ASSERT(index < m_valuesCount || PrintIndexError(index, true));
-	if (m_uint32Values[index] != value)
-		m_uint32Values[index] = value;
-}
-
-void WoWObject::SetUInt64Value(uint16 index, const uint64 &value)
-{
-	_ASSERT(index + 1 < m_valuesCount || PrintIndexError(index, true));
-	if (*((uint64*)&(m_uint32Values[index])) != value)
-	{
-		m_uint32Values[index] = *((uint32*)&value);
-		m_uint32Values[index + 1] = *(((uint32*)&value) + 1);
-	}
-}
-
-void WoWObject::SetFloatValue(uint16 index, float value)
-{
-	_ASSERT(index < m_valuesCount || PrintIndexError(index, true)); //[[TZERO] : not sure of it ] _ASSERT( index < m_valuesCount || PrintIndexError( index , true ) ); 
-	if (m_floatValues[index] != value)
-		m_floatValues[index] = value;
-}
-
-void WoWObject::SetByteValue(uint16 index, uint8 offset, uint8 value)
-{
-	_ASSERT(index < m_valuesCount || PrintIndexError(index, true));
-
-	if (offset > 4)
-		throw CException("WoWObject::SetByteValue: wrong offset %u", offset);
-
-	if (uint8(m_uint32Values[index] >> (offset * 8)) != value)
-	{
-		m_uint32Values[index] &= ~uint32(uint32(0xFF) << (offset * 8));
-		m_uint32Values[index] |= uint32(uint32(value) << (offset * 8));
-	}
-}
-
-void WoWObject::SetUInt16Value(uint16 index, uint8 offset, uint16 value)
-{
-	_ASSERT(index < m_valuesCount || PrintIndexError(index, true));
-
-	if (offset > 2)
-		throw CException("WoWObject::SetUInt16Value: wrong offset %u", offset);
-
-	if (uint8(m_uint32Values[index] >> (offset * 16)) != value)
-	{
-		m_uint32Values[index] &= ~uint32(uint32(0xFFFF) << (offset * 16));
-		m_uint32Values[index] |= uint32(uint32(value) << (offset * 16));
-	}
-}
-
-void WoWObject::SetStatFloatValue(uint16 index, float value)
-{
-	if (value < 0)
-		value = 0.0f;
-	SetFloatValue(index, value);
-}
-
-void WoWObject::SetStatInt32Value(uint16 index, int32 value)
-{
-	if (value < 0)
-		value = 0;
-	SetUInt32Value(index, uint32(value));
-}
-
-bool WoWObject::PrintIndexError(uint32 index, bool set) const
-{
-	Log::Error("WoWObject: Attempt %s non-existed value field: %u (count: %u) for object typeid: %u type mask: %u", (set ? "set value to" : "get value from"), index, m_valuesCount, GetObjectTypeID(), GetObjectType());
-	return true;
-}
 
 #endif

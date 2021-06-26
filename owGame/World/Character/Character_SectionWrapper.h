@@ -11,40 +11,39 @@ class Character;
 class Character_SectionWrapper
 {
 public:
-	Character_SectionWrapper(IBaseManager& BaseManager, IRenderDevice& RenderDevice);
+	Character_SectionWrapper(const IBaseManager& BaseManager);
 	virtual ~Character_SectionWrapper();
 
 	// Skin
-	std::shared_ptr<ITexture> getSkinTexture(const Character* Character) const;
-	std::shared_ptr<ITexture> getSkinExtraTexture(const Character* Character) const;
+	std::shared_ptr<IImage> getSkinTexture(const CInet_CharacterTemplate& CharacterTemlate) const;
+	std::shared_ptr<IImage> getSkinExtraTexture(const CInet_CharacterTemplate& CharacterTemlate) const;
 
 	// Face
-	std::shared_ptr<ITexture> getFaceLowerTexture(const Character* Character) const;
-	std::shared_ptr<ITexture> getFaceUpperTexture(const Character* Character) const;
+	std::shared_ptr<IImage> getFaceLowerTexture(const CInet_CharacterTemplate& CharacterTemlate) const;
+	std::shared_ptr<IImage> getFaceUpperTexture(const CInet_CharacterTemplate& CharacterTemlate) const;
 
 	// FacialHair
-	std::string getFacialHairLowerTexture(const Character* Character) const;
-	std::string getFacialHairUpperTexture(const Character* Character) const;
-	uint32 getFacial01Geoset(const Character* Character) const;
-	uint32 getFacial02Geoset(const Character* Character) const;
-	uint32 getFacial03Geoset(const Character* Character) const;
-	uint32 getFacial16Geoset(const Character* Character) const;
-	uint32 getFacial17Geoset(const Character* Character) const;
+	std::string getFacialHairLowerTexture(const CInet_CharacterTemplate& CharacterTemlate) const;
+	std::string getFacialHairUpperTexture(const CInet_CharacterTemplate& CharacterTemlate) const;
+	uint32 getFacial01Geoset(const CInet_CharacterTemplate& CharacterTemlate) const;
+	uint32 getFacial02Geoset(const CInet_CharacterTemplate& CharacterTemlate) const;
+	uint32 getFacial03Geoset(const CInet_CharacterTemplate& CharacterTemlate) const;
+	uint32 getFacial16Geoset(const CInet_CharacterTemplate& CharacterTemlate) const;
+	uint32 getFacial17Geoset(const CInet_CharacterTemplate& CharacterTemlate) const;
 
 	// Hair
-	uint32     getHairGeoset(const Character* Character) const;
-	uint32     getHairShowScalp(const Character* Character) const;
-	std::shared_ptr<ITexture> getHairTexture(const Character* Character) const;
-	std::shared_ptr<ITexture> getHairScalpLowerTexture(const Character* Character) const;
-	std::shared_ptr<ITexture> getHairScalpUpperTexture(const Character* Character) const;
+	uint32     getHairGeoset(const CInet_CharacterTemplate& CharacterTemlate) const;
+	uint32     getHairShowScalp(const CInet_CharacterTemplate& CharacterTemlate) const;
+	std::shared_ptr<IImage> getHairTexture(const CInet_CharacterTemplate& CharacterTemlate) const;
+	std::shared_ptr<IImage> getHairScalpLowerTexture(const CInet_CharacterTemplate& CharacterTemlate) const;
+	std::shared_ptr<IImage> getHairScalpUpperTexture(const CInet_CharacterTemplate& CharacterTemlate) const;
 
 	// Naked
-	std::string getNakedPelvisTexture(const Character* Character) const;
-	std::string getNakedTorsoTexture(const Character* Character) const;
+	std::string getNakedPelvisTexture(const CInet_CharacterTemplate& CharacterTemlate) const;
+	std::string getNakedTorsoTexture(const CInet_CharacterTemplate& CharacterTemlate) const;
 
 private:
-	IBaseManager& m_BaseManager;
-	IRenderDevice& m_RenderDevice;
+	const IBaseManager& m_BaseManager;
 	CDBCStorage* m_DBCs;
 };
 

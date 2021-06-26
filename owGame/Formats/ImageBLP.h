@@ -60,7 +60,8 @@ class CImageBLP
 	: public CImageBase
 {
 public:
-	CImageBLP();
+	CImageBLP(const std::string & FileName);
+	CImageBLP(const std::string & FileName, uint32 Width, uint32 Height, uint32 BitsPerPixel);
 	virtual ~CImageBLP();
 
 protected:
@@ -73,7 +74,7 @@ protected:
 public: // Static
 	static bool IsFilenameSupported(const std::string& Filename);
 	static bool IsFileSupported(std::shared_ptr<IFile> File);
-	static std::shared_ptr<CImageBLP> CreateEmptyImage(uint32 Width, uint32 Height, uint32 BitsPerPixel);
+	static std::shared_ptr<CImageBLP> CreateEmptyImage(const std::string& FileName, uint32 Width, uint32 Height, uint32 BitsPerPixel);
 	static std::shared_ptr<CImageBLP> CreateImage(std::shared_ptr<IFile> File);
 
 };

@@ -34,6 +34,7 @@ public:
 
 	void CommitPositionAndRotation();
 
+	IScene& GetScene() const { return m_Scene; }
 	CWoWWorld& GetWoWWorld() const { return m_WoWWorld; }
 	const IBaseManager& GetBaseManager() const { return m_BaseManager; }
 
@@ -42,6 +43,7 @@ protected:
 	bool m_HiddenNodeDirty;
 
 private:
+	IScene& m_Scene;
 	CWoWWorld& m_WoWWorld;
 	const IBaseManager& m_BaseManager;
 };

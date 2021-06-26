@@ -28,7 +28,7 @@ CAuthSocket::~CAuthSocket()
     Log::Info("CAuthSocket: Deleted.");
 }
 
-void CAuthSocket::Open(std::string Host, port_t Port)
+void CAuthSocket::Open(std::string Host, uint16 Port)
 {
 	bool result = false;
 

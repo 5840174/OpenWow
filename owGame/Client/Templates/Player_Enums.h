@@ -15,6 +15,7 @@ enum PlayerSlots
 enum EquipmentSlots : uint8                                 // 19 slots
 {
 	EQUIPMENT_SLOT_START = 0,
+
 	EQUIPMENT_SLOT_HEAD = 0,
 	EQUIPMENT_SLOT_NECK = 1,
 	EQUIPMENT_SLOT_SHOULDERS = 2,

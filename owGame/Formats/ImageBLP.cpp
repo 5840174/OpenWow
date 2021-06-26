@@ -3,9 +3,14 @@
 #include "ImageBLP.h"
 
 
-CImageBLP::CImageBLP()
+CImageBLP::CImageBLP(const std::string & FileName)
+	: CImageBase(FileName)
 {
 }
+
+CImageBLP::CImageBLP(const std::string & FileName, uint32 Width, uint32 Height, uint32 BitsPerPixel)
+	: CImageBase(FileName, Width, Height, BitsPerPixel, false)
+{}
 
 CImageBLP::~CImageBLP()
 {
@@ -50,16 +55,16 @@ bool CImageBLP::IsFileSupported(std::shared_ptr<IFile> File)
 	return (header.magic[0] == 'B' && header.magic[1] == 'L' && header.magic[2] == 'P' && header.magic[3] == '2' && header.type == 1);
 }
 
-std::shared_ptr<CImageBLP> CImageBLP::CreateEmptyImage(uint32 Width, uint32 Height, uint32 BitsPerPixel)
+std::shared_ptr<CImageBLP> CImageBLP::CreateEmptyImage(const std::string & FileName, uint32 Width, uint32 Height, uint32 BitsPerPixel)
 {
-	return std::shared_ptr<CImageBLP>();
+	return MakeShared(CImageBLP, FileName, Width, Height, BitsPerPixel);;
 }
 
 std::shared_ptr<CImageBLP> CImageBLP::CreateImage(std::shared_ptr<IFile> File)
 {
 	_ASSERT(IsFileSupported(File));
 
-	std::shared_ptr<CImageBLP> imageBLP = std::make_shared<CImageBLP>();
+	std::shared_ptr<CImageBLP> imageBLP = MakeShared(CImageBLP, File->Path_Name());
 	if (false == imageBLP->LoadImageData(File))
 	{
 		Log::Error("CImageBLP: Unable to load PLP file '%s'.", File->Name().c_str());

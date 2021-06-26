@@ -14,7 +14,7 @@ CWorldObjectCreator::CWorldObjectCreator(IBaseManager & BaseManager)
 //
 // Factory
 //
-std::shared_ptr<Creature> CWorldObjectCreator::BuildCreatureFromDisplayInfo(IRenderDevice& RenderDevice, IScene* Scene, uint32 _id, const std::shared_ptr<ISceneNode>& Parent)
+std::shared_ptr<Creature> CWorldObjectCreator::BuildCreatureFromDisplayInfo(IRenderDevice& RenderDevice, IScene& Scene, uint32 _id, const std::shared_ptr<ISceneNode>& Parent)
 {
 	const DBC_CreatureDisplayInfoRecord* rec = m_DBCs->DBC_CreatureDisplayInfo()[_id];
 	if (rec == nullptr)
@@ -23,14 +23,14 @@ std::shared_ptr<Creature> CWorldObjectCreator::BuildCreatureFromDisplayInfo(IRen
 	uint32 humanoidData = rec->Get_HumanoidData();
 	const DBC_CreatureDisplayInfoExtraRecord* humanoidRecExtra = m_DBCs->DBC_CreatureDisplayInfoExtra()[humanoidData];
 	if (humanoidRecExtra != nullptr)
-		return BuildCharactedFromDisplayInfo(RenderDevice, Scene, _id, Parent);
+		return BuildCharacterFromDisplayInfo(RenderDevice, Scene, _id, Parent);
 
 	// 1. Load model
 	auto m2Model = CreateCreatureModel(RenderDevice, rec);
 	if (m2Model == nullptr)
 		return nullptr;
 
-	std::shared_ptr<Creature> newCreature = ((Parent != nullptr) ? Parent : Scene->GetRootSceneNode())->CreateSceneNode<Creature>(m2Model);
+	std::shared_ptr<Creature> newCreature = ((Parent != nullptr) ? Parent : Scene.GetRootSceneNode())->CreateSceneNode<Creature>(m2Model);
 	m_BaseManager.GetManager<ILoader>()->AddToLoadQueue(newCreature);
 	newCreature->setAlpha(static_cast<float>(rec->Get_Opacity()) / 255.0f);
 	newCreature->SetScale(glm::vec3(rec->Get_Scale()));
@@ -50,14 +50,16 @@ std::shared_ptr<Creature> CWorldObjectCreator::BuildCreatureFromDisplayInfo(IRen
 	return newCreature;
 }
 
-std::shared_ptr<Character> CWorldObjectCreator::BuildCharacterFromTemplate(IRenderDevice& RenderDevice, IScene* Scene, const CInet_CharacterTemplate& b, const std::shared_ptr<ISceneNode>& Parent)
+std::shared_ptr<Character> CWorldObjectCreator::BuildCharacterFromTemplate(IRenderDevice& RenderDevice, IScene& Scene, const CInet_CharacterTemplate& b, const std::shared_ptr<ISceneNode>& Parent)
 {
 	// 1. Load model
 	std::shared_ptr<CM2> m2Model = CreateCharacterModel(RenderDevice, b);
 	if (m2Model == nullptr)
 		return nullptr;
 
-	std::shared_ptr<Character> newCharacter = ((Parent != nullptr) ? Parent : Scene->GetRootSceneNode())->CreateSceneNode<Character>(m2Model);
+	Character_SectionWrapper sectionWrapper(m_BaseManager);
+
+	std::shared_ptr<Character> newCharacter = ((Parent != nullptr) ? Parent : Scene.GetRootSceneNode())->CreateSceneNode<Character>(m2Model);
 	m_BaseManager.GetManager<ILoader>()->AddToLoadQueue(newCharacter);
 
 	// 2. Template
@@ -65,37 +67,42 @@ std::shared_ptr<Character> CWorldObjectCreator::BuildCharacterFromTemplate(IRend
 		newCharacter->GetTemplate().TemplateSet(b);
 	}
 
-	// 3 Refresh
-	Character_SectionWrapper sectionWrapper(m_BaseManager, RenderDevice);
+	// 3. Items
+	{
+		newCharacter->RefreshItemVisualData();
+	}
 
-	newCharacter->RefreshItemVisualData();
-
-	Character_SkinTextureBaker skinTextureBaker(m_BaseManager, RenderDevice);
-	auto skinTexture = skinTextureBaker.createTexture(newCharacter.get());
-	newCharacter->RefreshTextures(sectionWrapper, skinTexture);
+	// 5. Character textures
+	{
+		Character_SkinTextureBaker skinTextureBaker(m_BaseManager, RenderDevice);
+		auto skinTexture = skinTextureBaker.createTexture(newCharacter.get());
+		newCharacter->RefreshTextures(sectionWrapper, skinTexture);
+	}
 
 	newCharacter->RefreshMeshIDs(sectionWrapper);
 
 	return newCharacter;
 }
 
-std::shared_ptr<Character> CWorldObjectCreator::BuildCharactedFromDisplayInfo(IRenderDevice& RenderDevice, IScene * Scene, uint32 _id, const std::shared_ptr<ISceneNode>& Parent)
+std::shared_ptr<Character> CWorldObjectCreator::BuildCharacterFromDisplayInfo(IRenderDevice& RenderDevice, IScene& Scene, uint32 _id, const std::shared_ptr<ISceneNode>& Parent)
 {
 	const DBC_CreatureDisplayInfoRecord* rec = m_DBCs->DBC_CreatureDisplayInfo()[_id];
 	if (rec == nullptr)
-		throw CException("CWorldObjectCreator::BuildCharactedFromDisplayInfo: CreatureDisplayInfo don't contains id '%d'.", _id);
+		throw CException("CWorldObjectCreator::BuildCharacterFromDisplayInfo: CreatureDisplayInfo don't contains id '%d'.", _id);
 
 	uint32 humanoidData = rec->Get_HumanoidData();
 	const DBC_CreatureDisplayInfoExtraRecord* humanoidRecExtra = m_DBCs->DBC_CreatureDisplayInfoExtra()[humanoidData];
 	if (humanoidRecExtra == nullptr)
-		throw CException("CWorldObjectCreator::BuildCharactedFromDisplayInfo: CreatureDisplayInfoExtra '%d' for CreatureDisplayInfo '%d'.", humanoidRecExtra, _id);
+		throw CException("CWorldObjectCreator::BuildCharacterFromDisplayInfo: CreatureDisplayInfoExtra '%d' for CreatureDisplayInfo '%d'.", humanoidRecExtra, _id);
 
 	// 1. Load model
 	auto m2Model = CreateCreatureModel(RenderDevice, rec);
 	if (m2Model == nullptr)
 		return nullptr;
 
-	std::shared_ptr<Character> newCharacter = ((Parent != nullptr) ? Parent : Scene->GetRootSceneNode())->CreateSceneNode<Character>(m2Model);
+	Character_SectionWrapper sectionWrapper(m_BaseManager);
+
+	std::shared_ptr<Character> newCharacter = ((Parent != nullptr) ? Parent : Scene.GetRootSceneNode())->CreateSceneNode<Character>(m2Model);
 	m_BaseManager.GetManager<ILoader>()->AddToLoadQueue(newCharacter);
 
 	// 2. Template
@@ -144,19 +151,31 @@ std::shared_ptr<Character> CWorldObjectCreator::BuildCharactedFromDisplayInfo(IR
 		{
 			Log::Error("Character[%d]: Missing baked texture for humanoid[%d]. Create own. [%s]", rec->Get_ID(), humanoidRecExtra->Get_ID(), bakedTextureName.c_str());
 		}
-
-		Character_SectionWrapper sectionWrapper(m_BaseManager, RenderDevice);
-
 		newCharacter->RefreshTextures(sectionWrapper, bakedSkinTexture);
 	}
 
-	Character_SectionWrapper sectionWrapper(m_BaseManager, RenderDevice);
 	newCharacter->RefreshMeshIDs(sectionWrapper);
 
 	return newCharacter;
 }
 
-std::shared_ptr<ISceneNode> CWorldObjectCreator::BuildGameObjectFromDisplayInfo(IRenderDevice & RenderDevice, IScene * Scene, uint32 _id, const std::shared_ptr<ISceneNode>& Parent)
+std::shared_ptr<Character> CWorldObjectCreator::BuildEmptyCharacterFromDisplayInfo(IRenderDevice & RenderDevice, IScene & Scene, uint32 _id, const std::shared_ptr<ISceneNode>& Parent)
+{
+	const DBC_CreatureDisplayInfoRecord* rec = m_DBCs->DBC_CreatureDisplayInfo()[_id];
+	if (rec == nullptr)
+		throw CException("CWorldObjectCreator::BuildCharacterFromDisplayInfo: CreatureDisplayInfo don't contains id '%d'.", _id);
+
+	// 1. Load model
+	auto m2Model = CreateCreatureModel(RenderDevice, rec);
+	if (m2Model == nullptr)
+		return nullptr;
+
+	std::shared_ptr<Character> newCharacter = ((Parent != nullptr) ? Parent : Scene.GetRootSceneNode())->CreateSceneNode<Character>(m2Model);
+	m_BaseManager.GetManager<ILoader>()->AddToLoadQueue(newCharacter);
+	return newCharacter;
+}
+
+std::shared_ptr<ISceneNode> CWorldObjectCreator::BuildGameObjectFromDisplayInfo(IRenderDevice& RenderDevice, IScene& Scene, uint32 _id, const std::shared_ptr<ISceneNode>& Parent)
 {
 	const DBC_GameObjectDisplayInfoRecord* gameObjectDisplayInfoRecord = m_DBCs->DBC_GameObjectDisplayInfo()[_id];
 	if (gameObjectDisplayInfoRecord == nullptr)
@@ -169,7 +188,7 @@ std::shared_ptr<ISceneNode> CWorldObjectCreator::BuildGameObjectFromDisplayInfo(
 	{
 		auto wmoModel = CreateGameObjectWMOModel(RenderDevice, gameObjectDisplayInfoRecord);
 
-		std::shared_ptr<GameObjectWMO> newGameObject = ((Parent != nullptr) ? Parent : Scene->GetRootSceneNode())->CreateSceneNode<GameObjectWMO>(wmoModel);
+		std::shared_ptr<GameObjectWMO> newGameObject = ((Parent != nullptr) ? Parent : Scene.GetRootSceneNode())->CreateSceneNode<GameObjectWMO>(wmoModel);
 		m_BaseManager.GetManager<ILoader>()->AddToLoadQueue(newGameObject);
 
 		return newGameObject;
@@ -178,7 +197,7 @@ std::shared_ptr<ISceneNode> CWorldObjectCreator::BuildGameObjectFromDisplayInfo(
 	{
 		auto m2Model = CreateGameObjectM2Model(RenderDevice, gameObjectDisplayInfoRecord);
 
-		std::shared_ptr<GameObjectM2> newGameObject = ((Parent != nullptr) ? Parent : Scene->GetRootSceneNode())->CreateSceneNode<GameObjectM2>(m2Model);
+		std::shared_ptr<GameObjectM2> newGameObject = ((Parent != nullptr) ? Parent : Scene.GetRootSceneNode())->CreateSceneNode<GameObjectM2>(m2Model);
 		m_BaseManager.GetManager<ILoader>()->AddToLoadQueue(newGameObject);
 
 		return newGameObject;
@@ -321,7 +340,7 @@ std::shared_ptr<CM2> CWorldObjectCreator::CreateCreatureModel(IRenderDevice& Ren
 	uint32 creatureModelDataID = CreatureDisplayInfo->Get_Model();
 	const DBC_CreatureModelDataRecord* creatureModelDataRecord = m_DBCs->DBC_CreatureModelData()[creatureModelDataID];
 	if (creatureModelDataRecord == nullptr)
-		throw CException("CWorldObjectCreator::CreateCreatureModel: ");
+		throw CException("CWorldObjectCreator::CreateCreatureModel: CreatureModelData don't contains id '%d'.", creatureModelDataID);
 
 	std::string modelName = creatureModelDataRecord->Get_ModelPath();
 	return LoadM2(RenderDevice, modelName);
@@ -347,9 +366,6 @@ std::shared_ptr<CM2> CWorldObjectCreator::CreateGameObjectM2Model(IRenderDevice 
 
 std::shared_ptr<CWMO> CWorldObjectCreator::CreateGameObjectWMOModel(IRenderDevice & RenderDevice, const DBC_GameObjectDisplayInfoRecord * GameObjectDisplayInfoRecord)
 {
-	if (GameObjectDisplayInfoRecord == nullptr)
-		return nullptr;
-
 	std::string modelName = GameObjectDisplayInfoRecord->Get_ModelName();
 	return LoadWMO(RenderDevice, modelName);
 }

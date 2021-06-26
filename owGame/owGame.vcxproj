@@ -57,6 +57,7 @@
     <ClCompile Include="Client\WoWItem.cpp" />
     <ClCompile Include="Client\WoWObject.cpp" />
     <ClCompile Include="Client\OpenSSLCrypto.cpp" />
+    <ClCompile Include="Client\WoWObjectValues.cpp" />
     <ClCompile Include="Client\WoWPlayer.cpp" />
     <ClCompile Include="Client\ServerPacket.cpp" />
     <ClCompile Include="Client\SHA1.cpp" />
@@ -213,6 +214,7 @@
     <ClInclude Include="Client\Opcodes.h" />
     <ClInclude Include="Client\OpcodesNames.h" />
     <ClInclude Include="Client\OpenSSLCrypto.h" />
+    <ClInclude Include="Client\WoWObjectValues.h" />
     <ClInclude Include="Client\WoWPlayer.h" />
     <ClInclude Include="Client\RealmInfo.h" />
     <ClInclude Include="Client\ServerPacket.h" />

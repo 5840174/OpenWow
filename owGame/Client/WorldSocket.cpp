@@ -28,7 +28,7 @@ CWorldSocket::~CWorldSocket()
 	Log::Info("[WorldSocket]: All threads stopped.");
 }
 
-void CWorldSocket::Open(std::string Host, port_t Port)
+void CWorldSocket::Open(std::string Host, uint16 Port)
 {
 	bool result = false;
 
@@ -86,7 +86,7 @@ void CWorldSocket::Update()
 			uint32 size = 0;
 			uint16 cmd = 0;
 
-#if 0
+#if 1
 			// 1. Decrypt size
 			m_WoWCryptoUtils.DecryptRecv(data + 0, 1);
 			uint8 firstByte = data[0];
@@ -201,7 +201,7 @@ void CWorldSocket::Packet2(CByteBuffer& _buf)
 			}
 			else
 			{
-				Log::Info("Opcode: '%s' (0x%X). Size: '%d' not handled.", OpcodesNames[m_CurrentPacket->GetPacketOpcode()], m_CurrentPacket->GetPacketOpcode(), m_CurrentPacket->GetPacketSize());
+				//Log::Info("Opcode: '%s' (0x%X). Size: '%d' not handled.", OpcodesNames[m_CurrentPacket->GetPacketOpcode()], m_CurrentPacket->GetPacketOpcode(), m_CurrentPacket->GetPacketSize());
 			}
 		}
 

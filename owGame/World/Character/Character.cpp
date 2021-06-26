@@ -51,12 +51,12 @@ void Character::RefreshItemVisualData()
 		{
 			if ((m_Template.Flags & CHARACTER_FLAG_HIDE_HELM))
 			{
-				setMeshEnabled(MeshIDType::Ears, EarsStyles::Enabled);
+				setMeshEnabled(MeshIDType::Ears, (uint32)EarsStyles::Enabled);
 				continue;
 			}
 			else
 			{
-				setMeshEnabled(MeshIDType::Ears, EarsStyles::None);
+				setMeshEnabled(MeshIDType::Ears, (uint32)EarsStyles::None);
 			}
 		}
 		else if (i == EQUIPMENT_SLOT_BACK)
@@ -82,31 +82,31 @@ void Character::RefreshItemVisualData()
 void Character::RefreshTextures(const Character_SectionWrapper& SectionWrapper, std::shared_ptr<ITexture> SkinTexture)
 {
 	setSpecialTexture(SM2_Texture::Type::SKIN, SkinTexture);
-	setSpecialTexture(SM2_Texture::Type::SKIN_EXTRA, SectionWrapper.getSkinExtraTexture(this));
-	setSpecialTexture(SM2_Texture::Type::CHAR_HAIR, SectionWrapper.getHairTexture(this));
+	setSpecialTexture(SM2_Texture::Type::SKIN_EXTRA, GetBaseManager().GetManager<IznTexturesFactory>()->LoadTexture2D(SectionWrapper.getSkinExtraTexture(GetTemplate())));
+	setSpecialTexture(SM2_Texture::Type::CHAR_HAIR, GetBaseManager().GetManager<IznTexturesFactory>()->LoadTexture2D(SectionWrapper.getHairTexture(GetTemplate())));
 
 	// Cloak
 	std::shared_ptr<const CItem_VisualData> item = m_VisualItems[static_cast<EInventoryType>(EQUIPMENT_SLOT_BACK)];
 	if (item->m_InventoryType != (uint8)EInventoryType::NON_EQUIP)
 	{
 		_ASSERT(item->getObjectComponents().size() == 1);
-		std::shared_ptr<ITexture> cloackTexttre = item->getObjectComponents()[0].texture;
-		setSpecialTexture(SM2_Texture::Type::OBJECT_SKIN, cloackTexttre);
+		auto cloackImage = item->getObjectComponents()[0].texture;
+		setSpecialTexture(SM2_Texture::Type::OBJECT_SKIN, GetBaseManager().GetManager<IznTexturesFactory>()->LoadTexture2D(cloackImage));
 	}
 }
 
 void Character::RefreshMeshIDs(const Character_SectionWrapper& SectionWrapper)
 {
-	if (SectionWrapper.getHairShowScalp(this))
+	if (SectionWrapper.getHairShowScalp(GetTemplate()))
 		setMeshEnabled(MeshIDType::SkinAndHair, 1);
 	else
-		setMeshEnabled(MeshIDType::SkinAndHair, SectionWrapper.getHairGeoset(this));
+		setMeshEnabled(MeshIDType::SkinAndHair, SectionWrapper.getHairGeoset(GetTemplate()));
 
-	setMeshEnabled(MeshIDType::Facial1,  SectionWrapper.getFacial01Geoset(this));
-	setMeshEnabled(MeshIDType::Facial2,  SectionWrapper.getFacial02Geoset(this));
-	setMeshEnabled(MeshIDType::Facial3,  SectionWrapper.getFacial03Geoset(this));
-	setMeshEnabled(MeshIDType::Unk16,    SectionWrapper.getFacial16Geoset(this));
-	setMeshEnabled(MeshIDType::Eyeglows, SectionWrapper.getFacial17Geoset(this));
+	setMeshEnabled(MeshIDType::Facial1,  SectionWrapper.getFacial01Geoset(GetTemplate()));
+	setMeshEnabled(MeshIDType::Facial2,  SectionWrapper.getFacial02Geoset(GetTemplate()));
+	setMeshEnabled(MeshIDType::Facial3,  SectionWrapper.getFacial03Geoset(GetTemplate()));
+	setMeshEnabled(MeshIDType::Unk16,    SectionWrapper.getFacial16Geoset(GetTemplate()));
+	setMeshEnabled(MeshIDType::Eyeglows, SectionWrapper.getFacial17Geoset(GetTemplate()));
 }
 
 

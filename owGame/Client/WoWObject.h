@@ -2,8 +2,8 @@
 
 #ifdef ENABLE_WOW_CLIENT
 
-#include "UpdateMask.h"
-#include "UpdateFields.h"
+#include "WoWObjectValues.h"
+
 
 enum ZN_API ObjectTypeMask : uint16
 {
@@ -18,30 +18,7 @@ enum ZN_API ObjectTypeMask : uint16
     TYPEMASK_SEER           = TYPEMASK_PLAYER | TYPEMASK_UNIT | TYPEMASK_DYNAMICOBJECT
 };
 
-enum class ZN_API OBJECT_UPDATE_TYPE : uint8
-{
-	UPDATETYPE_VALUES = 0,
-	UPDATETYPE_MOVEMENT = 1,
-	UPDATETYPE_CREATE_OBJECT = 2,
-	UPDATETYPE_CREATE_OBJECT2 = 3, // New object
-	UPDATETYPE_OUT_OF_RANGE_OBJECTS = 4,
-	UPDATETYPE_NEAR_OBJECTS = 5
-};
 
-enum OBJECT_UPDATE_FLAGS
-{
-	UPDATEFLAG_NONE = 0x0000,
-	UPDATEFLAG_SELF = 0x0001,
-	UPDATEFLAG_TRANSPORT = 0x0002,
-	UPDATEFLAG_HAS_TARGET = 0x0004,
-	UPDATEFLAG_UNKNOWN = 0x0008,
-	UPDATEFLAG_LOWGUID = 0x0010,
-	UPDATEFLAG_LIVING = 0x0020,
-	UPDATEFLAG_STATIONARY_POSITION = 0x0040,
-	UPDATEFLAG_VEHICLE = 0x0080,
-	UPDATEFLAG_POSITION = 0x0100,
-	UPDATEFLAG_ROTATION = 0x0200
-};
 
 
 // TODO: MOVE ME!!!
@@ -91,58 +68,28 @@ enum OBJECT_UPDATE_FLAGS
 class ZN_API WoWObject
 {
 public:
-
-public:
 	WoWObject(CWoWObjectGuid Guid);
 	virtual ~WoWObject();
 
 	CWoWObjectGuid GetWoWGUID() const { return m_GUID; }
 	uint16 GetObjectType() const { return m_ObjectType; }
 	bool IsWoWType(uint16 mask) const { return (mask & m_ObjectType) != 0; }
-	EWoWObjectTypeID GetObjectTypeID() const { return m_ObjectTypeId; }
 
-	virtual void ProcessMovementUpdate(CByteBuffer& Bytes);
+	void ProcessMovementUpdate(CByteBuffer& Bytes);
 	void UpdateValues(CByteBuffer& Bytes);
+	virtual void OnValueUpdated(uint16 index);
+	virtual void OnValuesUpdated(const UpdateMask& Mask);
 
 public: // Creation
 	static std::shared_ptr<WoWObject> Create(IScene& Scene, CWoWObjectGuid Guid);
 	virtual void AfterCreate(IScene& Scene);
 	virtual void Destroy();
 
-public: // Values system
-	const int32& GetInt32Value(uint16 index) const;
-	const uint32& GetUInt32Value(uint16 index) const;
-	const uint64& GetUInt64Value(uint16 index) const;
-	const float& GetFloatValue(uint16 index) const;
-	uint8 GetByteValue(uint16 index, uint8 offset) const;
-	int16 GetInt16Value(uint16 index, uint8 offset) const;
-	uint16 GetUInt16Value(uint16 index, uint8 offset) const;
-	CWoWObjectGuid GetGuidValue(uint16 index) const;
-
-	void SetInt32Value(uint16 index, int32  value);
-	void SetUInt32Value(uint16 index, uint32  value);
-	void SetUInt64Value(uint16 index, const uint64 &value);
-	void SetFloatValue(uint16 index, float   value);
-	void SetByteValue(uint16 index, uint8 offset, uint8 value);
-	void SetUInt16Value(uint16 index, uint8 offset, uint16 value);
-	void SetInt16Value(uint16 index, uint8 offset, int16 value) { SetUInt16Value(index, offset, (uint16)value); }
-	void SetStatFloatValue(uint16 index, float value);
-	void SetStatInt32Value(uint16 index, int32 value);
-
-	bool PrintIndexError(uint32 index, bool set) const;
-
-	union
-	{
-		int32  *m_int32Values = nullptr;
-		uint32 *m_uint32Values;
-		float  *m_floatValues;
-	};
-	uint16 m_valuesCount;
 
 protected:
 	CWoWObjectGuid m_GUID;
+	CWoWObjectValues m_Values;
 	uint16 m_ObjectType;
-	EWoWObjectTypeID m_ObjectTypeId;
 };
 
 #endif

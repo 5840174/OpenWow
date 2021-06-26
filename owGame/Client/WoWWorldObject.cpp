@@ -11,6 +11,7 @@
 
 CWoWWorldObject::CWoWWorldObject(IScene& Scene, CWoWWorld& WoWWorld, CWoWObjectGuid Guid)
 	: WoWObject(Guid)
+	, m_Scene(Scene)
 	, m_WoWWorld(WoWWorld)
 	, m_HiddenNodeDirty(false)
 	, m_BaseManager(Scene.GetBaseManager())

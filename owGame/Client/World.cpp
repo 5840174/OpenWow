@@ -83,7 +83,7 @@ void CWoWWorld::S_SMSG_LOGIN_VERIFY_WORLD(CServerPacket& Buffer)
 	position.y += 5.0f;
 
 	// Skies
-	//skyManager->Load(mapID);
+	m_SkyManager->Load(mapID);
 
 	// Map
 	m_Map->MapPreLoad(m_Scene.GetBaseManager().GetManager<CDBCStorage>()->DBC_Map()[mapID]);

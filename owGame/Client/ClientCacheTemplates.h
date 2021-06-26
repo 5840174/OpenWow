@@ -464,7 +464,7 @@ struct ZN_API SGameObjectQueryResult
 
 	void Print()
 	{
-		Log::Info("GameObject query: EntryID '%d', Type '%d', Name '%s'", entryID, type, Name.c_str());
+		//Log::Info("GameObject query: EntryID '%d', Type '%d', Name '%s'", entryID, type, Name.c_str());
 	}
 };
 

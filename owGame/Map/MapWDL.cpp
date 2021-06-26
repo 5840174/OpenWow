@@ -177,7 +177,7 @@ void CMapWDL::Load()
 	//}
 
 	// Minimap
-	std::shared_ptr<CImageBase> mimimapImage = std::make_shared<CImageBase>(512, 512, 32, false);
+	std::shared_ptr<CImageBase> mimimapImage = std::make_shared<CImageBase>("", 512, 512, 32, false);
 
 	// Heightmap
 	glm::vec3 lowres[17][17];

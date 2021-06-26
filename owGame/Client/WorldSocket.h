@@ -30,7 +30,7 @@ public:
 	CWorldSocket(const std::string& Login, BigNumber Key);
 	virtual ~CWorldSocket();
 
-	void Open(std::string Host, port_t Port);
+	void Open(std::string Host, uint16 Port);
 	void Update();
 
 	// CWorldSocket

@@ -12,8 +12,7 @@ WoWCorpse::WoWCorpse(IScene& Scene, CWoWWorld& WoWWorld, CWoWObjectGuid Guid)
 	: CWoWWorldObject(Scene, WoWWorld, Guid)
 {
 	m_ObjectType |= TYPEMASK_CORPSE;
-	m_ObjectTypeId = TYPEID_CORPSE;
-	m_valuesCount = CORPSE_END;
+	m_Values.SetValuesCount(CORPSE_END);
 }
 
 WoWCorpse::~WoWCorpse()

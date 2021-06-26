@@ -17,7 +17,7 @@ struct
 {
 	EInventoryType	            slot;
 	const char* const			folder = "";
-	MeshIDType::List			modifiers[MESHID_MAX_MODS] = MESHID_ALLUNK;
+	MeshIDType					modifiers[MESHID_MAX_MODS] = MESHID_ALLUNK;
 	uint32						count = 0;
 	M2_AttachmentType		    attach[ATTACHS_MAX] = { M2_AttachmentType::Count, M2_AttachmentType::Count };
 } ItemObjectComponents[size_t(EInventoryType::__Count)] =
@@ -126,13 +126,14 @@ bool CItem_VisualData::Delete()
 
 void CItem_VisualData::InitObjectComponents()
 {
-	const DBC_ItemDisplayInfoRecord* displayInfo = m_DBCs->DBC_ItemDisplayInfo()[m_DisplayId];
-	_ASSERT(displayInfo != nullptr);
+	const DBC_ItemDisplayInfoRecord* itemDisplayInfoRecord = m_DBCs->DBC_ItemDisplayInfo()[m_DisplayId];
+	if (itemDisplayInfoRecord == nullptr)
+		throw CException("CItem_VisualData::InitObjectComponents: ItemDisplayInfoRecord don't contains id '%d'.", m_DisplayId);
 
 	for (uint32 i = 0; i < ItemObjectComponents[static_cast<size_t>(m_InventoryType)].count; i++)
 	{
-		std::string objectFileName = displayInfo->Get_ObjectModelName(i);
-		std::string objectTextureName = displayInfo->Get_ObjectTextureName(i);
+		std::string objectFileName = itemDisplayInfoRecord->Get_ObjectModelName(i);
+		std::string objectTextureName = itemDisplayInfoRecord->Get_ObjectTextureName(i);
 
 		if (objectFileName.empty() && m_InventoryType != (uint8)EInventoryType::CLOAK)
 		{
@@ -150,14 +151,14 @@ void CItem_VisualData::InitObjectComponents()
 		}
 		else if (m_InventoryType == (uint8)EInventoryType::CLOAK)
 		{
-			std::shared_ptr<ITexture> texture = LoadObjectTexture((EInventoryType)m_InventoryType, objectTextureName);
+			std::shared_ptr<IImage> texture = LoadObjectTexture((EInventoryType)m_InventoryType, objectTextureName);
 			m_ObjectComponents.push_back({ nullptr, texture, M2_AttachmentType::NotAttached });
 			continue;
 		}
 
 		// Fill data
 		std::string modelName = GetObjectModelName((EInventoryType)m_InventoryType, objectFileName);
-		std::shared_ptr<ITexture> itemObjectTexture = LoadObjectTexture((EInventoryType)m_InventoryType, objectTextureName);
+		std::shared_ptr<IImage> itemObjectTexture = LoadObjectTexture((EInventoryType)m_InventoryType, objectTextureName);
 		auto itemObjectAttach = m_ParentCharacter.getM2().getMiscellaneous().getAttachment(ItemObjectComponents[static_cast<size_t>(m_InventoryType)].attach[i]);
 
 		// Create instance
@@ -167,7 +168,7 @@ void CItem_VisualData::InitObjectComponents()
 		std::shared_ptr<CItem_M2Instance> itemObjectInstance = m_ParentCharacter.CreateSceneNode<CItem_M2Instance>(m2Model);
 		m_BaseManager.GetManager<ILoader>()->AddToLoadQueue(itemObjectInstance);
 		itemObjectInstance->Attach(itemObjectAttach.GetAttachmentType());
-		itemObjectInstance->setSpecialTexture(SM2_Texture::Type::OBJECT_SKIN, itemObjectTexture);
+		itemObjectInstance->setSpecialTexture(SM2_Texture::Type::OBJECT_SKIN, m_BaseManager.GetManager<IznTexturesFactory>()->LoadTexture2D(itemObjectTexture));
 
 
 		//
@@ -214,7 +215,7 @@ void CItem_VisualData::InitGeosetComponents()
 
 	for (uint32 j = 0; j < MESHID_MAX_MODS; j++)
 	{
-		MeshIDType::List mesh = ItemObjectComponents[static_cast<size_t>(m_InventoryType)].modifiers[j];
+		MeshIDType mesh = ItemObjectComponents[static_cast<size_t>(m_InventoryType)].modifiers[j];
 		if (mesh == MeshIDType::UNK)
 			continue;
 
@@ -247,12 +248,13 @@ std::string CItem_VisualData::GetObjectModelName(EInventoryType _objectType, std
 	return GetManager<IM2Manager>()->Add("Item\\ObjectComponents\\" + ItemObjectComponents[_objectType].folder + "\\" + _modelName);
 }*/
 
-std::shared_ptr<ITexture> CItem_VisualData::LoadObjectTexture(EInventoryType _objectType, std::string _textureName)
+std::shared_ptr<IImage> CItem_VisualData::LoadObjectTexture(EInventoryType _objectType, std::string _textureName)
 {
-	return m_BaseManager.GetManager<IznTexturesFactory>()->LoadTexture2D("Item\\ObjectComponents\\" + std::string(ItemObjectComponents[static_cast<size_t>(_objectType)].folder) + "\\" + _textureName + ".blp");
+	std::string imageFilename = "Item\\ObjectComponents\\" + std::string(ItemObjectComponents[static_cast<size_t>(_objectType)].folder) + "\\" + _textureName + ".blp";
+	return m_BaseManager.GetManager<IImagesFactory>()->CreateImage(imageFilename);
 }
 
-std::shared_ptr<ITexture> CItem_VisualData::LoadSkinTexture(DBC_CharComponent_Sections _type, std::string _textureName)
+std::shared_ptr<IImage> CItem_VisualData::LoadSkinTexture(DBC_CharComponent_Sections _type, std::string _textureName)
 {
 	std::string universalTexture = getTextureComponentName(_type, _textureName, Gender::None);
 	std::string maleTexture = getTextureComponentName(_type, _textureName, Gender::Male);
@@ -262,15 +264,15 @@ std::shared_ptr<ITexture> CItem_VisualData::LoadSkinTexture(DBC_CharComponent_Se
 
 	if (fManager->IsFileExists(universalTexture))
 	{
-		return m_BaseManager.GetManager<IznTexturesFactory>()->LoadTexture2D(universalTexture);
+		return m_BaseManager.GetManager<IImagesFactory>()->CreateImage(universalTexture);
 	}
 	else if (fManager->IsFileExists(maleTexture))
 	{
-		return m_BaseManager.GetManager<IznTexturesFactory>()->LoadTexture2D(maleTexture);
+		return m_BaseManager.GetManager<IImagesFactory>()->CreateImage(maleTexture);
 	}
 	else if (fManager->IsFileExists(femaleTexture))
 	{
-		return m_BaseManager.GetManager<IznTexturesFactory>()->LoadTexture2D(femaleTexture);
+		return m_BaseManager.GetManager<IImagesFactory>()->CreateImage(femaleTexture);
 	}
 
 	return nullptr;
