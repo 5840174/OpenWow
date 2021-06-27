@@ -47,6 +47,16 @@ WMO_Part_Material::~WMO_Part_Material()
 {
 }
 
+void WMO_Part_Material::SetBlendMode(uint32 BlendMode)
+{
+	MaterialData().BlendMode = BlendMode;
+}
+
+void WMO_Part_Material::SetMOCVExists(uint32 MOCVExists)
+{
+	MaterialData().MOCVExists = MOCVExists;
+}
+
 /*void WMO_Part_Material::fillRenderState(RenderState* _state) const
 {
 	uint16 sampler = m_QualitySettings.Texture_Sampler;

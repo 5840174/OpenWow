@@ -64,7 +64,7 @@ void CMapWMOInstance::Accept(IVisitor* visitor)
 glm::mat4 CMapWMOInstance::CalculateLocalTransform() const
 {
 	glm::mat4 localTransform = glm::mat4(1.0f);
-	localTransform = glm::translate(localTransform, GetLocalPosition());
+	localTransform = glm::translate(localTransform, m_PlacementInfo.position);
 	localTransform *= glm::eulerAngleYZX(glm::radians(m_PlacementInfo.rotation.y - 90.0f), glm::radians(-m_PlacementInfo.rotation.x), glm::radians(m_PlacementInfo.rotation.z));
 	return localTransform;
 }

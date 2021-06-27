@@ -16,7 +16,7 @@
 #include "WMO_Liquid_Instance.h"
 #include "WMO_Fixes.h"
 
-WMO_Group::WMO_Group(IBaseManager& BaseManager, IRenderDevice& RenderDevice, const std::shared_ptr<CWMO>& WMOModel, const uint32 GroupIndex, const SWMO_GroupInfoDef& GroupProto)
+CWMO_Group::CWMO_Group(IBaseManager& BaseManager, IRenderDevice& RenderDevice, const std::shared_ptr<CWMO>& WMOModel, const uint32 GroupIndex, const SWMO_GroupInfoDef& GroupProto)
 	: CLoadableObject(WMOModel)
 	, m_IsMOCVExists(false)
 	, m_BaseManager(BaseManager)
@@ -63,26 +63,45 @@ WMO_Group::WMO_Group(IBaseManager& BaseManager, IRenderDevice& RenderDevice, con
 	}
 }
 
-WMO_Group::~WMO_Group()
+CWMO_Group::~CWMO_Group()
+{}
+
+
+
+//
+// CWMO_Group
+//
+const SWMO_Group_HeaderDef & CWMO_Group::GetHeader() const
 {
+	return m_GroupHeader;
 }
 
-
-
-//
-// WMO_Group
-//
-const uint32 WMO_Group::GetGroupIndex() const
+const uint32 CWMO_Group::GetGroupIndex() const
 {
 	return m_GroupIndex;
 }
 
-void WMO_Group::AddPortal(const CWMO_Part_Portal& WMOPartPortal)
+const BoundingBox & CWMO_Group::GetBoundingBox() const
+{
+	return m_Bounds;
+}
+
+bool CWMO_Group::IsIndoor() const
+{
+	return m_GroupHeader.flags.IS_INDOOR;
+}
+
+bool CWMO_Group::IsOutdoor() const
+{
+	return m_GroupHeader.flags.IS_OUTDOOR;
+}
+
+void CWMO_Group::AddPortal(const CWMO_Part_Portal& WMOPartPortal)
 {
 	m_Portals.push_back(WMOPartPortal);
 }
 
-const std::vector<CWMO_Part_Portal>& WMO_Group::GetPortals() const
+const std::vector<CWMO_Part_Portal>& CWMO_Group::GetPortals() const
 {
 	return m_Portals;
 }
@@ -92,7 +111,7 @@ const std::vector<CWMO_Part_Portal>& WMO_Group::GetPortals() const
 //
 // ISceneNodeProvider
 //
-void WMO_Group::CreateInsances(const std::shared_ptr<CWMO_Group_Instance>& Parent) const
+void CWMO_Group::CreateInsances(const std::shared_ptr<CWMO_Group_Instance>& Parent) const
 {
 	_ASSERT(GetState() == ILoadable::ELoadableState::Loaded);
 
@@ -116,8 +135,8 @@ void WMO_Group::CreateInsances(const std::shared_ptr<CWMO_Group_Instance>& Paren
 		if (auto liquidColliderComponent = liquidInstance->GetComponentT<IColliderComponent>())
 		{
 			BoundingBox bbox(
-				glm::vec3(0.0f,                                    realPos.y - 1.0f, -1.0f * m_WMOLiqiud->GetHeader().Y * C_UnitSize),
-				glm::vec3(m_WMOLiqiud->GetHeader().X * C_UnitSize, realPos.y + 1.0f,  0.0f)
+				glm::vec3(0.0f, realPos.y - 1.0f, -1.0f * m_WMOLiqiud->GetHeader().Y * C_UnitSize),
+				glm::vec3(m_WMOLiqiud->GetHeader().X * C_UnitSize, realPos.y + 1.0f, 0.0f)
 			);
 			liquidColliderComponent->SetBounds(bbox);
 		}
@@ -125,7 +144,7 @@ void WMO_Group::CreateInsances(const std::shared_ptr<CWMO_Group_Instance>& Paren
 		Parent->AddRoomObject(liquidInstance);
 	}
 
-#if 0 && defined(USE_M2_MODELS)
+#if 1 && defined(USE_M2_MODELS)
 	//std::vector<SWMO_Doodad_SetInfo> activeDoodadSets;
 	//activeDoodadSets.push_back(m_WMOModel.m_DoodadsSetInfos[0]);
 
@@ -136,24 +155,24 @@ void WMO_Group::CreateInsances(const std::shared_ptr<CWMO_Group_Instance>& Paren
 	//for (const auto& doodadSet : activeDoodadSets)
 	//{
 		//for (size_t i = doodadSet.start; i < doodadSet.start + doodadSet.size; i++)
-		for (size_t i = 0; i < m_DoodadsPlacementIndexes.size(); i++)
+	for (size_t i = 0; i < m_DoodadsPlacementIndexes.size(); i++)
+	{
+		auto doodadPlacementIndex = m_DoodadsPlacementIndexes[i];
+
+		const SWMO_Doodad_PlacementInfo& placement = m_WMOModel.GetDoodadPlacement(doodadPlacementIndex);
+
+		std::string doodadFileName = m_WMOModel.GetDoodadFileName(placement.flags.nameIndex);
+		if (std::shared_ptr<CM2> m2 = m_BaseManager.GetManager<IWoWObjectsCreator>()->LoadM2(m_RenderDevice, doodadFileName, true))
 		{
-			auto doodadPlacementIndex = m_DoodadsPlacementIndexes[i];
+			auto inst = Parent->CreateSceneNode<CWMO_Doodad_Instance>(m2, doodadPlacementIndex, placement);
 
-			const SWMO_Doodad_PlacementInfo& placement = m_WMOModel.GetDoodadPlacement(doodadPlacementIndex);
+			if (false == m_GroupHeader.flags.DO_NOT_USE_LIGHTING_DIFFUSE && !m_GroupHeader.flags.IS_OUTDOOR)
+				inst->setColor(placement.getColor());
 
-			std::string doodadFileName = m_WMOModel.GetDoodadFileName(placement.flags.nameIndex);
-			if (std::shared_ptr<CM2> m2 = m_BaseManager.GetManager<IWoWObjectsCreator>()->LoadM2(m_RenderDevice, doodadFileName, true))
-			{
-				auto inst = Parent->CreateSceneNode<CWMO_Doodad_Instance>(m2, doodadPlacementIndex, placement);
-
-				if (false == m_GroupHeader.flags.DO_NOT_USE_LIGHTING_DIFFUSE && !m_GroupHeader.flags.IS_OUTDOOR)
-					inst->setColor(placement.getColor());
-
-				m_BaseManager.GetManager<ILoader>()->AddToLoadQueue(inst);
-				Parent->AddRoomObject(inst);
-			}
+			m_BaseManager.GetManager<ILoader>()->AddToLoadQueue(inst);
+			Parent->AddRoomObject(inst);
 		}
+	}
 	//}
 #endif
 }
@@ -163,14 +182,14 @@ uint32 to_wmo_liquid(const SWMO_Group_HeaderDef& Header, int x)
 	DBC_LIQUIDTYPE_Type basic = (DBC_LIQUIDTYPE_Type)(x & 3);
 	switch (basic)
 	{
-	case DBC_LIQUIDTYPE_Type::water:
-		return (Header.flags.IS_NOT_WATER_BUT_OCEAN) ? 14 : 13;
-	case DBC_LIQUIDTYPE_Type::ocean:
-		return 14;
-	case DBC_LIQUIDTYPE_Type::magma:
-		return 19;
-	case DBC_LIQUIDTYPE_Type::slime:
-		return 20;
+		case DBC_LIQUIDTYPE_Type::water:
+			return (Header.flags.IS_NOT_WATER_BUT_OCEAN) ? 14 : 13;
+		case DBC_LIQUIDTYPE_Type::ocean:
+			return 14;
+		case DBC_LIQUIDTYPE_Type::magma:
+			return 19;
+		case DBC_LIQUIDTYPE_Type::slime:
+			return 20;
 	}
 
 	throw CException("Unexpected behaviour");
@@ -217,7 +236,7 @@ const DBC_LiquidTypeRecord* ResolveLiquidType(const CDBCStorage* DBCStorage, con
 
 
 
-bool WMO_Group::Load()
+bool CWMO_Group::Load()
 {
 	// Buffer
 	uint16* dataFromMOVI = nullptr;
@@ -350,7 +369,7 @@ bool WMO_Group::Load()
 	uint32 ccccccccc = 0;
 	for (const auto& buffer : m_ChunkReader->OpenChunks("MOCV"))
 	{
-		_ASSERT(m_GroupHeader.flags.HAS_VERTEX_COLORS);
+		_ASSERT(m_GroupHeader.flags.HAS_MOCV);
 
 		uint32 vertexColorsCount = buffer->getSize() / sizeof(CBgra);
 		CBgra* vertexColors = (CBgra*)buffer->getDataFromCurrent();
@@ -358,8 +377,8 @@ bool WMO_Group::Load()
 		ccccccccc = vertexColorsCount;
 
 #if WOW_CLIENT_VERSION >= WOW_WOTLK_3_3_5
-		//if (false == m_WMOModel.GetHeader().flags.lighten_interiors)
-		//	FixColors(vertexColors, vertexColorsCount, WMOBatchs.data());
+		if (false == m_WMOModel.GetHeader().flags.lighten_interiors)
+			FixColors(vertexColors, vertexColorsCount, WMOBatchs.data());
 #endif
 
 		// Convert
@@ -387,10 +406,10 @@ bool WMO_Group::Load()
 
 		/*Log::Green
 		(
-			"WMO[%s]: Liq: headerID [%d] headerFlag [%d] MatID: [%d]", 
+			"WMO[%s]: Liq: headerID [%d] headerFlag [%d] MatID: [%d]",
 			m_WMOModel.GetFilename().c_str(),
 			m_GroupHeader.liquidType,
-			m_WMOModel.GetHeader().flags.use_liquid_type_dbc_id, 
+			m_WMOModel.GetHeader().flags.use_liquid_type_dbc_id,
 			liquidHeader.materialID
 		);*/
 
@@ -399,9 +418,9 @@ bool WMO_Group::Load()
 		m_WMOLiqiud = std::make_shared<CWMO_Liquid>(m_RenderDevice, m_WMOModel, *this, buffer, liquidHeader, ResolveLiquidType(m_BaseManager.GetManager<CDBCStorage>(), m_WMOModel.GetHeader(), m_GroupHeader));
 	}
 
-	/*Log::Info("WMO '%s': Batch count '%d'. Trans: '%d' (%d - %d). Int: '%d' (%d - %d). Ext: '%d' (%d - %d).", 
-		m_WMOModel.GetFilename().c_str(), 
-		WMOBatchs.size(), 
+	/*Log::Info("WMO '%s': Batch count '%d'. Trans: '%d' (%d - %d). Int: '%d' (%d - %d). Ext: '%d' (%d - %d).",
+		m_WMOModel.GetFilename().c_str(),
+		WMOBatchs.size(),
 
 		m_GroupHeader.transBatchCount,
 		m_GroupHeader.transBatchCount > 0 ? WMOBatchs[0].vertexStart : -1,
@@ -416,20 +435,34 @@ bool WMO_Group::Load()
 		m_GroupHeader.extBatchCount > 0 ? WMOBatchs[m_GroupHeader.transBatchCount + m_GroupHeader.intBatchCount].vertexEnd : -1
 	);
 	Log::Info("WMO '%s': MOCV count '%d'.", m_WMOModel.GetFilename().c_str(), ccccccccc);*/
-	
-	
-	
-	
+
+
+
+
 	if (m_GroupHeader.transBatchCount + m_GroupHeader.intBatchCount + m_GroupHeader.extBatchCount != WMOBatchs.size())
 		throw CException("dick");
 
+	size_t currentIntex = 0;
 	for (const auto& WMOGroupBatchProto : WMOBatchs)
 	{
 		std::shared_ptr<WMO_Group_Part_Batch> batch = std::make_shared<WMO_Group_Part_Batch>(m_RenderDevice, m_WMOModel, WMOGroupBatchProto);
+		if (currentIntex < m_GroupHeader.transBatchCount)
+		{
+			batch->SetBatchType(WMO_Group_Part_Batch::EBatchType::BatchType_Trans);
+		}
+		else if (currentIntex < m_GroupHeader.transBatchCount + m_GroupHeader.intBatchCount)
+		{
+			batch->SetBatchType(WMO_Group_Part_Batch::EBatchType::BatchType_Int);
+		}
+		else if (currentIntex < m_GroupHeader.transBatchCount + m_GroupHeader.intBatchCount + m_GroupHeader.extBatchCount)
+		{
+			batch->SetBatchType(WMO_Group_Part_Batch::EBatchType::BatchType_Ext);
+		}
 
 		batch->AddConnection(m_WMOModel.GetMaterial(WMOGroupBatchProto.material_id), geometry, SGeometryDrawArgs(WMOGroupBatchProto.indexStart, WMOGroupBatchProto.indexCount));
 
 		m_WMOBatchIndexes.push_back(batch);
+		currentIntex++;
 	}
 
 
@@ -441,66 +474,189 @@ bool WMO_Group::Load()
 	return true;
 }
 
-bool WMO_Group::Delete()
+
+#define epsilon 0.01F
+
+enum Flags
+{
+	Flag_XAxis = 0x0,
+	Flag_YAxis = 0x1,
+	Flag_ZAxis = 0x2,
+	Flag_AxisMask = 0x3,
+	Flag_Leaf = 0x4,
+	Flag_NoChild = 0xFFFF,
+};
+
+struct CAaBspNode
+{
+	uint16_t flags;        // See above enum. 4: leaf, 0 for YZ-plane, 1 for XZ-plane, 2 for XY-plane
+	int16_t negChild;      // index of bsp child node (right in this array)
+	int16_t posChild;
+	uint16_t nFaces;       // num of triangle faces in MOBR
+	uint32_t faceStart;    // index of the first triangle index(in MOBR)
+	float planeDist;
+};
+
+void MergeBox(glm::vec3(&result)[2], float  *box1, float  *box2)
+{
+	result[0][0] = box1[0];
+	result[0][1] = box1[1];
+	result[0][2] = box1[2];
+
+	result[1][0] = box2[0];
+	result[1][1] = box2[1];
+	result[1][2] = box2[2];
+}
+void AjustDelta(glm::vec3(&src)[2], float *dst, float coef)
+{
+	float d1 = (src[1][0] - src[0][0]) * coef;// delta x
+	float d2 = (src[1][1] - src[0][1]) * coef;// delta y
+	float d3 = (src[1][2] - src[0][2]) * coef;// delta z
+	dst[1] = d1 + src[0][1];
+	dst[0] = d2 + src[0][0];
+	dst[2] = d3 + src[0][2];
+}
+void TraverseBsp(int iNode, glm::vec3(&pEyes)[2], glm::vec3(&pBox)[2], void *(pAction)(CAaBspNode*, void*), void* param)
+{
+	glm::vec3 newEyes[2];
+	glm::vec3 ajusted;
+	CAaBspNode *pNode = nullptr; // &m_tNode[iNode];
+
+	if (pNode == nullptr)
+		return;
+
+	if (pNode->flags & Flag_Leaf)
+	{
+		if (pAction == nullptr)
+		{
+			//RenderGeometry(GetEngine3DInstance(), pNode);
+			return;
+		}
+		else
+		{
+			pAction(pNode, param);
+		}
+	}
+
+	int plane = pNode->flags & Flag_AxisMask;
+
+	float eyesmin_boxmin = pEyes[0][plane] - pBox [0][plane];
+	float boxmax_eyesmax =  pBox[1][plane] - pEyes[1][plane];
+
+	if (false == ((-epsilon < eyesmin_boxmin) | (-epsilon == eyesmin_boxmin)) && false == ((pEyes[1][plane] - pBox [0][plane]) >= -epsilon) && 
+		false == (( epsilon < boxmax_eyesmax) | ( epsilon == boxmax_eyesmax)) && false == (( pBox[1][plane] - pEyes[0][plane]) >= epsilon)
+		)
+		return;
+
+	glm::vec3 tBox1[2];
+	memmove(tBox1, pBox, sizeof(pBox));
+	tBox1[0][plane] = pNode->planeDist;
+
+	glm::vec3 tBox2[2];
+	memmove(tBox2, pBox, sizeof(pBox));
+	tBox2[1][plane] = pNode->planeDist;
+
+	float eyes_min_fdist = (pEyes[0][plane]) - pNode->planeDist;
+	float eyes_max_fdist = (pEyes[1][plane]) - pNode->planeDist;
+
+	if (((eyes_min_fdist >= -epsilon) && (eyes_min_fdist <= epsilon)) || ((eyes_max_fdist >= -epsilon) && (eyes_max_fdist <= epsilon)))
+	{
+		if (pNode->posChild != -1) 
+			TraverseBsp(pNode->posChild, pEyes, tBox1, pAction, param);
+		if (pNode->negChild != -1) 
+			TraverseBsp(pNode->negChild, pEyes, tBox2, pAction, param);
+		return;
+	}
+
+	if (eyes_min_fdist > epsilon && eyes_max_fdist < epsilon)
+	{
+		if (pNode->posChild != -1) 
+			TraverseBsp(pNode->posChild, pEyes, tBox1, pAction, param);
+		return;
+	}
+
+	if (eyes_min_fdist < -epsilon && eyes_max_fdist < -epsilon)
+	{
+		if (pNode->negChild != -1) 
+			TraverseBsp(pNode->negChild, pEyes, tBox2, pAction, param);
+		return;
+	}
+
+	float eyesmin_div_deltadist = (float)(eyes_min_fdist / (eyes_min_fdist - eyes_max_fdist));
+	AjustDelta(pEyes, (float*)&ajusted.x, eyesmin_div_deltadist);
+				
+	if (eyes_min_fdist <= 0.0)
+	{
+		if (pNode->negChild != -1)
+		{
+			MergeBox(newEyes, &pEyes[0][0], (float*)&ajusted.x);
+			TraverseBsp(pNode->negChild, newEyes, tBox2, pAction, param);
+		}
+		if (pNode->posChild != -1)
+		{
+			MergeBox(newEyes, (float*)&ajusted.x, &pEyes[1][0]);
+			TraverseBsp(pNode->posChild, newEyes, tBox1, pAction, param);
+		}
+	}
+	else
+	{
+		if (pNode->posChild != (short)-1)
+		{
+			MergeBox(newEyes, &pEyes[0][0], (float*)&ajusted.x);
+			TraverseBsp(pNode->posChild, newEyes, tBox1, pAction, param);
+		}
+		if (pNode->negChild != (short)-1)
+		{
+			MergeBox(newEyes, (float*)&ajusted.x, &pEyes[1][0]);
+			TraverseBsp(pNode->negChild, newEyes, tBox2, pAction, param);
+		}
+	}
+}
+
+bool CWMO_Group::Delete()
 {
 	return false;
 }
 
 
-void WMO_Group::FixColors(CBgra* mocv, uint32 mocv_count, const SWMO_Group_BatchDef* moba)
+void CWMO_Group::FixColors(CBgra* mocv, uint32 mocv_count, const SWMO_Group_BatchDef* moba)
 {
-	int32_t intBatchStart;
+	int32_t intBatchStart = 0;
 
 	if (m_GroupHeader.transBatchCount > 0)
-	{
 		intBatchStart = moba[(uint16)m_GroupHeader.transBatchCount].vertexStart;
-	}
-	else
-	{
-		intBatchStart = 0;
-	}
 
 	if (mocv_count > 0)
 	{
 		for (int32_t i = 0; i < mocv_count; i++)
 		{
-			auto* color = &mocv[i];
+			auto& color = mocv[i];
 
 			// Int / ext batches
 			if (i >= intBatchStart)
 			{
-				int32_t v6 = (color->r + (color->a * color->r / 64)) / 2;
-				int32_t v7 = (color->g + (color->a * color->g / 64)) / 2;
-				int32_t v8 = (color->b + (color->a * color->b / 64)) / 2;
+				int32_t r = (color.r + (color.a * color.r / 64.0f)) / 2.0f;
+				int32_t g = (color.g + (color.a * color.g / 64.0f)) / 2.0f;
+				int32_t b = (color.b + (color.a * color.b / 64.0f)) / 2.0f;
 
-				v6 = v6 > 255 ? 255 : v6;
-				v7 = v7 > 255 ? 255 : v7;
-				v8 = v8 > 255 ? 255 : v8;
-
-				color->r = v6;
-				color->g = v7;
-				color->b = v8;
-
-				color->a = 255;
-				// Trans batches
+				color.r = glm::min(r, 255);
+				color.g = glm::min(g, 255);
+				color.b = glm::min(b, 255);
+				color.a = 255u;
 			}
 			else
 			{
-				color->r /= 2;
-				color->g /= 2;
-				color->b /= 2;
+				color.r /= 2;
+				color.g /= 2;
+				color.b /= 2;
 			}
-
-			color->r = 255;
-			color->g = 255;
-			color->b = 255;
 		}
 	}
 }
 
 
 /*
-void WMO_Group::FixColors(CBgra* mocv, uint32 mocv_count, const SWMO_Group_BatchDef* moba)
+void CWMO_Group::FixColors(CBgra* mocv, uint32 mocv_count, const SWMO_Group_BatchDef* moba)
 {
 	uint32 begin_second_fixup = 0;
 	if (m_GroupHeader.transBatchCount)

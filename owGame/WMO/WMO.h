@@ -64,8 +64,7 @@ private:
 
 	//-- Groups --//
 	std::unique_ptr<char[]>												m_GroupNames;		    // MOGN chunk
-	std::vector<std::shared_ptr<WMO_Group>>                             m_Groups;				// MOGI chunk
-	std::vector<std::shared_ptr<WMO_Group>>                             m_OutdoorGroups;
+	std::vector<std::shared_ptr<CWMO_Group>>                             m_Groups;				// MOGI chunk
 
 	//-- Skybox --//
 	std::shared_ptr<CM2>                                                m_Skybox;

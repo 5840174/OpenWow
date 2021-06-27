@@ -20,9 +20,19 @@ CWMOPortalInstance::~CWMOPortalInstance()
 
 
 //
+// CWMOPortalInstance
+//
+const std::vector<glm::vec3>& CWMOPortalInstance::GetVertices() const
+{
+	return m_Vertices;
+}
+
+
+
+//
 // IPortal
 //
-Frustum CWMOPortalInstance::CreatePolyFrustum(glm::vec3 Eye) const
+Frustum CWMOPortalInstance::CreatePolyFrustum(glm::vec3 CameraPosition) const
 {
 	Plane _portalPlanes[15];
 	_ASSERT(m_Vertices.size() < 15);
@@ -32,13 +42,13 @@ Frustum CWMOPortalInstance::CreatePolyFrustum(glm::vec3 Eye) const
 		glm::vec3 v1 = m_Vertices[i];
 		glm::vec3 v2 = m_Vertices[(i + 1) % m_Vertices.size()];
 
-		if (IsPositive(Eye))
+		if (IsPositive(CameraPosition))
 		{
-			_portalPlanes[i] = Plane(Eye, v1, v2);
+			_portalPlanes[i] = Plane(CameraPosition, v1, v2);
 		}
 		else
 		{
-			_portalPlanes[i] = Plane(Eye, v2, v1);
+			_portalPlanes[i] = Plane(CameraPosition, v2, v1);
 		}
 	}
 
@@ -47,25 +57,32 @@ Frustum CWMOPortalInstance::CreatePolyFrustum(glm::vec3 Eye) const
 
 bool CWMOPortalInstance::IsVisible(const Frustum& Frustum) const
 {
-	return Frustum.cullPoly(m_Vertices) == false;
+	return false == Frustum.cullPoly(m_Vertices);
 }
 
 bool CWMOPortalInstance::IsVisible(const std::vector<Plane>& Planes) const
 {
-	if (Planes.empty())
-		return false;
-
-	return cullPolyByPlanes(Planes.data(), Planes.size(), m_Vertices) == false;
+	return false == cullPolyByPlanes(Planes.data(), Planes.size(), m_Vertices);
 }
 
-bool CWMOPortalInstance::IsPositive(const glm::vec3& InvTranslateCamera) const
+bool CWMOPortalInstance::IsPositive(const glm::vec3& CameraPosition) const
 {
-	return m_Plane.distToPoint(InvTranslateCamera) > 0.0f;
+	return m_Plane.distToPoint(CameraPosition) > 0.0f;
 }
 
-std::shared_ptr<IPortalRoom> CWMOPortalInstance::GetRoomObject(glm::vec3 Eye) const
+std::shared_ptr<IPortalRoom> CWMOPortalInstance::GetInnerRoom() const
 {
-	return IsPositive(Eye) ? m_RoomInner.lock() : m_RoomOuter.lock();
+	return m_RoomInner.lock();
+}
+
+std::shared_ptr<IPortalRoom> CWMOPortalInstance::GetOuterRoom() const
+{
+	return m_RoomOuter.lock();
+}
+
+std::shared_ptr<IPortalRoom> CWMOPortalInstance::GetRoomObject(glm::vec3 CameraPosition) const
+{
+	return IsPositive(CameraPosition) ? m_RoomInner.lock() : m_RoomOuter.lock();
 }
 
 #endif

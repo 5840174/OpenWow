@@ -49,11 +49,16 @@ void CSceneWoW::Initialize()
 
 		SetCameraController(MakeShared(CFreeCameraController));
 		GetCameraController()->SetCamera(cameraNode->GetComponentT<ICameraComponent3D>());
-		GetCameraController()->GetCamera()->SetPerspectiveProjection(75.0f, static_cast<float>(GetRenderWindow().GetWindowWidth()) / static_cast<float>(GetRenderWindow().GetWindowHeight()), 1.0f, 2500.0f);
+		GetCameraController()->GetCamera()->SetPerspectiveProjection(65.0f, static_cast<float>(GetRenderWindow().GetWindowWidth()) / static_cast<float>(GetRenderWindow().GetWindowHeight()), 1.0f, 2500.0f);
 		GetCameraController()->GetCamera()->SetPosition(glm::vec3(100.0f));
 		GetCameraController()->GetCamera()->SetYaw(225);
 		GetCameraController()->GetCamera()->SetPitch(-45);
 	}
+
+	const float cMinimapOffset = 10.0f;
+	minimap = GetRootUIControl()->CreateUIControl<CUIControlMinimap>();
+	minimap->SetPosition(glm::vec2(GetRenderWindow().GetWindowWidth() - minimap->GetSize().x - cMinimapOffset, cMinimapOffset));
+	minimap->SetOnClickCallback([this](const IUIControl* Node, glm::vec2 Point) { this->GoToCoord(Node, Point); });
 
 
 	m_RendererStatisticText = CreateUIControlTCast<IUIControlText>();
@@ -64,39 +69,61 @@ void CSceneWoW::Initialize()
 	GetBaseManager().GetManager<IWoWObjectsCreator>()->InitEGxBlend(GetRenderDevice());
 
 
-	skyManager = GetRootSceneNode()->CreateSceneNode<SkyManager>();
-	GetBaseManager().AddManager<ISkyManager>(skyManager);
+	m_WoWSkyManager = GetRootSceneNode()->CreateSceneNode<SkyManager>();
+	GetBaseManager().AddManager<ISkyManager>(m_WoWSkyManager);
 
-	//const float x = 34; //0 fire
-	//const float y = 47; //0 fire
+	m_WoWMap = GetRootSceneNode()->CreateSceneNode<CMap>();
+
+	//const float x = 31; //0 fire
+	//const float y = 28; //0 fire
 	//const uint32 mapID = 0;
 
 	//const float x = 40; //1 barrens
 	//const float y = 30; //1 barrens
 	//const uint32 mapID = 1;
 
-	const float x = 26; //530 outland
-	const float y = 32; //530 outland
-	const uint32 mapID = 530;
+	//const float x = 26; //530 outland
+	//const float y = 32; //530 outland
+	//const uint32 mapID = 530;
 
-	//const float x = 30; //571 nortrend
-	//const float y = 21; //571 nortrend
-	//const uint32 mapID = 571;
-
-	skyManager->Load(mapID);
-	map = GetRootSceneNode()->CreateSceneNode<CMap>();
+	const float x = 30; //571 nortrend
+	const float y = 21; //571 nortrend
+	const uint32 mapID = 571;
 
 
-	glm::vec3 position = glm::vec3(x * C_TileSize + C_TileSize / 2.0f, 100.0f, y * C_TileSize + C_TileSize / 2.0f);
+	//const float x = 32; //571 44
+	//const float y = 32; //571 44
+	//const uint32 mapID = 451;
 
-	map->MapPreLoad(GetBaseManager().GetManager<CDBCStorage>()->DBC_Map()[mapID]);
-	map->MapLoad();
-	map->EnterMap(position);
+	if (false)
+	{
+		m_WoWSkyManager->Load(mapID);
+		
 
+		glm::vec3 position = glm::vec3(x * C_TileSize + C_TileSize / 2.0f, 100.0f, y * C_TileSize + C_TileSize / 2.0f);
 
-	GetCameraController()->GetCamera()->SetPosition(position);
+		m_WoWMap->MapPreLoad(GetBaseManager().GetManager<CDBCStorage>()->DBC_Map()[mapID]);
 
-	//GetCameraController()->GetCamera()->SetPosition(glm::vec3(14300, 150, 20500));
+		minimap->SetMinimapTexture(m_WoWMap->getMinimap());
+
+		m_WoWMap->MapLoad();
+		m_WoWMap->EnterMap(position);
+
+		GetCameraController()->GetCamera()->SetPosition(position);
+
+		//GetCameraController()->GetCamera()->SetPosition(glm::vec3(14300, 150, 20500));
+	}
+	else
+	{
+		m_WoWSkyManager->Load(0);
+
+		auto wmoModel = GetBaseManager().GetManager<IWoWObjectsCreator>()->LoadWMO(GetRenderDevice(), "WORLD\\WMO\\NORTHREND\\DALARAN\\ND_DALARAN.WMO");
+		
+		auto wmoInstance = GetRootSceneNode()->CreateSceneNode<CWMO_Base_Instance>(wmoModel);
+		GetBaseManager().GetManager<ILoader>()->AddToLoadQueue(wmoInstance);
+
+		GetCameraController()->GetCamera()->SetPosition(glm::vec3(0.0f));
+	}
 }
 
 void CSceneWoW::Finalize()
@@ -111,8 +138,8 @@ void CSceneWoW::OnUpdate(UpdateEventArgs & e)
 
 	__super::OnUpdate(e);
 
-	skyManager->Update(e);
-	map->Update(e);
+	m_WoWSkyManager->Update(e);
+	m_WoWMap->Update(e);
 
 	m_RendererStatisticText->SetText(GetRenderer()->GetStatisticText());
 }
@@ -156,7 +183,13 @@ void CSceneWoW::InitializeRenderer()
 }
 
 
+void CSceneWoW::GoToCoord(const IUIControl* Node, const glm::vec2& Point)
+{
+	Log::Green("Coord %f %f", Point.x, Point.y);
+	glm::vec2 conv = (Point) * (C_TileSize * 128.0f / 512.0f);
 
+	GetCameraController()->GetCamera()->SetPosition(glm::vec3(conv.x, GetCameraController()->GetCamera()->GetPosition().y, conv.y));
+}
 
 #if 0
 
@@ -307,9 +340,9 @@ void CSceneWoW::Load3D()
 
 	
 
-	skyManager = GetRootNode3D()->CreateSceneNode<SkyManager>(GetRenderDevice());
-	GetBaseManager().AddManager<ISkyManager>(skyManager);
-	skyManager->Load(0);
+	m_WoWSkyManager = GetRootNode3D()->CreateSceneNode<SkyManager>(GetRenderDevice());
+	GetBaseManager().AddManager<ISkyManager>(m_WoWSkyManager);
+	m_WoWSkyManager->Load(0);
 
 	map = GetRootNode3D()->CreateSceneNode<CMap>(GetBaseManager(), GetRenderDevice());
 
@@ -415,7 +448,7 @@ void CSceneWoW::TestCreateMap(uint32 MapID)
 	const int32 x = 26; //FOR BC 2
 	const int32 y = 30;
 
-	skyManager->Load(MapID);
+	m_WoWSkyManager->Load(MapID);
 
 	rootForBtns->GetParent().lock()->RemoveChild(rootForBtns);
 	map->Unload();

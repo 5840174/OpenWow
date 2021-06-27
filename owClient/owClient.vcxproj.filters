@@ -34,13 +34,13 @@
     <Filter Include="Renderer">
       <UniqueIdentifier>{745dc5d0-e4bc-4c45-8f51-0e38b5a6b824}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Client\DBCCache">
+      <UniqueIdentifier>{f6ddb1e1-65b6-4a45-8f39-f68c0fac1c9e}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="RealmSelection\RealmInfo.h">
       <Filter>RealmSelection</Filter>
-    </ClInclude>
-    <ClInclude Include="Types\MovementTypedefs.h">
-      <Filter>Types</Filter>
     </ClInclude>
     <ClInclude Include="Types\MoveSplineFlag.h">
       <Filter>Types</Filter>
@@ -120,12 +120,6 @@
     <ClInclude Include="Client\ClientCacheTemplates.h">
       <Filter>Client</Filter>
     </ClInclude>
-    <ClInclude Include="Client\TaxiStorage.h">
-      <Filter>Client</Filter>
-    </ClInclude>
-    <ClInclude Include="Client\TransportAnimationStorage.h">
-      <Filter>Client</Filter>
-    </ClInclude>
     <ClInclude Include="CharacterSelection\CharacterSelection.h">
       <Filter>CharacterSelection</Filter>
     </ClInclude>
@@ -164,6 +158,12 @@
     </ClInclude>
     <ClInclude Include="Renderer\RenderPass_Path.h">
       <Filter>Renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="Client\TransportAnimationStorage.h">
+      <Filter>Client\DBCCache</Filter>
+    </ClInclude>
+    <ClInclude Include="Client\TaxiStorage.h">
+      <Filter>Client\DBCCache</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -227,12 +227,6 @@
     <ClCompile Include="Client\ClientCache.cpp">
       <Filter>Client</Filter>
     </ClCompile>
-    <ClCompile Include="Client\TaxiStorage.cpp">
-      <Filter>Client</Filter>
-    </ClCompile>
-    <ClCompile Include="Client\TransportAnimationStorage.cpp">
-      <Filter>Client</Filter>
-    </ClCompile>
     <ClCompile Include="CharacterSelection\CharacterSelection.cpp">
       <Filter>CharacterSelection</Filter>
     </ClCompile>
@@ -262,6 +256,12 @@
     </ClCompile>
     <ClCompile Include="Renderer\RenderPass_Path.cpp">
       <Filter>Renderer</Filter>
+    </ClCompile>
+    <ClCompile Include="Client\TransportAnimationStorage.cpp">
+      <Filter>Client\DBCCache</Filter>
+    </ClCompile>
+    <ClCompile Include="Client\TaxiStorage.cpp">
+      <Filter>Client\DBCCache</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

@@ -9,21 +9,21 @@
 
 // FORWARD BEGIN
 class CWMO;
-class WMO_Group;
+class CWMO_Group;
 // FORWARD END
 
 class ZN_API CWMO_Liquid
 	: public CLiquid
 {
 public:
-	CWMO_Liquid(IRenderDevice& RenderDevice, const CWMO& WMOObject, const WMO_Group& WMOGroupObject, const std::shared_ptr<IByteBuffer>& Bytes, const SWMO_Group_MLIQDef& LiquidHeader, const DBC_LiquidTypeRecord* LiquidType);
+	CWMO_Liquid(IRenderDevice& RenderDevice, const CWMO& WMOObject, const CWMO_Group& WMOGroupObject, const std::shared_ptr<IByteBuffer>& Bytes, const SWMO_Group_MLIQDef& LiquidHeader, const DBC_LiquidTypeRecord* LiquidType);
 	virtual ~CWMO_Liquid();
 
 	const SWMO_Group_MLIQDef& GetHeader() const { return m_LiquidHeader; }
 
 private:
 	const CWMO&         m_WMOObject;
-	const WMO_Group&    m_WMOGroupObject;
+	const CWMO_Group&    m_WMOGroupObject;
 	SWMO_Group_MLIQDef  m_LiquidHeader;
 };
 

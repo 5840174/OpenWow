@@ -8,7 +8,7 @@
 // General
 #include "WMO_Group_Part_BSP_Node.h"
 
-CWMO_Group_Part_BSP_Node::CWMO_Group_Part_BSP_Node(const WMO_Group& WMOGroup, const SWMO_Group_MOBNDef& _proto) :
+CWMO_Group_Part_BSP_Node::CWMO_Group_Part_BSP_Node(const CWMO_Group& WMOGroup, const SWMO_Group_MOBNDef& _proto) :
 	m_Proto(_proto)
 {
 	std::vector<glm::vec3> collisionVertices;

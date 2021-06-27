@@ -10,10 +10,10 @@
 // General
 #include "WMO_Group_Instance.h"
 
-CWMO_Group_Instance::CWMO_Group_Instance(IScene& Scene, const std::shared_ptr<WMO_Group>& WMOGroupObject)
+CWMO_Group_Instance::CWMO_Group_Instance(IScene& Scene, const std::shared_ptr<CWMO_Group>& WMOGroupObject)
 	: CSceneNode(Scene)
 	, CLoadableObject(WMOGroupObject)
-	, m_PortalsVis(true)
+	, m_IsThisRoomVisible(true)
 	, m_Calculated(false)
 	, m_WMOGroupObject(*WMOGroupObject)
 {}
@@ -64,6 +64,16 @@ const std::vector<std::weak_ptr<IPortalRoomObject>>& CWMO_Group_Instance::GetRoo
 	return m_PortalRoomObjects;
 }
 
+bool CWMO_Group_Instance::IsIndoor() const
+{
+	return m_WMOGroupObject.IsIndoor();
+}
+
+bool CWMO_Group_Instance::IsOutdoor() const
+{
+	return m_WMOGroupObject.IsOutdoor();
+}
+
 void CWMO_Group_Instance::Reset()
 {
 	SetVisibilityState(false);
@@ -79,9 +89,45 @@ BoundingBox CWMO_Group_Instance::GetBoundingBox() const
 	return GetComponentT<IColliderComponent>()->GetWorldBounds();
 }
 
+bool CWMO_Group_Instance::IsPointInside(const glm::vec3 & CameraPosition) const
+{
+	// Point isn't inside room if point is not insibe AABB
+	if (false == GetBoundingBox().isPointInside(CameraPosition))
+		return false;
+
+	bool atLeastInsideOneportal = false;
+	for (const auto& portal : m_RoomPortals)
+	{
+		if (this == portal->GetInnerRoom().get())
+		{
+			if (false == portal->IsPositive(CameraPosition))
+			{
+				atLeastInsideOneportal = true;
+				break;
+			}
+		}
+
+		if (this == portal->GetOuterRoom().get())
+		{
+			if (portal->IsPositive(CameraPosition))
+			{
+				atLeastInsideOneportal = true;
+				break;
+			}
+		}
+	}
+
+	return atLeastInsideOneportal;
+}
+
 void CWMO_Group_Instance::SetVisibilityState(bool Value)
 {
-	m_PortalsVis = Value;
+	m_IsThisRoomVisible = Value;
+}
+
+bool CWMO_Group_Instance::IsVisible() const
+{
+	return m_IsThisRoomVisible;
 }
 
 void CWMO_Group_Instance::SetCalculatedState(bool Value)
@@ -132,6 +178,7 @@ void CWMO_Group_Instance::CreatePortals(const std::shared_ptr<CWMO_Base_Instance
 		//plane.dist = glm::dot(O.xyz(), N.xyz());
 
 		Plane plane(portalsVertices[0], portalsVertices[1], portalsVertices[2]);
+
 		AddPortal(std::make_shared<CWMOPortalInstance>(roomInnerInstance, roomOuterInstance, portalsVertices, plane));
 	}
 }
@@ -149,18 +196,16 @@ void CWMO_Group_Instance::Initialize()
 	{
 		colliderComponent->SetCullStrategy(IColliderComponent::ECullStrategy::ByFrustrumAndDistance);
 		colliderComponent->SetCullDistance(GetBaseManager().GetManager<ISettings>()->GetGroup("WoWSettings")->GetPropertyT<float>("ADT_WMO_Distance")->Get());
-		colliderComponent->SetBounds(m_WMOGroupObject.m_Bounds);
-		colliderComponent->SetDebugDrawMode(false);
+		colliderComponent->SetBounds(m_WMOGroupObject.GetBoundingBox());
+		colliderComponent->SetDebugDrawMode(true);
 		colliderComponent->SetDebugDrawColor(ColorRGBA(0.8f, 0.6f, 0.2f, 0.8f));
 	}
 }
 
 void CWMO_Group_Instance::Accept(IVisitor* visitor)
 {
-	if (m_PortalsVis)
-	{
+	if (m_IsThisRoomVisible)
 		__super::Accept(visitor);
-	}	
 }
 
 #endif

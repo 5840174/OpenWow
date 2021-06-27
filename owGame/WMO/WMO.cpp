@@ -48,8 +48,8 @@ void CWMO::CreateInsances(const std::shared_ptr<CWMO_Base_Instance>& Parent) con
 		auto groupInstance = Parent->CreateSceneNode<CWMO_Group_Instance>(it);
 
 		Parent->AddGroupInstance(groupInstance);
-		if (it->m_GroupHeader.flags.IS_OUTDOOR)
-			Parent->AddOutdoorGroupInstance(groupInstance);
+		//if (it->IsOutdoor())
+		//	Parent->AddOutdoorGroupInstance(groupInstance);
 
 		m_BaseManager.GetManager<ILoader>()->AddToLoadQueue(groupInstance);
 	}
@@ -197,15 +197,10 @@ bool CWMO::Load()
 		uint32 cntr = 0;
 		for (const auto& groupInfo : m_ChunkReader->OpenChunkT<SWMO_GroupInfoDef>("MOGI"))
 		{
-			std::shared_ptr<WMO_Group> group = std::make_shared<WMO_Group>(m_BaseManager, m_RenderDevice, std::dynamic_pointer_cast<CWMO>(shared_from_this()), cntr++, groupInfo);
-			m_BaseManager.GetManager<ILoader>()->AddToLoadQueue(group);
+			auto wmoGroup = std::make_shared<CWMO_Group>(m_BaseManager, m_RenderDevice, std::dynamic_pointer_cast<CWMO>(shared_from_this()), cntr++, groupInfo);
+			m_BaseManager.GetManager<ILoader>()->AddToLoadQueue(wmoGroup);
 
-			m_Groups.push_back(group);
-
-			if (group->m_GroupHeader.flags.IS_OUTDOOR)
-			{
-				m_OutdoorGroups.push_back(group);
-			}
+			m_Groups.push_back(wmoGroup);
 		}
 	}
 

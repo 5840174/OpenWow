@@ -39,7 +39,13 @@ CM2_Skin_Batch::CM2_Skin_Batch(IBaseManager& BaseManager, IRenderDevice& RenderD
 	}
 	_ASSERT(m_Textures.size() >= 0 && m_Textures.size() <= 2);
 	if (m_Textures.size() == 2)
-		newShader = 1;
+	{
+		if (newShader >= 6 /*Combiners_Add_Add*/)
+		{
+			Log::Warn("M2 shader setted to 1 (old %d)", newShader);
+			newShader = 1;
+		}
+	}
 
 	// Texture unit
 	//if (SkinBatchProto.texture_CoordIndex != -1)

@@ -30,7 +30,6 @@
     <ClInclude Include="RealmSelection\RealmInfo.h" />
     <ClInclude Include="Renderer\RenderPass_Path.h" />
     <ClInclude Include="stdafx.h" />
-    <ClInclude Include="Types\MovementTypedefs.h" />
     <ClInclude Include="Types\MoveSplineFlag.h" />
     <ClInclude Include="Types\UpdateFields.h" />
     <ClInclude Include="Types\UpdateMask.h" />

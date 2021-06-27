@@ -6,6 +6,9 @@
     </ClInclude>
     <ClInclude Include="SceneWoW.h" />
     <ClInclude Include="SceneWoWClient.h" />
+    <ClInclude Include="UIControls\UIControlMinimap.h">
+      <Filter>UIControls</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
@@ -14,10 +17,16 @@
     </ClCompile>
     <ClCompile Include="SceneWoW.cpp" />
     <ClCompile Include="SceneWoWClient.cpp" />
+    <ClCompile Include="UIControls\UIControlMinimap.cpp">
+      <Filter>UIControls</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Common">
       <UniqueIdentifier>{d8c5527d-4092-4dba-af1a-a3b1f7a57e92}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="UIControls">
+      <UniqueIdentifier>{7e8c8b0c-5c6b-4a1f-9e50-6c78e9ecdaeb}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

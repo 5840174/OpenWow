@@ -149,7 +149,8 @@ std::shared_ptr<Character> CWorldObjectCreator::BuildCharacterFromDisplayInfo(IR
 		}
 		else
 		{
-			Log::Error("Character[%d]: Missing baked texture for humanoid[%d]. Create own. [%s]", rec->Get_ID(), humanoidRecExtra->Get_ID(), bakedTextureName.c_str());
+			bakedSkinTexture = m_BaseManager.GetManager<IznTexturesFactory>()->GetDefaultTexture();
+			Log::Error("CWorldObjectCreator::BuildCharacterFromDisplayInfo: For character '%d' his CreatureDisplayInfoExtraRecord with id '%d' don't contains baked texture.", rec->Get_ID(), humanoidRecExtra->Get_ID());
 		}
 		newCharacter->RefreshTextures(sectionWrapper, bakedSkinTexture);
 	}
@@ -306,6 +307,8 @@ std::shared_ptr<CWMO> CWorldObjectCreator::LoadWMO(IRenderDevice& RenderDevice, 
 	{
 		m_BaseManager.GetManager<ILoader>()->AddToLoadQueue(wmoObject);
 	}
+
+	Log::Print("CWorldObjectCreator::LoadWMO: WMO '%s' loaded.", Filename.c_str());
 
 	return wmoObject;
 }

@@ -1,5 +1,7 @@
 #pragma once
 
+#include "UIControls/UIControlMinimap.h"
+
 class CSceneWoW
 	: public SceneBase
 {
@@ -24,9 +26,14 @@ protected:
 	virtual void InitializeRenderer() override;
 
 private:
-	std::shared_ptr<SkyManager> skyManager;
-	std::shared_ptr<CMap> map;
+	void GoToCoord(const IUIControl* Node, const glm::vec2& Point);
+
+private:
+	std::shared_ptr<SkyManager> m_WoWSkyManager;
+	std::shared_ptr<CMap> m_WoWMap;
 	std::shared_ptr<IUIControlText> m_RendererStatisticText;
+
+	std::shared_ptr<CUIControlMinimap> minimap;
 };
 
 
@@ -63,7 +70,7 @@ private:
 private:
 	//std::shared_ptr<CWMO_Base_Instance> wmoInstance;
 	//std::shared_ptr<CM2_Base_Instance> m2Instance;
-	std::shared_ptr<SkyManager> skyManager;
+	std::shared_ptr<SkyManager> m_WoWSkyManager;
 	std::shared_ptr<CMap> map;
 
 	//std::shared_ptr<SceneNodeUI> rootForBtns;

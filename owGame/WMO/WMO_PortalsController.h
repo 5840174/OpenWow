@@ -16,8 +16,10 @@ public:
 	CWMO_PortalsController();
     virtual ~CWMO_PortalsController();
 	
-	void Update(const CWMO_Base_Instance* SceneNodeInstance, const ICameraComponent3D* _camera);
-	bool Recur(const CWMO_Base_Instance* SceneNodeInstance, const std::shared_ptr<IPortalRoom>& Room, const Frustum& CameraFrustum, const glm::vec3& _InvWorldCamera, const Frustum& _frustum, bool _isFirstIteration);
+	void Update(const CWMO_Base_Instance* WMOBaseInstance, const ICameraComponent3D* _camera);
+
+private:
+	bool Recur(const std::shared_ptr<IPortalRoom>& Room, const Frustum& CameraFrustum, const glm::vec3& CameraPosition, const Frustum& _frustum, bool _isFirstIteration);
 };
 
 #endif

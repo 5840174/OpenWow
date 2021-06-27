@@ -7,7 +7,7 @@
 
 
 
-/*void AttenTransVerts(WMO* mapObj, WMO_Group* mapObjGroup)
+/*void AttenTransVerts(WMO* mapObj, CWMO_Group* mapObjGroup)
 {
 	//mapObjGroup->field_98 |= 1u;
 

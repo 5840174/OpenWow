@@ -58,7 +58,7 @@ ZN_MAKE_OBJECTCLASS(cWowSkyManagerCustom, 52);
 // UIControl
 // 500 - 599 UIControls custom
 //
-//ZN_MAKE_OBJECTCLASS(cUIControlRTSTowerBtn, 400);
+ZN_MAKE_OBJECTCLASS(cUIControlMinimap, 500);
 
 //
 // SceneNode components

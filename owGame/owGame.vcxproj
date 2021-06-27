@@ -104,6 +104,7 @@
     <ClCompile Include="Renderer\RenderPass_WDLList.cpp" />
     <ClCompile Include="Renderer\RenderPass_WMO.cpp" />
     <ClCompile Include="Renderer\RenderPass_WMOList.cpp" />
+    <ClCompile Include="Renderer\RenderPass_WMOPortalDebug.cpp" />
     <ClCompile Include="Settings\WoWSettingsGroup.cpp" />
     <ClCompile Include="Sky\Environment\DayNightPhase.cpp" />
     <ClCompile Include="Sky\Environment\EnvironmentManager.cpp" />
@@ -275,6 +276,7 @@
     <ClInclude Include="Renderer\RenderPass_WDLList.h" />
     <ClInclude Include="Renderer\RenderPass_WMO.h" />
     <ClInclude Include="Renderer\RenderPass_WMOList.h" />
+    <ClInclude Include="Renderer\RenderPass_WMOPortalDebug.h" />
     <ClInclude Include="Settings\WoWSettingsGroup.h" />
     <ClInclude Include="Sky\Environment\DayNightPhase.h" />
     <ClInclude Include="Sky\Environment\EnvironmentManager.h" />

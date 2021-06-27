@@ -25,7 +25,7 @@ public:
 	typedef std::vector<CWMO_Liquid_Instance*> LuqidInstances;
 
 public:
-	CWMO_Group_Instance(IScene& Scene, const std::shared_ptr<WMO_Group>& WMOGroupObject);
+	CWMO_Group_Instance(IScene& Scene, const std::shared_ptr<CWMO_Group>& WMOGroupObject);
 	virtual ~CWMO_Group_Instance();
 
 	// CLoadableObject
@@ -37,15 +37,22 @@ public:
 	const std::vector<std::shared_ptr<IPortal>>& GetPortals() const override final;
 	void AddRoomObject(const std::weak_ptr<IPortalRoomObject>& RoomObject) override final;
 	const std::vector<std::weak_ptr<IPortalRoomObject>>& GetRoomObjects() const override final;
+	bool IsIndoor() const override final;
+	bool IsOutdoor() const override final;
 	void Reset() override final;
+
 	BoundingBox GetBoundingBox() const override final;
+	bool IsPointInside(const glm::vec3& CameraPosition) const override final;
+
 	void SetVisibilityState(bool Value) override final;
+	bool IsVisible() const override final;
+
 	void SetCalculatedState(bool Value) override final;
 	bool IsCalculated() const override final;
 
 	// CWMO_Group_Instance
 	void CreatePortals(const std::shared_ptr<CWMO_Base_Instance>& BaseInstance);
-    const WMO_Group& getObject() const { return m_WMOGroupObject; }
+    const CWMO_Group& GetWMOGroupObject() const { return m_WMOGroupObject; }
 
 	// SceneNode3D
 	void Initialize() override;
@@ -54,11 +61,11 @@ public:
 private:
 	std::vector<std::shared_ptr<IPortal>>         m_RoomPortals;
 	std::vector<std::weak_ptr<IPortalRoomObject>> m_PortalRoomObjects;
-	bool                                          m_PortalsVis;
+	bool                                          m_IsThisRoomVisible;
 	bool                                          m_Calculated;
 
 private:
-	const WMO_Group& m_WMOGroupObject;
+	const CWMO_Group& m_WMOGroupObject;
 };
 
 #endif

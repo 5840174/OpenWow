@@ -77,36 +77,11 @@
 ~Loading shader 'shaders_D3D/Liquid.hlsl':'PS_main'.
 ~Loading shader '3D/BondingBox.hlsl':'VS_main_Inst'.
 ~Loading shader '3D/BondingBox.hlsl':'PS_main'.
+~Loading shader '3D/Debug.hlsl':'VS_main'.
+~Loading shader '3D/Debug.hlsl':'PS_main'.
 ~Loading shader 'UI/UIControlCommon.hlsl':'VS_main'.
 ~Loading shader 'UI/UIControlCommon.hlsl':'PS_main'.
 ~Loading shader 'UI/UI_Font.hlsl':'VS_main'.
 ~Loading shader 'UI/UI_Font.hlsl':'PS_main'.
-~Loading shader '3D/Debug.hlsl':'VS_main'.
-~Loading shader '3D/Debug.hlsl':'PS_main'.
-~Sky: [191] is global sky.
- Map[Kalimdor]: Id = '1'. Preloading...
- Map[Kalimdor]: InstanceType = '0'.
- Map[Kalimdor]: MapType = '0'.
- Map[Kalimdor]: IsBattleGround = '0'.
- Map[Kalimdor]: Name = 'Калимдор'.
- Map[Kalimdor]: AreaTableID = '0'.
- Map[Kalimdor]: AllianceDescr = ''.
- Map[Kalimdor]: HordeDescr = ''.
- Map[Kalimdor]: CorpseMapID = '-1'.
- Map[Kalimdor]: Id [1]. Loading...
-^CMapWDL: Low WMOs count [0].
-~MapWDT: Global WMO exists [false].
-!File 'Character\Tauren\TaurenMaleFaceLower04_18.blp' not exists.
-!CImagesFactory: File is nullptr.
-!File 'Character\Tauren\TaurenMaleFaceLower04_18.blp' not exists.
-!CImagesFactory: File is nullptr.
-!File 'Character\Tauren\Hair00_01.blp' not exists.
-!CImagesFactory: File is nullptr.
-!File 'Character\Tauren\Hair00_01.blp' not exists.
-!CImagesFactory: File is nullptr.
-!File 'Character\Tauren\TaurenMaleFaceLower04_18.blp' not exists.
-!CImagesFactory: File is nullptr.
-!CImagesFactory: Image 'Leather_Blood_A_02Red_Chest_TL_U.blp' not supported.
-!CImagesFactory: Image 'Leather_Blood_A_02Red_Chest_TL_U.blp' not supported.
-!CImagesFactory: Image 'Leather_Blood_A_02Red_Chest_TL_U.blp' not supported.
-!CImagesFactory: Image 'Leather_Blood_A_02Red_Chest_TL_U.blp' not supported.
+~Sky: [1] is global sky.
+ CWorldObjectCreator::LoadWMO: WMO 'WORLD\WMO\NORTHREND\DALARAN\ND_DALARAN.WMO' loaded.

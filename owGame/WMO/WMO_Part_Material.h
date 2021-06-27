@@ -31,6 +31,9 @@ public:
 	WMO_Part_Material(IRenderDevice& RenderDevice, const CWMO& WMOModel, const SWMO_MaterialDef& WMOMaterialProto);
 	virtual ~WMO_Part_Material();
 
+	void SetBlendMode(uint32 BlendMode);
+	void SetMOCVExists(uint32 MOCVExists);
+
 	const std::shared_ptr<IDepthStencilState>& GetDepthStencilState() const { return m_DepthStencilState; }
 	const std::shared_ptr<IBlendState>& GetBlendState() const { return m_BlendState; };
 	const std::shared_ptr<IRasterizerState>& GetRasterizerState() const { return m_RasterizerState; };

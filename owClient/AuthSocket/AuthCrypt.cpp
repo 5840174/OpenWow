@@ -105,9 +105,10 @@ void AuthCrypt::GenerateKey(uint8 *key, BigNumber *bn)
 
 #else
 
-AuthCrypt::AuthCrypt() :
-	_clientDecrypt(SHA_DIGEST_LENGTH), _serverEncrypt(SHA_DIGEST_LENGTH),
-	_initialized(false)
+AuthCrypt::AuthCrypt() 
+	: _clientDecrypt(SHA_DIGEST_LENGTH)
+	, _serverEncrypt(SHA_DIGEST_LENGTH)
+	, _initialized(false)
 { }
 
 void AuthCrypt::Init(BigNumber* K)
@@ -142,17 +143,15 @@ void AuthCrypt::Init(BigNumber* K)
 
 void AuthCrypt::DecryptRecv(uint8 *data, size_t len)
 {
-	if (!_initialized)
+	if (false == _initialized)
 		return;
 
 	_serverEncrypt.UpdateData(len, data);
-
-	
 }
 
 void AuthCrypt::EncryptSend(uint8 *data, size_t len)
 {
-	if (!_initialized)
+	if (false == _initialized)
 		return;
 
 	_clientDecrypt.UpdateData(len, data);

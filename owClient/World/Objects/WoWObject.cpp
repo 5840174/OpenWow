@@ -117,13 +117,15 @@ void WoWObject::ProcessMovementUpdate(CByteBuffer& Bytes)
 		{
 			uint64 transportGuid;
 			Bytes.ReadPackedUInt64(transportGuid);
-			object->TransportID = CWoWObjectGuid(transportGuid);
+			if (object)
+				object->TransportID = CWoWObjectGuid(transportGuid);
 
 			glm::vec3 gamePosition;
 			Bytes >> gamePosition.x;
 			Bytes >> gamePosition.y;
 			Bytes >> gamePosition.z;
-			object->Position = fromGameToReal(gamePosition);
+			if (object)
+				object->Position = fromGameToReal(gamePosition);
 
 			if (transportGuid != 0)
 			{
@@ -131,7 +133,8 @@ void WoWObject::ProcessMovementUpdate(CByteBuffer& Bytes)
 				Bytes >> gamePositionTransportOffset.x;
 				Bytes >> gamePositionTransportOffset.y;
 				Bytes >> gamePositionTransportOffset.z;
-				object->PositionTransportOffset = fromGameToReal(gamePositionTransportOffset);
+				if (object)
+					object->PositionTransportOffset = fromGameToReal(gamePositionTransportOffset);
 				//Log::Error("WoWObject::ProcessMovementUpdate: transportGuid != 0.");
 			}
 			else
@@ -140,18 +143,21 @@ void WoWObject::ProcessMovementUpdate(CByteBuffer& Bytes)
 				Bytes >> gamePosition2.x;
 				Bytes >> gamePosition2.y;
 				Bytes >> gamePosition2.z;
-				object->Position = fromGameToReal(gamePosition2);
+				if (object)
+					object->Position = fromGameToReal(gamePosition2);
 			}
 
 			float gameOrientation;
 			Bytes >> gameOrientation;
-			object->Orientation = glm::degrees(gameOrientation + glm::half_pi<float>());
+			if (object)
+				object->Orientation = glm::degrees(gameOrientation + glm::half_pi<float>());
 
 			if (GetWoWGUID().GetTypeId() == EWoWObjectTypeID::TYPEID_CORPSE)
 			{
 				float gameOrientation2;
 				Bytes >> gameOrientation2;
-				object->Orientation = glm::degrees(gameOrientation2 + glm::half_pi<float>());
+				if (object)
+					object->Orientation = glm::degrees(gameOrientation2 + glm::half_pi<float>());
 			}
 			else
 			{
@@ -167,11 +173,13 @@ void WoWObject::ProcessMovementUpdate(CByteBuffer& Bytes)
 				Bytes >> gamePosition3.y;
 				Bytes >> gamePosition3.z;
 				//Log::Print("UPDATEFLAG_STATIONARY_POSITION: %f %f %f", gamePosition3.x, gamePosition3.y, gamePosition3.z);
-				object->Position = fromGameToReal(gamePosition3);
+				if (object)
+					object->Position = fromGameToReal(gamePosition3);
 
 				float gameOrientation;
 				Bytes >> gameOrientation;
-				object->Orientation = glm::degrees(gameOrientation + glm::half_pi<float>());
+				if (object)
+					object->Orientation = glm::degrees(gameOrientation + glm::half_pi<float>());
 			}
 		}
 

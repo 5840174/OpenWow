@@ -57,9 +57,9 @@ void CMapM2Instance::Accept(IVisitor* visitor)
 glm::mat4 CMapM2Instance::CalculateLocalTransform() const
 {
 	glm::mat4 localTransform(1.0f);
-	localTransform = glm::translate(localTransform, GetLocalPosition());
+	localTransform = glm::translate(localTransform, m_PlacementInfo.position);
 	localTransform *= glm::eulerAngleYZX(glm::radians(m_PlacementInfo.rotation.y - 90.0f), glm::radians(-m_PlacementInfo.rotation.x), glm::radians(m_PlacementInfo.rotation.z));
-	localTransform = glm::scale(localTransform, GetLocalScale());
+	localTransform = glm::scale(localTransform, glm::vec3(static_cast<float>(m_PlacementInfo.scale) / 1024.0f));
 	return localTransform;
 }
 

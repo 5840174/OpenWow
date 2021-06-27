@@ -34,8 +34,16 @@ public:
 		CLIENT_UPDATE_MASK_BITS = sizeof(ClientUpdateMaskType) * 8,
 	};
 
-	UpdateMask() : mCount(0), mBlocks(0), mUpdateMask(0) {}
-	UpdateMask(const UpdateMask& mask) : mUpdateMask(0) { *this = mask; }
+	UpdateMask() 
+		: mCount(0)
+		, mBlocks(0)
+		, mUpdateMask(0) 
+	{}
+	UpdateMask(const UpdateMask& mask) 
+		: mUpdateMask(0) 
+	{ 
+		*this = mask; 
+	}
 
 	~UpdateMask()
 	{

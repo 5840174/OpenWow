@@ -4,6 +4,9 @@
 
 #include "RenderPassProcessTypelessList.h"
 
+#include "WMO/WMO_Group_Instance.h"
+#include "WMO/WMO_Group_Part_Batch.h"
+
 class ZN_API CRenderPass_WMOList 
 	: public CRenderPassProcessTypelessList
 {
@@ -15,11 +18,14 @@ public:
 	std::shared_ptr<IRenderPassPipelined> ConfigurePipeline(std::shared_ptr<IRenderTarget> RenderTarget) override final;
 
     // IVisitor
-    EVisitResult Visit(const std::shared_ptr<ISceneNode>& node) override final;
+    EVisitResult Visit(const std::shared_ptr<ISceneNode>& SceneNode) override final;
+	EVisitResult Visit(const std::shared_ptr<IModel>& Model) override final;
 	EVisitResult Visit(const std::shared_ptr<IGeometry>& Geometry, const std::shared_ptr<IMaterial>& Material, SGeometryDrawArgs GeometryDrawArgs) override final;
 
 private:
 	std::shared_ptr<IPropertiesGroup> m_WoWSettings;
+	const CWMO_Group_Instance * m_CurrentWMOGroupInstance;
+	const WMO_Group_Part_Batch * m_CurrentWMOBatch;
 };
 
 #if 0

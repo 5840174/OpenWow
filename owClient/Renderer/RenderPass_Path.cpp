@@ -36,8 +36,6 @@ std::shared_ptr<IRenderPassPipelined> CRenderPass_Path::ConfigurePipeline(std::s
 {
 	__super::ConfigurePipeline(RenderTarget);
 
-	m_PointBox = GetRenderDevice().GetPrimitivesFactory().CreateCube();
-
 	std::shared_ptr<IShader> vertexShader = GetRenderDevice().GetObjectsFactory().LoadShader(EShaderType::VertexShader, "3D/Debug.hlsl", "VS_main");
 	vertexShader->LoadInputLayoutFromReflector();
 

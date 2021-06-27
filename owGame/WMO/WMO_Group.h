@@ -21,15 +21,19 @@ class CWMO_Group_Instance;
 class CWMO_Doodad_Instance;
 // FORWARD END
 
-class WMO_Group
+class CWMO_Group
 	: public CLoadableObject
 {
 public:
-	WMO_Group(IBaseManager& BaseManager, IRenderDevice& RenderDevice, const std::shared_ptr<CWMO>& WMOModel, const uint32 GroupIndex, const SWMO_GroupInfoDef& GroupProto);
-	virtual ~WMO_Group();
+	CWMO_Group(IBaseManager& BaseManager, IRenderDevice& RenderDevice, const std::shared_ptr<CWMO>& WMOModel, const uint32 GroupIndex, const SWMO_GroupInfoDef& GroupProto);
+	virtual ~CWMO_Group();
 
-	// WMO_Group
+	// CWMO_Group
+	const SWMO_Group_HeaderDef& GetHeader() const;
 	const uint32 GetGroupIndex() const;
+	const BoundingBox& GetBoundingBox() const;
+	bool IsIndoor() const;
+	bool IsOutdoor() const;
 	void AddPortal(const CWMO_Part_Portal& WMOPartPortal);
 	const std::vector<CWMO_Part_Portal>& GetPortals() const;
 
@@ -43,13 +47,12 @@ public:
 private:
 	void FixColors(CBgra* mocv, uint32 mocv_count, const SWMO_Group_BatchDef* moba);
 
-public:
+private:
 	std::string                             m_GroupName;
-	
 	SWMO_Group_HeaderDef					m_GroupHeader;
 	BoundingBox								m_Bounds;
 
-public:
+private:
 	//-- Triangles --//
 	glm::vec3 * dataFromMOVT;
 	std::vector<SWMO_Group_MaterialDef>		m_MaterialsInfo;

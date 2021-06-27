@@ -37,8 +37,6 @@ protected:
 	std::shared_ptr<MaterialDebug>     m_MaterialDebug;
 	std::shared_ptr<IGeometry>         m_WaypointGeometry;
 
-	std::shared_ptr<IGeometry>         m_PointBox;
-
 	std::shared_ptr<IConstantBuffer>   m_PerObjectConstantBuffer;
 	//IShaderParameter*                m_PerObjectParameter;
 

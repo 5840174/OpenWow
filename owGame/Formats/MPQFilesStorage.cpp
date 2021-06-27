@@ -46,16 +46,12 @@ CMPQFilesStorage::CMPQFilesStorage(std::string _path)
 
 	AddArchive("ruRU/backup-ruRU.MPQ");
 	AddArchive("ruRU/base-ruRU.MPQ");
-
 	AddArchive("ruRU/expansion-locale-ruRU.MPQ");
 	AddArchive("ruRU/expansion-speech-ruRU.MPQ");
-
 	AddArchive("ruRU/lichking-locale-ruRU.MPQ");
 	AddArchive("ruRU/lichking-speech-ruRU.MPQ");
-
 	AddArchive("ruRU/locale-ruRU.MPQ");
 	AddArchive("ruRU/speech-ruRU.MPQ");
-
 	AddArchive("ruRU/patch-ruRU.MPQ");
 	AddArchive("ruRU/patch-ruRU-2.MPQ");
 	AddArchive("ruRU/patch-ruRU-3.MPQ");

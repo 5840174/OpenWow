@@ -35,7 +35,8 @@ void CWMO_Part_Portal::setGroup(int32 _group, int16 side)
 	{
 		m_GrOuter = _group;
 	}
-	else _ASSERT(false);
+	else 
+		_ASSERT(false);
 }
 
 #endif

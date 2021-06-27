@@ -5,13 +5,13 @@
 #include "WMO_Group_Headers.h"
 
 // FORWARD BEGIN
-class WMO_Group;
+class CWMO_Group;
 // FORWARD END
 
 class CWMO_Group_Part_BSP_Node
 {
 public:
-	CWMO_Group_Part_BSP_Node(const WMO_Group& WMOGroup, const SWMO_Group_MOBNDef& _proto);
+	CWMO_Group_Part_BSP_Node(const CWMO_Group& WMOGroup, const SWMO_Group_MOBNDef& _proto);
 	virtual ~CWMO_Group_Part_BSP_Node();
 
 	void Render(const glm::mat4& _worldMatrix);

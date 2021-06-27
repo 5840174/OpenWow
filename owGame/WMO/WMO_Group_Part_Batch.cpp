@@ -14,13 +14,10 @@
 WMO_Group_Part_Batch::WMO_Group_Part_Batch(IRenderDevice& RenderDevice, const CWMO& WMOModel, const SWMO_Group_BatchDef& WMOGroupBatchProto)
 	: ModelProxie(RenderDevice.GetObjectsFactory().CreateModel())
 	, m_ParentWMO(WMOModel)
-	, m_WMOGroupBatchProto(WMOGroupBatchProto)
+	, m_BatchType(EBatchType::BatchType_Trans)
 {
-	m_Bounds.setMin(glm::vec3(m_WMOGroupBatchProto.bx, m_WMOGroupBatchProto.by, m_WMOGroupBatchProto.bz));
-	m_Bounds.setMax(glm::vec3(m_WMOGroupBatchProto.tx, m_WMOGroupBatchProto.ty, m_WMOGroupBatchProto.tz));
-
-
-	//SetBounds(m_Bounds);
+	m_Bounds.setMin(glm::vec3(WMOGroupBatchProto.bx, WMOGroupBatchProto.by, WMOGroupBatchProto.bz));
+	m_Bounds.setMax(glm::vec3(WMOGroupBatchProto.tx, WMOGroupBatchProto.ty, WMOGroupBatchProto.tz));
 }
 
 WMO_Group_Part_Batch::~WMO_Group_Part_Batch()
@@ -35,6 +32,12 @@ WMO_Group_Part_Batch::~WMO_Group_Part_Batch()
 bool WMO_Group_Part_Batch::Render(const ShaderMap& Shaders) const
 {
 	return ModelProxie::Render(Shaders);
+}
+
+void WMO_Group_Part_Batch::Accept(IVisitor * visitor)
+{
+	//if (GetBatchType() == EBatchType::BatchType_Int)
+		return __super::Accept(visitor);
 }
 
 #endif

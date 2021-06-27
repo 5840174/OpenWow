@@ -4,7 +4,6 @@
 
 #include "WoWObjectValues.h"
 
-
 enum ZN_API ObjectTypeMask : uint16
 {
     TYPEMASK_OBJECT         = 0x0001,
@@ -17,9 +16,6 @@ enum ZN_API ObjectTypeMask : uint16
     TYPEMASK_CORPSE         = 0x0080,
     TYPEMASK_SEER           = TYPEMASK_PLAYER | TYPEMASK_UNIT | TYPEMASK_DYNAMICOBJECT
 };
-
-
-
 
 // TODO: MOVE ME!!!
 /*enum CreatureFlagsExtra

@@ -5,7 +5,7 @@
 // General
 #include "WMO_Liquid.h"
 
-CWMO_Liquid::CWMO_Liquid(IRenderDevice& RenderDevice, const CWMO& WMOObject, const WMO_Group& WMOGroupObject, const std::shared_ptr<IByteBuffer>& Bytes, const SWMO_Group_MLIQDef& LiquidHeader, const DBC_LiquidTypeRecord* LiquidType)
+CWMO_Liquid::CWMO_Liquid(IRenderDevice& RenderDevice, const CWMO& WMOObject, const CWMO_Group& WMOGroupObject, const std::shared_ptr<IByteBuffer>& Bytes, const SWMO_Group_MLIQDef& LiquidHeader, const DBC_LiquidTypeRecord* LiquidType)
 	: CLiquid(RenderDevice, LiquidHeader.A, LiquidHeader.B)
 	, m_WMOObject(WMOObject)
 	, m_WMOGroupObject(WMOGroupObject)

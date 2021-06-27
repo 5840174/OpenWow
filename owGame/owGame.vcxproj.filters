@@ -157,6 +157,9 @@
     <Filter Include="World\Character\Types">
       <UniqueIdentifier>{9b33dbe5-de55-4951-a0eb-d06a7a04ed7a}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Renderer\Debug">
+      <UniqueIdentifier>{653d1bcd-503c-43f5-be28-5c70c171a61e}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -485,6 +488,9 @@
     </ClCompile>
     <ClCompile Include="World\Character\Types\ItemTemplate.cpp">
       <Filter>World\Character\Types</Filter>
+    </ClCompile>
+    <ClCompile Include="Renderer\RenderPass_WMOPortalDebug.cpp">
+      <Filter>Renderer\Debug</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -1015,6 +1021,9 @@
     </ClInclude>
     <ClInclude Include="World\Character\Types\Player_Enums.h">
       <Filter>World\Character\Types</Filter>
+    </ClInclude>
+    <ClInclude Include="Renderer\RenderPass_WMOPortalDebug.h">
+      <Filter>Renderer\Debug</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

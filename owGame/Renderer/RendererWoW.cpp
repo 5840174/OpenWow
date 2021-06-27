@@ -23,6 +23,8 @@
 #include "RenderPass_WDLList.h"
 #include "RenderPass_WMOList.h"
 
+#include "RenderPass_WMOPortalDebug.h"
+
 CRendererWoW::CRendererWoW(IBaseManager& BaseManager, IScene& Scene)
 	: RendererBase(BaseManager, Scene)
 {
@@ -80,6 +82,7 @@ void CRendererWoW::Initialize(std::shared_ptr<IRenderTarget> OutputRenderTarget)
 	//Add3DPass(MakeShared(CDebugPass, m_RenderDevice, m_Scene)->ConfigurePipeline(OutputRenderTarget));
 	//Add3DPass(MakeShared(CDrawBonesPass, m_Scene)->ConfigurePipeline(OutputRenderTarget));
 	Add3DPass(MakeShared(CDrawBoundingBoxPass, GetRenderDevice(), GetScene())->ConfigurePipeline(OutputRenderTarget));
+	Add3DPass(MakeShared(CRenderPass_WMOPortalDebug, GetScene())->ConfigurePipeline(OutputRenderTarget));
 	//Add3DPass(MakeShared(CDrawLightFrustumPass, m_RenderDevice, m_Scene)->ConfigurePipeline(OutputRenderTarget));
 	//Add3DPass(MakeShared(CPassDrawNormals, m_RenderDevice, m_Scene)->ConfigurePipeline(OutputRenderTarget));
 
@@ -89,7 +92,7 @@ void CRendererWoW::Initialize(std::shared_ptr<IRenderTarget> OutputRenderTarget)
 	//
 	AddUIPass(MakeShared(CUIControlPass, GetRenderDevice(), GetScene())->ConfigurePipeline(OutputRenderTarget));
 	AddUIPass(MakeShared(CUIFontPass, GetRenderDevice(), GetScene())->ConfigurePipeline(OutputRenderTarget));
-
+	//AddUIPass(MakeShared(CUIControlDebugBounds, GetRenderDevice(), GetScene())->ConfigurePipeline(OutputRenderTarget));
 
 	//std::shared_ptr<CUIConsolePass> consolePass = MakeShared(CUIConsolePass, m_RenderDevice);
 	//consolePass->Configure(OutputRenderTarget);

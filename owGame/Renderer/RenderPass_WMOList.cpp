@@ -12,6 +12,8 @@
 
 CRenderPass_WMOList::CRenderPass_WMOList(IRenderDevice& RenderDevice, const std::shared_ptr<IRenderPassCreateTypelessList>& CreateTypelessList)
 	: CRenderPassProcessTypelessList(RenderDevice, CreateTypelessList)
+	, m_CurrentWMOGroupInstance(nullptr)
+	, m_CurrentWMOBatch(nullptr)
 {
 	SetPassName("WMOList");
 
@@ -67,9 +69,23 @@ EVisitResult CRenderPass_WMOList::Visit(const std::shared_ptr<ISceneNode>& Scene
 	//{
 	//	return __super::Visit(SceneNode);
 	//}
-	if (std::dynamic_pointer_cast<CWMO_Group_Instance>(SceneNode))
+	m_CurrentWMOGroupInstance = nullptr;
+	if (auto wmoGroupInstance = std::dynamic_pointer_cast<CWMO_Group_Instance>(SceneNode))
 	{
+		m_CurrentWMOGroupInstance = wmoGroupInstance.get();
 		return __super::Visit(SceneNode);
+	}
+
+	return EVisitResult::Block;
+}
+
+EVisitResult CRenderPass_WMOList::Visit(const std::shared_ptr<IModel>& Model)
+{
+	m_CurrentWMOBatch = nullptr;
+	if (auto wmoBatch = std::dynamic_pointer_cast<WMO_Group_Part_Batch>(Model))
+	{
+		m_CurrentWMOBatch = wmoBatch.get();
+		return EVisitResult::AllowAll;
 	}
 
 	return EVisitResult::Block;
@@ -78,6 +94,9 @@ EVisitResult CRenderPass_WMOList::Visit(const std::shared_ptr<ISceneNode>& Scene
 EVisitResult CRenderPass_WMOList::Visit(const std::shared_ptr<IGeometry>& Geometry, const std::shared_ptr<IMaterial>& Material, SGeometryDrawArgs GeometryDrawArgs)
 {
 	auto wmoMaterial = std::dynamic_pointer_cast<WMO_Part_Material>(Material);
+
+	if (m_CurrentWMOBatch)
+		wmoMaterial->SetMOCVExists(m_CurrentWMOGroupInstance->GetWMOGroupObject().GetHeader().flags.HAS_MOCV && m_CurrentWMOBatch->GetBatchType() != WMO_Group_Part_Batch::EBatchType::BatchType_Ext);
 
 	wmoMaterial->GetBlendState()->Bind();
 	wmoMaterial->GetRasterizerState()->Bind();

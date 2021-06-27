@@ -33,8 +33,8 @@ public:
 	void AddGroupInstance(const std::weak_ptr<CWMO_Group_Instance>& _group) { m_GroupInstances.push_back(_group); }
 	const GroupInstances& getGroupInstances() const { return m_GroupInstances; }
 
-	void AddOutdoorGroupInstance(const std::weak_ptr<CWMO_Group_Instance>& _group) { m_OutdoorGroupInstances.push_back(_group); }
-	const GroupInstances& getGroupOutdoorInstances() const { return m_OutdoorGroupInstances; }
+	//void AddOutdoorGroupInstance(const std::weak_ptr<CWMO_Group_Instance>& _group) { m_OutdoorGroupInstances.push_back(_group); }
+	//const GroupInstances& getGroupOutdoorInstances() const { return m_OutdoorGroupInstances; }
 
 	// SceneNode3D
 	void Initialize() override;
@@ -44,7 +44,7 @@ public:
 protected:
 	std::shared_ptr<CWMO> m_WMOObject;	
 	GroupInstances  m_GroupInstances;
-	GroupInstances  m_OutdoorGroupInstances;
+	//GroupInstances  m_OutdoorGroupInstances;
 };
 
 #endif

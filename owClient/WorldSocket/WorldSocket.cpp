@@ -23,7 +23,6 @@ CWorldSocket::CWorldSocket(const std::string& Login, BigNumber Key)
 
 CWorldSocket::~CWorldSocket()
 {
-	Log::Info("[WorldSocket]: All threads stopped.");
 }
 
 void CWorldSocket::Open(std::string Host, uint16 Port)
@@ -125,11 +124,6 @@ void CWorldSocket::Update()
 
 			Packet1(size - sizeof(uint16) /*Opcode*/, static_cast<Opcodes>(cmd));
 			Packet2(buffer);
-		}
-
-		if (GetStatus() != CSocket::Connected)
-		{
-			//NotifyListeners(&ConnectionListener::OnSocketStateChange, m_TCPSocket.GetStatus());
 		}
 	}
 }
