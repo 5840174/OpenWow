@@ -83,8 +83,8 @@ void CMapWDT::Load()
 	if (auto buffer = reader.OpenChunk("MODF"))
     {
         _ASSERT(m_MPHD.flags.Flag_GlobalWMO);
-        _ASSERT((buffer->getSize() / sizeof(ADT_MODF)) == 1);
-        buffer->readBytes(&m_GlobalWMOPlacementInfo, sizeof(ADT_MODF));
+        _ASSERT((buffer->getSize() / sizeof(SMapTile_MODF)) == 1);
+        buffer->readBytes(&m_GlobalWMOPlacementInfo, sizeof(SMapTile_MODF));
     }
 #endif
 

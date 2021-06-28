@@ -1,6 +1,7 @@
 #pragma once
 
-struct ADT_MHDR
+// MapTile Header
+struct SMapTile_MHDR
 {
 	struct Flags
 	{
@@ -25,7 +26,8 @@ struct ADT_MHDR
 	uint8 unk1[16];
 };
 
-struct ADT_TextureInfo
+// MapTile Texture info
+struct SMapTile_MTEX
 {
 	std::string                 textureName;
 #if 0
@@ -37,7 +39,8 @@ struct ADT_TextureInfo
 #endif
 };
 
-struct ADT_MCIN
+// MapTile Chunk info
+struct SMapTile_MCIN
 {
 	uint32_t offset;               // absolute offset.
 	uint32_t size;                 // the size of the MCNK chunk, this is refering to.
@@ -45,7 +48,44 @@ struct ADT_MCIN
 	uint32_t asyncId;
 };
 
-struct ADT_MCNK_Header
+// MapTile M2 model placement info
+struct SMapTile_MDDF
+{
+	uint32    nameIndex;
+	uint32    uniqueId;
+	glm::vec3 position;
+	glm::vec3 rotation;
+	uint16    scale;
+	struct
+	{
+		uint16 Flag_Biodome : 1;
+		uint16 Flag_Shrubbery : 1;
+		uint16 : 14;
+	} flags;
+};
+
+// MapTile WMO model placement info
+struct SMapTile_MODF
+{
+	uint32 nameIndex;		// Ref to MWID
+	uint32 uniqueId;		// this ID should be unique for all ADTs currently loaded. Best, they are unique for the whole map.
+	glm::vec3 position;
+	glm::vec3 rotation;
+	CAaBox boundingBox;		// position plus the transformed wmo bounding box. used for defining if they are rendered as well as collision.
+	struct Flags
+	{
+		uint16 Destroyable : 1;
+		uint16 : 15;
+	} flags;
+	uint16 doodadSetIndex;	// which WMO doodad set is used.
+	uint16 nameSet;			// which WMO name set is used. Used for renaming goldshire inn to northshire inn while using the same model.
+	uint16 scale;			// Legion+
+};
+
+
+
+// MapChunk Header
+struct SMapChunk_MCNK
 {
 	struct Flags
 	{
@@ -103,7 +143,8 @@ struct ADT_MCNK_Header
 	uint8 unk1[8];
 };
 
-struct ADT_MCNK_MCLY
+// MapChunk Texture info
+struct SMapChunk_MCLY
 {
 	uint32 textureIndex;
 

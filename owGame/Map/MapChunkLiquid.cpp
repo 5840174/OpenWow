@@ -3,7 +3,7 @@
 // General
 #include "MapChunkLiquid.h"
 
-CMapChunkLiquid::CMapChunkLiquid(IRenderDevice& RenderDevice, const std::shared_ptr<IByteBuffer>& Bytes, const ADT_MCNK_Header& header) 
+CMapChunkLiquid::CMapChunkLiquid(IRenderDevice& RenderDevice, const std::shared_ptr<IByteBuffer>& Bytes, const SMapChunk_MCNK& header) 
 	: CLiquid(RenderDevice, 8, 8)
 {
 	const DBC_LiquidTypeRecord* liquidTypeRecord = GetLiquidType(header, m_RenderDevice.GetBaseManager().GetManager<CDBCStorage>());
@@ -25,7 +25,7 @@ CMapChunkLiquid::~CMapChunkLiquid()
 //
 // Private
 //
-const DBC_LiquidTypeRecord * CMapChunkLiquid::GetLiquidType(const ADT_MCNK_Header & Header, const CDBCStorage * DBCStorage)
+const DBC_LiquidTypeRecord * CMapChunkLiquid::GetLiquidType(const SMapChunk_MCNK & Header, const CDBCStorage * DBCStorage)
 {
 	if (Header.flags.lq_river)
 	{

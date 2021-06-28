@@ -6,14 +6,14 @@
 #include "../WoWChunkReader.h"
 
 // WMO Group
-#include "WMO_Group_Headers.h"
+#include "WMOGroup_Headers.h"
 
 // Parts
-#include "WMO_Liquid.h"
+#include "WMOGroup_Part_Liquid.h"
 #include "WMO_Part_Portal.h"
 
-#include "WMO_Group_Part_Batch.h"
-#include "WMO_Group_Part_BSP_Node.h"
+#include "WMOGroup_Part_Batch.h"
+#include "WMOGroup_Part_CollisionNode.h"
 
 // FORWARD BEGIN
 class CWMO;
@@ -21,15 +21,15 @@ class CWMO_Group_Instance;
 class CWMO_Doodad_Instance;
 // FORWARD END
 
-class CWMO_Group
+class CWMOGroup
 	: public CLoadableObject
 {
 public:
-	CWMO_Group(IBaseManager& BaseManager, IRenderDevice& RenderDevice, const std::shared_ptr<CWMO>& WMOModel, const uint32 GroupIndex, const SWMO_GroupInfoDef& GroupProto);
-	virtual ~CWMO_Group();
+	CWMOGroup(IBaseManager& BaseManager, IRenderDevice& RenderDevice, const CWMO& WMO, const uint32 GroupIndex, const SWMO_MOGI& GroupProto);
+	virtual ~CWMOGroup();
 
-	// CWMO_Group
-	const SWMO_Group_HeaderDef& GetHeader() const;
+	// CWMOGroup
+	const SWMOGroup_MOGP& GetHeader() const;
 	const uint32 GetGroupIndex() const;
 	const BoundingBox& GetBoundingBox() const;
 	bool IsIndoor() const;
@@ -45,18 +45,13 @@ public:
 	bool Delete() override;
 
 private:
-	void FixColors(CBgra* mocv, uint32 mocv_count, const SWMO_Group_BatchDef* moba);
-
-private:
 	std::string                             m_GroupName;
-	SWMO_Group_HeaderDef					m_GroupHeader;
+	SWMOGroup_MOGP					        m_GroupHeader;
 	BoundingBox								m_Bounds;
 
 private:
 	//-- Triangles --//
-	glm::vec3 * dataFromMOVT;
-	std::vector<SWMO_Group_MaterialDef>		m_MaterialsInfo;
-	bool									m_IsMOCVExists;
+	std::vector<SWMOGroup_MOPY>		        m_MaterialsInfo;
 
 	//-- Render bathes --//
 	std::vector<std::shared_ptr<WMO_Group_Part_Batch>> m_WMOBatchIndexes;
@@ -72,10 +67,10 @@ private:
 	// MOBR chunk
 	std::vector<uint16>                     collisionIndexes;
 	std::shared_ptr<IBuffer>                 VB_Collision;
-	std::vector<std::shared_ptr<CWMO_Group_Part_BSP_Node>>	m_CollisionNodes;
+	std::vector<std::shared_ptr<CWMOGroup_Part_CollisionNode>>	m_CollisionNodes;
 
 	//-- Liquid --//
-	std::shared_ptr<CWMO_Liquid>            m_WMOLiqiud;
+	std::shared_ptr<CWMOGroup_Part_Liquid>            m_WMOLiqiud;
 	
 
 private:
@@ -84,7 +79,7 @@ private:
 private:
 	IBaseManager& m_BaseManager;
 	IRenderDevice& m_RenderDevice;
-	const CWMO& m_WMOModel;
+	const CWMO& m_WMO;
 	const uint32 m_GroupIndex;
 	std::unique_ptr<WoWChunkReader> m_ChunkReader;
 };

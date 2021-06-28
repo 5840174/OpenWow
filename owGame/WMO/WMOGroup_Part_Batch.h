@@ -2,11 +2,11 @@
 
 #ifdef USE_WMO_MODELS
 
-#include "WMO_Headers.h"
+#include "WMOGroup_Headers.h"
 
 // FORWARD BEGIN
 class CWMO;
-class CWMO_Group;
+class CWMOGroup;
 // FORWARD END
 
 class WMO_Group_Part_Batch 
@@ -21,7 +21,7 @@ public:
 	};
 
 public:
-	WMO_Group_Part_Batch(IRenderDevice& RenderDevice, const CWMO& WMOModel, const SWMO_Group_BatchDef& WMOGroupBatchProto);
+	WMO_Group_Part_Batch(IRenderDevice& RenderDevice, const CWMO& WMOModel, const SWMOGroup_MOBA& WMOGroupBatchProto);
 	virtual ~WMO_Group_Part_Batch();
 
 	void SetBatchType(EBatchType BatchType) { m_BatchType = BatchType; }
@@ -37,7 +37,7 @@ private:
 
 private:
 	const CWMO& m_ParentWMO;
-	//const SWMO_Group_BatchDef m_WMOGroupBatchProto;
+	//const SWMOGroup_MOBA m_WMOGroupBatchProto;
 };
 
 /*

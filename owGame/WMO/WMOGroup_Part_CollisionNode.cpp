@@ -3,12 +3,12 @@
 #ifdef USE_WMO_MODELS
 
 // Include 
-#include "WMO_Group.h"
+#include "WMOGroup.h"
 
 // General
-#include "WMO_Group_Part_BSP_Node.h"
+#include "WMOGroup_Part_CollisionNode.h"
 
-CWMO_Group_Part_BSP_Node::CWMO_Group_Part_BSP_Node(const CWMO_Group& WMOGroup, const SWMO_Group_MOBNDef& _proto) :
+CWMOGroup_Part_CollisionNode::CWMOGroup_Part_CollisionNode(const CWMOGroup& WMOGroup, const SWMOGroup_MOBN& _proto) :
 	m_Proto(_proto)
 {
 	std::vector<glm::vec3> collisionVertices;
@@ -29,11 +29,11 @@ CWMO_Group_Part_BSP_Node::CWMO_Group_Part_BSP_Node(const CWMO_Group& WMOGroup, c
 	color = glm::vec4(0.0f, 1.0f, 0.0f, 1.0f);
 }
 
-CWMO_Group_Part_BSP_Node::~CWMO_Group_Part_BSP_Node()
+CWMOGroup_Part_CollisionNode::~CWMOGroup_Part_CollisionNode()
 {
 }
 
-void CWMO_Group_Part_BSP_Node::Render(const glm::mat4& _worldMatrix)
+void CWMOGroup_Part_CollisionNode::Render(const glm::mat4& _worldMatrix)
 {
 	//_Render->r.setFillMode(R_FillMode::RS_FILL_WIREFRAME);
 	/*_Render->r.setCullMode(R_CullMode::RS_CULL_NONE);

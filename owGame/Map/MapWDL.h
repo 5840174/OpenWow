@@ -30,7 +30,7 @@ private:
 	mutable std::shared_ptr<CMapWDLTileMaterial>    m_LowResilutionTileMaterial;
 	std::vector<std::string>						m_LowResolutionWMOsNames;
 #ifdef USE_WMO_MODELS
-	std::vector<ADT_MODF>					        m_LowResolutionWMOsPlacementInfo;
+	std::vector<SMapTile_MODF>					        m_LowResolutionWMOsPlacementInfo;
 	mutable std::vector<CMapWMOInstance*>	        m_LowResolutionWMOs;
 #endif	
 };

@@ -155,7 +155,7 @@ void CMapWDL::Load()
 	}
 
 #ifdef USE_WMO_MODELS
-	for (const auto& placement : reader.OpenChunkT<ADT_MODF>("MODF")) // Placement information for the WMO. Appears to be the same 64 byte structure used in the WDT and ADT MODF chunks.
+	for (const auto& placement : reader.OpenChunkT<SMapTile_MODF>("MODF")) // Placement information for the WMO. Appears to be the same 64 byte structure used in the WDT and ADT MODF chunks.
 	{
 		m_LowResolutionWMOsPlacementInfo.push_back(placement);
 	}

@@ -51,7 +51,7 @@ bool CMapTile::IsNortrend() const
 	return m_Header.flags.IsNortrend;
 }
 
-std::shared_ptr<ADT_TextureInfo> CMapTile::GetTextureInfo(size_t Index) const
+std::shared_ptr<SMapTile_MTEX> CMapTile::GetTextureInfo(size_t Index) const
 {
 	if (Index >= m_Textures.size())
 		return nullptr;
@@ -117,20 +117,20 @@ bool CMapTile::Load()
 	// MHDR + size (8)
 	f->seekRelative(8);
 	{
-		f->readBytes(&m_Header, sizeof(ADT_MHDR));
+		f->readBytes(&m_Header, sizeof(SMapTile_MHDR));
 	}
 
 	// Chunks info
-	ADT_MCIN chunks[C_ChunksInTileGlobal];
+	SMapTile_MCIN chunks[C_ChunksInTileGlobal];
 	f->seek(startPos + m_Header.MCIN);
 	{
 		f->seekRelative(4);
 		uint32_t size;
 		f->readBytes(&size, sizeof(uint32_t));
 
-		uint32 count = size / sizeof(ADT_MCIN);
+		uint32 count = size / sizeof(SMapTile_MCIN);
 		_ASSERT(count == C_ChunksInTileGlobal);
-		memcpy(chunks, f->getDataFromCurrent(), sizeof(ADT_MCIN) * count);
+		memcpy(chunks, f->getDataFromCurrent(), sizeof(SMapTile_MCIN) * count);
 	}
 
 	// Liquids
@@ -139,7 +139,6 @@ bool CMapTile::Load()
 		f->seek(startPos + m_Header.MH20);
 		{
 			f->seekRelative(4);
-
 			uint32_t size;
 			f->readBytes(&size, sizeof(uint32_t));
 			_ASSERT(size > 0);
@@ -196,7 +195,7 @@ bool CMapTile::Load()
 			for (const auto& stringsIt : strings)
 			{
 
-				std::shared_ptr<ADT_TextureInfo> textureInfo = std::make_shared<ADT_TextureInfo>();
+				std::shared_ptr<SMapTile_MTEX> textureInfo = std::make_shared<SMapTile_MTEX>();
 				textureInfo->textureName = stringsIt;
 
 				// PreLoad diffuse texture
@@ -245,9 +244,8 @@ bool CMapTile::Load()
 	f->seek(startPos + m_Header.MMDX);
 	{
 		f->seekRelative(4);
-
-		uint32_t size;
-		f->readBytes(&size, sizeof(uint32_t));
+		uint32 size;
+		f->readBytes(&size, sizeof(uint32));
 
 		if (size > 0)
 			PasreChunkAsStringArray(MakeShared(CByteBufferOnlyPointer, f->getDataFromCurrent(), size), &m_MDXsNames);
@@ -258,12 +256,12 @@ bool CMapTile::Load()
 	f->seek(startPos + m_Header.MMID);
 	{
 		f->seekRelative(4);
-		uint32_t size;
-		f->readBytes(&size, sizeof(uint32_t));
+		uint32 size;
+		f->readBytes(&size, sizeof(uint32));
 
 		uint32 count = size / sizeof(uint32);
 		_ASSERT(count == m_MDXsNames.size());
-		for (uint32_t i = 0; i < count; i++)
+		for (uint32 i = 0; i < count; i++)
 		{
 			uint32 offset;
 			f->readBytes(&offset, sizeof(uint32));
@@ -272,68 +270,69 @@ bool CMapTile::Load()
 	}
 
 	// WMO Names
-	std::vector<std::string> m_WMOsNames;
+	std::vector<std::string> WMOsNames;
 	f->seek(startPos + m_Header.MWMO);
 	{
 		f->seekRelative(4);
-
 		uint32_t size;
-		f->readBytes(&size, sizeof(uint32_t));
+		f->readBytes(&size, sizeof(uint32));
 
 		if (size > 0)
-			PasreChunkAsStringArray(MakeShared(CByteBufferOnlyPointer, f->getDataFromCurrent(), size), &m_WMOsNames);
+			PasreChunkAsStringArray(MakeShared(CByteBufferOnlyPointer, f->getDataFromCurrent(), size), &WMOsNames);
 	}
 
 	// WMO Offsets
-	std::vector<uint32> m_WMOsOffsets;
+	std::vector<uint32> WMOsOffsets;
 	f->seek(startPos + m_Header.MWID);
 	{
 		f->seekRelative(4);
 		uint32_t size;
-		f->readBytes(&size, sizeof(uint32_t));
-
+		f->readBytes(&size, sizeof(uint32));
 		uint32 count = size / sizeof(uint32);
+
 		_ASSERT(count == m_WMOsNames.size());
+
 		for (uint32_t i = 0; i < count; i++)
 		{
 			uint32 offset;
 			f->readBytes(&offset, sizeof(uint32));
-			m_WMOsOffsets.push_back(offset);
+			WMOsOffsets.push_back(offset);
 		}
 	}
 
 	// M2 PlacementInfo
 #ifdef USE_M2_MODELS
-	std::vector<ADT_MDXDef> m_MDXsPlacementInfo;
+	std::vector<SMapTile_MDDF> M2PlacementInfo;
 	f->seek(startPos + m_Header.MDDF);
 	{
 		f->seekRelative(4);
 		uint32_t size;
 		f->readBytes(&size, sizeof(uint32_t));
 
-		for (uint32 i = 0; i < size / sizeof(ADT_MDXDef); i++)
+		for (uint32 i = 0; i < size / sizeof(SMapTile_MDDF); i++)
 		{
-			ADT_MDXDef placementInfo;
-			f->readBytes(&placementInfo, sizeof(ADT_MDXDef));
-			m_MDXsPlacementInfo.push_back(placementInfo);
+			SMapTile_MDDF placementInfo;
+			f->readBytes(&placementInfo, sizeof(SMapTile_MDDF));
+			M2PlacementInfo.push_back(placementInfo);
 		}
 	}
 #endif
 
 	// WMO PlacementInfo
 #ifdef USE_WMO_MODELS
-	std::vector<ADT_MODF> m_WMOsPlacementInfo;
+	std::vector<SMapTile_MODF> WMOPlacementInfo;
 	f->seek(startPos + m_Header.MODF);
 	{
 		f->seekRelative(4);
+
 		uint32_t size;
 		f->readBytes(&size, sizeof(uint32_t));
 
-		for (uint32 i = 0; i < size / sizeof(ADT_MODF); i++)
+		for (uint32 i = 0; i < size / sizeof(SMapTile_MODF); i++)
 		{
-			ADT_MODF placementInfo;
-			f->readBytes(&placementInfo, sizeof(ADT_MODF));
-			m_WMOsPlacementInfo.push_back(placementInfo);
+			SMapTile_MODF placementInfo;
+			f->readBytes(&placementInfo, sizeof(SMapTile_MODF));
+			WMOPlacementInfo.push_back(placementInfo);
 		}
 	}
 #endif
@@ -344,7 +343,7 @@ bool CMapTile::Load()
 	for (uint32_t i = 0; i < C_ChunksInTileGlobal; i++)
 	{
 		auto chunk = CreateSceneNode<CMapChunk>(*this, chunks[i], f);
-		std::dynamic_pointer_cast<ILoadable>(chunk)->AddDependense(std::dynamic_pointer_cast<ILoadable>(shared_from_this()));
+		chunk->AddDependense(std::dynamic_pointer_cast<ILoadable>(shared_from_this()));
 		GetBaseManager().GetManager<ILoader>()->AddToLoadQueue(chunk);
 
 		m_Chunks.push_back(chunk.get());
@@ -353,9 +352,9 @@ bool CMapTile::Load()
 
 	//-- WMOs --------------------------------------------------------------------------
 #ifdef USE_WMO_MODELS
-	for (const auto& it : m_WMOsPlacementInfo)
+	for (const auto& it : WMOPlacementInfo)
 	{
-		if (std::shared_ptr<CWMO> wmo = GetBaseManager().GetManager<IWoWObjectsCreator>()->LoadWMO(GetRenderDevice(), m_WMOsNames[it.nameIndex], true))
+		if (std::shared_ptr<CWMO> wmo = GetBaseManager().GetManager<IWoWObjectsCreator>()->LoadWMO(GetRenderDevice(), WMOsNames[it.nameIndex], true))
 		{
 			auto inst = CreateSceneNode<CMapWMOInstance>(wmo, it);
 
@@ -367,14 +366,14 @@ bool CMapTile::Load()
 		}
 		else
 		{
-			Log::Warn("CMapTile: WMO model '%s' is nullptr.", m_WMOsNames[it.nameIndex].c_str());
+			Log::Warn("CMapTile: WMO model '%s' is nullptr.", WMOsNames[it.nameIndex].c_str());
 		}
 	}
 #endif
 
 	//-- MDXs -------------------------------------------------------------------------
 #ifdef USE_M2_MODELS
-	for (const auto& it : m_MDXsPlacementInfo)
+	for (const auto& it : M2PlacementInfo)
 	{
 		if (auto m2 = GetBaseManager().GetManager<IWoWObjectsCreator>()->LoadM2(GetRenderDevice(), m_MDXsNames[it.nameIndex]))
 		{

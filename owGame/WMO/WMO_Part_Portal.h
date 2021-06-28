@@ -11,7 +11,7 @@ class CWMO;
 class CWMO_Part_Portal
 {
 public:
-	CWMO_Part_Portal(IRenderDevice& RenderDevice, const std::vector<glm::vec3>& PortalVertices, const SWMO_PortalDef& Proto);
+	CWMO_Part_Portal(const std::vector<glm::vec3>& PortalVertices, const SWMO_MOPT& Proto);
 	virtual ~CWMO_Part_Portal();
 
 	const std::vector<glm::vec3>& GetVertices() const { return m_Vertices; }

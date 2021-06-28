@@ -24,7 +24,7 @@ namespace
 	}
 }
 
-CMapChunk::CMapChunk(IScene& Scene, CMapTile& MapTileParent, const ADT_MCIN& Chunk, const std::shared_ptr<IByteBuffer>& Bytes)
+CMapChunk::CMapChunk(IScene& Scene, CMapTile& MapTileParent, const SMapTile_MCIN& Chunk, const std::shared_ptr<IByteBuffer>& Bytes)
 	: CSceneNode(Scene)
 	, m_MapTile(MapTileParent)
 	, m_Map(m_MapTile.GetMap())
@@ -62,7 +62,7 @@ void CMapChunk::Initialize()
 
 	//m_Bytes->seek(m_MCIN.offset);
 
-// Chunk + size (8)
+	// Chunk + size (8)
 	uint32_t offset;
 	m_Bytes->read(&offset);
 
@@ -72,7 +72,7 @@ void CMapChunk::Initialize()
 	uint32_t startPos = m_Bytes->getPos();
 
 	// Read header
-	m_Bytes->readBytes(&m_Header, sizeof(ADT_MCNK_Header));
+	m_Bytes->readBytes(&m_Header, sizeof(SMapChunk_MCNK));
 
 	// Scene node params
 	{
@@ -101,11 +101,7 @@ void CMapChunk::Initialize()
 //
 bool CMapChunk::Load()
 {
-	if (auto depend = GetDependense())
-		if (depend->GetState() == ILoadable::ELoadableState::Deleted)
-			return false;
-
-	uint32_t startPos = m_Bytes->getPos() - sizeof(ADT_MCNK_Header);
+	uint32_t startPos = m_Bytes->getPos() - sizeof(SMapChunk_MCNK);
 
 	std::shared_ptr<IBuffer> verticesBuffer = nullptr;
 	std::shared_ptr<IBuffer> normalsBuffer = nullptr;
@@ -212,12 +208,12 @@ bool CMapChunk::Load()
 	_ASSERT(m_MapTile.GetState() == ILoadable::ELoadableState::Loaded);
 
 	// Textures
-	ADT_MCNK_MCLY mcly[4];
+	SMapChunk_MCLY mcly[4];
 	m_Bytes->seek(startPos + m_Header.ofsLayer);
 	{
 		for (uint32 i = 0; i < m_Header.nLayers; i++)
 		{
-			m_Bytes->readBytes(&mcly[i], sizeof(ADT_MCNK_MCLY));
+			m_Bytes->readBytes(&mcly[i], sizeof(SMapChunk_MCLY));
 
 			//m_DiffuseTextures[i] = m_MapTile.m_Textures.at(mcly[i].textureIndex)->diffuseTexture;
 			//m_SpecularTextures[i] = m_MapTile.m_Textures.at(mcly[i].textureIndex)->specularTexture;

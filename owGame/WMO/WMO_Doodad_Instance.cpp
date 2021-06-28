@@ -10,7 +10,7 @@
 // Additional
 #include "WMO_Base_Instance.h"
 
-CWMO_Doodad_Instance::CWMO_Doodad_Instance(IScene& Scene, const std::shared_ptr<CM2>& M2Object, uint32 _index, const SWMO_Doodad_PlacementInfo & _placement)
+CWMO_Doodad_Instance::CWMO_Doodad_Instance(IScene& Scene, const std::shared_ptr<CM2>& M2Object, uint32 _index, const SWMO_MODD& _placement)
 	: CM2_Base_Instance(Scene, M2Object)
 	, m_Index(_index)
 	, m_Placement(_placement)

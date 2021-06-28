@@ -1,10 +1,12 @@
 ﻿#pragma once
 
+#include "WMO_Shared.h"
+
 #ifdef USE_WMO_MODELS
 
 #pragma pack(push,1)
 
-struct SWMO_HeaderDef
+struct SWMO_MOHD
 {
 	uint32 nTextures;
 	uint32 nGroups;
@@ -16,6 +18,7 @@ struct SWMO_HeaderDef
 	CArgb ambColor;
 	FOREIGN_KEY(uint32, DBC_WMOAreaTable, WMOID, wmoID);
 	CAaBox bounding_box;
+	
 	struct Flags
 	{
 		uint16 attenuate_vertices_based_on_distance_to_portal : 1;	// delete vertexes
@@ -38,25 +41,13 @@ struct SWMO_HeaderDef
 		uint16 unk0x4000 : 1;
 		uint16 unk0x8000 : 1;
 	} flags;
+
 	uint16 unk0;										  // ≥ Legion (21108) includes base lod (→ numLod = 3 means '.wmo', 
-
-	//--
-
-	/*vec4 getAmbColor() const
-	{
-		return vec4
-		(
-			static_cast<float>(ambColor.r) / 255.0f,
-			static_cast<float>(ambColor.g) / 255.0f,
-			static_cast<float>(ambColor.b) / 255.0f,
-			static_cast<float>(ambColor.a) / 255.0f
-		);
-	}*/
 };
 
 
-
-struct SWMO_MaterialDef
+// WMO Material info
+struct SWMO_MOMT 
 {
 	struct
 	{
@@ -91,14 +82,16 @@ struct SWMO_MaterialDef
 	uint32 unk0[4];
 };
 
-struct SWMO_PortalDef
+// WMO Portal
+struct SWMO_MOPT
 {
 	uint16 startVertex;
 	uint16 count;
 	C4Plane plane;
 };
 
-struct SWMO_PortalReferencesDef
+// WMO Portal reference
+struct SWMO_MOPR
 {
 	uint16 portalIndex;  // into MOPR
 	uint16 groupIndex;   // the other one
@@ -106,13 +99,15 @@ struct SWMO_PortalReferencesDef
 	uint16 unk0;
 };
 
-struct SWMO_VisibleBlockListDef
+// WMO Visible block list
+struct SWMO_MOVB
 {
 	uint16 firstVertex;
 	uint16 count;
 };
 
-struct SWMO_LightDef
+// WMO Light definition
+struct SWMO_MOLT
 {
 	enum : uint8
 	{
@@ -131,16 +126,9 @@ struct SWMO_LightDef
 	float unk1[4];
 };
 
-// Doodads
-
-struct SWMO_Doodad_SetInfo
+// WMO Doodad set info
+struct SWMO_MODS
 {
-	SWMO_Doodad_SetInfo() :
-		name("none"),
-		start(UINT32_MAX),
-		size(UINT32_MAX)
-	{}
-
 	char name[20];		// Set name
 	uint32 start;		// index of first doodad instance in this set
 	uint32 size;		// number of doodad instances in this set
@@ -152,7 +140,8 @@ struct SWMO_Doodad_SetInfo
 	}
 };
 
-struct SWMO_Doodad_PlacementInfo
+// WMO Doodad placement
+struct SWMO_MODD
 {
 	struct Flags
 	{
@@ -161,7 +150,7 @@ struct SWMO_Doodad_PlacementInfo
 		uint32 : 7;                     // unused as of 7.0.1.20994
 	} flags;
 
-	glm::vec3 position;		    // (X,Z,-Y)
+	glm::vec3 position;		    // (X, Z, -Y)
 	C4ImQuaternion orientation;	// (X, Y, Z, W)
 	float scale;				// scale factor
 	CBgra color;				// (B,G,R,A) diffuse lighting color, used in place of global diffuse from DBCs
@@ -177,7 +166,8 @@ struct SWMO_Doodad_PlacementInfo
 	}
 };
 
-struct SWMO_FogDef
+// WMO Fog definition
+struct SWMO_MFOG
 {
 	struct Flags
 	{
@@ -202,6 +192,14 @@ struct SWMO_FogDef
 		float startScalar;
 		CBgra color;
 	} underwater_fog;
+};
+
+// WMO Group info def
+struct SWMO_MOGI
+{
+	SWMOGroup_Flags	flags;
+	CAaBox			bounding_box;
+	int32			nameoffset;		// name in MOGN chunk (-1 for no name)
 };
 
 #pragma pack(pop)

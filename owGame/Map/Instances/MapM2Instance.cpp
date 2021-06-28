@@ -7,7 +7,7 @@
 
 // Additional
 
-CMapM2Instance::CMapM2Instance(IScene& Scene, const std::shared_ptr<CM2>& M2Object, const ADT_MDXDef& _placementInfo) 
+CMapM2Instance::CMapM2Instance(IScene& Scene, const std::shared_ptr<CM2>& M2Object, const SMapTile_MDDF& _placementInfo) 
 	: CM2_Base_Instance(Scene, M2Object)
 	, m_PlacementInfo(_placementInfo)
 {

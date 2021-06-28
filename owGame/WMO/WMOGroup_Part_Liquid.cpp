@@ -3,9 +3,9 @@
 #ifdef USE_WMO_MODELS
 
 // General
-#include "WMO_Liquid.h"
+#include "WMOGroup_Part_Liquid.h"
 
-CWMO_Liquid::CWMO_Liquid(IRenderDevice& RenderDevice, const CWMO& WMOObject, const CWMO_Group& WMOGroupObject, const std::shared_ptr<IByteBuffer>& Bytes, const SWMO_Group_MLIQDef& LiquidHeader, const DBC_LiquidTypeRecord* LiquidType)
+CWMOGroup_Part_Liquid::CWMOGroup_Part_Liquid(IRenderDevice& RenderDevice, const CWMO& WMOObject, const CWMOGroup& WMOGroupObject, const std::shared_ptr<IByteBuffer>& Bytes, const SWMOGroup_MLIQ& LiquidHeader, const DBC_LiquidTypeRecord* LiquidType)
 	: CLiquid(RenderDevice, LiquidHeader.A, LiquidHeader.B)
 	, m_WMOObject(WMOObject)
 	, m_WMOGroupObject(WMOGroupObject)
@@ -28,7 +28,7 @@ CWMO_Liquid::CWMO_Liquid(IRenderDevice& RenderDevice, const CWMO& WMOObject, con
 	}*/
 }
 
-CWMO_Liquid::~CWMO_Liquid()
+CWMOGroup_Part_Liquid::~CWMOGroup_Part_Liquid()
 {
 
 }

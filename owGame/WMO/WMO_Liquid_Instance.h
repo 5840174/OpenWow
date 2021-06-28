@@ -3,8 +3,6 @@
 #ifdef USE_WMO_MODELS
 
 #include "../Liquid/LiquidBaseInstance.h"
-#include "WMO_Headers.h"
-#include "WMO_Group.h"
 
 class ZN_API CWMO_Liquid_Instance
 	: public CLiquidBaseInstance
@@ -16,7 +14,7 @@ public:
 
 	// IPortalRoomObject
 	BoundingBox GetBoundingBox() const override final;
-	inline void SetVisibilityState(bool _visibility) override { m_PortalVisibilityState = _visibility; }
+	void SetVisibilityState(bool _visibility) override final;
 
 	// SceneNode3D
 	void Accept(IVisitor* visitor) override;

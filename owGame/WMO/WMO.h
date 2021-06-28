@@ -9,7 +9,7 @@
 #include "WMO_Headers.h"
 
 // WMO Parts
-#include "WMO_Group.h"
+#include "WMOGroup.h"
 #include "WMO_Part_Fog.h"
 #include "WMO_Part_Light.h"
 #include "WMO_Part_Material.h"
@@ -34,14 +34,14 @@ public:
 	// ISceneNodeProvider
 	void CreateInsances(const std::shared_ptr<CWMO_Base_Instance>& Parent) const;
 
-	// CLoadableObject
+	// ILoadable
 	bool Load() override;
 	bool Delete() override;
 
 public:
 	std::string GetFilename() const { return m_FileName; }
 	BoundingBox	GetBounds() const { return m_Bounds; }
-	const SWMO_HeaderDef& GetHeader() const { return m_Header; }
+	const SWMO_MOHD& GetHeader() const { return m_Header; }
 #ifdef USE_WMO_PORTALS_CULLING
 	const std::shared_ptr<CWMO_PortalsController>& GetPortalController() const { return m_PortalController; }
 #endif
@@ -53,9 +53,9 @@ public:
 
 	bool IsDoodadInSet(size_t SetIndex, uint16 DoodadIndex) const { return m_DoodadsSetInfos.at(SetIndex).InSet(DoodadIndex); }
 	std::string GetDoodadFileName(size_t Offset) const { return std::string(m_DoodadsFilenames.get() + Offset); }
-	const SWMO_Doodad_PlacementInfo& GetDoodadPlacement(size_t Index) const { return m_DoodadsPlacementInfos.at(Index); }
+	const SWMO_MODD& GetDoodadPlacement(size_t Index) const { return m_DoodadsPlacementInfos.at(Index); }
 
-	bool useAmbColor() const { return !(m_Header.flags.skip_base_color); }
+	bool useAmbColor() const { return false == (m_Header.flags.skip_base_color); }
 
 private:
 	//-- Materials --//
@@ -64,7 +64,7 @@ private:
 
 	//-- Groups --//
 	std::unique_ptr<char[]>												m_GroupNames;		    // MOGN chunk
-	std::vector<std::shared_ptr<CWMO_Group>>                             m_Groups;				// MOGI chunk
+	std::vector<std::shared_ptr<CWMOGroup>>                            m_Groups;				// MOGI chunk
 
 	//-- Skybox --//
 	std::shared_ptr<CM2>                                                m_Skybox;
@@ -76,7 +76,7 @@ private:
 	
 	//-- Visible block
 	std::vector<glm::vec3>                                              m_VisibleBlockVertices;	// MOVV chunk
-	std::vector<SWMO_VisibleBlockListDef>                               m_VisibleBlockList;		// MOVB chunk
+	std::vector<SWMO_MOVB>                                              m_VisibleBlockList;		// MOVB chunk
 
 
 	// -- Lights --//
@@ -84,9 +84,9 @@ private:
 
 
 	//-- Doodads --//
-	std::vector<SWMO_Doodad_SetInfo>                                    m_DoodadsSetInfos;      // MODS chunk
+	std::vector<SWMO_MODS>                                              m_DoodadsSetInfos;      // MODS chunk
 	std::unique_ptr<char[]>                                             m_DoodadsFilenames;     // MODN chunk        
-	std::vector<SWMO_Doodad_PlacementInfo>                              m_DoodadsPlacementInfos;
+	std::vector<SWMO_MODD>                                              m_DoodadsPlacementInfos;
 
 
 	//-- Fog --//
@@ -101,7 +101,7 @@ private:
 	IRenderDevice& m_RenderDevice;
 	const std::string m_FileName;
 	std::unique_ptr<WoWChunkReader> m_ChunkReader;
-	SWMO_HeaderDef m_Header;				// MOHD chunk
+	SWMO_MOHD m_Header;
 	BoundingBox m_Bounds;
 };
 

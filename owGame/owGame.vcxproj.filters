@@ -237,12 +237,6 @@
     <ClCompile Include="WMO\WMO_PortalsController.cpp">
       <Filter>WMO</Filter>
     </ClCompile>
-    <ClCompile Include="WMO\WMO_Group_Part_Batch.cpp">
-      <Filter>WMO\Groups</Filter>
-    </ClCompile>
-    <ClCompile Include="WMO\WMO_Group_Part_BSP_Node.cpp">
-      <Filter>WMO\Groups</Filter>
-    </ClCompile>
     <ClCompile Include="WMO\WMO_Base_Instance.cpp">
       <Filter>WMO\Instances</Filter>
     </ClCompile>
@@ -266,9 +260,6 @@
     </ClCompile>
     <ClCompile Include="WoWChunkReader.cpp">
       <Filter>Utils</Filter>
-    </ClCompile>
-    <ClCompile Include="WMO\WMO_Liquid.cpp">
-      <Filter>WMO\Parts</Filter>
     </ClCompile>
     <ClCompile Include="Formats\ImageBLP.cpp">
       <Filter>Formats</Filter>
@@ -390,9 +381,6 @@
     <ClCompile Include="M2\M2_ParticlesComponent.cpp">
       <Filter>M2\SceneNode &amp; Components\Components</Filter>
     </ClCompile>
-    <ClCompile Include="WMO\WMO_Group.cpp">
-      <Filter>WMO</Filter>
-    </ClCompile>
     <ClCompile Include="Map\MapTileLiquid.cpp">
       <Filter>Map\MapTile</Filter>
     </ClCompile>
@@ -491,6 +479,18 @@
     </ClCompile>
     <ClCompile Include="Renderer\RenderPass_WMOPortalDebug.cpp">
       <Filter>Renderer\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="WMO\WMOGroup_Part_CollisionNode.cpp">
+      <Filter>WMO\Groups</Filter>
+    </ClCompile>
+    <ClCompile Include="WMO\WMOGroup_Part_Liquid.cpp">
+      <Filter>WMO\Groups</Filter>
+    </ClCompile>
+    <ClCompile Include="WMO\WMOGroup_Part_Batch.cpp">
+      <Filter>WMO\Groups</Filter>
+    </ClCompile>
+    <ClCompile Include="WMO\WMOGroup.cpp">
+      <Filter>WMO\Groups</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -695,15 +695,6 @@
     <ClInclude Include="WMO\WMO_PortalsController.h">
       <Filter>WMO</Filter>
     </ClInclude>
-    <ClInclude Include="WMO\WMO_Group_Headers.h">
-      <Filter>WMO\Groups</Filter>
-    </ClInclude>
-    <ClInclude Include="WMO\WMO_Group_Part_Batch.h">
-      <Filter>WMO\Groups</Filter>
-    </ClInclude>
-    <ClInclude Include="WMO\WMO_Group_Part_BSP_Node.h">
-      <Filter>WMO\Groups</Filter>
-    </ClInclude>
     <ClInclude Include="WMO\WMO_Fixes.h">
       <Filter>WMO\Groups</Filter>
     </ClInclude>
@@ -742,9 +733,6 @@
     </ClInclude>
     <ClInclude Include="WowTypes.h">
       <Filter>Utils</Filter>
-    </ClInclude>
-    <ClInclude Include="WMO\WMO_Liquid.h">
-      <Filter>WMO\Parts</Filter>
     </ClInclude>
     <ClInclude Include="Formats\ImageBLP.h">
       <Filter>Formats</Filter>
@@ -899,9 +887,6 @@
     <ClInclude Include="M2\M2_ParticlesComponent.h">
       <Filter>M2\SceneNode &amp; Components\Components</Filter>
     </ClInclude>
-    <ClInclude Include="WMO\WMO_Group.h">
-      <Filter>WMO</Filter>
-    </ClInclude>
     <ClInclude Include="Map\MapTileLiquid.h">
       <Filter>Map\MapTile</Filter>
     </ClInclude>
@@ -1024,6 +1009,24 @@
     </ClInclude>
     <ClInclude Include="Renderer\RenderPass_WMOPortalDebug.h">
       <Filter>Renderer\Debug</Filter>
+    </ClInclude>
+    <ClInclude Include="WMO\WMO_Shared.h">
+      <Filter>WMO</Filter>
+    </ClInclude>
+    <ClInclude Include="WMO\WMOGroup_Part_CollisionNode.h">
+      <Filter>WMO\Groups</Filter>
+    </ClInclude>
+    <ClInclude Include="WMO\WMOGroup_Part_Liquid.h">
+      <Filter>WMO\Groups</Filter>
+    </ClInclude>
+    <ClInclude Include="WMO\WMOGroup_Part_Batch.h">
+      <Filter>WMO\Groups</Filter>
+    </ClInclude>
+    <ClInclude Include="WMO\WMOGroup_Headers.h">
+      <Filter>WMO\Groups</Filter>
+    </ClInclude>
+    <ClInclude Include="WMO\WMOGroup.h">
+      <Filter>WMO\Groups</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

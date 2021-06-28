@@ -151,7 +151,7 @@ float4 PS_main(VertexShaderOutput IN) : SV_TARGET
 			discard;
 	}
 	
-	float4 colorAndAlpha = IN.color;//gColor;
+	float4 colorAndAlpha = gColor;
 	
 	//if (gBlendMode == 0 || gBlendMode == 1) 
 	//	colorAndAlpha.rgb *= IN.color.rgb; // It looks like in order to get correct picture the color from SMODoodadDef should be applied only to opaque submeshes of M2.

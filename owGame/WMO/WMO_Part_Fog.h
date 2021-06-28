@@ -7,7 +7,7 @@
 class WMO_Part_Fog
 {
 public:
-	WMO_Part_Fog(const SWMO_FogDef& WMOFogProto);
+	WMO_Part_Fog(const SWMO_MFOG& WMOFogProto);
 
 	void setup();
 
@@ -15,7 +15,7 @@ public:
 	glm::vec4 color;
 
 private:
-	SWMO_FogDef m_WMOFogProto;
+	SWMO_MFOG m_WMOFogProto;
 };
 
 #endif

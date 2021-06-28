@@ -70,7 +70,7 @@ private:
 	// Global WMO
 	std::string							m_GlobalWMOName;
 #ifdef USE_WMO_MODELS
-	ADT_MODF							m_GlobalWMOPlacementInfo;
+	SMapTile_MODF							m_GlobalWMOPlacementInfo;
 	std::shared_ptr<CMapWMOInstance>	m_GlobalWMO;
 #endif
 };

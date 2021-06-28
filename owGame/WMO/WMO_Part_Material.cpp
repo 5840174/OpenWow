@@ -8,9 +8,9 @@
 // General
 #include "Wmo_Part_Material.h"
 
-WMO_Part_Material::WMO_Part_Material(IRenderDevice& RenderDevice, const CWMO& WMOModel, const SWMO_MaterialDef& WMOMaterialProto)
+WMO_Part_Material::WMO_Part_Material(IRenderDevice& RenderDevice, const CWMO& WMOModel, const SWMO_MOMT& WMOMaterialProto)
 	: MaterialProxieT(RenderDevice.GetObjectsFactory().CreateMaterial("WMO_Part_Material"))
-	, m_WMOModel(WMOModel)
+	, m_WMO(WMOModel)
 {
 	MaterialData().BlendMode = WMOMaterialProto.blendMode;
 
@@ -24,7 +24,7 @@ WMO_Part_Material::WMO_Part_Material(IRenderDevice& RenderDevice, const CWMO& WM
     SetSampler(0, sampler);
 
 	// This
-	std::string textureName = m_WMOModel.GetTextureName(WMOMaterialProto.diffuseNameIndex);
+	std::string textureName = m_WMO.GetTextureName(WMOMaterialProto.diffuseNameIndex);
 	std::shared_ptr<ITexture> texture = GetBaseManager().GetManager<IznTexturesFactory>()->LoadTexture2D(textureName);
 	SetTexture(0, texture);
 

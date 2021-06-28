@@ -2,7 +2,7 @@
 
 #ifdef USE_WMO_MODELS
 
-#include "WMO_Group.h"
+#include "WMOGroup.h"
 #include "WMO_Portal_Instance.h"
 
 // FORWARD BEGIN
@@ -25,7 +25,7 @@ public:
 	typedef std::vector<CWMO_Liquid_Instance*> LuqidInstances;
 
 public:
-	CWMO_Group_Instance(IScene& Scene, const std::shared_ptr<CWMO_Group>& WMOGroupObject);
+	CWMO_Group_Instance(IScene& Scene, const std::shared_ptr<CWMOGroup>& WMOGroupObject);
 	virtual ~CWMO_Group_Instance();
 
 	// CLoadableObject
@@ -52,7 +52,7 @@ public:
 
 	// CWMO_Group_Instance
 	void CreatePortals(const std::shared_ptr<CWMO_Base_Instance>& BaseInstance);
-    const CWMO_Group& GetWMOGroupObject() const { return m_WMOGroupObject; }
+    const CWMOGroup& GetWMOGroupObject() const { return m_WMOGroupObject; }
 
 	// SceneNode3D
 	void Initialize() override;
@@ -65,7 +65,7 @@ private:
 	bool                                          m_Calculated;
 
 private:
-	const CWMO_Group& m_WMOGroupObject;
+	const CWMOGroup& m_WMOGroupObject;
 };
 
 #endif

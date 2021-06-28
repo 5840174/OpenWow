@@ -5,7 +5,7 @@
 #include "RenderPassProcessTypelessList.h"
 
 #include "WMO/WMO_Group_Instance.h"
-#include "WMO/WMO_Group_Part_Batch.h"
+#include "WMO/WMOGroup_Part_Batch.h"
 
 class ZN_API CRenderPass_WMOList 
 	: public CRenderPassProcessTypelessList

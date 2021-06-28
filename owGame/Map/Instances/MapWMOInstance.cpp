@@ -5,7 +5,7 @@
 // General
 #include "MapWMOInstance.h"
 
-CMapWMOInstance::CMapWMOInstance(IScene& Scene, const std::shared_ptr<CWMO>& WMOObject, const ADT_MODF& _placementInfo)
+CMapWMOInstance::CMapWMOInstance(IScene& Scene, const std::shared_ptr<CWMO>& WMOObject, const SMapTile_MODF& _placementInfo)
 	: CWMO_Base_Instance(Scene, WMOObject)
 	, m_PlacementInfo(_placementInfo)
 {

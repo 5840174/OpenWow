@@ -28,7 +28,7 @@ class WMO_Part_Material
 	: public MaterialProxieT<WMO_Part_MaterialMaterialProperties>
 {
 public:
-	WMO_Part_Material(IRenderDevice& RenderDevice, const CWMO& WMOModel, const SWMO_MaterialDef& WMOMaterialProto);
+	WMO_Part_Material(IRenderDevice& RenderDevice, const CWMO& WMOModel, const SWMO_MOMT& WMOMaterialProto);
 	virtual ~WMO_Part_Material();
 
 	void SetBlendMode(uint32 BlendMode);
@@ -44,7 +44,7 @@ private:
 	std::shared_ptr<IRasterizerState>   m_RasterizerState;
 
 private:
-	const CWMO& m_WMOModel;
+	const CWMO& m_WMO;
 };
 
 #endif

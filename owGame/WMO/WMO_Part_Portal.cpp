@@ -8,7 +8,7 @@
 // General
 #include "WMO_Part_Portal.h"
 
-CWMO_Part_Portal::CWMO_Part_Portal(IRenderDevice& RenderDevice, const std::vector<glm::vec3>& PortalVertices, const SWMO_PortalDef& _proto)
+CWMO_Part_Portal::CWMO_Part_Portal(const std::vector<glm::vec3>& PortalVertices, const SWMO_MOPT& _proto)
 	: m_GrInner(-1)
 	, m_GrOuter(-1)
 {

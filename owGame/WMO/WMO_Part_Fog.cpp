@@ -5,10 +5,11 @@
 // General
 #include "Wmo_Part_Fog.h"
 
-WMO_Part_Fog::WMO_Part_Fog(const SWMO_FogDef& WMOFogProto)
+WMO_Part_Fog::WMO_Part_Fog(const SWMO_MFOG& WMOFogProto)
 	: m_WMOFogProto(WMOFogProto)
 {
 	color = glm::vec4(m_WMOFogProto.fog.color.r, m_WMOFogProto.fog.color.g, m_WMOFogProto.fog.color.b, m_WMOFogProto.fog.color.a);
+	
 	m_WMOFogProto.position = Fix_XZmY(m_WMOFogProto.position);
 	m_WMOFogProto.fog.startScalar = m_WMOFogProto.fog.startScalar * m_WMOFogProto.fog.end;
 }

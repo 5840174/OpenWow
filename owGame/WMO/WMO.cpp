@@ -28,7 +28,7 @@ CWMO::CWMO(IBaseManager& BaseManager, IRenderDevice& RenderDevice, const std::st
 	// Header
 	{
 		auto buffer = m_ChunkReader->OpenChunk("MOHD");
-		buffer->readBytes(&m_Header, sizeof(SWMO_HeaderDef));
+		buffer->readBytes(&m_Header, sizeof(SWMO_MOHD));
 
 		m_Bounds = m_Header.bounding_box.Convert();
 	}
@@ -37,6 +37,8 @@ CWMO::CWMO(IBaseManager& BaseManager, IRenderDevice& RenderDevice, const std::st
 CWMO::~CWMO()
 {
 }
+
+
 
 //
 // ISceneNodeProvider
@@ -71,6 +73,11 @@ void CWMO::CreateInsances(const std::shared_ptr<CWMO_Base_Instance>& Parent) con
 	}
 }
 
+
+
+//
+// ILoadable
+//
 bool CWMO::Load()
 {
 	// Textures
@@ -84,7 +91,7 @@ bool CWMO::Load()
 	// Materials
 	size_t cntr = 0;
 	{
-		for (const auto& mat : m_ChunkReader->OpenChunkT<SWMO_MaterialDef>("MOMT"))
+		for (const auto& mat : m_ChunkReader->OpenChunkT<SWMO_MOMT>("MOMT"))
 		{
 			std::shared_ptr<WMO_Part_Material> material = std::make_shared<WMO_Part_Material>(m_RenderDevice, *this, mat);
 			material->SetName(m_FileName + "_Material_" + std::to_string(cntr++));
@@ -127,15 +134,15 @@ bool CWMO::Load()
 
 	// Portal defs
 	std::vector<CWMO_Part_Portal> portals;
-	for (const auto& pt : m_ChunkReader->OpenChunkT<SWMO_PortalDef>("MOPT"))
+	for (const auto& pt : m_ChunkReader->OpenChunkT<SWMO_MOPT>("MOPT"))
 	{
-		portals.push_back(CWMO_Part_Portal(m_RenderDevice, portalVertices, pt));
+		portals.push_back(CWMO_Part_Portal(portalVertices, pt));
 	}
 
 	// Portal references
-	std::vector<SWMO_PortalReferencesDef> portalsReferences;
+	std::vector<SWMO_MOPR> portalsReferences;
 	{
-		for (const auto& pr : m_ChunkReader->OpenChunkT<SWMO_PortalReferencesDef>("MOPR"))
+		for (const auto& pr : m_ChunkReader->OpenChunkT<SWMO_MOPR>("MOPR"))
 		{
 			_ASSERT(pr.portalIndex >= 0 && pr.portalIndex < portals.size());
 			auto& portal = portals[pr.portalIndex];
@@ -151,19 +158,19 @@ bool CWMO::Load()
 	}
 
 	// Visible blocks
-	for (const auto& vb : m_ChunkReader->OpenChunkT<SWMO_VisibleBlockListDef>("MOVB"))
+	for (const auto& vb : m_ChunkReader->OpenChunkT<SWMO_MOVB>("MOVB"))
 	{
 		m_VisibleBlockList.push_back(vb);
 	}
 
 	// Lights
-	for (const auto& lt : m_ChunkReader->OpenChunkT<SWMO_LightDef>("MOLT"))
+	for (const auto& lt : m_ChunkReader->OpenChunkT<SWMO_MOLT>("MOLT"))
 	{
 		m_Lights.push_back(std::make_shared<WMO_Part_Light>(lt));
 	}
 
 	// Doodads set
-	for (const auto& ds : m_ChunkReader->OpenChunkT<SWMO_Doodad_SetInfo>("MODS"))
+	for (const auto& ds : m_ChunkReader->OpenChunkT<SWMO_MODS>("MODS"))
 	{
 		m_DoodadsSetInfos.push_back(ds);
 	}
@@ -174,11 +181,11 @@ bool CWMO::Load()
 	{
 		m_DoodadsFilenames = std::unique_ptr<char[]>(new char[buffer->getSize() + 1]);
 		buffer->readBytes(m_DoodadsFilenames.get(), buffer->getSize());
-		m_DoodadsFilenames[buffer->getSize()] = 0x00;
+		m_DoodadsFilenames[buffer->getSize()] = '\0';
 	}
 
 	// Doodads placemnts
-	for (const auto& dd : m_ChunkReader->OpenChunkT<SWMO_Doodad_PlacementInfo>("MODD"))
+	for (const auto& dd : m_ChunkReader->OpenChunkT<SWMO_MODD>("MODD"))
 	{
 		m_DoodadsPlacementInfos.push_back(dd);
 	}
@@ -187,21 +194,23 @@ bool CWMO::Load()
 	//m_Header.nDoodadDefs = m_DoodadsPlacementInfos.size();
 
 	// Fog
-	for (const auto& fog : m_ChunkReader->OpenChunkT<SWMO_FogDef>("MFOG"))
+	for (const auto& fog : m_ChunkReader->OpenChunkT<SWMO_MFOG>("MFOG"))
 	{
-		m_Fogs.push_back(std::make_shared<WMO_Part_Fog>(fog));
+		m_Fogs.push_back(MakeShared(WMO_Part_Fog, fog));
 	}
 
 	// Group info
 	{
 		uint32 cntr = 0;
-		for (const auto& groupInfo : m_ChunkReader->OpenChunkT<SWMO_GroupInfoDef>("MOGI"))
+		for (const auto& gi : m_ChunkReader->OpenChunkT<SWMO_MOGI>("MOGI"))
 		{
-			auto wmoGroup = std::make_shared<CWMO_Group>(m_BaseManager, m_RenderDevice, std::dynamic_pointer_cast<CWMO>(shared_from_this()), cntr++, groupInfo);
-			m_BaseManager.GetManager<ILoader>()->AddToLoadQueue(wmoGroup);
-
+			auto wmoGroup = MakeShared(CWMOGroup, m_BaseManager, m_RenderDevice, *this, cntr++, gi);
+			wmoGroup->AddDependense(std::dynamic_pointer_cast<ILoadable>(shared_from_this()));
 			m_Groups.push_back(wmoGroup);
 		}
+
+		for (const auto& groupIt : m_Groups)
+			m_BaseManager.GetManager<ILoader>()->AddToLoadQueue(groupIt);
 	}
 
 	m_ChunkReader.reset();

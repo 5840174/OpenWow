@@ -21,7 +21,7 @@ public:
 	int                                             getIndexZ() const;
 	const CMapChunk*                                getChunk(int32 x, int32 z) const;
 	bool                                            IsNortrend() const;
-	std::shared_ptr<ADT_TextureInfo>                GetTextureInfo(size_t Index) const;
+	std::shared_ptr<SMapTile_MTEX>                GetTextureInfo(size_t Index) const;
 
 	void                                            ExtendMapTileBounds(const BoundingBox& OtherBBox);
 
@@ -37,8 +37,8 @@ private:
 	const int                                       m_IndexX;
 	const int                                       m_IndexZ;
 
-	ADT_MHDR                                        m_Header;
-	std::vector<std::shared_ptr<ADT_TextureInfo>>	m_Textures;
+	SMapTile_MHDR                                        m_Header;
+	std::vector<std::shared_ptr<SMapTile_MTEX>>	m_Textures;
 	std::shared_ptr<ITexture>                       m_ArrayTexture;
 
 	// Instances
