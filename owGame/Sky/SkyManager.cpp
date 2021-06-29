@@ -8,7 +8,7 @@ const uint32 C_SkySegmentsCount = 32;
 
 //.............................top.............................med.............................medh............................horiz...........................bottom
 const float  C_SkyAngles[] = { 90.0f,                          30.0f,                          15.0f,                          5.0f,                           0.0f,                           -30.0f,                       -90.0f                       };
-const uint32 C_Skycolors[] = { LightColors::LIGHT_COLOR_SKY_0, LightColors::LIGHT_COLOR_SKY_1, LightColors::LIGHT_COLOR_SKY_2, LightColors::LIGHT_COLOR_SKY_3, LightColors::LIGHT_COLOR_SKY_4, LightColors::LIGHT_COLOR_FOG, LightColors::LIGHT_COLOR_FOG };
+const uint32 C_Skycolors[] = { ESkyColors::SKY_COLOR_SKY_0, ESkyColors::SKY_COLOR_SKY_1, ESkyColors::SKY_COLOR_SKY_2, ESkyColors::SKY_COLOR_SKY_3, ESkyColors::SKY_COLOR_SKY_4, ESkyColors::SKY_COLOR_FOG, ESkyColors::SKY_COLOR_FOG };
 const uint32 C_SkycolorsCount = 7;
 
 SkyManager::SkyManager(IScene& Scene)

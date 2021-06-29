@@ -194,10 +194,9 @@ void CWMO_Group_Instance::Initialize()
 
 	if (auto colliderComponent = GetComponentT<IColliderComponent>())
 	{
-		colliderComponent->SetCullStrategy(IColliderComponent::ECullStrategy::ByFrustrumAndDistance);
-		colliderComponent->SetCullDistance(GetBaseManager().GetManager<ISettings>()->GetGroup("WoWSettings")->GetPropertyT<float>("ADT_WMO_Distance")->Get());
+		colliderComponent->SetCullStrategy(IColliderComponent::ECullStrategy::ByFrustrum);
 		colliderComponent->SetBounds(m_WMOGroupObject.GetBoundingBox());
-		colliderComponent->SetDebugDrawMode(true);
+		colliderComponent->SetDebugDrawMode(false);
 		colliderComponent->SetDebugDrawColor(ColorRGBA(0.8f, 0.6f, 0.2f, 0.8f));
 	}
 }

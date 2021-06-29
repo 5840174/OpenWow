@@ -6,7 +6,7 @@
 CLiquidBaseInstance::CLiquidBaseInstance(IScene& Scene)
 	: CSceneNode(Scene)
 {
-
+	SetUpdateEnabled(false);
 }
 
 CLiquidBaseInstance::~CLiquidBaseInstance()

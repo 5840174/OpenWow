@@ -68,9 +68,6 @@ protected:
 	bool LoadImageData(std::shared_ptr<IFile> File);
 	bool LoadBPL(const BLPFormat::BLPHeader& header, std::shared_ptr<IFile> f);
 
-	template <class DECODER>
-	bool LoadDXT_Helper(std::shared_ptr<IFile> io);
-
 public: // Static
 	static bool IsFilenameSupported(const std::string& Filename);
 	static bool IsFileSupported(std::shared_ptr<IFile> File);

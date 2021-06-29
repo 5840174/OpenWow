@@ -14,7 +14,7 @@ WMO_Part_Light::WMO_Part_Light(const SWMO_MOLT& WMOLightProto)
 
 	fcolor = fromARGB(m_WMOLightProto.color);
 	//fcolor *= m_WMOLightProto.intensity;
-	fcolor.w = 1.0f;
+	//fcolor.w = 1.0f;
 
 	/*
 

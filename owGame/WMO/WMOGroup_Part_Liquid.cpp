@@ -23,8 +23,8 @@ CWMOGroup_Part_Liquid::CWMOGroup_Part_Liquid(IRenderDevice& RenderDevice, const 
 	}
 	else
 	{
-		m_WaterColorLight = _World->EnvM()->m_SkyManager->GetColor(LIGHT_COLOR_RIVER_LIGHT);
-		m_WaterColorDark = _World->EnvM()->m_SkyManager->GetColor(LIGHT_COLOR_RIVER_DARK);
+		m_WaterColorLight = _World->EnvM()->m_SkyManager->GetColor(SKY_COLOR_RIVER_LIGHT);
+		m_WaterColorDark = _World->EnvM()->m_SkyManager->GetColor(SKY_COLOR_RIVER_DARK);
 	}*/
 }
 

@@ -34,7 +34,8 @@ public:
 	std::string getFilePath() const { return m_FilePath; }
 	std::string getUniqueName() const { return m_UniqueName; }
 	const BoundingBox& GetBounds() const { return m_Bounds; }
-	
+	const SM2_Header& GetHeader() const { return m_Header; }
+
 public:
 	const bool isAnimated() const { return m_IsAnimated; }
 private:
@@ -72,6 +73,6 @@ private:
 	uint32								m_CollisionVetCnt;
 
 private:
-	IBaseManager& m_BaseManager;
-	IRenderDevice& m_RenderDevice;
+	IBaseManager&                       m_BaseManager;
+	IRenderDevice&                      m_RenderDevice;
 };

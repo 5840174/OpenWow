@@ -1,10 +1,10 @@
 #pragma once
 
 #include "Instances/MapWMOInstance.h"
+#include "MapWDLTileMaterial.h"
 
 // FORWARD BEGIN
 class CMap;
-class CMapWDLTileMaterial;
 // FORWARD END
 
 class CMapWDL 

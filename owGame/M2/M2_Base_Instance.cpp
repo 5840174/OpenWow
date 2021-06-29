@@ -13,16 +13,13 @@ CM2_Base_Instance::CM2_Base_Instance(IScene& Scene, const std::shared_ptr<CM2>& 
 	, m_AttachmentType(M2_AttachmentType::NotAttached)
 	, m_Color(glm::vec4(1.0f, 1.0f, 1.0f, 1.0f))
 	, m_Alpha(1.0f)
-	, m_Animator(nullptr)
 {
+	//SetUpdateEnabled(false);
 }
 
 CM2_Base_Instance::~CM2_Base_Instance()
 {
-	if (getM2().isAnimated())
-	{
-		//_Bindings->UnregisterUpdatableObject(this);
-	}
+	GetBaseManager().GetManager<ILoader>()->AddToDeleteQueue(m_M2);
 }
 
 // CM2_Base_Instance
@@ -32,28 +29,7 @@ void CM2_Base_Instance::CreateInstances()
 	getM2().CreateInsances(shared_from_this());
 }
 
-bool CM2_Base_Instance::Load()
-{
-	if (getM2().isAnimated())
-		m_Animator = std::make_shared<CM2_Animator>(GetBaseManager(), getM2());
 
-	if (getM2().getSkeleton().hasBones())
-		m_SkeletonComponent = AddComponentT(std::make_shared<CM2SkeletonComponent3D>(*this));
-
-#ifdef USE_M2_PARTICLES
-	m_ParticleComponent = AddComponentT(std::make_shared<CM2ParticlesComponent3D>(*this));
-#endif
-
-	UpdateLocalTransform();
-	CreateInstances();
-
-	return true;
-}
-
-bool CM2_Base_Instance::Delete()
-{
-	return false;
-}
 
 const CM2& CM2_Base_Instance::getM2() const
 {
@@ -95,22 +71,28 @@ const std::shared_ptr<ITexture>& CM2_Base_Instance::getSpecialTexture(SM2_Textur
 }
 
 
-//
-//	m_M2->update(_time, _dTime);
-//
 
+//
+// ISceneNode
+//
 void CM2_Base_Instance::Initialize()
 {
 	__super::Initialize();
 
 	if (auto colliderComponent = GetComponentT<IColliderComponent>())
 	{
-		colliderComponent->SetCullStrategy(IColliderComponent::ECullStrategy::ByFrustrumAndDistance);
-		colliderComponent->SetCullDistance(GetBaseManager().GetManager<ISettings>()->GetGroup("WoWSettings")->GetPropertyT<float>("ADT_MDX_Distance")->Get());
+		colliderComponent->SetCullStrategy(IColliderComponent::ECullStrategy::ByFrustrumAndDistance2D);
+		colliderComponent->SetCullDistance(GetBaseManager().GetManager<ISettings>()->GetGroup("WoWSettings")->GetPropertyT<float>("M2BaseRenderDistance")->Get());
 		colliderComponent->SetBounds(getM2().GetBounds());
 		colliderComponent->SetDebugDrawMode(false);
 		colliderComponent->SetDebugDrawColor(ColorRGBA(0.9f, 0.2f, 0.2f, 0.8f));
 	}
+}
+
+void CM2_Base_Instance::RegisterComponents()
+{
+	AddComponentT(GetBaseManager().GetManager<IObjectsFactory>()->GetClassFactoryCast<IComponentFactory>()->CreateComponentT<IModelComponent>(cSceneNodeModelsComponent, *this));
+	m_ColliderComponent = AddComponentT(MakeShared(CM2_ColliderComponent, *this));
 }
 
 void CM2_Base_Instance::Update(const UpdateEventArgs & e)
@@ -130,6 +112,34 @@ void CM2_Base_Instance::Update(const UpdateEventArgs & e)
 void CM2_Base_Instance::Accept(IVisitor* visitor)
 {
 	CSceneNode::Accept(visitor);
+}
+
+
+
+//
+// ILoadable
+//
+bool CM2_Base_Instance::Load()
+{
+	if (getM2().isAnimated())
+		m_Animator = std::make_shared<CM2_Animator>(GetBaseManager(), getM2());
+
+	if (getM2().getSkeleton().hasBones())
+		m_SkeletonComponent = AddComponentT(std::make_shared<CM2SkeletonComponent3D>(*this));
+
+#ifdef USE_M2_PARTICLES
+	m_ParticleComponent = AddComponentT(std::make_shared<CM2ParticlesComponent3D>(*this));
+#endif
+
+	UpdateLocalTransform();
+	CreateInstances();
+
+	return true;
+}
+
+bool CM2_Base_Instance::Delete()
+{
+	return false;
 }
 
 
@@ -162,8 +172,4 @@ glm::mat4 CM2_Base_Instance::CalculateLocalTransform() const
 	}
 }
 
-void CM2_Base_Instance::RegisterComponents()
-{
-	AddComponentT(GetBaseManager().GetManager<IObjectsFactory>()->GetClassFactoryCast<IComponentFactory>()->CreateComponentT<IModelComponent>(cSceneNodeModelsComponent, *this));
-	m_ColliderComponent = AddComponentT(MakeShared(CM2_ColliderComponent, *this));
-}
+

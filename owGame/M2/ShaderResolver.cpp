@@ -3,8 +3,15 @@
 #ifdef USE_M2_MODELS
 
 #include "M2_Types.h"
+#include "M2.h"
 
 #include "ShaderResolver.h"
+
+
+
+
+
+
 
 enum EGxTexOp : uint32
 {
@@ -17,38 +24,7 @@ enum EGxTexOp : uint32
 
 };
 
-/*
-0 PS_Combiners_Add	1	out.rgb = in.rgb + tex0.rgb;	out.a = in.a + tex0.a;
-1 PS_Combiners_Decal	1	out.rgb = mix(in.rgb, tex0.rgb, in.a);	out.a = in.a;
-2 PS_Combiners_Fade	1	out.rgb = mix(tex0.rgb, in.rgb, in.a);	out.a = in.a;
-3 PS_Combiners_Mod	1	out.rgb = in.rgb * tex0.rgb;	out.a = in.a * tex0.a;
-4 PS_Combiners_Mod2x	1	out.rgb = in.rgb * tex0.rgb * 2.0;	out.a = in.a * tex0.a * 2.0;
-5 PS_Combiners_Opaque	1	out.rgb = in.rgb * tex0.rgb;	out.a = in.a;
-6 PS_Combiners_Add_Add	2	out.rgb = (in.rgb + tex0.rgb) + tex1.rgb;	out.a = (in.a + tex0.a) + tex1.a;
-7 PS_Combiners_Add_Mod	2	out.rgb = (in.rgb + tex0.rgb) * tex1.rgb;	out.a = (in.a + tex0.a) * tex1.a;
-8 PS_Combiners_Add_Mod2x	2	out.rgb = (in.rgb + tex0.rgb) * tex1.rgb * 2.0;	out.a = (in.a + tex0.a) * tex1.a * 2.0;
-9 PS_Combiners_Add_Opaque	2	out.rgb = (in.rgb + tex0.rgb) * tex1.rgb;	out.a = in.a + tex0.a;
-10 PS_Combiners_Mod_Add	2	out.rgb = (in.rgb * tex0.rgb) + tex1.rgb;	out.a = (in.a * tex0.a) + tex1.a;
-11 PS_Combiners_Mod_AddNA	2	out.rgb = (in.rgb * tex0.rgb) + tex1.rgb;	out.a = in.a * tex0.a;
-12 PS_Combiners_Mod_Mod	2	out.rgb = (in.rgb * tex0.rgb) * tex1.rgb;	out.a = (in.a * tex0.a) * tex1.a;
-13 PS_Combiners_Mod_Mod2x	2	out.rgb = (in.rgb * tex0.rgb) * tex1.rgb * 2.0;	out.a = (in.a * tex0.a) * tex1.a * 2.0;
-14 PS_Combiners_Mod_Mod2xNA	2	out.rgb = (in.rgb * tex0.rgb) * tex1.rgb * 2.0;	out.a = in.a * tex0.a;
-15 PS_Combiners_Mod_Opaque	2	out.rgb = (in.rgb * tex0.rgb) * tex1.rgb;	out.a = in.a * tex0.a;
-16 PS_Combiners_Mod2x_Add	2	// TODO	// TODO
-17 PS_Combiners_Mod2x_Mod2x	2	// TODO	// TODO
-18 PS_Combiners_Mod2x_Opaque	2	// TODO	// TODO
-19 PS_Combiners_Opaque_Add	2	out.rgb = (in.rgb * tex0.rgb) + tex1.rgb;	out.a = in.a + tex1.a;
-20 PS_Combiners_Opaque_AddAlpha	2	out.rgb = (in.rgb * tex0.rgb) + (tex1.rgb * tex1.a);	out.a = in.a;
-21 PS_Combiners_Opaque_AddAlpha_Alpha	2	out.rgb = (in.rgb * tex0.rgb) + (tex1.rgb * tex1.a * tex0.a);	out.a = in.a;
-22 PS_Combiners_Opaque_AddNA	2	out.rgb = (in.rgb * tex0.rgb) + tex1.rgb;	out.a = in.a;
-23 PS_Combiners_Opaque_Mod	2	out.rgb = (in.rgb * tex0.rgb) * tex1.rgb;	out.a = in.a * tex1.a;
-24 PS_Combiners_Opaque_Mod2x	2	out.rgb = (in.rgb * tex0.rgb) * tex1.rgb * 2.0;	out.a = in.a * tex1.a * 2.0;
-25 PS_Combiners_Opaque_Mod2xNA	2	out.rgb = (in.rgb * tex0.rgb) * tex1.rgb * 2.0;	out.a = in.a;
-26 PS_Combiners_Opaque_Mod2xNA_Alpha	2	out.rgb = (in.rgb * tex0.rgb) * mix(tex1.rgb * 2.0, vec3(1.0), tex0.a);	out.a = in.a;
-27 PS_Combiners_Opaque_Opaque	2	out.rgb = (in.rgb * tex0.rgb) * tex1.rgb;	out.a = in.a;
-*/
-
-uint16 arr[] =
+uint16 arr[15] =
 {
 	/*PS_Combiners_Opaque = */5,
 	/*PS_Combiners_Mod = */3,
@@ -246,7 +222,7 @@ struct
 	uint32 ff_colorOp;
 	uint32 ff_alphaOp;
 }
-s_modelShaderEffect[100] =
+s_modelShaderEffect[NUM_M2SHADERS] =
 {
 	{ PS_Combiners_Opaque_Mod2xNA_Alpha,           VS_Diffuse_T1_Env,         HS_T1_T2,       DS_T1_T2,       0, 3 },
 	{ PS_Combiners_Opaque_AddAlpha,                VS_Diffuse_T1_Env,         HS_T1_T2,       DS_T1_T2,       0, 3 },
@@ -292,7 +268,10 @@ uint32 M2GetPixelShaderID(uint32 op_count, uint16 shader_id)
 	{
 		if (op_count == 1)
 		{
-			return (shader_id & 0x70) ? PS_Combiners_Mod : PS_Combiners_Opaque;
+			if (shader_id & 0x70)
+				return PS_Combiners_Mod;
+			else
+				return PS_Combiners_Opaque;
 		}
 		else
 		{
@@ -300,20 +279,20 @@ uint32 M2GetPixelShaderID(uint32 op_count, uint16 shader_id)
 			if (shader_id & 0x70)
 			{
 				return lower == 0 ? PS_Combiners_Mod_Opaque
-					: lower == 3 ? PS_Combiners_Mod_Add
-					: lower == 4 ? PS_Combiners_Mod_Mod2x
-					: lower == 6 ? PS_Combiners_Mod_Mod2xNA
-					: lower == 7 ? PS_Combiners_Mod_AddNA
-					: PS_Combiners_Mod_Mod;
+					 : lower == 3 ? PS_Combiners_Mod_Add
+					 : lower == 4 ? PS_Combiners_Mod_Mod2x
+					 : lower == 6 ? PS_Combiners_Mod_Mod2xNA
+					 : lower == 7 ? PS_Combiners_Mod_AddNA
+					 : PS_Combiners_Mod_Mod;
 			}
 			else
 			{
 				return lower == 0 ? PS_Combiners_Opaque_Opaque
-					: lower == 3 ? PS_Combiners_Opaque_AddAlpha
-					: lower == 4 ? PS_Combiners_Opaque_Mod2x
-					: lower == 6 ? PS_Combiners_Opaque_Mod2xNA
-					: lower == 7 ? PS_Combiners_Opaque_AddAlpha
-					: PS_Combiners_Opaque_Mod;
+					 : lower == 3 ? PS_Combiners_Opaque_AddAlpha
+					 : lower == 4 ? PS_Combiners_Opaque_Mod2x
+					 : lower == 6 ? PS_Combiners_Opaque_Mod2xNA
+					 : lower == 7 ? PS_Combiners_Opaque_AddAlpha
+					 : PS_Combiners_Opaque_Mod;
 			}
 		}
 	}
@@ -408,6 +387,12 @@ const char* M2GetPixelShaderName(uint32 op_count, uint16 shader_id)
 	uint32 pixelShaderID(M2GetPixelShaderID(op_count, shader_id));
 	//array_size_check(pixelShaderID, s_modelPixelShaders);
 	return s_modelPixelShaders[pixelShaderID];
+}
+uint16 GetMyShaderID(uint32 V)
+{
+	if (V >= 15)
+		throw CException("Incorrect Value '%d'", V);
+	return arr[V];
 }
 const char* M2GetVertexShaderName(uint32 op_count, uint16 shader_id)
 {

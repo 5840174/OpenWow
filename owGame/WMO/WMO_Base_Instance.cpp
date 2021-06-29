@@ -10,35 +10,17 @@ CWMO_Base_Instance::CWMO_Base_Instance(IScene& Scene, const std::shared_ptr<CWMO
 	, CLoadableObject(WMOObject)
 	, m_WMOObject(WMOObject)
 {
+	SetUpdateEnabled(false);
 }
 
 CWMO_Base_Instance::~CWMO_Base_Instance()
-{}
-
-
-
-
-void CWMO_Base_Instance::CreateInstances()
 {
-	m_WMOObject->CreateInsances(std::dynamic_pointer_cast<CWMO_Base_Instance>(shared_from_this()));
+	GetBaseManager().GetManager<ILoader>()->AddToDeleteQueue(m_WMOObject);
 }
 
 
 
-//
-// CLoadableObject
-//
-bool CWMO_Base_Instance::Load()
-{
-	CreateInstances();
 
-	return true;
-}
-
-bool CWMO_Base_Instance::Delete()
-{
-	return false;
-}
 
 
 const CWMO& CWMO_Base_Instance::getWMO() const
@@ -66,7 +48,7 @@ bool CWMO_Base_Instance::IsDoodadInSet(uint16 doodadIndex) const
 
 
 //
-// SceneNode
+// ISceneNode
 //
 void CWMO_Base_Instance::Initialize()
 {
@@ -74,8 +56,8 @@ void CWMO_Base_Instance::Initialize()
 
 	if (auto colliderComponent = GetComponentT<IColliderComponent>())
 	{
-		colliderComponent->SetCullStrategy(IColliderComponent::ECullStrategy::ByFrustrumAndDistance);
-		colliderComponent->SetCullDistance(GetBaseManager().GetManager<ISettings>()->GetGroup("WoWSettings")->GetPropertyT<float>("ADT_WMO_Distance")->Get());
+		colliderComponent->SetCullStrategy(IColliderComponent::ECullStrategy::ByFrustrumAndDistance2D);
+		colliderComponent->SetCullDistance(GetBaseManager().GetManager<ISettings>()->GetGroup("WoWSettings")->GetPropertyT<float>("WMOBaseRenderDistance")->Get());
 		colliderComponent->SetBounds(getWMO().GetBounds());
 		colliderComponent->SetDebugDrawMode(false);
 		colliderComponent->SetDebugDrawColor(ColorRGBA(0.8f, 0.8f, 0.2f, 0.8f));
@@ -98,6 +80,22 @@ void CWMO_Base_Instance::Update(const UpdateEventArgs& e)
 void CWMO_Base_Instance::Accept(IVisitor* visitor)
 {
 	__super::Accept(visitor);
+}
+
+
+
+//
+// ILoadable
+//
+bool CWMO_Base_Instance::Load()
+{
+	m_WMOObject->CreateInsances(std::dynamic_pointer_cast<CWMO_Base_Instance>(shared_from_this()));
+	return true;
+}
+
+bool CWMO_Base_Instance::Delete()
+{
+	return false;
 }
 
 #endif

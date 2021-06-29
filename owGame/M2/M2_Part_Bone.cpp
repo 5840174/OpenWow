@@ -14,6 +14,8 @@ SM2_Part_Bone_Wrapper::SM2_Part_Bone_Wrapper(const CM2& M2Object, const std::sha
 	m_TranslateAnimated.Initialize(M2Bone.translation, File, M2Object.getSkeleton().GetAnimFiles(), Fix_XZmY);
 	m_RotateAnimated.Initialize(M2Bone.rotation, File, M2Object.getSkeleton().GetAnimFiles(), Fix_XZmYW);
 	m_ScaleAnimated.Initialize(M2Bone.scale, File, M2Object.getSkeleton().GetAnimFiles(), Fix_XZY);
+
+	_ASSERT(M2Bone.flags.ignoreParentTranslate == 0 && M2Bone.flags.ignoreParentRotation == 0 && M2Bone.flags.ignoreParentScale == 0);
 }
 
 
@@ -76,6 +78,11 @@ glm::mat4 SM2_Part_Bone_Wrapper::calcBillboardMatrix(const glm::mat4& Calculated
 		W = CalculatedMatrix * W;
 		W = M2Instance->GetWorldTransfom() * W;
 
+		/*auto invertedView = glm::inverse(Camera->GetViewMatrix());
+		W = invertedView * W;
+
+		m = W;*/
+
 		glm::mat4 VW = Camera->GetViewMatrix() * W;
 
 		// Set vectors default
@@ -86,20 +93,22 @@ glm::mat4 SM2_Part_Bone_Wrapper::calcBillboardMatrix(const glm::mat4& Calculated
 		vRight *= -1.0f;
 
 
-
 		if (m_M2Bone.flags.cylindrical_billboard_lock_x) // TODO: investigate it
 		{
 			vUp = glm::vec3(VW[0][1], 0, 0) / worldScale.x;
 		}
-
-		else if (m_M2Bone.flags.cylindrical_billboard_lock_y)
-		{
-			vUp = glm::vec3(0, VW[1][1], 0) / worldScale.y;
-		}
-
 		else if (m_M2Bone.flags.cylindrical_billboard_lock_z)
 		{
-			vUp = glm::vec3(0, 0, VW[2][1]) / worldScale.z;
+			vUp = glm::vec3(0, VW[1][1], 0) / worldScale.z;
+		}
+		else if (m_M2Bone.flags.cylindrical_billboard_lock_y)
+		{
+			vUp = glm::vec3(0, 0, VW[2][1]) / worldScale.y;
+		}
+
+		else if (m_M2Bone.flags.spherical_billboard)
+		{
+			vUp = glm::vec3(VW[0][1], VW[1][1], VW[2][1]) / worldScale;
 		}
 
 		m[0][0] = vForward.x;
@@ -113,6 +122,12 @@ glm::mat4 SM2_Part_Bone_Wrapper::calcBillboardMatrix(const glm::mat4& Calculated
 		m[2][0] = vRight.x;
 		m[2][1] = vRight.y;
 		m[2][2] = vRight.z;
+
+		//m = glm::rotate(m, (GetTickCount() % 36000) / 1000.0f, glm::vec3(0.0f, 0.0f, 1.0f));
+
+		//W *= glm::toMat4(glm::conjugate(glm::toQuat(glm::lookAt(Camera->GetDirection(), glm::vec3(0.0f), glm::vec3(0.0f, 1.0f, 0.0f)))));
+
+		//m = Camera->GetInverseViewMatrix() * m;
 	}
 	m = glm::translate(m, getPivot() * -1.0f);
 

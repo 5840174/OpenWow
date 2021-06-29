@@ -1,17 +1,5 @@
 #pragma once
 
-enum class LightParamsNames : uint32
-{
-	ParamsClear, 	// Used in clear weather.
-	ParamsClearWat, // Used in clear weather while being underwater.
-	ParamsStorm,    // Used in rainy / snowy / sandstormy weather.
-	ParamsStormWat, // Used in rainy / snowy / sandstormy weather while being underwater.
-	ParamsDeath,	// Only 4 and in newer ones 3 are used as value here(with some exceptions).Changing this seems to have no effect in 3.3.5a(is death light setting hardcoded ? )
-	ParamsUnk1, 	// Following 3 Params are used only in WotLK records, and not very commonly.Perhaps used in different phases.
-	ParamsUnk2,
-	ParamsUnk3
-};
-
 #include "SkyParams.h"
 
 // FORWARD BEGIN
@@ -35,7 +23,7 @@ public:
 	Sky(const CDBCStorage* DBCStorage, const DBC_LightRecord* LightData);
 	virtual ~Sky();
 
-	void                                            LoadParams(const CDBCStorage* DBCStorage, LightParamsNames _param);
+	void                                            LoadParams(const CDBCStorage* DBCStorage, ESkyParamsNames _param);
 
 	CSkyParams&                                     Interpolate(uint32 _time);
 
@@ -49,8 +37,8 @@ private:
 	bool					                        m_IsGlobalSky;
 
 	CSkyParams				                        m_Params;
-	std::vector<SkyParam<glm::vec3>>                m_IntBand_Colors[LightColors::COUNT];
-	std::vector<SkyParam<float>>                    m_FloatBand_Fogs[LightFogs::COUNT];
+	std::vector<SkyParam<glm::vec3>>                m_IntBand_Colors[ESkyColors::SKY_COLOR_COUNT];
+	std::vector<SkyParam<float>>                    m_FloatBand_Fogs[ESkyFogs::SKY_FOG_COUNT];
 };
 
 #include "Sky.inl"

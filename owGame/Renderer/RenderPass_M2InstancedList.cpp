@@ -58,10 +58,19 @@ void CRenderPass_M2InstancedList::Render(RenderEventArgs & e)
 		else
 			m_InstancesBuffer->Set(instances);
 
+		// Update
+		auto firstInstance = *m2BaseInstances.begin();
+		/*{
+			for (const auto& componentsIt : firstInstance->GetComponents())
+				componentsIt.second->Update(GetRenderEventArgs());
+			const_cast<CM2_Base_Instance*>(firstInstance)->Update(GetRenderEventArgs());
+		}*/
+
+		// Render
 		m_ShaderInstancesBufferParameter->SetStructuredBuffer(m_InstancesBuffer);
 		m_ShaderInstancesBufferParameter->Bind();
 		{
-			DoRenderM2Model(*m2BaseInstances.begin(), skin, instances.size());
+			DoRenderM2Model(firstInstance, skin, instances.size());
 		}
 		m_ShaderInstancesBufferParameter->Unbind();
 	}

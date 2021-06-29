@@ -18,7 +18,7 @@ CWoWWorld::CWoWWorld(IScene& Scene, const std::shared_ptr<CWorldSocket>& Socket)
 	, m_TransportAnimationStorage(m_Scene.GetBaseManager())
 {
 	m_SkyManager = m_Scene.GetRootSceneNode()->CreateSceneNode<SkyManager>();
-	m_Scene.GetBaseManager().AddManager<ISkyManager>(m_SkyManager);
+	m_Scene.GetBaseManager().AddManager<SkyManager>(m_SkyManager);
 
 	m_Map = m_Scene.GetRootSceneNode()->CreateSceneNode<CMap>();
 

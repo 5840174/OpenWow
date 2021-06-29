@@ -36,6 +36,7 @@ CWMO::CWMO(IBaseManager& BaseManager, IRenderDevice& RenderDevice, const std::st
 
 CWMO::~CWMO()
 {
+	//Log::Error("Deleted.");
 }
 
 
@@ -205,12 +206,13 @@ bool CWMO::Load()
 		for (const auto& gi : m_ChunkReader->OpenChunkT<SWMO_MOGI>("MOGI"))
 		{
 			auto wmoGroup = MakeShared(CWMOGroup, m_BaseManager, m_RenderDevice, *this, cntr++, gi);
-			wmoGroup->AddDependense(std::dynamic_pointer_cast<ILoadable>(shared_from_this()));
+			wmoGroup->SetParentLoadable(shared_from_this());
+			m_BaseManager.GetManager<ILoader>()->AddToLoadQueue(wmoGroup);
 			m_Groups.push_back(wmoGroup);
 		}
 
-		for (const auto& groupIt : m_Groups)
-			m_BaseManager.GetManager<ILoader>()->AddToLoadQueue(groupIt);
+		//for (const auto& groupIt : m_Groups)
+			
 	}
 
 	m_ChunkReader.reset();

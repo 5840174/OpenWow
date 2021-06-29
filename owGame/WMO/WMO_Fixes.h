@@ -210,6 +210,7 @@ void MergeBox(glm::vec3(&result)[2], float  *box1, float  *box2)
 	result[1][1] = box2[1];
 	result[1][2] = box2[2];
 }
+
 void AjustDelta(glm::vec3(&src)[2], float *dst, float coef)
 {
 	float d1 = (src[1][0] - src[0][0]) * coef;// delta x
@@ -219,6 +220,7 @@ void AjustDelta(glm::vec3(&src)[2], float *dst, float coef)
 	dst[0] = d2 + src[0][0];
 	dst[2] = d3 + src[0][2];
 }
+
 void TraverseBsp(int iNode, glm::vec3(&pEyes)[2], glm::vec3(&pBox)[2], void *(pAction)(SWMOGroup_MOBN*, void*), void* param)
 {
 	glm::vec3 newEyes[2];

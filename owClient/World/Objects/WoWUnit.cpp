@@ -88,7 +88,7 @@ void WoWUnit::ProcessMovementPacket(CByteBuffer & Bytes)
 	// 0x02200000
 	if ((HasMovementFlag(MOVEMENTFLAG_SWIMMING | MOVEMENTFLAG_FLYING)) || (HasExtraMovementFlag(MOVEMENTFLAG2_ALWAYS_ALLOW_PITCHING)))
 	{
-		Bytes >> float(m_Pitch);
+		Bytes >> float(m_StrideOrPitch);
 	}
 
 	Bytes >> uint32(m_FallTime);

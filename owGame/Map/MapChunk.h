@@ -19,7 +19,7 @@ public:
 	uint32 GetAreaID() const;
 	void ExtendMapChunkBounds(const BoundingBox& OtherBBox);
 
-	// SceneNode3D
+	// ISceneNode
 	void Initialize() override;
 
 	// ILoadable
@@ -29,6 +29,6 @@ public:
 private:
 	CMapTile&                       m_MapTile;
 	CMap&                           m_Map;
-	SMapChunk_MCNK                 m_Header;
+	SMapChunk_MCNK                  m_Header;
 	std::shared_ptr<IByteBuffer>    m_Bytes;
 };

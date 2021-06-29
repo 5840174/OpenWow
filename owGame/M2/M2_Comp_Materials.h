@@ -50,48 +50,79 @@ public:
 	}
 	std::shared_ptr<const CM2_Part_Texture> GetTexture(uint32 _index) const
 	{
-		_ASSERT(_index < m_TexturesLookup.size());
+		if (_index >= m_TexturesLookup.size())
+			throw CException("GetTexture lookup index out of bounds.");
+
 		int16 newIndex = m_TexturesLookup[_index];
 		if (newIndex == -1)
 			return nullptr;
-		_ASSERT(newIndex < static_cast<int16>(m_Textures.size()));
+
+		if (newIndex >= static_cast<int16>(m_Textures.size()))
+			throw CException("GetTexture direct index out of bounds.");
+
 		return (m_Textures[newIndex]);
+	}
+	int16 GetTextureUnit(uint32 _index) const
+	{
+		if (_index >= static_cast<uint32>(m_TexturesUnitLookup.size()))
+			throw CException("GetTextureUnit direct index out of bounds.");
+
+		return m_TexturesUnitLookup[_index];
 	}
 	std::shared_ptr<const CM2_Part_TextureWeight> GetTextureWeight(uint32 _index) const
 	{
-		_ASSERT(_index < m_TextureWeightsLookup.size());
+		if (_index >= m_TextureWeightsLookup.size())
+			throw CException("GetTextureWeight lookup index out of bounds.");
+
 		int16 newIndex = m_TextureWeightsLookup[_index];
 		if (newIndex == -1)
 			return nullptr;
-		_ASSERT(newIndex < static_cast<int16>(m_TextureWeights.size()));
-		return (m_TextureWeights[newIndex]);
+
+		if (newIndex >= static_cast<int16>(m_TextureWeights.size()))
+			throw CException("GetTextureWeight direct index out of bounds.");
+
+		return m_TextureWeights[newIndex];
 	}
 	std::shared_ptr<const CM2_Part_TextureTransform> GetTextureTransform(uint32 _index) const
 	{
-		_ASSERT(_index < m_TexturesTransformLookup.size());
-		int16 newIndex = m_TexturesTransformLookup[_index];
-		if (newIndex == -1)
+		if (_index >= m_TexturesTransformLookup.size())
+			throw CException("GetTextureTransform lookup index out of bounds.");
+
+		int16 directIndex = m_TexturesTransformLookup[_index];
+		if (directIndex == -1)
 			return nullptr;
-		_ASSERT(newIndex < static_cast<int16>(m_TexturesTransform.size()));
-		return (m_TexturesTransform[newIndex]);
+
+		if (directIndex >= static_cast<int16>(m_TexturesTransform.size()))
+			throw CException("GetTextureTransform direct index out of bounds.");
+
+		return m_TexturesTransform[directIndex];
+	}
+	int16 GetTextureCombiner(uint32 _index) const
+	{
+		if (_index >= static_cast<uint32>(m_TexturesCombinerLookup.size()))
+			throw CException("GetTextureCombiner direct index out of bounds.");
+
+		return m_TexturesCombinerLookup[_index];
 	}
 
 
 private:
-	std::vector<std::shared_ptr<CM2_Part_Texture>>           m_Textures;
-	std::vector<int16_t>                                     m_TexturesLookup;
+	std::vector<std::shared_ptr<CM2_Part_Texture>>         m_Textures;
+	std::vector<int16>                                     m_TexturesLookup;
 	//--
-	std::vector<int16_t>                                     m_TexturesUnitLookup;
-	std::vector<int16_t>                                     m_ReplacebleLookup;    // index is TextureType, value is texture number
+	std::vector<int16>                                     m_ReplacebleLookup;    // index is TextureType, value is texture number
+	std::vector<int16>                                     m_TexturesUnitLookup;
 	//--
-	std::vector<std::shared_ptr<CM2_Part_TextureWeight>>     m_TextureWeights;
-	std::vector<int16_t>                                     m_TextureWeightsLookup;
+	std::vector<std::shared_ptr<CM2_Part_TextureWeight>>   m_TextureWeights;
+	std::vector<int16>                                     m_TextureWeightsLookup;
 	//--
-	std::vector<std::shared_ptr<CM2_Part_TextureTransform>>  m_TexturesTransform;
-	std::vector<int16_t>                                     m_TexturesTransformLookup;
+	std::vector<std::shared_ptr<CM2_Part_TextureTransform>>m_TexturesTransform;
+	std::vector<int16>                                     m_TexturesTransformLookup;
+	//--
+	std::vector<uint16>                                    m_TexturesCombinerLookup;
 
 private:
-	bool                                                     m_IsAnimTextures;
+	bool                                                   m_IsAnimTextures;
 
 private:
 	const CM2& m_M2Object;

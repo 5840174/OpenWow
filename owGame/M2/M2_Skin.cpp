@@ -81,39 +81,16 @@ void CM2_Skin::Load(const SM2_Header& M2Header, const std::shared_ptr<IFile>& Fi
 
 
 	// BATCHES
-
-
 	const SM2_SkinBatch* skinBatchesProtos = (const SM2_SkinBatch*)(File->getData() + m_M2SkinProfile.batches.offset);
 	for (uint32 i = 0; i < m_M2SkinProfile.batches.size; i++)
 	{
-		
-
-		//if (skinBatchesProtos[i].flags.InvertSomething == 1)
-		//	continue;
-
-		std::shared_ptr<CM2_Skin_Batch> skinBatchObject = std::make_shared<CM2_Skin_Batch>(m_BaseManager, m_RenderDevice, m_M2Model, skinBatchesProtos[i]);
+		std::shared_ptr<CM2_Skin_Batch> skinBatchObject = MakeShared(CM2_Skin_Batch, m_BaseManager, m_RenderDevice, m_M2Model, skinBatchesProtos[i]);
 		m_Batches.push_back(skinBatchObject);
 
-		//if (skinBatchObject->m_PriorityPlan != 0)
-		//	Log::Green("Test");
-
-		m_GeometryMarerials[skinBatchesProtos[i].skinSectionIndex].push_back(skinBatchObject);
-		/*auto& ttIter = m_TTT.find(m_Sections[skinBatchesProtos[i].skinSectionIndex]);
-		if (ttIter == m_TTT.end())
-		{
-			m_TTT.insert(std::make_pair(m_Sections[skinBatchesProtos[i].skinSectionIndex], std::vector<std::shared_ptr<CM2_Skin_Batch>>({ skinBatchObject })));
-		}
-		else
-		{
-			ttIter->second.push_back(skinBatchObject);
-		}*/
-
-		//std::shared_ptr<IModel> model = m_RenderDevice.GetObjectsFactory().CreateModel();
-		//model->AddConnection(skinBatchObject, m_Sections[skinBatchesProtos[i].skinSectionIndex]);
-		//m_Models.push_back(model);
+		m_GeometryMaterials[skinBatchesProtos[i].skinSectionIndex].push_back(skinBatchObject);
 	}
 
-	for (auto& it : m_GeometryMarerials)
+	for (auto& it : m_GeometryMaterials)
 	{
 		auto& materials = it.second; // aka batch
 		std::sort(materials.begin(), materials.end(), [](const std::shared_ptr<CM2_Skin_Batch>& left, const std::shared_ptr<CM2_Skin_Batch>& right) {

@@ -19,11 +19,9 @@ namespace
 			, gTextureAnimEnable(false)
 			, gTextureWeight(1.0f)
 
-			, gColor(glm::vec4(1.0))
+			, gMaterialColorAndAlpha(glm::vec4(1.0f))
 
 			, gTextureAnimMatrix(glm::mat4(1.0f))
-
-			, gInstanceColor(glm::vec4(1.0))
 		{}
 
 		uint32     gBlendMode;
@@ -32,14 +30,11 @@ namespace
 		float      gTextureWeight;
 		//--------------------------------------------------------------( 16 bytes )
 
-		glm::vec4  gColor;
+		glm::vec4  gMaterialColorAndAlpha;
 		//--------------------------------------------------------------( 16 bytes )
 
 		glm::mat4  gTextureAnimMatrix;
 		//--------------------------------------------------------------( 16 * 4 bytes )
-
-		glm::vec4  gInstanceColor;
-		//--------------------------------------------------------------( 16 bytes )
 	};
 }
 
@@ -56,6 +51,8 @@ public:
 
 	const std::shared_ptr<const CM2_Part_Material>& GetM2Material() const {	return m_M2ModelMaterial; }
 	void UpdateMaterialProps(const RenderEventArgs& RenderEventArgs, const CM2_Base_Instance* M2Instance);
+
+	void FixMyShaderID(const SM2_SkinBatch& Batch);
 
 public:
 	int32												m_PriorityPlan;

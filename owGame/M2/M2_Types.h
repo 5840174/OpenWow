@@ -12,7 +12,7 @@ struct SM2_Loop
 struct SM2_Sequence
 {
 	FOREIGN_KEY_ID(uint16, DBC_AnimationData, animID); // Animation id in AnimationData.dbc	
-	uint16		variationIndex;			// Sub-animation id: Which number in a row of animations this one is.
+	uint16 variationIndex;			// Sub-animation id: Which number in a row of animations this one is.
 
 #if WOW_CLIENT_VERSION <= WOW_BC_2_4_3
 	uint32_t start_timestamp;
@@ -20,7 +20,7 @@ struct SM2_Sequence
 #else
 	uint32_t duration;
 #endif
-	float		movespeed;				// This is the speed the character moves with in this animation.
+	float movespeed;				// This is the speed the character moves with in this animation.
 
 	struct Flags
 	{
@@ -50,13 +50,13 @@ struct SM2_Bone
 
 	struct Flags
 	{
-		uint32 unk0 : 1;
-		uint32 unk1 : 1;
-		uint32 unk2 : 1;
+		uint32 ignoreParentTranslate : 1;
+		uint32 ignoreParentScale : 1;
+		uint32 ignoreParentRotation : 1;
 		uint32 spherical_billboard : 1;
 		uint32 cylindrical_billboard_lock_x : 1;
-		uint32 cylindrical_billboard_lock_z : 1;
 		uint32 cylindrical_billboard_lock_y : 1;
+		uint32 cylindrical_billboard_lock_z : 1;
 		uint32 unk3 : 1;
 		uint32 unk4 : 1;
 		uint32 transformed : 1;
@@ -118,21 +118,6 @@ struct SM2_Vertex
 	uint8	    bone_indices[4];	// 16-20
 	glm::vec3	normal;				// 20-32
 	glm::vec2	tex_coords[2];		// 32-40, 40-48		// two DiffuseTextures, depending on shader used
-};
-
-struct SM2_Vertex_znEngine
-{
-	glm::vec3 pos;
-	struct
-	{
-		float weights[4];
-	} bone_weights;
-	struct
-	{
-		uint32 indexes[4];
-	} bone_indices;
-	glm::vec3 normal;
-	glm::vec2 tex_coords[2];
 };
 
 #pragma pack(pop)
@@ -209,14 +194,17 @@ struct SM2_Material
 		uint16 UNFOGGED : 1;
 		uint16 TWOSIDED : 1;
 		uint16 DEPTHTEST : 1;
+
 		uint16 DEPTHWRITE : 1;
 		uint16 unk0x20 : 1;
 		uint16 unk0x40 : 1;
 		uint16 unk0x80 : 1;
+
 		uint16 unk0x100 : 1;
 		uint16 unk0x200 : 1;
 		uint16 unk0x400 : 1;
 		uint16 unk0x800 : 1;
+
 		uint16 unk0x1000 : 1;
 		uint16 unk0x2000 : 1;
 		uint16 unk0x4000 : 1;
@@ -231,7 +219,8 @@ struct SM2_Material
 		M2BLEND_NO_ALPHA_ADD,
 		M2BLEND_ADD,
 		M2BLEND_MOD,
-		M2BLEND_MOD2X
+		M2BLEND_MOD2X,
+		M2BLEND_BlendAdd
 	} BlendMode;
 };
 

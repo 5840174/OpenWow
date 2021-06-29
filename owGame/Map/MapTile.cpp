@@ -66,7 +66,7 @@ void CMapTile::ExtendMapTileBounds(const BoundingBox & OtherBBox)
 
 
 //
-// SceneNode3D
+// ISceneNode
 //
 void CMapTile::Initialize()
 {
@@ -91,6 +91,8 @@ void CMapTile::Initialize()
 		colliderComponent->SetDebugDrawColor(ColorRGBA(0.5f, 0.8f, 0.2f, 0.8f));
 	}
 }
+
+
 
 //
 // ILoadableObject
@@ -290,7 +292,7 @@ bool CMapTile::Load()
 		f->readBytes(&size, sizeof(uint32));
 		uint32 count = size / sizeof(uint32);
 
-		_ASSERT(count == m_WMOsNames.size());
+		_ASSERT(count == WMOsNames.size());
 
 		for (uint32_t i = 0; i < count; i++)
 		{
@@ -343,7 +345,8 @@ bool CMapTile::Load()
 	for (uint32_t i = 0; i < C_ChunksInTileGlobal; i++)
 	{
 		auto chunk = CreateSceneNode<CMapChunk>(*this, chunks[i], f);
-		chunk->AddDependense(std::dynamic_pointer_cast<ILoadable>(shared_from_this()));
+		chunk->SetParentLoadable(std::dynamic_pointer_cast<ILoadable>(shared_from_this()));
+		AddChildLoadable(chunk);
 		GetBaseManager().GetManager<ILoader>()->AddToLoadQueue(chunk);
 
 		m_Chunks.push_back(chunk.get());
@@ -354,7 +357,7 @@ bool CMapTile::Load()
 #ifdef USE_WMO_MODELS
 	for (const auto& it : WMOPlacementInfo)
 	{
-		if (std::shared_ptr<CWMO> wmo = GetBaseManager().GetManager<IWoWObjectsCreator>()->LoadWMO(GetRenderDevice(), WMOsNames[it.nameIndex], true))
+		if (auto wmo = GetBaseManager().GetManager<IWoWObjectsCreator>()->LoadWMO(GetRenderDevice(), WMOsNames[it.nameIndex], true))
 		{
 			auto inst = CreateSceneNode<CMapWMOInstance>(wmo, it);
 

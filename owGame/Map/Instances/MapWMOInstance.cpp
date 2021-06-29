@@ -27,6 +27,8 @@ uint16 CMapWMOInstance::GetDoodadSetIndex() const
 	return m_PlacementInfo.doodadSetIndex;
 }
 
+
+
 //
 // ISceneNode
 //
@@ -39,6 +41,11 @@ void CMapWMOInstance::Initialize()
 
 	SetLocalPosition(m_PlacementInfo.position);
 	SetLocalRotationEuler(m_PlacementInfo.rotation);
+
+	if (auto colliderComponent = GetComponentT<IColliderComponent>())
+	{
+		colliderComponent->SetCullDistance(GetBaseManager().GetManager<ISettings>()->GetGroup("WoWSettings")->GetPropertyT<float>("MapTileWMORenderDistance")->Get());
+	}
 }
 
 void CMapWMOInstance::Accept(IVisitor* visitor)
@@ -54,7 +61,7 @@ void CMapWMOInstance::Accept(IVisitor* visitor)
 		m_AlreadyDraw.insert(std::make_pair(m_PlacementInfo.uniqueId, this));
 	}
 
-	CWMO_Base_Instance::Accept(visitor);
+	__super::Accept(visitor);
 }
 
 

@@ -695,9 +695,6 @@
     <ClInclude Include="WMO\WMO_PortalsController.h">
       <Filter>WMO</Filter>
     </ClInclude>
-    <ClInclude Include="WMO\WMO_Fixes.h">
-      <Filter>WMO\Groups</Filter>
-    </ClInclude>
     <ClInclude Include="WMO\WMO_Base_Instance.h">
       <Filter>WMO\Instances</Filter>
     </ClInclude>
@@ -1027,6 +1024,9 @@
     </ClInclude>
     <ClInclude Include="WMO\WMOGroup.h">
       <Filter>WMO\Groups</Filter>
+    </ClInclude>
+    <ClInclude Include="WMO\WMO_Fixes.h">
+      <Filter>WMO</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

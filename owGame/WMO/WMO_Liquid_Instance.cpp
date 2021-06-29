@@ -36,9 +36,7 @@ void CWMO_Liquid_Instance::SetVisibilityState(bool _visibility)
 void CWMO_Liquid_Instance::Accept(IVisitor* visitor)
 {
 	if (m_PortalVisibilityState)
-	{
-		CLiquidBaseInstance::Accept(visitor);
-	}
+		__super::Accept(visitor);
 }
 
 #endif

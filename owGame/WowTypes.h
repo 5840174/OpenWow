@@ -154,6 +154,14 @@ struct C4Vec
 	uint8 w;
 };
 
+struct C4Quaternion
+{
+	float x;
+	float y;
+	float z;
+	float w; // Unlike Quaternions elsewhere, the scalar part ('w') is the last element in the struct instead of the first
+};
+
 struct C3Segment
 {
 	glm::vec3 start;
@@ -173,3 +181,4 @@ struct C3Ray
 };
 
 #pragma pack(pop)
+

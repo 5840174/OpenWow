@@ -7,6 +7,22 @@
 // General
 #include "M2_SkinSection.h"
 
+struct SM2_Vertex_znEngine
+{
+	glm::vec3 pos;
+	struct
+	{
+		float weights[4];
+	} bone_weights;
+	struct
+	{
+		uint32 indexes[4];
+	} bone_indices;
+	glm::vec3 normal;
+	glm::vec2 tex_coords[2];
+};
+
+
 struct SM2_Vertex_BoneWeight
 {
 	float weights[4];
@@ -106,32 +122,11 @@ void CM2_SkinSection::UpdateGeometryProps(const RenderEventArgs& RenderEventArgs
 {
 	M2Instance->getAnimator()->Update(RenderEventArgs.TotalTime, RenderEventArgs.DeltaTime);
 
-	bool isAnimated = m_M2Model.getSkeleton().hasBones() && m_M2Model.isAnimated();
-	m_Properties->gIsAnimated = isAnimated ? 1 : 0;
-	if (isAnimated)
+	m_Properties->gIsAnimated = m_M2Model.getSkeleton().hasBones() && m_M2Model.isAnimated();
+	if (m_Properties->gIsAnimated)
 	{
 		m_Properties->gStartBoneIndex = m_SkinSectionProto.bonesStartIndex;
 		m_Properties->gBonesMaxInfluences = m_SkinSectionProto.boneInfluences;
-
-		//for (uint16 i = 0; i < m_SkinSectionProto.boneCount; i++)
-		//	m_M2Model.getSkeleton().getBoneLookup(m_SkinSectionProto.bonesStartIndex + i)->SetNeedCalculate();
-
-		//for (uint16 i = 0; i < m_SkinSectionProto.boneCount; i++)
-		//	m_M2Model.getSkeleton().getBoneLookup(m_SkinSectionProto.bonesStartIndex + i)->calcMatrix(M2Instance->getAnimator()->getSequenceIndex(), M2Instance->getAnimator()->getCurrentTime(), static_cast<uint32>(RenderEventArgs.TotalTime));
-
-		//for (uint16 i = 0; i < m_SkinSectionProto.boneCount; i++)
-		//	m_M2Model.getSkeleton()->getBoneLookup(m_SkinSectionProto.bonesStartIndex + i)->calcBillboard(RenderEventArgs.Camera->GetViewMatrix(), M2Instance->GetWorldTransfom());
-
-		//glm::mat4 currMat(1.0f);
-		//auto RootBoone = m_M2Model.getSkeleton()->getGameBone(M2_GameBoneType::Root);
-		//if (RootBoone != nullptr)
-		//	currMat = RootBoone->getTransformMatrix() * currMat;
-
-		//for (uint16 i = 0; i < m_SkinSectionProto.boneCount; i++)
-		//{
-		//	_ASSERT(m_M2Model.getSkeleton().isLookupBoneCorrect(m_SkinSectionProto.bonesStartIndex + i));
-		//	m_BonesList[i] = m_M2Model.getSkeleton().getBoneLookup(m_SkinSectionProto.bonesStartIndex + i)->getTransformMatrix();
-		//}
 
 		m_BonesList = M2Instance->getSkeletonComponent()->CreatePose(m_SkinSectionProto.bonesStartIndex, m_SkinSectionProto.boneCount);
 		_ASSERT(m_BonesList.size() == m_SkinSectionProto.boneCount);

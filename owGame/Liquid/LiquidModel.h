@@ -2,6 +2,10 @@
 
 #include "LiquidMaterial.h"
 
+// FORWARD BEGIN
+class SkyManager;
+// FORWARD END
+
 struct SLiquidLayerDefinition
 {
 	SLiquidLayerDefinition()
@@ -50,7 +54,7 @@ private:
 	std::shared_ptr<IGeometry> CreateGeometryByDefinition(const SLiquidLayerDefinition& LiquidLayerDefinition);
 
 private:
-	ISkyManager* m_SkyManager;
+	SkyManager* m_SkyManager;
 	std::shared_ptr<CLiquidMaterial> m_Material;
 	DBC_LIQUIDTYPE_Type m_LiquidType;
 

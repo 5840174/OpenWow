@@ -83,10 +83,10 @@ void CM2_Comp_Skeleton::Load(const SM2_Header& M2Header, const std::shared_ptr<I
 	//		bb->Print(0);
 
 	// Bones Lookup
-	if (M2Header.bonesLookup.size > 0)
+	if (M2Header.boneCombos.size > 0)
 	{
-		const int16* BonesLookup = (const int16*)(File->getData() + M2Header.bonesLookup.offset);
-		for (uint32 i = 0; i < M2Header.bonesLookup.size; i++)
+		const int16* BonesLookup = (const int16*)(File->getData() + M2Header.boneCombos.offset);
+		for (uint32 i = 0; i < M2Header.boneCombos.size; i++)
 			m_BonesLookup.push_back(BonesLookup[i]);
 	}
 

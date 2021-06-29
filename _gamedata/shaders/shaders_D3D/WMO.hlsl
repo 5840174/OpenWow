@@ -67,7 +67,7 @@ float4 PS_main(VertexShaderOutput IN) : SV_TARGET
 	if (gMOCVExists)
 	{
 		//resultColor = IN.color;
-		//resultColor = resultColor * 0.5f + (resultColor * IN.color);
+		resultColor = resultColor * 0.5f + (resultColor * IN.color);
 		//resultColor *= IN.color;
 	}
 

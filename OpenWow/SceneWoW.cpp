@@ -70,7 +70,7 @@ void CSceneWoW::Initialize()
 
 
 	m_WoWSkyManager = GetRootSceneNode()->CreateSceneNode<SkyManager>();
-	GetBaseManager().AddManager<ISkyManager>(m_WoWSkyManager);
+	GetBaseManager().AddManager<SkyManager>(m_WoWSkyManager);
 
 	m_WoWMap = GetRootSceneNode()->CreateSceneNode<CMap>();
 
@@ -78,9 +78,9 @@ void CSceneWoW::Initialize()
 	//const float y = 28; //0 fire
 	//const uint32 mapID = 0;
 
-	const float x = 40; //1 barrens
-	const float y = 30; //1 barrens
-	const uint32 mapID = 1;
+	//const float x = 40; //1 barrens
+	//const float y = 30; //1 barrens
+	//const uint32 mapID = 1;
 
 	//const float x = 26; //530 outland
 	//const float y = 32; //530 outland
@@ -94,6 +94,11 @@ void CSceneWoW::Initialize()
 	//const float x = 32; //571 44
 	//const float y = 32; //571 44
 	//const uint32 mapID = 451;
+
+	// Ulduar
+	const float x = 0; //571 nortrend
+	const float y = 0; //571 nortrend
+	const uint32 mapID = 631;
 
 	if (true)
 	{
@@ -113,7 +118,7 @@ void CSceneWoW::Initialize()
 
 		//GetCameraController()->GetCamera()->SetPosition(glm::vec3(14300, 150, 20500));
 	}
-	else
+	else if (false)
 	{
 		m_WoWSkyManager->Load(0);
 
@@ -125,6 +130,26 @@ void CSceneWoW::Initialize()
 		GetBaseManager().GetManager<ILoader>()->AddToLoadQueue(wmoInstance);
 
 		GetCameraController()->GetCamera()->SetPosition(glm::vec3(0.0f));
+	}
+	else if (true)
+	{
+		m_WoWSkyManager->Load(0);
+
+		auto name = "WORLD\\GOOBER\\G_SCOURGERUNECIRCLECRYSTAL.M2";
+		auto name2 = "WORLD\\EXPANSION02\\DOODADS\\NEXUS\\NEXUS_ENERGYCHAINS.M2";
+		auto name3 = "WORLD\\NODXT\\GENERIC\\PASSIVEDOODADS\\VOLUMETRICLIGHTS\\LD_LIGHTSHAFT01.M2";
+		auto name4 = "WORLD\\EXPANSION02\\DOODADS\\ICECROWN\\EFFECTS\\ICECROWN_ICECORE.M2";
+
+		auto m2Model = GetBaseManager().GetManager<IWoWObjectsCreator>()->LoadM2(GetRenderDevice(), name4);
+
+		auto m2Instance = GetRootSceneNode()->CreateSceneNode<CM2_Base_Instance>(m2Model);
+		GetBaseManager().GetManager<ILoader>()->AddToLoadQueue(m2Instance);
+
+		GetCameraController()->GetCamera()->SetPosition(glm::vec3(0.0f));
+	}
+	else
+	{
+		minimap->SetMinimapTexture(GetBaseManager().GetManager<IznTexturesFactory>()->GetDefaultTexture());
 	}
 }
 
@@ -148,6 +173,18 @@ void CSceneWoW::OnUpdate(UpdateEventArgs & e)
 
 bool CSceneWoW::OnMousePressed(const MouseButtonEventArgs & e, const Ray& RayToWorld)
 {
+	auto selectedNodes = GetFinder().FindIntersection(RayToWorld, nullptr);
+	if (false == selectedNodes.empty())
+	{
+		for (const auto& selectedNodesIt : selectedNodes)
+		{
+			if (auto m2Node = std::dynamic_pointer_cast<CM2_Base_Instance>(selectedNodesIt.second))
+			{
+				Log::Green("Selected node '%f' = '%s'.", selectedNodesIt.first, m2Node->getM2().getFilename().c_str());
+			}
+		}
+	}
+
 	return false;
 }
 

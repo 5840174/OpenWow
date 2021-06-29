@@ -25,7 +25,7 @@ Sky::Sky(const CDBCStorage* DBCStorage, const DBC_LightRecord* LightData)
 	if (m_IsGlobalSky)
 		Log::Info("Sky: [%d] is global sky.", m_LightRecord->Get_ID());
 
-	LoadParams(DBCStorage, LightParamsNames::ParamsClear);
+	LoadParams(DBCStorage, ESkyParamsNames::SKY_ParamsClear);
 }
 
 Sky::~Sky()
@@ -49,18 +49,18 @@ public:
 	{}
 };
 
-void Sky::LoadParams(const CDBCStorage* DBCStorage, LightParamsNames _param)
+void Sky::LoadParams(const CDBCStorage* DBCStorage, ESkyParamsNames _param)
 {
-	for (uint32 i = 0; i < LightColors::COUNT; i++)
+	for (uint32 i = 0; i < ESkyColors::SKY_COLOR_COUNT; i++)
 	{
 		m_IntBand_Colors[i].clear();
 	}
-	for (uint32 i = 0; i < LightFogs::COUNT; i++)
+	for (uint32 i = 0; i < ESkyFogs::SKY_FOG_COUNT; i++)
 	{
 		m_FloatBand_Fogs[i].clear();
 	}
 
-	const DBC_LightParamsRecord* paramRecord = DBCStorage->DBC_LightParams()[m_LightRecord->Get_LightParams(static_cast<uint8>(_param))];
+	const DBC_LightParamsRecord* paramRecord = DBCStorage->DBC_LightParams()[m_LightRecord->Get_LightParams(_param)];
 	_ASSERT(paramRecord != nullptr);
 	uint32 paramSet = paramRecord->Get_ID();
 
@@ -68,10 +68,10 @@ void Sky::LoadParams(const CDBCStorage* DBCStorage, LightParamsNames _param)
 	m_Params.SetHighlightSky(paramRecord->Get_HighlightSky());
 	m_Params.SetSkybox(DBCStorage->DBC_LightSkybox()[paramRecord->Get_LightSkyboxID()]);
 	m_Params.SetGlow(paramRecord->Get_Glow());
-	m_Params.SetWaterAplha(LightWaterAlpha::WATER_SHALLOW, paramRecord->Get_WaterShallowAlpha());
-	m_Params.SetWaterAplha(LightWaterAlpha::WATER_DEEP, paramRecord->Get_WaterDeepAlpha());
-	m_Params.SetWaterAplha(LightWaterAlpha::OCEAN_SHALLOW, paramRecord->Get_OceanShallowAlpha());
-	m_Params.SetWaterAplha(LightWaterAlpha::OCEAN_DEEP, paramRecord->Get_OceanDeepAlpha());
+	m_Params.SetWaterAplha(ESkyWaterAlpha::SKY_WATER_SHALLOW, paramRecord->Get_WaterShallowAlpha());
+	m_Params.SetWaterAplha(ESkyWaterAlpha::SKY_WATER_DEEP, paramRecord->Get_WaterDeepAlpha());
+	m_Params.SetWaterAplha(ESkyWaterAlpha::SKY_OCEAN_SHALLOW, paramRecord->Get_OceanShallowAlpha());
+	m_Params.SetWaterAplha(ESkyWaterAlpha::SKY_OCEAN_DEEP, paramRecord->Get_OceanDeepAlpha());
 
 	if (m_Params.GetSkybox() != nullptr)
 	{
@@ -80,9 +80,9 @@ void Sky::LoadParams(const CDBCStorage* DBCStorage, LightParamsNames _param)
 	}
 
 	//-- Color params
-	for (uint32 i = 0; i < LightColors::COUNT; i++)
+	for (uint32 i = 0; i < ESkyColors::SKY_COLOR_COUNT; i++)
 	{
-		const DBC_LightIntBandRecord* lightColorsRecord = DBCStorage->DBC_LightIntBand()[paramSet * LightColors::COUNT - (LightColors::COUNT - 1) + i];
+		const DBC_LightIntBandRecord* lightColorsRecord = DBCStorage->DBC_LightIntBand()[paramSet * ESkyColors::SKY_COLOR_COUNT - (ESkyColors::SKY_COLOR_COUNT - 1) + i];
 		_ASSERT(lightColorsRecord != nullptr);
 		for (uint32 l = 0; l < lightColorsRecord->Get_Count(); l++)
 		{
@@ -92,15 +92,16 @@ void Sky::LoadParams(const CDBCStorage* DBCStorage, LightParamsNames _param)
 	}
 
 	//-- Fog, Sun, Clouds param
-	for (uint32 i = 0; i < LightFogs::COUNT; i++)
+	for (uint32 i = 0; i < ESkyFogs::SKY_FOG_COUNT; i++)
 	{
-		const DBC_LightFloatBandRecord* lightFogRecord = DBCStorage->DBC_LightFloatBand()[paramSet * LightFogs::COUNT - (LightFogs::COUNT - 1) + i];
+		const DBC_LightFloatBandRecord* lightFogRecord = DBCStorage->DBC_LightFloatBand()[paramSet * ESkyFogs::SKY_FOG_COUNT - (ESkyFogs::SKY_FOG_COUNT - 1) + i];
 		_ASSERT(lightFogRecord != nullptr);
 		for (uint32 l = 0; l < lightFogRecord->Get_Count(); l++)
 		{
 			// Read time & fog param
 			float param = lightFogRecord->Get_Values(l);
-			if (i == LightFogs::LIGHT_FOG_DISTANCE)	param /= cSkyMultiplier;
+			if (i == ESkyFogs::SKY_FOG_DISTANCE)
+				param /= cSkyMultiplier;
 			m_FloatBand_Fogs[i].push_back(SkyParam_Fog(lightFogRecord->Get_Times(l), param));
 		}
 	}
@@ -108,10 +109,10 @@ void Sky::LoadParams(const CDBCStorage* DBCStorage, LightParamsNames _param)
 
 CSkyParams& Sky::Interpolate(uint32 _time)
 {
-	for (uint8 i = 0; i < LightColors::COUNT; i++)
+	for (uint8 i = 0; i < ESkyColors::SKY_COLOR_COUNT; i++)
 		m_Params.SetColor(i, GetByTimeTemplate(m_IntBand_Colors, i, _time));
 
-	for (uint8 i = 0; i < LightFogs::COUNT; i++)
+	for (uint8 i = 0; i < ESkyFogs::SKY_FOG_COUNT; i++)
 		m_Params.SetFog(i, GetByTimeTemplate(m_FloatBand_Fogs, i, _time));
 
 	return m_Params;

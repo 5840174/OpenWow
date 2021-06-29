@@ -2,7 +2,6 @@
 
 // Include
 #include "Map.h"
-#include "MapWDLTileMaterial.h"
 
 // General
 #include "MapWDL.h"
@@ -10,6 +9,7 @@
 // Additional
 #include "Map/MapWDLTileModel.h"
 #include "WoWChunkReader.h"
+#include "Sky/SkyManager.h"
 
 CMapWDL::CMapWDL(const CMap& Map)
 	: m_Minimap(nullptr)
@@ -108,7 +108,7 @@ void CMapWDL::CreateInsances(const std::shared_ptr<ISceneNode>& Parent) const
 	Log::Green("CMapWDL: Low WMOs count [%d].", m_LowResolutionWMOsPlacementInfo.size());
 	for (const auto& it : m_LowResolutionWMOsPlacementInfo)
 	{
-		if (std::shared_ptr<CWMO> wmo = m_Map.GetBaseManager().GetManager<IWoWObjectsCreator>()->LoadWMO(m_Map.GetBaseManager().GetApplication().GetRenderDevice(), m_LowResolutionWMOsNames[it.nameIndex], true))
+		/*if (std::shared_ptr<CWMO> wmo = m_Map.GetBaseManager().GetManager<IWoWObjectsCreator>()->LoadWMO(m_Map.GetBaseManager().GetApplication().GetRenderDevice(), m_LowResolutionWMOsNames[it.nameIndex], true))
 		{
 			//auto wmoInstance = Parent->CreateSceneNode<CMapWMOInstance>(wmo, it);
 			//m_Map.GetBaseManager().GetManager<ILoader>()->AddToLoadQueue(wmoInstance);
@@ -118,7 +118,7 @@ void CMapWDL::CreateInsances(const std::shared_ptr<ISceneNode>& Parent) const
 		else
 		{
 			Log::Warn("CMapWDL: WMO model '%s' is nullptr.", m_LowResolutionWMOsNames[it.nameIndex].c_str());
-		}
+		}*/
 	}
 #endif
 }
@@ -126,7 +126,7 @@ void CMapWDL::CreateInsances(const std::shared_ptr<ISceneNode>& Parent) const
 void CMapWDL::UpdateCamera(const ICameraComponent3D * camera)
 {
 	if (m_LowResilutionTileMaterial)
-		m_LowResilutionTileMaterial->SetDiffuseColor(glm::vec4(m_Map.GetBaseManager().GetManager<ISkyManager>()->GetColor(LightColors::LIGHT_COLOR_FOG), 1.0f));
+		m_LowResilutionTileMaterial->SetDiffuseColor(glm::vec4(m_Map.GetBaseManager().GetManager<SkyManager>()->GetColor(ESkyColors::SKY_COLOR_FOG), 1.0f));
 }
 
 void CMapWDL::Load()
@@ -254,7 +254,7 @@ void CMapWDL::Load()
 							b = (uint8)(b2*t + b1 * (1.0f - t));
 						}
 
-						mimimapImage->GetPixel<uint32>(i * 8 + x, j * 8 + z) = (r) | (g << 8) | (b << 16) | (255 << 24);
+						mimimapImage->GetPixel<uint32>(i * 8 + x, j * 8 + z, 0) = (r) | (g << 8) | (b << 16) | (0xFF << 24);
 					}
 				}
 			}

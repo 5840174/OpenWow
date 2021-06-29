@@ -66,7 +66,6 @@ void WoWGameObject::OnValuesUpdated(const UpdateMask & Mask)
 void WoWGameObject::Update(const UpdateEventArgs & e)
 {
 	__super::Update(e);
-
 }
 
 void WoWGameObject::OnTemplateCallback(CWoWObjectGuid::EntryType_t entry, const std::shared_ptr<SGameObjectQueryResult>& QueryResult)

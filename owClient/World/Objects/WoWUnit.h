@@ -193,7 +193,7 @@ protected:
 	uint16 m_MovementFlagsExtra;
 
 	// swimming/flying
-	float m_Pitch;
+	float m_StrideOrPitch;
 
 	// falling
 	uint32 m_FallTime;

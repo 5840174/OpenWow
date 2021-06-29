@@ -19,10 +19,6 @@ public:
 
 	void                                CreateInstances();
 
-	// CLoadableObject
-	bool                                Load() override;
-	bool                                Delete() override;
-
 	// CM2_Base_Instance
 	const CM2&                          getM2() const;
 
@@ -48,13 +44,15 @@ public:
 	const std::shared_ptr<CM2ParticlesComponent3D>   getParticleComponent() const { return m_ParticleComponent; }
 #endif
 
-    // Components
-    virtual void                        RegisterComponents() override;
-
-	// SceneNode3D
+	// ISceneNode
 	void								Initialize() override;
+	virtual void                        RegisterComponents() override;
 	virtual void                        Update(const UpdateEventArgs& e) override;
 	virtual void                        Accept(IVisitor* visitor) override;
+
+	// ILoadable
+	bool                                Load() override;
+	bool                                Delete() override;
 
 protected:
 	virtual glm::mat4                   CalculateLocalTransform() const override;
@@ -78,5 +76,5 @@ private:
 #endif
 
 private:
-	std::shared_ptr<const CM2>           m_M2;
+	std::shared_ptr<CM2> m_M2;
 };

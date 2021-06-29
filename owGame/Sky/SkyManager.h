@@ -4,27 +4,29 @@
 
 class ZN_API SkyManager
 	: public CSceneNode
-	, public ISkyManager
+	, public IManager
 {
 public:
+	ZN_OBJECTCLASS(cWowSkyManagerCustom)
+
 	SkyManager(IScene& Scene);
 	virtual ~SkyManager();
 
 	bool                                            Load(uint32 MapID);
 
-	// SceneNode3D
+	// ISceneNode
 	void                                            Update(const UpdateEventArgs& e) override;
 
 	// ISkyManager
-	void                                            Calculate(const ICameraComponent3D* camera, uint32 _time) override;
-	bool                                            HasSkies() const override { return !skies.empty(); }
-	glm::vec3                                       GetColor(LightColors::List _color) const override { return m_Interpolated.GetColor(_color); }
-	float                                           GetFog(LightFogs::List _fog) const override { return m_Interpolated.GetFog(_fog); }
-	float                                           GetGlow() const override { return m_Interpolated.GetGlow(); }
-	float                                           GetWaterShallowAlpha() const override { return m_Interpolated.GetWaterAplha(LightWaterAlpha::WATER_SHALLOW); }
-	float                                           GetWaterDarkAlpha() const override { return m_Interpolated.GetWaterAplha(LightWaterAlpha::WATER_DEEP); }
-	float                                           GetOceanShallowAlpha() const override { return m_Interpolated.GetWaterAplha(LightWaterAlpha::OCEAN_SHALLOW); }
-	float                                           GetOceanDarkAlpha() const override { return m_Interpolated.GetWaterAplha(LightWaterAlpha::OCEAN_DEEP); }
+	void                                            Calculate(const ICameraComponent3D* camera, uint32 _time);
+	bool                                            HasSkies() const { return !skies.empty(); }
+	glm::vec3                                       GetColor(ESkyColors _color) const { return m_Interpolated.GetColor(_color); }
+	float                                           GetFog(ESkyFogs _fog) const { return m_Interpolated.GetFog(_fog); }
+	float                                           GetGlow() const { return m_Interpolated.GetGlow(); }
+	float                                           GetWaterShallowAlpha() const { return m_Interpolated.GetWaterAplha(ESkyWaterAlpha::SKY_WATER_SHALLOW); }
+	float                                           GetWaterDarkAlpha() const { return m_Interpolated.GetWaterAplha(ESkyWaterAlpha::SKY_WATER_DEEP); }
+	float                                           GetOceanShallowAlpha() const { return m_Interpolated.GetWaterAplha(ESkyWaterAlpha::SKY_OCEAN_SHALLOW); }
+	float                                           GetOceanDarkAlpha() const { return m_Interpolated.GetWaterAplha(ESkyWaterAlpha::SKY_OCEAN_DEEP); }
 
 private:
 	void                                            InitBuffer();

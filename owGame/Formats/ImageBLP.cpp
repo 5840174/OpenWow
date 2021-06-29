@@ -31,7 +31,7 @@ bool CImageBLP::IsFilenameSupported(const std::string & Filename)
 	{
 		std::string extension = Filename.substr(lastPointPos + 1);
 		extension = Utils::ToLower(extension);
-		return extension == "png";
+		return extension == "blp";
 	}
 
 	return false;
@@ -41,7 +41,7 @@ bool CImageBLP::IsFileSupported(std::shared_ptr<IFile> File)
 {
 	_ASSERT(File != nullptr);
 
-	if (File->Extension().empty() == false)
+	if (false == File->Extension().empty())
 		if (Utils::ToLower(File->Extension()) != "blp")
 			return false;
 
@@ -80,7 +80,9 @@ bool CImageBLP::LoadBPL(const BLPFormat::BLPHeader& header, std::shared_ptr<IFil
 	{
 		//view->IsTexture3D = true;
 		// 3D texture
+		return false;
 	}
+
 	if (header.height & (header.height - 1))
 	{
 		_ASSERT(false);
@@ -90,21 +92,26 @@ bool CImageBLP::LoadBPL(const BLPFormat::BLPHeader& header, std::shared_ptr<IFil
 	m_Width = header.width;
 	m_Height = header.height;
 	m_BitsPerPixel = 32;
-	m_Stride = m_Width * (m_BitsPerPixel / 8);
 	m_IsTransperent = (header.alphaChannelBitDepth != 0);
-	m_Data.resize(m_Height * m_Stride);
-
 
 	bool    hasAlpha = (header.alphaChannelBitDepth != 0);
-	uint8_t mipmax = 1; //(header.has_mips ? LIBBLP_MIPMAP_COUNT : 1);
+	uint8_t mipmax = (header.has_mips ? LIBBLP_MIPMAP_COUNT : 1);
+
+	m_MipsCount = mipmax;
 
 	for (uint8_t currentMip = 0; currentMip < mipmax; currentMip++)
 	{
 		if ((header.mipOffsets[currentMip] == 0) || (header.mipSizes[currentMip] == 0))
+		{
+			m_MipsCount = currentMip;
 			break;
+		}
 
-		uint16_t mipWidth = std::max(header.width >> currentMip, 1u);
-		uint16_t mipHeight = std::max(header.height >> currentMip, 1u);
+		uint16 mipWidth = std::max(header.width >> currentMip, 1u);
+		uint16 mipHeight = std::max(header.height >> currentMip, 1u);
+		uint32 mipStride = mipWidth * (m_BitsPerPixel / 8);
+
+		m_MipMapData[currentMip].resize(mipHeight * mipStride);
 
 		switch (header.colorEncoding)
 		{
@@ -156,10 +163,10 @@ bool CImageBLP::LoadBPL(const BLPFormat::BLPHeader& header, std::shared_ptr<IFil
 						return NULL;
 					}
 
-					m_Data[resultBufferCntr++] = ((color & 0x00FF0000) >> 16);
-					m_Data[resultBufferCntr++] = ((color & 0x0000FF00) >> 8);
-					m_Data[resultBufferCntr++] = ((color & 0x000000FF));
-					m_Data[resultBufferCntr++] = ((alpha & 0x000000FF));
+					m_MipMapData[currentMip][resultBufferCntr++] = ((color & 0x00FF0000) >> 16);
+					m_MipMapData[currentMip][resultBufferCntr++] = ((color & 0x0000FF00) >> 8);
+					m_MipMapData[currentMip][resultBufferCntr++] = ((color & 0x000000FF));
+					m_MipMapData[currentMip][resultBufferCntr++] = ((alpha & 0x000000FF));
 				}
 			}
 
@@ -174,13 +181,13 @@ bool CImageBLP::LoadBPL(const BLPFormat::BLPHeader& header, std::shared_ptr<IFil
 			switch (header.pixelFormat)
 			{
 			case BLPFormat::BLPPixelFormat::PIXEL_DXT1:
-				LoadDXT_Helper <DDSFormat::DXT_BLOCKDECODER_1>(f);
+				LoadDXT_Helper <DDSFormat::DXT_BLOCKDECODER_1>(mipWidth, mipHeight, mipStride, GetDataEx(currentMip), f);
 				break;
 			case BLPFormat::BLPPixelFormat::PIXEL_DXT3:
-				LoadDXT_Helper <DDSFormat::DXT_BLOCKDECODER_3>(f);
+				LoadDXT_Helper <DDSFormat::DXT_BLOCKDECODER_3>(mipWidth, mipHeight, mipStride, GetDataEx(currentMip), f);
 				break;
 			case BLPFormat::BLPPixelFormat::PIXEL_DXT5:
-				LoadDXT_Helper <DDSFormat::DXT_BLOCKDECODER_5>(f);
+				LoadDXT_Helper <DDSFormat::DXT_BLOCKDECODER_5>(mipWidth, mipHeight, mipStride, GetDataEx(currentMip), f);
 				break;
 			default:
 				_ASSERT(false); //LIBBLP_ERROR_FORMAT
@@ -192,94 +199,13 @@ bool CImageBLP::LoadBPL(const BLPFormat::BLPHeader& header, std::shared_ptr<IFil
 		case BLPFormat::BLPColorEncoding::COLOR_ARGB8888:
 		{
 			f->seek(header.mipOffsets[currentMip]);
-			f->readBytes(&m_Data[0], header.mipSizes[currentMip]);
+			f->readBytes(GetDataEx(currentMip), header.mipSizes[currentMip]);
 		}
 		break;
 
 		default:
 			_ASSERT(false); //LIBBLP_ERROR_FORMAT
 			return false;
-		}
-	}
-
-	return true;
-}
-
-template <class DECODER>
-bool CImageBLP::LoadDXT_Helper(std::shared_ptr<IFile> io)
-{
-	typedef typename DECODER::INFO INFO;
-	typedef typename INFO::Block Block;
-
-	Block *input_buffer = ZN_NEW Block[(m_Width + 3) / 4];
-	if (!input_buffer)
-	{
-		Log::Error("CImageDDS: LoadDXT_Helper: Unable to create 'Block' array with size '%d'.", (m_Width + 3) / 4);
-		return false;
-	}
-
-	int widthRest = (int)m_Width & 3;
-	int heightRest = (int)m_Height & 3;
-	int inputLine = (m_Width + 3) / 4;
-	uint32 y = 0;
-
-	if (m_Height >= 4)
-	{
-		for (; y < m_Height; y += 4)
-		{
-			io->readBytes(input_buffer, sizeof(typename INFO::Block) * inputLine);
-
-			// TODO: probably need some endian work here
-			uint8 *pbSrc = (uint8 *)input_buffer;
-			uint8 *pbDst = GetLineEx(y);
-
-			if (m_Width >= 4)
-			{
-				for (uint32 x = 0; x < m_Width; x += 4)
-				{
-					DecodeDXTBlock <DECODER>(pbDst, pbSrc, m_Stride, 4, 4);
-					pbSrc += INFO::bytesPerBlock;
-					pbDst += 4 * 4;
-				}
-			}
-			if (widthRest)
-			{
-				DecodeDXTBlock <DECODER>(pbDst, pbSrc, m_Stride, widthRest, 4);
-			}
-		}
-	}
-
-	if (heightRest)
-	{
-		io->readBytes(input_buffer, sizeof(typename INFO::Block) * inputLine);
-		// TODO: probably need some endian work here
-		uint8 *pbSrc = (uint8 *)input_buffer;
-		uint8 *pbDst = GetLineEx(y);
-
-		if (m_Width >= 4)
-		{
-			for (int x = 0; x < m_Width; x += 4)
-			{
-				DecodeDXTBlock <DECODER>(pbDst, pbSrc, m_Stride, 4, heightRest);
-				pbSrc += INFO::bytesPerBlock;
-				pbDst += 4 * 4;
-			}
-		}
-		if (widthRest)
-		{
-			DecodeDXTBlock <DECODER>(pbDst, pbSrc, m_Stride, widthRest, heightRest);
-		}
-
-	}
-
-	delete[] input_buffer;
-
-	for (size_t pixelIndex = 0; pixelIndex < m_Height * m_Width * 4; pixelIndex += 4)
-	{
-		if (m_Data[pixelIndex + 3] < 0xFF)
-		{
-			m_IsTransperent = true;
-			break;
 		}
 	}
 

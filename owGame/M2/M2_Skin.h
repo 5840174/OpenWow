@@ -26,7 +26,7 @@ public:
 
 	const std::map<size_t, std::vector<std::shared_ptr<CM2_Skin_Batch>>>& GetGeometryMaterials() const
 	{
-		return m_GeometryMarerials;
+		return m_GeometryMaterials;
 	}
 
 	// IModel
@@ -36,7 +36,7 @@ private:
 	std::vector<std::shared_ptr<CM2_SkinSection>> m_Sections; // 'Geometries'
 	std::vector<std::shared_ptr<CM2_Skin_Batch>> m_Batches;   // 'Materials'
 
-	std::map<size_t, std::vector<std::shared_ptr<CM2_Skin_Batch>>> m_GeometryMarerials;
+	std::map<size_t, std::vector<std::shared_ptr<CM2_Skin_Batch>>> m_GeometryMaterials;
 	
 private:
 	IBaseManager& m_BaseManager;

@@ -59,32 +59,30 @@ void CM2_Comp_Materials::Load(const SM2_Header& M2Header, const std::shared_ptr<
 	}
 
 	// 3.2 Textures lookup
-	if (M2Header.textureLookup.size > 0)
+	if (M2Header.textureCombos.size > 0)
 	{
-		int16* m2TexturesLookups = (int16*)(File->getData() + M2Header.textureLookup.offset);
-		for (uint32 i = 0; i < M2Header.textureLookup.size; i++)
+		int16* m2TexturesLookups = (int16*)(File->getData() + M2Header.textureCombos.offset);
+		for (uint32 i = 0; i < M2Header.textureCombos.size; i++)
 		{
 			m_TexturesLookup.push_back(m2TexturesLookups[i]);
 		}
 	}
 
-	// 3.3 Textures unit lookup
-	if (M2Header.textureUnitLookup.size > 0)
+	// 3.3 Replaceble textures lookup
+	if (M2Header.textureIndicesById.size > 0)
 	{
-		int16* m2TexturesUnitLookups = (int16*)(File->getData() + M2Header.textureUnitLookup.offset);
-		for (uint32 i = 0; i < M2Header.textureUnitLookup.size; i++)
-		{
-			m_TexturesUnitLookup.push_back(m2TexturesUnitLookups[i]);
-		}
+		int16* m2ReplacebleLookup = (int16*)(File->getData() + M2Header.textureIndicesById.offset);
+		for (uint32 i = 0; i < M2Header.textureIndicesById.size; i++)
+			m_ReplacebleLookup.push_back(m2ReplacebleLookup[i]);
 	}
 
-	// 3.4 Replaceble textures lookup
-	if (M2Header.replacable_texture_lookup.size > 0)
+	// 3.4 Textures unit lookup
+	if (M2Header.textureCoordCombos.size > 0)
 	{
-		int16* m2ReplacebleLookup = (int16*)(File->getData() + M2Header.replacable_texture_lookup.offset);
-		for (uint32 i = 0; i < M2Header.replacable_texture_lookup.size; i++)
+		int16* m2TexturesUnitLookups = (int16*)(File->getData() + M2Header.textureCoordCombos.offset);
+		for (uint32 i = 0; i < M2Header.textureCoordCombos.size; i++)
 		{
-			m_ReplacebleLookup.push_back(m2ReplacebleLookup[i]);
+			m_TexturesUnitLookup.push_back(m2TexturesUnitLookups[i]);
 		}
 	}
 
@@ -106,16 +104,14 @@ void CM2_Comp_Materials::Load(const SM2_Header& M2Header, const std::shared_ptr<
 	}
 
 	// 4.2 Textures weights lookup
-	if (M2Header.textureWeightsLookup.size > 0)
+	if (M2Header.textureWeightCombos.size > 0)
 	{
-		int16* m2TextureWeightsLookup = (int16*)(File->getData() + M2Header.textureWeightsLookup.offset);
-		for (uint32 i = 0; i < M2Header.textureWeightsLookup.size; i++)
+		int16* m2TextureWeightsLookup = (int16*)(File->getData() + M2Header.textureWeightCombos.offset);
+		for (uint32 i = 0; i < M2Header.textureWeightCombos.size; i++)
 		{
 			m_TextureWeightsLookup.push_back(m2TextureWeightsLookup[i]);
 		}
 	}
-
-	//_ASSERT(M2Header.textureWeights.size == M2Header.textureWeightsLookup.size);
 
 	// 5.1 Textures transform
 	if (M2Header.textureTransforms.size > 0)
@@ -137,12 +133,20 @@ void CM2_Comp_Materials::Load(const SM2_Header& M2Header, const std::shared_ptr<
 	}
 
 	// 5.2 Textures transform lookup
-	if (M2Header.textureTransformsLookup.size > 0)
+	if (M2Header.textureTransformCombos.size > 0)
 	{
-		int16* m2TextureTransformsLookups = (int16*)(File->getData() + M2Header.textureTransformsLookup.offset);
-		for (uint32 i = 0; i < M2Header.textureTransformsLookup.size; i++)
+		int16* m2TextureTransformsLookups = (int16*)(File->getData() + M2Header.textureTransformCombos.offset);
+		for (uint32 i = 0; i < M2Header.textureTransformCombos.size; i++)
 		{
 			m_TexturesTransformLookup.push_back(m2TextureTransformsLookups[i]);
 		}
+	}
+
+	// 6.1 Textures combiner lookup
+	if ((M2Header.global_flags.flag_use_texture_combiner_combos) && (M2Header.textureCombinerCombos.size > 0))
+	{
+		int16* m2TextureCombinerLookups = (int16*)(File->getData() + M2Header.textureCombinerCombos.offset);
+		for (uint32 i = 0; i < M2Header.textureCombinerCombos.size; i++)
+			m_TexturesCombinerLookup.push_back(m2TextureCombinerLookups[i]);
 	}
 }

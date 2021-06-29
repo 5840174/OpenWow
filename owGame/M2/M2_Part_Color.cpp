@@ -53,5 +53,5 @@ float CM2_Part_Color::GetAlpha(const CM2_Base_Instance* M2Instance, uint32 Globa
 	if (const auto& animator = M2Instance->getAnimator())
 		if (m_AlphaAnimated.IsUsesBySequence(animator->getSequenceIndex()))
 			return m_AlphaAnimated.GetValue(animator->getSequenceIndex(), animator->getCurrentTime(), m_M2Object.getSkeleton().getGlobalLoops(), GlobalTime);
-	return 0.05f;
+	return 0.5f;
 }

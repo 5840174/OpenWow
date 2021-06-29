@@ -31,6 +31,7 @@ CMapChunk::CMapChunk(IScene& Scene, CMapTile& MapTileParent, const SMapTile_MCIN
 {
 	m_Bytes = MakeShared(CByteBuffer, Bytes->getData() + Chunk.offset, Chunk.size);
 	SetName("MapTile[" + std::to_string(m_MapTile.getIndexX()) + "," + std::to_string(m_MapTile.getIndexZ()) + "]_Chunk[" + std::to_string(Chunk.offset) + "]");
+	SetUpdateEnabled(false);
 }
 
 CMapChunk::~CMapChunk()
@@ -60,25 +61,15 @@ void CMapChunk::Initialize()
 {
 	__super::Initialize();
 
-	//m_Bytes->seek(m_MCIN.offset);
-
 	// Chunk + size (8)
 	uint32_t offset;
 	m_Bytes->read(&offset);
-
 	uint32_t size;
 	m_Bytes->read(&size);
-
-	uint32_t startPos = m_Bytes->getPos();
 
 	// Read header
 	m_Bytes->readBytes(&m_Header, sizeof(SMapChunk_MCNK));
 
-	// Scene node params
-	{
-		// Set translate
-		//SetLocalPosition(glm::vec3(- m_Header.xpos + C_ZeroPoint, m_Header.ypos, - m_Header.zpos + C_ZeroPoint));
-	}
 
 	if (auto colliderComponent = GetComponentT<IColliderComponent>())
 	{
@@ -470,46 +461,45 @@ bool CMapChunk::Load()
 	mapChunkMaterial->SetIsNortrend(m_Map.IsNortrend());
 
 	// Geom High
-	/*{ 
+	{ 
 		const std::vector<uint16>& mapArrayHigh = m_Map.GenarateHighMapArray(m_Header.holes);
-		std::shared_ptr<IBuffer> __ibHigh = GetRenderDevice().GetObjectsFactory().CreateIndexBuffer(mapArrayHigh);
+		std::shared_ptr<IBuffer> indexBufferHigh = GetRenderDevice().GetObjectsFactory().CreateIndexBuffer(mapArrayHigh);
 
 		std::shared_ptr<IGeometry> defaultGeometry = GetRenderDevice().GetObjectsFactory().CreateGeometry();
-
 		defaultGeometry->AddVertexBuffer(BufferBinding("POSITION", 0), verticesBuffer);
 		defaultGeometry->AddVertexBuffer(BufferBinding("NORMAL", 0), normalsBuffer);
 		defaultGeometry->AddVertexBuffer(BufferBinding("TEXCOORD", 0), m_Map.GetBufferTextureCoordDetailAndAlpha());
 		if (mccvBuffer)
 			defaultGeometry->AddVertexBuffer(BufferBinding("COLOR", 0), mccvBuffer);
 
-		defaultGeometry->SetIndexBuffer(__ibHigh);
-
-		auto mapChunkModel = GetRenderDevice().GetObjectsFactory().CreateModel();
-		mapChunkModel->AddConnection(mapChunkMaterial, defaultGeometry);
-
-		GetComponentT<IModelComponent>()->SetModel(mapChunkModel);
-	}*/
-
-	// Geom Default
-	{
-		const std::vector<uint16>& mapArrayHigh = m_Map.GenarateDefaultMapArray(m_Header.holes);
-		std::shared_ptr<IBuffer> __ibDefault = GetRenderDevice().GetObjectsFactory().CreateIndexBuffer(mapArrayHigh);
-
-		std::shared_ptr<IGeometry> defaultGeometry = GetRenderDevice().GetObjectsFactory().CreateGeometry();
-
-		defaultGeometry->AddVertexBuffer(BufferBinding("POSITION", 0), verticesBuffer);
-		defaultGeometry->AddVertexBuffer(BufferBinding("NORMAL", 0), normalsBuffer);
-		defaultGeometry->AddVertexBuffer(BufferBinding("TEXCOORD", 0), m_Map.GetBufferTextureCoordDetailAndAlpha());
-		if (mccvBuffer)
-			defaultGeometry->AddVertexBuffer(BufferBinding("COLOR", 0), mccvBuffer);
-
-		defaultGeometry->SetIndexBuffer(__ibDefault);
+		defaultGeometry->SetIndexBuffer(indexBufferHigh);
 
 		auto mapChunkModel = GetRenderDevice().GetObjectsFactory().CreateModel();
 		mapChunkModel->AddConnection(mapChunkMaterial, defaultGeometry);
 
 		GetComponentT<IModelComponent>()->SetModel(mapChunkModel);
 	}
+
+	// Geom Default
+	/*{
+		const std::vector<uint16>& mapArrayDefault = m_Map.GenarateDefaultMapArray(m_Header.holes);
+		std::shared_ptr<IBuffer> indexBufferDefault = GetRenderDevice().GetObjectsFactory().CreateIndexBuffer(mapArrayDefault);
+
+		std::shared_ptr<IGeometry> defaultGeometry = GetRenderDevice().GetObjectsFactory().CreateGeometry();
+
+		defaultGeometry->AddVertexBuffer(BufferBinding("POSITION", 0), verticesBuffer);
+		defaultGeometry->AddVertexBuffer(BufferBinding("NORMAL", 0), normalsBuffer);
+		defaultGeometry->AddVertexBuffer(BufferBinding("TEXCOORD", 0), m_Map.GetBufferTextureCoordDetailAndAlpha());
+		if (mccvBuffer)
+			defaultGeometry->AddVertexBuffer(BufferBinding("COLOR", 0), mccvBuffer);
+
+		defaultGeometry->SetIndexBuffer(indexBufferDefault);
+
+		auto mapChunkModel = GetRenderDevice().GetObjectsFactory().CreateModel();
+		mapChunkModel->AddConnection(mapChunkMaterial, defaultGeometry);
+
+		GetComponentT<IModelComponent>()->SetModel(mapChunkModel);
+	}*/
 
 	return true;
 }

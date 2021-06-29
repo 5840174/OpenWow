@@ -16,7 +16,7 @@ public:
 	BoundingBox GetBoundingBox() const override final;
 	void SetVisibilityState(bool _visibility) override final;
 
-	// SceneNode3D
+	// ISceneNode
 	void Accept(IVisitor* visitor) override;
 
 private:

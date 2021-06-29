@@ -85,13 +85,13 @@ struct SM2_Header
 #endif
 	M2Array<SM2_TextureTransform>	textureTransforms;
 
-    M2Array<uint16>					replacable_texture_lookup;		// ???
+    M2Array<uint16>					textureIndicesById;		// ???
     M2Array<SM2_Material>			materials;						// Blending modes / render flags.
-	M2Array<uint16>					bonesLookup;
-    M2Array<uint16>					textureLookup;
-	M2Array<uint16>					textureUnitLookup;				// -1 env mapping, 0, 1 - indexes
-    M2Array<uint16>					textureWeightsLookup;
-    M2Array<uint16>					textureTransformsLookup;
+	M2Array<uint16>					boneCombos;
+    M2Array<uint16>					textureCombos;
+	M2Array<uint16>					textureCoordCombos;				// -1 env mapping, 0, 1 - indexes
+    M2Array<uint16>					textureWeightCombos;
+    M2Array<uint16>					textureTransformCombos;
 
 
     // Bounding box
@@ -122,6 +122,8 @@ struct SM2_Header
     // Emitters and particles
     M2Array<SM2_RibbonEmitter>		ribbon_emitters;
     M2Array<SM2_Particle>			particle_emitters;
+
+	M2Array<uint16>                 textureCombinerCombos;
 };
 
 #pragma pack(pop)

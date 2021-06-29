@@ -73,209 +73,1443 @@
 ~Loading shader 'shaders_D3D/M2.hlsl':'PS_main'.
 ~Loading shader 'shaders_D3D/M2.hlsl':'VS_main_Inst'.
 ~Loading shader 'shaders_D3D/M2.hlsl':'PS_main'.
+~Loading shader 'shaders_D3D/M2.hlsl':'VS_main'.
+~Loading shader 'shaders_D3D/M2.hlsl':'PS_main'.
+~Loading shader 'shaders_D3D/M2.hlsl':'VS_main_Inst'.
+~Loading shader 'shaders_D3D/M2.hlsl':'PS_main'.
 ~Loading shader 'shaders_D3D/Liquid.hlsl':'VS_main'.
 ~Loading shader 'shaders_D3D/Liquid.hlsl':'PS_main'.
-~Loading shader '3D/BondingBox.hlsl':'VS_main_Inst'.
-~Loading shader '3D/BondingBox.hlsl':'PS_main'.
-~Loading shader '3D/Debug.hlsl':'VS_main'.
-~Loading shader '3D/Debug.hlsl':'PS_main'.
 ~Loading shader 'UI/UIControlCommon.hlsl':'VS_main'.
 ~Loading shader 'UI/UIControlCommon.hlsl':'PS_main'.
 ~Loading shader 'UI/UI_Font.hlsl':'VS_main'.
 ~Loading shader 'UI/UI_Font.hlsl':'PS_main'.
-~Sky: [191] is global sky.
- Map[Kalimdor]: Id = '1'. Preloading...
- Map[Kalimdor]: InstanceType = '0'.
- Map[Kalimdor]: MapType = '0'.
- Map[Kalimdor]: IsBattleGround = '0'.
- Map[Kalimdor]: Name = 'Калимдор'.
- Map[Kalimdor]: AreaTableID = '0'.
- Map[Kalimdor]: AllianceDescr = ''.
- Map[Kalimdor]: HordeDescr = ''.
- Map[Kalimdor]: CorpseMapID = '-1'.
- Map[Kalimdor]: Id [1]. Loading...
+~Sky: [2488] is global sky.
+ Map[IcecrownCitadel]: Id = '631'. Preloading...
+ Map[IcecrownCitadel]: InstanceType = '2'.
+ Map[IcecrownCitadel]: MapType = '285'.
+ Map[IcecrownCitadel]: IsBattleGround = '0'.
+ Map[IcecrownCitadel]: Name = 'Цитадель Ледяной Короны'.
+ Map[IcecrownCitadel]: AreaTableID = '0'.
+ Map[IcecrownCitadel]: AllianceDescr = ''.
+ Map[IcecrownCitadel]: HordeDescr = ''.
+ Map[IcecrownCitadel]: CorpseMapID = '571'.
+ Map[IcecrownCitadel]: Id [631]. Loading...
 ^CMapWDL: Low WMOs count [0].
 ~MapWDT: Global WMO exists [false].
- CWorldObjectCreator::LoadWMO: WMO 'WORLD\WMO\OUTLAND\ORCBUILDINGS\OUTLANDPIGFARMRUIN02.WMO' loaded.
- CWorldObjectCreator::LoadWMO: WMO 'WORLD\WMO\KALIMDOR\COLLIDABLEDOODADS\ORCBRIDGE\ORCBRIDGE.WMO' loaded.
- CWorldObjectCreator::LoadWMO: WMO 'WORLD\WMO\KALIMDOR\BUILDINGS\ORCHUT\ORCHUT.WMO' loaded.
- CWorldObjectCreator::LoadWMO: WMO 'WORLD\WMO\DUNGEON\MD_MOUNTAINCAVE\MD_WARMCAVE.WMO' loaded.
- CWorldObjectCreator::LoadWMO: WMO 'WORLD\WMO\OUTLAND\ORCBUILDINGS\OUTLANDORCPIGFARM01.WMO' loaded.
- CWorldObjectCreator::LoadWMO: WMO 'WORLD\WMO\KALIMDOR\BUILDINGS\ORCZEPPELINHOUSE\ORCZEPPELINHOUSE_DUROTAR01.WMO' loaded.
- CWorldObjectCreator::LoadWMO: WMO 'WORLD\WMO\DUNGEON\MD_MOUNTAINCAVE\MD_WARMCAVE_MEDIUM.WMO' loaded.
- CWorldObjectCreator::LoadWMO: WMO 'WORLD\WMO\KALIMDOR\BUILDINGS\ORCTOWER\ORCTOWER.WMO' loaded.
- CWorldObjectCreator::LoadWMO: WMO 'WORLD\WMO\DUNGEON\MD_CAVETUNNELS\MD_WARMCAVETUNNEL01.WMO' loaded.
- CWorldObjectCreator::LoadWMO: WMO 'WORLD\WMO\KALIMDOR\BUILDINGS\TROLLBURROW\TROLLBURROW.WMO' loaded.
- CWorldObjectCreator::LoadWMO: WMO 'WORLD\WMO\KALIMDOR\BUILDINGS\ORCBARRACKS\ORCBARRACKS.WMO' loaded.
- CWorldObjectCreator::LoadWMO: WMO 'WORLD\WMO\KALIMDOR\BUILDINGS\ORCINN\ORCINN.WMO' loaded.
- CWorldObjectCreator::LoadWMO: WMO 'WORLD\WMO\KALIMDOR\BUILDINGS\ORCBLACKSMITH\ORCBLACKSMITH.WMO' loaded.
- CWorldObjectCreator::LoadWMO: WMO 'WORLD\WMO\DUNGEON\MD_SHIPWRECK\SHIPWRECK_B.WMO' loaded.
- CWorldObjectCreator::LoadWMO: WMO 'WORLD\WMO\DUNGEON\MD_SHIPWRECK\SHIPWRECK_D.WMO' loaded.
- CWorldObjectCreator::LoadWMO: WMO 'WORLD\WMO\KALIMDOR\OGRIMMAR\OGRIMMAR.WMO' loaded.
- CWorldObjectCreator::LoadWMO: WMO 'WORLD\WMO\KALIMDOR\BUILDINGS\ORCZEPPELINHOUSE\ORCZEPPELINHOUSE.WMO' loaded.
- CWorldObjectCreator::LoadWMO: WMO 'WORLD\WMO\KALIMDOR\COLLIDABLEDOODADS\DUROTAR\STONEGATE\DUROTARGATE.WMO' loaded.
- CWorldObjectCreator::LoadWMO: WMO 'WORLD\WMO\DUNGEON\MD_RUINEDKEEP\RUINEDKEEP.WMO' loaded.
- CWorldObjectCreator::LoadWMO: WMO 'WORLD\WMO\AZEROTH\BUILDINGS\GUARDTOWER_RUINED\RUINEDHUMANGUARDTOWER01.WMO' loaded.
- CWorldObjectCreator::LoadWMO: WMO 'WORLD\WMO\LORDERON\COLLIDABLEDOODADS\ARATHIHIGHLANDS\HUMANRUINEDBUILDINGS\HURUINEDBUILDINGSSMALL01.WMO' loaded.
- CWorldObjectCreator::LoadWMO: WMO 'WORLD\WMO\LORDERON\COLLIDABLEDOODADS\ARATHIHIGHLANDS\HUMANRUINEDBUILDINGS\HURUINEDBUILDINGSBIG01.WMO' loaded.
- CWorldObjectCreator::LoadWMO: WMO 'WORLD\WMO\LORDERON\COLLIDABLEDOODADS\ARATHIHIGHLANDS\HUMANRUINEDBUILDINGS\HURUINEDBUILDINGSSMALL02.WMO' loaded.
- CWorldObjectCreator::LoadWMO: WMO 'WORLD\WMO\LORDERON\COLLIDABLEDOODADS\ARATHIHIGHLANDS\HUMANRUINEDBUILDINGS\HURUINEDBUILDINGSMED01.WMO' loaded.
- CWorldObjectCreator::LoadWMO: WMO 'WORLD\WMO\DUNGEON\MD_SHIPWRECK\SHIPWRECK_C.WMO' loaded.
- CWorldObjectCreator::LoadWMO: WMO 'WORLD\WMO\KALIMDOR\BUILDINGS\DUROTAR\TIRIGARDEKEEP\TIRIGARDEKEEP01.WMO' loaded.
- CWorldObjectCreator::LoadWMO: WMO 'WORLD\WMO\KALIMDOR\BUILDINGS\DUROTAR\TIRIGARDEKEEP\TIRIGARDEKEEP02.WMO' loaded.
- CWorldObjectCreator::LoadWMO: WMO 'WORLD\WMO\KALIMDOR\COLLIDABLEDOODADS\MULGORE\CENTAURTENTS\CENTAURTENT03.WMO' loaded.
- CWorldObjectCreator::LoadWMO: WMO 'WORLD\WMO\KALIMDOR\COLLIDABLEDOODADS\MULGORE\CENTAURTENTS\CENTAURTENT02.WMO' loaded.
- CWorldObjectCreator::LoadWMO: WMO 'WORLD\WMO\KALIMDOR\BUILDINGS\TROLLHUT\TROLLHUTSMALL01.WMO' loaded.
- CWorldObjectCreator::LoadWMO: WMO 'WORLD\WMO\KALIMDOR\BUILDINGS\TROLLHUT\TROLLHUT01.WMO' loaded.
- CWorldObjectCreator::LoadWMO: WMO 'WORLD\WMO\KALIMDOR\COLLIDABLEDOODADS\TANARIS\TROLLTENT\TROLLTENTSAND01.WMO' loaded.
- CWorldObjectCreator::LoadWMO: WMO 'WORLD\WMO\AZEROTH\BUILDINGS\STRANGLETHORN_BOOTYBAY\RATCHET_DOCK.WMO' loaded.
- CWorldObjectCreator::LoadWMO: WMO 'WORLD\WMO\KALIMDOR\BUILDINGS\TROLLHOTEL\TROLL_HOTEL01.WMO' loaded.
- CWorldObjectCreator::LoadWMO: WMO 'WORLD\WMO\AZEROTH\BUILDINGS\STRANGLETHORN_BOOTYBAY\BOOTYBAY_RAILING.WMO' loaded.
- CWorldObjectCreator::LoadWMO: WMO 'WORLD\WMO\KALIMDOR\BUILDINGS\ORCTWOSTORY\ORCTWOSTORY.WMO' loaded.
- CWorldObjectCreator::LoadWMO: WMO 'WORLD\WMO\DUNGEON\MD_HORDEMINE\MD_HORDEMINE1ROOM.WMO' loaded.
- CWorldObjectCreator::LoadWMO: WMO 'WORLD\WMO\KALIMDOR\BUILDINGS\GOBLINLAB\GOBLINLAB.WMO' loaded.
- CWorldObjectCreator::LoadWMO: WMO 'WORLD\WMO\AZEROTH\BUILDINGS\STRANGLETHORN_BOOTYBAY\BOOTYBAY_WAREHOUSE.WMO' loaded.
- CWorldObjectCreator::LoadWMO: WMO 'WORLD\WMO\AZEROTH\BUILDINGS\STRANGLETHORN_BOOTYBAY\RATCHET_INN.WMO' loaded.
- CWorldObjectCreator::LoadWMO: WMO 'WORLD\WMO\DUNGEON\MD_SHIPWRECK\TRANSPORT_SHIPWRECK.WMO' loaded.
- CWorldObjectCreator::LoadWMO: WMO 'WORLD\WMO\KALIMDOR\BUILDINGS\TAURENHUTS\TAURENTEPEE.WMO' loaded.
- CWorldObjectCreator::LoadWMO: WMO 'WORLD\WMO\DUNGEON\MD_PIRATESHIP\PIRATESHIP.WMO' loaded.
- CWorldObjectCreator::LoadWMO: WMO 'WORLD\WMO\KALIMDOR\BUILDINGS\TROLLHUT\TROLLHUT_BURN01.WMO' loaded.
- CWorldObjectCreator::LoadWMO: WMO 'WORLD\WMO\KALIMDOR\BUILDINGS\TROLLHOTEL\TROLL_HOTEL_BURN01.WMO' loaded.
- CWorldObjectCreator::LoadWMO: WMO 'WORLD\WMO\AZEROTH\BUILDINGS\PRISON_CAMP\PRISONHQ_NEW.WMO' loaded.
- CWorldObjectCreator::LoadWMO: WMO 'WORLD\WMO\AZEROTH\BUILDINGS\PRISON_CAMP\PRISONLONGHOUSE_NEW.WMO' loaded.
- CWorldObjectCreator::LoadWMO: WMO 'WORLD\WMO\AZEROTH\BUILDINGS\PRISON_CAMP\PRISONOUBLIETTEWATER.WMO' loaded.
- CWorldObjectCreator::LoadWMO: WMO 'WORLD\WMO\AZEROTH\BUILDINGS\INTACTPRISONTOWER\INTACTPRISONTOWER.WMO' loaded.
- CWorldObjectCreator::LoadWMO: WMO 'WORLD\WMO\KALIMDOR\BUILDINGS\ORCHUT\ORCHUT.WMO' loaded.
- CWorldObjectCreator::LoadWMO: WMO 'WORLD\WMO\AZEROTH\BUILDINGS\STRANGLETHORN_BOOTYBAY\BOOTYBAY_HOUSE1.WMO' loaded.
- CWorldObjectCreator::LoadWMO: WMO 'WORLD\WMO\KALIMDOR\BUILDINGS\ORCKENNEL\ORCKENNEL.WMO' loaded.
- CWorldObjectCreator::LoadWMO: WMO 'WORLD\WMO\KALIMDOR\BUILDINGS\ORCTOWER\ORCTOWER.WMO' loaded.
- CWorldObjectCreator::LoadWMO: WMO 'WORLD\WMO\KALIMDOR\BUILDINGS\GOBLINHUT\GOBLINHUT.WMO' loaded.
- CWorldObjectCreator::LoadWMO: WMO 'WORLD\WMO\AZEROTH\BUILDINGS\STRANGLETHORN_BOOTYBAY\BOOTYBAY_HOUSE2.WMO' loaded.
- CWorldObjectCreator::LoadWMO: WMO 'WORLD\WMO\KALIMDOR\BUILDINGS\TAURENHUTS\TAURENTALLHUT.WMO' loaded.
- CWorldObjectCreator::LoadWMO: WMO 'WORLD\WMO\KALIMDOR\BUILDINGS\ORCINN\ORCINN.WMO' loaded.
- CWorldObjectCreator::LoadWMO: WMO 'WORLD\WMO\KALIMDOR\BUILDINGS\TAURENHUTS\TAURENCHICKENHUT.WMO' loaded.
- CWorldObjectCreator::LoadWMO: WMO 'WORLD\WMO\KALIMDOR\COLLIDABLEDOODADS\MULGORE\CENTAURTENTS\CENTAURTENTCOMMAND.WMO' loaded.
- CWorldObjectCreator::LoadWMO: WMO 'WORLD\WMO\AZEROTH\BUILDINGS\KEEPWALL\WALLPIECE03.WMO' loaded.
- CWorldObjectCreator::LoadWMO: WMO 'WORLD\WMO\AZEROTH\BUILDINGS\KEEPWALL\LOWWALLPOST01.WMO' loaded.
- CWorldObjectCreator::LoadWMO: WMO 'WORLD\WMO\AZEROTH\BUILDINGS\GUARDTOWER\GUARDTOWER.WMO' loaded.
- CWorldObjectCreator::LoadWMO: WMO 'WORLD\WMO\AZEROTH\BUILDINGS\KEEPWALL\GATE03.WMO' loaded.
- CWorldObjectCreator::LoadWMO: WMO 'WORLD\WMO\AZEROTH\BUILDINGS\WESTFALL_BLACKSMITH\WESTFALL_BLACKSMITH.WMO' loaded.
- CWorldObjectCreator::LoadWMO: WMO 'WORLD\WMO\AZEROTH\BUILDINGS\WESTFALL_STABLE\WESTFALL_STABLE.WMO' loaded.
- CWorldObjectCreator::LoadWMO: WMO 'WORLD\WMO\AZEROTH\BUILDINGS\WESTFALL_MAGETOWER\WESTFALL_MAGETOWER.WMO' loaded.
- CWorldObjectCreator::LoadWMO: WMO 'WORLD\WMO\KALIMDOR\BUILDINGS\TAURENHUTS\TAURENHUTA.WMO' loaded.
- CWorldObjectCreator::LoadWMO: WMO 'WORLD\WMO\KALIMDOR\COLLIDABLEDOODADS\MULGORE\CROSSROADSBRIDGE\CROSSROADSBRIDGE.WMO' loaded.
- CWorldObjectCreator::LoadWMO: WMO 'WORLD\WMO\KALIMDOR\BUILDINGS\TAURENHUTS\TAURENHUTB.WMO' loaded.
- CWorldObjectCreator::LoadWMO: WMO 'WORLD\WMO\DUNGEON\KL_WAILING\WAILINGCAVERNS.WMO' loaded.
- CWorldObjectCreator::LoadWMO: WMO 'WORLD\WMO\KALIMDOR\BUILDINGS\TAURENHUTS\RUINEDTAURENTEPEE.WMO' loaded.
- CWorldObjectCreator::LoadWMO: WMO 'WORLD\WMO\KALIMDOR\BUILDINGS\TAURENHUTS\RUINEDTAURENCHICKENHUT.WMO' loaded.
- CWorldObjectCreator::LoadWMO: WMO 'WORLD\WMO\KALIMDOR\BUILDINGS\TAURENHUTS\TAURENHUTBIG.WMO' loaded.
- CWorldObjectCreator::LoadWMO: WMO 'WORLD\WMO\KALIMDOR\BUILDINGS\TAURENHUTS\TAURENHUTD.WMO' loaded.
- CWorldObjectCreator::LoadWMO: WMO 'WORLD\WMO\KALIMDOR\BUILDINGS\TAURENLONGHOUSE\TAURENLONGHOUSE.WMO' loaded.
- CWorldObjectCreator::LoadWMO: WMO 'WORLD\WMO\DUNGEON\MD_SPIDERMINE\MD_SPIDERMINE.WMO' loaded.
- CWorldObjectCreator::LoadWMO: WMO 'WORLD\WMO\DUNGEON\MD_OGREMOUND\MD_OGREMOUND1ROOM.WMO' loaded.
- CWorldObjectCreator::LoadWMO: WMO 'WORLD\WMO\AZEROTH\COLLIDABLE DOODADS\SWAMPOFSORROWS\SWAMPBRIDGE01\SWAMPBRIDGE01.WMO' loaded.
- CWorldObjectCreator::LoadWMO: WMO 'WORLD\WMO\LORDERON\COLLIDABLEDOODADS\ARATHIHIGHLANDS\HUMANRUINEDBUILDINGS\HURUINEDBUILDINGSMED02.WMO' loaded.
- CWorldObjectCreator::LoadWMO: WMO 'WORLD\WMO\LORDERON\COLLIDABLEDOODADS\ARATHIHIGHLANDS\WRECKEDBUILDINGHCORNER02\WRECKEDBUILDINGHCORNER02.WMO' loaded.
- CWorldObjectCreator::LoadWMO: WMO 'WORLD\WMO\OUTLAND\ORCBUILDINGS\OUTLANDORCTOWER04.WMO' loaded.
- CWorldObjectCreator::LoadWMO: WMO 'WORLD\WMO\KALIMDOR\COLLIDABLEDOODADS\DUSTWALLOWMARSH\DUSTWALLOWFOOTBRIDGE\DUSTWALLOWFOOTBRIDGE.WMO' loaded.
- CWorldObjectCreator::LoadWMO: WMO 'WORLD\WMO\KALIMDOR\BUILDINGS\TAURENHUTS\RUINEDTAURENTALLHUT.WMO' loaded.
- CWorldObjectCreator::LoadWMO: WMO 'WORLD\WMO\KALIMDOR\BUILDINGS\TAURENHUTS\RUINEDTAURENHUTB.WMO' loaded.
- CWorldObjectCreator::LoadWMO: WMO 'WORLD\WMO\AZEROTH\BUILDINGS\GUARDTOWER_RUINED\RUINEDHUMANGUARDTOWER01.WMO' loaded.
- CWorldObjectCreator::LoadWMO: WMO 'WORLD\WMO\DUNGEON\KL_RAZORFEN\RAZORFENKRAUL.WMO' loaded.
- CWorldObjectCreator::LoadWMO: WMO 'WORLD\WMO\KALIMDOR\COLLIDABLEDOODADS\BARRENS\EXCAVATIONPLATFORM\EXCAVATIONPLATFORM.WMO' loaded.
- CWorldObjectCreator::LoadWMO: WMO 'WORLD\WMO\DUNGEON\MD_CAVEDEN\MD_MUSHROOMDEN.WMO' loaded.
- CWorldObjectCreator::LoadWMO: WMO 'WORLD\WMO\KALIMDOR\COLLIDABLEDOODADS\STONETALON\LANDINGPAD\LANDINGPAD01.WMO' loaded.
- CWorldObjectCreator::LoadWMO: WMO 'WORLD\WMO\KALIMDOR\BUILDINGS\QUILLBOAR\HUT.WMO' loaded.
- CWorldObjectCreator::LoadWMO: WMO 'WORLD\WMO\KHAZMODAN\BUILDINGS\DWARVEN_BARRACKS\WETLANDS_BARRACKS\WET_DWARFBARRACKS.WMO' loaded.
- CWorldObjectCreator::LoadWMO: WMO 'WORLD\WMO\KALIMDOR\BUILDINGS\QUILLBOAR\LADDER.WMO' loaded.
- CWorldObjectCreator::LoadWMO: WMO 'WORLD\WMO\KALIMDOR\BUILDINGS\QUILLBOAR\BIGHOUSE.WMO' loaded.
- CWorldObjectCreator::LoadWMO: WMO 'WORLD\WMO\DUNGEON\MD_CAVEDEN\MD_WARMDEN.WMO' loaded.
- CWorldObjectCreator::LoadWMO: WMO 'WORLD\WMO\KALIMDOR\COLLIDABLEDOODADS\MULGORE\CENTAURTENTS\CENTAURTENT02.WMO' loaded.
- CWorldObjectCreator::LoadWMO: WMO 'WORLD\WMO\KALIMDOR\BUILDINGS\QUILLBOAR\WALLHUT.WMO' loaded.
- CWorldObjectCreator::LoadWMO: WMO 'WORLD\WMO\KALIMDOR\BUILDINGS\QUILLBOAR\WALLHUT2.WMO' loaded.
- CWorldObjectCreator::LoadWMO: WMO 'WORLD\WMO\ELEVATORS\THOUSANDNEEDLESELEVATOR\THOUSANDNEEDLESELEVATOR.WMO' loaded.
- CWorldObjectCreator::LoadWMO: WMO 'WORLD\WMO\KALIMDOR\COLLIDABLEDOODADS\MULGORE\CENTAURTENTS\CENTAURTENT03.WMO' loaded.
- CWorldObjectCreator::LoadWMO: WMO 'WORLD\WMO\KALIMDOR\BUILDINGS\TAURENHUTS\TAURENHUTC.WMO' loaded.
- CWorldObjectCreator::LoadWMO: WMO 'WORLD\WMO\DUNGEON\KL_RAZORFEN\RAZORFENDOWNS.WMO' loaded.
- CWorldObjectCreator::LoadWMO: WMO 'WORLD\WMO\KALIMDOR\BUILDINGS\GOBLINHUT\GOBLINHUT.WMO' loaded.
- CWorldObjectCreator::LoadWMO: WMO 'WORLD\WMO\KALIMDOR\BUILDINGS\GOBLINLAB\GOBLINLAB.WMO' loaded.
- CWorldObjectCreator::LoadWMO: WMO 'WORLD\WMO\DUNGEON\MD_OGREMOUND\MD_OGREMOUND.WMO' loaded.
- CWorldObjectCreator::LoadWMO: WMO 'WORLD\WMO\KALIMDOR\BUILDINGS\TAURENHUTS\TAURENCHICKENHUT.WMO' loaded.
- CWorldObjectCreator::LoadWMO: WMO 'WORLD\WMO\KALIMDOR\BUILDINGS\TAURENHUTS\TAURENHUTD.WMO' loaded.
- CWorldObjectCreator::LoadWMO: WMO 'WORLD\WMO\KALIMDOR\COLLIDABLEDOODADS\MULGORE\CENTAURTENTS\CENTAURTENTCOMMAND.WMO' loaded.
- CWorldObjectCreator::LoadWMO: WMO 'WORLD\WMO\KALIMDOR\BUILDINGS\TAURENHUTS\TAURENTEPEE.WMO' loaded.
- CWorldObjectCreator::LoadWMO: WMO 'WORLD\WMO\KALIMDOR\COLLIDABLEDOODADS\THOUSANDNEEDLES\BRIDGE\1000NEEDLESBRIDGE.WMO' loaded.
- CWorldObjectCreator::LoadWMO: WMO 'WORLD\WMO\KALIMDOR\BUILDINGS\TAURENHUTS\TAURENHUTBIG.WMO' loaded.
- CWorldObjectCreator::LoadWMO: WMO 'WORLD\WMO\KALIMDOR\BUILDINGS\TAURENHUTS\TAURENTALLHUT.WMO' loaded.
- CWorldObjectCreator::LoadWMO: WMO 'WORLD\WMO\DUNGEON\MD_MOUNTAINCAVE\MD_WARMCAVE.WMO' loaded.
- CWorldObjectCreator::LoadWMO: WMO 'WORLD\WMO\DUNGEON\MD_MOUNTAINCAVE\MD_WARMCAVE_MEDIUM.WMO' loaded.
- CWorldObjectCreator::LoadWMO: WMO 'WORLD\WMO\DUNGEON\MD_MOUNTAINCAVE\MD_MUSHROOMCAVE08.WMO' loaded.
- CWorldObjectCreator::LoadWMO: WMO 'WORLD\WMO\DUNGEON\MD_MOUNTAINCAVE\MD_JUNGLECAVE_CRYSTAL.WMO' loaded.
- CWorldObjectCreator::LoadWMO: WMO 'WORLD\WMO\KALIMDOR\BUILDINGS\TANARISRUINS\TANARISRUINS13.WMO' loaded.
- CWorldObjectCreator::LoadWMO: WMO 'WORLD\WMO\KALIMDOR\BUILDINGS\TANARISRUINS\TANARISRUINS09.WMO' loaded.
- CWorldObjectCreator::LoadWMO: WMO 'WORLD\WMO\KALIMDOR\COLLIDABLEDOODADS\TANARIS\TROLLTENT\TROLLTENTDESERT01.WMO' loaded.
- CWorldObjectCreator::LoadWMO: WMO 'WORLD\WMO\KALIMDOR\BUILDINGS\TROLLHUT\TROLLHUT_DESERTSMALL.WMO' loaded.
- CWorldObjectCreator::LoadWMO: WMO 'WORLD\WMO\KALIMDOR\BUILDINGS\TANARISRUINS\TANARISRUINS14.WMO' loaded.
- CWorldObjectCreator::LoadWMO: WMO 'WORLD\WMO\KALIMDOR\BUILDINGS\TANARISRUINS\TANARISRUINS12.WMO' loaded.
- CWorldObjectCreator::LoadWMO: WMO 'WORLD\WMO\DUNGEON\ND_TITANMICROS\ND_TITANOVERLOOK03.WMO' loaded.
- CWorldObjectCreator::LoadWMO: WMO 'WORLD\WMO\KALIMDOR\BUILDINGS\TANARISRUINS\TANARISRUINS07.WMO' loaded.
- CWorldObjectCreator::LoadWMO: WMO 'WORLD\WMO\KALIMDOR\BUILDINGS\TROLLHUT\TROLLHUT_DESERT.WMO' loaded.
- CWorldObjectCreator::LoadWMO: WMO 'WORLD\WMO\DUNGEON\MD_CAVEDEN\MD_VOLCANICDEN.WMO' loaded.
- CWorldObjectCreator::LoadWMO: WMO 'WORLD\WMO\KALIMDOR\BUILDINGS\TAURENHUTS\TAURENTEPEE.WMO' loaded.
- CWorldObjectCreator::LoadWMO: WMO 'WORLD\WMO\DUNGEON\MD_MOUNTAINCAVE\MD_MOUNTAINCAVE_MEDIUM_H.WMO' loaded.
- CWorldObjectCreator::LoadWMO: WMO 'WORLD\WMO\DUNGEON\MD_HIVE\MINI-HIVE_B.WMO' loaded.
- CWorldObjectCreator::LoadWMO: WMO 'WORLD\WMO\KALIMDOR\COLLIDABLEDOODADS\SILITHUS\ELVENTOWERSILITHUS01.WMO' loaded.
- CWorldObjectCreator::LoadWMO: WMO 'WORLD\WMO\KALIMDOR\COLLIDABLEDOODADS\SILITHUS\NIGHTELF2STORYSILITHUS.WMO' loaded.
- CWorldObjectCreator::LoadWMO: WMO 'WORLD\WMO\DUNGEON\MD_HIVE\MINI-HIVE_E.WMO' loaded.
- CWorldObjectCreator::LoadWMO: WMO 'WORLD\WMO\DUNGEON\MD_HIVE\MINI-HIVE_C.WMO' loaded.
- CWorldObjectCreator::LoadWMO: WMO 'WORLD\WMO\DUNGEON\MD_CAVEDEN\MD_TROLLDEN.WMO' loaded.
- CWorldObjectCreator::LoadWMO: WMO 'WORLD\WMO\KALIMDOR\BUILDINGS\NIGHTELFOUTPOST\NIGHTELFOUTPOST_B.WMO' loaded.
- CWorldObjectCreator::LoadWMO: WMO 'WORLD\WMO\DUNGEON\MD_HIVE\EXTERIOR_PIECE05.WMO' loaded.
- CWorldObjectCreator::LoadWMO: WMO 'WORLD\WMO\DUNGEON\MD_HIVE\EXTERIOR_PIECE03.WMO' loaded.
- CWorldObjectCreator::LoadWMO: WMO 'WORLD\WMO\DUNGEON\MD_HIVE\EXTERIOR_ARCH.WMO' loaded.
- CWorldObjectCreator::LoadWMO: WMO 'WORLD\WMO\DUNGEON\MD_HIVE\EXTERIOR_PIECE01.WMO' loaded.
- CWorldObjectCreator::LoadWMO: WMO 'WORLD\WMO\DUNGEON\KL_AHNQIRAJ\EASTERNFRONTLANDSCAPE.WMO' loaded.
- CWorldObjectCreator::LoadWMO: WMO 'WORLD\WMO\KALIMDOR\COLLIDABLEDOODADS\DUSTWALLOWMARSH\CRASHEDZIPPELIN\FINAL\CRASHEDZIPPELIN.WMO' loaded.
- CWorldObjectCreator::LoadWMO: WMO 'WORLD\WMO\DUNGEON\MD_HIVE\MINI-HIVE_E.WMO' loaded.
- CWorldObjectCreator::LoadWMO: WMO 'WORLD\WMO\DUNGEON\MD_OGREMOUND\MD_BROGREMOUND1ROOM.WMO' loaded.
- CWorldObjectCreator::LoadWMO: WMO 'WORLD\WMO\KALIMDOR\BUILDINGS\TANARISRUINS\TANARISRUINS04.WMO' loaded.
- CWorldObjectCreator::LoadWMO: WMO 'WORLD\WMO\KHAZMODAN\BUILDINGS\GREATWALL\GREATWALL_WALL_01.WMO' loaded.
- CWorldObjectCreator::LoadWMO: WMO 'WORLD\WMO\KHAZMODAN\BUILDINGS\GREATWALL\GREATWALL_TOWER_01.WMO' loaded.
- CWorldObjectCreator::LoadWMO: WMO 'WORLD\WMO\KHAZMODAN\BUILDINGS\GREATWALL\GREATWALL_WALL_03.WMO' loaded.
- CWorldObjectCreator::LoadWMO: WMO 'WORLD\WMO\KALIMDOR\BUILDINGS\TANARISRUINS\TANARISRUINS03.WMO' loaded.
- CWorldObjectCreator::LoadWMO: WMO 'WORLD\WMO\DUNGEON\MD_HIVE\MINI-HIVE_A.WMO' loaded.
- CWorldObjectCreator::LoadWMO: WMO 'WORLD\WMO\DUNGEON\MD_HIVE\MINI-HIVE_F.WMO' loaded.
- CWorldObjectCreator::LoadWMO: WMO 'WORLD\WMO\DUNGEON\MD_HIVE\EXTERIOR_PIECE05.WMO' loaded.
- CWorldObjectCreator::LoadWMO: WMO 'WORLD\WMO\DUNGEON\MD_HIVE\EXTERIOR_PIECE03.WMO' loaded.
- CWorldObjectCreator::LoadWMO: WMO 'WORLD\WMO\DUNGEON\MD_HIVE\EXTERIOR_PIECE04.WMO' loaded.
- CWorldObjectCreator::LoadWMO: WMO 'WORLD\WMO\DUNGEON\MD_HIVE\EXTERIOR_ARCH.WMO' loaded.
-!WMO[WORLD\WMO\DUNGEON\CAVERNSOFTIME\CAVERNSOFTIME.WMO]: Skybox [ENVIRONMENTS\STARS\CAVERNSOFTIMESKY.MDX]
-!WMO[WORLD\WMO\DUNGEON\CAVERNSOFTIME\CAVERNSOFTIME.WMO]: Skybox [ENVIRONMENTS\STARS\CAVERNSOFTIMESKY.MDX]
- CWorldObjectCreator::LoadWMO: WMO 'WORLD\WMO\DUNGEON\CAVERNSOFTIME\CAVERNSOFTIME.WMO' loaded.
- CWorldObjectCreator::LoadWMO: WMO 'WORLD\WMO\DUNGEON\CAVERNSOFTIME\CAVERNSOFTIME.WMO' loaded.
- CWorldObjectCreator::LoadWMO: WMO 'WORLD\WMO\KALIMDOR\BUILDINGS\TANARISRUINS\TANARISRUINS02.WMO' loaded.
- CWorldObjectCreator::LoadWMO: WMO 'WORLD\WMO\DUNGEON\MD_HIVE\MINI-HIVE_D.WMO' loaded.
- CWorldObjectCreator::LoadWMO: WMO 'WORLD\WMO\KALIMDOR\BUILDINGS\ORCHUT\ORCHUT.WMO' loaded.
- CWorldObjectCreator::LoadWMO: WMO 'WORLD\WMO\DUNGEON\CAVERNSOFTIME\CAVERNSOFTIMEENTRANCE.WMO' loaded.
- CWorldObjectCreator::LoadWMO: WMO 'WORLD\WMO\KALIMDOR\BUILDINGS\TANARISRUINS\TANARISRUINS01.WMO' loaded.
- CWorldObjectCreator::LoadWMO: WMO 'WORLD\WMO\KALIMDOR\BUILDINGS\GOBLINHUT\KL_TANARIS_GOBLINBLD_A.WMO' loaded.
- CWorldObjectCreator::LoadWMO: WMO 'WORLD\WMO\KALIMDOR\BUILDINGS\GOBLINHUT\KL_TANARIS_GOBLINBLD_A.WMO' loaded.
- CWorldObjectCreator::LoadWMO: WMO 'WORLD\WMO\KALIMDOR\COLLIDABLEDOODADS\TANARIS\GADGETZANWALL\GADGETZANWALL.WMO' loaded.
- CWorldObjectCreator::LoadWMO: WMO 'WORLD\WMO\KALIMDOR\BUILDINGS\GOBLINHUT\KL_TANARIS_GOBLINBLD_B.WMO' loaded.
- CWorldObjectCreator::LoadWMO: WMO 'WORLD\WMO\KALIMDOR\BUILDINGS\GOBLINHUT\KL_TANARIS_GOBLINBLD_C.WMO' loaded.
- CWorldObjectCreator::LoadWMO: WMO 'WORLD\WMO\KALIMDOR\COLLIDABLEDOODADS\TANARIS\GOBLINGATES\TANARISGOBLINWALLGATEBIG.WMO' loaded.
- CWorldObjectCreator::LoadWMO: WMO 'WORLD\WMO\KALIMDOR\BUILDINGS\GOBLINHOLDINGPEN\GOBLINHOLDINGPEN.WMO' loaded.
- CWorldObjectCreator::LoadWMO: WMO 'WORLD\WMO\KALIMDOR\BUILDINGS\GOBLINHUT\KL_TANARIS_GOBLINBLD_D.WMO' loaded.
- CWorldObjectCreator::LoadWMO: WMO 'WORLD\WMO\AZEROTH\COLLIDABLE DOODADS\WETLANDS\WETLANDSHUMANDOCK01\WETLANDSHUMANDOCK01.WMO' loaded.
- CWorldObjectCreator::LoadWMO: WMO 'WORLD\WMO\DUNGEON\MD_CAVEDEN\MD_WARMDEN.WMO' loaded.
- CWorldObjectCreator::LoadWMO: WMO 'WORLD\WMO\AZEROTH\BUILDINGS\PRISON_CAMP\PRISONGUARDTOWER.WMO' loaded.
- CWorldObjectCreator::LoadWMO: WMO 'WORLD\WMO\KHAZMODAN\COLLIDABLE DOODADS\LOCHMODAN\EXCAVATIONSITE\EXCAVATIONPLATFORM02.WMO' loaded.
- CWorldObjectCreator::LoadWMO: WMO 'WORLD\WMO\DUNGEON\MD_CAVETUNNELS\MD_WARMCAVETUNNEL01.WMO' loaded.
- CWorldObjectCreator::LoadWMO: WMO 'WORLD\WMO\AZEROTH\BUILDINGS\PRISON_CAMP\PRISONHQ_NEW.WMO' loaded.
- CWorldObjectCreator::LoadWMO: WMO 'WORLD\WMO\AZEROTH\BUILDINGS\PRISON_CAMP\PRISONLONGHOUSE_NEW.WMO' loaded.
- CWorldObjectCreator::LoadWMO: WMO 'WORLD\WMO\KHAZMODAN\COLLIDABLE DOODADS\LOCHMODAN\EXCAVATIONSITE\EXCAVATIONPLATFORM03.WMO' loaded.
- CWorldObjectCreator::LoadWMO: WMO 'WORLD\WMO\KALIMDOR\BUILDINGS\TANARISSHIPYARD\TANARISSHIPYARD.WMO' loaded.
- CWorldObjectCreator::LoadWMO: WMO 'WORLD\WMO\AZEROTH\BUILDINGS\GNOMEHUT\GNOMEHUT.WMO' loaded.
- CWorldObjectCreator::LoadWMO: WMO 'WORLD\WMO\KALIMDOR\BUILDINGS\TAURENHUTS\RUINEDTAURENTALLHUT.WMO' loaded.
- CWorldObjectCreator::LoadWMO: WMO 'WORLD\WMO\KALIMDOR\BUILDINGS\TAURENHUTS\RUINEDTAURENHUTB.WMO' loaded.
- CWorldObjectCreator::LoadWMO: WMO 'WORLD\WMO\DUNGEON\MD_HIVE\MINI-HIVE_A.WMO' loaded.
+!File 'World\Maps\IcecrownCitadel\IcecrownCitadel_0_0.adt' not exists.
+!File 'World\Maps\IcecrownCitadel\IcecrownCitadel_0_1.adt' not exists.
+!File 'World\Maps\IcecrownCitadel\IcecrownCitadel_1_1.adt' not exists.
+!File 'World\Maps\IcecrownCitadel\IcecrownCitadel_1_0.adt' not exists.
+^Coord 117,000000 130,000000
+ CWorldObjectCreator::LoadWMO: WMO 'WORLD\WMO\DUNGEON\ICECROWNRAID\ICECROWNRAID.WMO' loaded.
+!Shader = '16404'. 'Combiners_Mod_Mod2x'. TexturesCnt = '2'. Blend mode = '4'.
+!ConvShader = '7'
+!Shader = '16'. 'Combiners_Mod'. TexturesCnt = '1'. Blend mode = '1'.
+!ConvShader = '1'
+!Shader = '16'. 'Combiners_Mod'. TexturesCnt = '1'. Blend mode = '4'.
+!ConvShader = '1'
+!Shader = '16'. 'Combiners_Mod'. TexturesCnt = '1'. Blend mode = '1'.
+!ConvShader = '1'
+!Shader = '16404'. 'Combiners_Mod_Mod2x'. TexturesCnt = '2'. Blend mode = '2'.
+!ConvShader = '7'
+!Shader = '16'. 'Combiners_Mod'. TexturesCnt = '1'. Blend mode = '1'.
+!ConvShader = '1'
+@Shader = '0'. 'Combiners_Opaque'. TexturesCnt = '1'. Blend mode = '0'.
+!ConvShader = '0'
+@Shader = '0'. 'Combiners_Opaque'. TexturesCnt = '1'. Blend mode = '0'.
+!ConvShader = '0'
+!Shader = '16404'. 'Combiners_Mod_Mod2x'. TexturesCnt = '2'. Blend mode = '2'.
+!ConvShader = '7'
+!Shader = '16'. 'Combiners_Mod'. TexturesCnt = '1'. Blend mode = '4'.
+!ConvShader = '1'
+@Shader = '0'. 'Combiners_Opaque'. TexturesCnt = '1'. Blend mode = '0'.
+!ConvShader = '0'
+!Shader = '16'. 'Combiners_Mod'. TexturesCnt = '1'. Blend mode = '1'.
+!ConvShader = '1'
+!Shader = '16404'. 'Combiners_Mod_Mod2x'. TexturesCnt = '2'. Blend mode = '2'.
+!ConvShader = '7'
+@Shader = '0'. 'Combiners_Opaque'. TexturesCnt = '1'. Blend mode = '0'.
+!ConvShader = '0'
+!Shader = '16404'. 'Combiners_Mod_Mod2x'. TexturesCnt = '2'. Blend mode = '2'.
+!ConvShader = '7'
+!Shader = '16'. 'Combiners_Mod'. TexturesCnt = '1'. Blend mode = '1'.
+!ConvShader = '1'
+@Shader = '0'. 'Combiners_Opaque'. TexturesCnt = '1'. Blend mode = '0'.
+!ConvShader = '0'
+!Shader = '16387'. 'Combiners_Opaque_AddAlpha'. TexturesCnt = '2'. Blend mode = '0'.
+!ConvShader = '13'
+!Shader = '16'. 'Combiners_Mod'. TexturesCnt = '1'. Blend mode = '1'.
+!ConvShader = '1'
+!Shader = '16404'. 'Combiners_Mod_Mod2x'. TexturesCnt = '2'. Blend mode = '2'.
+!ConvShader = '7'
+!Shader = '16'. 'Combiners_Mod'. TexturesCnt = '1'. Blend mode = '4'.
+!ConvShader = '1'
+@Shader = '0'. 'Combiners_Opaque'. TexturesCnt = '1'. Blend mode = '0'.
+!ConvShader = '0'
+@Shader = '0'. 'Combiners_Opaque'. TexturesCnt = '1'. Blend mode = '0'.
+!ConvShader = '0'
+!Shader = '16404'. 'Combiners_Mod_Mod2x'. TexturesCnt = '2'. Blend mode = '2'.
+!ConvShader = '7'
+@Shader = '0'. 'Combiners_Opaque'. TexturesCnt = '1'. Blend mode = '0'.
+!ConvShader = '0'
+@Shader = '0'. 'Combiners_Opaque'. TexturesCnt = '1'. Blend mode = '0'.
+!ConvShader = '0'
+@Shader = '0'. 'Combiners_Opaque'. TexturesCnt = '1'. Blend mode = '0'.
+!ConvShader = '0'
+!Shader = '16404'. 'Combiners_Mod_Mod2x'. TexturesCnt = '2'. Blend mode = '2'.
+!ConvShader = '7'
+!Shader = '16387'. 'Combiners_Opaque_AddAlpha'. TexturesCnt = '2'. Blend mode = '0'.
+!ConvShader = '13'
+@Shader = '0'. 'Combiners_Opaque'. TexturesCnt = '1'. Blend mode = '0'.
+!ConvShader = '0'
+@Shader = '0'. 'Combiners_Opaque'. TexturesCnt = '1'. Blend mode = '0'.
+!ConvShader = '0'
+@Shader = '0'. 'Combiners_Opaque'. TexturesCnt = '1'. Blend mode = '0'.
+!ConvShader = '0'
+@Shader = '0'. 'Combiners_Opaque'. TexturesCnt = '1'. Blend mode = '0'.
+!ConvShader = '0'
+!Shader = '16404'. 'Combiners_Mod_Mod2x'. TexturesCnt = '2'. Blend mode = '2'.
+!ConvShader = '7'
+!Shader = '16'. 'Combiners_Mod'. TexturesCnt = '1'. Blend mode = '1'.
+!ConvShader = '1'
+@Shader = '0'. 'Combiners_Opaque'. TexturesCnt = '1'. Blend mode = '0'.
+!ConvShader = '0'
+!Shader = '16'. 'Combiners_Mod'. TexturesCnt = '1'. Blend mode = '1'.
+!ConvShader = '1'
+!Shader = '16'. 'Combiners_Mod'. TexturesCnt = '1'. Blend mode = '4'.
+!ConvShader = '1'
+!Shader = '16'. 'Combiners_Mod'. TexturesCnt = '1'. Blend mode = '1'.
+!ConvShader = '1'
+!Shader = '16404'. 'Combiners_Mod_Mod2x'. TexturesCnt = '2'. Blend mode = '2'.
+!ConvShader = '7'
+!Shader = '16'. 'Combiners_Mod'. TexturesCnt = '1'. Blend mode = '4'.
+!ConvShader = '1'
+@Shader = '0'. 'Combiners_Opaque'. TexturesCnt = '1'. Blend mode = '0'.
+!ConvShader = '0'
+!Shader = '135'. 'Combiners_Opaque_AddAlpha'. TexturesCnt = '2'. Blend mode = '0'.
+!ConvShader = '13'
+!Shader = '16404'. 'Combiners_Mod_Mod2x'. TexturesCnt = '2'. Blend mode = '4'.
+!ConvShader = '7'
+!Shader = '16'. 'Combiners_Mod'. TexturesCnt = '1'. Blend mode = '2'.
+!ConvShader = '1'
+!Shader = '16404'. 'Combiners_Mod_Mod2x'. TexturesCnt = '2'. Blend mode = '2'.
+!ConvShader = '7'
+!Shader = '16'. 'Combiners_Mod'. TexturesCnt = '1'. Blend mode = '4'.
+!ConvShader = '1'
+!Shader = '16'. 'Combiners_Mod'. TexturesCnt = '1'. Blend mode = '1'.
+!ConvShader = '1'
+@Shader = '0'. 'Combiners_Opaque'. TexturesCnt = '1'. Blend mode = '0'.
+!ConvShader = '0'
+!Shader = '16'. 'Combiners_Mod'. TexturesCnt = '1'. Blend mode = '2'.
+!ConvShader = '1'
+!Shader = '16'. 'Combiners_Mod'. TexturesCnt = '1'. Blend mode = '2'.
+!ConvShader = '1'
+@Shader = '0'. 'Combiners_Opaque'. TexturesCnt = '1'. Blend mode = '0'.
+!ConvShader = '0'
+!Shader = '135'. 'Combiners_Opaque_AddAlpha'. TexturesCnt = '2'. Blend mode = '0'.
+!ConvShader = '13'
+!Shader = '16'. 'Combiners_Mod'. TexturesCnt = '1'. Blend mode = '2'.
+!ConvShader = '1'
+!Shader = '16'. 'Combiners_Mod'. TexturesCnt = '1'. Blend mode = '2'.
+!ConvShader = '1'
+!Shader = '16'. 'Combiners_Mod'. TexturesCnt = '1'. Blend mode = '2'.
+!ConvShader = '1'
+!Shader = '16'. 'Combiners_Mod'. TexturesCnt = '1'. Blend mode = '2'.
+!ConvShader = '1'
+@Shader = '0'. 'Combiners_Opaque'. TexturesCnt = '1'. Blend mode = '0'.
+!ConvShader = '0'
+!Shader = '16'. 'Combiners_Mod'. TexturesCnt = '1'. Blend mode = '4'.
+!ConvShader = '1'
+@Shader = '0'. 'Combiners_Opaque'. TexturesCnt = '1'. Blend mode = '0'.
+!ConvShader = '0'
+!Shader = '16'. 'Combiners_Mod'. TexturesCnt = '1'. Blend mode = '1'.
+!ConvShader = '1'
+!Shader = '132'. 'Combiners_Opaque_Mod2x'. TexturesCnt = '2'. Blend mode = '0'.
+!ConvShader = '3'
+!Shader = '16'. 'Combiners_Mod'. TexturesCnt = '1'. Blend mode = '1'.
+!ConvShader = '1'
+@Shader = '0'. 'Combiners_Opaque'. TexturesCnt = '1'. Blend mode = '0'.
+!ConvShader = '0'
+@Shader = '0'. 'Combiners_Opaque'. TexturesCnt = '1'. Blend mode = '0'.
+!ConvShader = '0'
+!Shader = '16'. 'Combiners_Mod'. TexturesCnt = '1'. Blend mode = '2'.
+!ConvShader = '1'
+@Shader = '0'. 'Combiners_Opaque'. TexturesCnt = '1'. Blend mode = '0'.
+!ConvShader = '0'
+@Shader = '0'. 'Combiners_Opaque'. TexturesCnt = '1'. Blend mode = '0'.
+!ConvShader = '0'
+!Shader = '16'. 'Combiners_Mod'. TexturesCnt = '1'. Blend mode = '1'.
+!ConvShader = '1'
+!Shader = '131'. 'Combiners_Opaque_AddAlpha'. TexturesCnt = '2'. Blend mode = '0'.
+!ConvShader = '13'
+!Shader = '16'. 'Combiners_Mod'. TexturesCnt = '1'. Blend mode = '4'.
+!ConvShader = '1'
+@Shader = '0'. 'Combiners_Opaque'. TexturesCnt = '1'. Blend mode = '0'.
+!ConvShader = '0'
+!Shader = '16'. 'Combiners_Mod'. TexturesCnt = '1'. Blend mode = '1'.
+!ConvShader = '1'
+@Shader = '0'. 'Combiners_Opaque'. TexturesCnt = '1'. Blend mode = '0'.
+!ConvShader = '0'
+!Shader = '16'. 'Combiners_Mod'. TexturesCnt = '1'. Blend mode = '1'.
+!ConvShader = '1'
+@Shader = '0'. 'Combiners_Opaque'. TexturesCnt = '1'. Blend mode = '0'.
+!ConvShader = '0'
+@Shader = '0'. 'Combiners_Opaque'. TexturesCnt = '1'. Blend mode = '0'.
+!ConvShader = '0'
+!Shader = '131'. 'Combiners_Opaque_AddAlpha'. TexturesCnt = '2'. Blend mode = '0'.
+!ConvShader = '13'
+@Shader = '0'. 'Combiners_Opaque'. TexturesCnt = '1'. Blend mode = '0'.
+!ConvShader = '0'
+!Shader = '16'. 'Combiners_Mod'. TexturesCnt = '1'. Blend mode = '1'.
+!ConvShader = '1'
+@Shader = '0'. 'Combiners_Opaque'. TexturesCnt = '1'. Blend mode = '0'.
+!ConvShader = '0'
+@Shader = '0'. 'Combiners_Opaque'. TexturesCnt = '1'. Blend mode = '0'.
+!ConvShader = '0'
+!Shader = '16'. 'Combiners_Mod'. TexturesCnt = '1'. Blend mode = '1'.
+!ConvShader = '1'
+!Shader = '16'. 'Combiners_Mod'. TexturesCnt = '1'. Blend mode = '2'.
+!ConvShader = '1'
+@Shader = '0'. 'Combiners_Opaque'. TexturesCnt = '1'. Blend mode = '0'.
+!ConvShader = '0'
+@Shader = '0'. 'Combiners_Opaque'. TexturesCnt = '1'. Blend mode = '0'.
+!ConvShader = '0'
+@Shader = '0'. 'Combiners_Opaque'. TexturesCnt = '1'. Blend mode = '0'.
+!ConvShader = '0'
+!Shader = '131'. 'Combiners_Opaque_AddAlpha'. TexturesCnt = '2'. Blend mode = '0'.
+!ConvShader = '13'
+@Shader = '0'. 'Combiners_Opaque'. TexturesCnt = '1'. Blend mode = '0'.
+!ConvShader = '0'
+!Shader = '16'. 'Combiners_Mod'. TexturesCnt = '1'. Blend mode = '1'.
+!ConvShader = '1'
+@Shader = '0'. 'Combiners_Opaque'. TexturesCnt = '1'. Blend mode = '0'.
+!ConvShader = '0'
+@Shader = '0'. 'Combiners_Opaque'. TexturesCnt = '1'. Blend mode = '0'.
+!ConvShader = '0'
+@Shader = '0'. 'Combiners_Opaque'. TexturesCnt = '1'. Blend mode = '0'.
+!ConvShader = '0'
+@Shader = '0'. 'Combiners_Opaque'. TexturesCnt = '1'. Blend mode = '0'.
+!ConvShader = '0'
+@Shader = '0'. 'Combiners_Opaque'. TexturesCnt = '1'. Blend mode = '0'.
+!ConvShader = '0'
+!Shader = '16'. 'Combiners_Mod'. TexturesCnt = '1'. Blend mode = '1'.
+!ConvShader = '1'
+@Shader = '0'. 'Combiners_Opaque'. TexturesCnt = '1'. Blend mode = '0'.
+!ConvShader = '0'
+@Shader = '0'. 'Combiners_Opaque'. TexturesCnt = '1'. Blend mode = '0'.
+!ConvShader = '0'
+@Shader = '0'. 'Combiners_Opaque'. TexturesCnt = '1'. Blend mode = '0'.
+!ConvShader = '0'
+!Shader = '16'. 'Combiners_Mod'. TexturesCnt = '1'. Blend mode = '1'.
+!ConvShader = '1'
+@Shader = '0'. 'Combiners_Opaque'. TexturesCnt = '1'. Blend mode = '0'.
+!ConvShader = '0'
+@Shader = '0'. 'Combiners_Opaque'. TexturesCnt = '1'. Blend mode = '0'.
+!ConvShader = '0'
+@Shader = '0'. 'Combiners_Opaque'. TexturesCnt = '1'. Blend mode = '0'.
+!ConvShader = '0'
+@Shader = '0'. 'Combiners_Opaque'. TexturesCnt = '1'. Blend mode = '0'.
+!ConvShader = '0'
+!Shader = '16'. 'Combiners_Mod'. TexturesCnt = '1'. Blend mode = '1'.
+!ConvShader = '1'
+!Shader = '16'. 'Combiners_Mod'. TexturesCnt = '1'. Blend mode = '1'.
+!ConvShader = '1'
+@Shader = '0'. 'Combiners_Opaque'. TexturesCnt = '1'. Blend mode = '0'.
+!ConvShader = '0'
+!Shader = '16'. 'Combiners_Mod'. TexturesCnt = '1'. Blend mode = '1'.
+!ConvShader = '1'
+!Shader = '16'. 'Combiners_Mod'. TexturesCnt = '1'. Blend mode = '1'.
+!ConvShader = '1'
+!Shader = '16'. 'Combiners_Mod'. TexturesCnt = '1'. Blend mode = '1'.
+!ConvShader = '1'
+!Shader = '16'. 'Combiners_Mod'. TexturesCnt = '1'. Blend mode = '1'.
+!ConvShader = '1'
+!Shader = '16'. 'Combiners_Mod'. TexturesCnt = '1'. Blend mode = '1'.
+!ConvShader = '1'
+!Shader = '16'. 'Combiners_Mod'. TexturesCnt = '1'. Blend mode = '1'.
+!ConvShader = '1'
+!Shader = '16'. 'Combiners_Mod'. TexturesCnt = '1'. Blend mode = '1'.
+!ConvShader = '1'
+!Shader = '16'. 'Combiners_Mod'. TexturesCnt = '1'. Blend mode = '4'.
+!ConvShader = '1'
+@Shader = '0'. 'Combiners_Opaque'. TexturesCnt = '1'. Blend mode = '0'.
+!ConvShader = '0'
+@Shader = '0'. 'Combiners_Opaque'. TexturesCnt = '1'. Blend mode = '0'.
+!ConvShader = '0'
+@Shader = '0'. 'Combiners_Opaque'. TexturesCnt = '1'. Blend mode = '0'.
+!ConvShader = '0'
+!Shader = '16'. 'Combiners_Mod'. TexturesCnt = '1'. Blend mode = '2'.
+!ConvShader = '1'
+@Shader = '0'. 'Combiners_Opaque'. TexturesCnt = '1'. Blend mode = '0'.
+!ConvShader = '0'
+!Shader = '16'. 'Combiners_Mod'. TexturesCnt = '1'. Blend mode = '1'.
+!ConvShader = '1'
+!Shader = '2064'. 'Combiners_Mod'. TexturesCnt = '1'. Blend mode = '6'.
+!ConvShader = '1'
+!Shader = '16'. 'Combiners_Mod'. TexturesCnt = '1'. Blend mode = '4'.
+!ConvShader = '1'
+!Shader = '16'. 'Combiners_Mod'. TexturesCnt = '1'. Blend mode = '2'.
+!ConvShader = '1'
+!Shader = '16'. 'Combiners_Mod'. TexturesCnt = '1'. Blend mode = '1'.
+!ConvShader = '1'
+!Shader = '16'. 'Combiners_Mod'. TexturesCnt = '1'. Blend mode = '1'.
+!ConvShader = '1'
+!Shader = '16'. 'Combiners_Mod'. TexturesCnt = '1'. Blend mode = '2'.
+!ConvShader = '1'
+@Shader = '0'. 'Combiners_Opaque'. TexturesCnt = '1'. Blend mode = '0'.
+!ConvShader = '0'
+!Shader = '134'. 'Combiners_Opaque_Mod2xNA'. TexturesCnt = '2'. Blend mode = '0'.
+!ConvShader = '4'
+@Shader = '0'. 'Combiners_Opaque'. TexturesCnt = '1'. Blend mode = '0'.
+!ConvShader = '0'
+@Shader = '0'. 'Combiners_Opaque'. TexturesCnt = '1'. Blend mode = '0'.
+!ConvShader = '0'
+!Shader = '16'. 'Combiners_Mod'. TexturesCnt = '1'. Blend mode = '2'.
+!ConvShader = '1'
+@Shader = '0'. 'Combiners_Opaque'. TexturesCnt = '1'. Blend mode = '0'.
+!ConvShader = '0'
+!Shader = '134'. 'Combiners_Opaque_Mod2xNA'. TexturesCnt = '2'. Blend mode = '0'.
+!ConvShader = '4'
+!Shader = '16'. 'Combiners_Mod'. TexturesCnt = '1'. Blend mode = '1'.
+!ConvShader = '1'
+!Shader = '16'. 'Combiners_Mod'. TexturesCnt = '1'. Blend mode = '2'.
+!ConvShader = '1'
+!Shader = '16'. 'Combiners_Mod'. TexturesCnt = '1'. Blend mode = '2'.
+!ConvShader = '1'
+!Shader = '16'. 'Combiners_Mod'. TexturesCnt = '1'. Blend mode = '1'.
+!ConvShader = '1'
+^Selected node '0,000000' = 'WORLD\EXPANSION02\DOODADS\STORMPEAKS\FOG\STORMPEAKS_FOG_01.M2'.
+^Selected node '25,580078' = 'WORLD\EXPANSION02\DOODADS\STORMPEAKS\FOG\STORMPEAKS_FOG_01.M2'.
+^Selected node '79,456413' = 'WORLD\EXPANSION02\DOODADS\STORMPEAKS\FOG\STORMPEAKS_FOG_01.M2'.
+^Selected node '81,550781' = 'WORLD\EXPANSION02\DOODADS\STORMPEAKS\FOG\STORMPEAKS_FOG_01.M2'.
+^Selected node '117,495544' = 'WORLD\EXPANSION02\DOODADS\STORMPEAKS\FOG\STORMPEAKS_FOG_01.M2'.
+^Selected node '122,732872' = 'WORLD\EXPANSION02\DOODADS\GENERIC\SCOURGE\SC_BRAZIER2_SHORT.M2'.
+^Selected node '130,555435' = 'WORLD\EXPANSION02\DOODADS\ICECROWN\GLOWS\IC_GLOW02.M2'.
+^Selected node '182,983078' = 'WORLD\EXPANSION02\DOODADS\ICECROWN\LIGHTS\ICECROWN_BLUEGLOW_02.M2'.
+^Selected node '246,342010' = 'WORLD\EXPANSION02\DOODADS\GENERIC\SCOURGE\SC_BRAZIER2_SHORT.M2'.
+^Selected node '251,672882' = 'WORLD\EXPANSION02\DOODADS\ICECROWN\GLOWS\IC_GLOW02.M2'.
+^Selected node '269,902039' = 'WORLD\EXPANSION02\DOODADS\GENERIC\SCOURGE\SC_BRAZIER2_SHORT.M2'.
+^Selected node '281,844727' = 'WORLD\EXPANSION02\DOODADS\ICECROWN\EFFECTS\ICECROWN_ICECORE.M2'.
+^Selected node '302,674866' = 'WORLD\EXPANSION02\DOODADS\ICECROWN\LIGHTS\ICECROWN_BLUEGLOW_02.M2'.
+^Selected node '422,184082' = 'WORLD\NODXT\GENERIC\PASSIVEDOODADS\VOLUMETRICLIGHTS\LD_LIGHTSHAFT01.M2'.
+^Selected node '0,000000' = 'WORLD\EXPANSION02\DOODADS\ICECROWN\EFFECTS\ICECROWN_ICECORE.M2'.
+^Selected node '0,764648' = 'WORLD\EXPANSION02\DOODADS\STORMPEAKS\FOG\STORMPEAKS_FOG_01.M2'.
+^Selected node '16,195313' = 'WORLD\EXPANSION02\DOODADS\STORMPEAKS\FOG\STORMPEAKS_FOG_01.M2'.
+^Selected node '96,720703' = 'WORLD\EXPANSION02\DOODADS\STORMPEAKS\FOG\STORMPEAKS_FOG_01.M2'.
+^Selected node '121,812500' = 'WORLD\EXPANSION02\DOODADS\STORMPEAKS\FOG\STORMPEAKS_FOG_01.M2'.
+^Selected node '133,959961' = 'WORLD\EXPANSION02\DOODADS\STORMPEAKS\FOG\STORMPEAKS_FOG_01.M2'.
+^Selected node '143,693359' = 'WORLD\EXPANSION02\DOODADS\STORMPEAKS\FOG\STORMPEAKS_FOG_01.M2'.
+^Selected node '163,765106' = 'WORLD\EXPANSION02\DOODADS\STORMPEAKS\FOG\STORMPEAKS_FOG_01.M2'.
+^Selected node '179,931641' = 'WORLD\EXPANSION02\DOODADS\STORMPEAKS\FOG\STORMPEAKS_FOG_01.M2'.
+^Selected node '316,316040' = 'WORLD\EXPANSION02\DOODADS\ICECROWN\LIGHTS\ICECROWN_RAYS.M2'.
+^Selected node '430,060547' = 'WORLD\EXPANSION02\DOODADS\ICECROWN\LIGHTS\ICECROWN_BLUEGLOW_01.M2'.
+^Selected node '0,000000' = 'WORLD\EXPANSION02\DOODADS\ICECROWN\EFFECTS\ICECROWN_ICECORE.M2'.
+^Selected node '11,337891' = 'WORLD\EXPANSION02\DOODADS\STORMPEAKS\FOG\STORMPEAKS_FOG_01.M2'.
+^Selected node '36,429688' = 'WORLD\EXPANSION02\DOODADS\STORMPEAKS\FOG\STORMPEAKS_FOG_01.M2'.
+^Selected node '48,577148' = 'WORLD\EXPANSION02\DOODADS\STORMPEAKS\FOG\STORMPEAKS_FOG_01.M2'.
+^Selected node '58,310547' = 'WORLD\EXPANSION02\DOODADS\STORMPEAKS\FOG\STORMPEAKS_FOG_01.M2'.
+^Selected node '0,000000' = 'WORLD\EXPANSION02\DOODADS\ICECROWN\EFFECTS\ICECROWN_ICECORE.M2'.
+^Selected node '9,968750' = 'WORLD\EXPANSION02\DOODADS\STORMPEAKS\FOG\STORMPEAKS_FOG_01.M2'.
+^Selected node '19,226717' = 'WORLD\NODXT\GENERIC\PASSIVEDOODADS\VOLUMETRICLIGHTS\LD_LIGHTSHAFT01.M2'.
+^Selected node '46,258694' = 'WORLD\NODXT\GENERIC\PASSIVEDOODADS\VOLUMETRICLIGHTS\LD_LIGHTSHAFT01.M2'.
+^Selected node '47,208008' = 'WORLD\EXPANSION02\DOODADS\STORMPEAKS\FOG\STORMPEAKS_FOG_01.M2'.
+^Selected node '80,053497' = 'WORLD\EXPANSION02\DOODADS\STORMPEAKS\FOG\STORMPEAKS_FOG_01.M2'.
+^Selected node '107,011322' = 'WORLD\NODXT\GENERIC\PASSIVEDOODADS\VOLUMETRICLIGHTS\LD_LIGHTSHAFT02.M2'.
+^Selected node '112,571655' = 'WORLD\EXPANSION02\DOODADS\STORMPEAKS\FOG\STORMPEAKS_FOG_01.M2'.
+^Selected node '116,527802' = 'WORLD\NODXT\GENERIC\PASSIVEDOODADS\VOLUMETRICLIGHTS\LD_LIGHTSHAFT02.M2'.
+^Selected node '157,357437' = 'WORLD\EXPANSION02\DOODADS\STORMPEAKS\FOG\STORMPEAKS_FOG_01.M2'.
+^Selected node '167,393631' = 'WORLD\EXPANSION02\DOODADS\STORMPEAKS\FOG\STORMPEAKS_FOG_01.M2'.
+^Selected node '243,116837' = 'WORLD\EXPANSION02\DOODADS\GENERIC\SCOURGE\SC_BANNER_02.M2'.
+^Selected node '0,000000' = 'WORLD\EXPANSION02\DOODADS\ICECROWN\EFFECTS\ICECROWN_ICECORE.M2'.
+^Selected node '0,429161' = 'WORLD\EXPANSION02\DOODADS\ICECROWN\LIGHTS\ICECROWN_RAYS.M2'.
+^Coord 109,000000 96,000000
+ CWorldObjectCreator::LoadWMO: WMO 'WORLD\WMO\NORTHREND\ICECROWN\SCOURGEWALLS\ICECROWN_CITYGATE_01.WMO' loaded.
+!Shader = '16'. 'Combiners_Mod'. TexturesCnt = '1'. Blend mode = '2'.
+!ConvShader = '1'
+!Shader = '16'. 'Combiners_Mod'. TexturesCnt = '1'. Blend mode = '2'.
+!ConvShader = '1'
+!Shader = '16'. 'Combiners_Mod'. TexturesCnt = '1'. Blend mode = '2'.
+!ConvShader = '1'
+!Shader = '16'. 'Combiners_Mod'. TexturesCnt = '1'. Blend mode = '2'.
+!ConvShader = '1'
+@Shader = '0'. 'Combiners_Opaque'. TexturesCnt = '1'. Blend mode = '0'.
+!ConvShader = '0'
+@Shader = '0'. 'Combiners_Opaque'. TexturesCnt = '1'. Blend mode = '0'.
+!ConvShader = '0'
+@Shader = '0'. 'Combiners_Opaque'. TexturesCnt = '1'. Blend mode = '0'.
+!ConvShader = '0'
+@Shader = '0'. 'Combiners_Opaque'. TexturesCnt = '1'. Blend mode = '0'.
+!ConvShader = '0'
+!Shader = '16'. 'Combiners_Mod'. TexturesCnt = '1'. Blend mode = '1'.
+!ConvShader = '1'
+!Shader = '16'. 'Combiners_Mod'. TexturesCnt = '1'. Blend mode = '4'.
+!ConvShader = '1'
+@Shader = '0'. 'Combiners_Opaque'. TexturesCnt = '1'. Blend mode = '0'.
+!ConvShader = '0'
+!Shader = '16404'. 'Combiners_Mod_Mod2x'. TexturesCnt = '2'. Blend mode = '4'.
+!ConvShader = '7'
+ CWorldObjectCreator::LoadWMO: WMO 'WORLD\WMO\DUNGEON\ICECROWNRAID\ICECROWNRAID_MIDDLE_SECTION.WMO' loaded.
+!Shader = '16404'. 'Combiners_Mod_Mod2x'. TexturesCnt = '2'. Blend mode = '4'.
+!ConvShader = '7'
+!Shader = '16'. 'Combiners_Mod'. TexturesCnt = '1'. Blend mode = '1'.
+!ConvShader = '1'
+@Shader = '0'. 'Combiners_Opaque'. TexturesCnt = '1'. Blend mode = '0'.
+!ConvShader = '0'
+!Shader = '16'. 'Combiners_Mod'. TexturesCnt = '1'. Blend mode = '1'.
+!ConvShader = '1'
+ CWorldObjectCreator::LoadWMO: WMO 'WORLD\WMO\DUNGEON\ICECROWNRAID\ICECROWNRAID_MIDDLE_SECTION.WMO' loaded.
+@Shader = '0'. 'Combiners_Opaque'. TexturesCnt = '1'. Blend mode = '0'.
+!ConvShader = '0'
+!Shader = '16'. 'Combiners_Mod'. TexturesCnt = '1'. Blend mode = '1'.
+!ConvShader = '1'
+!Shader = '16'. 'Combiners_Mod'. TexturesCnt = '1'. Blend mode = '1'.
+!ConvShader = '1'
+@Shader = '0'. 'Combiners_Opaque'. TexturesCnt = '1'. Blend mode = '0'.
+!ConvShader = '0'
+@Shader = '0'. 'Combiners_Opaque'. TexturesCnt = '1'. Blend mode = '0'.
+!ConvShader = '0'
+!Shader = '16'. 'Combiners_Mod'. TexturesCnt = '1'. Blend mode = '1'.
+!ConvShader = '1'
+@Shader = '0'. 'Combiners_Opaque'. TexturesCnt = '1'. Blend mode = '0'.
+!ConvShader = '0'
+!Shader = '20'. 'Combiners_Mod_Mod2x'. TexturesCnt = '2'. Blend mode = '4'.
+!ConvShader = '7'
+!Shader = '16'. 'Combiners_Mod'. TexturesCnt = '1'. Blend mode = '1'.
+!ConvShader = '1'
+@Shader = '0'. 'Combiners_Opaque'. TexturesCnt = '1'. Blend mode = '0'.
+!ConvShader = '0'
+@Shader = '0'. 'Combiners_Opaque'. TexturesCnt = '1'. Blend mode = '0'.
+!ConvShader = '0'
+@Shader = '0'. 'Combiners_Opaque'. TexturesCnt = '1'. Blend mode = '0'.
+!ConvShader = '0'
+!Shader = '16'. 'Combiners_Mod'. TexturesCnt = '1'. Blend mode = '4'.
+!ConvShader = '1'
+!Shader = '16'. 'Combiners_Mod'. TexturesCnt = '1'. Blend mode = '4'.
+!ConvShader = '1'
+!Shader = '16'. 'Combiners_Mod'. TexturesCnt = '1'. Blend mode = '4'.
+!ConvShader = '1'
+!Shader = '16'. 'Combiners_Mod'. TexturesCnt = '1'. Blend mode = '4'.
+!ConvShader = '1'
+!Shader = '16'. 'Combiners_Mod'. TexturesCnt = '1'. Blend mode = '4'.
+!ConvShader = '1'
+!Shader = '16404'. 'Combiners_Mod_Mod2x'. TexturesCnt = '2'. Blend mode = '4'.
+!ConvShader = '7'
+!Shader = '2064'. 'Combiners_Mod'. TexturesCnt = '1'. Blend mode = '4'.
+!ConvShader = '1'
+!Shader = '16'. 'Combiners_Mod'. TexturesCnt = '1'. Blend mode = '4'.
+!ConvShader = '1'
+!Shader = '2064'. 'Combiners_Mod'. TexturesCnt = '1'. Blend mode = '4'.
+!ConvShader = '1'
+!Shader = '16'. 'Combiners_Mod'. TexturesCnt = '1'. Blend mode = '4'.
+!ConvShader = '1'
+!Shader = '2064'. 'Combiners_Mod'. TexturesCnt = '1'. Blend mode = '4'.
+!ConvShader = '1'
+!Shader = '16404'. 'Combiners_Mod_Mod2x'. TexturesCnt = '2'. Blend mode = '4'.
+!ConvShader = '7'
+@Shader = '0'. 'Combiners_Opaque'. TexturesCnt = '1'. Blend mode = '0'.
+!ConvShader = '0'
+!Shader = '16'. 'Combiners_Mod'. TexturesCnt = '1'. Blend mode = '4'.
+!ConvShader = '1'
+!Shader = '2064'. 'Combiners_Mod'. TexturesCnt = '1'. Blend mode = '4'.
+!ConvShader = '1'
+!Shader = '16404'. 'Combiners_Mod_Mod2x'. TexturesCnt = '2'. Blend mode = '4'.
+!ConvShader = '7'
+@Shader = '0'. 'Combiners_Opaque'. TexturesCnt = '1'. Blend mode = '0'.
+!ConvShader = '0'
+@Shader = '0'. 'Combiners_Opaque'. TexturesCnt = '1'. Blend mode = '0'.
+!ConvShader = '0'
+@Shader = '0'. 'Combiners_Opaque'. TexturesCnt = '1'. Blend mode = '0'.
+!ConvShader = '0'
+@Shader = '0'. 'Combiners_Opaque'. TexturesCnt = '1'. Blend mode = '0'.
+!ConvShader = '0'
+@Shader = '0'. 'Combiners_Opaque'. TexturesCnt = '1'. Blend mode = '0'.
+!ConvShader = '0'
+!Shader = '16'. 'Combiners_Mod'. TexturesCnt = '1'. Blend mode = '1'.
+!ConvShader = '1'
+@Shader = '0'. 'Combiners_Opaque'. TexturesCnt = '1'. Blend mode = '0'.
+!ConvShader = '0'
+!Shader = '16'. 'Combiners_Mod'. TexturesCnt = '1'. Blend mode = '4'.
+!ConvShader = '1'
+@Shader = '0'. 'Combiners_Opaque'. TexturesCnt = '1'. Blend mode = '0'.
+!ConvShader = '0'
+@Shader = '0'. 'Combiners_Opaque'. TexturesCnt = '1'. Blend mode = '0'.
+!ConvShader = '0'
+!Shader = '16'. 'Combiners_Mod'. TexturesCnt = '1'. Blend mode = '4'.
+!ConvShader = '1'
+!Shader = '2064'. 'Combiners_Mod'. TexturesCnt = '1'. Blend mode = '4'.
+!ConvShader = '1'
+!Shader = '2064'. 'Combiners_Mod'. TexturesCnt = '1'. Blend mode = '4'.
+!ConvShader = '1'
+!Shader = '16404'. 'Combiners_Mod_Mod2x'. TexturesCnt = '2'. Blend mode = '4'.
+!ConvShader = '7'
+!Shader = '16404'. 'Combiners_Mod_Mod2x'. TexturesCnt = '2'. Blend mode = '2'.
+!ConvShader = '7'
+!Shader = '2064'. 'Combiners_Mod'. TexturesCnt = '1'. Blend mode = '4'.
+!ConvShader = '1'
+!Shader = '16404'. 'Combiners_Mod_Mod2x'. TexturesCnt = '2'. Blend mode = '2'.
+!ConvShader = '7'
+@Shader = '0'. 'Combiners_Opaque'. TexturesCnt = '1'. Blend mode = '0'.
+!ConvShader = '0'
+!Shader = '16'. 'Combiners_Mod'. TexturesCnt = '1'. Blend mode = '4'.
+!ConvShader = '1'
+@Shader = '0'. 'Combiners_Opaque'. TexturesCnt = '1'. Blend mode = '0'.
+!ConvShader = '0'
+!Shader = '2064'. 'Combiners_Mod'. TexturesCnt = '1'. Blend mode = '4'.
+!ConvShader = '1'
+@Shader = '0'. 'Combiners_Opaque'. TexturesCnt = '1'. Blend mode = '0'.
+!ConvShader = '0'
+@Shader = '0'. 'Combiners_Opaque'. TexturesCnt = '1'. Blend mode = '0'.
+!ConvShader = '0'
+@Shader = '0'. 'Combiners_Opaque'. TexturesCnt = '1'. Blend mode = '0'.
+!ConvShader = '0'
+@Shader = '0'. 'Combiners_Opaque'. TexturesCnt = '1'. Blend mode = '0'.
+!ConvShader = '0'
+!Shader = '16'. 'Combiners_Mod'. TexturesCnt = '1'. Blend mode = '1'.
+!ConvShader = '1'
+!Shader = '150'. 'Combiners_Mod_Mod2xNA'. TexturesCnt = '2'. Blend mode = '4'.
+!ConvShader = '9'
+!Shader = '151'. 'Combiners_Mod_AddNA'. TexturesCnt = '2'. Blend mode = '4'.
+!ConvShader = '10'
+@Shader = '0'. 'Combiners_Opaque'. TexturesCnt = '1'. Blend mode = '0'.
+!ConvShader = '0'
+@Shader = '0'. 'Combiners_Opaque'. TexturesCnt = '1'. Blend mode = '0'.
+!ConvShader = '0'
+!Shader = '150'. 'Combiners_Mod_Mod2xNA'. TexturesCnt = '2'. Blend mode = '4'.
+!ConvShader = '9'
+!Shader = '16'. 'Combiners_Mod'. TexturesCnt = '1'. Blend mode = '1'.
+!ConvShader = '1'
+!Shader = '151'. 'Combiners_Mod_AddNA'. TexturesCnt = '2'. Blend mode = '4'.
+!ConvShader = '10'
+@Shader = '0'. 'Combiners_Opaque'. TexturesCnt = '1'. Blend mode = '0'.
+!ConvShader = '0'
+!Shader = '16'. 'Combiners_Mod'. TexturesCnt = '1'. Blend mode = '4'.
+!ConvShader = '1'
+!Shader = '16'. 'Combiners_Mod'. TexturesCnt = '1'. Blend mode = '1'.
+!ConvShader = '1'
+!Shader = '16'. 'Combiners_Mod'. TexturesCnt = '1'. Blend mode = '1'.
+!ConvShader = '1'
+@Shader = '0'. 'Combiners_Opaque'. TexturesCnt = '1'. Blend mode = '0'.
+!ConvShader = '0'
+@Shader = '0'. 'Combiners_Opaque'. TexturesCnt = '1'. Blend mode = '0'.
+!ConvShader = '0'
+@Shader = '0'. 'Combiners_Opaque'. TexturesCnt = '1'. Blend mode = '0'.
+!ConvShader = '0'
+!Shader = '16'. 'Combiners_Mod'. TexturesCnt = '1'. Blend mode = '1'.
+!ConvShader = '1'
+!Shader = '16'. 'Combiners_Mod'. TexturesCnt = '1'. Blend mode = '2'.
+!ConvShader = '1'
+!Shader = '16'. 'Combiners_Mod'. TexturesCnt = '1'. Blend mode = '1'.
+!ConvShader = '1'
+@Shader = '0'. 'Combiners_Opaque'. TexturesCnt = '1'. Blend mode = '0'.
+!ConvShader = '0'
+@Shader = '0'. 'Combiners_Opaque'. TexturesCnt = '1'. Blend mode = '0'.
+!ConvShader = '0'
+!Shader = '16'. 'Combiners_Mod'. TexturesCnt = '1'. Blend mode = '1'.
+!ConvShader = '1'
+!Shader = '16'. 'Combiners_Mod'. TexturesCnt = '1'. Blend mode = '4'.
+!ConvShader = '1'
+@Shader = '0'. 'Combiners_Opaque'. TexturesCnt = '1'. Blend mode = '0'.
+!ConvShader = '0'
+@Shader = '0'. 'Combiners_Opaque'. TexturesCnt = '1'. Blend mode = '0'.
+!ConvShader = '0'
+!Shader = '16'. 'Combiners_Mod'. TexturesCnt = '1'. Blend mode = '4'.
+!ConvShader = '1'
+!Shader = '151'. 'Combiners_Mod_AddNA'. TexturesCnt = '2'. Blend mode = '4'.
+!ConvShader = '10'
+@Shader = '0'. 'Combiners_Opaque'. TexturesCnt = '1'. Blend mode = '0'.
+!ConvShader = '0'
+!Shader = '16'. 'Combiners_Mod'. TexturesCnt = '1'. Blend mode = '1'.
+!ConvShader = '1'
+!Shader = '2064'. 'Combiners_Mod'. TexturesCnt = '1'. Blend mode = '4'.
+!ConvShader = '1'
+@Shader = '0'. 'Combiners_Opaque'. TexturesCnt = '1'. Blend mode = '0'.
+!ConvShader = '0'
+!Shader = '16'. 'Combiners_Mod'. TexturesCnt = '1'. Blend mode = '4'.
+!ConvShader = '1'
+@Shader = '0'. 'Combiners_Opaque'. TexturesCnt = '1'. Blend mode = '0'.
+!ConvShader = '0'
+!Shader = '16404'. 'Combiners_Mod_Mod2x'. TexturesCnt = '2'. Blend mode = '4'.
+!ConvShader = '7'
+@Shader = '0'. 'Combiners_Opaque'. TexturesCnt = '1'. Blend mode = '0'.
+!ConvShader = '0'
+!Shader = '2064'. 'Combiners_Mod'. TexturesCnt = '1'. Blend mode = '4'.
+!ConvShader = '1'
+@Shader = '0'. 'Combiners_Opaque'. TexturesCnt = '1'. Blend mode = '0'.
+!ConvShader = '0'
+!Shader = '16'. 'Combiners_Mod'. TexturesCnt = '1'. Blend mode = '4'.
+!ConvShader = '1'
+@Shader = '0'. 'Combiners_Opaque'. TexturesCnt = '1'. Blend mode = '0'.
+!ConvShader = '0'
+@Shader = '0'. 'Combiners_Opaque'. TexturesCnt = '1'. Blend mode = '0'.
+!ConvShader = '0'
+!Shader = '16'. 'Combiners_Mod'. TexturesCnt = '1'. Blend mode = '4'.
+!ConvShader = '1'
+!Shader = '2064'. 'Combiners_Mod'. TexturesCnt = '1'. Blend mode = '4'.
+!ConvShader = '1'
+@Shader = '0'. 'Combiners_Opaque'. TexturesCnt = '1'. Blend mode = '0'.
+!ConvShader = '0'
+@Shader = '0'. 'Combiners_Opaque'. TexturesCnt = '1'. Blend mode = '0'.
+!ConvShader = '0'
+!Shader = '16404'. 'Combiners_Mod_Mod2x'. TexturesCnt = '2'. Blend mode = '4'.
+!ConvShader = '7'
+!Shader = '16'. 'Combiners_Mod'. TexturesCnt = '1'. Blend mode = '1'.
+!ConvShader = '1'
+@Shader = '0'. 'Combiners_Opaque'. TexturesCnt = '1'. Blend mode = '0'.
+!ConvShader = '0'
+@Shader = '0'. 'Combiners_Opaque'. TexturesCnt = '1'. Blend mode = '0'.
+!ConvShader = '0'
+!Shader = '16404'. 'Combiners_Mod_Mod2x'. TexturesCnt = '2'. Blend mode = '2'.
+!ConvShader = '7'
+!Shader = '16'. 'Combiners_Mod'. TexturesCnt = '1'. Blend mode = '1'.
+!ConvShader = '1'
+@Shader = '0'. 'Combiners_Opaque'. TexturesCnt = '1'. Blend mode = '0'.
+!ConvShader = '0'
+!Shader = '16390'. 'Combiners_Opaque_Mod2xNA'. TexturesCnt = '2'. Blend mode = '0'.
+!ConvShader = '4'
+@Shader = '0'. 'Combiners_Opaque'. TexturesCnt = '1'. Blend mode = '0'.
+!ConvShader = '0'
+!Shader = '16'. 'Combiners_Mod'. TexturesCnt = '1'. Blend mode = '1'.
+!ConvShader = '1'
+@Shader = '0'. 'Combiners_Opaque'. TexturesCnt = '1'. Blend mode = '0'.
+!ConvShader = '0'
+@Shader = '0'. 'Combiners_Opaque'. TexturesCnt = '1'. Blend mode = '0'.
+!ConvShader = '0'
+!Shader = '16387'. 'Combiners_Opaque_AddAlpha'. TexturesCnt = '2'. Blend mode = '0'.
+!ConvShader = '13'
+!Shader = '16'. 'Combiners_Mod'. TexturesCnt = '1'. Blend mode = '1'.
+!ConvShader = '1'
+!Shader = '16'. 'Combiners_Mod'. TexturesCnt = '1'. Blend mode = '1'.
+!ConvShader = '1'
+@Shader = '0'. 'Combiners_Opaque'. TexturesCnt = '1'. Blend mode = '0'.
+!ConvShader = '0'
+@Shader = '0'. 'Combiners_Opaque'. TexturesCnt = '1'. Blend mode = '0'.
+!ConvShader = '0'
+!Shader = '16'. 'Combiners_Mod'. TexturesCnt = '1'. Blend mode = '4'.
+!ConvShader = '1'
+!Shader = '16'. 'Combiners_Mod'. TexturesCnt = '1'. Blend mode = '1'.
+!ConvShader = '1'
+@Shader = '0'. 'Combiners_Opaque'. TexturesCnt = '1'. Blend mode = '0'.
+!ConvShader = '0'
+@Shader = '0'. 'Combiners_Opaque'. TexturesCnt = '1'. Blend mode = '0'.
+!ConvShader = '0'
+!Shader = '16'. 'Combiners_Mod'. TexturesCnt = '1'. Blend mode = '1'.
+!ConvShader = '1'
+!Shader = '16'. 'Combiners_Mod'. TexturesCnt = '1'. Blend mode = '4'.
+!ConvShader = '1'
+@Shader = '0'. 'Combiners_Opaque'. TexturesCnt = '1'. Blend mode = '0'.
+!ConvShader = '0'
+@Shader = '0'. 'Combiners_Opaque'. TexturesCnt = '1'. Blend mode = '0'.
+!ConvShader = '0'
+!Shader = '16'. 'Combiners_Mod'. TexturesCnt = '1'. Blend mode = '4'.
+!ConvShader = '1'
+!Shader = '16'. 'Combiners_Mod'. TexturesCnt = '1'. Blend mode = '4'.
+!ConvShader = '1'
+!Shader = '16'. 'Combiners_Mod'. TexturesCnt = '1'. Blend mode = '4'.
+!ConvShader = '1'
+!Shader = '16'. 'Combiners_Mod'. TexturesCnt = '1'. Blend mode = '4'.
+!ConvShader = '1'
+@Shader = '0'. 'Combiners_Opaque'. TexturesCnt = '1'. Blend mode = '0'.
+!ConvShader = '0'
+!Shader = '16'. 'Combiners_Mod'. TexturesCnt = '1'. Blend mode = '1'.
+!ConvShader = '1'
+!Shader = '16'. 'Combiners_Mod'. TexturesCnt = '1'. Blend mode = '1'.
+!ConvShader = '1'
+@Shader = '0'. 'Combiners_Opaque'. TexturesCnt = '1'. Blend mode = '0'.
+!ConvShader = '0'
+@Shader = '0'. 'Combiners_Opaque'. TexturesCnt = '1'. Blend mode = '0'.
+!ConvShader = '0'
+!Shader = '16'. 'Combiners_Mod'. TexturesCnt = '1'. Blend mode = '1'.
+!ConvShader = '1'
+@Shader = '0'. 'Combiners_Opaque'. TexturesCnt = '1'. Blend mode = '0'.
+!ConvShader = '0'
+!Shader = '150'. 'Combiners_Mod_Mod2xNA'. TexturesCnt = '2'. Blend mode = '4'.
+!ConvShader = '9'
+@Shader = '0'. 'Combiners_Opaque'. TexturesCnt = '1'. Blend mode = '0'.
+!ConvShader = '0'
+@Shader = '0'. 'Combiners_Opaque'. TexturesCnt = '1'. Blend mode = '0'.
+!ConvShader = '0'
+@Shader = '0'. 'Combiners_Opaque'. TexturesCnt = '1'. Blend mode = '0'.
+!ConvShader = '0'
+!Shader = '150'. 'Combiners_Mod_Mod2xNA'. TexturesCnt = '2'. Blend mode = '4'.
+!ConvShader = '9'
+!Shader = '16'. 'Combiners_Mod'. TexturesCnt = '1'. Blend mode = '4'.
+!ConvShader = '1'
+@Shader = '0'. 'Combiners_Opaque'. TexturesCnt = '1'. Blend mode = '0'.
+!ConvShader = '0'
+!Shader = '16'. 'Combiners_Mod'. TexturesCnt = '1'. Blend mode = '1'.
+!ConvShader = '1'
+!Shader = '16'. 'Combiners_Mod'. TexturesCnt = '1'. Blend mode = '1'.
+!ConvShader = '1'
+!Shader = '16'. 'Combiners_Mod'. TexturesCnt = '1'. Blend mode = '4'.
+!ConvShader = '1'
+!Shader = '16'. 'Combiners_Mod'. TexturesCnt = '1'. Blend mode = '2'.
+!ConvShader = '1'
+!Shader = '16'. 'Combiners_Mod'. TexturesCnt = '1'. Blend mode = '4'.
+!ConvShader = '1'
+!Shader = '16'. 'Combiners_Mod'. TexturesCnt = '1'. Blend mode = '4'.
+!ConvShader = '1'
+@Shader = '0'. 'Combiners_Opaque'. TexturesCnt = '1'. Blend mode = '0'.
+!ConvShader = '0'
+!Shader = '132'. 'Combiners_Opaque_Mod2x'. TexturesCnt = '2'. Blend mode = '0'.
+!ConvShader = '3'
+!Shader = '2064'. 'Combiners_Mod'. TexturesCnt = '1'. Blend mode = '4'.
+!ConvShader = '1'
+!Shader = '2064'. 'Combiners_Mod'. TexturesCnt = '1'. Blend mode = '4'.
+!ConvShader = '1'
+@Shader = '0'. 'Combiners_Opaque'. TexturesCnt = '1'. Blend mode = '0'.
+!ConvShader = '0'
+!Shader = '16'. 'Combiners_Mod'. TexturesCnt = '1'. Blend mode = '2'.
+!ConvShader = '1'
+!Shader = '16'. 'Combiners_Mod'. TexturesCnt = '1'. Blend mode = '4'.
+!ConvShader = '1'
+!Shader = '16'. 'Combiners_Mod'. TexturesCnt = '1'. Blend mode = '4'.
+!ConvShader = '1'
+!Shader = '16'. 'Combiners_Mod'. TexturesCnt = '1'. Blend mode = '1'.
+!ConvShader = '1'
+@Shader = '0'. 'Combiners_Opaque'. TexturesCnt = '1'. Blend mode = '0'.
+!ConvShader = '0'
+!Shader = '2064'. 'Combiners_Mod'. TexturesCnt = '1'. Blend mode = '4'.
+!ConvShader = '1'
+!Shader = '2064'. 'Combiners_Mod'. TexturesCnt = '1'. Blend mode = '4'.
+!ConvShader = '1'
+!Shader = '16'. 'Combiners_Mod'. TexturesCnt = '1'. Blend mode = '4'.
+!ConvShader = '1'
+!Shader = '16'. 'Combiners_Mod'. TexturesCnt = '1'. Blend mode = '1'.
+!ConvShader = '1'
+!Shader = '150'. 'Combiners_Mod_Mod2xNA'. TexturesCnt = '2'. Blend mode = '4'.
+!ConvShader = '9'
+!Shader = '16'. 'Combiners_Mod'. TexturesCnt = '1'. Blend mode = '4'.
+!ConvShader = '1'
+!Shader = '150'. 'Combiners_Mod_Mod2xNA'. TexturesCnt = '2'. Blend mode = '4'.
+!ConvShader = '9'
+!Shader = '2064'. 'Combiners_Mod'. TexturesCnt = '1'. Blend mode = '4'.
+!ConvShader = '1'
+@Shader = '0'. 'Combiners_Opaque'. TexturesCnt = '1'. Blend mode = '0'.
+!ConvShader = '0'
+!Shader = '16'. 'Combiners_Mod'. TexturesCnt = '1'. Blend mode = '4'.
+!ConvShader = '1'
+@Shader = '0'. 'Combiners_Opaque'. TexturesCnt = '1'. Blend mode = '0'.
+!ConvShader = '0'
+!Shader = '2064'. 'Combiners_Mod'. TexturesCnt = '1'. Blend mode = '4'.
+!ConvShader = '1'
+@Shader = '0'. 'Combiners_Opaque'. TexturesCnt = '1'. Blend mode = '0'.
+!ConvShader = '0'
+!Shader = '150'. 'Combiners_Mod_Mod2xNA'. TexturesCnt = '2'. Blend mode = '4'.
+!ConvShader = '9'
+!Shader = '16'. 'Combiners_Mod'. TexturesCnt = '1'. Blend mode = '4'.
+!ConvShader = '1'
+!Shader = '150'. 'Combiners_Mod_Mod2xNA'. TexturesCnt = '2'. Blend mode = '4'.
+!ConvShader = '9'
+!Shader = '16'. 'Combiners_Mod'. TexturesCnt = '1'. Blend mode = '4'.
+!ConvShader = '1'
+!Shader = '16'. 'Combiners_Mod'. TexturesCnt = '1'. Blend mode = '4'.
+!ConvShader = '1'
+!Shader = '16'. 'Combiners_Mod'. TexturesCnt = '1'. Blend mode = '2'.
+!ConvShader = '1'
+!Shader = '16404'. 'Combiners_Mod_Mod2x'. TexturesCnt = '2'. Blend mode = '4'.
+!ConvShader = '7'
+!Shader = '16404'. 'Combiners_Mod_Mod2x'. TexturesCnt = '2'. Blend mode = '4'.
+!ConvShader = '7'
+!Shader = '16'. 'Combiners_Mod'. TexturesCnt = '1'. Blend mode = '4'.
+!ConvShader = '1'
+@Shader = '0'. 'Combiners_Opaque'. TexturesCnt = '1'. Blend mode = '0'.
+!ConvShader = '0'
+!Shader = '16'. 'Combiners_Mod'. TexturesCnt = '1'. Blend mode = '1'.
+!ConvShader = '1'
+@Shader = '0'. 'Combiners_Opaque'. TexturesCnt = '1'. Blend mode = '0'.
+!ConvShader = '0'
+!Shader = '131'. 'Combiners_Opaque_AddAlpha'. TexturesCnt = '2'. Blend mode = '0'.
+!ConvShader = '13'
+!Shader = '16'. 'Combiners_Mod'. TexturesCnt = '1'. Blend mode = '2'.
+!ConvShader = '1'
+!Shader = '16'. 'Combiners_Mod'. TexturesCnt = '1'. Blend mode = '4'.
+!ConvShader = '1'
+@Shader = '0'. 'Combiners_Opaque'. TexturesCnt = '1'. Blend mode = '0'.
+!ConvShader = '0'
+!Shader = '16'. 'Combiners_Mod'. TexturesCnt = '1'. Blend mode = '2'.
+!ConvShader = '1'
+@Shader = '0'. 'Combiners_Opaque'. TexturesCnt = '1'. Blend mode = '0'.
+!ConvShader = '0'
+@Shader = '0'. 'Combiners_Opaque'. TexturesCnt = '1'. Blend mode = '0'.
+!ConvShader = '0'
+@Shader = '0'. 'Combiners_Opaque'. TexturesCnt = '1'. Blend mode = '0'.
+!ConvShader = '0'
+!Shader = '16'. 'Combiners_Mod'. TexturesCnt = '1'. Blend mode = '1'.
+!ConvShader = '1'
+!Shader = '2064'. 'Combiners_Mod'. TexturesCnt = '1'. Blend mode = '4'.
+!ConvShader = '1'
+@Shader = '0'. 'Combiners_Opaque'. TexturesCnt = '1'. Blend mode = '0'.
+!ConvShader = '0'
+!Shader = '16'. 'Combiners_Mod'. TexturesCnt = '1'. Blend mode = '1'.
+!ConvShader = '1'
+!Shader = '16'. 'Combiners_Mod'. TexturesCnt = '1'. Blend mode = '4'.
+!ConvShader = '1'
+!Shader = '16'. 'Combiners_Mod'. TexturesCnt = '1'. Blend mode = '4'.
+!ConvShader = '1'
+@Shader = '0'. 'Combiners_Opaque'. TexturesCnt = '1'. Blend mode = '0'.
+!ConvShader = '0'
+!Shader = '2064'. 'Combiners_Mod'. TexturesCnt = '1'. Blend mode = '4'.
+!ConvShader = '1'
+@Shader = '0'. 'Combiners_Opaque'. TexturesCnt = '1'. Blend mode = '0'.
+!ConvShader = '0'
+!Shader = '16'. 'Combiners_Mod'. TexturesCnt = '1'. Blend mode = '1'.
+!ConvShader = '1'
+@Shader = '0'. 'Combiners_Opaque'. TexturesCnt = '1'. Blend mode = '0'.
+!ConvShader = '0'
+@Shader = '0'. 'Combiners_Opaque'. TexturesCnt = '1'. Blend mode = '0'.
+!ConvShader = '0'
+!Shader = '16'. 'Combiners_Mod'. TexturesCnt = '1'. Blend mode = '1'.
+!ConvShader = '1'
+!Shader = '16'. 'Combiners_Mod'. TexturesCnt = '1'. Blend mode = '1'.
+!ConvShader = '1'
+@Shader = '0'. 'Combiners_Opaque'. TexturesCnt = '1'. Blend mode = '0'.
+!ConvShader = '0'
+!Shader = '16'. 'Combiners_Mod'. TexturesCnt = '1'. Blend mode = '1'.
+!ConvShader = '1'
+!Shader = '16'. 'Combiners_Mod'. TexturesCnt = '1'. Blend mode = '1'.
+!ConvShader = '1'
+@Shader = '0'. 'Combiners_Opaque'. TexturesCnt = '1'. Blend mode = '0'.
+!ConvShader = '0'
+@Shader = '0'. 'Combiners_Opaque'. TexturesCnt = '1'. Blend mode = '0'.
+!ConvShader = '0'
+!Shader = '16'. 'Combiners_Mod'. TexturesCnt = '1'. Blend mode = '4'.
+!ConvShader = '1'
+!Shader = '132'. 'Combiners_Opaque_Mod2x'. TexturesCnt = '2'. Blend mode = '0'.
+!ConvShader = '3'
+!Shader = '16'. 'Combiners_Mod'. TexturesCnt = '1'. Blend mode = '1'.
+!ConvShader = '1'
+@Shader = '0'. 'Combiners_Opaque'. TexturesCnt = '1'. Blend mode = '0'.
+!ConvShader = '0'
+@Shader = '0'. 'Combiners_Opaque'. TexturesCnt = '1'. Blend mode = '0'.
+!ConvShader = '0'
+!Shader = '16'. 'Combiners_Mod'. TexturesCnt = '1'. Blend mode = '2'.
+!ConvShader = '1'
+@Shader = '0'. 'Combiners_Opaque'. TexturesCnt = '1'. Blend mode = '0'.
+!Shader = '145'. 'Combiners_Mod_Mod'. TexturesCnt = '2'. Blend mode = '2'.
+!ConvShader = '6'
+!Shader = '16'. 'Combiners_Mod'. TexturesCnt = '1'. Blend mode = '4'.
+!ConvShader = '1'
+@Shader = '0'. 'Combiners_Opaque'. TexturesCnt = '1'. Blend mode = '0'.
+!ConvShader = '0'
+!ConvShader = '0'
+@Shader = '0'. 'Combiners_Opaque'. TexturesCnt = '1'. Blend mode = '0'.
+!ConvShader = '0'
+@Shader = '0'. 'Combiners_Opaque'. TexturesCnt = '1'. Blend mode = '0'.
+!ConvShader = '0'
+@Shader = '0'. 'Combiners_Opaque'. TexturesCnt = '1'. Blend mode = '0'.
+!ConvShader = '0'
+@Shader = '0'. 'Combiners_Opaque'. TexturesCnt = '1'. Blend mode = '0'.
+!ConvShader = '0'
+@Shader = '0'. 'Combiners_Opaque'. TexturesCnt = '1'. Blend mode = '0'.
+!ConvShader = '0'
+!Shader = '145'. 'Combiners_Mod_Mod'. TexturesCnt = '2'. Blend mode = '2'.
+!ConvShader = '6'
+!Shader = '2064'. 'Combiners_Mod'. TexturesCnt = '1'. Blend mode = '4'.
+!ConvShader = '1'
+!Shader = '2064'. 'Combiners_Mod'. TexturesCnt = '1'. Blend mode = '4'.
+!ConvShader = '1'
+!Shader = '16'. 'Combiners_Mod'. TexturesCnt = '1'. Blend mode = '1'.
+!ConvShader = '1'
+@Shader = '0'. 'Combiners_Opaque'. TexturesCnt = '1'. Blend mode = '0'.
+!ConvShader = '0'
+@Shader = '0'. 'Combiners_Opaque'. TexturesCnt = '1'. Blend mode = '0'.
+!ConvShader = '0'
+@Shader = '0'. 'Combiners_Opaque'. TexturesCnt = '1'. Blend mode = '0'.
+!ConvShader = '0'
+!Shader = '16'. 'Combiners_Mod'. TexturesCnt = '1'. Blend mode = '1'.
+!ConvShader = '1'
+@Shader = '0'. 'Combiners_Opaque'. TexturesCnt = '1'. Blend mode = '0'.
+!ConvShader = '0'
+!Shader = '2064'. 'Combiners_Mod'. TexturesCnt = '1'. Blend mode = '4'.
+!ConvShader = '1'
+!Shader = '2064'. 'Combiners_Mod'. TexturesCnt = '1'. Blend mode = '4'.
+!ConvShader = '1'
+!Shader = '16'. 'Combiners_Mod'. TexturesCnt = '1'. Blend mode = '4'.
+!ConvShader = '1'
+!Shader = '16'. 'Combiners_Mod'. TexturesCnt = '1'. Blend mode = '1'.
+!ConvShader = '1'
+@Shader = '0'. 'Combiners_Opaque'. TexturesCnt = '1'. Blend mode = '0'.
+!ConvShader = '0'
+@Shader = '0'. 'Combiners_Opaque'. TexturesCnt = '1'. Blend mode = '0'.
+!ConvShader = '0'
+!Shader = '2064'. 'Combiners_Mod'. TexturesCnt = '1'. Blend mode = '4'.
+!ConvShader = '1'
+!Shader = '132'. 'Combiners_Opaque_Mod2x'. TexturesCnt = '2'. Blend mode = '0'.
+!ConvShader = '3'
+!Shader = '2064'. 'Combiners_Mod'. TexturesCnt = '1'. Blend mode = '4'.
+!ConvShader = '1'
+!Shader = '16'. 'Combiners_Mod'. TexturesCnt = '1'. Blend mode = '1'.
+!ConvShader = '1'
+@Shader = '0'. 'Combiners_Opaque'. TexturesCnt = '1'. Blend mode = '0'.
+!ConvShader = '0'
+!Shader = '16'. 'Combiners_Mod'. TexturesCnt = '1'. Blend mode = '4'.
+!ConvShader = '1'
+!Shader = '2064'. 'Combiners_Mod'. TexturesCnt = '1'. Blend mode = '4'.
+!ConvShader = '1'
+!Shader = '16'. 'Combiners_Mod'. TexturesCnt = '1'. Blend mode = '4'.
+!ConvShader = '1'
+!Shader = '2064'. 'Combiners_Mod'. TexturesCnt = '1'. Blend mode = '4'.
+!ConvShader = '1'
+!Shader = '16'. 'Combiners_Mod'. TexturesCnt = '1'. Blend mode = '4'.
+!ConvShader = '1'
+!Shader = '16'. 'Combiners_Mod'. TexturesCnt = '1'. Blend mode = '4'.
+!ConvShader = '1'
+!Shader = '2064'. 'Combiners_Mod'. TexturesCnt = '1'. Blend mode = '4'.
+!ConvShader = '1'
+!Shader = '16'. 'Combiners_Mod'. TexturesCnt = '1'. Blend mode = '4'.
+!ConvShader = '1'
+!Shader = '2064'. 'Combiners_Mod'. TexturesCnt = '1'. Blend mode = '4'.
+!ConvShader = '1'
+!Shader = '16'. 'Combiners_Mod'. TexturesCnt = '1'. Blend mode = '4'.
+!ConvShader = '1'
+!Shader = '16'. 'Combiners_Mod'. TexturesCnt = '1'. Blend mode = '1'.
+!ConvShader = '1'
+ CWorldObjectCreator::LoadWMO: WMO 'WORLD\WMO\NORTHREND\ICECROWN\SCOURGEWALLS\ICECROWN_CITYGATE_02.WMO' loaded.
+@Shader = '0'. 'Combiners_Opaque'. TexturesCnt = '1'. Blend mode = '0'.
+!ConvShader = '0'
+@Shader = '0'. 'Combiners_Opaque'. TexturesCnt = '1'. Blend mode = '0'.
+!ConvShader = '0'
+@Shader = '0'. 'Combiners_Opaque'. TexturesCnt = '1'. Blend mode = '0'.
+!ConvShader = '0'
+@Shader = '0'. 'Combiners_Opaque'. TexturesCnt = '1'. Blend mode = '0'.
+!ConvShader = '0'
+!Shader = '16'. 'Combiners_Mod'. TexturesCnt = '1'. Blend mode = '1'.
+!ConvShader = '1'
+!Shader = '16'. 'Combiners_Mod'. TexturesCnt = '1'. Blend mode = '1'.
+!ConvShader = '1'
+!Shader = '16'. 'Combiners_Mod'. TexturesCnt = '1'. Blend mode = '2'.
+!ConvShader = '1'
+!Shader = '16'. 'Combiners_Mod'. TexturesCnt = '1'. Blend mode = '1'.
+!ConvShader = '1'
+!Shader = '16'. 'Combiners_Mod'. TexturesCnt = '1'. Blend mode = '2'.
+!ConvShader = '1'
+@Shader = '0'. 'Combiners_Opaque'. TexturesCnt = '1'. Blend mode = '0'.
+!ConvShader = '0'
+@Shader = '0'. 'Combiners_Opaque'. TexturesCnt = '1'. Blend mode = '0'.
+!ConvShader = '0'
+!Shader = '16'. 'Combiners_Mod'. TexturesCnt = '1'. Blend mode = '4'.
+!ConvShader = '1'
+!Shader = '16404'. 'Combiners_Mod_Mod2x'. TexturesCnt = '2'. Blend mode = '2'.
+!ConvShader = '7'
+@Shader = '0'. 'Combiners_Opaque'. TexturesCnt = '1'. Blend mode = '0'.
+!ConvShader = '0'
+!Shader = '16'. 'Combiners_Mod'. TexturesCnt = '1'. Blend mode = '4'.
+!ConvShader = '1'
+!Shader = '16'. 'Combiners_Mod'. TexturesCnt = '1'. Blend mode = '4'.
+!ConvShader = '1'
+@Shader = '0'. 'Combiners_Opaque'. TexturesCnt = '1'. Blend mode = '0'.
+!ConvShader = '0'
+!Shader = '2064'. 'Combiners_Mod'. TexturesCnt = '1'. Blend mode = '4'.
+!ConvShader = '1'
+@Shader = '0'. 'Combiners_Opaque'. TexturesCnt = '1'. Blend mode = '0'.
+!ConvShader = '0'
+!Shader = '16'. 'Combiners_Mod'. TexturesCnt = '1'. Blend mode = '4'.
+!ConvShader = '1'
+@Shader = '0'. 'Combiners_Opaque'. TexturesCnt = '1'. Blend mode = '0'.
+!ConvShader = '0'
+!Shader = '16'. 'Combiners_Mod'. TexturesCnt = '1'. Blend mode = '1'.
+!ConvShader = '1'
+@Shader = '0'. 'Combiners_Opaque'. TexturesCnt = '1'. Blend mode = '0'.
+!ConvShader = '0'
+@Shader = '0'. 'Combiners_Opaque'. TexturesCnt = '1'. Blend mode = '0'.
+!ConvShader = '0'
+@Shader = '0'. 'Combiners_Opaque'. TexturesCnt = '1'. Blend mode = '0'.
+!ConvShader = '0'
+@Shader = '0'. 'Combiners_Opaque'. TexturesCnt = '1'. Blend mode = '0'.
+!ConvShader = '0'
+@Shader = '0'. 'Combiners_Opaque'. TexturesCnt = '1'. Blend mode = '0'.
+!ConvShader = '0'
+@Shader = '0'. 'Combiners_Opaque'. TexturesCnt = '1'. Blend mode = '0'.
+!ConvShader = '0'
+@Shader = '0'. 'Combiners_Opaque'. TexturesCnt = '1'. Blend mode = '0'.
+!ConvShader = '0'
+@Shader = '0'. 'Combiners_Opaque'. TexturesCnt = '1'. Blend mode = '0'.
+!ConvShader = '0'
+@Shader = '0'. 'Combiners_Opaque'. TexturesCnt = '1'. Blend mode = '0'.
+!ConvShader = '0'
+@Shader = '0'. 'Combiners_Opaque'. TexturesCnt = '1'. Blend mode = '0'.
+!ConvShader = '0'
+!Shader = '16'. 'Combiners_Mod'. TexturesCnt = '1'. Blend mode = '2'.
+!ConvShader = '1'
+@Shader = '0'. 'Combiners_Opaque'. TexturesCnt = '1'. Blend mode = '0'.
+!ConvShader = '0'
+!Shader = '2064'. 'Combiners_Mod'. TexturesCnt = '1'. Blend mode = '6'.
+!ConvShader = '1'
+@Shader = '0'. 'Combiners_Opaque'. TexturesCnt = '1'. Blend mode = '0'.
+!ConvShader = '0'
+@Shader = '0'. 'Combiners_Opaque'. TexturesCnt = '1'. Blend mode = '0'.
+!ConvShader = '0'
+@Shader = '0'. 'Combiners_Opaque'. TexturesCnt = '1'. Blend mode = '0'.
+!ConvShader = '0'
+@Shader = '0'. 'Combiners_Opaque'. TexturesCnt = '1'. Blend mode = '0'.
+!ConvShader = '0'
+@Shader = '0'. 'Combiners_Opaque'. TexturesCnt = '1'. Blend mode = '0'.
+!ConvShader = '0'
+@Shader = '0'. 'Combiners_Opaque'. TexturesCnt = '1'. Blend mode = '0'.
+!ConvShader = '0'
+@Shader = '0'. 'Combiners_Opaque'. TexturesCnt = '1'. Blend mode = '0'.
+!ConvShader = '0'
+!Shader = '1'. 'Combiners_Opaque_Mod'. TexturesCnt = '2'. Blend mode = '0'.
+!ConvShader = '2'
+!Shader = '16'. 'Combiners_Mod'. TexturesCnt = '1'. Blend mode = '2'.
+!ConvShader = '1'
+!Shader = '16'. 'Combiners_Mod'. TexturesCnt = '1'. Blend mode = '2'.
+!ConvShader = '1'
+@Shader = '0'. 'Combiners_Opaque'. TexturesCnt = '1'. Blend mode = '0'.
+!ConvShader = '0'
+@Shader = '0'. 'Combiners_Opaque'. TexturesCnt = '1'. Blend mode = '0'.
+!ConvShader = '0'
+!Shader = '16'. 'Combiners_Mod'. TexturesCnt = '1'. Blend mode = '2'.
+!ConvShader = '1'
+!Shader = '16'. 'Combiners_Mod'. TexturesCnt = '1'. Blend mode = '1'.
+!ConvShader = '1'
+@Shader = '0'. 'Combiners_Opaque'. TexturesCnt = '1'. Blend mode = '0'.
+!ConvShader = '0'
+@Shader = '0'. 'Combiners_Opaque'. TexturesCnt = '1'. Blend mode = '0'.
+!ConvShader = '0'
+!Shader = '16'. 'Combiners_Mod'. TexturesCnt = '1'. Blend mode = '2'.
+!ConvShader = '1'
+@Shader = '0'. 'Combiners_Opaque'. TexturesCnt = '1'. Blend mode = '0'.
+!ConvShader = '0'
+!Shader = '16'. 'Combiners_Mod'. TexturesCnt = '1'. Blend mode = '2'.
+!ConvShader = '1'
+@Shader = '0'. 'Combiners_Opaque'. TexturesCnt = '1'. Blend mode = '0'.
+!ConvShader = '0'
+@Shader = '0'. 'Combiners_Opaque'. TexturesCnt = '1'. Blend mode = '0'.
+!ConvShader = '0'
+!Shader = '16'. 'Combiners_Mod'. TexturesCnt = '1'. Blend mode = '2'.
+!ConvShader = '1'
+@Shader = '0'. 'Combiners_Opaque'. TexturesCnt = '1'. Blend mode = '0'.
+!ConvShader = '0'
+@Shader = '0'. 'Combiners_Opaque'. TexturesCnt = '1'. Blend mode = '0'.
+!ConvShader = '0'
+!Shader = '2064'. 'Combiners_Mod'. TexturesCnt = '1'. Blend mode = '4'.
+!ConvShader = '1'
+@Shader = '0'. 'Combiners_Opaque'. TexturesCnt = '1'. Blend mode = '0'.
+!ConvShader = '0'
+!Shader = '16'. 'Combiners_Mod'. TexturesCnt = '1'. Blend mode = '2'.
+!ConvShader = '1'
+@Shader = '0'. 'Combiners_Opaque'. TexturesCnt = '1'. Blend mode = '0'.
+!ConvShader = '0'
+@Shader = '0'. 'Combiners_Opaque'. TexturesCnt = '1'. Blend mode = '0'.
+!ConvShader = '0'
+@Shader = '0'. 'Combiners_Opaque'. TexturesCnt = '1'. Blend mode = '0'.
+!ConvShader = '0'
+!Shader = '16'. 'Combiners_Mod'. TexturesCnt = '1'. Blend mode = '1'.
+!ConvShader = '1'
+@Shader = '0'. 'Combiners_Opaque'. TexturesCnt = '1'. Blend mode = '0'.
+!ConvShader = '0'
+!Shader = '3'. 'Combiners_Opaque_AddAlpha'. TexturesCnt = '2'. Blend mode = '0'.
+!ConvShader = '13'
+@Shader = '0'. 'Combiners_Opaque'. TexturesCnt = '1'. Blend mode = '0'.
+!ConvShader = '0'
+@Shader = '0'. 'Combiners_Opaque'. TexturesCnt = '1'. Blend mode = '0'.
+!ConvShader = '0'
+@Shader = '0'. 'Combiners_Opaque'. TexturesCnt = '1'. Blend mode = '0'.
+!ConvShader = '0'
+@Shader = '0'. 'Combiners_Opaque'. TexturesCnt = '1'. Blend mode = '0'.
+!ConvShader = '0'
+@Shader = '0'. 'Combiners_Opaque'. TexturesCnt = '1'. Blend mode = '0'.
+!ConvShader = '0'
+!Shader = '16'. 'Combiners_Mod'. TexturesCnt = '1'. Blend mode = '1'.
+!ConvShader = '1'
+!Shader = '3'. 'Combiners_Opaque_AddAlpha'. TexturesCnt = '2'. Blend mode = '0'.
+!ConvShader = '13'
+@Shader = '0'. 'Combiners_Opaque'. TexturesCnt = '1'. Blend mode = '0'.
+!ConvShader = '0'
+!Shader = '16'. 'Combiners_Mod'. TexturesCnt = '1'. Blend mode = '2'.
+!ConvShader = '1'
+!Shader = '16'. 'Combiners_Mod'. TexturesCnt = '1'. Blend mode = '1'.
+!ConvShader = '1'
+@Shader = '0'. 'Combiners_Opaque'. TexturesCnt = '1'. Blend mode = '0'.
+!ConvShader = '0'
+@Shader = '0'. 'Combiners_Opaque'. TexturesCnt = '1'. Blend mode = '0'.
+!ConvShader = '0'
+@Shader = '0'. 'Combiners_Opaque'. TexturesCnt = '1'. Blend mode = '0'.
+!ConvShader = '0'
+!Shader = '16'. 'Combiners_Mod'. TexturesCnt = '1'. Blend mode = '2'.
+!ConvShader = '1'
+@Shader = '0'. 'Combiners_Opaque'. TexturesCnt = '1'. Blend mode = '0'.
+!ConvShader = '0'
+!Shader = '16'. 'Combiners_Mod'. TexturesCnt = '1'. Blend mode = '1'.
+!ConvShader = '1'
+@Shader = '0'. 'Combiners_Opaque'. TexturesCnt = '1'. Blend mode = '0'.
+!ConvShader = '0'
+!Shader = '16'. 'Combiners_Mod'. TexturesCnt = '1'. Blend mode = '2'.
+!ConvShader = '1'
+!Shader = '16'. 'Combiners_Mod'. TexturesCnt = '1'. Blend mode = '2'.
+!ConvShader = '1'
+!Shader = '16387'. 'Combiners_Opaque_AddAlpha'. TexturesCnt = '2'. Blend mode = '0'.
+!ConvShader = '13'
+@Shader = '0'. 'Combiners_Opaque'. TexturesCnt = '1'. Blend mode = '0'.
+!ConvShader = '0'
+!Shader = '2064'. 'Combiners_Mod'. TexturesCnt = '1'. Blend mode = '4'.
+!ConvShader = '1'
+@Shader = '0'. 'Combiners_Opaque'. TexturesCnt = '1'. Blend mode = '0'.
+!ConvShader = '0'
+@Shader = '0'. 'Combiners_Opaque'. TexturesCnt = '1'. Blend mode = '0'.
+!ConvShader = '0'
+@Shader = '0'. 'Combiners_Opaque'. TexturesCnt = '1'. Blend mode = '0'.
+!ConvShader = '0'
+@Shader = '0'. 'Combiners_Opaque'. TexturesCnt = '1'. Blend mode = '0'.
+!ConvShader = '0'
+!Shader = '16'. 'Combiners_Mod'. TexturesCnt = '1'. Blend mode = '2'.
+!ConvShader = '1'
+!Shader = '16'. 'Combiners_Mod'. TexturesCnt = '1'. Blend mode = '2'.
+!ConvShader = '1'
+@Shader = '0'. 'Combiners_Opaque'. TexturesCnt = '1'. Blend mode = '0'.
+!ConvShader = '0'
+@Shader = '0'. 'Combiners_Opaque'. TexturesCnt = '1'. Blend mode = '0'.
+!ConvShader = '0'
+@Shader = '0'. 'Combiners_Opaque'. TexturesCnt = '1'. Blend mode = '0'.
+!ConvShader = '0'
+@Shader = '0'. 'Combiners_Opaque'. TexturesCnt = '1'. Blend mode = '0'.
+!ConvShader = '0'
+!Shader = '129'. 'Combiners_Opaque_Mod'. TexturesCnt = '2'. Blend mode = '0'.
+!ConvShader = '2'
+@Shader = '0'. 'Combiners_Opaque'. TexturesCnt = '1'. Blend mode = '0'.
+!ConvShader = '0'
+!Shader = '16'. 'Combiners_Mod'. TexturesCnt = '1'. Blend mode = '1'.
+!ConvShader = '1'
+!Shader = '16'. 'Combiners_Mod'. TexturesCnt = '1'. Blend mode = '2'.
+!ConvShader = '1'
+!Shader = '16401'. 'Combiners_Mod_Mod'. TexturesCnt = '2'. Blend mode = '4'.
+!ConvShader = '6'
+@Shader = '0'. 'Combiners_Opaque'. TexturesCnt = '1'. Blend mode = '0'.
+!ConvShader = '0'
+@Shader = '0'. 'Combiners_Opaque'. TexturesCnt = '1'. Blend mode = '0'.
+!ConvShader = '0'
+!Shader = '16'. 'Combiners_Mod'. TexturesCnt = '1'. Blend mode = '1'.
+!ConvShader = '1'
+@Shader = '0'. 'Combiners_Opaque'. TexturesCnt = '1'. Blend mode = '0'.
+!ConvShader = '0'
+!Shader = '16'. 'Combiners_Mod'. TexturesCnt = '1'. Blend mode = '2'.
+!ConvShader = '1'
+!Shader = '16'. 'Combiners_Mod'. TexturesCnt = '1'. Blend mode = '1'.
+!ConvShader = '1'
+!Shader = '16'. 'Combiners_Mod'. TexturesCnt = '1'. Blend mode = '4'.
+!ConvShader = '1'
+!Shader = '2064'. 'Combiners_Mod'. TexturesCnt = '1'. Blend mode = '4'.
+!ConvShader = '1'
+@Shader = '0'. 'Combiners_Opaque'. TexturesCnt = '1'. Blend mode = '0'.
+!ConvShader = '0'
+@Shader = '0'. 'Combiners_Opaque'. TexturesCnt = '1'. Blend mode = '0'.
+!ConvShader = '0'
+@Shader = '0'. 'Combiners_Opaque'. TexturesCnt = '1'. Blend mode = '0'.
+!ConvShader = '0'
+@Shader = '0'. 'Combiners_Opaque'. TexturesCnt = '1'. Blend mode = '0'.
+!ConvShader = '0'
+!Shader = '16'. 'Combiners_Mod'. TexturesCnt = '1'. Blend mode = '1'.
+!ConvShader = '1'
+@Shader = '0'. 'Combiners_Opaque'. TexturesCnt = '1'. Blend mode = '0'.
+!ConvShader = '0'
+!Shader = '16'. 'Combiners_Mod'. TexturesCnt = '1'. Blend mode = '1'.
+!ConvShader = '1'
+!Shader = '16'. 'Combiners_Mod'. TexturesCnt = '1'. Blend mode = '1'.
+!ConvShader = '1'
+@Shader = '0'. 'Combiners_Opaque'. TexturesCnt = '1'. Blend mode = '0'.
+!ConvShader = '0'
+!Shader = '16'. 'Combiners_Mod'. TexturesCnt = '1'. Blend mode = '1'.
+!ConvShader = '1'
+!Shader = '16'. 'Combiners_Mod'. TexturesCnt = '1'. Blend mode = '4'.
+!ConvShader = '1'
+!Shader = '16'. 'Combiners_Mod'. TexturesCnt = '1'. Blend mode = '1'.
+!ConvShader = '1'
+@Shader = '0'. 'Combiners_Opaque'. TexturesCnt = '1'. Blend mode = '0'.
+!ConvShader = '0'
+@Shader = '0'. 'Combiners_Opaque'. TexturesCnt = '1'. Blend mode = '0'.
+!ConvShader = '0'
+!Shader = '16'. 'Combiners_Mod'. TexturesCnt = '1'. Blend mode = '1'.
+!ConvShader = '1'
+@Shader = '0'. 'Combiners_Opaque'. TexturesCnt = '1'. Blend mode = '0'.
+!ConvShader = '0'
+!Shader = '16'. 'Combiners_Mod'. TexturesCnt = '1'. Blend mode = '1'.
+!ConvShader = '1'
+!Shader = '16'. 'Combiners_Mod'. TexturesCnt = '1'. Blend mode = '1'.
+!ConvShader = '1'
+@Shader = '0'. 'Combiners_Opaque'. TexturesCnt = '1'. Blend mode = '0'.
+!ConvShader = '0'
+@Shader = '0'. 'Combiners_Opaque'. TexturesCnt = '1'. Blend mode = '0'.
+!ConvShader = '0'
+@Shader = '0'. 'Combiners_Opaque'. TexturesCnt = '1'. Blend mode = '0'.
+!ConvShader = '0'
+@Shader = '0'. 'Combiners_Opaque'. TexturesCnt = '1'. Blend mode = '0'.
+!ConvShader = '0'
+@Shader = '0'. 'Combiners_Opaque'. TexturesCnt = '1'. Blend mode = '0'.
+!ConvShader = '0'
+@Shader = '0'. 'Combiners_Opaque'. TexturesCnt = '1'. Blend mode = '0'.
+!ConvShader = '0'
+!Shader = '16'. 'Combiners_Mod'. TexturesCnt = '1'. Blend mode = '4'.
+!ConvShader = '1'
+!Shader = '16'. 'Combiners_Mod'. TexturesCnt = '1'. Blend mode = '2'.
+!ConvShader = '1'
+!Shader = '16'. 'Combiners_Mod'. TexturesCnt = '1'. Blend mode = '1'.
+!ConvShader = '1'
+!Shader = '135'. 'Combiners_Opaque_AddAlpha'. TexturesCnt = '2'. Blend mode = '0'.
+!ConvShader = '13'
+!Shader = '16'. 'Combiners_Mod'. TexturesCnt = '1'. Blend mode = '4'.
+!ConvShader = '1'
+!Shader = '2064'. 'Combiners_Mod'. TexturesCnt = '1'. Blend mode = '6'.
+!ConvShader = '1'
+@Shader = '0'. 'Combiners_Opaque'. TexturesCnt = '1'. Blend mode = '0'.
+!ConvShader = '0'
+!Shader = '16'. 'Combiners_Mod'. TexturesCnt = '1'. Blend mode = '2'.
+!ConvShader = '1'
+!Shader = '16'. 'Combiners_Mod'. TexturesCnt = '1'. Blend mode = '4'.
+!ConvShader = '1'
+!Shader = '16'. 'Combiners_Mod'. TexturesCnt = '1'. Blend mode = '4'.
+!ConvShader = '1'
+!Shader = '16'. 'Combiners_Mod'. TexturesCnt = '1'. Blend mode = '4'.
+!ConvShader = '1'
+!Shader = '16'. 'Combiners_Mod'. TexturesCnt = '1'. Blend mode = '2'.
+!ConvShader = '1'
+@Shader = '0'. 'Combiners_Opaque'. TexturesCnt = '1'. Blend mode = '0'.
+!ConvShader = '0'
+!Shader = '16'. 'Combiners_Mod'. TexturesCnt = '1'. Blend mode = '4'.
+!ConvShader = '1'
+!Shader = '16'. 'Combiners_Mod'. TexturesCnt = '1'. Blend mode = '4'.
+!ConvShader = '1'
+!Shader = '16'. 'Combiners_Mod'. TexturesCnt = '1'. Blend mode = '4'.
+!ConvShader = '1'
+@Shader = '0'. 'Combiners_Opaque'. TexturesCnt = '1'. Blend mode = '0'.
+!ConvShader = '0'
+!Shader = '16404'. 'Combiners_Mod_Mod2x'. TexturesCnt = '2'. Blend mode = '4'.
+!ConvShader = '7'
+!Shader = '16'. 'Combiners_Mod'. TexturesCnt = '1'. Blend mode = '1'.
+!ConvShader = '1'
+@Shader = '0'. 'Combiners_Opaque'. TexturesCnt = '1'. Blend mode = '0'.
+!ConvShader = '0'
+!Shader = '16'. 'Combiners_Mod'. TexturesCnt = '1'. Blend mode = '4'.
+!ConvShader = '1'
+!Shader = '16404'. 'Combiners_Mod_Mod2x'. TexturesCnt = '2'. Blend mode = '4'.
+!ConvShader = '7'
+!Shader = '16'. 'Combiners_Mod'. TexturesCnt = '1'. Blend mode = '4'.
+!ConvShader = '1'
+@Shader = '0'. 'Combiners_Opaque'. TexturesCnt = '1'. Blend mode = '0'.
+!ConvShader = '0'
+!Shader = '16'. 'Combiners_Mod'. TexturesCnt = '1'. Blend mode = '1'.
+!ConvShader = '1'
+@Shader = '0'. 'Combiners_Opaque'. TexturesCnt = '1'. Blend mode = '0'.
+!ConvShader = '0'
+!Shader = '16'. 'Combiners_Mod'. TexturesCnt = '1'. Blend mode = '4'.
+!ConvShader = '1'
+!Shader = '16'. 'Combiners_Mod'. TexturesCnt = '1'. Blend mode = '1'.
+!ConvShader = '1'
+@Shader = '0'. 'Combiners_Opaque'. TexturesCnt = '1'. Blend mode = '0'.
+!ConvShader = '0'
+@Shader = '0'. 'Combiners_Opaque'. TexturesCnt = '1'. Blend mode = '0'.
+!ConvShader = '0'
+!Shader = '16'. 'Combiners_Mod'. TexturesCnt = '1'. Blend mode = '4'.
+!ConvShader = '1'
+!Shader = '16'. 'Combiners_Mod'. TexturesCnt = '1'. Blend mode = '1'.
+!ConvShader = '1'
+!Shader = '16'. 'Combiners_Mod'. TexturesCnt = '1'. Blend mode = '1'.
+!ConvShader = '1'
+!Shader = '16'. 'Combiners_Mod'. TexturesCnt = '1'. Blend mode = '1'.
+!ConvShader = '1'
+!Shader = '2064'. 'Combiners_Mod'. TexturesCnt = '1'. Blend mode = '4'.
+!ConvShader = '1'
+!Shader = '16'. 'Combiners_Mod'. TexturesCnt = '1'. Blend mode = '1'.
+!ConvShader = '1'
+!Shader = '2064'. 'Combiners_Mod'. TexturesCnt = '1'. Blend mode = '4'.
+!ConvShader = '1'
+@Shader = '0'. 'Combiners_Opaque'. TexturesCnt = '1'. Blend mode = '0'.
+!ConvShader = '0'
+@Shader = '0'. 'Combiners_Opaque'. TexturesCnt = '1'. Blend mode = '0'.
+!ConvShader = '0'
+!Shader = '16'. 'Combiners_Mod'. TexturesCnt = '1'. Blend mode = '1'.
+!ConvShader = '1'
+@Shader = '0'. 'Combiners_Opaque'. TexturesCnt = '1'. Blend mode = '0'.
+!ConvShader = '0'
+@Shader = '0'. 'Combiners_Opaque'. TexturesCnt = '1'. Blend mode = '0'.
+!ConvShader = '0'
+!Shader = '16'. 'Combiners_Mod'. TexturesCnt = '1'. Blend mode = '2'.
+!ConvShader = '1'
+@Shader = '0'. 'Combiners_Opaque'. TexturesCnt = '1'. Blend mode = '0'.
+!ConvShader = '0'
+@Shader = '0'. 'Combiners_Opaque'. TexturesCnt = '1'. Blend mode = '0'.
+!ConvShader = '0'
+!Shader = '16'. 'Combiners_Mod'. TexturesCnt = '1'. Blend mode = '1'.
+!ConvShader = '1'
+!Shader = '16'. 'Combiners_Mod'. TexturesCnt = '1'. Blend mode = '4'.
+!ConvShader = '1'
+@Shader = '0'. 'Combiners_Opaque'. TexturesCnt = '1'. Blend mode = '0'.
+!ConvShader = '0'
+!Shader = '2064'. 'Combiners_Mod'. TexturesCnt = '1'. Blend mode = '4'.
+!ConvShader = '1'
+!Shader = '16'. 'Combiners_Mod'. TexturesCnt = '1'. Blend mode = '1'.
+!ConvShader = '1'
+!Shader = '2064'. 'Combiners_Mod'. TexturesCnt = '1'. Blend mode = '4'.
+!ConvShader = '1'
+@Shader = '0'. 'Combiners_Opaque'. TexturesCnt = '1'. Blend mode = '0'.
+!ConvShader = '0'
+@Shader = '0'. 'Combiners_Opaque'. TexturesCnt = '1'. Blend mode = '0'.
+!ConvShader = '0'
+!Shader = '16'. 'Combiners_Mod'. TexturesCnt = '1'. Blend mode = '1'.
+!ConvShader = '1'
+@Shader = '0'. 'Combiners_Opaque'. TexturesCnt = '1'. Blend mode = '0'.
+!ConvShader = '0'
+@Shader = '0'. 'Combiners_Opaque'. TexturesCnt = '1'. Blend mode = '0'.
+!ConvShader = '0'
+!Shader = '16'. 'Combiners_Mod'. TexturesCnt = '1'. Blend mode = '2'.
+!ConvShader = '1'
+!Shader = '16'. 'Combiners_Mod'. TexturesCnt = '1'. Blend mode = '1'.
+!ConvShader = '1'
+@Shader = '0'. 'Combiners_Opaque'. TexturesCnt = '1'. Blend mode = '0'.
+!ConvShader = '0'
+@Shader = '0'. 'Combiners_Opaque'. TexturesCnt = '1'. Blend mode = '0'.
+!ConvShader = '0'
+!Shader = '16'. 'Combiners_Mod'. TexturesCnt = '1'. Blend mode = '2'.
+!ConvShader = '1'
+!Shader = '16'. 'Combiners_Mod'. TexturesCnt = '1'. Blend mode = '1'.
+!ConvShader = '1'
+^Selected node '0,000000' = 'WORLD\EXPANSION02\DOODADS\ICECROWN\ICECORE\ICECROWN_ICECORE_MIDDLE.M2'.
+^Selected node '0,000000' = 'WORLD\EXPANSION02\DOODADS\STORMPEAKS\FOG\STORMPEAKS_FOG_01.M2'.
+^Selected node '58,714844' = 'WORLD\EXPANSION02\DOODADS\STORMPEAKS\FOG\STORMPEAKS_FOG_01.M2'.
+^Selected node '30,590698' = 'WORLD\EXPANSION02\DOODADS\STORMPEAKS\FOG\STORMPEAKS_ULDUAR_CLOUDS.M2'.
+^Selected node '46,510254' = 'WORLD\EXPANSION02\DOODADS\ICECROWN\ICECORE\ICECROWN_ICECORE_MIDDLE.M2'.
+^Selected node '68,239258' = 'WORLD\NODXT\GENERIC\PASSIVEDOODADS\VOLUMETRICLIGHTS\LD_LIGHTSHAFT01.M2'.
+^Selected node '73,829567' = 'WORLD\EXPANSION02\DOODADS\STORMPEAKS\FOG\STORMPEAKS_FOG_01.M2'.
+^Selected node '0,000000' = 'WORLD\EXPANSION02\DOODADS\STORMPEAKS\FOG\STORMPEAKS_FOG_01.M2'.
+^Selected node '50,517487' = 'WORLD\EXPANSION02\DOODADS\ICECROWN\LIGHTS\ICECROWN_WALLSCONCE_01.M2'.
+^Selected node '73,025925' = 'WORLD\EXPANSION02\DOODADS\ICECROWN\LIGHTS\ICECROWN_WALLSCONCE_01.M2'.
+^Selected node '108,119308' = 'WORLD\EXPANSION02\DOODADS\ICECROWN\LIGHTS\ICECROWN_WALLSCONCE_01.M2'.
+^Selected node '141,124268' = 'WORLD\EXPANSION02\DOODADS\ICECROWN\LIGHTS\ICECROWN_WALLSCONCE_01.M2'.
+^Selected node '282,226196' = 'WORLD\EXPANSION02\DOODADS\ICECROWN\LIGHTS\ICECROWN_WALLSCONCE_01.M2'.
+^Selected node '402,875244' = 'WORLD\EXPANSION02\DOODADS\STORMPEAKS\FOG\STORMPEAKS_ULDUAR_CLOUDS.M2'.
+^Selected node '470,333893' = 'WORLD\AZEROTH\KARAZAHN\PASSIVEDOODADS\KARAZAHNWEBS\KARAZAHNWEB02.M2'.
+^Selected node '487,029175' = 'WORLD\AZEROTH\KARAZAHN\PASSIVEDOODADS\KARAZAHNWEBS\KARAZAHNWEB02.M2'.
+^Selected node '188,269348' = 'WORLD\EXPANSION02\DOODADS\STORMPEAKS\FOG\STORMPEAKS_ULDUAR_CLOUDS.M2'.
+^Selected node '36,633301' = 'WORLD\EXPANSION02\DOODADS\ICECROWN\PORTALS\ICECROWN_BLOODPRINCE_PORTAL_RIGHT.M2'.
+^Selected node '52,186035' = 'WORLD\EXPANSION02\DOODADS\ICECROWN\PORTALS\ICECROWN_BLOODPRINCE_PORTAL_MIDDLE.M2'.
+^Selected node '55,191040' = 'WORLD\EXPANSION02\DOODADS\STORMPEAKS\FOG\STORMPEAKS_ULDUAR_CLOUDS.M2'.
+^Selected node '24,776503' = 'WORLD\EXPANSION02\DOODADS\ICECROWN\PORTALS\ICECROWN_BLOODPRINCE_PORTAL_LEFT.M2'.
+^Selected node '39,792480' = 'WORLD\EXPANSION02\DOODADS\ICECROWN\PORTALS\ICECROWN_BLOODPRINCE_PORTAL_MIDDLE.M2'.
+^Selected node '53,852722' = 'WORLD\EXPANSION02\DOODADS\STORMPEAKS\FOG\STORMPEAKS_ULDUAR_CLOUDS.M2'.
+^Selected node '12,122559' = 'WORLD\EXPANSION02\DOODADS\ICECROWN\ICECORE\ICECROWN_ICECORE_MIDDLE.M2'.
+^Selected node '29,060547' = 'WORLD\NODXT\GENERIC\PASSIVEDOODADS\VOLUMETRICLIGHTS\LD_LIGHTSHAFT01.M2'.
+^Selected node '34,757446' = 'WORLD\EXPANSION02\DOODADS\STORMPEAKS\FOG\STORMPEAKS_ULDUAR_CLOUDS.M2'.
+^Selected node '68,470703' = 'WORLD\EXPANSION02\DOODADS\STORMPEAKS\FOG\STORMPEAKS_FOG_01.M2'.
+^Selected node '149,831924' = 'WORLD\EXPANSION02\DOODADS\STORMPEAKS\FOG\STORMPEAKS_FOG_01.M2'.
+!File 'World\Maps\IcecrownCitadel\IcecrownCitadel_24_22.adt' not exists.
+!File 'World\Maps\IcecrownCitadel\IcecrownCitadel_24_24.adt' not exists.
+!File 'World\Maps\IcecrownCitadel\IcecrownCitadel_24_23.adt' not exists.
+^Selected node '9,545898' = 'WORLD\EXPANSION02\DOODADS\ICECROWN\LIGHTS\ICECROWN_LABLAMP.M2'.
+^Selected node '14,828125' = 'WORLD\EXPANSION02\DOODADS\STORMPEAKS\FOG\STORMPEAKS_FOG_01.M2'.
+^Selected node '26,732088' = 'WORLD\EXPANSION02\DOODADS\ICECROWN\LAB ITEMS\ICECROWN_ORANGEBALL.M2'.
+^Selected node '29,427734' = 'WORLD\EXPANSION02\DOODADS\STORMPEAKS\FOG\STORMPEAKS_FOG_01.M2'.
+^Selected node '33,030231' = 'WORLD\EXPANSION02\DOODADS\ICECROWN\SPIGOT\ICECROWN_SPIGOT.M2'.
+^Selected node '0,000000' = 'WORLD\EXPANSION02\DOODADS\ICECROWN\LIGHTS\ICECROWN_LABLAMP.M2'.
+^Selected node '0,782227' = 'WORLD\EXPANSION02\DOODADS\STORMPEAKS\FOG\STORMPEAKS_FOG_01.M2'.
+^Selected node '17,320313' = 'WORLD\EXPANSION02\DOODADS\STORMPEAKS\FOG\STORMPEAKS_FOG_01.M2'.
+^Selected node '19,401545' = 'WORLD\EXPANSION02\DOODADS\ICECROWN\LAB ITEMS\ICECROWN_CHEMISTRYSET_02.M2'.
+^Selected node '33,555008' = 'WORLD\EXPANSION02\DOODADS\GENERIC\SCOURGE\SC_SURGICALTABLE_02.M2'.
+^Selected node '37,184570' = 'WORLD\EXPANSION02\DOODADS\STORMPEAKS\FOG\STORMPEAKS_FOG_01.M2'.
+^Selected node '46,220703' = 'WORLD\EXPANSION02\DOODADS\STORMPEAKS\FOG\STORMPEAKS_FOG_01.M2'.
+^Selected node '0,000000' = 'WORLD\EXPANSION02\DOODADS\ICECROWN\LIGHTS\ICECROWN_LABLAMP.M2'.
+^Selected node '4,285156' = 'WORLD\EXPANSION02\DOODADS\STORMPEAKS\FOG\STORMPEAKS_FOG_01.M2'.
+^Selected node '4,955566' = 'WORLD\EXPANSION02\DOODADS\ICECROWN\LAB ITEMS\ICECROWN_CHEMISTRYSET_02.M2'.
+^Selected node '20,477539' = 'WORLD\EXPANSION02\DOODADS\GENERIC\SCOURGE\SC_SURGICALTABLE_02.M2'.
+^Selected node '24,149414' = 'WORLD\EXPANSION02\DOODADS\STORMPEAKS\FOG\STORMPEAKS_FOG_01.M2'.
+^Selected node '33,185547' = 'WORLD\EXPANSION02\DOODADS\STORMPEAKS\FOG\STORMPEAKS_FOG_01.M2'.
+^Selected node '26,394644' = 'WORLD\EXPANSION02\DOODADS\GENERIC\SCOURGE\SC_BRAZIER1.M2'.
+^Selected node '81,259270' = 'WORLD\NODXT\GENERIC\PASSIVEDOODADS\VOLUMETRICLIGHTS\LD_LIGHTSHAFT01.M2'.
+^Selected node '82,321220' = 'WORLD\ENVIRONMENT\DOODAD\ANQUIRAJ\LIGHTSHAFT\HIVE_LIGHTSHAFT01.M2'.
+^Selected node '142,553040' = 'WORLD\EXPANSION02\DOODADS\STORMPEAKS\FOG\STORMPEAKS_FOG_01.M2'.
+^Selected node '854,829468' = 'WORLD\EXPANSION02\DOODADS\STORMPEAKS\FOG\STORMPEAKS_ULDUAR_CLOUDS.M2'.
+^Coord 142,000000 126,000000
+!WMO[world\wmo\dungeon\icecrownraid\icecrownraid_arthas_precipice.wmo]: Skybox [W:\PROJECTS\WOW\FINALDATA\PATCH_3.3.0\DATA\ENVIRONMENTS\STARS\ICECROWNRAIDSKY01.MDX]
+ CWorldObjectCreator::LoadWMO: WMO 'world\wmo\dungeon\icecrownraid\icecrownraid_arthas_precipice_phase0.wmo' loaded.
+ CWorldObjectCreator::LoadWMO: WMO 'world\wmo\dungeon\icecrownraid\icecrownraid_arthas_precipice.wmo' loaded.
+!Shader = '16404'. 'Combiners_Mod_Mod2x'. TexturesCnt = '2'. Blend mode = '4'.
+!ConvShader = '7'
+!Shader = '16'. 'Combiners_Mod'. TexturesCnt = '1'. Blend mode = '4'.
+!ConvShader = '1'
+!Shader = '16404'. 'Combiners_Mod_Mod2x'. TexturesCnt = '2'. Blend mode = '4'.
+!ConvShader = '7'
+!Shader = '16404'. 'Combiners_Mod_Mod2x'. TexturesCnt = '2'. Blend mode = '4'.
+!ConvShader = '7'
+!Shader = '16'. 'Combiners_Mod'. TexturesCnt = '1'. Blend mode = '4'.
+!ConvShader = '1'
+!Shader = '16'. 'Combiners_Mod'. TexturesCnt = '1'. Blend mode = '4'.
+!ConvShader = '1'
+!Shader = '16401'. 'Combiners_Mod_Mod'. TexturesCnt = '2'. Blend mode = '4'.
+!ConvShader = '6'
+!Shader = '16404'. 'Combiners_Mod_Mod2x'. TexturesCnt = '2'. Blend mode = '4'.
+!ConvShader = '7'
+!Shader = '17'. 'Combiners_Mod_Mod'. TexturesCnt = '2'. Blend mode = '4'.
+!ConvShader = '6'
+!Shader = '16'. 'Combiners_Mod'. TexturesCnt = '1'. Blend mode = '4'.
+!ConvShader = '1'
+!Shader = '17'. 'Combiners_Mod_Mod'. TexturesCnt = '2'. Blend mode = '4'.
+!ConvShader = '6'
+!Shader = '16401'. 'Combiners_Mod_Mod'. TexturesCnt = '2'. Blend mode = '4'.
+!ConvShader = '6'
+@Shader = '0'. 'Combiners_Opaque'. TexturesCnt = '1'. Blend mode = '0'.
+!ConvShader = '0'
+!Shader = '16401'. 'Combiners_Mod_Mod'. TexturesCnt = '2'. Blend mode = '4'.
+!ConvShader = '6'
+@Shader = '0'. 'Combiners_Opaque'. TexturesCnt = '1'. Blend mode = '0'.
+!ConvShader = '0'
+!Shader = '16401'. 'Combiners_Mod_Mod'. TexturesCnt = '2'. Blend mode = '4'.
+!ConvShader = '6'
+@Shader = '0'. 'Combiners_Opaque'. TexturesCnt = '1'. Blend mode = '0'.
+!ConvShader = '0'
+!Shader = '16'. 'Combiners_Mod'. TexturesCnt = '1'. Blend mode = '4'.
+!ConvShader = '1'
+@Shader = '0'. 'Combiners_Opaque'. TexturesCnt = '1'. Blend mode = '0'.
+!ConvShader = '0'
+!Shader = '16'. 'Combiners_Mod'. TexturesCnt = '1'. Blend mode = '4'.
+!ConvShader = '1'
+@Shader = '0'. 'Combiners_Opaque'. TexturesCnt = '1'. Blend mode = '0'.
+!ConvShader = '0'
+!Shader = '16'. 'Combiners_Mod'. TexturesCnt = '1'. Blend mode = '4'.
+!ConvShader = '1'
+@Shader = '0'. 'Combiners_Opaque'. TexturesCnt = '1'. Blend mode = '0'.
+!ConvShader = '0'
+!Shader = '16'. 'Combiners_Mod'. TexturesCnt = '1'. Blend mode = '4'.
+!ConvShader = '1'
+@Shader = '0'. 'Combiners_Opaque'. TexturesCnt = '1'. Blend mode = '0'.
+!ConvShader = '0'
+@Shader = '0'. 'Combiners_Opaque'. TexturesCnt = '1'. Blend mode = '0'.
+!ConvShader = '0'
+@Shader = '0'. 'Combiners_Opaque'. TexturesCnt = '1'. Blend mode = '0'.
+!ConvShader = '0'
+@Shader = '0'. 'Combiners_Opaque'. TexturesCnt = '1'. Blend mode = '0'.
+!ConvShader = '0'
+^Selected node '0,000000' = 'WORLD\EXPANSION02\DOODADS\ICECROWN\THRONE\ICECROWN_THRONE_EXTERIORSPIRES.M2'.
+^Selected node '38,891602' = 'WORLD\EXPANSION02\DOODADS\ICECROWN\CHAINS\ICECROWN_FROSTMOURNESKYCHAINS.M2'.
+^Selected node '267,310272' = 'WORLD\EXPANSION02\DOODADS\STORMPEAKS\FOG\STORMPEAKS_FOG_01.M2'.
+^Selected node '0,000000' = 'WORLD\EXPANSION02\DOODADS\GENERIC\SCOURGE\SC_SPIRITS_02.M2'.
+^Selected node '5,875641' = 'WORLD\EXPANSION02\DOODADS\STORMPEAKS\FOG\STORMPEAKS_FOG_01.M2'.
+^Selected node '7,279297' = 'WORLD\EXPANSION02\DOODADS\ICECROWN\GLOWS\IC_GLOW01.M2'.
+^Selected node '16,341797' = 'WORLD\EXPANSION02\DOODADS\ICECROWN\GLOWS\IC_GLOW01.M2'.
+^Selected node '23,386719' = 'WORLD\EXPANSION02\DOODADS\ICECROWN\GLOWS\IC_GLOW01.M2'.
+^Selected node '31,912109' = 'WORLD\EXPANSION02\DOODADS\ICECROWN\GLOWS\IC_GLOW01.M2'.
+^Selected node '36,714844' = 'WORLD\EXPANSION02\DOODADS\ZULDRAK\LIGHTFX\ZULDRAK_LIGHTRAY_01.M2'.
+^Selected node '40,930725' = 'WORLD\EXPANSION02\DOODADS\STORMPEAKS\FOG\STORMPEAKS_FOG_01.M2'.
+^Selected node '42,312500' = 'WORLD\EXPANSION02\DOODADS\ICECROWN\GLOWS\IC_GLOW01.M2'.
+^Selected node '60,583984' = 'WORLD\EXPANSION02\DOODADS\ZULDRAK\LIGHTFX\ZULDRAK_LIGHTRAY_01.M2'.
+^Selected node '63,059895' = 'WORLD\NODXT\GENERIC\PASSIVEDOODADS\VOLUMETRICLIGHTS\LIGHTRAY_DUSTY_01.M2'.
+^Selected node '87,082184' = 'WORLD\NODXT\GENERIC\PASSIVEDOODADS\VOLUMETRICLIGHTS\LIGHTRAY_DUSTY_01.M2'.
+^Selected node '95,924805' = 'WORLD\EXPANSION02\DOODADS\ICECROWN\GLOWS\IC_GLOW01.M2'.
+^Selected node '97,183716' = 'WORLD\EXPANSION02\DOODADS\STORMPEAKS\FOG\STORMPEAKS_FOG_01.M2'.
+^Selected node '107,132019' = 'WORLD\EXPANSION02\DOODADS\STORMPEAKS\FOG\STORMPEAKS_FOG_01.M2'.
+^Selected node '198,440125' = 'WORLD\EXPANSION02\DOODADS\STORMPEAKS\FOG\STORMPEAKS_FOG_01.M2'.
+^Selected node '0,000000' = 'WORLD\EXPANSION02\DOODADS\GENERIC\SCOURGE\SC_SPIRITS_02.M2'.
+^Selected node '4,260742' = 'WORLD\EXPANSION02\DOODADS\GENERIC\SCOURGE\SC_SPIRITS_02.M2'.
+^Selected node '6,024933' = 'WORLD\EXPANSION02\DOODADS\STORMPEAKS\FOG\STORMPEAKS_FOG_01.M2'.
+^Selected node '15,973236' = 'WORLD\EXPANSION02\DOODADS\STORMPEAKS\FOG\STORMPEAKS_FOG_01.M2'.
+^Selected node '51,028320' = 'WORLD\EXPANSION02\DOODADS\STORMPEAKS\FOG\STORMPEAKS_FOG_01.M2'.
+^Selected node '57,968750' = 'WORLD\EXPANSION02\DOODADS\ICECROWN\GLOWS\IC_GLOW01.M2'.
+^Selected node '58,655567' = 'WORLD\EXPANSION02\DOODADS\ICECROWN\RUNES\ICECROWN_PRECIPICERUNES_01.M2'.
+^Selected node '58,680492' = 'WORLD\EXPANSION02\DOODADS\ICECROWN\RUNES\ICECROWN_PRECIPICERUNES_01.M2'.
+^Selected node '65,515625' = 'WORLD\EXPANSION02\DOODADS\ICECROWN\GLOWS\IC_GLOW01.M2'.
+^Selected node '74,578125' = 'WORLD\EXPANSION02\DOODADS\ICECROWN\GLOWS\IC_GLOW01.M2'.
+^Selected node '77,602478' = 'WORLD\EXPANSION02\DOODADS\STORMPEAKS\FOG\STORMPEAKS_FOG_01.M2'.
+^Selected node '81,623047' = 'WORLD\EXPANSION02\DOODADS\ICECROWN\GLOWS\IC_GLOW01.M2'.
+^Selected node '90,148438' = 'WORLD\EXPANSION02\DOODADS\ICECROWN\GLOWS\IC_GLOW01.M2'.
+^Selected node '100,548828' = 'WORLD\EXPANSION02\DOODADS\ICECROWN\GLOWS\IC_GLOW01.M2'.
+^Selected node '107,281311' = 'WORLD\EXPANSION02\DOODADS\STORMPEAKS\FOG\STORMPEAKS_FOG_01.M2'.
+^Selected node '117,229614' = 'WORLD\EXPANSION02\DOODADS\STORMPEAKS\FOG\STORMPEAKS_FOG_01.M2'.
+^Selected node '208,537720' = 'WORLD\EXPANSION02\DOODADS\STORMPEAKS\FOG\STORMPEAKS_FOG_01.M2'.

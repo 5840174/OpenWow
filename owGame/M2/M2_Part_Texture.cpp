@@ -9,8 +9,8 @@
 CM2_Part_Texture::CM2_Part_Texture(IBaseManager& BaseManager, IRenderDevice& RenderDevice, const CM2& M2Object, const std::shared_ptr<IFile>& File, const SM2_Texture& M2Texture)
 	: m_M2Object(M2Object)
 {
-	m_WrapX = M2Texture.flags.WRAPX == 0;
-	m_WrapY = M2Texture.flags.WRAPY == 0;
+	m_WrapX = (M2Texture.flags.WRAPX == 0);
+	m_WrapY = (M2Texture.flags.WRAPY == 0);
 
 	m_SpecialType = M2Texture.type;
 
@@ -28,7 +28,8 @@ CM2_Part_Texture::~CM2_Part_Texture()
 
 const std::shared_ptr<ITexture>& CM2_Part_Texture::GetTexture() const
 {
-	_ASSERT(m_SpecialType == SM2_Texture::Type::NONE);
+	if (m_SpecialType != SM2_Texture::Type::NONE)
+		throw CException("CM2_Part_Texture::GetTexture: You can access only NONE texture using getter without instance.");
 	return m_Texture;
 }
 

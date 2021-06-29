@@ -8,7 +8,7 @@ struct
 {
 	SM2_Material::BlendModes	M2Blend;
 	uint8						EGxBLend;
-} M2Blend_To_EGxBlend[SM2_Material::M2BLEND_MOD2X + 1] =
+} M2Blend_To_EGxBlend[SM2_Material::M2BLEND_BlendAdd + 1] =
 {
 	{ SM2_Material::M2BLEND_OPAQUE,			0 },
 	{ SM2_Material::M2BLEND_ALPHA_KEY,		1 },
@@ -16,7 +16,8 @@ struct
 	{ SM2_Material::M2BLEND_NO_ALPHA_ADD,	10 },
 	{ SM2_Material::M2BLEND_ADD,			3 },
 	{ SM2_Material::M2BLEND_MOD,			4 },
-	{ SM2_Material::M2BLEND_MOD2X,			5 }
+	{ SM2_Material::M2BLEND_MOD2X,			5 },
+	{ SM2_Material::M2BLEND_BlendAdd,	    13 },
 };
 
 CM2_Part_Material::CM2_Part_Material(IBaseManager& BaseManager, IRenderDevice& RenderDevice, const CM2& M2Object, const SM2_Material& M2Material)

@@ -31,6 +31,11 @@ void CMapM2Instance::Initialize()
 	SetLocalPosition(m_PlacementInfo.position);
 	SetLocalRotationEuler(m_PlacementInfo.rotation);
 	SetLocalScale(glm::vec3(static_cast<float>(m_PlacementInfo.scale) / 1024.0f));
+
+	if (auto colliderComponent = GetComponentT<IColliderComponent>())
+	{
+		colliderComponent->SetCullDistance(GetBaseManager().GetManager<ISettings>()->GetGroup("WoWSettings")->GetPropertyT<float>("MapTileM2RenderDistance")->Get());
+	}
 }
 
 void CMapM2Instance::Accept(IVisitor* visitor)
@@ -46,7 +51,7 @@ void CMapM2Instance::Accept(IVisitor* visitor)
 		m_AlreadyDraw.insert(std::make_pair(m_PlacementInfo.uniqueId, this));
 	}
 
-	CM2_Base_Instance::Accept(visitor);
+	__super::Accept(visitor);
 }
 
 
