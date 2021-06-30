@@ -17,13 +17,11 @@
 #include "M2/M2_Skin_Batch.h"
 
 CRenderPass_M2List::CRenderPass_M2List(IRenderDevice& RenderDevice, const std::shared_ptr<IRenderPassCreateTypelessList>& CreateTypelessList, ERenderPassM2DrawMode DrawMode)
-	: CRenderPassProcessTypelessList(RenderDevice, CreateTypelessList)
+	: CRenderPassPipelinedProcessTypelessList(RenderDevice, CreateTypelessList)
 	, m_CurrentM2Model(nullptr)
 	, m_DrawMode(DrawMode)
 {
-	SetPassName("M2List");
-
-	m_ADT_MDX_Distance = GetBaseManager().GetManager<ISettings>()->GetGroup("WoWSettings")->GetPropertyT<float>("ADT_MDX_Distance");
+	SetPassName("M2List " + std::string((DrawMode == ERenderPassM2DrawMode::Opaque) ? "Opaque" : (DrawMode == ERenderPassM2DrawMode::Transperent) ? "Transperent" : "All"));
 
 	m_M2PerObjectConstantBuffer = GetRenderDevice().GetObjectsFactory().CreateConstantBuffer(nullptr, sizeof(M2PerObject));
 }
@@ -65,7 +63,7 @@ void CRenderPass_M2List::DoRenderM2Model(const CM2_Base_Instance* M2SceneNode, c
 			{
 				const auto& material = materialsIt;
 
-				bool isOpaqueGeom = material->GetM2Material()->getBlendMode() == 0 || material->GetM2Material()->getBlendMode() == 1;
+				bool isOpaqueGeom = (material->GetM2Material()->getBlendMode() == 0) || (material->GetM2Material()->getBlendMode() == 1);
 				switch (m_DrawMode)
 				{
 					case ERenderPassM2DrawMode::Opaque:
@@ -98,6 +96,10 @@ void CRenderPass_M2List::DoRenderM2Model(const CM2_Base_Instance* M2SceneNode, c
 					geomInternal->Render_Draw(geometryDrawArgs);
 				}
 				material->Unbind(GetPipeline().GetPixelShaderPtr());
+
+				material->GetM2Material()->GetRasterizerState()->Unbind();
+				material->GetM2Material()->GetDepthStencilState()->Unbind();
+				material->GetM2Material()->GetBlendState()->Unbind();
 			}
 
 			geomInternal->Render_UnbindAllBuffers(vertexShader);

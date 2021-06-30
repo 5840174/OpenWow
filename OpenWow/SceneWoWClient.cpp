@@ -86,6 +86,18 @@ void CSceneWoWClient::OnUpdate(UpdateEventArgs & e)
 
 bool CSceneWoWClient::OnMousePressed(const MouseButtonEventArgs & e, const Ray& RayToWorld)
 {
+	auto selectedNodes = GetFinder().FindIntersection(RayToWorld, nullptr);
+	if (false == selectedNodes.empty())
+	{
+		for (const auto& selectedNodesIt : selectedNodes)
+		{
+			if (auto m2Node = std::dynamic_pointer_cast<CM2_Base_Instance>(selectedNodesIt.second))
+			{
+				Log::Green("Selected node '%f' = '%s'.", selectedNodesIt.first, m2Node->getM2().getFilename().c_str());
+			}
+		}
+	}
+
 	return false;
 }
 

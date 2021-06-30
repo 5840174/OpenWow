@@ -438,9 +438,6 @@
     <ClCompile Include="Renderer\RenderPassCreateTypelessList.cpp">
       <Filter>Renderer</Filter>
     </ClCompile>
-    <ClCompile Include="Renderer\RenderPassProcessTypelessList.cpp">
-      <Filter>Renderer</Filter>
-    </ClCompile>
     <ClCompile Include="Renderer\RenderPass_M2InstancedList.cpp">
       <Filter>Renderer\PassesList</Filter>
     </ClCompile>
@@ -491,6 +488,15 @@
     </ClCompile>
     <ClCompile Include="WMO\WMOGroup.cpp">
       <Filter>WMO\Groups</Filter>
+    </ClCompile>
+    <ClCompile Include="Renderer\RenderPassPipelinedProcessTypelessList.cpp">
+      <Filter>Renderer</Filter>
+    </ClCompile>
+    <ClCompile Include="Renderer\RenderPassProcessTypelessList.cpp">
+      <Filter>Renderer</Filter>
+    </ClCompile>
+    <ClCompile Include="Renderer\RenderPass_Update.cpp">
+      <Filter>Renderer\PassesList</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -941,9 +947,6 @@
     <ClInclude Include="Renderer\RenderPassCreateTypelessList.h">
       <Filter>Renderer</Filter>
     </ClInclude>
-    <ClInclude Include="Renderer\RenderPassProcessTypelessList.h">
-      <Filter>Renderer</Filter>
-    </ClInclude>
     <ClInclude Include="Renderer\RenderPass_M2InstancedList.h">
       <Filter>Renderer\PassesList</Filter>
     </ClInclude>
@@ -1027,6 +1030,15 @@
     </ClInclude>
     <ClInclude Include="WMO\WMO_Fixes.h">
       <Filter>WMO</Filter>
+    </ClInclude>
+    <ClInclude Include="Renderer\RenderPassPipelinedProcessTypelessList.h">
+      <Filter>Renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="Renderer\RenderPassProcessTypelessList.h">
+      <Filter>Renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="Renderer\RenderPass_Update.h">
+      <Filter>Renderer\PassesList</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

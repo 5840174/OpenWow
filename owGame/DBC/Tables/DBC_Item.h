@@ -2,7 +2,7 @@
 
 #include "DBC__File.h"
 
-enum class ZN_API EInventoryType : uint32
+enum class ZN_API DBCItem_EInventoryType : uint32
 {
 	NON_EQUIP = 0,
 	HEAD = 1,
@@ -36,18 +36,18 @@ enum class ZN_API EInventoryType : uint32
 	__Count = 29
 };
 
-static bool isWeapon(EInventoryType InventoryType)
+static bool isWeapon(DBCItem_EInventoryType InventoryType)
 {
-	if (InventoryType == EInventoryType::WEAPON)
+	if (InventoryType == DBCItem_EInventoryType::WEAPON)
 		return true;
 
-	if (InventoryType == EInventoryType::TWOHWEAPON)
+	if (InventoryType == DBCItem_EInventoryType::TWOHWEAPON)
 		return true;
 
-	if (InventoryType == EInventoryType::WEAPONMAINHAND)
+	if (InventoryType == DBCItem_EInventoryType::WEAPONMAINHAND)
 		return true;
 
-	if (InventoryType == EInventoryType::WEAPONOFFHAND)
+	if (InventoryType == DBCItem_EInventoryType::WEAPONOFFHAND)
 		return true;
 
 	return false;
@@ -60,7 +60,7 @@ __DBC_TVALUE(uint32,               ItemSubclassID,         3);
 __DBC_TVALUE(int32,                SoundSubclassOverride,  4);
 __DBC_REF_ID(DBC_Material,         MaterialID,             5);
 __DBC_REF_ID(DBC_ItemDisplayInfo,  DisplayInfoID,          6);
-__DBC_TVALUE(EInventoryType,       InventorySlot,          7);
+__DBC_TVALUE(DBCItem_EInventoryType, InventorySlot,        7);
 __DBC_TVALUE(uint32,               SheathID,               8);
 
 DBC_DEF_END

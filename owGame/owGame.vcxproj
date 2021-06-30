@@ -88,6 +88,7 @@
     <ClCompile Include="owGame.cpp" />
     <ClCompile Include="Renderer\RendererWoW.cpp" />
     <ClCompile Include="Renderer\RenderPassCreateTypelessList.cpp" />
+    <ClCompile Include="Renderer\RenderPassPipelinedProcessTypelessList.cpp" />
     <ClCompile Include="Renderer\RenderPassProcessTypelessList.cpp" />
     <ClCompile Include="Renderer\RenderPass_Liquid.cpp" />
     <ClCompile Include="Renderer\RenderPass_LiquidList.cpp" />
@@ -100,6 +101,7 @@
     <ClCompile Include="Renderer\RenderPass_MapTile.cpp" />
     <ClCompile Include="Renderer\RenderPass_Sky.cpp" />
     <ClCompile Include="Renderer\RenderPass_SkyList.cpp" />
+    <ClCompile Include="Renderer\RenderPass_Update.cpp" />
     <ClCompile Include="Renderer\RenderPass_WDL.cpp" />
     <ClCompile Include="Renderer\RenderPass_WDLList.cpp" />
     <ClCompile Include="Renderer\RenderPass_WMO.cpp" />
@@ -260,6 +262,7 @@
     <ClInclude Include="Map\MapWDLTileMaterial.h" />
     <ClInclude Include="Renderer\RendererWoW.h" />
     <ClInclude Include="Renderer\RenderPassCreateTypelessList.h" />
+    <ClInclude Include="Renderer\RenderPassPipelinedProcessTypelessList.h" />
     <ClInclude Include="Renderer\RenderPassProcessTypelessList.h" />
     <ClInclude Include="Renderer\RenderPass_Liquid.h" />
     <ClInclude Include="Renderer\RenderPass_LiquidList.h" />
@@ -272,6 +275,7 @@
     <ClInclude Include="Renderer\RenderPass_MapTile.h" />
     <ClInclude Include="Renderer\RenderPass_Sky.h" />
     <ClInclude Include="Renderer\RenderPass_SkyList.h" />
+    <ClInclude Include="Renderer\RenderPass_Update.h" />
     <ClInclude Include="Renderer\RenderPass_WDL.h" />
     <ClInclude Include="Renderer\RenderPass_WDLList.h" />
     <ClInclude Include="Renderer\RenderPass_WMO.h" />

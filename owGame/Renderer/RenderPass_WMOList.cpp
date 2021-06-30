@@ -11,7 +11,7 @@
 #include "WMO/WMO_Part_Material.h"
 
 CRenderPass_WMOList::CRenderPass_WMOList(IRenderDevice& RenderDevice, const std::shared_ptr<IRenderPassCreateTypelessList>& CreateTypelessList)
-	: CRenderPassProcessTypelessList(RenderDevice, CreateTypelessList)
+	: CRenderPassPipelinedProcessTypelessList(RenderDevice, CreateTypelessList)
 	, m_CurrentWMOGroupInstance(nullptr)
 	, m_CurrentWMOBatch(nullptr)
 {

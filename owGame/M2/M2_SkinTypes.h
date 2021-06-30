@@ -47,15 +47,14 @@ struct SM2_SkinBatch
 	} flags;
 
 	int8   priorityPlane;
-
 	int16  shader_id;
-	uint16 skinSectionIndex;		// A duplicate entry of a submesh from the list above.
-
+	uint16 skinSectionIndex;		// A duplicate entry of a submesh from the list above
 	uint16 geosetIndex;
 
 	int16  colorIndex;				// A Color out of the Colors-Block or -1 if none.
 	int16  materialIndex;			// The renderflags used on this texture-unit.
 	uint16 materialLayer;			// Capped at 7 (see CM2Scene::BeginDraw)
+
 	uint16 textureCount;			// 1 to 4. Also seems to be the number of m_DiffuseTextures to load, starting at the texture lookup in the next field (0x10).
 	int16  textureComboIndex;			// Index into Texture lookup table
 	int16  textureCoordComboIndex;		// Index into the texture unit lookup table.

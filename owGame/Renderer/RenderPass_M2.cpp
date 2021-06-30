@@ -23,8 +23,6 @@ CRenderPass_M2::CRenderPass_M2(IScene& Scene, ERenderPassM2DrawMode DrawMode)
 {
 	SetPassName("M2");
 
-	m_ADT_MDX_Distance = Scene.GetBaseManager().GetManager<ISettings>()->GetGroup("WoWSettings")->GetPropertyT<float>("ADT_MDX_Distance");
-
 	m_M2PerObjectConstantBuffer = GetRenderDevice().GetObjectsFactory().CreateConstantBuffer(nullptr, sizeof(M2PerObject));
 }
 

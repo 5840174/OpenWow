@@ -14,7 +14,7 @@ CM2_Base_Instance::CM2_Base_Instance(IScene& Scene, const std::shared_ptr<CM2>& 
 	, m_Color(glm::vec4(1.0f, 1.0f, 1.0f, 1.0f))
 	, m_Alpha(1.0f)
 {
-	//SetUpdateEnabled(false);
+	SetUpdateEnabled(false);
 }
 
 CM2_Base_Instance::~CM2_Base_Instance()

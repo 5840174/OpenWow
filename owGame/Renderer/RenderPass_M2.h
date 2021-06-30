@@ -40,7 +40,6 @@ public:
 	virtual EVisitResult Visit(const std::shared_ptr<IModel>& Model) override;
 
 protected:
-	std::shared_ptr<IPropertyT<float>> m_ADT_MDX_Distance;
 	ERenderPassM2DrawMode m_DrawMode;
 
 	const CM2_Base_Instance* m_CurrentM2Model;

@@ -82,7 +82,7 @@ std::shared_ptr<ITexture> Character_SkinTextureBaker::createTexture(const Charac
 		{
 			for (uint32 comp = 0; comp < static_cast<size_t>(DBC_CharComponent_Sections::ITEMS_COUNT); comp++)
 			{
-				auto itemComponentTexture = _character->getItemTextureComponents(static_cast<EInventoryType>(slot))->getTextureComponent((DBC_CharComponent_Sections)comp);
+				auto itemComponentTexture = _character->getItemTextureComponents(static_cast<DBCItem_EInventoryType>(slot))->getTextureComponent((DBC_CharComponent_Sections)comp);
 				if (itemComponentTexture == nullptr)
 					continue;
 

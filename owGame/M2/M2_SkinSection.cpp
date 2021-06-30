@@ -54,9 +54,7 @@ CM2_SkinSection::CM2_SkinSection(IRenderDevice& RenderDevice, const CM2& M2Model
 
 		SM2_Vertex_znEngine vertex;
 		vertex.pos = m2Vertex.pos;
-		vertex.normal = m2Vertex.normal;
-		vertex.tex_coords[0] = m2Vertex.tex_coords[0];
-		vertex.tex_coords[1] = m2Vertex.tex_coords[1];
+		
 
 		for (size_t j = 0; j < 4; j++)
 		{
@@ -65,6 +63,10 @@ CM2_SkinSection::CM2_SkinSection(IRenderDevice& RenderDevice, const CM2& M2Model
 			vertex.bone_weights.weights[j] = static_cast<float>(m2Vertex.bone_weights[j]) / 255.0f;
 			vertex.bone_indices.indexes[j] = m2Vertex.bone_indices[j];
 		}
+
+		vertex.normal = m2Vertex.normal;
+		vertex.tex_coords[0] = m2Vertex.tex_coords[0];
+		vertex.tex_coords[1] = m2Vertex.tex_coords[1];
 
 		zenonVertices[i] = vertex;
 	}

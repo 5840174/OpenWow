@@ -8,7 +8,7 @@
 #include "Map/Map.h"
 
 CRenderPass_WDLList::CRenderPass_WDLList(IRenderDevice& RenderDevice, const std::shared_ptr<IRenderPassCreateTypelessList>& CreateTypelessList)
-	: CRenderPassProcessTypelessList(RenderDevice, CreateTypelessList)
+	: CRenderPassPipelinedProcessTypelessList(RenderDevice, CreateTypelessList)
 {
 	SetPassName("MapWDLList");
 

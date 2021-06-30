@@ -11,11 +11,12 @@ __DBC_STRING(Icon, 6);
 
 __DBC_TARRAY(uint32, GeosetGroups, 8, 3);
 
-__DBC_TVALUE(uint32, SpellVisualID, 11);
+__DBC_TVALUE(uint32, Flags, 11);  // 1 - Apply guild tabard texture on the char select screen (EmblazonedTabard), 2 - Hides underwear
+__DBC_TVALUE(uint32, SpellVisualID, 12);
 __DBC_TVALUE(uint32, GroupSoundID, 13);
 
-__DBC_TVALUE(uint32, HelmetGeosetMale, 14);
-__DBC_TVALUE(uint32, HelmetGeosetFemale, 15);
+__DBC_TVALUE(uint32, HelmetGeosetMaleID, 14);
+__DBC_TVALUE(uint32, HelmetGeosetFemaleID, 15);
 
 __DBC_STRARR(TextureComponents, 16, DBC_CharComponent_Sections::ITEMS_COUNT); // !MUST! equal DBC_CharComponent_Sections enum
 __DBC_STRING(UpperArmTexture, 16);

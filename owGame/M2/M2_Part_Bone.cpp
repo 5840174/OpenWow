@@ -15,7 +15,7 @@ SM2_Part_Bone_Wrapper::SM2_Part_Bone_Wrapper(const CM2& M2Object, const std::sha
 	m_RotateAnimated.Initialize(M2Bone.rotation, File, M2Object.getSkeleton().GetAnimFiles(), Fix_XZmYW);
 	m_ScaleAnimated.Initialize(M2Bone.scale, File, M2Object.getSkeleton().GetAnimFiles(), Fix_XZY);
 
-	_ASSERT(M2Bone.flags.ignoreParentTranslate == 0 && M2Bone.flags.ignoreParentRotation == 0 && M2Bone.flags.ignoreParentScale == 0);
+	//_ASSERT(M2Bone.flags.ignoreParentTranslate == 0 && M2Bone.flags.ignoreParentRotation == 0 && M2Bone.flags.ignoreParentScale == 0);
 }
 
 

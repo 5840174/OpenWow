@@ -1,12 +1,12 @@
 #pragma once
 
-class ZN_API CRenderPassProcessTypelessList
-	: public RenderPass
+class ZN_API CRenderPassPipelinedProcessTypelessList
+	: public RenderPassPipelined
 	, public IVisitor
 {
 public:
-	CRenderPassProcessTypelessList(IRenderDevice& RenderDevice, const std::shared_ptr<IRenderPassCreateTypelessList>& CreateTypelessList);
-	virtual ~CRenderPassProcessTypelessList();
+	CRenderPassPipelinedProcessTypelessList(IRenderDevice& RenderDevice, const std::shared_ptr<IRenderPassCreateTypelessList>& CreateTypelessList);
+	virtual ~CRenderPassPipelinedProcessTypelessList();
 
 	// IRenderPassPipelined
 	void Render(RenderEventArgs& e);
@@ -21,8 +21,13 @@ public:
 	virtual EVisitResult Visit(const std::shared_ptr<ITerrain>& Terrain) override;
 
 protected:
+	void BindPerObjectData(const PerObject& PerObject);
 	const std::shared_ptr<IRenderPassCreateTypelessList>& GetSceneNodeListPass() const;
 
 protected:
 	std::shared_ptr<IRenderPassCreateTypelessList> m_CreateTypelessList;
+
+private:
+	std::shared_ptr<IConstantBuffer> m_PerObjectConstantBuffer;
+	IShaderParameter* m_PerObjectParameter;
 };

@@ -15,50 +15,50 @@
 // Object components
 struct
 {
-	EInventoryType	            slot;
+	DBCItem_EInventoryType	            slot;
 	const char* const			folder = "";
 	MeshIDType					modifiers[MESHID_MAX_MODS] = MESHID_ALLUNK;
 	uint32						count = 0;
 	M2_AttachmentType		    attach[ATTACHS_MAX] = { M2_AttachmentType::Count, M2_AttachmentType::Count };
-} ItemObjectComponents[size_t(EInventoryType::__Count)] =
+} ItemObjectComponents[size_t(DBCItem_EInventoryType::__Count)] =
 {
-	{ EInventoryType::NON_EQUIP, },
-	{ EInventoryType::HEAD,          "Head",     MESHID_ALLUNK,                                                         1, M2_AttachmentType::Helm                                           },
-	{ EInventoryType::NECK, },
-	{ EInventoryType::SHOULDERS,     "SHOULDER", MESHID_ALLUNK,                                                         2, M2_AttachmentType::ShoulderLeft, M2_AttachmentType::ShoulderRight },
-	{ EInventoryType::BODY,          "",         { MeshIDType::Wristbands, MeshIDType::Chest,    MeshIDType::UNK }                                                                           },
-	{ EInventoryType::CHEST,         "",         { MeshIDType::Wristbands, MeshIDType::Chest,    MeshIDType::Trousers }                                                                      },
-	{ EInventoryType::WAIST,         "",         { MeshIDType::Belt,       MeshIDType::UNK,      MeshIDType::UNK }                                                                           },
-	{ EInventoryType::LEGS,          "",         { MeshIDType::Pants,      MeshIDType::Kneepads, MeshIDType::Trousers }                                                                      },
-	{ EInventoryType::FEET,          "",         { MeshIDType::Boots,      MeshIDType::UNK,      MeshIDType::UNK }                                                                           },
-	{ EInventoryType::WRISTS, },
-	{ EInventoryType::HANDS,         "",         { MeshIDType::Glove,      MeshIDType::UNK,      MeshIDType::UNK }                                                                           },
+	{ DBCItem_EInventoryType::NON_EQUIP, },
+	{ DBCItem_EInventoryType::HEAD,          "Head",     MESHID_ALLUNK,                                                         1, M2_AttachmentType::Helm                                           },
+	{ DBCItem_EInventoryType::NECK, },
+	{ DBCItem_EInventoryType::SHOULDERS,     "SHOULDER", MESHID_ALLUNK,                                                         2, M2_AttachmentType::ShoulderLeft, M2_AttachmentType::ShoulderRight },
+	{ DBCItem_EInventoryType::BODY,          "",         { MeshIDType::Wristbands, MeshIDType::Chest,    MeshIDType::UNK }                                                                           },
+	{ DBCItem_EInventoryType::CHEST,         "",         { MeshIDType::Wristbands, MeshIDType::Chest,    MeshIDType::Trousers }                                                                      },
+	{ DBCItem_EInventoryType::WAIST,         "",         { MeshIDType::Belt,       MeshIDType::UNK,      MeshIDType::UNK }                                                                           },
+	{ DBCItem_EInventoryType::LEGS,          "",         { MeshIDType::Pants,      MeshIDType::Kneepads, MeshIDType::Trousers }                                                                      },
+	{ DBCItem_EInventoryType::FEET,          "",         { MeshIDType::Boots,      MeshIDType::UNK,      MeshIDType::UNK }                                                                           },
+	{ DBCItem_EInventoryType::WRISTS, },
+	{ DBCItem_EInventoryType::HANDS,         "",         { MeshIDType::Glove,      MeshIDType::UNK,      MeshIDType::UNK }                                                                           },
 
-	{ EInventoryType::FINGER, },
-	{ EInventoryType::TRINKET },
+	{ DBCItem_EInventoryType::FINGER, },
+	{ DBCItem_EInventoryType::TRINKET },
 
-	{ EInventoryType::WEAPON,        "WEAPON",   MESHID_ALLUNK,                                                         1, M2_AttachmentType::HandRight                                      },
-	{ EInventoryType::SHIELD,        "Shield",   MESHID_ALLUNK,                                                         1, M2_AttachmentType::Shield                                         },
-	{ EInventoryType::RANGED,        "WEAPON",   MESHID_ALLUNK,                                                         1, M2_AttachmentType::HandRight                                      },
+	{ DBCItem_EInventoryType::WEAPON,        "WEAPON",   MESHID_ALLUNK,                                                         1, M2_AttachmentType::HandRight                                      },
+	{ DBCItem_EInventoryType::SHIELD,        "Shield",   MESHID_ALLUNK,                                                         1, M2_AttachmentType::Shield                                         },
+	{ DBCItem_EInventoryType::RANGED,        "WEAPON",   MESHID_ALLUNK,                                                         1, M2_AttachmentType::HandRight                                      },
 
-	{ EInventoryType::CLOAK,         "Cape",     { MeshIDType::Cloak,     MeshIDType::UNK,      MeshIDType::UNK },      1, M2_AttachmentType::Back /*Cloack specific*/                       },
+	{ DBCItem_EInventoryType::CLOAK,         "Cape",     { MeshIDType::Cloak,     MeshIDType::UNK,      MeshIDType::UNK },      1, M2_AttachmentType::Back /*Cloack specific*/                       },
 
-	{ EInventoryType::TWOHWEAPON,    "WEAPON",   MESHID_ALLUNK,                                                         1, M2_AttachmentType::HandRight                                      },
-	{ EInventoryType::BAG,           "Pouch" },
-	{ EInventoryType::TABARD,        "",         { MeshIDType::Tabard,    MeshIDType::UNK,      MeshIDType::UNK }                                                                            },
+	{ DBCItem_EInventoryType::TWOHWEAPON,    "WEAPON",   MESHID_ALLUNK,                                                         1, M2_AttachmentType::HandRight                                      },
+	{ DBCItem_EInventoryType::BAG,           "Pouch" },
+	{ DBCItem_EInventoryType::TABARD,        "",         { MeshIDType::Tabard,    MeshIDType::UNK,      MeshIDType::UNK }                                                                            },
 
-	{ EInventoryType::ROBE, },
+	{ DBCItem_EInventoryType::ROBE, },
 
-	{ EInventoryType::WEAPONMAINHAND,"WEAPON",   MESHID_ALLUNK,                                                         1, M2_AttachmentType::HandRight                                      },
-	{ EInventoryType::WEAPONOFFHAND, "WEAPON",   MESHID_ALLUNK,                                                         1, M2_AttachmentType::HandLeft                                       },
-	{ EInventoryType::HOLDABLE, },
+	{ DBCItem_EInventoryType::WEAPONMAINHAND,"WEAPON",   MESHID_ALLUNK,                                                         1, M2_AttachmentType::HandRight                                      },
+	{ DBCItem_EInventoryType::WEAPONOFFHAND, "WEAPON",   MESHID_ALLUNK,                                                         1, M2_AttachmentType::HandLeft                                       },
+	{ DBCItem_EInventoryType::HOLDABLE, },
 
-	{ EInventoryType::AMMO,          "Ammo" },
-	{ EInventoryType::THROWN, },
-	{ EInventoryType::RANGEDRIGHT, },
+	{ DBCItem_EInventoryType::AMMO,          "Ammo" },
+	{ DBCItem_EInventoryType::THROWN, },
+	{ DBCItem_EInventoryType::RANGEDRIGHT, },
 
-	{ EInventoryType::QUIVER,        "Quiver" },
-	{ EInventoryType::RELIC, }
+	{ DBCItem_EInventoryType::QUIVER,        "Quiver" },
+	{ DBCItem_EInventoryType::RELIC, }
 };
 
 // Textures names
@@ -92,13 +92,13 @@ CItem_VisualData::~CItem_VisualData()
 {
 }
 
-/*CItem_VisualData::CItem_VisualData(uint32 _displayId, EInventoryType::List _inventoryType, uint32 _enchantAuraID) :
+/*CItem_VisualData::CItem_VisualData(uint32 _displayId, DBCItem_EInventoryType::List _inventoryType, uint32 _enchantAuraID) :
 	ItemTemplate(_displayId, _inventoryType, _enchantAuraID)
 {}*/
 
 bool CItem_VisualData::Load()
 {
-	if (m_DisplayId == 0 || m_InventoryType == (uint8)EInventoryType::NON_EQUIP)
+	if (m_DisplayId == 0 || m_InventoryType == (uint8)DBCItem_EInventoryType::NON_EQUIP)
 	{
 		return false;
 	}
@@ -114,7 +114,7 @@ bool CItem_VisualData::Delete()
 	return false;
 }
 
-	//if (m_InventoryType == EInventoryType::CLOAK)
+	//if (m_InventoryType == DBCItem_EInventoryType::CLOAK)
 	//{
 	//	return;
 	//}
@@ -135,12 +135,12 @@ void CItem_VisualData::InitObjectComponents()
 		std::string objectFileName = itemDisplayInfoRecord->Get_ObjectModelName(i);
 		std::string objectTextureName = itemDisplayInfoRecord->Get_ObjectTextureName(i);
 
-		if (objectFileName.empty() && m_InventoryType != (uint8)EInventoryType::CLOAK)
+		if (objectFileName.empty() && m_InventoryType != (uint8)DBCItem_EInventoryType::CLOAK)
 		{
 			continue;
 		}
 
-		if (m_InventoryType == (uint8)EInventoryType::HEAD)
+		if (m_InventoryType == (uint8)DBCItem_EInventoryType::HEAD)
 		{
 			char modelPostfix[64];
 			sprintf_s(modelPostfix, "_%s%c", m_DBCs->DBC_ChrRaces()[static_cast<size_t>(m_ParentCharacter.GetTemplate().Race)]->Get_ClientPrefix().c_str(), getGenderLetter(m_ParentCharacter.GetTemplate().Gender));
@@ -149,16 +149,16 @@ void CItem_VisualData::InitObjectComponents()
 			_ASSERT(dotPosition != -1);
 			objectFileName.insert(dotPosition, modelPostfix);
 		}
-		else if (m_InventoryType == (uint8)EInventoryType::CLOAK)
+		else if (m_InventoryType == (uint8)DBCItem_EInventoryType::CLOAK)
 		{
-			std::shared_ptr<IImage> texture = LoadObjectTexture((EInventoryType)m_InventoryType, objectTextureName);
+			std::shared_ptr<IImage> texture = LoadObjectTexture((DBCItem_EInventoryType)m_InventoryType, objectTextureName);
 			m_ObjectComponents.push_back({ nullptr, texture, M2_AttachmentType::NotAttached });
 			continue;
 		}
 
 		// Fill data
-		std::string modelName = GetObjectModelName((EInventoryType)m_InventoryType, objectFileName);
-		std::shared_ptr<IImage> itemObjectTexture = LoadObjectTexture((EInventoryType)m_InventoryType, objectTextureName);
+		std::string modelName = GetObjectModelName((DBCItem_EInventoryType)m_InventoryType, objectFileName);
+		std::shared_ptr<IImage> itemObjectTexture = LoadObjectTexture((DBCItem_EInventoryType)m_InventoryType, objectTextureName);
 		auto itemObjectAttach = m_ParentCharacter.getM2().getMiscellaneous().getAttachment(ItemObjectComponents[static_cast<size_t>(m_InventoryType)].attach[i]);
 
 		// Create instance
@@ -238,17 +238,17 @@ void CItem_VisualData::InitTextureComponents()
 	}
 }
 
-std::string CItem_VisualData::GetObjectModelName(EInventoryType _objectType, std::string _modelName)
+std::string CItem_VisualData::GetObjectModelName(DBCItem_EInventoryType _objectType, std::string _modelName)
 {
 	return "Item\\ObjectComponents\\" + std::string(ItemObjectComponents[static_cast<size_t>(_objectType)].folder) + "\\" + _modelName;
 }
 
-/*std::shared_ptr<M2> CItem_VisualData::LoadObjectModel(EInventoryType::List _objectType, std::string _modelName)
+/*std::shared_ptr<M2> CItem_VisualData::LoadObjectModel(DBCItem_EInventoryType::List _objectType, std::string _modelName)
 {
 	return GetManager<IM2Manager>()->Add("Item\\ObjectComponents\\" + ItemObjectComponents[_objectType].folder + "\\" + _modelName);
 }*/
 
-std::shared_ptr<IImage> CItem_VisualData::LoadObjectTexture(EInventoryType _objectType, std::string _textureName)
+std::shared_ptr<IImage> CItem_VisualData::LoadObjectTexture(DBCItem_EInventoryType _objectType, std::string _textureName)
 {
 	std::string imageFilename = "Item\\ObjectComponents\\" + std::string(ItemObjectComponents[static_cast<size_t>(_objectType)].folder) + "\\" + _textureName + ".blp";
 	return m_BaseManager.GetManager<IImagesFactory>()->CreateImage(imageFilename);

@@ -11,9 +11,9 @@ CInet_ItemTemplate::CInet_ItemTemplate(CByteBuffer & b)
 }
 
 
-/*ItemTemplate::ItemTemplate(std::shared_ptr<const DBC_ItemDisplayInfoRecord> _display, EInventoryType::List _inventoryType, uint32 _enchantAuraID) :
+/*ItemTemplate::ItemTemplate(std::shared_ptr<const DBC_ItemDisplayInfoRecord> _display, DBCItem_EInventoryType::List _inventoryType, uint32 _enchantAuraID) :
 	DisplayId(0),
-	EInventoryType(EInventoryType::NON_EQUIP),
+	DBCItem_EInventoryType(DBCItem_EInventoryType::NON_EQUIP),
 	EnchantAuraID(0)
 {
 	if (_display == nullptr)
@@ -22,7 +22,7 @@ CInet_ItemTemplate::CInet_ItemTemplate(CByteBuffer & b)
 	}
 
 	DisplayId = _display->Get_ID();
-	EInventoryType = _inventoryType;
+	DBCItem_EInventoryType = _inventoryType;
 	EnchantAuraID = _enchantAuraID;
 }*/
 
@@ -35,5 +35,5 @@ void CInet_ItemTemplate::TemplateSet(const CInet_ItemTemplate & _o)
 
 void CInet_ItemTemplate::TemplatePrint()
 {
-	Log::Print("Item(%d, (EInventoryType::List) %d, %d);", m_DisplayId, m_InventoryType, m_EnchantAuraID);
+	Log::Print("Item(%d, (DBCItem_EInventoryType::List) %d, %d);", m_DisplayId, m_InventoryType, m_EnchantAuraID);
 }

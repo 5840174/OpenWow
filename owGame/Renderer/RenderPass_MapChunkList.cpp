@@ -7,7 +7,7 @@
 #include "Map/MapChunk.h"
 
 CRenderPass_MapChunkList::CRenderPass_MapChunkList(IRenderDevice& RenderDevice, const std::shared_ptr<IRenderPassCreateTypelessList>& CreateTypelessList)
-	: CRenderPassProcessTypelessList(RenderDevice, CreateTypelessList)
+	: CRenderPassPipelinedProcessTypelessList(RenderDevice, CreateTypelessList)
 {
 	SetPassName("MapChunkList");
 
@@ -61,9 +61,7 @@ std::shared_ptr<IRenderPassPipelined> CRenderPass_MapChunkList::ConfigurePipelin
 EVisitResult CRenderPass_MapChunkList::Visit(const std::shared_ptr<ISceneNode>& SceneNode3D)
 {
 	if (const auto adtMCNKInstance = std::dynamic_pointer_cast<CMapChunk>(SceneNode3D))
-	{
 		return EVisitResult::AllowAll;
-	}
 
 	return EVisitResult::Block;
 }

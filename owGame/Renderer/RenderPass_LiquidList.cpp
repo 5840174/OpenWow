@@ -7,7 +7,7 @@
 #include "Liquid/LiquidBaseInstance.h"
 
 CRenderPass_LiquidList::CRenderPass_LiquidList(IRenderDevice& RenderDevice, const std::shared_ptr<IRenderPassCreateTypelessList>& CreateTypelessList)
-	: CRenderPassProcessTypelessList(RenderDevice, CreateTypelessList)
+	: CRenderPassPipelinedProcessTypelessList(RenderDevice, CreateTypelessList)
 {
 	SetPassName("LiquidList");
 }

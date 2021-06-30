@@ -1,9 +1,9 @@
 #pragma once
 
-#include "RenderPassProcessTypelessList.h"
+#include "RenderPassPipelinedProcessTypelessList.h"
 
 class ZN_API CRenderPass_MapChunkList
-	: public CRenderPassProcessTypelessList
+	: public CRenderPassPipelinedProcessTypelessList
 {
 public:
 	CRenderPass_MapChunkList(IRenderDevice& RenderDevice, const std::shared_ptr<IRenderPassCreateTypelessList>& CreateTypelessList);

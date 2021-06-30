@@ -86,9 +86,9 @@ void CSceneWoW::Initialize()
 	//const float y = 32; //530 outland
 	//const uint32 mapID = 530;
 
-	//const float x = 30; //571 nortrend
-	//const float y = 21; //571 nortrend
-	//const uint32 mapID = 571;
+	const float x = 30; //571 nortrend
+	const float y = 21; //571 nortrend
+	const uint32 mapID = 571;
 
 
 	//const float x = 32; //571 44
@@ -96,11 +96,11 @@ void CSceneWoW::Initialize()
 	//const uint32 mapID = 451;
 
 	// Ulduar
-	const float x = 0; //571 nortrend
-	const float y = 0; //571 nortrend
-	const uint32 mapID = 631;
+	//const float x = 0; //571 nortrend
+	//const float y = 0; //571 nortrend
+	//const uint32 mapID = 631;
 
-	if (true)
+	if (false)
 	{
 		m_WoWSkyManager->Load(mapID);
 		
@@ -131,7 +131,7 @@ void CSceneWoW::Initialize()
 
 		GetCameraController()->GetCamera()->SetPosition(glm::vec3(0.0f));
 	}
-	else if (true)
+	else if (false)
 	{
 		m_WoWSkyManager->Load(0);
 
@@ -139,8 +139,14 @@ void CSceneWoW::Initialize()
 		auto name2 = "WORLD\\EXPANSION02\\DOODADS\\NEXUS\\NEXUS_ENERGYCHAINS.M2";
 		auto name3 = "WORLD\\NODXT\\GENERIC\\PASSIVEDOODADS\\VOLUMETRICLIGHTS\\LD_LIGHTSHAFT01.M2";
 		auto name4 = "WORLD\\EXPANSION02\\DOODADS\\ICECROWN\\EFFECTS\\ICECROWN_ICECORE.M2";
+		auto name5 = "WORLD\\EXPANSION02\\DOODADS\\DALARAN\\DALARAN_BUILDINGCRYSTAL_01.M2";
+		auto name6 = "WORLD\\EXPANSION02\\DOODADS\\HOWLINGFJORD\\FOG\\HFJORD_FOG_01.M2";
+		auto name7 = "WORLD\\EXPANSION02\\DOODADS\\GENERIC\\WATERFALLS\\WATERFALLS_SET2_MED_TALL_WITHCHOP.M2";
+		auto name8 = "Creature\\spirithealer\\SpiritHealer.m2";
 
-		auto m2Model = GetBaseManager().GetManager<IWoWObjectsCreator>()->LoadM2(GetRenderDevice(), name4);
+		
+
+		auto m2Model = GetBaseManager().GetManager<IWoWObjectsCreator>()->LoadM2(GetRenderDevice(), name8);
 
 		auto m2Instance = GetRootSceneNode()->CreateSceneNode<CM2_Base_Instance>(m2Model);
 		GetBaseManager().GetManager<ILoader>()->AddToLoadQueue(m2Instance);
@@ -149,7 +155,12 @@ void CSceneWoW::Initialize()
 	}
 	else
 	{
-		minimap->SetMinimapTexture(GetBaseManager().GetManager<IznTexturesFactory>()->GetDefaultTexture());
+		m_WoWSkyManager->Load(0);
+
+		auto creatureInstance = dynamic_cast<CWorldObjectCreator*>(GetBaseManager().GetManager<IWoWObjectsCreator>())->BuildCharacterFromDisplayInfo(GetRenderDevice(), *this, 10747);
+		GetBaseManager().GetManager<ILoader>()->AddToLoadQueue(creatureInstance);
+
+		GetCameraController()->GetCamera()->SetPosition(glm::vec3(0.0f));
 	}
 }
 

@@ -16,8 +16,8 @@ namespace
 		ShaderM2BatchProperties()
 			: gBlendMode(0)
 			, gShader(0)
-			, gTextureAnimEnable(false)
 			, gTextureWeight(1.0f)
+			, gTextureAnimEnable(0)
 
 			, gMaterialColorAndAlpha(glm::vec4(1.0f))
 
@@ -26,8 +26,8 @@ namespace
 
 		uint32     gBlendMode;
 		uint32     gShader;
-		uint32     gTextureAnimEnable;
 		float      gTextureWeight;
+		uint32     gTextureAnimEnable;
 		//--------------------------------------------------------------( 16 bytes )
 
 		glm::vec4  gMaterialColorAndAlpha;
@@ -49,14 +49,17 @@ public:
 	CM2_Skin_Batch(IBaseManager& BaseManager, IRenderDevice& RenderDevice, const CM2& M2Model, const SM2_SkinBatch& SkinBatchProto);
 	virtual ~CM2_Skin_Batch();
 
+	int8 GetPriorityPlan() const { return m_SkinBatchProto.priorityPlane; }
 	const std::shared_ptr<const CM2_Part_Material>& GetM2Material() const {	return m_M2ModelMaterial; }
+
 	void UpdateMaterialProps(const RenderEventArgs& RenderEventArgs, const CM2_Base_Instance* M2Instance);
 
-	void FixMyShaderID(const SM2_SkinBatch& Batch);
+private:
+	void FixMyShaderID();
 
-public:
-	int32												m_PriorityPlan;
-	
+private:
+	int32												m_ShaderID;
+
 	// Material props
 	std::shared_ptr<const CM2_Part_Color>				m_Color;
 	std::shared_ptr<const CM2_Part_Material>			m_M2ModelMaterial;
@@ -65,11 +68,8 @@ public:
 	std::shared_ptr<const CM2_Part_TextureWeight>		m_TextureWeight;
 	std::shared_ptr<const CM2_Part_TextureTransform>	m_TextureTransform;
 
-	int32												newShader;
-
-private:
-	IBaseManager& m_BaseManager;
-	IRenderDevice& m_RenderDevice;
-	const CM2& m_M2Model;
-	const SM2_SkinBatch m_SkinBatchProto;
+	IBaseManager&                                       m_BaseManager;
+	IRenderDevice&                                      m_RenderDevice;
+	const CM2&                                          m_M2Model;
+	const SM2_SkinBatch                                 m_SkinBatchProto;
 };

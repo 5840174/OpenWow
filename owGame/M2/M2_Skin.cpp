@@ -94,7 +94,7 @@ void CM2_Skin::Load(const SM2_Header& M2Header, const std::shared_ptr<IFile>& Fi
 	{
 		auto& materials = it.second; // aka batch
 		std::sort(materials.begin(), materials.end(), [](const std::shared_ptr<CM2_Skin_Batch>& left, const std::shared_ptr<CM2_Skin_Batch>& right) {
-			return left->m_PriorityPlan < right->m_PriorityPlan;
+			return left->GetPriorityPlan() < right->GetPriorityPlan();
 		});
 	}
 

@@ -20,7 +20,7 @@
 CRenderPass_M2InstancedList::CRenderPass_M2InstancedList(IRenderDevice& RenderDevice, const std::shared_ptr<IRenderPassCreateTypelessList>& CreateTypelessList, ERenderPassM2DrawMode DrawMode)
 	: CRenderPass_M2List(RenderDevice, CreateTypelessList, DrawMode)
 {
-	SetPassName("M2InstancedList");
+	SetPassName("M2InstancedList " + std::string((DrawMode == ERenderPassM2DrawMode::Opaque) ? "Opaque" : (DrawMode == ERenderPassM2DrawMode::Transperent) ? "Transperent" : "All"));
 
 	m_InstancesBuffer = GetRenderDevice().GetObjectsFactory().CreateStructuredBuffer(nullptr, 1000, sizeof(M2PerObject), EAccess::CPUWrite);
 }

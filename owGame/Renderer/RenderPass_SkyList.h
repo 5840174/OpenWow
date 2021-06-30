@@ -1,9 +1,9 @@
 #pragma once
 
-#include "RenderPassProcessTypelessList.h"
+#include "RenderPassPipelinedProcessTypelessList.h"
 
 class ZN_API CRenderPass_SkyList
-	: public CRenderPassProcessTypelessList
+	: public CRenderPassPipelinedProcessTypelessList
 {
 public:
 	CRenderPass_SkyList(IRenderDevice& RenderDevice, const std::shared_ptr<IRenderPassCreateTypelessList>& CreateTypelessList);

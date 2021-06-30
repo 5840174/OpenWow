@@ -119,17 +119,17 @@ std::shared_ptr<Character> CWorldObjectCreator::BuildCharacterFromDisplayInfo(IR
 		characterTemplate.facialStyle = humanoidRecExtra->Get_FacialHairID();
 
 		// 2.2 Items
-		characterTemplate.ItemsTemplates[EQUIPMENT_SLOT_HEAD] = CInet_ItemTemplate(humanoidRecExtra->Get_Helm(), EInventoryType::HEAD, 0);
-		characterTemplate.ItemsTemplates[EQUIPMENT_SLOT_SHOULDERS] = CInet_ItemTemplate(humanoidRecExtra->Get_Shoulder(), EInventoryType::SHOULDERS, 0);
-		characterTemplate.ItemsTemplates[EQUIPMENT_SLOT_BODY] = CInet_ItemTemplate(humanoidRecExtra->Get_Shirt(), EInventoryType::BODY, 0);
-		characterTemplate.ItemsTemplates[EQUIPMENT_SLOT_CHEST] = CInet_ItemTemplate(humanoidRecExtra->Get_Chest(), EInventoryType::CHEST, 0);
-		characterTemplate.ItemsTemplates[EQUIPMENT_SLOT_WAIST] = CInet_ItemTemplate(humanoidRecExtra->Get_Belt(), EInventoryType::WAIST, 0);
-		characterTemplate.ItemsTemplates[EQUIPMENT_SLOT_LEGS] = CInet_ItemTemplate(humanoidRecExtra->Get_Legs(), EInventoryType::LEGS, 0);
-		characterTemplate.ItemsTemplates[EQUIPMENT_SLOT_FEET] = CInet_ItemTemplate(humanoidRecExtra->Get_Boots(), EInventoryType::FEET, 0);
-		characterTemplate.ItemsTemplates[EQUIPMENT_SLOT_WRISTS] = CInet_ItemTemplate(humanoidRecExtra->Get_Wrist(), EInventoryType::WRISTS, 0);
-		characterTemplate.ItemsTemplates[EQUIPMENT_SLOT_HANDS] = CInet_ItemTemplate(humanoidRecExtra->Get_Gloves(), EInventoryType::HANDS, 0);
-		characterTemplate.ItemsTemplates[EQUIPMENT_SLOT_TABARD] = CInet_ItemTemplate(humanoidRecExtra->Get_Tabard(), EInventoryType::TABARD, 0);
-		//ItemsTemplates[EQUIPMENT_SLOT_BACK] = CInet_ItemTemplate(humanoidRecExtra->Get_Cape(), EInventoryType::CLOAK, 0);
+		characterTemplate.ItemsTemplates[EQUIPMENT_SLOT_HEAD] = CInet_ItemTemplate(humanoidRecExtra->Get_Helm(), DBCItem_EInventoryType::HEAD, 0);
+		characterTemplate.ItemsTemplates[EQUIPMENT_SLOT_SHOULDERS] = CInet_ItemTemplate(humanoidRecExtra->Get_Shoulder(), DBCItem_EInventoryType::SHOULDERS, 0);
+		characterTemplate.ItemsTemplates[EQUIPMENT_SLOT_BODY] = CInet_ItemTemplate(humanoidRecExtra->Get_Shirt(), DBCItem_EInventoryType::BODY, 0);
+		characterTemplate.ItemsTemplates[EQUIPMENT_SLOT_CHEST] = CInet_ItemTemplate(humanoidRecExtra->Get_Chest(), DBCItem_EInventoryType::CHEST, 0);
+		characterTemplate.ItemsTemplates[EQUIPMENT_SLOT_WAIST] = CInet_ItemTemplate(humanoidRecExtra->Get_Belt(), DBCItem_EInventoryType::WAIST, 0);
+		characterTemplate.ItemsTemplates[EQUIPMENT_SLOT_LEGS] = CInet_ItemTemplate(humanoidRecExtra->Get_Legs(), DBCItem_EInventoryType::LEGS, 0);
+		characterTemplate.ItemsTemplates[EQUIPMENT_SLOT_FEET] = CInet_ItemTemplate(humanoidRecExtra->Get_Boots(), DBCItem_EInventoryType::FEET, 0);
+		characterTemplate.ItemsTemplates[EQUIPMENT_SLOT_WRISTS] = CInet_ItemTemplate(humanoidRecExtra->Get_Wrist(), DBCItem_EInventoryType::WRISTS, 0);
+		characterTemplate.ItemsTemplates[EQUIPMENT_SLOT_HANDS] = CInet_ItemTemplate(humanoidRecExtra->Get_Gloves(), DBCItem_EInventoryType::HANDS, 0);
+		characterTemplate.ItemsTemplates[EQUIPMENT_SLOT_TABARD] = CInet_ItemTemplate(humanoidRecExtra->Get_Tabard(), DBCItem_EInventoryType::TABARD, 0);
+		//ItemsTemplates[EQUIPMENT_SLOT_BACK] = CInet_ItemTemplate(humanoidRecExtra->Get_Cape(), DBCItem_EInventoryType::CLOAK, 0);
 
 		newCharacter->GetTemplate().TemplateSet(characterTemplate);
 	}
@@ -308,7 +308,7 @@ std::shared_ptr<CWMO> CWorldObjectCreator::LoadWMO(IRenderDevice& RenderDevice, 
 		m_BaseManager.GetManager<ILoader>()->AddToLoadQueue(wmoObject);
 	}
 
-	Log::Print("CWorldObjectCreator::LoadWMO: WMO '%s' loaded.", Filename.c_str());
+	//Log::Print("CWorldObjectCreator::LoadWMO: WMO '%s' loaded.", Filename.c_str());
 
 	return wmoObject;
 }

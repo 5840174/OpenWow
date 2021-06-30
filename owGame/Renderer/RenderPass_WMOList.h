@@ -2,13 +2,13 @@
 
 #ifdef USE_WMO_MODELS
 
-#include "RenderPassProcessTypelessList.h"
+#include "RenderPassPipelinedProcessTypelessList.h"
 
 #include "WMO/WMO_Group_Instance.h"
 #include "WMO/WMOGroup_Part_Batch.h"
 
 class ZN_API CRenderPass_WMOList 
-	: public CRenderPassProcessTypelessList
+	: public CRenderPassPipelinedProcessTypelessList
 {
 public:
 	CRenderPass_WMOList(IRenderDevice& RenderDevice, const std::shared_ptr<IRenderPassCreateTypelessList>& CreateTypelessList);

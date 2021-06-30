@@ -48,9 +48,9 @@ private:
 	void                                 InitGeosetComponents();
 	void                                 InitTextureComponents();
 
-	std::string				 GetObjectModelName(EInventoryType _objectType, std::string _modelName);
-	//std::shared_ptr<M2>      LoadObjectModel   (EInventoryType::List _objectType, std::string _modelName);
-	std::shared_ptr<IImage> LoadObjectTexture (EInventoryType _objectType, std::string _textureName);
+	std::string				 GetObjectModelName(DBCItem_EInventoryType _objectType, std::string _modelName);
+	//std::shared_ptr<M2>      LoadObjectModel   (DBCItem_EInventoryType::List _objectType, std::string _modelName);
+	std::shared_ptr<IImage> LoadObjectTexture (DBCItem_EInventoryType _objectType, std::string _textureName);
 	std::shared_ptr<IImage> LoadSkinTexture   (DBC_CharComponent_Sections _type, std::string _textureName);
 	
 	// Helpers

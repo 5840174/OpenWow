@@ -34,8 +34,8 @@ cbuffer Material : register(b2)
 {
 	uint      gBlendMode;
 	uint      gShader;
-	bool      gTextureAnimEnable;
 	float     gTextureWeight;
+	uint      gTextureAnimEnable;
 	//--------------------------------------------------------------(16 bytes)
 	float4    gMaterialColorAndAlpha;
 	//--------------------------------------------------------------(16 bytes)
@@ -136,29 +136,10 @@ float4 PS_main(VertexShaderOutput IN) : SV_TARGET
 	if (colorA < cAlphaThreshold_TransperentKey)
 		discard;
 
-	float2 originalTex0 = IN.texCoord0;
+	float2 tc0 = (gTextureAnimEnable != 0) ? mul(gTextureAnimMatrix, float4(IN.texCoord0, 0.0f, 1.0f)).xy : IN.texCoord0;
+	float2 tc1 = /*(gTextureAnimEnable != 0) ? mul(gTextureAnimMatrix, float4(IN.texCoord0, 0.0f, 1.0f)).xy :*/ IN.texCoord0;
 
-	IN.texCoord0 = (gTextureAnimEnable) ? mul(gTextureAnimMatrix, float4(IN.texCoord0, 1.0f, 1.0f)).xy : IN.texCoord0;
-	IN.texCoord1 = /*(gTextureAnimEnable) ? mul(gTextureAnimMatrix, float4(IN.texCoord1, 1.0f, 1.0f)).xy :*/ originalTex0;
-
-	//float4 resultColor = DiffuseTexture0.Sample(DiffuseTexture0Sampler, float2(IN.texCoord0.x, 1.0f - IN.texCoord0.y));
-	
-	
-	//float4 colorAndAlpha = gMaterialColorAndAlpha;
-	//if (gBlendMode == 0 || gBlendMode == 1) 
-	//	colorAndAlpha.rgb *= IN.color.rgb; // It looks like in order to get correct picture the color from SMODoodadDef should be applied only to opaque submeshes of M2.
-	//colorAndAlpha.a *= gTextureWeight /*TODO: all M2 alpha*/;
-	//colorAndAlpha.a *= IN.color.a;
-
-	//if (gShader == 1)
-	//{
-	//	const float4 tex1 = DiffuseTexture1.Sample(DiffuseTexture1Sampler, float2(IN.texCoord1.x, 1.0 - IN.texCoord1.y));
-	//	resultColor *= tex1;
-	//}
-
-	//resultColor = MixColorAndTexture(gBlendMode, float4(colorRGB, colorA), resultColor);
-	
-	float4 resultColor = Test(gShader, float4(colorRGB, colorA), DiffuseTexture0, DiffuseTexture0Sampler, IN.texCoord0, DiffuseTexture1, DiffuseTexture1Sampler, IN.texCoord1);
+	float4 resultColor = Test(gShader, float4(colorRGB, colorA), DiffuseTexture0, DiffuseTexture0Sampler, tc0, DiffuseTexture1, DiffuseTexture1Sampler, tc1);
 	
 	if (gBlendMode == 0) // GxBlend_Opaque
 	{
@@ -174,8 +155,6 @@ float4 PS_main(VertexShaderOutput IN) : SV_TARGET
 		if (resultColor.a < cAlphaThreshold_TransperentKey) 
 			discard;
 	}
-	
-	//resultColor.r += 0.05f;
 	
 	return resultColor;
 }
