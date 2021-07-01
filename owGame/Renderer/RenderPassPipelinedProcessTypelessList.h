@@ -29,5 +29,6 @@ protected:
 
 private:
 	std::shared_ptr<IConstantBuffer> m_PerObjectConstantBuffer;
-	IShaderParameter* m_PerObjectParameter;
+
+	IShaderParameter* m_PerObjectParameters[(size_t)EShaderType::ComputeShader + 1ull];
 };

@@ -17,7 +17,7 @@ CM2_ColliderComponent::~CM2_ColliderComponent()
 
 const CM2_Base_Instance& CM2_ColliderComponent::GetOwnerNode()
 {
-    return reinterpret_cast<const CM2_Base_Instance&>(__super::GetOwnerNode());
+    return dynamic_cast<const CM2_Base_Instance&>(__super::GetOwnerNode());
 }
 
 

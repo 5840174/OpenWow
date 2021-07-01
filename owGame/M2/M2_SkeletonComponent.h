@@ -49,7 +49,7 @@ class ZN_API CM2SkeletonComponent3D
 	: public CComponentBase
 {
 public:
-	ZN_OBJECTCLASS(UINT16_MAX - 600u);
+	ZN_OBJECTCLASS(cSceneNodeComponentM2SkeletonComponent);
 
 	CM2SkeletonComponent3D(const CM2_Base_Instance& OwnerNode);
 	virtual ~CM2SkeletonComponent3D();

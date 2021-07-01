@@ -17,4 +17,9 @@ struct CM2_ParticleObject
 
 	glm::vec4 color;
 	int tile;
+
+	SGPUParticle ToGPUParticle() const
+	{
+		return SGPUParticle(pos, ColorRGBA(color.r, color.g, color.b, color.a), glm::vec2(size));
+	}
 };

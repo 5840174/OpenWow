@@ -72,11 +72,11 @@ private:
 	M2_Animated<uint8>        enabled;
 	int                       order;
 
-	int rows, cols;
-	bool billboard;
-	std::vector<TexCoordSet> tiles;
+	int                       rows, cols;
+	bool                      billboard;
+	std::vector<TexCoordSet>  tiles;
 
 private:
-	const CM2& m_M2Object;
-	const SM2_Particle m_M2Particle;
+	const CM2&                m_M2Object;
+	const SM2_Particle        m_M2Particle;
 };

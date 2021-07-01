@@ -324,24 +324,29 @@ struct SM2_RibbonEmitter
 struct SM2_Particle
 {
 	int32 particleId;                      // Always (as I have seen): -1.
+
 	struct Flags
 	{
 		uint32 AFFECTEDBYLIGHTING : 1;     // Particles are affected by lighting;
 		uint32 unk0x2 : 1;
 		uint32 unk0x4 : 1;
 		uint32 WORLDUP : 1;                // Particles travel "up" in world space, rather than model.
+
 		uint32 DONOTTRAIL : 1;             // Do not Trail
 		uint32 INLIGHTING : 1;             // Unlightning
 		uint32 unk0x40 : 1;                // Use Burst Multiplier
 		uint32 unk0x80 : 1;                // Particles in Model Space
+
 		uint32 unk0x100 : 1;
 		uint32 unk0x200 : 1;               // spawn position randomized in some way?
 		uint32 unk0x400 : 1;               // STYLE: Pinned Particles, their quad enlarges from their creation position to where they expand.
 		uint32 unk0x800 : 1;
+
 		uint32 DONOTBILLBOARD : 1;         // XYQuad Particles. They align to XY axis facing Z axis direction.
 		uint32 unk0x2000 : 1;              // clamp to ground; call CParticleEmitter2::ProjectParticle
 		uint32 unk0x4000 : 1;
 		uint32 unk0x8000 : 1;
+
 		uint32 unk0x10000 : 1;             // ChooseRandomTexture
 		uint32 unk0x20000 : 1;             // STYLE: "Outward" particles, most emitters have this and their particles move away from the origin, when they don't the particles start at origin+(speed*life) and move towards the origin.
 		uint32 unk0x40000 : 1;             // STYLE: unknown. In a large proportion of particles this seems to be simply the opposite of the above flag, but in some (e.g. voidgod.m2 or wingedlionmount.m2) both flags are true.

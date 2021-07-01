@@ -19,6 +19,7 @@
 #include "RenderPass_LiquidList.h"
 #include "RenderPass_M2List.h"
 #include "RenderPass_M2InstancedList.h"
+#include "RenderPass_M2ParticlesList.h"
 #include "RenderPass_MapChunkList.h"
 #include "RenderPass_SkyList.h"
 #include "RenderPass_WDLList.h"
@@ -76,6 +77,8 @@ void CRendererWoW::Initialize(std::shared_ptr<IRenderTarget> OutputRenderTarget)
 
 	//Add3DPass(MakeShared(CRenderPass_Liquid, GetScene())->ConfigurePipeline(OutputRenderTarget));
 	Add3DPass(MakeShared(CRenderPass_LiquidList, GetRenderDevice(), m_SceneListTypelessPass)->ConfigurePipeline(OutputRenderTarget));
+
+	Add3DPass(MakeShared(CRenderPass_M2ParticlesList, GetRenderDevice(), m_SceneListTypelessPass)->ConfigurePipeline(OutputRenderTarget));
 
 
 

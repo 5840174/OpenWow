@@ -10,9 +10,6 @@
 #include "M2/M2_Part_TextureTransform.h"
 #include "M2/M2_Part_TextureWeight.h"
 
-// Additional (SceneNodes)
-#include "M2/M2_Base_Instance.h"
-
 // Additional (meshes)
 #include "M2/M2_Skin_Batch.h"
 

@@ -128,7 +128,7 @@ bool CM2_Base_Instance::Load()
 		m_SkeletonComponent = AddComponentT(std::make_shared<CM2SkeletonComponent3D>(*this));
 
 #ifdef USE_M2_PARTICLES
-	m_ParticleComponent = AddComponentT(std::make_shared<CM2ParticlesComponent3D>(*this));
+	m_ParticleComponent = AddComponentT(std::make_shared<CM2ParticlesComponent>(*this));
 #endif
 
 	UpdateLocalTransform();

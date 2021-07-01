@@ -332,8 +332,8 @@ private:
 	{
 		if (m_GlobalSecIndex == -1 && m_Type == Interpolations::None && GetCount() == 1)
 		{
-			_ASSERT(m_Times.at(0).size() == 1);
-			_ASSERT(m_Values.at(0).size() == 1);
+			//_ASSERT(m_Times.at(0).size() == 1);
+			//_ASSERT(m_Values.at(0).size() == 1);
 			return true;
 		}
 

@@ -2,36 +2,40 @@
 
 #ifdef USE_M2_PARTICLES
 
-#include "M2/M2_ParticleSystem.h"
+#include "M2_ParticleSystem.h"
 
 // FORWARD BEGIN
 class CM2;
 class CM2_Base_Instance;
 // FORWARD END
 
+
 //
 // CM2ParticleSystem
 //
 class CM2ParticleSystem
-	: public IParticleSystem
+	: virtual public IParticleSystem
+	, public Object
 {
 public:
-	CM2ParticleSystem(IRenderDevice& RenderDevice, const std::shared_ptr<SM2_ParticleSystem_Wrapper>& M2ParticleSystem);
+	CM2ParticleSystem(const CM2_Base_Instance& M2Instance, IRenderDevice& RenderDevice, const std::shared_ptr<SM2_ParticleSystem_Wrapper>& M2ParticleSystem);
 	virtual ~CM2ParticleSystem();
 
 	// CM2ParticleSystem
-	void Update(const CM2_Base_Instance* M2Instance, const UpdateEventArgs& e);
+	std::shared_ptr<IBlendState> GetBlendState() const;
 
 	// IParticleSystem
-	void AddParticle(const SParticle& Particle) override;
-	void ClearParticles() override;
-	const std::vector<SParticle>& GetParticles() const override;
+	void Update(const UpdateEventArgs& e) override;
+	void SetNode(const ISceneNode* Node) override;
+	const ISceneNode* GetNode() const override;
+	void SetEnableCreatingNewParticles(bool Value) override;
+	bool IsEnableCreatingNewParticles() const override;
 	void SetTexture(const std::shared_ptr<ITexture>& Texture) override;
 	std::shared_ptr<ITexture> GetTexture() const override;
-	std::shared_ptr<IBlendState> GetBlendState() const override;
+	const std::vector<SGPUParticle>& GetGPUParticles() const override;
 
 private:
-	std::vector<SParticle> m_ParticleObjects;
+	std::vector<SGPUParticle> m_ParticleObjects;
 	std::shared_ptr<ITexture> m_Texture;
 	std::shared_ptr<IBlendState> m_BlendState;
 
@@ -39,36 +43,30 @@ private:
 	float rem;
 	std::shared_ptr<SM2_ParticleSystem_Wrapper> m_M2ParticleSystem;
 	CM2_ParticleObject m_M2ParticleObjects[MAX_PARTICLES];
+
+	const CM2_Base_Instance& m_M2Instance;
 };
 
 
 
 //
-// CM2ParticlesComponent3D
+// CM2ParticlesComponent
 //
-class CM2ParticlesComponent3D
-	: public IParticleComponent3D
-	, public CComponentBase
+class CM2ParticlesComponent
+	: public CParticlesComponent
 {
 public:
-	CM2ParticlesComponent3D(const CM2_Base_Instance& SceneNode);
-	virtual ~CM2ParticlesComponent3D();
+	ZN_OBJECTCLASS(cSceneNodeParticleComponent);
+
+	CM2ParticlesComponent(const CM2_Base_Instance& SceneNode);
+	virtual ~CM2ParticlesComponent();
 
 	// IParticleComponent3D
 	void AddParticleSystem(std::shared_ptr<IParticleSystem> ParticleSystem) override;
 	void RemoveParticleSystem(std::shared_ptr<IParticleSystem> ParticleSystem) override;
-	void DeleteAllParticleSystem() override;
-	const std::vector<std::shared_ptr<IParticleSystem>>& GetParticleSystems() const override;
-
-	// ISceneNodeComponent
-	void Update(const UpdateEventArgs& e) override final;
-	void Accept(IVisitor* visitor) override final;
 
 protected:
 	const CM2_Base_Instance& GetM2OwnerNode() const;
-
-private:
-	std::vector<std::shared_ptr<IParticleSystem>> m_ParticleSystems;
 };
 
 #endif

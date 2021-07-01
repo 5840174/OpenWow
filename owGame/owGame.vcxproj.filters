@@ -498,6 +498,9 @@
     <ClCompile Include="Renderer\RenderPass_Update.cpp">
       <Filter>Renderer\PassesList</Filter>
     </ClCompile>
+    <ClCompile Include="Renderer\RenderPass_M2ParticlesList.cpp">
+      <Filter>Renderer\PassesList</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="common.h">
@@ -1038,6 +1041,9 @@
       <Filter>Renderer</Filter>
     </ClInclude>
     <ClInclude Include="Renderer\RenderPass_Update.h">
+      <Filter>Renderer\PassesList</Filter>
+    </ClInclude>
+    <ClInclude Include="Renderer\RenderPass_M2ParticlesList.h">
       <Filter>Renderer\PassesList</Filter>
     </ClInclude>
   </ItemGroup>

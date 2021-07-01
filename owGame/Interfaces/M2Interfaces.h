@@ -4,7 +4,7 @@
 class CM2;
 class CM2_Animator;
 class CM2SkeletonComponent3D;
-class CM2ParticlesComponent3D;
+class CM2ParticlesComponent;
 // FORWARD END
 
 ZN_INTERFACE ZN_API IowM2BaseInstance
@@ -34,5 +34,5 @@ ZN_INTERFACE ZN_API IowM2BaseInstance
 	// Animations
 	virtual const std::shared_ptr<CM2_Animator>& getAnimator() const = 0;
 	virtual const std::shared_ptr<CM2SkeletonComponent3D> getSkeletonComponent() const = 0;
-	virtual const std::shared_ptr<CM2ParticlesComponent3D> getParticleComponent() const = 0;
+	virtual const std::shared_ptr<CM2ParticlesComponent> getParticleComponent() const = 0;
 };

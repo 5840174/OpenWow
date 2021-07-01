@@ -86,9 +86,9 @@ void CSceneWoW::Initialize()
 	//const float y = 32; //530 outland
 	//const uint32 mapID = 530;
 
-	const float x = 30; //571 nortrend
-	const float y = 21; //571 nortrend
-	const uint32 mapID = 571;
+	//const float x = 30; //571 nortrend
+	//const float y = 21; //571 nortrend
+	//const uint32 mapID = 571;
 
 
 	//const float x = 32; //571 44
@@ -96,11 +96,11 @@ void CSceneWoW::Initialize()
 	//const uint32 mapID = 451;
 
 	// Ulduar
-	//const float x = 0; //571 nortrend
-	//const float y = 0; //571 nortrend
-	//const uint32 mapID = 631;
+	const float x = 0; //571 nortrend
+	const float y = 0; //571 nortrend
+	const uint32 mapID = 631;
 
-	if (false)
+	if (true)
 	{
 		m_WoWSkyManager->Load(mapID);
 		
@@ -118,7 +118,7 @@ void CSceneWoW::Initialize()
 
 		//GetCameraController()->GetCamera()->SetPosition(glm::vec3(14300, 150, 20500));
 	}
-	else if (false)
+	else if (true)
 	{
 		m_WoWSkyManager->Load(0);
 

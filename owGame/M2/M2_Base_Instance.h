@@ -41,7 +41,7 @@ public:
 	const std::shared_ptr<CM2_Animator>&           getAnimator() const { return m_Animator; }
 	const std::shared_ptr<CM2SkeletonComponent3D>  getSkeletonComponent() const { return m_SkeletonComponent; }
 #ifdef USE_M2_PARTICLES
-	const std::shared_ptr<CM2ParticlesComponent3D>   getParticleComponent() const { return m_ParticleComponent; }
+	const std::shared_ptr<CM2ParticlesComponent>   getParticleComponent() const { return m_ParticleComponent; }
 #endif
 
 	// ISceneNode
@@ -72,7 +72,7 @@ private:
 	std::shared_ptr<CM2_Animator>           m_Animator;
 	std::shared_ptr<CM2SkeletonComponent3D> m_SkeletonComponent;
 #ifdef USE_M2_PARTICLES
-	std::shared_ptr<CM2ParticlesComponent3D>m_ParticleComponent;
+	std::shared_ptr<CM2ParticlesComponent>m_ParticleComponent;
 #endif
 
 private:

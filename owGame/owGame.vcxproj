@@ -96,6 +96,7 @@
     <ClCompile Include="Renderer\RenderPass_M2Instanced.cpp" />
     <ClCompile Include="Renderer\RenderPass_M2InstancedList.cpp" />
     <ClCompile Include="Renderer\RenderPass_M2List.cpp" />
+    <ClCompile Include="Renderer\RenderPass_M2ParticlesList.cpp" />
     <ClCompile Include="Renderer\RenderPass_MapChunk.cpp" />
     <ClCompile Include="Renderer\RenderPass_MapChunkList.cpp" />
     <ClCompile Include="Renderer\RenderPass_MapTile.cpp" />
@@ -270,6 +271,7 @@
     <ClInclude Include="Renderer\RenderPass_M2Instanced.h" />
     <ClInclude Include="Renderer\RenderPass_M2InstancedList.h" />
     <ClInclude Include="Renderer\RenderPass_M2List.h" />
+    <ClInclude Include="Renderer\RenderPass_M2ParticlesList.h" />
     <ClInclude Include="Renderer\RenderPass_MapChunk.h" />
     <ClInclude Include="Renderer\RenderPass_MapChunkList.h" />
     <ClInclude Include="Renderer\RenderPass_MapTile.h" />

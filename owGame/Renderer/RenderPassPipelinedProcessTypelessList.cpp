@@ -6,9 +6,11 @@
 CRenderPassPipelinedProcessTypelessList::CRenderPassPipelinedProcessTypelessList(IRenderDevice& RenderDevice, const std::shared_ptr<IRenderPassCreateTypelessList>& CreateTypelessList)
 	: RenderPassPipelined(RenderDevice)
 	, m_CreateTypelessList(CreateTypelessList)
-	, m_PerObjectParameter(nullptr)
 {
 	m_PerObjectConstantBuffer = GetRenderDevice().GetObjectsFactory().CreateConstantBuffer(PerObject());
+
+	for (size_t i = 0; i < (size_t)EShaderType::ComputeShader + 1ull; i++)
+		m_PerObjectParameters[i] = nullptr;
 }
 
 CRenderPassPipelinedProcessTypelessList::~CRenderPassPipelinedProcessTypelessList()
@@ -90,13 +92,17 @@ void CRenderPassPipelinedProcessTypelessList::BindPerObjectData(const PerObject&
 {
 	m_PerObjectConstantBuffer->Set(PerObject);
 
-	if (m_PerObjectParameter == nullptr)
-		m_PerObjectParameter = GetPipeline().GetVertexShaderPtr()->GetShaderParameterByName("PerObject");
-
-	if (m_PerObjectParameter && m_PerObjectConstantBuffer != nullptr)
+	for (const auto& shadersIt : GetPipeline().GetShaders())
 	{
-		m_PerObjectParameter->SetConstantBuffer(m_PerObjectConstantBuffer);
-		m_PerObjectParameter->Bind();
+		auto& perObjectParameter = m_PerObjectParameters[(size_t)shadersIt.first];
+		if (perObjectParameter == nullptr)
+			perObjectParameter = shadersIt.second->GetShaderParameterByName("PerObject");
+
+		if (perObjectParameter && m_PerObjectConstantBuffer != nullptr)
+		{
+			perObjectParameter->SetConstantBuffer(m_PerObjectConstantBuffer);
+			perObjectParameter->Bind();
+		}		
 	}
 }
 

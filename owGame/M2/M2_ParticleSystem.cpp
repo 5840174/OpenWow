@@ -7,57 +7,6 @@
 // General
 #include "M2_ParticleSystem.h"
 
-
-namespace
-{
-	glm::mat4 CalcSpreadMatrix(float Spread1, float Spread2, float w, float l)
-	{
-		float a[2], c[2], s[2];
-
-		a[0] = Random::Range(-Spread1, Spread1) / 2.0f;
-		a[1] = Random::Range(-Spread2, Spread2) / 2.0f;
-
-		for (size_t i = 0; i < 2; i++)
-		{
-			c[i] = glm::cos(a[i]);
-			s[i] = glm::sin(a[i]);
-		}
-
-		glm::mat4 Temp(1.0f);
-		Temp[1][1] = c[0];
-		Temp[2][1] = s[0];
-		Temp[2][2] = c[0];
-		Temp[1][2] = -s[0];
-
-		glm::mat4 SpreadMat = Temp;
-
-		Temp = glm::mat4(1.0f);
-		Temp[0][0] = c[1];
-		Temp[1][0] = s[1];
-		Temp[1][1] = c[1];
-		Temp[0][1] = -s[1];
-
-		SpreadMat *= Temp;
-
-		float Size = glm::abs(c[0]) * l + glm::abs(s[0]) * w;
-		for (size_t i = 0; i < 3; i++)
-			for (size_t j = 0; j < 3; j++)
-				SpreadMat[i][j] *= Size;
-
-		return SpreadMat;
-	}
-
-	template<class T>
-	inline T lifeRamp(float currentTime, float mid, const T& a, const T& b, const T& c)
-	{
-		if (currentTime <= mid)
-			return interpolateLinear<T>(currentTime / mid, a, b);
-		else
-			return interpolateLinear<T>((currentTime - mid) / (1.0f - mid), b, c);
-	}
-}
-
-
 SM2_ParticleSystem_Wrapper::SM2_ParticleSystem_Wrapper(const CM2& M2Object, const std::shared_ptr<IFile>& File, const SM2_Particle& M2Particle)
 	: m_M2Object(M2Object)
 	, m_M2Particle(M2Particle)
@@ -98,6 +47,7 @@ SM2_ParticleSystem_Wrapper::SM2_ParticleSystem_Wrapper(const CM2& M2Object, cons
 	}
 #else
 	m_MiddleTime = 0.5f;
+
 	glm::vec3 colors2[3];
 	memcpy(colors2, File->getData() + M2Particle.colorTrack.values.offset, sizeof(glm::vec3) * 3);
 
@@ -161,8 +111,8 @@ void SM2_ParticleSystem_Wrapper::update(const CM2_Base_Instance* M2Instance, con
 		float rlife = p.currentTime / p.maxTime;
 
 		// calculate size and color based on lifetime
-		p.size = lifeRamp<float>(rlife, m_MiddleTime, m_Scales[0], m_Scales[1], m_Scales[2]);
-		p.color = lifeRamp<glm::vec4>(rlife, m_MiddleTime, m_Colors[0], m_Colors[1], m_Colors[2]);
+		p.size = ParticleSystemHelper::InterpolateParticleValue<float>(rlife, m_MiddleTime, m_Scales[0], m_Scales[1], m_Scales[2]);
+		p.color = ParticleSystemHelper::InterpolateParticleValue<glm::vec4>(rlife, m_MiddleTime, m_Colors[0], m_Colors[1], m_Colors[2]);
 
 		// kill off old Particles
 		if (rlife >= 1.0f)
@@ -269,7 +219,7 @@ void SM2_ParticleSystem_Wrapper::CreateAndDeleteParticles(const CM2_Base_Instanc
 				size_t freeIndex = -1;
 				for (size_t ind = 0; ind < MAX_PARTICLES; ind++)
 				{
-					if (!Particles[ind].Active)
+					if (false == Particles[ind].Active)
 					{
 						freeIndex = ind;
 						break;
@@ -398,7 +348,7 @@ CM2_ParticleObject SM2_ParticleSystem_Wrapper::SphereGenerator_New(const CM2_Bas
 	float radius = Random::Range(0.0f, 1.0f);
 
 	//Spread Calculation
-	glm::mat4 SpreadMat = CalcSpreadMatrix(spr * 2, spr2 * 2, w, l);
+	glm::mat4 SpreadMat = ParticleSystemHelper::CalcSpreadMatrix(spr * 2, spr2 * 2, w, l);
 	glm::mat4 mrot = bone->GetRotateMatrix() * SpreadMat;
 
 	glm::vec3 bdir = mrot * glm::vec4(glm::vec3(0, 1, 0) * radius, 0);
@@ -597,7 +547,9 @@ void SM2_ParticleSystem_Wrapper::initTile(glm::vec2 * tc, int num)
 	otc[0] = a;
 	otc[1].x = b.x;
 	otc[1].y = a.y;
+
 	otc[2] = b;
+
 	otc[3].x = a.x;
 	otc[3].y = b.y;
 

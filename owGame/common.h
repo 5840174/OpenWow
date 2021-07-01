@@ -26,7 +26,7 @@
 /**
   * Enable or disable M2 models support
 */
-//#define USE_M2_PARTICLES
+#define USE_M2_PARTICLES
 
 /**
   * Enable or disable M2 models support
@@ -62,9 +62,10 @@ ZN_MAKE_OBJECTCLASS(cUIControlMinimap, 500);
 
 //
 // SceneNode components
-// 700 - 799 UIControls custom
+// 700 - 799 SceneNodeComponent custom
 //
-//ZN_MAKE_OBJECTCLASS(cUIControlRTSTowerBtn, 700);
+ZN_MAKE_OBJECTCLASS(cSceneNodeComponentM2SkeletonComponent, 700);
+ZN_MAKE_OBJECTCLASS(cSceneNodeComponentM2ParticlesComponent, 701);
 
 
 
