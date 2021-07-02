@@ -153,11 +153,9 @@ public:
 
 	virtual void OnValuesUpdated(const UpdateMask & Mask) override;
 
-	uint8 GetRace() const { return m_Values.GetByteValue(UNIT_FIELD_BYTES_0, UNIT_BYTES_0_OFFSET_RACE); }
-	uint32 GetRaceMask() const { return 1 << (GetRace() - 1); }
-	uint8 GetClass() const { return m_Values.GetByteValue(UNIT_FIELD_BYTES_0, UNIT_BYTES_0_OFFSET_CLASS); }
-	uint32 GetClassMask() const { return 1 << (GetClass() - 1); }
-	uint8 GetGender() const { return m_Values.GetByteValue(UNIT_FIELD_BYTES_0, UNIT_BYTES_0_OFFSET_GENDER); }
+	uint8 GetRace() const       { return m_Values.GetByteValue(UNIT_FIELD_BYTES_0, UNIT_BYTES_0_OFFSET_RACE); }
+	uint8 GetClass() const      { return m_Values.GetByteValue(UNIT_FIELD_BYTES_0, UNIT_BYTES_0_OFFSET_CLASS); }
+	uint8 GetGender() const     { return m_Values.GetByteValue(UNIT_FIELD_BYTES_0, UNIT_BYTES_0_OFFSET_GENDER); }
 
 	// Speed
 	float GetSpeed(UnitMoveType MoveType) const { return m_Speed[MoveType]; }
@@ -182,9 +180,7 @@ public:
 	static std::shared_ptr<WoWUnit> Create(CWoWWorld& WoWWorld, IScene& Scene, CWoWGuid Guid);
 	virtual void Destroy() override;
 
-	glm::vec3 DestinationPoint;
 	std::shared_ptr<CWoWPath> m_WoWPath;
-
 
 	CInet_ItemTemplate GetItemDisplayInfoIDByItemID(uint32 ItemID);
 

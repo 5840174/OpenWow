@@ -54,61 +54,6 @@ void WoWObject::ProcessMovementUpdate(CByteBuffer& Bytes)
 		if (IsWoWType(TYPEMASK_UNIT))
 		{
 			unit->ProcessMovementPacket(Bytes);
-
-			unit->SetSpeed(MOVE_WALK, Bytes.ReadFloat());
-			unit->SetSpeed(MOVE_RUN, Bytes.ReadFloat());
-			unit->SetSpeed(MOVE_RUN_BACK, Bytes.ReadFloat());
-			unit->SetSpeed(MOVE_SWIM, Bytes.ReadFloat());
-			unit->SetSpeed(MOVE_SWIM_BACK, Bytes.ReadFloat());
-			unit->SetSpeed(MOVE_FLIGHT, Bytes.ReadFloat());
-			unit->SetSpeed(MOVE_FLIGHT_BACK, Bytes.ReadFloat());
-			unit->SetSpeed(MOVE_TURN_RATE, Bytes.ReadFloat());
-			unit->SetSpeed(MOVE_PITCH_RATE, Bytes.ReadFloat());
-
-			if (unit->GetMovementFlags() & MOVEMENTFLAG_SPLINE_ENABLED)
-			{
-				Movement::MoveSplineFlag splineFlags;
-				splineFlags.raw() = Bytes.ReadUInt32();
-
-				if (splineFlags.final_angle)
-				{
-					Bytes.seekRelative(4); // float
-				}
-				else if (splineFlags.final_target)
-				{
-					Bytes.seekRelative(8); // uint64
-				}
-				else if (splineFlags.final_point)
-				{
-					Bytes.seekRelative(12);
-				}
-
-				Bytes.seekRelative(12);
-				//Bytes >> move_spline.timePassed();
-				//Bytes >> move_spline.Duration();
-				//Bytes >> move_spline.GetId();
-
-				Bytes.seekRelative(8);
-				//Bytes >> float(1.f);                             // splineInfo.duration_mod; added in 3.1
-				//Bytes >> float(1.f);                             // splineInfo.duration_mod_next; added in 3.1
-
-				Bytes.seekRelative(8);
-				//Bytes << move_spline.vertical_acceleration;      // added in 3.1
-				//Bytes << move_spline.effect_start_time;          // added in 3.1
-
-				uint32 nodes;
-				Bytes >> nodes;
-				for (size_t i = 0; i < nodes; i++)
-				{
-					Bytes.seekRelative(12);
-				}
-
-				Bytes.seekRelative(1);
-				//Bytes << uint8(move_spline.spline.mode());       // added in 3.1
-
-				Bytes.seekRelative(12);
-				//Bytes << (move_spline.isCyclic() ? G3D::Vector3::zero() : move_spline.FinalDestination());
-			}
 		}
 	}
 	else
@@ -121,18 +66,14 @@ void WoWObject::ProcessMovementUpdate(CByteBuffer& Bytes)
 				object->TransportID = CWoWGuid(transportGuid);
 
 			glm::vec3 gamePosition;
-			Bytes >> gamePosition.x;
-			Bytes >> gamePosition.y;
-			Bytes >> gamePosition.z;
+			Bytes >> gamePosition;
 			if (object)
 				object->Position = fromGameToReal(gamePosition);
 
 			if (transportGuid != 0)
 			{
 				glm::vec3 gamePositionTransportOffset;
-				Bytes >> gamePositionTransportOffset.x;
-				Bytes >> gamePositionTransportOffset.y;
-				Bytes >> gamePositionTransportOffset.z;
+				Bytes >> gamePositionTransportOffset;
 				if (object)
 					object->PositionTransportOffset = fromGameToReal(gamePositionTransportOffset);
 				//Log::Error("WoWObject::ProcessMovementUpdate: transportGuid != 0.");
@@ -140,9 +81,7 @@ void WoWObject::ProcessMovementUpdate(CByteBuffer& Bytes)
 			else
 			{
 				glm::vec3 gamePosition2;
-				Bytes >> gamePosition2.x;
-				Bytes >> gamePosition2.y;
-				Bytes >> gamePosition2.z;
+				Bytes >> gamePosition2;
 				if (object)
 					object->Position = fromGameToReal(gamePosition2);
 			}
@@ -169,9 +108,7 @@ void WoWObject::ProcessMovementUpdate(CByteBuffer& Bytes)
 			if (updateFlags & UPDATEFLAG_STATIONARY_POSITION)
 			{
 				glm::vec3 gamePosition3;
-				Bytes >> gamePosition3.x;
-				Bytes >> gamePosition3.y;
-				Bytes >> gamePosition3.z;
+				Bytes >> gamePosition3;
 				//Log::Print("UPDATEFLAG_STATIONARY_POSITION: %f %f %f", gamePosition3.x, gamePosition3.y, gamePosition3.z);
 				if (object)
 					object->Position = fromGameToReal(gamePosition3);

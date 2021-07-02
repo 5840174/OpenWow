@@ -39,7 +39,7 @@
     <ClInclude Include="WorldSocket\ServerPacket.h" />
     <ClInclude Include="WorldSocket\WorldSocket.h" />
     <ClInclude Include="World\Path\Path.h" />
-    <ClInclude Include="World\Path\Point.h" />
+    <ClInclude Include="World\Path\PathNode.h" />
     <ClInclude Include="World\WoWGUID.h" />
     <ClInclude Include="World\Objects\WoWContainer.h" />
     <ClInclude Include="World\Objects\WoWCorpse.h" />
@@ -79,7 +79,7 @@
     <ClCompile Include="WorldSocket\ServerPacket.cpp" />
     <ClCompile Include="WorldSocket\WorldSocket.cpp" />
     <ClCompile Include="World\Path\Path.cpp" />
-    <ClCompile Include="World\Path\Point.cpp" />
+    <ClCompile Include="World\Path\PathNode.cpp" />
     <ClCompile Include="World\WoWGUID.cpp" />
     <ClCompile Include="World\Objects\WoWContainer.cpp" />
     <ClCompile Include="World\Objects\WoWCorpse.cpp" />

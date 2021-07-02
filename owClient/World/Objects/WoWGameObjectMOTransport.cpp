@@ -44,7 +44,12 @@ void WoWGameObjectMOTransport::OnTemplate(CWoWGuid::EntryType_t Entry, const std
 
 	auto path = MakeShared(CWoWPath);
 	for (const auto& taxiNodesIt : taxiNodes)
-		path->AddPathNode(MakeShared(CWoWPathNode, fromGameToReal(taxiNodesIt.Position)));
+	{
+		auto pathNode = MakeShared(CWoWPathNode, fromGameToReal(taxiNodesIt.Position));
+		pathNode->SetMapID(taxiNodesIt.MapID);
+		pathNode->SetTimeDelay(taxiNodesIt.Delay * 1000);
+		path->AddPathNode(pathNode);
+	}
 	m_WoWPath = path;
 }
 

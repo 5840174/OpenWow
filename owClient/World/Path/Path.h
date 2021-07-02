@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Point.h"
+#include "PathNode.h"
 
 class CWoWPath
 {
@@ -8,12 +8,41 @@ public:
 	CWoWPath();
 	virtual ~CWoWPath();
 
-	const std::vector<std::shared_ptr<CWoWPathNode>>& GetPathNodes() const;
+	std::vector<std::shared_ptr<CWoWPathNode>> GetPathNodes() const;
 	size_t GetPathNodesCount() const;
-	std::shared_ptr<CWoWPathNode> GetPath(size_t Index) const;
+	std::shared_ptr<CWoWPathNode> GetPathNode(size_t Index) const;
 	void AddPathNode(std::shared_ptr<CWoWPathNode> PathNode);
 
-private:
-	std::vector<std::shared_ptr<CWoWPathNode>> m_Nodes;
+	int32 GetDuration() const;
+	void SetDuration(int32 Duration);
 
+	int32 GetCurrTime() const;
+	void SetCurrTime(int32 CurrTime);
+	void AddCurrTime(int32 Value);
+
+	glm::vec3 GetPositionByCurrTime() const;
+	glm::vec3 GetNextNodePosition() const;
+
+private:
+	void CalculateTimes();
+
+private:
+	struct SPathNode
+	{
+		explicit SPathNode(std::shared_ptr<CWoWPathNode> Node_)
+			: Node(Node_)
+			, DistanceFromPreviousPoint(0.0f)
+			, Time(0)
+		{}
+
+		std::shared_ptr<CWoWPathNode> Node;
+		float DistanceFromPreviousPoint;
+		int32 Time;
+	};
+
+private:
+	std::vector<SPathNode> m_Nodes;
+	int32 m_FullPathDuration;
+	float m_FullPathLength;
+	int32 m_CurrTime;
 };

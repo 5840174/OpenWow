@@ -171,7 +171,7 @@
     <ClInclude Include="World\Path\Path.h">
       <Filter>World\Path</Filter>
     </ClInclude>
-    <ClInclude Include="World\Path\Point.h">
+    <ClInclude Include="World\Path\PathNode.h">
       <Filter>World\Path</Filter>
     </ClInclude>
   </ItemGroup>
@@ -278,7 +278,7 @@
     <ClCompile Include="World\Path\Path.cpp">
       <Filter>World\Path</Filter>
     </ClCompile>
-    <ClCompile Include="World\Path\Point.cpp">
+    <ClCompile Include="World\Path\PathNode.cpp">
       <Filter>World\Path</Filter>
     </ClCompile>
   </ItemGroup>

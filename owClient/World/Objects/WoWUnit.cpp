@@ -23,7 +23,6 @@ namespace
 
 WoWUnit::WoWUnit(IScene& Scene, CWoWWorld& WoWWorld, CWoWGuid Guid)
 	: CWoWWorldObject(Scene, WoWWorld, Guid)
-	, DestinationPoint(0.0f)
 {
 	m_ObjectType |= TYPEMASK_UNIT;
 	m_Values.SetValuesCount(UNIT_END);
@@ -104,7 +103,91 @@ void WoWUnit::ProcessMovementPacket(CByteBuffer & Bytes)
 
 	// 0x04000000
 	if (HasMovementFlag(MOVEMENTFLAG_SPLINE_ELEVATION))
+	{
 		Bytes >> float(m_SplineElevation);
+	}
+
+	SetSpeed(MOVE_WALK, Bytes.ReadFloat());
+	SetSpeed(MOVE_RUN, Bytes.ReadFloat());
+	SetSpeed(MOVE_RUN_BACK, Bytes.ReadFloat());
+	SetSpeed(MOVE_SWIM, Bytes.ReadFloat());
+	SetSpeed(MOVE_SWIM_BACK, Bytes.ReadFloat());
+	SetSpeed(MOVE_FLIGHT, Bytes.ReadFloat());
+	SetSpeed(MOVE_FLIGHT_BACK, Bytes.ReadFloat());
+	SetSpeed(MOVE_TURN_RATE, Bytes.ReadFloat());
+	SetSpeed(MOVE_PITCH_RATE, Bytes.ReadFloat());
+
+	if (HasMovementFlag(MOVEMENTFLAG_SPLINE_ENABLED))
+	{
+		auto path = MakeShared(CWoWPath);
+
+		Movement::MoveSplineFlag splineFlags;
+		Bytes >> splineFlags;
+
+		if (splineFlags.final_angle)
+		{
+			float angle;
+			Bytes >> angle;
+		}
+		else if (splineFlags.final_target)
+		{
+			uint64 targetGUID;
+			Bytes >> targetGUID;
+		}
+		else if (splineFlags.final_point)
+		{
+			glm::vec3 targetPoint;
+			Bytes >> targetPoint;
+		}
+
+		int32 timePassed, duration;
+		Bytes >> timePassed;
+		Bytes >> duration;
+
+		path->SetDuration(duration);
+		path->SetCurrTime(timePassed);
+
+		uint32 splineID;
+		Bytes >> splineID;
+
+		Bytes.seekRelative(4); // splineInfo.duration_mod; added in 3.1      ALWAYS 1.0f
+		Bytes.seekRelative(4); // splineInfo.duration_mod_next; added in 3.1 ALWAYS 1.0f
+
+		Bytes.seekRelative(4); // move_spline.vertical_acceleration;
+		Bytes.seekRelative(4); // move_spline.effect_start_time;
+
+		uint32 pathNodesCount;
+		Bytes >> pathNodesCount;
+		for (size_t i = 0; i < pathNodesCount; i++)
+		{
+			glm::vec3 pathNodePoint;
+			Bytes >> pathNodePoint;
+			path->AddPathNode(MakeShared(CWoWPathNode, fromGameToReal(pathNodePoint)));
+		}
+
+		enum EEvaluationMode : uint8
+		{
+			ModeLinear,
+			ModeCatmullrom,
+			ModeBezier3_Unused,
+			UninitializedMode,
+			ModesEnd
+		} splineMode;
+		Bytes >> splineMode;
+
+		if (splineFlags.cyclic)
+		{
+			Bytes.seekRelative(12); // Zero vector
+		}
+		else
+		{
+			glm::vec3 finalDestination;
+			Bytes >> finalDestination;
+			path->AddPathNode(MakeShared(CWoWPathNode, fromGameToReal(finalDestination)));
+		}
+
+		m_WoWPath = path;
+	}
 
 	CommitPositionAndRotation();
 }
@@ -112,25 +195,21 @@ void WoWUnit::ProcessMovementPacket(CByteBuffer & Bytes)
 void WoWUnit::ProcessMonsterMove(CByteBuffer & Bytes)
 {
 	glm::vec3 firstSplinePointGame;
-	Bytes >> firstSplinePointGame.x;
-	Bytes >> firstSplinePointGame.y;
-	Bytes >> firstSplinePointGame.z;
+	Bytes >> firstSplinePointGame;
 	Position = fromGameToReal(firstSplinePointGame);
 
 	uint32 splineID;
 	Bytes >> splineID;
 
 	MonsterMoveType monsterMoveType;
-	Bytes.read(&monsterMoveType);
+	Bytes >> monsterMoveType;
 
 	switch (monsterMoveType)
 	{
 		case MonsterMoveType::MonsterMoveFacingSpot:
 		{
-			float x, y, z;
-			Bytes >> x;
-			Bytes >> y;
-			Bytes >> z;
+			glm::vec3 targetPoint;
+			Bytes >> targetPoint;
 		}
 		break;
 
@@ -159,7 +238,7 @@ void WoWUnit::ProcessMonsterMove(CByteBuffer & Bytes)
 	}
 
 	Movement::MoveSplineFlag splineflags;
-	Bytes.read(&splineflags);
+	Bytes >> splineflags;
 
 	if (splineflags.animation)
 	{
@@ -182,10 +261,10 @@ void WoWUnit::ProcessMonsterMove(CByteBuffer & Bytes)
 		Bytes >> effectStartTime;
 	}
 
-
 	if (splineflags & Movement::MoveSplineFlag::Mask_CatmullRom)
 	{
 		auto path = MakeShared(CWoWPath);
+		path->SetDuration(duration);
 
 		path->AddPathNode(MakeShared(CWoWPathNode, fromGameToReal(firstSplinePointGame)));
 
@@ -195,10 +274,7 @@ void WoWUnit::ProcessMonsterMove(CByteBuffer & Bytes)
 		for (uint32 i = 0u; i < pathPointsCnt; i++)
 		{
 			glm::vec3 gamePathPoint;
-			Bytes >> gamePathPoint.x;
-			Bytes >> gamePathPoint.y;
-			Bytes >> gamePathPoint.z;
-
+			Bytes >> gamePathPoint;
 			path->AddPathNode(MakeShared(CWoWPathNode, fromGameToReal(gamePathPoint)));
 		}
 		
@@ -209,15 +285,13 @@ void WoWUnit::ProcessMonsterMove(CByteBuffer & Bytes)
 	else // linear
 	{
 		auto path = MakeShared(CWoWPath);
+		path->SetDuration(duration);
 
 		uint32 count;
 		Bytes >> count;
 
 		glm::vec3 lastSplinePointGame;
-		Bytes >> lastSplinePointGame.x;
-		Bytes >> lastSplinePointGame.y;
-		Bytes >> lastSplinePointGame.z;
-		DestinationPoint = fromGameToReal(lastSplinePointGame);
+		Bytes >> lastSplinePointGame;
 
 		path->AddPathNode(MakeShared(CWoWPathNode, fromGameToReal(firstSplinePointGame)));
 
@@ -228,8 +302,7 @@ void WoWUnit::ProcessMonsterMove(CByteBuffer & Bytes)
 			uint32 packedPos;
 			Bytes >> packedPos;
 
-			// this is offsets to path
-			float x2 = ((packedPos      ) & 0x7FF) * 0.25f;
+			float x2 = ((packedPos      ) & 0x7FF) * 0.25f; // this is offsets to path
 			float y2 = ((packedPos >> 11) & 0x7FF) * 0.25f;
 			float z2 = ((packedPos >> 22) & 0x3FF) * 0.25f;
 
@@ -310,6 +383,17 @@ void WoWUnit::OnValuesUpdated(const UpdateMask & Mask)
 }
 
 
+namespace
+{
+float angleBetween(glm::vec3 a, glm::vec3 b, glm::vec3 origin)
+{
+	glm::vec3 da = glm::normalize(a - origin);
+	glm::vec3 db = glm::normalize(b - origin);
+	return glm::acos(glm::dot(da, db));
+}
+}
+
+
 //
 // ISceneNode
 //
@@ -317,26 +401,27 @@ void WoWUnit::Update(const UpdateEventArgs & e)
 {
 	__super::Update(e);
 
-	if (DestinationPoint.x == 0.0f || DestinationPoint.y == 0.0f || DestinationPoint.z == 0.0f)
-		return;
+	float speedPerTick = GetSpeed(MOVE_WALK) / 1000.0f * e.DeltaTime;
 
-	if (m_HiddenNode == nullptr)
-		return;
-
-	if (glm::distance(Position, DestinationPoint) > 0.1f)
+	if (m_WoWPath)
 	{
-		glm::vec3 directionVec = glm::normalize(DestinationPoint - Position);
+		m_WoWPath->AddCurrTime(e.DeltaTime);
 
-		float speed = GetSpeed(MOVE_WALK) / 1000.0f * e.DeltaTime;
-		Position = Position + directionVec * speed;
-		CommitPositionAndRotation();
+		glm::vec3 NextPoint = m_WoWPath->GetPositionByCurrTime();
+		if (glm::distance(NextPoint, Position) > 0.01f)
+		{
+			
 
-		glm::vec3 rightDirection = glm::normalize(glm::cross(directionVec, glm::vec3(0.0f, 1.0f, 0.0f)));
-		glm::vec3 leftDirection = -rightDirection;
 
-		glm::quat lookAtQuat = glm::quatLookAt(leftDirection, glm::vec3(0.0f, 1.0f, 0.0f));
-		if (m_HiddenNode)
-			m_HiddenNode->SetLocalRotationQuaternion(lookAtQuat);
+			glm::vec3 test = m_WoWPath->GetNextNodePosition();
+
+			glm::vec3 directionVec = glm::normalize(glm::vec3(test.x, 0.0f, test.z) - glm::vec3(Position.x, 0.0f, Position.z));
+			float yaw = atan2(directionVec.x, directionVec.z);
+
+			Position = NextPoint;
+			Orientation = glm::degrees(yaw - glm::half_pi<float>());
+			CommitPositionAndRotation();
+		}
 	}
 }
 
