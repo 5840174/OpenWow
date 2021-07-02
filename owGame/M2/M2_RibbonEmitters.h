@@ -2,10 +2,10 @@
 
 // FORWARD BEGIN
 class CM2;
-class SM2_Part_Bone_Wrapper;
+class CM2_Part_Bone;
 // FORWARD END
 
-struct RibbonSegment
+struct SM2RibbonSegment
 {
 	glm::vec3 pos, up, back;
 	float len, len0;
@@ -21,8 +21,7 @@ public:
 	void Render(const glm::mat4& _world);
 
 private:
-	uint32										m_ID;
-	std::weak_ptr<const SM2_Part_Bone_Wrapper>	m_Bone;
+	std::weak_ptr<const CM2_Part_Bone>	        m_Bone;
 	glm::vec3									pos;
 	glm::vec3									posValue;
 
@@ -38,12 +37,11 @@ private:
 	float										tabove;
 	float										tbelow;
 	
-	float length;
-	float m_EdgesLifeTime;
-	int m_EdgesPerSecond;
+	float                                       length;
 
-	std::list<RibbonSegment> segs;
+	std::list<SM2RibbonSegment>                 m_Segments;
 
 private:
-	const CM2& m_M2Object;
+	const CM2&                                  m_M2Object;
+	const SM2_RibbonEmitter                     m_M2RibbonEmitter;
 };

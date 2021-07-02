@@ -118,9 +118,7 @@ void Character::setMeshEnabled(MeshIDType _type, uint32 _value)
 {
 	_ASSERT(_type < MeshIDType::Count);
 	if (_value == UINT32_MAX)
-	{
 		return;
-	}
 
 	m_MeshID[(size_t)_type] = _value;
 }

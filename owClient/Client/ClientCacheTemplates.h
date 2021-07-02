@@ -1,5 +1,6 @@
 #pragma once
 
+
 #define MAX_GAMEOBJECT_QUEST_ITEMS 6
 
 enum ZN_API GameobjectTypes : uint32
@@ -41,7 +42,6 @@ enum ZN_API GameobjectTypes : uint32
 	GAMEOBJECT_TYPE_GUILD_BANK = 34,
 	GAMEOBJECT_TYPE_TRAPDOOR = 35
 };
-
 
 struct ZN_API SGameObjectQueryResult
 {
@@ -440,23 +440,23 @@ struct ZN_API SGameObjectQueryResult
 	void Fill(CByteBuffer& Bytes)
 	{
 		//Bytes >> entryID;
-		Bytes.read(&type);
+		Bytes >> type;
 		Bytes >> displayId;
-		Bytes >> &Name;
+		Bytes >> Name;
 		Bytes.seekRelative(1); // Name2
 		Bytes.seekRelative(1); // Name3
 		Bytes.seekRelative(1); // Name4
 
-		Bytes.readString(&IconName);
-		Bytes.readString(&CastBarCaption);
-		Bytes.readString(&UnkString);
+		Bytes >> IconName;
+		Bytes >> CastBarCaption;
+		Bytes >> UnkString;
 
-		Bytes.readBytes(&raw.data, sizeof(raw.data));
+		Bytes >> raw.data;
 
 		float Size;
 		Bytes >> Size;
 
-		Bytes.readBytes(&QuestItems, sizeof(QuestItems));
+		Bytes >> QuestItems;
 	}
 
 	void Print()
@@ -465,31 +465,12 @@ struct ZN_API SGameObjectQueryResult
 	}
 };
 
+ZN_INTERFACE ZN_API IClientCacheGameobjectResponseListener
+{
+	virtual ~IClientCacheGameobjectResponseListener() {}
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+	virtual void OnTemplate(CWoWGuid::EntryType_t Entry, const std::shared_ptr<SGameObjectQueryResult>& QueryResult) = 0;
+};
 
 
 
@@ -512,7 +493,7 @@ enum ZN_API CreatureType : uint32   // CreatureType.dbc
 	CREATURE_TYPE_GAS_CLOUD = 13
 };
 
-enum CreatureTypeFlags : uint32
+enum ZN_API CreatureTypeFlags : uint32
 {
 	CREATURE_TYPE_FLAG_TAMEABLE_PET = 0x00000001,   // Makes the mob tameable (must also be a beast and have family set)
 	CREATURE_TYPE_FLAG_GHOST_VISIBLE = 0x00000002,   // Creature are also visible for not alive player. Allow gossip interaction if npcflag allow?
@@ -548,7 +529,7 @@ enum CreatureTypeFlags : uint32
 	CREATURE_TYPE_FLAG_UNIT_IS_QUEST_BOSS = 0x80000000    // Not verified
 };
 
-enum CreatureEliteType : uint32
+enum ZN_API CreatureEliteType : uint32
 {
 	CREATURE_ELITE_NORMAL = 0,
 	CREATURE_ELITE_ELITE = 1,
@@ -604,7 +585,6 @@ enum ZN_API CreatureFamily : uint32
 	CREATURE_FAMILY_SPIRIT_BEAST = 46
 };
 
-
 static const uint8 MAX_KILL_CREDIT = 2;
 static const uint32 MAX_CREATURE_MODELS = 4;
 static const uint32 MAX_CREATURE_QUEST_ITEMS = 6;
@@ -636,27 +616,27 @@ struct ZN_API SCreatureQueryResult
 	void Fill(CByteBuffer& Bytes)
 	{
 		//Bytes >> entry;
-		Bytes >> &Name;
+		Bytes >> Name;
 		Bytes.seekRelative(1); // Name2
 		Bytes.seekRelative(1); // Name3
 		Bytes.seekRelative(1); // Name3
-		Bytes >> &SubName;
-		Bytes >> &CursorName;
+		Bytes >> SubName;
+		Bytes >> CursorName;
 
-		Bytes.read(&type_flags);
-		Bytes.read(&type);           // CreatureType.dbc
-		Bytes.read(&family);         // CreatureFamily.dbc
-		Bytes.read(&Classification); // Creature Rank (elite, boss, etc)
+		Bytes >> type_flags;
+		Bytes >> type;           // CreatureType.dbc
+		Bytes >> family;         // CreatureFamily.dbc
+		Bytes >> Classification; // Creature Rank (elite, boss, etc)
 
-		Bytes.readBytes(&ProxyCreatureID, sizeof(ProxyCreatureID));
-		Bytes.readBytes(&CreatureDisplayID, sizeof(CreatureDisplayID));
+		Bytes >> ProxyCreatureID;
+		Bytes >> CreatureDisplayID;
 
 		Bytes >> HpMulti;
 		Bytes >> EnergyMulti;
 
-		Bytes.read(&Leader);
+		Bytes >> Leader;
 
-		Bytes.readBytes(&QuestItems, sizeof(QuestItems));
+		Bytes >> QuestItems;
 
 		Bytes >> CreatureMovementInfoID;
 	}
@@ -665,4 +645,11 @@ struct ZN_API SCreatureQueryResult
 	{
 		//Log::Info("SCreatureQueryResult: ID '%d', Name '%s', SubName '%s'", entry, Name.c_str(), SubName.c_str());
 	}
+};
+
+ZN_INTERFACE ZN_API IClientCacheCreatureResponseListener
+{
+	virtual ~IClientCacheCreatureResponseListener() {}
+
+	virtual void OnTemplate(CWoWGuid::EntryType_t Entry, const std::shared_ptr<SCreatureQueryResult>& QueryResult) = 0;
 };

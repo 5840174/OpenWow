@@ -81,11 +81,11 @@ const char* const M2_GameBoneTypeNames[] =
 	"Root"
 };
 
-class SM2_Part_Bone_Wrapper
+class CM2_Part_Bone
 {
 public:
-	SM2_Part_Bone_Wrapper(const CM2& M2Object, const std::shared_ptr<IFile>& File, const SM2_Bone& M2Bone);
-	virtual ~SM2_Part_Bone_Wrapper();
+	CM2_Part_Bone(const CM2& M2Object, const std::shared_ptr<IFile>& File, const SM2_Bone& M2Bone);
+	virtual ~CM2_Part_Bone();
 
 	glm::mat4 calcMatrix(const CM2_Base_Instance* M2Instance, uint32 globalTime) const;
 	glm::mat4 calcRotationMatrix(const CM2_Base_Instance* M2Instance, uint32 globalTime) const;

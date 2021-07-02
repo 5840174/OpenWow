@@ -5,7 +5,7 @@
 // General
 #include "WoWContainer.h"
 
-CWoWContainer::CWoWContainer(CWoWObjectGuid Guid)
+CWoWContainer::CWoWContainer(CWoWGuid Guid)
 	: WoWItem(Guid)
 {
 	m_ObjectType |= TYPEMASK_CONTAINER;
@@ -21,7 +21,7 @@ CWoWContainer::~CWoWContainer()
 //
 // Public
 //
-std::shared_ptr<CWoWContainer> CWoWContainer::Create(IScene& Scene, CWoWObjectGuid Guid)
+std::shared_ptr<CWoWContainer> CWoWContainer::Create(IScene& Scene, CWoWGuid Guid)
 {
 	std::shared_ptr<CWoWContainer> thisObj = MakeShared(CWoWContainer, Guid);
 	return thisObj;

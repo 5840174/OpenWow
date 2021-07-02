@@ -2,7 +2,7 @@
 
 #ifdef USE_M2_PARTICLES
 
-#include "M2_ParticleSystem.h"
+#include "M2_Part_ParticleSystem.h"
 
 // FORWARD BEGIN
 class CM2;
@@ -18,7 +18,7 @@ class CM2ParticleSystem
 	, public Object
 {
 public:
-	CM2ParticleSystem(const CM2_Base_Instance& M2Instance, IRenderDevice& RenderDevice, const std::shared_ptr<SM2_ParticleSystem_Wrapper>& M2ParticleSystem);
+	CM2ParticleSystem(const CM2_Base_Instance& M2Instance, IRenderDevice& RenderDevice, const std::shared_ptr<CM2_Part_ParticleSystem>& M2ParticleSystem);
 	virtual ~CM2ParticleSystem();
 
 	// CM2ParticleSystem
@@ -41,8 +41,8 @@ private:
 
 private:
 	float rem;
-	std::shared_ptr<SM2_ParticleSystem_Wrapper> m_M2ParticleSystem;
-	CM2_ParticleObject m_M2ParticleObjects[MAX_PARTICLES];
+	std::shared_ptr<CM2_Part_ParticleSystem> m_M2ParticleSystem;
+	SGPUM2Particle m_M2ParticleObjects[MAX_PARTICLES];
 
 	const CM2_Base_Instance& m_M2Instance;
 };

@@ -15,19 +15,18 @@ class CClientCache
 public:
 	CClientCache(CWoWWorld& world);
 
-	void SendQueryResponce            (CWoWObjectGuid::EntryType_t Entry, CWoWObjectGuid Guid);
-	void SendQueryResponceWithCallback(CWoWObjectGuid::EntryType_t Entry, CWoWObjectGuid Guid, std::function<void(CWoWObjectGuid::EntryType_t, const std::shared_ptr<SGameObjectQueryResult>&)> OnGameObjectQueryResponceReceived);
+	void SendGameObjectQueryResponce(CWoWGuid::EntryType_t Entry, CWoWGuid Guid, const std::shared_ptr<IClientCacheGameobjectResponseListener>& Callback);
+	void SendCreatureQueryResponce  (CWoWGuid::EntryType_t Entry, CWoWGuid Guid, const std::shared_ptr<IClientCacheCreatureResponseListener>& Callback);
 
 	bool On_SMSG_GAMEOBJECT_QUERY_RESPONSE(CServerPacket& Bytes);
 	bool On_SMSG_CREATURE_QUERY_RESPONSE(CServerPacket& Bytes);
 
 private:
-	std::map<CWoWObjectGuid::EntryType_t, std::shared_ptr<SGameObjectQueryResult>> m_CacheGameObjects;
-	std::map<CWoWObjectGuid::EntryType_t, std::vector<std::function<void(CWoWObjectGuid::EntryType_t, const std::shared_ptr<SGameObjectQueryResult>&)>>> m_GameObjectCallbacks;
+	std::map<CWoWGuid::EntryType_t, std::shared_ptr<SGameObjectQueryResult>>                            m_CacheGameObjects;
+	std::map<CWoWGuid::EntryType_t, std::vector<std::weak_ptr<IClientCacheGameobjectResponseListener>>> m_GameObjectCallbacks;
 
-	std::map<CWoWObjectGuid::EntryType_t, std::shared_ptr<SCreatureQueryResult>> m_CacheCreatures;
-
-
+	std::map<CWoWGuid::EntryType_t, std::shared_ptr<SCreatureQueryResult>>                              m_CacheCreatures;
+	std::map<CWoWGuid::EntryType_t, std::vector<std::weak_ptr<IClientCacheCreatureResponseListener>>>   m_CreatureCallbacks;
 
 	CWoWWorld& m_World;
 };

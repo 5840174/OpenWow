@@ -37,6 +37,9 @@
     <Filter Include="Client\DBCCache">
       <UniqueIdentifier>{f6ddb1e1-65b6-4a45-8f39-f68c0fac1c9e}</UniqueIdentifier>
     </Filter>
+    <Filter Include="World\Path">
+      <UniqueIdentifier>{2d4470d2-8ab6-447f-8fa8-8a57edf3e1b8}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="RealmSelection\RealmInfo.h">
@@ -50,9 +53,6 @@
     </ClInclude>
     <ClInclude Include="Types\UpdateMask.h">
       <Filter>Types</Filter>
-    </ClInclude>
-    <ClInclude Include="World\ObjectGUID.h">
-      <Filter>World</Filter>
     </ClInclude>
     <ClInclude Include="World\World.h">
       <Filter>World</Filter>
@@ -165,11 +165,17 @@
     <ClInclude Include="Client\TaxiStorage.h">
       <Filter>Client\DBCCache</Filter>
     </ClInclude>
+    <ClInclude Include="World\WoWGUID.h">
+      <Filter>World</Filter>
+    </ClInclude>
+    <ClInclude Include="World\Path\Path.h">
+      <Filter>World\Path</Filter>
+    </ClInclude>
+    <ClInclude Include="World\Path\Point.h">
+      <Filter>World\Path</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="World\ObjectGUID.cpp">
-      <Filter>World</Filter>
-    </ClCompile>
     <ClCompile Include="World\World.cpp">
       <Filter>World</Filter>
     </ClCompile>
@@ -262,6 +268,18 @@
     </ClCompile>
     <ClCompile Include="Client\TaxiStorage.cpp">
       <Filter>Client\DBCCache</Filter>
+    </ClCompile>
+    <ClCompile Include="owClient.cpp">
+      <Filter>Common</Filter>
+    </ClCompile>
+    <ClCompile Include="World\WoWGUID.cpp">
+      <Filter>World</Filter>
+    </ClCompile>
+    <ClCompile Include="World\Path\Path.cpp">
+      <Filter>World\Path</Filter>
+    </ClCompile>
+    <ClCompile Include="World\Path\Point.cpp">
+      <Filter>World\Path</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

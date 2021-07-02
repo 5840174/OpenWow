@@ -1,8 +1,8 @@
 #pragma once
 
-struct CM2_ParticleObject
+struct SGPUM2Particle
 {
-	CM2_ParticleObject()
+	SGPUM2Particle()
 		: Active(false)
 	{}
 
@@ -10,7 +10,7 @@ struct CM2_ParticleObject
 	glm::vec3 pos;
 	glm::vec3 speed;
 	glm::vec3 down;
-	glm::vec3 origin;
+	glm::vec3 creationPoint;
 	glm::vec3 dir;
 
 	float size, currentTime, maxTime;

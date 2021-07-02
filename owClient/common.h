@@ -1,3 +1,3 @@
 #pragma once
 
-#include "World/ObjectGUID.h"
+#include "World/WoWGUID.h"

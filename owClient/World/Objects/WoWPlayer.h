@@ -39,7 +39,7 @@ class ZN_API WoWPlayer
 	: public WoWUnit
 {
 public:
-	WoWPlayer(IScene& Scene, CWoWWorld& WoWWorld, CWoWObjectGuid Guid);
+	WoWPlayer(IScene& Scene, CWoWWorld& WoWWorld, CWoWGuid Guid);
 	virtual ~WoWPlayer();
 
 	virtual void OnValuesUpdated(const UpdateMask & Mask) override;
@@ -53,8 +53,7 @@ private:
 	uint8 GetNativeGender() const { return m_Values.GetByteValue(PLAYER_BYTES_3, PLAYER_BYTES_3_OFFSET_GENDER); }
 
 public:
-	static std::shared_ptr<WoWPlayer> Create(CWoWWorld& WoWWorld, IScene& Scene, CWoWObjectGuid Guid);
-	virtual void AfterCreate(IScene& Scene) override;
+	static std::shared_ptr<WoWPlayer> Create(CWoWWorld& WoWWorld, IScene& Scene, CWoWGuid Guid);
 	virtual void Destroy() override;
 };
 

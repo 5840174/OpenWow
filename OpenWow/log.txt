@@ -3,6 +3,8 @@
 ^Plugin 'D:\OpenWow\bin_x64\Release\znRenderDX11.dll' successfully added.
 ^Plugin 'D:\OpenWow\bin_x64\Release\owGame.dll' loaded.
 ^Plugin 'D:\OpenWow\bin_x64\Release\owGame.dll' successfully added.
+^Plugin 'D:\OpenWow\bin_x64\Release\owClient.dll' loaded.
+^Plugin 'D:\OpenWow\bin_x64\Release\owClient.dll' successfully added.
 ~MPQFile[common.MPQ]: Added!
 ~MPQFile[common-2.MPQ]: Added!
 ~MPQFile[expansion.MPQ]: Added!
@@ -75,143 +77,2319 @@
 ~Loading shader 'shaders_D3D/M2.hlsl':'PS_main'.
 ~Loading shader 'shaders_D3D/Liquid.hlsl':'VS_main'.
 ~Loading shader 'shaders_D3D/Liquid.hlsl':'PS_main'.
-~Loading shader '3D/Particle.hlsl':'VS_main'.
-~Loading shader '3D/Particle.hlsl':'GS_Billboard'.
-~Loading shader '3D/Particle.hlsl':'PS_main'.
+~Loading shader 'shaders_D3D/M2Particle.hlsl':'VS_main'.
+~Loading shader 'shaders_D3D/M2Particle.hlsl':'GS_Billboard'.
+~Loading shader 'shaders_D3D/M2Particle.hlsl':'PS_main'.
 ~Loading shader '3D/BondingBox.hlsl':'VS_main_Inst'.
 ~Loading shader '3D/BondingBox.hlsl':'PS_main'.
 ~Loading shader 'UI/UIControlCommon.hlsl':'VS_main'.
 ~Loading shader 'UI/UIControlCommon.hlsl':'PS_main'.
 ~Loading shader 'UI/UI_Font.hlsl':'VS_main'.
 ~Loading shader 'UI/UI_Font.hlsl':'PS_main'.
-~Sky: [2488] is global sky.
- Map[IcecrownCitadel]: Id = '631'. Preloading...
- Map[IcecrownCitadel]: InstanceType = '2'.
- Map[IcecrownCitadel]: MapType = '285'.
- Map[IcecrownCitadel]: IsBattleGround = '0'.
- Map[IcecrownCitadel]: Name = 'Цитадель Ледяной Короны'.
- Map[IcecrownCitadel]: AreaTableID = '0'.
- Map[IcecrownCitadel]: AllianceDescr = ''.
- Map[IcecrownCitadel]: HordeDescr = ''.
- Map[IcecrownCitadel]: CorpseMapID = '571'.
- Map[IcecrownCitadel]: Id [631]. Loading...
+^All ok! Server proof equal client calculated server proof!
+^Successfully logined!!!
+^S_Realmlist: Count [1]
+^RealmType: '0', IsLocked: '0', Flag: '0x0', Name: 'Trinity', Address '127.0.0.1:8085', Population: '0,000000', CharacterCount: '1'
+^CWoWClient::OnRealmListSelected: Realm name 'Trinity'.
+@SOCKET DISCONNECTED.
+^Succes access to server!!!
+~Opcode: 'SMSG_ADDON_INFO' (0x2EF). Size: '139' not handled.
+~Opcode: 'SMSG_CLIENTCACHE_VERSION' (0x4AB). Size: '4' not handled.
+~Opcode: 'SMSG_TUTORIAL_FLAGS' (0xFD). Size: '32' not handled.
+ CWoWClientCharactedSelection::On_SMSG_CHAR_ENUM:: Characters count '1'.
+ CWoWClientCharactedSelection::On_SMSG_CHAR_ENUM:: Character [0] name 'Testchar'.
+^CWoWClient::OnCharacterSelected: Character name 'Testchar'.
+ CTransportAnimationStorage::Initialize: Loaded records for '82' transport entries.
+~Loading shader '3D/Debug.hlsl':'VS_main'.
+~Loading shader '3D/Debug.hlsl':'PS_main'.
+!File 'Character\Tauren\TaurenMaleFaceLower04_18.blp' not exists.
+!CImagesFactory: File is nullptr.
+~Opcode: 'SMSG_AURA_UPDATE_ALL' (0x495). Size: '15' not handled.
+~Opcode: 'SMSG_AURA_UPDATE_ALL' (0x495). Size: '15' not handled.
+~Opcode: 'SMSG_AURA_UPDATE_ALL' (0x495). Size: '15' not handled.
+~Opcode: 'SMSG_AURA_UPDATE_ALL' (0x495). Size: '15' not handled.
+~Opcode: 'SMSG_AURA_UPDATE_ALL' (0x495). Size: '15' not handled.
+~Opcode: 'SMSG_AURA_UPDATE_ALL' (0x495). Size: '15' not handled.
+~Opcode: 'SMSG_AURA_UPDATE_ALL' (0x495). Size: '15' not handled.
+~Opcode: 'SMSG_AURA_UPDATE_ALL' (0x495). Size: '15' not handled.
+~Opcode: 'SMSG_AURA_UPDATE_ALL' (0x495). Size: '15' not handled.
+~Opcode: 'SMSG_AURA_UPDATE_ALL' (0x495). Size: '15' not handled.
+~Opcode: 'SMSG_AURA_UPDATE_ALL' (0x495). Size: '15' not handled.
+~Opcode: 'SMSG_AURA_UPDATE_ALL' (0x495). Size: '15' not handled.
+~Opcode: 'SMSG_AURA_UPDATE_ALL' (0x495). Size: '15' not handled.
+~Opcode: 'SMSG_AURA_UPDATE_ALL' (0x495). Size: '15' not handled.
+~Opcode: 'SMSG_POWER_UPDATE' (0x480). Size: '7' not handled.
+~Opcode: 'SMSG_POWER_UPDATE' (0x480). Size: '7' not handled.
+~Opcode: 'SMSG_SET_PROFICIENCY' (0x127). Size: '5' not handled.
+~Opcode: 'SMSG_SET_PROFICIENCY' (0x127). Size: '5' not handled.
+~Opcode: 'SMSG_SET_PROFICIENCY' (0x127). Size: '5' not handled.
+~Opcode: 'SMSG_SET_PROFICIENCY' (0x127). Size: '5' not handled.
+~Opcode: 'SMSG_SET_PROFICIENCY' (0x127). Size: '5' not handled.
+~Opcode: 'SMSG_SET_PROFICIENCY' (0x127). Size: '5' not handled.
+~Opcode: 'SMSG_POWER_UPDATE' (0x480). Size: '7' not handled.
+~Opcode: 'SMSG_CANCEL_COMBAT' (0x14E). Size: '0' not handled.
+~Opcode: 'MSG_SET_DUNGEON_DIFFICULTY' (0x329). Size: '12' not handled.
+~Sky: [1] is global sky.
+ Map[Azeroth]: Id = '0'. Preloading...
+ Map[Azeroth]: InstanceType = '0'.
+ Map[Azeroth]: MapType = '0'.
+ Map[Azeroth]: IsBattleGround = '0'.
+ Map[Azeroth]: Name = 'Восточные королевства'.
+ Map[Azeroth]: AreaTableID = '0'.
+ Map[Azeroth]: AllianceDescr = ''.
+ Map[Azeroth]: HordeDescr = ''.
+ Map[Azeroth]: CorpseMapID = '-1'.
+ Map[Azeroth]: Id [0]. Loading...
 ^CMapWDL: Low WMOs count [0].
 ~MapWDT: Global WMO exists [false].
-!File 'World\Maps\IcecrownCitadel\IcecrownCitadel_1_1.adt' not exists.
-!File 'World\Maps\IcecrownCitadel\IcecrownCitadel_1_0.adt' not exists.
-!File 'World\Maps\IcecrownCitadel\IcecrownCitadel_0_1.adt' not exists.
-!File 'World\Maps\IcecrownCitadel\IcecrownCitadel_0_0.adt' not exists.
-^Coord 111,000000 130,000000
-^Selected node '12,197472' = 'WORLD\EXPANSION02\DOODADS\ICECROWN\LIGHTS\ICECROWN_BLUEGLOW_02.M2'.
-^Selected node '0,000000' = 'WORLD\EXPANSION02\DOODADS\STORMPEAKS\FOG\STORMPEAKS_FOG_01.M2'.
-^Selected node '2,660156' = 'WORLD\EXPANSION02\DOODADS\STORMPEAKS\FOG\STORMPEAKS_FOG_01.M2'.
-^Selected node '58,926758' = 'WORLD\EXPANSION02\DOODADS\ICECROWN\DOORS\ICECROWN_DOOR_01.M2'.
-^Selected node '0,000000' = 'WORLD\EXPANSION02\DOODADS\STORMPEAKS\FOG\STORMPEAKS_FOG_01.M2'.
-^Selected node '2,326190' = 'WORLD\EXPANSION02\DOODADS\GENERIC\SCOURGE\SC_BRAZIER2.M2'.
-^Selected node '0,000000' = 'WORLD\EXPANSION02\DOODADS\STORMPEAKS\FOG\STORMPEAKS_FOG_01.M2'.
-^Selected node '3,414340' = 'WORLD\EXPANSION02\DOODADS\ICECROWN\LAB ITEMS\ICECROWN_DEATHKNIGHT_SHIELD.M2'.
-^Selected node '5,892214' = 'WORLD\EXPANSION01\DOODADS\GENERIC\BLOODELF\BARRIERSPIKES\BE_BARRIERSPIKES03.M2'.
-^Selected node '6,008268' = 'WORLD\EXPANSION02\DOODADS\GENERIC\EBONBLADE\EBONBLADE_BANNER02.M2'.
-^Selected node '6,303043' = 'WORLD\EXPANSION02\DOODADS\GENERIC\EBONBLADE\EBONBLADE_BANNER02.M2'.
-^Selected node '6,862559' = 'WORLD\EXPANSION01\DOODADS\GENERIC\BLOODELF\BARRIERSPIKES\BE_BARRIERSPIKES03.M2'.
-^Selected node '6,897461' = 'WORLD\EXPANSION02\DOODADS\ICECROWN\LAB ITEMS\ICECROWN_DEATHKNIGHT_SHIELD.M2'.
-^Selected node '12,925781' = 'WORLD\EXPANSION02\DOODADS\STORMPEAKS\FOG\STORMPEAKS_FOG_01.M2'.
-^Selected node '14,750000' = 'WORLD\EXPANSION02\DOODADS\ICECROWN\GLOWS\IC_GLOW02.M2'.
-^Selected node '15,074219' = 'WORLD\EXPANSION02\DOODADS\STORMPEAKS\FOG\STORMPEAKS_FOG_01.M2'.
-^Selected node '0,000000' = 'WORLD\EXPANSION02\DOODADS\STORMPEAKS\FOG\STORMPEAKS_FOG_01.M2'.
-^Selected node '4,175781' = 'WORLD\EXPANSION02\DOODADS\STORMPEAKS\FOG\STORMPEAKS_FOG_01.M2'.
-^Selected node '18,761719' = 'WORLD\EXPANSION02\DOODADS\STORMPEAKS\FOG\STORMPEAKS_FOG_01.M2'.
-^Selected node '42,416016' = 'WORLD\EXPANSION02\DOODADS\STORMPEAKS\FOG\STORMPEAKS_FOG_01.M2'.
-^Selected node '43,459167' = 'WORLD\EXPANSION02\DOODADS\ICECROWN\LIGHTS\ICECROWN_BLUEGLOW_02.M2'.
-^Selected node '0,000000' = 'WORLD\EXPANSION02\DOODADS\ICECROWN\EFFECTS\ICECROWN_ICECORE.M2'.
-^Selected node '6,201172' = 'WORLD\EXPANSION02\DOODADS\STORMPEAKS\FOG\STORMPEAKS_FOG_01.M2'.
-^Selected node '33,423828' = 'WORLD\EXPANSION02\DOODADS\STORMPEAKS\FOG\STORMPEAKS_FOG_01.M2'.
-^Selected node '43,440430' = 'WORLD\EXPANSION02\DOODADS\STORMPEAKS\FOG\STORMPEAKS_FOG_01.M2'.
-^Selected node '53,173828' = 'WORLD\EXPANSION02\DOODADS\STORMPEAKS\FOG\STORMPEAKS_FOG_01.M2'.
-^Selected node '74,121094' = 'WORLD\EXPANSION02\DOODADS\STORMPEAKS\FOG\STORMPEAKS_FOG_01.M2'.
-^Selected node '89,412109' = 'WORLD\EXPANSION02\DOODADS\STORMPEAKS\FOG\STORMPEAKS_FOG_01.M2'.
-^Selected node '0,000000' = 'WORLD\EXPANSION02\DOODADS\ICECROWN\EFFECTS\ICECROWN_ICECORE.M2'.
-^Selected node '0,000000' = 'WORLD\EXPANSION02\DOODADS\ICECROWN\EFFECTS\ICECROWN_ICECORE.M2'.
-^Selected node '21,180664' = 'WORLD\EXPANSION02\DOODADS\ICECROWN\LIGHTS\ICECROWN_RAYS.M2'.
-^Selected node '67,040215' = 'WORLD\EXPANSION02\DOODADS\GENERIC\SCOURGE\SC_BRAZIER2.M2'.
-^Selected node '71,777344' = 'WORLD\NODXT\GENERIC\PASSIVEDOODADS\VOLUMETRICLIGHTS\LD_LIGHTSHAFT02.M2'.
-^Selected node '134,925781' = 'WORLD\EXPANSION02\DOODADS\ICECROWN\LIGHTS\ICECROWN_BLUEGLOW_01.M2'.
-^Selected node '10,804016' = 'WORLD\EXPANSION02\DOODADS\ICECROWN\EFFECTS\ICECROWN_ICECORE.M2'.
-^Selected node '367,748718' = 'WORLD\EXPANSION02\DOODADS\GENERIC\SCOURGE\SC_TENT1.M2'.
-^Selected node '0,000000' = 'WORLD\EXPANSION02\DOODADS\ICECROWN\EFFECTS\ICECROWN_ICECORE.M2'.
-^Selected node '209,390350' = 'WORLD\EXPANSION02\DOODADS\ICECROWN\LIGHTS\ICECROWN_RAYS.M2'.
-^Selected node '238,738510' = 'WORLD\EXPANSION02\DOODADS\ICECROWN\RUGS\ICECROWN_RUG_LONG_01.M2'.
-^Selected node '0,000000' = 'WORLD\EXPANSION02\DOODADS\ICECROWN\EFFECTS\ICECROWN_ICECORE.M2'.
-^Selected node '22,440952' = 'WORLD\NODXT\GENERIC\PASSIVEDOODADS\VOLUMETRICLIGHTS\LD_LIGHTSHAFT01.M2'.
-^Selected node '47,547348' = 'WORLD\NODXT\GENERIC\PASSIVEDOODADS\VOLUMETRICLIGHTS\LD_LIGHTSHAFT02.M2'.
-^Selected node '56,377014' = 'WORLD\NODXT\GENERIC\PASSIVEDOODADS\VOLUMETRICLIGHTS\LD_LIGHTSHAFT02.M2'.
-^Selected node '171,079636' = 'WORLD\EXPANSION02\DOODADS\STORMPEAKS\FOG\STORMPEAKS_FOG_01.M2'.
-^Selected node '193,442398' = 'WORLD\EXPANSION02\DOODADS\ICECROWN\LIGHTS\ICECROWN_BLUEGLOW_01.M2'.
-^Coord 112,000000 96,000000
-^Selected node '694,619751' = 'WORLD\EXPANSION02\DOODADS\STORMPEAKS\FOG\STORMPEAKS_ULDUAR_CLOUDS.M2'.
-^Selected node '215,285645' = 'WORLD\EXPANSION02\DOODADS\STORMPEAKS\FOG\STORMPEAKS_ULDUAR_CLOUDS.M2'.
-^Selected node '285,402618' = 'WORLD\EXPANSION02\DOODADS\GENERIC\SCOURGE\SC_BRAZIER2_SHORT.M2'.
-^Selected node '534,421509' = 'WORLD\EXPANSION02\DOODADS\STORMPEAKS\FOG\STORMPEAKS_FOG_01.M2'.
-^Selected node '0,000000' = 'WORLD\AZEROTH\KARAZAHN\PASSIVEDOODADS\KARAZAHNWEBS\KARAZAHNWEB02.M2'.
-^Selected node '0,113152' = 'WORLD\AZEROTH\KARAZAHN\PASSIVEDOODADS\KARAZAHNWEBS\KARAZAHNWEB03.M2'.
-^Selected node '77,565430' = 'WORLD\AZEROTH\KARAZAHN\PASSIVEDOODADS\KARAZAHNWEBS\KARAZAHNWEB02.M2'.
-^Selected node '85,541016' = 'WORLD\AZEROTH\KARAZAHN\PASSIVEDOODADS\KARAZAHNWEBS\KARAZAHNWEB02.M2'.
-^Selected node '22,817810' = 'WORLD\EXPANSION02\DOODADS\STORMPEAKS\FOG\STORMPEAKS_ULDUAR_CLOUDS.M2'.
-^Selected node '60,401917' = 'WORLD\AZEROTH\KARAZAHN\PASSIVEDOODADS\KARAZAHNWEBS\KARAZAHNWEB02.M2'.
-^Selected node '75,721390' = 'WORLD\AZEROTH\KARAZAHN\PASSIVEDOODADS\KARAZAHNWEBS\KARAZAHNWEB03.M2'.
-^Selected node '77,011284' = 'WORLD\AZEROTH\KARAZAHN\PASSIVEDOODADS\KARAZAHNWEBS\KARAZAHNWEB02.M2'.
-^Selected node '80,739716' = 'WORLD\AZEROTH\KARAZAHN\PASSIVEDOODADS\KARAZAHNWEBS\KARAZAHNWEB03.M2'.
-^Selected node '88,778458' = 'WORLD\AZEROTH\KARAZAHN\PASSIVEDOODADS\KARAZAHNWEBS\KARAZAHNWEB02.M2'.
-^Selected node '91,448502' = 'WORLD\AZEROTH\KARAZAHN\PASSIVEDOODADS\KARAZAHNWEBS\KARAZAHNWEB02.M2'.
-^Selected node '108,549652' = 'WORLD\AZEROTH\KARAZAHN\PASSIVEDOODADS\KARAZAHNWEBS\KARAZAHNWEB03.M2'.
-^Selected node '114,672554' = 'WORLD\AZEROTH\KARAZAHN\PASSIVEDOODADS\KARAZAHNWEBS\KARAZAHNWEB01.M2'.
-^Selected node '133,271973' = 'WORLD\AZEROTH\KARAZAHN\PASSIVEDOODADS\KARAZAHNWEBS\KARAZAHNWEB02.M2'.
-^Selected node '136,473404' = 'WORLD\AZEROTH\KARAZAHN\PASSIVEDOODADS\KARAZAHNWEBS\KARAZAHNWEB02.M2'.
-^Selected node '67,328728' = 'WORLD\EXPANSION02\DOODADS\ZULDRAK\LIGHTFX\ZULDRAK_BLUE_FIRE02.M2'.
-^Selected node '136,978516' = 'WORLD\AZEROTH\KARAZAHN\PASSIVEDOODADS\KARAZAHNWEBS\KARAZAHNWEB02.M2'.
-^Selected node '172,592773' = 'WORLD\AZEROTH\KARAZAHN\PASSIVEDOODADS\KARAZAHNWEBS\KARAZAHNWEB03.M2'.
-^Selected node '195,552734' = 'WORLD\AZEROTH\KARAZAHN\PASSIVEDOODADS\KARAZAHNWEBS\KARAZAHNWEB02.M2'.
-^Selected node '242,948135' = 'WORLD\AZEROTH\KARAZAHN\PASSIVEDOODADS\KARAZAHNWEBS\KARAZAHNWEB01.M2'.
-^Selected node '274,688477' = 'WORLD\AZEROTH\KARAZAHN\PASSIVEDOODADS\KARAZAHNWEBS\KARAZAHNWEB02.M2'.
-^Selected node '127,461555' = 'WORLD\EXPANSION02\DOODADS\ICECROWN\LIGHTS\ICECROWN_WALLSCONCE_01.M2'.
-^Selected node '231,698364' = 'WORLD\EXPANSION02\DOODADS\STORMPEAKS\FOG\STORMPEAKS_ULDUAR_CLOUDS.M2'.
-^Selected node '0,000000' = 'WORLD\EXPANSION02\DOODADS\ICECROWN\LIGHTS\ICECROWN_WALLSCONCE_01.M2'.
-^Selected node '3,362793' = 'WORLD\EXPANSION02\DOODADS\ICECROWN\LIGHTS\ICECROWN_WALLSCONCE_01.M2'.
-^Selected node '39,501465' = 'WORLD\EXPANSION02\DOODADS\ICECROWN\LIGHTS\ICECROWN_WALLSCONCE_01.M2'.
-^Selected node '47,597229' = 'WORLD\EXPANSION02\DOODADS\STORMPEAKS\FOG\STORMPEAKS_ULDUAR_CLOUDS.M2'.
-^Selected node '35,629395' = 'WORLD\EXPANSION02\DOODADS\ICECROWN\LIGHTS\ICECROWN_WALLSCONCE_01.M2'.
-^Selected node '37,740723' = 'WORLD\EXPANSION02\DOODADS\ICECROWN\LIGHTS\ICECROWN_WALLSCONCE_01.M2'.
-^Selected node '3,071289' = 'WORLD\EXPANSION02\DOODADS\STORMPEAKS\FOG\STORMPEAKS_FOG_01.M2'.
-^Selected node '19,367188' = 'WORLD\EXPANSION02\DOODADS\STORMPEAKS\FOG\STORMPEAKS_FOG_01.M2'.
-^Selected node '36,817566' = 'WORLD\EXPANSION02\DOODADS\STORMPEAKS\FOG\STORMPEAKS_ULDUAR_CLOUDS.M2'.
-^Selected node '38,159180' = 'WORLD\EXPANSION02\DOODADS\STORMPEAKS\FOG\STORMPEAKS_FOG_01.M2'.
-^Selected node '48,755859' = 'WORLD\EXPANSION02\DOODADS\ICECROWN\LIGHTS\ICECROWN_BLUEGLOW_02.M2'.
-^Selected node '74,737305' = 'WORLD\EXPANSION02\DOODADS\STORMPEAKS\FOG\STORMPEAKS_FOG_01.M2'.
-^Selected node '84,427734' = 'WORLD\EXPANSION02\DOODADS\ICECROWN\LIGHTS\ICECROWN_BLUEGLOW_02.M2'.
-^Selected node '100,665039' = 'WORLD\EXPANSION02\DOODADS\STORMPEAKS\FOG\STORMPEAKS_FOG_01.M2'.
-^Selected node '174,465332' = 'WORLD\EXPANSION02\DOODADS\ICECROWN\ICECORE\ICECROWN_ICECORE_MIDDLE.M2'.
-^Selected node '192,317871' = 'WORLD\NODXT\GENERIC\PASSIVEDOODADS\VOLUMETRICLIGHTS\LD_LIGHTSHAFT01.M2'.
-^Selected node '239,466797' = 'WORLD\EXPANSION02\DOODADS\STORMPEAKS\FOG\STORMPEAKS_FOG_01.M2'.
-^Selected node '359,154297' = 'WORLD\EXPANSION02\DOODADS\STORMPEAKS\FOG\STORMPEAKS_FOG_01.M2'.
-^Selected node '379,464844' = 'WORLD\EXPANSION02\DOODADS\STORMPEAKS\FOG\STORMPEAKS_FOG_01.M2'.
-^Selected node '383,344788' = 'WORLD\EXPANSION02\DOODADS\STORMPEAKS\FOG\STORMPEAKS_FOG_01.M2'.
-^Selected node '403,975586' = 'WORLD\EXPANSION02\DOODADS\ICECROWN\LIGHTS\ICECROWN_GREENPILLAR_FIRE.M2'.
-^Selected node '8,318848' = 'WORLD\EXPANSION02\DOODADS\ICECROWN\ICECORE\ICECROWN_ICECORE_MIDDLE.M2'.
-^Selected node '30,047852' = 'WORLD\NODXT\GENERIC\PASSIVEDOODADS\VOLUMETRICLIGHTS\LD_LIGHTSHAFT01.M2'.
-^Selected node '30,701111' = 'WORLD\EXPANSION02\DOODADS\STORMPEAKS\FOG\STORMPEAKS_ULDUAR_CLOUDS.M2'.
-^Selected node '39,895508' = 'WORLD\EXPANSION02\DOODADS\STORMPEAKS\FOG\STORMPEAKS_FOG_01.M2'.
-^Selected node '69,322815' = 'WORLD\EXPANSION02\DOODADS\GENERIC\SCOURGE\SC_BRAZIER2.M2'.
-^Selected node '116,602333' = 'WORLD\EXPANSION02\DOODADS\STORMPEAKS\FOG\STORMPEAKS_FOG_01.M2'.
-^Selected node '149,190170' = 'WORLD\EXPANSION02\DOODADS\ICECROWN\LIGHTS\ICECROWN_GREENPILLAR_FIRE.M2'.
-^Selected node '0,000000' = 'WORLD\EXPANSION02\DOODADS\STORMPEAKS\FOG\STORMPEAKS_FOG_01.M2'.
-^Selected node '1,957031' = 'WORLD\EXPANSION02\DOODADS\STORMPEAKS\FOG\STORMPEAKS_FOG_01.M2'.
-^Selected node '6,555664' = 'WORLD\EXPANSION02\DOODADS\STORMPEAKS\FOG\STORMPEAKS_FOG_01.M2'.
-^Selected node '53,792969' = 'WORLD\EXPANSION02\DOODADS\STORMPEAKS\FOG\STORMPEAKS_FOG_01.M2'.
-^Selected node '64,248047' = 'WORLD\EXPANSION02\DOODADS\ICECROWN\RUNEFORGE\ICECROWN_RUNEFORGE_ORANGE.M2'.
-^Selected node '46,761459' = 'WORLD\EXPANSION02\DOODADS\GENERIC\SCOURGE\SC_BODYJAR_ORANGE_03.M2'.
-^Selected node '50,608192' = 'WORLD\EXPANSION02\DOODADS\ICECROWN\SPIGOT\ICECROWN_SPIGOT.M2'.
-^Selected node '42,443214' = 'WORLD\EXPANSION02\DOODADS\GENERIC\SCOURGE\SC_BODYJAR_ORANGE.M2'.
-^Selected node '46,947788' = 'WORLD\EXPANSION02\DOODADS\ICECROWN\SPIGOT\ICECROWN_SPIGOT.M2'.
-!File 'World\Maps\IcecrownCitadel\IcecrownCitadel_24_24.adt' not exists.
-!File 'World\Maps\IcecrownCitadel\IcecrownCitadel_24_23.adt' not exists.
-!File 'World\Maps\IcecrownCitadel\IcecrownCitadel_24_22.adt' not exists.
+~Opcode: 'SMSG_ACCOUNT_DATA_TIMES' (0x209). Size: '29' not handled.
+~Opcode: 'SMSG_FEATURE_SYSTEM_STATUS' (0x3C9). Size: '2' not handled.
+^MOTD: Welcome to a Trinity Core server.
+~Opcode: 'SMSG_LEARNED_DANCE_MOVES' (0x455). Size: '8' not handled.
+~Opcode: 'SMSG_CONTACT_LIST' (0x67). Size: '8' not handled.
+~Opcode: 'SMSG_BIND_POINT_UPDATE' (0x155). Size: '20' not handled.
+~Opcode: 'SMSG_TALENTS_INFO' (0x4C0). Size: '21' not handled.
+~Opcode: 'SMSG_INSTANCE_DIFFICULTY' (0x33B). Size: '8' not handled.
+~Opcode: 'SMSG_INITIAL_SPELLS' (0x12A). Size: '251' not handled.
+~Opcode: 'SMSG_SEND_UNLEARN_SPELLS' (0x41E). Size: '4' not handled.
+~Opcode: 'SMSG_ACTION_BUTTONS' (0x129). Size: '577' not handled.
+~Opcode: 'SMSG_INITIALIZE_FACTIONS' (0x122). Size: '644' not handled.
+~Opcode: 'SMSG_ALL_ACHIEVEMENT_DATA' (0x47D). Size: '1445' not handled.
+~Opcode: 'SMSG_EQUIPMENT_SET_LIST' (0x4BC). Size: '4' not handled.
+~Opcode: 'SMSG_LOGIN_SET_TIME_SPEED' (0x42). Size: '12' not handled.
+~Opcode: 'SMSG_SET_FORCED_REACTIONS' (0x2A5). Size: '4' not handled.
+^---Create WoWGameObjectMOTransport with Type 'MoTransport', Entry '0', Counter '4'
+^---Create WoWGameObjectMOTransport with Type 'MoTransport', Entry '0', Counter '1'
+^---Create WoWGameObjectMOTransport with Type 'MoTransport', Entry '0', Counter '11'
+^---Create WoWGameObjectMOTransport with Type 'MoTransport', Entry '0', Counter '7'
+^---Create WoWGameObjectMOTransport with Type 'MoTransport', Entry '0', Counter '5'
+^---Create WoWGameObjectMOTransport with Type 'MoTransport', Entry '0', Counter '17'
+@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
+@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
+@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
+@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
+@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
+@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
+@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
+@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
+@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
+@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
+@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
+@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
+@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
+@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
+@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
+@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
+@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
+@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
+@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
+@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
+@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
+@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
+@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
+@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
+@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
+@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
+@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
+@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
+@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
+@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
+@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
+@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
+@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
+@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
+@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
+@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
+@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
+@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
+@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
+@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
+@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
+@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
+@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
+@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
+@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
+@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
+@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
+@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
+@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
+@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
+@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
+@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
+@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
+@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
+@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
+@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
+@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
+@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
+@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
+@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
+@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
+@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
+@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
+@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
+@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
+@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
+@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
+@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
+@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
+@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
+@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
+@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
+@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
+@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
+@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
+@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
+@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
+@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
+@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
+@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
+@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
+@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
+@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
+@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
+@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
+@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
+@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
+@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
+@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
+@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
+@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
+@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
+@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
+@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
+@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
+@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
+@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
+@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
+@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
+@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
+@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
+@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
+@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
+@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
+@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
+@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
+@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
+@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
+@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
+@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
+@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
+@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
+@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
+@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
+@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
+@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
+@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
+@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
+@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
+@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
+@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
+@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
+@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
+@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
+@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
+@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
+@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
+@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
+@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
+@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
+@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
+@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
+@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
+@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
+@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
+@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
+@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
+@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
+@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
+@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
+@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
+~Opcode: 'SMSG_ATTACK_START' (0x143). Size: '16' not handled.
+~Opcode: 'SMSG_AURA_UPDATE_ALL' (0x495). Size: '15' not handled.
+~Opcode: 'SMSG_AURA_UPDATE_ALL' (0x495). Size: '15' not handled.
+~Opcode: 'SMSG_AURA_UPDATE_ALL' (0x495). Size: '15' not handled.
+~Opcode: 'SMSG_AURA_UPDATE_ALL' (0x495). Size: '15' not handled.
+~Opcode: 'SMSG_AURA_UPDATE_ALL' (0x495). Size: '15' not handled.
+~Opcode: 'SMSG_AURA_UPDATE_ALL' (0x495). Size: '15' not handled.
+~Opcode: 'SMSG_AURA_UPDATE_ALL' (0x495). Size: '15' not handled.
+~Opcode: 'SMSG_AURA_UPDATE_ALL' (0x495). Size: '15' not handled.
+~Opcode: 'SMSG_AURA_UPDATE_ALL' (0x495). Size: '15' not handled.
+~Opcode: 'SMSG_AURA_UPDATE_ALL' (0x495). Size: '15' not handled.
+~Opcode: 'SMSG_AURA_UPDATE_ALL' (0x495). Size: '15' not handled.
+~Opcode: 'SMSG_AURA_UPDATE_ALL' (0x495). Size: '15' not handled.
+~Opcode: 'SMSG_AURA_UPDATE_ALL' (0x495). Size: '15' not handled.
+~Opcode: 'SMSG_AURA_UPDATE_ALL' (0x495). Size: '15' not handled.
+~Opcode: 'SMSG_WEATHER' (0x2F4). Size: '9' not handled.
+~Opcode: 'SMSG_INIT_WORLD_STATES' (0x2C2). Size: '78' not handled.
+~Opcode: 'SMSG_UPDATE_WORLD_STATE' (0x2C3). Size: '8' not handled.
+~Opcode: 'SMSG_UPDATE_WORLD_STATE' (0x2C3). Size: '8' not handled.
+~Opcode: 'SMSG_UPDATE_WORLD_STATE' (0x2C3). Size: '8' not handled.
+~Opcode: 'SMSG_UPDATE_WORLD_STATE' (0x2C3). Size: '8' not handled.
+~Opcode: 'SMSG_UPDATE_WORLD_STATE' (0x2C3). Size: '8' not handled.
+~Opcode: 'SMSG_UPDATE_WORLD_STATE' (0x2C3). Size: '8' not handled.
+~Opcode: 'SMSG_SPELL_GO' (0x132). Size: '36' not handled.
+~Opcode: 'SMSG_QUESTGIVER_STATUS_MULTIPLE' (0x418). Size: '283' not handled.
+~Opcode: 'MSG_SET_RAID_DIFFICULTY' (0x4EB). Size: '12' not handled.
+^NOTIFICATION: GM mode is ON
+~Opcode: 'SMSG_HIGHEST_THREAT_UPDATE' (0x482). Size: '29' not handled.
+~Opcode: 'SMSG_AI_REACTION' (0x13C). Size: '12' not handled.
+~Opcode: 'SMSG_ATTACK_START' (0x143). Size: '16' not handled.
+~Opcode: 'SMSG_ATTACKERSTATEUPDATE' (0x14A). Size: '48' not handled.
+~Opcode: 'SMSG_ATTACKERSTATEUPDATE' (0x14A). Size: '48' not handled.
+^Selected node '52,670471' = 'World\Generic\Human\Passive Doodads\Chairs\GeneralChairLoEnd01.m2'.
+~Opcode: 'SMSG_THREAT_UPDATE' (0x483). Size: '22' not handled.
+~Opcode: 'SMSG_ATTACKERSTATEUPDATE' (0x14A). Size: '48' not handled.
+~Opcode: 'SMSG_ATTACK_STOP' (0x144). Size: '18' not handled.
+~Opcode: 'SMSG_ATTACK_STOP' (0x144). Size: '18' not handled.
+~Opcode: 'SMSG_THREAT_REMOVE' (0x484). Size: '14' not handled.
+~Opcode: 'SMSG_THREAT_CLEAR' (0x485). Size: '7' not handled.
+^Selected node '212,003235' = 'WORLD\LORDAERON\TIRISFALGLADE\PASSIVEDOODADS\TREES\TIRISFALLGLADECANOPYTREE03.M2'.
+^Selected node '222,069702' = 'WORLD\LORDAERON\TIRISFALGLADE\PASSIVEDOODADS\TREES\TIRISFALLGLADECANOPYTREE05.M2'.
+^Selected node '243,875198' = 'WORLD\LORDAERON\TIRISFALGLADE\PASSIVEDOODADS\TREES\TIRISFALLGLADECANOPYTREE04.M2'.
+^Selected node '272,929077' = 'WORLD\LORDAERON\TIRISFALGLADE\PASSIVEDOODADS\TREES\TIRISFALLGLADECANOPYTREE05.M2'.
+^Selected node '321,387726' = 'WORLD\LORDAERON\TIRISFALGLADE\PASSIVEDOODADS\TREES\TIRISFALLGLADECANOPYTREE06.M2'.
+^Selected node '327,492615' = 'WORLD\LORDAERON\TIRISFALGLADE\PASSIVEDOODADS\TREES\TIRISFALLGLADECANOPYTREE06.M2'.
+^Selected node '365,909790' = 'WORLD\LORDAERON\TIRISFALGLADE\PASSIVEDOODADS\TREES\TIRISFALLGLADECANOPYTREE05.M2'.
+~Opcode: 'SMSG_SPELL_START' (0x131). Size: '31' not handled.
+~Opcode: 'SMSG_SPELL_GO' (0x132). Size: '42' not handled.
+~Opcode: 'SMSG_HIGHEST_THREAT_UPDATE' (0x482). Size: '29' not handled.
+~Opcode: 'SMSG_AI_REACTION' (0x13C). Size: '12' not handled.
+~Opcode: 'SMSG_ATTACK_START' (0x143). Size: '16' not handled.
+^---Create WoWGameObjectMOTransport with Type 'MoTransport', Entry '0', Counter '2'
+~Opcode: 'SMSG_HIGHEST_THREAT_UPDATE' (0x482). Size: '29' not handled.
+~Opcode: 'SMSG_ATTACK_STOP' (0x144). Size: '12' not handled.
+~Opcode: 'SMSG_ATTACKERSTATEUPDATE' (0x14A). Size: '48' not handled.
+~Opcode: 'SMSG_ATTACK_STOP' (0x144). Size: '18' not handled.
+~Opcode: 'SMSG_THREAT_REMOVE' (0x484). Size: '14' not handled.
+~Opcode: 'SMSG_THREAT_CLEAR' (0x485). Size: '7' not handled.
+~Opcode: 'SMSG_SPELL_START' (0x131). Size: '31' not handled.
+~Opcode: 'SMSG_SPELL_GO' (0x132). Size: '42' not handled.
+~Opcode: 'SMSG_EMOTE' (0x103). Size: '12' not handled.
+~Opcode: 'SMSG_SPELL_START' (0x131). Size: '31' not handled.
+~Opcode: 'SMSG_SPELL_GO' (0x132). Size: '42' not handled.
+^Selected node '0,726807' = 'Character\Scourge\Male\ScourgeMale.m2'.
+^---Create WoWGameObjectMOTransport with Type 'MoTransport', Entry '0', Counter '6'
+~Opcode: 'SMSG_SPELL_START' (0x131). Size: '31' not handled.
+~Opcode: 'SMSG_SPELL_GO' (0x132). Size: '42' not handled.
+^Selected node '0,000000' = 'WORLD\LORDAERON\TIRISFALGLADE\PASSIVEDOODADS\TREES\TIRISFALLGLADECANOPYTREE04.M2'.
+^Selected node '0,000000' = 'WORLD\LORDAERON\TIRISFALGLADE\PASSIVEDOODADS\TREES\TIRISFALLGLADECANOPYTREE05.M2'.
+^Selected node '8,214592' = 'Character\Scourge\Male\ScourgeMale.m2'.
+~Opcode: 'SMSG_EMOTE' (0x103). Size: '12' not handled.
+~Opcode: 'SMSG_EMOTE' (0x103). Size: '12' not handled.
+~Opcode: 'SMSG_SPELL_START' (0x131). Size: '31' not handled.
+~Opcode: 'SMSG_SPELL_GO' (0x132). Size: '42' not handled.
+~Opcode: 'SMSG_SPELL_START' (0x131). Size: '31' not handled.
+~Opcode: 'SMSG_SPELL_GO' (0x132). Size: '42' not handled.
+^Selected node '580,050964' = 'WORLD\LORDAERON\TIRISFALGLADE\PASSIVEDOODADS\TREES\TIRISFALLGLADECANOPYTREE04.M2'.
+^Selected node '585,404114' = 'WORLD\LORDAERON\TIRISFALGLADE\PASSIVEDOODADS\TREES\TIRISFALLGLADECANOPYTREE02.M2'.
+^Selected node '601,725464' = 'WORLD\LORDAERON\TIRISFALGLADE\PASSIVEDOODADS\TREES\TIRISFALLGLADECANOPYTREE06.M2'.
+~Opcode: 'SMSG_MESSAGECHAT' (0x96). Size: '220' not handled.
+^Selected node '227,579254' = 'WORLD\LORDAERON\TIRISFALGLADE\PASSIVEDOODADS\TREES\TIRISFALLGLADECANOPYTREE05.M2'.
+^Selected node '248,625214' = 'WORLD\LORDAERON\TIRISFALGLADE\PASSIVEDOODADS\TREES\TIRISFALLGLADECANOPYTREE06.M2'.
+~Opcode: 'SMSG_SPELL_START' (0x131). Size: '31' not handled.
+~Opcode: 'SMSG_SPELL_GO' (0x132). Size: '42' not handled.
+~Opcode: 'SMSG_HIGHEST_THREAT_UPDATE' (0x482). Size: '29' not handled.
+~Opcode: 'SMSG_AI_REACTION' (0x13C). Size: '12' not handled.
+~Opcode: 'SMSG_ATTACK_START' (0x143). Size: '16' not handled.
+~Opcode: 'SMSG_HIGHEST_THREAT_UPDATE' (0x482). Size: '29' not handled.
+~Opcode: 'SMSG_ATTACK_STOP' (0x144). Size: '12' not handled.
+~Opcode: 'SMSG_ATTACKERSTATEUPDATE' (0x14A). Size: '48' not handled.
+~Opcode: 'SMSG_THREAT_UPDATE' (0x483). Size: '22' not handled.
+~Opcode: 'SMSG_ATTACKERSTATEUPDATE' (0x14A). Size: '48' not handled.
+~Opcode: 'SMSG_ATTACK_STOP' (0x144). Size: '18' not handled.
+~Opcode: 'SMSG_THREAT_REMOVE' (0x484). Size: '14' not handled.
+~Opcode: 'SMSG_THREAT_CLEAR' (0x485). Size: '7' not handled.
+~Opcode: 'SMSG_EMOTE' (0x103). Size: '12' not handled.
+~Opcode: 'SMSG_SPELL_START' (0x131). Size: '31' not handled.
+~Opcode: 'SMSG_SPELL_GO' (0x132). Size: '42' not handled.
+^Selected node '2,937025' = 'WORLD\LORDAERON\TIRISFALGLADE\PASSIVEDOODADS\GRAVES\BRILLGRAVES03.M2'.
+^Selected node '4,018211' = 'WORLD\LORDAERON\TIRISFALGLADE\PASSIVEDOODADS\GRAVES\BRILLGRAVES04.M2'.
+~Opcode: 'SMSG_SPELL_START' (0x131). Size: '31' not handled.
+~Opcode: 'SMSG_SPELL_GO' (0x132). Size: '42' not handled.
+^---Create WoWGameObjectMOTransport with Type 'MoTransport', Entry '0', Counter '11'
+^Selected node '4,465590' = 'World\Goober\G_MausoleumSeal.m2'.
+^Selected node '10,035967' = 'WORLD\LORDAERON\TIRISFALGLADE\PASSIVEDOODADS\GRAVES\BRILLGRAVES04.M2'.
+~Opcode: 'SMSG_SPELL_START' (0x131). Size: '31' not handled.
+~Opcode: 'SMSG_SPELL_GO' (0x132). Size: '42' not handled.
+~Opcode: 'SMSG_AURA_UPDATE_ALL' (0x495). Size: '15' not handled.
+~Opcode: 'SMSG_AURA_UPDATE_ALL' (0x495). Size: '15' not handled.
+~Opcode: 'MSG_MOVE_FALL_LAND' (0xC9). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'SMSG_EMOTE' (0x103). Size: '12' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_START_FORWARD' (0xB5). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_HEARTBEAT' (0xEE). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_STOP' (0xB7). Size: '32' not handled.
+~Opcode: 'SMSG_MESSAGECHAT' (0x96). Size: '268' not handled.
+~Opcode: 'MSG_MOVE_START_TURN_RIGHT' (0xBD). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_START_FORWARD' (0xB5). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_STOP_TURN' (0xBE). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_STOP' (0xB7). Size: '32' not handled.
+~Opcode: 'SMSG_HIGHEST_THREAT_UPDATE' (0x482). Size: '29' not handled.
+~Opcode: 'SMSG_HIGHEST_THREAT_UPDATE' (0x482). Size: '29' not handled.
+~Opcode: 'SMSG_AI_REACTION' (0x13C). Size: '12' not handled.
+~Opcode: 'SMSG_ATTACK_START' (0x143). Size: '16' not handled.
+~Opcode: 'SMSG_AI_REACTION' (0x13C). Size: '12' not handled.
+~Opcode: 'SMSG_ATTACK_START' (0x143). Size: '16' not handled.
+~Opcode: 'SMSG_SPELL_START' (0x131). Size: '31' not handled.
+~Opcode: 'SMSG_SPELL_GO' (0x132). Size: '42' not handled.
+~Opcode: 'SMSG_SPELL_START' (0x131). Size: '46' not handled.
+~Opcode: 'MSG_MOVE_SET_WALK_SPEED' (0xD1). Size: '36' not handled.
+~Opcode: 'MSG_MOVE_SET_RUN_SPEED' (0xCD). Size: '36' not handled.
+~Opcode: 'MSG_MOVE_SET_SWIM_SPEED' (0xD3). Size: '36' not handled.
+~Opcode: 'MSG_MOVE_SET_FLIGHT_SPEED' (0x37E). Size: '36' not handled.
+~Opcode: 'SMSG_SPELL_START' (0x131). Size: '46' not handled.
+~Opcode: 'SMSG_SPELL_GO' (0x132). Size: '56' not handled.
+~Opcode: 'MSG_MOVE_START_FORWARD' (0xB5). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_START_TURN_RIGHT' (0xBD). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_STOP_TURN' (0xBE). Size: '32' not handled.
+~Opcode: 'SMSG_SPELL_GO' (0x132). Size: '56' not handled.
+~Opcode: 'SMSG_HIGHEST_THREAT_UPDATE' (0x482). Size: '29' not handled.
+~Opcode: 'SMSG_SPELLNONMELEEDAMAGELOG' (0x250). Size: '46' not handled.
+~Opcode: 'SMSG_ATTACK_STOP' (0x144). Size: '18' not handled.
+~Opcode: 'SMSG_ATTACK_STOP' (0x144). Size: '18' not handled.
+~Opcode: 'SMSG_THREAT_REMOVE' (0x484). Size: '14' not handled.
+~Opcode: 'SMSG_THREAT_REMOVE' (0x484). Size: '14' not handled.
+~Opcode: 'SMSG_THREAT_CLEAR' (0x485). Size: '7' not handled.
+~Opcode: 'SMSG_AURA_UPDATE' (0x496). Size: '12' not handled.
+~Opcode: 'MSG_MOVE_START_TURN_LEFT' (0xBC). Size: '32' not handled.
+~Opcode: 'SMSG_AURA_UPDATE' (0x496). Size: '12' not handled.
+~Opcode: 'SMSG_AURA_UPDATE' (0x496). Size: '15' not handled.
+~Opcode: 'SMSG_HIGHEST_THREAT_UPDATE' (0x482). Size: '29' not handled.
+~Opcode: 'SMSG_AURA_UPDATE' (0x496). Size: '15' not handled.
+~Opcode: 'SMSG_AI_REACTION' (0x13C). Size: '12' not handled.
+~Opcode: 'SMSG_ATTACK_START' (0x143). Size: '16' not handled.
+~Opcode: 'MSG_MOVE_STOP_TURN' (0xBE). Size: '32' not handled.
+~Opcode: 'SMSG_SPELLNONMELEEDAMAGELOG' (0x250). Size: '46' not handled.
+~Opcode: 'MSG_MOVE_JUMP' (0xBB). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_FALL_LAND' (0xC9). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_JUMP' (0xBB). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_HEARTBEAT' (0xEE). Size: '48' not handled.
+~Opcode: 'SMSG_SPELL_START' (0x131). Size: '31' not handled.
+~Opcode: 'SMSG_SPELL_GO' (0x132). Size: '42' not handled.
+~Opcode: 'MSG_MOVE_HEARTBEAT' (0xEE). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_START_STRAFE_LEFT' (0xB8). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_FALL_LAND' (0xC9). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_JUMP' (0xBB). Size: '48' not handled.
+~Opcode: 'SMSG_HIGHEST_THREAT_UPDATE' (0x482). Size: '29' not handled.
+~Opcode: 'SMSG_ATTACK_STOP' (0x144). Size: '12' not handled.
+~Opcode: 'SMSG_ATTACKERSTATEUPDATE' (0x14A). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_FALL_LAND' (0xC9). Size: '32' not handled.
+~Opcode: 'SMSG_SPELL_START' (0x131). Size: '31' not handled.
+~Opcode: 'SMSG_SPELL_GO' (0x132). Size: '42' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'SMSG_AURA_UPDATE' (0x496). Size: '15' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_JUMP' (0xBB). Size: '48' not handled.
+~Opcode: 'SMSG_SPELL_START' (0x131). Size: '31' not handled.
+~Opcode: 'SMSG_SPELL_GO' (0x132). Size: '42' not handled.
+~Opcode: 'SMSG_THREAT_UPDATE' (0x483). Size: '22' not handled.
+~Opcode: 'SMSG_AURA_UPDATE' (0x496). Size: '15' not handled.
+~Opcode: 'MSG_MOVE_STOP_STRAFE' (0xBA). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '48' not handled.
+~Opcode: 'SMSG_ATTACKERSTATEUPDATE' (0x14A). Size: '48' not handled.
+~Opcode: 'SMSG_ATTACK_STOP' (0x144). Size: '18' not handled.
+~Opcode: 'SMSG_ATTACK_STOP' (0x144). Size: '18' not handled.
+~Opcode: 'SMSG_THREAT_REMOVE' (0x484). Size: '14' not handled.
+~Opcode: 'SMSG_THREAT_REMOVE' (0x484). Size: '14' not handled.
+~Opcode: 'SMSG_THREAT_CLEAR' (0x485). Size: '7' not handled.
+~Opcode: 'MSG_MOVE_FALL_LAND' (0xC9). Size: '32' not handled.
+^---Create WoWGameObjectMOTransport with Type 'MoTransport', Entry '0', Counter '5'
+~Opcode: 'MSG_MOVE_HEARTBEAT' (0xEE). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_START_STRAFE_LEFT' (0xB8). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_HEARTBEAT' (0xEE). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_JUMP' (0xBB). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_STOP_STRAFE' (0xBA). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_START_STRAFE_RIGHT' (0xB9). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_FALL_LAND' (0xC9). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_STOP_STRAFE' (0xBA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '36' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '36' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '36' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '36' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '36' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_FALL_LAND' (0xC9). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_JUMP' (0xBB). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_HEARTBEAT' (0xEE). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_FALL_LAND' (0xC9). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_START_STRAFE_RIGHT' (0xB9). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_STOP_STRAFE' (0xBA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_START_STRAFE_RIGHT' (0xB9). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_STOP_STRAFE' (0xBA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_STOP' (0xB7). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_START_FORWARD' (0xB5). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_START_STRAFE_LEFT' (0xB8). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_STOP_STRAFE' (0xBA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_STOP' (0xB7). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_START_STRAFE_RIGHT' (0xB9). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_START_BACKWARD' (0xB6). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_STOP_STRAFE' (0xBA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_STOP' (0xB7). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_START_STRAFE_LEFT' (0xB8). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_STOP_STRAFE' (0xBA). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_FALL_LAND' (0xC9). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_START_FORWARD' (0xB5). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_STOP' (0xB7). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_START_FORWARD' (0xB5). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_STOP' (0xB7). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_START_FORWARD' (0xB5). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_STOP' (0xB7). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_START_BACKWARD' (0xB6). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_STOP' (0xB7). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_START_STRAFE_LEFT' (0xB8). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_STOP_STRAFE' (0xBA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_START_STRAFE_RIGHT' (0xB9). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_STOP_STRAFE' (0xBA). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_FALL_LAND' (0xC9). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+^---Create WoWGameObjectMOTransport with Type 'MoTransport', Entry '0', Counter '7'
+~Opcode: 'MSG_MOVE_START_FORWARD' (0xB5). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_STOP' (0xB7). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_START_FORWARD' (0xB5). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_STOP' (0xB7). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+^---Create WoWGameObjectMOTransport with Type 'MoTransport', Entry '0', Counter '4'
+~Opcode: 'SMSG_SPELL_START' (0x131). Size: '31' not handled.
+~Opcode: 'SMSG_SPELL_GO' (0x132). Size: '42' not handled.
+^Selected node '2,428948' = 'World\Goober\G_MausoleumSeal.m2'.
+^Selected node '5,760126' = 'WORLD\AZEROTH\DUSKWOOD\PASSIVEDOODADS\MAUSOLEUM\MAUSOLEUMACTIVEDOORS.M2'.
+^Selected node '12,339811' = 'WORLD\LORDAERON\TIRISFALGLADE\PASSIVEDOODADS\TREES\TIRISFALLGLADECANOPYTREE03.M2'.
+^Selected node '22,153353' = 'WORLD\LORDAERON\TIRISFALGLADE\PASSIVEDOODADS\TREES\TIRISFALLGLADECANOPYTREE06.M2'.
+^Selected node '27,326172' = 'WORLD\LORDAERON\TIRISFALGLADE\PASSIVEDOODADS\TREES\TIRISFALLGLADECANOPYTREE04.M2'.
+^Selected node '61,443951' = 'WORLD\LORDAERON\TIRISFALGLADE\PASSIVEDOODADS\TREES\TIRISFALLGLADECANOPYTREE04.M2'.
+^Selected node '86,523643' = 'WORLD\LORDAERON\TIRISFALGLADE\PASSIVEDOODADS\TREES\TIRISFALLGLADECANOPYTREE04.M2'.
+^Selected node '91,377213' = 'WORLD\LORDAERON\TIRISFALGLADE\PASSIVEDOODADS\TREES\TIRISFALLGLADECANOPYTREE05.M2'.
+^Selected node '98,622169' = 'WORLD\LORDAERON\TIRISFALGLADE\PASSIVEDOODADS\TREES\TIRISFALLGLADECANOPYTREE05.M2'.
+^Selected node '100,377289' = 'WORLD\LORDAERON\TIRISFALGLADE\PASSIVEDOODADS\TREES\TIRISFALLGLADECANOPYTREE03.M2'.
+^Selected node '102,576172' = 'WORLD\LORDAERON\TIRISFALGLADE\PASSIVEDOODADS\TREES\TIRISFALLGLADECANOPYTREE06.M2'.
+^Selected node '108,256454' = 'WORLD\LORDAERON\TIRISFALGLADE\PASSIVEDOODADS\TREES\TIRISFALLGLADECANOPYTREE06.M2'.
+^Selected node '160,107498' = 'WORLD\LORDAERON\TIRISFALGLADE\PASSIVEDOODADS\TREES\TIRISFALLGLADECANOPYTREE04.M2'.
+^Selected node '172,849960' = 'WORLD\LORDAERON\TIRISFALGLADE\PASSIVEDOODADS\TREES\TIRISFALLGLADECANOPYTREE05.M2'.
+^Selected node '174,089264' = 'WORLD\LORDAERON\TIRISFALGLADE\PASSIVEDOODADS\TREES\TIRISFALLGLADECANOPYTREE03.M2'.
+^Selected node '180,761154' = 'WORLD\LORDAERON\TIRISFALGLADE\PASSIVEDOODADS\TREES\TIRISFALLGLADECANOPYTREE05.M2'.
+^Selected node '182,904480' = 'WORLD\LORDAERON\TIRISFALGLADE\PASSIVEDOODADS\TREES\TIRISFALLGLADECANOPYTREE06.M2'.
+^Selected node '189,335022' = 'WORLD\LORDAERON\TIRISFALGLADE\PASSIVEDOODADS\TREES\TIRISFALLGLADECANOPYTREE06.M2'.
+^Selected node '205,357346' = 'WORLD\LORDAERON\TIRISFALGLADE\PASSIVEDOODADS\TREES\TIRISFALLGLADECANOPYTREE04.M2'.
+^Selected node '229,486343' = 'WORLD\LORDAERON\TIRISFALGLADE\PASSIVEDOODADS\TREES\TIRISFALLGLADECANOPYTREE04.M2'.
+^Selected node '233,801910' = 'WORLD\LORDAERON\TIRISFALGLADE\PASSIVEDOODADS\TREES\TIRISFALLGLADECANOPYTREE06.M2'.
+^Selected node '346,836578' = 'WORLD\LORDAERON\TIRISFALGLADE\PASSIVEDOODADS\TREES\TIRISFALLGLADECANOPYTREE04.M2'.
+^Selected node '392,466888' = 'WORLD\LORDAERON\TIRISFALGLADE\PASSIVEDOODADS\TREES\TIRISFALLGLADECANOPYTREE02.M2'.
+^Selected node '396,857758' = 'WORLD\LORDAERON\TIRISFALGLADE\PASSIVEDOODADS\TREES\TIRISFALLGLADECANOPYTREE05.M2'.
+^Selected node '408,236115' = 'WORLD\LORDAERON\TIRISFALGLADE\PASSIVEDOODADS\TREES\TIRISFALLGLADECANOPYTREE04.M2'.
+^Selected node '435,020935' = 'WORLD\LORDAERON\TIRISFALGLADE\PASSIVEDOODADS\TREES\TIRISFALLGLADECANOPYTREE02.M2'.
+^Selected node '598,177673' = 'WORLD\LORDAERON\TIRISFALGLADE\PASSIVEDOODADS\TREES\TIRISFALLGLADECANOPYTREE04.M2'.
+^Selected node '603,853333' = 'WORLD\LORDAERON\TIRISFALGLADE\PASSIVEDOODADS\TREES\TIRISFALLGLADECANOPYTREE04.M2'.
+~Opcode: 'SMSG_HIGHEST_THREAT_UPDATE' (0x482). Size: '29' not handled.
+~Opcode: 'SMSG_ATTACK_STOP' (0x144). Size: '12' not handled.
+~Opcode: 'SMSG_ATTACKERSTATEUPDATE' (0x14A). Size: '48' not handled.
+~Opcode: 'SMSG_ATTACK_STOP' (0x144). Size: '18' not handled.
+~Opcode: 'SMSG_THREAT_REMOVE' (0x484). Size: '14' not handled.
+~Opcode: 'SMSG_THREAT_CLEAR' (0x485). Size: '7' not handled.
+^Selected node '2,633789' = 'WORLD\GENERIC\HUMAN\PASSIVE DOODADS\ARCHES\TRELLIS01.M2'.
+^Selected node '2,725630' = 'WORLD\GENERIC\HUMAN\PASSIVE DOODADS\PLANTERBOXES\TIRISFALLPLANTER.M2'.
+^Selected node '3,402433' = 'WORLD\LORDAERON\TIRISFALGLADE\PASSIVEDOODADS\GRAVES\BRILLGRAVES04.M2'.
+^Selected node '13,622020' = 'WORLD\GENERIC\HUMAN\PASSIVE DOODADS\ARCHES\GARDENARCHTOP.M2'.
+^Selected node '17,440882' = 'WORLD\LORDAERON\TIRISFALGLADE\PASSIVEDOODADS\GRAVES\BRILLGRAVES01.M2'.
+^Selected node '25,174805' = 'WORLD\LORDAERON\TIRISFALGLADE\PASSIVEDOODADS\GRAVES\BRILLGRAVES03.M2'.
+~Opcode: 'SMSG_EMOTE' (0x103). Size: '12' not handled.
+^Selected node '0,000000' = 'WORLD\LORDAERON\TIRISFALGLADE\PASSIVEDOODADS\TREES\TIRISFALLGLADECANOPYTREE02.M2'.
+^Selected node '9,563965' = 'WORLD\LORDAERON\TIRISFALGLADE\PASSIVEDOODADS\TREES\TIRISFALLGLADECANOPYTREE06.M2'.
+^Selected node '180,194397' = 'WORLD\LORDAERON\TIRISFALGLADE\PASSIVEDOODADS\TREES\TIRISFALLGLADECANOPYTREE02.M2'.
+^Selected node '191,534531' = 'WORLD\LORDAERON\TIRISFALGLADE\PASSIVEDOODADS\TREES\TIRISFALLGLADECANOPYTREE03.M2'.
+^Selected node '195,151413' = 'WORLD\LORDAERON\TIRISFALGLADE\PASSIVEDOODADS\TREES\TIRISFALLGLADECANOPYTREE06.M2'.
+^Selected node '212,988449' = 'WORLD\LORDAERON\TIRISFALGLADE\PASSIVEDOODADS\TREES\TIRISFALLGLADECANOPYTREE05.M2'.
+^Selected node '213,000946' = 'WORLD\LORDAERON\TIRISFALGLADE\PASSIVEDOODADS\TREES\TIRISFALLGLADECANOPYTREE04.M2'.
+^Selected node '465,242432' = 'WORLD\LORDAERON\TIRISFALGLADE\PASSIVEDOODADS\TREES\TIRISFALLGLADECANOPYTREE03.M2'.
+^Selected node '471,911835' = 'WORLD\LORDAERON\TIRISFALGLADE\PASSIVEDOODADS\TREES\TIRISFALLGLADECANOPYTREE05.M2'.
+^Selected node '0,000000' = 'WORLD\LORDAERON\TIRISFALGLADE\PASSIVEDOODADS\TREES\TIRISFALLGLADECANOPYTREE02.M2'.
+^Selected node '1,930664' = 'WORLD\LORDAERON\TIRISFALGLADE\PASSIVEDOODADS\TREES\TIRISFALLGLADECANOPYTREE06.M2'.
+~Opcode: 'SMSG_SPELL_START' (0x131). Size: '31' not handled.
+~Opcode: 'SMSG_SPELL_GO' (0x132). Size: '42' not handled.
+~Opcode: 'SMSG_EMOTE' (0x103). Size: '12' not handled.
+^Selected node '0,430176' = 'WORLD\LORDAERON\TIRISFALGLADE\PASSIVEDOODADS\TREES\TIRISFALLGLADECANOPYTREE05.M2'.
+^Selected node '6,092773' = 'WORLD\LORDAERON\TIRISFALGLADE\PASSIVEDOODADS\TREES\TIRISFALLGLADECANOPYTREE06.M2'.
+^Selected node '44,479980' = 'WORLD\LORDAERON\TIRISFALGLADE\PASSIVEDOODADS\TREES\TIRISFALLGLADECANOPYTREE06.M2'.
+~Opcode: 'SMSG_SPELL_START' (0x131). Size: '31' not handled.
+~Opcode: 'SMSG_SPELL_GO' (0x132). Size: '42' not handled.
+^Selected node '10,137695' = 'WORLD\LORDAERON\TIRISFALGLADE\PASSIVEDOODADS\TREES\TIRISFALLGLADECANOPYTREE06.M2'.
+^Selected node '11,033203' = 'WORLD\LORDAERON\TIRISFALGLADE\PASSIVEDOODADS\TREES\TIRISFALLGLADECANOPYTREE05.M2'.
+^Selected node '20,057673' = 'Character\Scourge\Male\ScourgeMale.m2'.
+^Selected node '24,757872' = 'Creature\UndeadHorse\RidingUndeadHorse.m2'.
+^Selected node '28,823254' = 'Creature\MountedDeathKnight\RidingUndeadWarHorse.m2'.
+^Selected node '34,343750' = 'WORLD\LORDAERON\TIRISFALGLADE\PASSIVEDOODADS\TREES\TIRISFALLGLADECANOPYTREE02.M2'.
+^Selected node '24,735907' = 'WORLD\GENERIC\HUMAN\PASSIVE DOODADS\ARTWORK\STORMWINDPAINTING03.M2'.
+^Selected node '46,652344' = 'WORLD\LORDAERON\TIRISFALGLADE\PASSIVEDOODADS\TREES\TIRISFALLGLADECANOPYTREE04.M2'.
+^Selected node '50,069317' = 'WORLD\GENERIC\HUMAN\PASSIVE DOODADS\PEWS\GENERALCHURCHPEW01.M2'.
+^Selected node '62,114746' = 'WORLD\LORDAERON\TIRISFALGLADE\PASSIVEDOODADS\TREES\TIRISFALLGLADECANOPYTREE04.M2'.
+^Selected node '89,336479' = 'WORLD\LORDAERON\TIRISFALGLADE\PASSIVEDOODADS\TREES\TIRISFALLGLADECANOPYTREE05.M2'.
+^Selected node '98,456718' = 'WORLD\LORDAERON\TIRISFALGLADE\PASSIVEDOODADS\TREES\TIRISFALLGLADECANOPYTREE03.M2'.
+^Selected node '4,364746' = 'World\Generic\PassiveDoodads\SummerFestival\SummerFest_Bonfire_Large01.m2'.
+^Selected node '9,175293' = 'World\Generic\PassiveDoodads\SummerFestival\SummerFest_Bonfire_Base_01.m2'.
+^Selected node '12,172363' = 'WORLD\LORDAERON\TIRISFALGLADE\PASSIVEDOODADS\TREES\TIRISFALLGLADECANOPYTREE06.M2'.
+^Selected node '29,120333' = 'WORLD\LORDAERON\TIRISFALGLADE\PASSIVEDOODADS\TREES\TIRISFALLGLADECANOPYTREE03.M2'.
+^Selected node '33,260792' = 'WORLD\LORDAERON\TIRISFALGLADE\PASSIVEDOODADS\TREES\TIRISFALLGLADECANOPYTREE05.M2'.
+^Selected node '90,286568' = 'WORLD\LORDAERON\TIRISFALGLADE\PASSIVEDOODADS\TREES\TIRISFALLGLADECANOPYTREE04.M2'.
+^Selected node '110,196411' = 'WORLD\CRITTER\BIRDS\BIRD02.M2'.
+^Selected node '116,348557' = 'WORLD\LORDAERON\TIRISFALGLADE\PASSIVEDOODADS\TREES\TIRISFALLGLADECANOPYTREE06.M2'.
+^Selected node '122,716133' = 'WORLD\LORDAERON\TIRISFALGLADE\PASSIVEDOODADS\TREES\TIRISFALLGLADECANOPYTREE02.M2'.
+^Selected node '129,300125' = 'WORLD\LORDAERON\TIRISFALGLADE\PASSIVEDOODADS\TREES\TIRISFALLGLADECANOPYTREE05.M2'.
+^Selected node '139,069000' = 'WORLD\LORDAERON\TIRISFALGLADE\PASSIVEDOODADS\TREES\TIRISFALLGLADECANOPYTREE06.M2'.
+^Selected node '152,126755' = 'WORLD\LORDAERON\TIRISFALGLADE\PASSIVEDOODADS\TREES\TIRISFALLGLADECANOPYTREE04.M2'.
+^Selected node '172,978348' = 'WORLD\LORDAERON\TIRISFALGLADE\PASSIVEDOODADS\TREES\TIRISFALLGLADECANOPYTREE05.M2'.
+^Selected node '180,647888' = 'WORLD\LORDAERON\TIRISFALGLADE\PASSIVEDOODADS\TREES\TIRISFALLGLADECANOPYTREE06.M2'.
+^Selected node '181,106842' = 'WORLD\LORDAERON\TIRISFALGLADE\PASSIVEDOODADS\TREES\TIRISFALLGLADECANOPYTREE03.M2'.
+^Selected node '181,202484' = 'WORLD\LORDAERON\TIRISFALGLADE\PASSIVEDOODADS\TREES\TIRISFALLGLADECANOPYTREE05.M2'.
+^Selected node '186,108398' = 'WORLD\LORDAERON\TIRISFALGLADE\PASSIVEDOODADS\TREES\TIRISFALLGLADECANOPYTREE04.M2'.
+^Selected node '189,482269' = 'WORLD\LORDAERON\TIRISFALGLADE\PASSIVEDOODADS\TREES\TIRISFALLGLADECANOPYTREE06.M2'.
+^Selected node '190,706024' = 'WORLD\LORDAERON\TIRISFALGLADE\PASSIVEDOODADS\TREES\TIRISFALLGLADECANOPYTREE05.M2'.
+^Selected node '199,568771' = 'WORLD\LORDAERON\TIRISFALGLADE\PASSIVEDOODADS\TREES\TIRISFALLGLADECANOPYTREE03.M2'.
+^Selected node '223,382813' = 'WORLD\LORDAERON\TIRISFALGLADE\PASSIVEDOODADS\TREES\TIRISFALLGLADECANOPYTREE04.M2'.
+^Selected node '237,581772' = 'WORLD\LORDAERON\TIRISFALGLADE\PASSIVEDOODADS\TREES\TIRISFALLGLADECANOPYTREE06.M2'.
+^Selected node '265,221649' = 'WORLD\LORDAERON\TIRISFALGLADE\PASSIVEDOODADS\TREES\TIRISFALLGLADECANOPYTREE04.M2'.
+^Selected node '291,096313' = 'WORLD\LORDAERON\TIRISFALGLADE\PASSIVEDOODADS\TREES\TIRISFALLGLADECANOPYTREE05.M2'.
+^Selected node '295,830780' = 'WORLD\LORDAERON\TIRISFALGLADE\PASSIVEDOODADS\TREES\TIRISFALLGLADECANOPYTREE04.M2'.
+^Selected node '302,654327' = 'WORLD\LORDAERON\TIRISFALGLADE\PASSIVEDOODADS\TREES\TIRISFALLGLADECANOPYTREE04.M2'.
+^Selected node '303,450836' = 'WORLD\LORDAERON\TIRISFALGLADE\PASSIVEDOODADS\TREES\TIRISFALLGLADECANOPYTREE02.M2'.
+^Selected node '307,385895' = 'WORLD\LORDAERON\TIRISFALGLADE\PASSIVEDOODADS\TREES\TIRISFALLGLADECANOPYTREE06.M2'.
+^Selected node '326,106232' = 'WORLD\LORDAERON\TIRISFALGLADE\PASSIVEDOODADS\TREES\TIRISFALLGLADECANOPYTREE04.M2'.
+^Selected node '350,273376' = 'WORLD\LORDAERON\TIRISFALGLADE\PASSIVEDOODADS\TREES\TIRISFALLGLADECANOPYTREE04.M2'.
+^Selected node '351,737274' = 'WORLD\LORDAERON\TIRISFALGLADE\PASSIVEDOODADS\TREES\TIRISFALLGLADECANOPYTREE05.M2'.
+^Selected node '357,807465' = 'WORLD\LORDAERON\TIRISFALGLADE\PASSIVEDOODADS\TREES\TIRISFALLGLADECANOPYTREE03.M2'.
+^Selected node '365,634125' = 'WORLD\LORDAERON\TIRISFALGLADE\PASSIVEDOODADS\TREES\TIRISFALLGLADECANOPYTREE06.M2'.
+^Selected node '367,677582' = 'WORLD\LORDAERON\TIRISFALGLADE\PASSIVEDOODADS\TREES\TIRISFALLGLADECANOPYTREE05.M2'.
+^Selected node '388,327515' = 'WORLD\LORDAERON\TIRISFALGLADE\PASSIVEDOODADS\TREES\TIRISFALLGLADECANOPYTREE04.M2'.
+^Selected node '397,184479' = 'WORLD\LORDAERON\TIRISFALGLADE\PASSIVEDOODADS\TREES\TIRISFALLGLADECANOPYTREE05.M2'.
+~Opcode: 'SMSG_HIGHEST_THREAT_UPDATE' (0x482). Size: '29' not handled.
+~Opcode: 'SMSG_AI_REACTION' (0x13C). Size: '12' not handled.
+~Opcode: 'SMSG_ATTACK_START' (0x143). Size: '16' not handled.
+~Opcode: 'SMSG_HIGHEST_THREAT_UPDATE' (0x482). Size: '29' not handled.
+~Opcode: 'SMSG_AI_REACTION' (0x13C). Size: '12' not handled.
+~Opcode: 'SMSG_ATTACK_START' (0x143). Size: '16' not handled.
+~Opcode: 'SMSG_HIGHEST_THREAT_UPDATE' (0x482). Size: '29' not handled.
+~Opcode: 'SMSG_AI_REACTION' (0x13C). Size: '12' not handled.
+~Opcode: 'SMSG_ATTACK_START' (0x143). Size: '16' not handled.
+~Opcode: 'SMSG_HIGHEST_THREAT_UPDATE' (0x482). Size: '29' not handled.
+^Selected node '166,093140' = 'WORLD\LORDAERON\TIRISFALGLADE\PASSIVEDOODADS\TREES\TIRISFALLGLADECANOPYTREE04.M2'.
+^Selected node '264,924103' = 'WORLD\LORDAERON\TIRISFALGLADE\PASSIVEDOODADS\TREES\TIRISFALLGLADECANOPYTREE04.M2'.
+~Opcode: 'SMSG_AI_REACTION' (0x13C). Size: '12' not handled.
+~Opcode: 'SMSG_ATTACK_START' (0x143). Size: '16' not handled.
+~Opcode: 'SMSG_SPELL_START' (0x131). Size: '31' not handled.
+~Opcode: 'SMSG_SPELL_GO' (0x132). Size: '42' not handled.
+~Opcode: 'SMSG_HIGHEST_THREAT_UPDATE' (0x482). Size: '29' not handled.
+~Opcode: 'SMSG_ATTACK_STOP' (0x144). Size: '12' not handled.
+~Opcode: 'SMSG_ATTACKERSTATEUPDATE' (0x14A). Size: '48' not handled.
+~Opcode: 'SMSG_THREAT_UPDATE' (0x483). Size: '22' not handled.
+~Opcode: 'SMSG_ATTACKERSTATEUPDATE' (0x14A). Size: '48' not handled.
+~Opcode: 'SMSG_ATTACKERSTATEUPDATE' (0x14A). Size: '48' not handled.
+~Opcode: 'SMSG_ATTACKERSTATEUPDATE' (0x14A). Size: '48' not handled.
+~Opcode: 'SMSG_ATTACK_STOP' (0x144). Size: '18' not handled.
+~Opcode: 'SMSG_THREAT_REMOVE' (0x484). Size: '14' not handled.
+~Opcode: 'SMSG_HIGHEST_THREAT_UPDATE' (0x482). Size: '40' not handled.
+~Opcode: 'SMSG_THREAT_CLEAR' (0x485). Size: '7' not handled.
+~Opcode: 'SMSG_AI_REACTION' (0x13C). Size: '12' not handled.
+~Opcode: 'SMSG_ATTACK_START' (0x143). Size: '16' not handled.
+~Opcode: 'SMSG_EMOTE' (0x103). Size: '12' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_START_STRAFE_RIGHT' (0xB9). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_START_FORWARD' (0xB5). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_STOP_STRAFE' (0xBA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'SMSG_HIGHEST_THREAT_UPDATE' (0x482). Size: '29' not handled.
+~Opcode: 'MSG_MOVE_HEARTBEAT' (0xEE). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_JUMP' (0xBB). Size: '48' not handled.
+~Opcode: 'SMSG_ATTACKERSTATEUPDATE' (0x14A). Size: '48' not handled.
+~Opcode: 'SMSG_ATTACK_STOP' (0x144). Size: '18' not handled.
+~Opcode: 'SMSG_ATTACK_STOP' (0x144). Size: '18' not handled.
+~Opcode: 'SMSG_ATTACK_STOP' (0x144). Size: '18' not handled.
+~Opcode: 'SMSG_THREAT_REMOVE' (0x484). Size: '14' not handled.
+~Opcode: 'SMSG_THREAT_REMOVE' (0x484). Size: '14' not handled.
+~Opcode: 'SMSG_THREAT_CLEAR' (0x485). Size: '7' not handled.
+~Opcode: 'SMSG_AI_REACTION' (0x13C). Size: '12' not handled.
+~Opcode: 'SMSG_ATTACK_START' (0x143). Size: '16' not handled.
+~Opcode: 'SMSG_ATTACKERSTATEUPDATE' (0x14A). Size: '48' not handled.
+~Opcode: 'SMSG_ATTACKERSTATEUPDATE' (0x14A). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_START_STRAFE_LEFT' (0xB8). Size: '48' not handled.
+~Opcode: 'SMSG_THREAT_UPDATE' (0x483). Size: '22' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_FALL_LAND' (0xC9). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_STOP_STRAFE' (0xBA). Size: '32' not handled.
+~Opcode: 'SMSG_EMOTE' (0x103). Size: '12' not handled.
+~Opcode: 'MSG_MOVE_JUMP' (0xBB). Size: '48' not handled.
+~Opcode: 'SMSG_ATTACKERSTATEUPDATE' (0x14A). Size: '48' not handled.
+~Opcode: 'SMSG_THREAT_UPDATE' (0x483). Size: '22' not handled.
+~Opcode: 'MSG_MOVE_HEARTBEAT' (0xEE). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '48' not handled.
+~Opcode: 'SMSG_ATTACKERSTATEUPDATE' (0x14A). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_FALL_LAND' (0xC9). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_START_STRAFE_LEFT' (0xB8). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_STOP_STRAFE' (0xBA). Size: '32' not handled.
+~Opcode: 'SMSG_ATTACK_START' (0x143). Size: '16' not handled.
+~Opcode: 'SMSG_ATTACK_START' (0x143). Size: '16' not handled.
+~Opcode: 'MSG_MOVE_STOP' (0xB7). Size: '32' not handled.
+~Opcode: 'SMSG_ATTACKERSTATEUPDATE' (0x14A). Size: '48' not handled.
+~Opcode: 'SMSG_ATTACK_STOP' (0x144). Size: '18' not handled.
+~Opcode: 'SMSG_ATTACK_STOP' (0x144). Size: '18' not handled.
+~Opcode: 'SMSG_THREAT_REMOVE' (0x484). Size: '14' not handled.
+~Opcode: 'SMSG_THREAT_CLEAR' (0x485). Size: '7' not handled.
+^Selected node '20,430136' = 'Character\Scourge\Male\ScourgeMale.m2'.
+~Opcode: 'SMSG_SPELL_START' (0x131). Size: '31' not handled.
+~Opcode: 'SMSG_SPELL_GO' (0x132). Size: '42' not handled.
+~Opcode: 'SMSG_HIGHEST_THREAT_UPDATE' (0x482). Size: '29' not handled.
+~Opcode: 'SMSG_AI_REACTION' (0x13C). Size: '12' not handled.
+~Opcode: 'SMSG_ATTACK_START' (0x143). Size: '16' not handled.
+~Opcode: 'SMSG_HIGHEST_THREAT_UPDATE' (0x482). Size: '29' not handled.
+~Opcode: 'SMSG_ATTACK_STOP' (0x144). Size: '12' not handled.
+~Opcode: 'SMSG_ATTACKERSTATEUPDATE' (0x14A). Size: '48' not handled.
+~Opcode: 'SMSG_THREAT_UPDATE' (0x483). Size: '22' not handled.
+~Opcode: 'SMSG_ATTACKERSTATEUPDATE' (0x14A). Size: '48' not handled.
+~Opcode: 'SMSG_ATTACK_STOP' (0x144). Size: '18' not handled.
+~Opcode: 'SMSG_THREAT_REMOVE' (0x484). Size: '14' not handled.
+~Opcode: 'SMSG_THREAT_CLEAR' (0x485). Size: '7' not handled.
+~Opcode: 'MSG_MOVE_START_FORWARD' (0xB5). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_STOP' (0xB7). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_START_STRAFE_LEFT' (0xB8). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_STOP_STRAFE' (0xBA). Size: '32' not handled.
+~Opcode: 'SMSG_SPELL_START' (0x131). Size: '31' not handled.
+~Opcode: 'SMSG_SPELL_GO' (0x132). Size: '42' not handled.
+~Opcode: 'MSG_MOVE_START_FORWARD' (0xB5). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_JUMP' (0xBB). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_FALL_LAND' (0xC9). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_JUMP' (0xBB). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_START_STRAFE_LEFT' (0xB8). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_STOP_STRAFE' (0xBA). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_STOP' (0xB7). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_FALL_LAND' (0xC9). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_START_FORWARD' (0xB5). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_START_STRAFE_RIGHT' (0xB9). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_STOP_STRAFE' (0xBA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_STOP' (0xB7). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_START_STRAFE_LEFT' (0xB8). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_START_FORWARD' (0xB5). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_STOP' (0xB7). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_STOP_STRAFE' (0xBA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_START_STRAFE_RIGHT' (0xB9). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_JUMP' (0xBB). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_STOP_STRAFE' (0xBA). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_START_STRAFE_LEFT' (0xB8). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_STOP_STRAFE' (0xBA). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_FALL_LAND' (0xC9). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_START_FORWARD' (0xB5). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_START_STRAFE_LEFT' (0xB8). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_STOP_STRAFE' (0xBA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_STOP' (0xB7). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_START_FORWARD' (0xB5). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_START_STRAFE_LEFT' (0xB8). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_STOP_STRAFE' (0xBA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_START_STRAFE_LEFT' (0xB8). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_STOP_STRAFE' (0xBA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_STOP' (0xB7). Size: '32' not handled.
+^Selected node '3,210295' = 'Character\Scourge\Male\ScourgeMale.m2'.
+~Opcode: 'SMSG_HIGHEST_THREAT_UPDATE' (0x482). Size: '29' not handled.
+~Opcode: 'SMSG_AI_REACTION' (0x13C). Size: '12' not handled.
+~Opcode: 'SMSG_ATTACK_START' (0x143). Size: '16' not handled.
+~Opcode: 'SMSG_SPELL_START' (0x131). Size: '31' not handled.
+~Opcode: 'SMSG_SPELL_GO' (0x132). Size: '42' not handled.
+~Opcode: 'SMSG_EMOTE' (0x103). Size: '12' not handled.
+~Opcode: 'MSG_MOVE_START_FORWARD' (0xB5). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_JUMP' (0xBB). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_FALL_LAND' (0xC9). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_STOP' (0xB7). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_START_STRAFE_LEFT' (0xB8). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_STOP_STRAFE' (0xBA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_START_FORWARD' (0xB5). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_STOP' (0xB7). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_START_STRAFE_LEFT' (0xB8). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_STOP_STRAFE' (0xBA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_START_STRAFE_LEFT' (0xB8). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_START_FORWARD' (0xB5). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_STOP_STRAFE' (0xBA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_JUMP' (0xBB). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_HEARTBEAT' (0xEE). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_START_STRAFE_LEFT' (0xB8). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_FALL_LAND' (0xC9). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_STOP_STRAFE' (0xBA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_JUMP' (0xBB). Size: '48' not handled.
+^---Create WoWGameObjectMOTransport with Type 'MoTransport', Entry '0', Counter '10'
+~Opcode: 'MSG_MOVE_HEARTBEAT' (0xEE). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_FALL_LAND' (0xC9). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_JUMP' (0xBB). Size: '48' not handled.
+~Opcode: 'SMSG_SPELL_START' (0x131). Size: '31' not handled.
+~Opcode: 'SMSG_SPELL_GO' (0x132). Size: '42' not handled.
+~Opcode: 'MSG_MOVE_HEARTBEAT' (0xEE). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_STOP' (0xB7). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_FALL_LAND' (0xC9). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_START_STRAFE_RIGHT' (0xB9). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+^---Create WoWGameObjectMOTransport with Type 'MoTransport', Entry '0', Counter '2'
+~Opcode: 'MSG_MOVE_STOP_STRAFE' (0xBA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+^Selected node '3,946995' = 'WORLD\LORDAERON\TIRISFALGLADE\PASSIVEDOODADS\TREES\TIRISFALLGLADECANOPYTREE02.M2'.
+^Selected node '14,624023' = 'WORLD\LORDAERON\TIRISFALGLADE\PASSIVEDOODADS\TREES\TIRISFALLGLADECANOPYTREE06.M2'.
+^Selected node '17,384766' = 'WORLD\LORDAERON\TIRISFALGLADE\PASSIVEDOODADS\TREES\TIRISFALLGLADECANOPYTREE04.M2'.
+^Selected node '17,777048' = 'WORLD\AZEROTH\DUSKWOOD\PASSIVEDOODADS\BUSH\DUSKWOODBUSH04.M2'.
+^---Create WoWGameObjectMOTransport with Type 'MoTransport', Entry '0', Counter '17'
+~Opcode: 'SMSG_SPELL_START' (0x131). Size: '31' not handled.
+~Opcode: 'SMSG_SPELL_GO' (0x132). Size: '42' not handled.
+^Selected node '19,082079' = 'WORLD\LORDAERON\TIRISFALGLADE\PASSIVEDOODADS\TREES\TIRISFALLGLADECANOPYTREE05.M2'.
+^Selected node '28,107496' = 'WORLD\LORDAERON\TIRISFALGLADE\PASSIVEDOODADS\TREES\TIRISFALLGLADECANOPYTREE04.M2'.
+^Selected node '35,911606' = 'WORLD\LORDAERON\TIRISFALGLADE\PASSIVEDOODADS\TREES\TIRISFALLGLADECANOPYTREE06.M2'.
+^Selected node '45,264706' = 'WORLD\AZEROTH\DUSKWOOD\PASSIVEDOODADS\BUSH\DUSKWOODBUSH06.M2'.
+~Opcode: 'SMSG_AI_REACTION' (0x13C). Size: '12' not handled.
+~Opcode: 'SMSG_ATTACK_START' (0x143). Size: '16' not handled.
+~Opcode: 'SMSG_EMOTE' (0x103). Size: '12' not handled.
+~Opcode: 'SMSG_SPELL_START' (0x131). Size: '31' not handled.
+~Opcode: 'SMSG_SPELL_GO' (0x132). Size: '42' not handled.
+~Opcode: 'SMSG_HIGHEST_THREAT_UPDATE' (0x482). Size: '29' not handled.
+~Opcode: 'SMSG_ATTACK_STOP' (0x144). Size: '12' not handled.
+~Opcode: 'SMSG_ATTACKERSTATEUPDATE' (0x14A). Size: '48' not handled.
+~Opcode: 'SMSG_THREAT_UPDATE' (0x483). Size: '22' not handled.
+~Opcode: 'SMSG_AURA_UPDATE_ALL' (0x495). Size: '15' not handled.
+~Opcode: 'SMSG_AURA_UPDATE_ALL' (0x495). Size: '15' not handled.
+~Opcode: 'SMSG_ATTACK_START' (0x143). Size: '16' not handled.
+~Opcode: 'SMSG_HIGHEST_THREAT_UPDATE' (0x482). Size: '29' not handled.
+~Opcode: 'SMSG_AI_REACTION' (0x13C). Size: '12' not handled.
+~Opcode: 'SMSG_ATTACK_START' (0x143). Size: '16' not handled.
+~Opcode: 'SMSG_ATTACKERSTATEUPDATE' (0x14A). Size: '48' not handled.
+~Opcode: 'SMSG_ATTACK_STOP' (0x144). Size: '18' not handled.
+~Opcode: 'SMSG_ATTACK_STOP' (0x144). Size: '18' not handled.
+~Opcode: 'SMSG_THREAT_REMOVE' (0x484). Size: '14' not handled.
+~Opcode: 'SMSG_THREAT_REMOVE' (0x484). Size: '14' not handled.
+~Opcode: 'SMSG_THREAT_CLEAR' (0x485). Size: '7' not handled.
+^---Create WoWGameObjectMOTransport with Type 'MoTransport', Entry '0', Counter '6'
+~Opcode: 'SMSG_SPELL_START' (0x131). Size: '31' not handled.
+~Opcode: 'SMSG_SPELL_GO' (0x132). Size: '42' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+^Selected node '8,727539' = 'WORLD\LORDAERON\TIRISFALGLADE\PASSIVEDOODADS\TREES\TIRISFALLGLADECANOPYTREE05.M2'.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'SMSG_MESSAGECHAT' (0x96). Size: '186' not handled.
+~Opcode: 'MSG_MOVE_START_FORWARD' (0xB5). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_STOP' (0xB7). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_START_FORWARD' (0xB5). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_HEARTBEAT' (0xEE). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_HEARTBEAT' (0xEE). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_HEARTBEAT' (0xEE). Size: '32' not handled.
+~Opcode: 'SMSG_SPELL_START' (0x131). Size: '31' not handled.
+~Opcode: 'SMSG_SPELL_GO' (0x132). Size: '42' not handled.
+~Opcode: 'MSG_MOVE_STOP' (0xB7). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_START_FORWARD' (0xB5). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_STOP' (0xB7). Size: '32' not handled.
+~Opcode: 'SMSG_ATTACK_START' (0x143). Size: '16' not handled.
+~Opcode: 'SMSG_ATTACKERSTATEUPDATE' (0x14A). Size: '43' not handled.
+~Opcode: 'SMSG_ATTACKERSTATEUPDATE' (0x14A). Size: '43' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_START_FORWARD' (0xB5). Size: '32' not handled.
+~Opcode: 'SMSG_HIGHEST_THREAT_UPDATE' (0x482). Size: '29' not handled.
+~Opcode: 'SMSG_ATTACK_STOP' (0x144). Size: '12' not handled.
+~Opcode: 'SMSG_ATTACKERSTATEUPDATE' (0x14A). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'SMSG_THREAT_UPDATE' (0x483). Size: '22' not handled.
+~Opcode: 'SMSG_AURA_UPDATE_ALL' (0x495). Size: '15' not handled.
+~Opcode: 'MSG_MOVE_HEARTBEAT' (0xEE). Size: '32' not handled.
+~Opcode: 'SMSG_AURA_UPDATE_ALL' (0x495). Size: '15' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'SMSG_ATTACKERSTATEUPDATE' (0x14A). Size: '48' not handled.
+~Opcode: 'SMSG_ATTACK_STOP' (0x144). Size: '18' not handled.
+~Opcode: 'SMSG_THREAT_REMOVE' (0x484). Size: '14' not handled.
+~Opcode: 'SMSG_THREAT_CLEAR' (0x485). Size: '7' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_STOP' (0xB7). Size: '32' not handled.
+~Opcode: 'SMSG_ATTACK_STOP' (0x144). Size: '13' not handled.
+~Opcode: 'SMSG_ATTACK_START' (0x143). Size: '16' not handled.
+~Opcode: 'SMSG_ATTACKERSTATEUPDATE' (0x14A). Size: '43' not handled.
+~Opcode: 'SMSG_LOOT_LIST' (0x3F9). Size: '10' not handled.
+~Opcode: 'SMSG_ATTACK_STOP' (0x144). Size: '13' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'SMSG_EMOTE' (0x103). Size: '12' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_START_FORWARD' (0xB5). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_STOP' (0xB7). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'SMSG_MESSAGECHAT' (0x96). Size: '220' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'SMSG_SPELL_START' (0x131). Size: '31' not handled.
+~Opcode: 'SMSG_SPELL_GO' (0x132). Size: '42' not handled.
+^Selected node '8,817383' = 'WORLD\LORDAERON\TIRISFALGLADE\PASSIVEDOODADS\TREES\TIRISFALLGLADECANOPYTREE05.M2'.
+~Opcode: 'SMSG_HIGHEST_THREAT_UPDATE' (0x482). Size: '29' not handled.
+~Opcode: 'SMSG_AI_REACTION' (0x13C). Size: '12' not handled.
+~Opcode: 'SMSG_ATTACK_START' (0x143). Size: '16' not handled.
+^---Create WoWGameObjectMOTransport with Type 'MoTransport', Entry '0', Counter '11'
+~Opcode: 'SMSG_SPELL_START' (0x131). Size: '31' not handled.
+~Opcode: 'SMSG_SPELL_GO' (0x132). Size: '42' not handled.
+~Opcode: 'MSG_MOVE_START_TURN_LEFT' (0xBC). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_STOP_TURN' (0xBE). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_START_STRAFE_LEFT' (0xB8). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_START_BACKWARD' (0xB6). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_STOP_STRAFE' (0xBA). Size: '32' not handled.
+~Opcode: 'SMSG_EMOTE' (0x103). Size: '12' not handled.
+~Opcode: 'MSG_MOVE_STOP' (0xB7). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_START_STRAFE_RIGHT' (0xB9). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_STOP_STRAFE' (0xBA). Size: '32' not handled.
+~Opcode: 'SMSG_HIGHEST_THREAT_UPDATE' (0x482). Size: '29' not handled.
+~Opcode: 'SMSG_AI_REACTION' (0x13C). Size: '12' not handled.
+~Opcode: 'SMSG_ATTACK_START' (0x143). Size: '16' not handled.
+~Opcode: 'SMSG_ATTACKERSTATEUPDATE' (0x14A). Size: '48' not handled.
+~Opcode: 'SMSG_ATTACKERSTATEUPDATE' (0x14A). Size: '48' not handled.
+~Opcode: 'SMSG_ATTACK_START' (0x143). Size: '16' not handled.
+~Opcode: 'SMSG_THREAT_UPDATE' (0x483). Size: '22' not handled.
+~Opcode: 'SMSG_ATTACKERSTATEUPDATE' (0x14A). Size: '48' not handled.
+~Opcode: 'SMSG_THREAT_UPDATE' (0x483). Size: '22' not handled.
+~Opcode: 'SMSG_ATTACKERSTATEUPDATE' (0x14A). Size: '48' not handled.
+~Opcode: 'SMSG_ATTACKERSTATEUPDATE' (0x14A). Size: '48' not handled.
+~Opcode: 'SMSG_ATTACK_STOP' (0x144). Size: '18' not handled.
+~Opcode: 'SMSG_ATTACK_STOP' (0x144). Size: '18' not handled.
+~Opcode: 'SMSG_THREAT_REMOVE' (0x484). Size: '14' not handled.
+~Opcode: 'SMSG_THREAT_CLEAR' (0x485). Size: '7' not handled.
+^Selected node '14,793945' = 'WORLD\LORDAERON\TIRISFALGLADE\PASSIVEDOODADS\TREES\TIRISFALLGLADECANOPYTREE05.M2'.
+^Selected node '27,084957' = 'WORLD\LORDAERON\TIRISFALGLADE\PASSIVEDOODADS\TREES\TIRISFALLGLADECANOPYTREE06.M2'.
+~Opcode: 'SMSG_SPELL_START' (0x131). Size: '31' not handled.
+~Opcode: 'SMSG_SPELL_GO' (0x132). Size: '42' not handled.
+~Opcode: 'SMSG_MESSAGECHAT' (0x96). Size: '268' not handled.
+~Opcode: 'SMSG_EMOTE' (0x103). Size: '12' not handled.
+~Opcode: 'SMSG_SPELL_START' (0x131). Size: '31' not handled.
+~Opcode: 'SMSG_SPELL_GO' (0x132). Size: '42' not handled.
+~Opcode: 'SMSG_HIGHEST_THREAT_UPDATE' (0x482). Size: '29' not handled.
+~Opcode: 'SMSG_AI_REACTION' (0x13C). Size: '12' not handled.
+~Opcode: 'SMSG_ATTACK_START' (0x143). Size: '16' not handled.
+~Opcode: 'SMSG_HIGHEST_THREAT_UPDATE' (0x482). Size: '29' not handled.
+~Opcode: 'SMSG_ATTACK_STOP' (0x144). Size: '12' not handled.
+~Opcode: 'SMSG_ATTACKERSTATEUPDATE' (0x14A). Size: '48' not handled.
+~Opcode: 'SMSG_SPELL_START' (0x131). Size: '31' not handled.
+~Opcode: 'SMSG_SPELL_GO' (0x132). Size: '42' not handled.
+~Opcode: 'SMSG_THREAT_UPDATE' (0x483). Size: '22' not handled.
+~Opcode: 'SMSG_HIGHEST_THREAT_UPDATE' (0x482). Size: '29' not handled.
+~Opcode: 'SMSG_AI_REACTION' (0x13C). Size: '12' not handled.
+~Opcode: 'SMSG_ATTACK_START' (0x143). Size: '16' not handled.
+~Opcode: 'SMSG_ATTACKERSTATEUPDATE' (0x14A). Size: '48' not handled.
+~Opcode: 'SMSG_ATTACK_STOP' (0x144). Size: '18' not handled.
+~Opcode: 'SMSG_THREAT_REMOVE' (0x484). Size: '14' not handled.
+~Opcode: 'SMSG_THREAT_CLEAR' (0x485). Size: '7' not handled.
+~Opcode: 'SMSG_ATTACK_STOP' (0x144). Size: '18' not handled.
+~Opcode: 'SMSG_THREAT_REMOVE' (0x484). Size: '14' not handled.
+~Opcode: 'SMSG_ATTACK_STOP' (0x144). Size: '13' not handled.
+~Opcode: 'MSG_MOVE_START_FORWARD' (0xB5). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_START_STRAFE_LEFT' (0xB8). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_JUMP' (0xBB). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_STOP_STRAFE' (0xBA). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_FALL_LAND' (0xC9). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_JUMP' (0xBB). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_START_STRAFE_RIGHT' (0xB9). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_FALL_LAND' (0xC9). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_JUMP' (0xBB). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_STOP_STRAFE' (0xBA). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_START_STRAFE_LEFT' (0xB8). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_FALL_LAND' (0xC9). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_JUMP' (0xBB). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_STOP_STRAFE' (0xBA). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_FALL_LAND' (0xC9). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_JUMP' (0xBB). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_START_STRAFE_RIGHT' (0xB9). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_FALL_LAND' (0xC9). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_STOP_STRAFE' (0xBA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_JUMP' (0xBB). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_START_STRAFE_LEFT' (0xB8). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_FALL_LAND' (0xC9). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_JUMP' (0xBB). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_STOP_STRAFE' (0xBA). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_FALL_LAND' (0xC9). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_JUMP' (0xBB). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_START_STRAFE_LEFT' (0xB8). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_FALL_LAND' (0xC9). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_JUMP' (0xBB). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_STOP_STRAFE' (0xBA). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_FALL_LAND' (0xC9). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_JUMP' (0xBB). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_FALL_LAND' (0xC9). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_JUMP' (0xBB). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_STOP' (0xB7). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_FALL_LAND' (0xC9). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_START_FORWARD' (0xB5). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_STOP' (0xB7). Size: '32' not handled.
+~Opcode: 'SMSG_EMOTE' (0x103). Size: '12' not handled.
+~Opcode: 'SMSG_SPELL_START' (0x131). Size: '31' not handled.
+~Opcode: 'SMSG_SPELL_GO' (0x132). Size: '42' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+^---Create WoWGameObjectMOTransport with Type 'MoTransport', Entry '0', Counter '4'
+~Opcode: 'MSG_MOVE_START_FORWARD' (0xB5). Size: '32' not handled.
+^---Create WoWGameObjectMOTransport with Type 'MoTransport', Entry '0', Counter '7'
+~Opcode: 'MSG_MOVE_STOP' (0xB7). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_START_FORWARD' (0xB5). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_STOP' (0xB7). Size: '32' not handled.
+~Opcode: 'SMSG_SPELL_START' (0x131). Size: '31' not handled.
+~Opcode: 'SMSG_SPELL_GO' (0x132). Size: '42' not handled.
+~Opcode: 'MSG_MOVE_START_BACKWARD' (0xB6). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_STOP' (0xB7). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_START_BACKWARD' (0xB6). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_STOP' (0xB7). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_START_TURN_RIGHT' (0xBD). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_STOP_TURN' (0xBE). Size: '32' not handled.
+^---Create WoWGameObjectMOTransport with Type 'MoTransport', Entry '0', Counter '5'
+~Opcode: 'MSG_MOVE_START_STRAFE_RIGHT' (0xB9). Size: '32' not handled.
+~Opcode: 'SMSG_SPELL_START' (0x131). Size: '31' not handled.
+~Opcode: 'SMSG_SPELL_GO' (0x132). Size: '42' not handled.
+~Opcode: 'MSG_MOVE_STOP_STRAFE' (0xBA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_START_STRAFE_LEFT' (0xB8). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_STOP_STRAFE' (0xBA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_START_STRAFE_LEFT' (0xB8). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_STOP_STRAFE' (0xBA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_START_STRAFE_LEFT' (0xB8). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_STOP_STRAFE' (0xBA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_START_STRAFE_RIGHT' (0xB9). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_STOP_STRAFE' (0xBA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_START_STRAFE_LEFT' (0xB8). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_HEARTBEAT' (0xEE). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_STOP_STRAFE' (0xBA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_START_STRAFE_RIGHT' (0xB9). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_HEARTBEAT' (0xEE). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_STOP_STRAFE' (0xBA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_START_STRAFE_LEFT' (0xB8). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_START_FORWARD' (0xB5). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_STOP_STRAFE' (0xBA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_JUMP' (0xBB). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_HEARTBEAT' (0xEE). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_FALL_LAND' (0xC9). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_START_STRAFE_LEFT' (0xB8). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_JUMP' (0xBB). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_STOP_STRAFE' (0xBA). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_STOP' (0xB7). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_FALL_LAND' (0xC9). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_START_FORWARD' (0xB5). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_START_STRAFE_LEFT' (0xB8). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_JUMP' (0xBB). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_STOP_STRAFE' (0xBA). Size: '48' not handled.
+~Opcode: 'SMSG_HIGHEST_THREAT_UPDATE' (0x482). Size: '29' not handled.
+~Opcode: 'SMSG_AI_REACTION' (0x13C). Size: '12' not handled.
+~Opcode: 'SMSG_ATTACK_START' (0x143). Size: '16' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_FALL_LAND' (0xC9). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_JUMP' (0xBB). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_HEARTBEAT' (0xEE). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_START_STRAFE_LEFT' (0xB8). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_FALL_LAND' (0xC9). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_JUMP' (0xBB). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_STOP_STRAFE' (0xBA). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_START_STRAFE_RIGHT' (0xB9). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_HEARTBEAT' (0xEE). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_FALL_LAND' (0xC9). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_JUMP' (0xBB). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_STOP_STRAFE' (0xBA). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_STOP' (0xB7). Size: '48' not handled.
+~Opcode: 'SMSG_HIGHEST_THREAT_UPDATE' (0x482). Size: '29' not handled.
+~Opcode: 'SMSG_ATTACK_STOP' (0x144). Size: '12' not handled.
+~Opcode: 'SMSG_ATTACKERSTATEUPDATE' (0x14A). Size: '48' not handled.
+~Opcode: 'SMSG_ATTACK_STOP' (0x144). Size: '18' not handled.
+~Opcode: 'SMSG_THREAT_REMOVE' (0x484). Size: '14' not handled.
+~Opcode: 'SMSG_THREAT_CLEAR' (0x485). Size: '7' not handled.
+~Opcode: 'MSG_MOVE_FALL_LAND' (0xC9). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_JUMP' (0xBB). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_HEARTBEAT' (0xEE). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_FALL_LAND' (0xC9). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_JUMP' (0xBB). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_HEARTBEAT' (0xEE). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_FALL_LAND' (0xC9). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_JUMP' (0xBB). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_HEARTBEAT' (0xEE). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_FALL_LAND' (0xC9). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_START_FORWARD' (0xB5). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_STOP' (0xB7). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_START_FORWARD' (0xB5). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_STOP' (0xB7). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_START_FORWARD' (0xB5). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_STOP' (0xB7). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_START_FORWARD' (0xB5). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_STOP' (0xB7). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_START_FORWARD' (0xB5). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_JUMP' (0xBB). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_STOP' (0xB7). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_FALL_LAND' (0xC9). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_START_FORWARD' (0xB5). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_JUMP' (0xBB). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_START_STRAFE_LEFT' (0xB8). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_FALL_LAND' (0xC9). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_JUMP' (0xBB). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_STOP_STRAFE' (0xBA). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_HEARTBEAT' (0xEE). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_START_STRAFE_RIGHT' (0xB9). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '48' not handled.
+~Opcode: 'SMSG_EMOTE' (0x103). Size: '12' not handled.
+~Opcode: 'MSG_MOVE_FALL_LAND' (0xC9). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_STOP_STRAFE' (0xBA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_JUMP' (0xBB). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_START_STRAFE_LEFT' (0xB8). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_FALL_LAND' (0xC9). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_JUMP' (0xBB). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_FALL_LAND' (0xC9). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_JUMP' (0xBB). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_STOP_STRAFE' (0xBA). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_FALL_LAND' (0xC9). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_JUMP' (0xBB). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_FALL_LAND' (0xC9). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'SMSG_SPELL_START' (0x131). Size: '31' not handled.
+~Opcode: 'SMSG_SPELL_GO' (0x132). Size: '42' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_JUMP' (0xBB). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '48' not handled.
+~Opcode: 'CMSG_MOVE_FALL_RESET' (0x2CA). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_STOP' (0xB7). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_FALL_LAND' (0xC9). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_START_FORWARD' (0xB5). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_JUMP' (0xBB). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_STOP' (0xB7). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_FALL_LAND' (0xC9). Size: '32' not handled.
+~Opcode: 'SMSG_EMOTE' (0x103). Size: '12' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_START_FORWARD' (0xB5). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_STOP' (0xB7). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_START_FORWARD' (0xB5). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_STOP' (0xB7). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_START_STRAFE_LEFT' (0xB8). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_STOP_STRAFE' (0xBA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_START_FORWARD' (0xB5). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_JUMP' (0xBB). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_STOP' (0xB7). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_FALL_LAND' (0xC9). Size: '32' not handled.
+~Opcode: 'SMSG_SPELL_START' (0x131). Size: '31' not handled.
+~Opcode: 'SMSG_SPELL_GO' (0x132). Size: '42' not handled.
+~Opcode: 'SMSG_EMOTE' (0x103). Size: '12' not handled.
+~Opcode: 'SMSG_SPELL_START' (0x131). Size: '31' not handled.
+~Opcode: 'SMSG_SPELL_GO' (0x132). Size: '42' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_START_FORWARD' (0xB5). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_HEARTBEAT' (0xEE). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_HEARTBEAT' (0xEE). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_HEARTBEAT' (0xEE). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_HEARTBEAT' (0xEE). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_HEARTBEAT' (0xEE). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_STOP' (0xB7). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_START_FORWARD' (0xB5). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_STOP' (0xB7). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_START_STRAFE_RIGHT' (0xB9). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_START_FORWARD' (0xB5). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_STOP_STRAFE' (0xBA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_JUMP' (0xBB). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_HEARTBEAT' (0xEE). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_START_STRAFE_RIGHT' (0xB9). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_FALL_LAND' (0xC9). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_JUMP' (0xBB). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_STOP_STRAFE' (0xBA). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_START_STRAFE_LEFT' (0xB8). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_FALL_LAND' (0xC9). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_JUMP' (0xBB). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_STOP_STRAFE' (0xBA). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_STOP' (0xB7). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_START_STRAFE_RIGHT' (0xB9). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_START_FORWARD' (0xB5). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_FALL_LAND' (0xC9). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_JUMP' (0xBB). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_STOP' (0xB7). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_STOP_STRAFE' (0xBA). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_START_STRAFE_LEFT' (0xB8). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_STOP_STRAFE' (0xBA). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_FALL_LAND' (0xC9). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_START_FORWARD' (0xB5). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_STOP' (0xB7). Size: '32' not handled.
+~Opcode: 'SMSG_HIGHEST_THREAT_UPDATE' (0x482). Size: '29' not handled.
+~Opcode: 'SMSG_HIGHEST_THREAT_UPDATE' (0x482). Size: '29' not handled.
+~Opcode: 'SMSG_AI_REACTION' (0x13C). Size: '12' not handled.
+~Opcode: 'SMSG_ATTACK_START' (0x143). Size: '16' not handled.
+~Opcode: 'SMSG_AI_REACTION' (0x13C). Size: '12' not handled.
+~Opcode: 'SMSG_ATTACK_START' (0x143). Size: '16' not handled.
+~Opcode: 'SMSG_SPELL_START' (0x131). Size: '46' not handled.
+~Opcode: 'SMSG_SPELL_GO' (0x132). Size: '56' not handled.
+~Opcode: 'SMSG_SPELL_START' (0x131). Size: '46' not handled.
+~Opcode: 'SMSG_HIGHEST_THREAT_UPDATE' (0x482). Size: '29' not handled.
+~Opcode: 'SMSG_SPELLNONMELEEDAMAGELOG' (0x250). Size: '46' not handled.
+~Opcode: 'SMSG_ATTACK_STOP' (0x144). Size: '18' not handled.
+~Opcode: 'SMSG_ATTACK_STOP' (0x144). Size: '18' not handled.
+~Opcode: 'SMSG_THREAT_REMOVE' (0x484). Size: '14' not handled.
+~Opcode: 'SMSG_THREAT_REMOVE' (0x484). Size: '14' not handled.
+~Opcode: 'SMSG_THREAT_CLEAR' (0x485). Size: '7' not handled.
+~Opcode: 'SMSG_AURA_UPDATE' (0x496). Size: '12' not handled.
+~Opcode: 'SMSG_AURA_UPDATE' (0x496). Size: '12' not handled.
+~Opcode: 'SMSG_SPELL_FAILURE' (0x133). Size: '13' not handled.
+~Opcode: 'SMSG_SPELL_FAILED_OTHER' (0x2A6). Size: '13' not handled.
+~Opcode: 'SMSG_AURA_UPDATE' (0x496). Size: '15' not handled.
+~Opcode: 'SMSG_AURA_UPDATE' (0x496). Size: '15' not handled.
+~Opcode: 'SMSG_SPELL_START' (0x131). Size: '31' not handled.
+~Opcode: 'SMSG_SPELL_GO' (0x132). Size: '42' not handled.
+~Opcode: 'SMSG_SPELL_START' (0x131). Size: '31' not handled.
+~Opcode: 'SMSG_SPELL_GO' (0x132). Size: '42' not handled.
+~Opcode: 'SMSG_HIGHEST_THREAT_UPDATE' (0x482). Size: '29' not handled.
+~Opcode: 'SMSG_ATTACK_STOP' (0x144). Size: '12' not handled.
+~Opcode: 'SMSG_ATTACKERSTATEUPDATE' (0x14A). Size: '48' not handled.
+~Opcode: 'SMSG_AURA_UPDATE' (0x496). Size: '15' not handled.
+~Opcode: 'SMSG_AURA_UPDATE' (0x496). Size: '15' not handled.
+~Opcode: 'SMSG_THREAT_UPDATE' (0x483). Size: '22' not handled.
+~Opcode: 'SMSG_EMOTE' (0x103). Size: '12' not handled.
+~Opcode: 'SMSG_GM_MESSAGECHAT' (0x3B3). Size: '44' not handled.
+~Opcode: 'SMSG_ATTACKERSTATEUPDATE' (0x14A). Size: '48' not handled.
+~Opcode: 'SMSG_ATTACK_STOP' (0x144). Size: '18' not handled.
+~Opcode: 'SMSG_THREAT_REMOVE' (0x484). Size: '14' not handled.
+~Opcode: 'SMSG_THREAT_CLEAR' (0x485). Size: '7' not handled.
+~Opcode: 'SMSG_GM_MESSAGECHAT' (0x3B3). Size: '51' not handled.
+~Opcode: 'MSG_MOVE_START_TURN_LEFT' (0xBC). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_STOP_TURN' (0xBE). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_START_FORWARD' (0xB5). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_JUMP' (0xBB). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_STOP' (0xB7). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_START_TURN_RIGHT' (0xBD). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_HEARTBEAT' (0xEE). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_FALL_LAND' (0xC9). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_START_FORWARD' (0xB5). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_HEARTBEAT' (0xEE). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_STOP_TURN' (0xBE). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_STOP' (0xB7). Size: '32' not handled.
+~Opcode: 'SMSG_SPELL_START' (0x131). Size: '31' not handled.
+~Opcode: 'SMSG_SPELL_GO' (0x132). Size: '42' not handled.
+~Opcode: 'MSG_MOVE_START_TURN_RIGHT' (0xBD). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_START_FORWARD' (0xB5). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_STOP_TURN' (0xBE). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_START_TURN_LEFT' (0xBC). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_STOP_TURN' (0xBE). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_JUMP' (0xBB). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_STOP' (0xB7). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_HEARTBEAT' (0xEE). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_FALL_LAND' (0xC9). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_START_FORWARD' (0xB5). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_HEARTBEAT' (0xEE). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_JUMP' (0xBB). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_STOP' (0xB7). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_START_FORWARD' (0xB5). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_FALL_LAND' (0xC9). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_STOP' (0xB7). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_START_FORWARD' (0xB5). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_JUMP' (0xBB). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_START_STRAFE_LEFT' (0xB8). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_FALL_LAND' (0xC9). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_JUMP' (0xBB). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '48' not handled.
+~Opcode: 'SMSG_SPELL_START' (0x131). Size: '31' not handled.
+~Opcode: 'SMSG_SPELL_GO' (0x132). Size: '42' not handled.
+~Opcode: 'MSG_MOVE_STOP_STRAFE' (0xBA). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '48' not handled.
+~Opcode: 'SMSG_SPELL_START' (0x131). Size: '31' not handled.
+~Opcode: 'SMSG_SPELL_GO' (0x132). Size: '42' not handled.
+~Opcode: 'MSG_MOVE_START_STRAFE_LEFT' (0xB8). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_FALL_LAND' (0xC9). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_JUMP' (0xBB). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_STOP_STRAFE' (0xBA). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_START_STRAFE_RIGHT' (0xB9). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_HEARTBEAT' (0xEE). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_FALL_LAND' (0xC9). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_STOP_STRAFE' (0xBA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_JUMP' (0xBB). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_FALL_LAND' (0xC9). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_JUMP' (0xBB). Size: '48' not handled.
+~Opcode: 'CMSG_MOVE_FALL_RESET' (0x2CA). Size: '48' not handled.
+~Opcode: 'MSG_MOVE_FALL_LAND' (0xC9). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_START_STRAFE_LEFT' (0xB8). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_STOP_STRAFE' (0xBA). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_START_TURN_LEFT' (0xBC). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_STOP' (0xB7). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_STOP_TURN' (0xBE). Size: '32' not handled.
+^Selected node '266,139160' = 'WORLD\LORDAERON\TIRISFALGLADE\PASSIVEDOODADS\TREES\TIRISFALLGLADECANOPYTREE04.M2'.
+^Selected node '281,552338' = 'WORLD\LORDAERON\TIRISFALGLADE\PASSIVEDOODADS\TREES\TIRISFALLGLADECANOPYTREE06.M2'.
+^Selected node '287,342377' = 'WORLD\LORDAERON\TIRISFALGLADE\PASSIVEDOODADS\TREES\TIRISFALLGLADECANOPYTREE05.M2'.
+^Selected node '59,859215' = 'Creature\DarkHound\DarkHound.m2'.
+^Selected node '79,365189' = 'Creature\FelBat\FelBat.m2'.
+^Selected node '74,820313' = 'WORLD\LORDAERON\TIRISFALGLADE\PASSIVEDOODADS\TREES\TIRISFALLGLADECANOPYTREE04.M2'.
+^Selected node '79,313477' = 'WORLD\LORDAERON\TIRISFALGLADE\PASSIVEDOODADS\TREES\TIRISFALLGLADECANOPYTREE05.M2'.
+^Selected node '90,282715' = 'WORLD\LORDAERON\TIRISFALGLADE\PASSIVEDOODADS\TREES\TIRISFALLGLADECANOPYTREE04.M2'.
+^Selected node '869,289551' = 'WORLD\AZEROTH\REDRIDGE\PASSIVEDOODADS\ROCKS\REDRIDGEROCK01.M2'.
+^---Create WoWGameObjectMOTransport with Type 'MoTransport', Entry '0', Counter '2'
+~Opcode: 'SMSG_HIGHEST_THREAT_UPDATE' (0x482). Size: '29' not handled.
+~Opcode: 'SMSG_AI_REACTION' (0x13C). Size: '12' not handled.
+~Opcode: 'SMSG_ATTACK_START' (0x143). Size: '16' not handled.
+~Opcode: 'SMSG_HIGHEST_THREAT_UPDATE' (0x482). Size: '29' not handled.
+~Opcode: 'SMSG_AI_REACTION' (0x13C). Size: '12' not handled.
+~Opcode: 'SMSG_ATTACK_START' (0x143). Size: '16' not handled.
+~Opcode: 'SMSG_HIGHEST_THREAT_UPDATE' (0x482). Size: '29' not handled.
+~Opcode: 'SMSG_ATTACK_STOP' (0x144). Size: '12' not handled.
+~Opcode: 'SMSG_ATTACKERSTATEUPDATE' (0x14A). Size: '48' not handled.
+~Opcode: 'SMSG_ATTACK_STOP' (0x144). Size: '18' not handled.
+~Opcode: 'SMSG_THREAT_REMOVE' (0x484). Size: '14' not handled.
+~Opcode: 'SMSG_THREAT_CLEAR' (0x485). Size: '7' not handled.
+~Opcode: 'SMSG_ATTACK_STOP' (0x144). Size: '18' not handled.
+~Opcode: 'SMSG_THREAT_REMOVE' (0x484). Size: '14' not handled.

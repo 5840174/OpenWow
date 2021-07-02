@@ -372,9 +372,6 @@
     <ClCompile Include="M2\M2_LightComponent.cpp">
       <Filter>M2\SceneNode &amp; Components\Components</Filter>
     </ClCompile>
-    <ClCompile Include="M2\M2_ParticleSystem.cpp">
-      <Filter>M2\Parts\Parts_Miscellaneous\Particles</Filter>
-    </ClCompile>
     <ClCompile Include="M2\M2_SkeletonComponent.cpp">
       <Filter>M2\SceneNode &amp; Components\Components</Filter>
     </ClCompile>
@@ -500,6 +497,9 @@
     </ClCompile>
     <ClCompile Include="Renderer\RenderPass_M2ParticlesList.cpp">
       <Filter>Renderer\PassesList</Filter>
+    </ClCompile>
+    <ClCompile Include="M2\M2_Part_ParticleSystem.cpp">
+      <Filter>M2\Parts\Parts_Miscellaneous\Particles</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -881,12 +881,6 @@
     <ClInclude Include="M2\M2_LightComponent.h">
       <Filter>M2\SceneNode &amp; Components\Components</Filter>
     </ClInclude>
-    <ClInclude Include="M2\M2_ParticleSystem.h">
-      <Filter>M2\Parts\Parts_Miscellaneous\Particles</Filter>
-    </ClInclude>
-    <ClInclude Include="M2\M2_Particle.h">
-      <Filter>M2\Parts\Parts_Miscellaneous\Particles</Filter>
-    </ClInclude>
     <ClInclude Include="M2\M2_SkeletonComponent.h">
       <Filter>M2\SceneNode &amp; Components\Components</Filter>
     </ClInclude>
@@ -1045,6 +1039,12 @@
     </ClInclude>
     <ClInclude Include="Renderer\RenderPass_M2ParticlesList.h">
       <Filter>Renderer\PassesList</Filter>
+    </ClInclude>
+    <ClInclude Include="M2\M2_Part_Particle.h">
+      <Filter>M2\Parts\Parts_Miscellaneous\Particles</Filter>
+    </ClInclude>
+    <ClInclude Include="M2\M2_Part_ParticleSystem.h">
+      <Filter>M2\Parts\Parts_Miscellaneous\Particles</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

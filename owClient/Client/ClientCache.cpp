@@ -22,82 +22,95 @@ CClientCache::CClientCache(CWoWWorld & world)
 	m_World.AddHandler(SMSG_CREATURE_QUERY_RESPONSE, std::bind(&CClientCache::On_SMSG_CREATURE_QUERY_RESPONSE, this, std::placeholders::_1));
 }
 
-void CClientCache::SendQueryResponce(CWoWObjectGuid::EntryType_t Entry, CWoWObjectGuid Guid)
+void CClientCache::SendGameObjectQueryResponce(CWoWGuid::EntryType_t Entry, CWoWGuid Guid, const std::shared_ptr<IClientCacheGameobjectResponseListener>& Callback)
 {
-	EWoWObjectTypeID typeID = Guid.GetTypeId();
 	if (Entry == 0)
-		throw CException("CClientCache::SendQueryResponce: Entry is 0.");
+		throw CException("CClientCache::SendGameObjectQueryResponce: Entry is 0.");
 
-	switch (typeID)
+	if (Guid.GetTypeId() != EWoWObjectTypeID::TYPEID_GAMEOBJECT)
+		throw CException("CClientCache::SendGameObjectQueryResponce: TypeID must be GameObject. %s - '%d'.", Guid.GetTypeName(), Guid.GetTypeId());
+
+	const auto& cacheGameObjectsIt = m_CacheGameObjects.find(Entry);
+	if (cacheGameObjectsIt != m_CacheGameObjects.end())
 	{
-		case EWoWObjectTypeID::TYPEID_GAMEOBJECT:
+		if (cacheGameObjectsIt->second != nullptr)
 		{
-			const auto& cacheGameObjectsIt = m_CacheGameObjects.find(Entry);
-			if (cacheGameObjectsIt != m_CacheGameObjects.end())
+			if (Callback != nullptr && cacheGameObjectsIt->second != nullptr)
 			{
-				// Callback
-				const auto& gameObjectCallbacksIt = m_GameObjectCallbacks.find(Entry);
-				if (gameObjectCallbacksIt != m_GameObjectCallbacks.end())
-				{
-					for (const auto& callbackIt : gameObjectCallbacksIt->second)
-						if (callbackIt != nullptr)
-							callbackIt(Entry, cacheGameObjectsIt->second);
-					m_GameObjectCallbacks.erase(gameObjectCallbacksIt);
-				}
-
-				return;
+				Callback->OnTemplate(Entry, cacheGameObjectsIt->second);
 			}
-
-			CClientPacket queryInfo(CMSG_GAMEOBJECT_QUERY);
-			queryInfo << Entry;
-			queryInfo << Guid;
-			m_World.SendPacket(queryInfo);
-
-			// Add to cache, to prevent next requests
-			m_CacheGameObjects[Entry] = nullptr;
 		}
-		break;
-
-		case EWoWObjectTypeID::TYPEID_UNIT:
+		else
 		{
-			if (m_CacheCreatures.find(Entry) != m_CacheCreatures.end())
-				return;
-
-			CClientPacket queryInfo(CMSG_CREATURE_QUERY);
-			queryInfo << Entry;
-			queryInfo << Guid;
-			m_World.SendPacket(queryInfo);
-
-			// Add to cache, to prevent next requests
-			m_CacheCreatures[Entry] = nullptr;
+			m_GameObjectCallbacks[Entry].push_back(Callback);
 		}
-		break;
+
+		return;
 	}
+	else
+	{
+		m_GameObjectCallbacks[Entry].push_back(Callback);
+	}
+
+	CClientPacket queryInfo(CMSG_GAMEOBJECT_QUERY);
+	queryInfo << Entry;
+	queryInfo << Guid;
+	m_World.SendPacket(queryInfo);
+
+	// Add to cache, to prevent next requests
+	m_CacheGameObjects[Entry] = nullptr;
 }
 
-void CClientCache::SendQueryResponceWithCallback(CWoWObjectGuid::EntryType_t Entry, CWoWObjectGuid Guid, std::function<void(CWoWObjectGuid::EntryType_t, const std::shared_ptr<SGameObjectQueryResult>&)> OnGameObjectQueryResponceReceived)
+void CClientCache::SendCreatureQueryResponce(CWoWGuid::EntryType_t Entry, CWoWGuid Guid, const std::shared_ptr<IClientCacheCreatureResponseListener>& Callback)
 {
-	SendQueryResponce(Entry, Guid);
-	m_GameObjectCallbacks[Entry].push_back(OnGameObjectQueryResponceReceived);
+	if (Entry == 0)
+		throw CException("CClientCache::SendCreatureQueryResponce: Entry is 0.");
+
+	if (Guid.GetTypeId() != EWoWObjectTypeID::TYPEID_UNIT)
+		throw CException("CClientCache::SendCreatureQueryResponce: TypeID must be Creature. %s - '%d'.", Guid.GetTypeName(), Guid.GetTypeId());
+
+	const auto& cacheCreatureIt = m_CacheCreatures.find(Entry);
+	if (cacheCreatureIt != m_CacheCreatures.end())
+	{
+		if (cacheCreatureIt->second != nullptr)
+		{
+			if (Callback != nullptr)
+			{
+				Callback->OnTemplate(Entry, cacheCreatureIt->second);
+			}
+		}
+		else
+		{
+			m_CreatureCallbacks[Entry].push_back(Callback);
+		}
+
+		return;
+	}
+	else
+	{
+		m_CreatureCallbacks[Entry].push_back(Callback);
+	}
+
+	CClientPacket queryInfo(CMSG_CREATURE_QUERY);
+	queryInfo << Entry;
+	queryInfo << Guid;
+	m_World.SendPacket(queryInfo);
+
+	// Add to cache, to prevent next requests
+	m_CacheCreatures[Entry] = nullptr;
 }
 
 bool CClientCache::On_SMSG_GAMEOBJECT_QUERY_RESPONSE(CServerPacket& Bytes)
 {
 	uint32 entryIDWIthFlag;
-	Bytes.read(&entryIDWIthFlag);
+	Bytes >> entryIDWIthFlag;
 	uint32 entryIDWIthoutFlag = entryIDWIthFlag & ~(0x80000000);
-
-	//const auto& cacheGameObjectsIt = m_CacheGameObjects.find(entryIDWIthoutFlag);
-	//if (cacheGameObjectsIt == m_CacheGameObjects.end())
-	//	throw CException("Unexpected behaviour");
 
 	if (entryIDWIthFlag & 0x80000000)
 	{
 		Log::Warn("CClientCache: On_SMSG_GAMEOBJECT_QUERY_RESPONSE is not allowed.");
 		return false;
 	}
-
-
 
 	std::shared_ptr<SGameObjectQueryResult> gameObjectQueryResult = MakeShared(SGameObjectQueryResult, entryIDWIthoutFlag);
 	gameObjectQueryResult->Fill(Bytes);
@@ -109,8 +122,8 @@ bool CClientCache::On_SMSG_GAMEOBJECT_QUERY_RESPONSE(CServerPacket& Bytes)
 	if (gameObjectCallbacksIt != m_GameObjectCallbacks.end())
 	{
 		for (const auto& callbackIt : gameObjectCallbacksIt->second)
-			if (callbackIt != nullptr)
-				callbackIt(entryIDWIthoutFlag, gameObjectQueryResult);
+			if (auto lockedCallback = callbackIt.lock())
+				lockedCallback->OnTemplate(entryIDWIthoutFlag, gameObjectQueryResult);
 		m_GameObjectCallbacks.erase(gameObjectCallbacksIt);
 	}
 
@@ -120,7 +133,7 @@ bool CClientCache::On_SMSG_GAMEOBJECT_QUERY_RESPONSE(CServerPacket& Bytes)
 bool CClientCache::On_SMSG_CREATURE_QUERY_RESPONSE(CServerPacket& Bytes)
 {
 	uint32 entryIDWIthFlag;
-	Bytes.read(&entryIDWIthFlag);
+	Bytes >> entryIDWIthFlag;
 	uint32 entryIDWIthoutFlag = entryIDWIthFlag & ~(0x80000000);
 
 	if (entryIDWIthFlag & 0x80000000)
@@ -133,5 +146,16 @@ bool CClientCache::On_SMSG_CREATURE_QUERY_RESPONSE(CServerPacket& Bytes)
 	creatureQueryResult->Fill(Bytes);
 	creatureQueryResult->Print();
 	m_CacheCreatures[creatureQueryResult->entry] = creatureQueryResult;
+
+	// Callback
+	const auto& creatureCallbacksIt = m_CreatureCallbacks.find(entryIDWIthoutFlag);
+	if (creatureCallbacksIt != m_CreatureCallbacks.end())
+	{
+		for (const auto& callbackIt : creatureCallbacksIt->second)
+			if (auto lockedCallback = callbackIt.lock())
+				lockedCallback->OnTemplate(entryIDWIthoutFlag, creatureQueryResult);
+		m_CreatureCallbacks.erase(creatureCallbacksIt);
+	}
+
 	return true;
 }

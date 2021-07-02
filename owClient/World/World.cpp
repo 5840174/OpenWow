@@ -128,7 +128,7 @@ void CWoWWorld::S_SMSG_MONSTER_MOVE(CServerPacket & Buffer)
 
 	Buffer.seekRelative(1);
 
-	CWoWObjectGuid guid(packedGUID);
+	CWoWGuid guid(packedGUID);
 	if (guid.GetTypeId() != EWoWObjectTypeID::TYPEID_UNIT)
 		throw CException("CWoWWorld::S_SMSG_MONSTER_MOVE: Movement packet accept only EWoWObjectTypeID::TYPEID_UNIT.");
 
@@ -143,7 +143,7 @@ void CWoWWorld::S_SMSG_DESTROY_OBJECT(CServerPacket & Buffer)
 {
 	uint64 guid;
 	Buffer >> guid;
-	CWoWObjectGuid objectGuid(guid);
+	CWoWGuid objectGuid(guid);
 
 	uint8 isOnDeath;
 	Buffer >> isOnDeath;

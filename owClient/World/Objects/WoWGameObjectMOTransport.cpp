@@ -8,7 +8,7 @@
 
 #include "Client/TaxiStorage.h"
 
-WoWGameObjectMOTransport::WoWGameObjectMOTransport(IScene & Scene, CWoWWorld & WoWWorld, CWoWObjectGuid Guid)
+WoWGameObjectMOTransport::WoWGameObjectMOTransport(IScene & Scene, CWoWWorld & WoWWorld, CWoWGuid Guid)
 	: WoWGameObject(Scene, WoWWorld, Guid)
 	, m_PathID(0)
 	, m_PathProgress(0.0f)
@@ -20,6 +20,32 @@ WoWGameObjectMOTransport::~WoWGameObjectMOTransport()
 uint32 WoWGameObjectMOTransport::GetPathID() const
 {
 	return m_PathID;
+}
+
+void WoWGameObjectMOTransport::OnValueUpdated(uint16 index)
+{
+	__super::OnValueUpdated(index);
+
+	if (index == GAMEOBJECT_DYNAMIC)
+	{
+		uint16 pathProgress = m_Values.GetUInt16Value(GAMEOBJECT_DYNAMIC, 1);
+		m_PathProgress = float(pathProgress) / 65535.0f;
+	}
+}
+
+void WoWGameObjectMOTransport::OnTemplate(CWoWGuid::EntryType_t Entry, const std::shared_ptr<SGameObjectQueryResult>& QueryResult)
+{
+	__super::OnTemplate(Entry, QueryResult);
+
+	m_TransportName = QueryResult->Name;
+	m_PathID = QueryResult->moTransport.taxiPathId;
+
+	const auto& taxiNodes = GetWoWWorld().GetTaxiStorage().GetPathNodes(m_PathID);
+
+	auto path = MakeShared(CWoWPath);
+	for (const auto& taxiNodesIt : taxiNodes)
+		path->AddPathNode(MakeShared(CWoWPathNode, fromGameToReal(taxiNodesIt.Position)));
+	m_WoWPath = path;
 }
 
 
@@ -75,26 +101,11 @@ void WoWGameObjectMOTransport::Update(const UpdateEventArgs & e)
 	//Log::Print("GAMEOBJECT_DYNAMIC: %s - (uint %d) (float %f) Nodes %d", m_GameObjectTemplate->Name.c_str(), pathProgress, pathProgressFloat, taxiNodes.size());
 }
 
-std::shared_ptr<WoWGameObjectMOTransport> WoWGameObjectMOTransport::Create(CWoWWorld & WoWWorld, IScene & Scene, CWoWObjectGuid Guid)
+std::shared_ptr<WoWGameObjectMOTransport> WoWGameObjectMOTransport::Create(CWoWWorld & WoWWorld, IScene & Scene, CWoWGuid Guid)
 {
 	std::shared_ptr<WoWGameObjectMOTransport> thisObj = MakeShared(WoWGameObjectMOTransport, Scene, WoWWorld, Guid);
 	Log::Green("---Create WoWGameObjectMOTransport with Type '%s', Entry '%d', Counter '%d'", Guid.GetTypeName(), Guid.GetEntry(), Guid.GetCounter());
 	return thisObj;
-}
-
-void WoWGameObjectMOTransport::AfterCreate(IScene& Scene)
-{
-	if (m_HiddenNode != nullptr)
-	{
-		Log::Error("WoWGameObjectMOTransport: Try to call 'AfterCreate' for object.");
-		return;
-	}
-
-	__super::AfterCreate(Scene);
-
-	//uint16 pathProgress = GetUInt16Value(GAMEOBJECT_DYNAMIC, 1);
-	//float pathProgressFloat = float(pathProgress) / 65535.0f;
-	//m_PathProgress = pathProgressFloat;
 }
 
 void WoWGameObjectMOTransport::Destroy()

@@ -88,10 +88,10 @@ uint16 CWoWObjectValues::GetUInt16Value(uint16 index, uint8 offset) const
 	return *(((uint16*)&m_uint32Values[index]) + offset);
 }
 
-CWoWObjectGuid CWoWObjectValues::GetGuidValue(uint16 index) const
+CWoWGuid CWoWObjectValues::GetGuidValue(uint16 index) const
 {
 	_ASSERT(index + 1 < m_valuesCount || PrintIndexError(index, false));
-	return *((CWoWObjectGuid*)&(m_uint32Values[index]));
+	return *((CWoWGuid*)&(m_uint32Values[index]));
 }
 
 void CWoWObjectValues::SetInt32Value(uint16 index, int32 value)

@@ -21,7 +21,7 @@ namespace
 }
 
 
-WoWUnit::WoWUnit(IScene& Scene, CWoWWorld& WoWWorld, CWoWObjectGuid Guid)
+WoWUnit::WoWUnit(IScene& Scene, CWoWWorld& WoWWorld, CWoWGuid Guid)
 	: CWoWWorldObject(Scene, WoWWorld, Guid)
 	, DestinationPoint(0.0f)
 {
@@ -35,8 +35,8 @@ WoWUnit::~WoWUnit()
 
 void WoWUnit::ProcessMovementPacket(CByteBuffer & Bytes)
 {
-	Bytes >> m_MovementFlags;
-	Bytes >> m_MovementFlagsExtra;
+	Bytes.read(&m_MovementFlags);
+	Bytes.read(&m_MovementFlagsExtra);
 
 	uint32 timeMS;
 	Bytes >> timeMS;
@@ -56,7 +56,7 @@ void WoWUnit::ProcessMovementPacket(CByteBuffer & Bytes)
 	{
 		uint64 transportGuid;
 		Bytes.ReadPackedUInt64(transportGuid);
-		TransportID = CWoWObjectGuid(transportGuid);
+		TransportID = CWoWGuid(transportGuid);
 
 		glm::vec3 gamePositionTransportOffset;
 		Bytes >> gamePositionTransportOffset.x;
@@ -82,7 +82,7 @@ void WoWUnit::ProcessMovementPacket(CByteBuffer & Bytes)
 	}
 	else
 	{
-		TransportID = CWoWObjectGuid(0ull);
+		TransportID = CWoWGuid(0ull);
 	}
 
 	// 0x02200000
@@ -111,11 +111,11 @@ void WoWUnit::ProcessMovementPacket(CByteBuffer & Bytes)
 
 void WoWUnit::ProcessMonsterMove(CByteBuffer & Bytes)
 {
-	glm::vec3 gamePosition;
-	Bytes >> gamePosition.x;
-	Bytes >> gamePosition.y;
-	Bytes >> gamePosition.z;
-	Position = fromGameToReal(gamePosition);
+	glm::vec3 firstSplinePointGame;
+	Bytes >> firstSplinePointGame.x;
+	Bytes >> firstSplinePointGame.y;
+	Bytes >> firstSplinePointGame.z;
+	Position = fromGameToReal(firstSplinePointGame);
 
 	uint32 splineID;
 	Bytes >> splineID;
@@ -185,6 +185,10 @@ void WoWUnit::ProcessMonsterMove(CByteBuffer & Bytes)
 
 	if (splineflags & Movement::MoveSplineFlag::Mask_CatmullRom)
 	{
+		auto path = MakeShared(CWoWPath);
+
+		path->AddPathNode(MakeShared(CWoWPathNode, fromGameToReal(firstSplinePointGame)));
+
 		uint32 pathPointsCnt;
 		Bytes >> pathPointsCnt;
 
@@ -194,56 +198,60 @@ void WoWUnit::ProcessMonsterMove(CByteBuffer & Bytes)
 			Bytes >> gamePathPoint.x;
 			Bytes >> gamePathPoint.y;
 			Bytes >> gamePathPoint.z;
+
+			path->AddPathNode(MakeShared(CWoWPathNode, fromGameToReal(gamePathPoint)));
 		}
+		
+		m_WoWPath = path;
 
 		//(splineflags.cyclic)
 	}
 	else // linear
 	{
+		auto path = MakeShared(CWoWPath);
+
 		uint32 count;
 		Bytes >> count;
 
-		glm::vec3 gameLastPoint;
-		Bytes >> gameLastPoint.x;
-		Bytes >> gameLastPoint.y;
-		Bytes >> gameLastPoint.z;
-		DestinationPoint = fromGameToReal(gameLastPoint);
+		glm::vec3 lastSplinePointGame;
+		Bytes >> lastSplinePointGame.x;
+		Bytes >> lastSplinePointGame.y;
+		Bytes >> lastSplinePointGame.z;
+		DestinationPoint = fromGameToReal(lastSplinePointGame);
 
-		if (count > 1)
+		path->AddPathNode(MakeShared(CWoWPathNode, fromGameToReal(firstSplinePointGame)));
+
+		glm::vec3 middle = (firstSplinePointGame + lastSplinePointGame) / 2.0f;
+
+		for (uint32 i = 1; i < count; ++i)
 		{
-			for (uint32 i = 1; i < count; ++i)
-			{
-				uint32 packedPos;
-				Bytes >> packedPos;
+			uint32 packedPos;
+			Bytes >> packedPos;
 
-				//G3D::Vector3 middle = (real_path[0] + real_path[last_idx]) / 2.f;
-				//G3D::Vector3 offset;
-				// first and last points already appended
-				//for (uint32 i = 1; i < last_idx; ++i)
-				//{
-				//	offset = middle - real_path[i];
+			// this is offsets to path
+			float x2 = ((packedPos      ) & 0x7FF) * 0.25f;
+			float y2 = ((packedPos >> 11) & 0x7FF) * 0.25f;
+			float z2 = ((packedPos >> 22) & 0x3FF) * 0.25f;
 
-				// this is offsets to path
-				float x2 = ((packedPos) & 0x7FF) * 0.25f;
-				float y2 = ((packedPos >> 11) & 0x7FF) * 0.25f;
-				float z2 = ((packedPos >> 22) & 0x3FF) * 0.25f;
-			}
+			glm::vec3 pOffs(x2, y2, z2);
+
+			path->AddPathNode(MakeShared(CWoWPathNode, fromGameToReal(middle - pOffs)));
 		}
+
+		path->AddPathNode(MakeShared(CWoWPathNode, fromGameToReal(lastSplinePointGame)));
+
+		m_WoWPath = path;
 	}
 
 	CommitPositionAndRotation();
-}
-
-void WoWUnit::OnValueUpdated(uint16 index)
-{
-	
-
 }
 
 void WoWUnit::OnValuesUpdated(const UpdateMask & Mask)
 {
 	if (Mask.GetBit(UNIT_FIELD_DISPLAYID))
 	{
+		uint32 diplayID = m_Values.GetUInt32Value(UNIT_FIELD_DISPLAYID);
+
 		if (m_HiddenNode != nullptr)
 		{
 			Log::Warn("WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.");
@@ -251,22 +259,20 @@ void WoWUnit::OnValuesUpdated(const UpdateMask & Mask)
 		}
 
 		CWorldObjectCreator creator(GetScene().GetBaseManager());
-		m_HiddenNode = creator.BuildCreatureFromDisplayInfo(GetScene().GetBaseManager().GetApplication().GetRenderDevice(), GetScene(), m_Values.GetUInt32Value(UNIT_FIELD_DISPLAYID));
+		m_HiddenNode = creator.BuildCreatureFromDisplayInfo(GetScene().GetBaseManager().GetApplication().GetRenderDevice(), GetScene(), diplayID);
 
-		/*
-		const DBC_CreatureDisplayInfoRecord * creatureDisplayInfo = GetBaseManager().GetManager<CDBCStorage>()->DBC_CreatureDisplayInfo()[displayInfo];
-		if (creatureDisplayInfo == nullptr)
-			throw CException("Creature display info '%d' don't found.", displayInfo);
+		//const DBC_CreatureDisplayInfoRecord * creatureDisplayInfo = GetBaseManager().GetManager<CDBCStorage>()->DBC_CreatureDisplayInfo()[diplayID];
+		//if (creatureDisplayInfo == nullptr)
+		//	throw CException("Creature display info '%d' don't found.", displayInfo);
 
-		const DBC_CreatureModelDataRecord* creatureModelDataRecord = GetBaseManager().GetManager<CDBCStorage>()->DBC_CreatureModelData()[creatureDisplayInfo->Get_Model()];
-		if (creatureModelDataRecord == nullptr)
-			throw CException("Creature model data '%d' don't found.", creatureDisplayInfo->Get_Model());
+		//const DBC_CreatureModelDataRecord* creatureModelDataRecord = GetBaseManager().GetManager<CDBCStorage>()->DBC_CreatureModelData()[creatureDisplayInfo->Get_Model()];
+		//if (creatureModelDataRecord == nullptr)
+		//	throw CException("Creature model data '%d' don't found.", creatureDisplayInfo->Get_Model());
 
-		float scaleFromCreature = creatureDisplayInfo->Get_Scale();
-		float scaleFromModel = creatureModelDataRecord->Get_Scale();
-		float scale = GetFloatValue(OBJECT_FIELD_SCALE_X);
-		//m_HiddenNode->SetScale(glm::vec3(scale));
-		*/
+		//float scaleFromCreature = creatureDisplayInfo->Get_Scale();
+		//float scaleFromModel = creatureModelDataRecord->Get_Scale();
+		float scale = m_Values.GetFloatValue(OBJECT_FIELD_SCALE_X);
+		m_HiddenNode->SetScale(glm::vec3(scale));
 	}
 
 	if (Mask.GetBit(UNIT_VIRTUAL_ITEM_SLOT_ID + 0))
@@ -304,20 +310,6 @@ void WoWUnit::OnValuesUpdated(const UpdateMask & Mask)
 }
 
 
-
-float WoWUnit::GetSpeed(UnitMoveType MoveType) const
-{
-	return m_Speed[MoveType];
-}
-
-void WoWUnit::SetSpeed(UnitMoveType MoveType, float Speed)
-{
-	m_Speed[MoveType] = Speed;
-}
-
-
-
-
 //
 // ISceneNode
 //
@@ -343,7 +335,8 @@ void WoWUnit::Update(const UpdateEventArgs & e)
 		glm::vec3 leftDirection = -rightDirection;
 
 		glm::quat lookAtQuat = glm::quatLookAt(leftDirection, glm::vec3(0.0f, 1.0f, 0.0f));
-		//SetLocalRotationQuaternion(lookAtQuat);
+		if (m_HiddenNode)
+			m_HiddenNode->SetLocalRotationQuaternion(lookAtQuat);
 	}
 }
 
@@ -352,16 +345,11 @@ void WoWUnit::Update(const UpdateEventArgs & e)
 //
 // Protected
 //
-std::shared_ptr<WoWUnit> WoWUnit::Create(CWoWWorld& WoWWorld, IScene& Scene, CWoWObjectGuid Guid)
+std::shared_ptr<WoWUnit> WoWUnit::Create(CWoWWorld& WoWWorld, IScene& Scene, CWoWGuid Guid)
 {
 	std::shared_ptr<WoWUnit> thisObj = MakeShared(WoWUnit, Scene, WoWWorld, Guid);
 	//Log::Error("WoWUnit created. ID  = %d. HIGH = %d, ENTRY = %d, COUNTER = %d", Guid.GetRawValue(), Guid.GetHigh(), Guid.GetEntry(), Guid.GetCounter());
 	return thisObj;
-}
-
-void WoWUnit::AfterCreate(IScene& Scene)
-{
-
 }
 
 void WoWUnit::Destroy()

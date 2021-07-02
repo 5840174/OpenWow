@@ -82,9 +82,9 @@ void CSceneWoW::Initialize()
 	//const float y = 30; //1 barrens
 	//const uint32 mapID = 1;
 
-	//const float x = 26; //530 outland
-	//const float y = 32; //530 outland
-	//const uint32 mapID = 530;
+	const float x = 26; //530 outland
+	const float y = 32; //530 outland
+	const uint32 mapID = 530;
 
 	//const float x = 30; //571 nortrend
 	//const float y = 21; //571 nortrend
@@ -96,9 +96,9 @@ void CSceneWoW::Initialize()
 	//const uint32 mapID = 451;
 
 	// Ulduar
-	const float x = 0; //571 nortrend
-	const float y = 0; //571 nortrend
-	const uint32 mapID = 631;
+	//const float x = 0; //571 nortrend
+	//const float y = 0; //571 nortrend
+	//const uint32 mapID = 631;
 
 	if (true)
 	{
@@ -118,7 +118,7 @@ void CSceneWoW::Initialize()
 
 		//GetCameraController()->GetCamera()->SetPosition(glm::vec3(14300, 150, 20500));
 	}
-	else if (true)
+	else if (false)
 	{
 		m_WoWSkyManager->Load(0);
 
@@ -131,7 +131,7 @@ void CSceneWoW::Initialize()
 
 		GetCameraController()->GetCamera()->SetPosition(glm::vec3(0.0f));
 	}
-	else if (false)
+	else if (true)
 	{
 		m_WoWSkyManager->Load(0);
 
@@ -143,10 +143,10 @@ void CSceneWoW::Initialize()
 		auto name6 = "WORLD\\EXPANSION02\\DOODADS\\HOWLINGFJORD\\FOG\\HFJORD_FOG_01.M2";
 		auto name7 = "WORLD\\EXPANSION02\\DOODADS\\GENERIC\\WATERFALLS\\WATERFALLS_SET2_MED_TALL_WITHCHOP.M2";
 		auto name8 = "Creature\\spirithealer\\SpiritHealer.m2";
-
+		auto name9 = "WORLD\\EXPANSION02\\DOODADS\\GENERIC\\SCOURGE\\SC_BRAZIER1.M2";
 		
 
-		auto m2Model = GetBaseManager().GetManager<IWoWObjectsCreator>()->LoadM2(GetRenderDevice(), name8);
+		auto m2Model = GetBaseManager().GetManager<IWoWObjectsCreator>()->LoadM2(GetRenderDevice(), name9);
 
 		auto m2Instance = GetRootSceneNode()->CreateSceneNode<CM2_Base_Instance>(m2Model);
 		GetBaseManager().GetManager<ILoader>()->AddToLoadQueue(m2Instance);

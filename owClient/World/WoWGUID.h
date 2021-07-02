@@ -32,24 +32,24 @@ enum ZN_API EWoWObjectTypeID : uint8
 };
 
 
-class CWoWObjectGuid
+class CWoWGuid
 {
 public:
-	static const CWoWObjectGuid Empty;
+	static const CWoWGuid Empty;
 
 	typedef uint32 EntryType_t;
 	typedef uint32 CounterType_t;
 
-	CWoWObjectGuid()
+	CWoWGuid()
 		: _guid(0)
 	{ }
-	explicit CWoWObjectGuid(uint64 guid)
+	explicit CWoWGuid(uint64 guid)
 		: _guid(guid)
 	{ }
-	explicit CWoWObjectGuid(EWoWObjectHighGuid hi, EntryType_t entry, CounterType_t counter)
+	explicit CWoWGuid(EWoWObjectHighGuid hi, EntryType_t entry, CounterType_t counter)
 		: _guid(counter ? uint64(counter) | (uint64(entry) << 24) | (uint64(hi) << 48) : 0)
 	{ }
-	explicit CWoWObjectGuid(EWoWObjectHighGuid hi, CounterType_t counter)
+	explicit CWoWGuid(EWoWObjectHighGuid hi, CounterType_t counter)
 		: _guid(counter ? uint64(counter) | (uint64(hi) << 48) : 0)
 	{ }
 
@@ -62,7 +62,7 @@ public:
 	EntryType_t   GetEntry() const { return HasEntry() ? EntryType_t((_guid >> 24) & UI64LIT(0x0000000000FFFFFF)) : 0; }
 	CounterType_t  GetCounter()  const { return HasEntry() ? CounterType_t(_guid & UI64LIT(0x0000000000FFFFFF)) : CounterType_t(_guid & UI64LIT(0x00000000FFFFFFFF)); }
 	static CounterType_t GetMaxCounter(EWoWObjectHighGuid high) { return HasEntry(high) ? CounterType_t(0x00FFFFFF) : CounterType_t(0xFFFFFFFF); }
-	CWoWObjectGuid::CounterType_t GetMaxCounter() const { return GetMaxCounter(GetHigh()); }
+	CWoWGuid::CounterType_t GetMaxCounter() const { return GetMaxCounter(GetHigh()); }
 
 	bool IsEmpty()             const { return _guid == 0; }
 	bool IsCreature()          const { return GetHigh() == EWoWObjectHighGuid::Unit; }
@@ -107,9 +107,9 @@ public:
 	EWoWObjectTypeID GetTypeId() const { return GetTypeId(GetHigh()); }
 
 	bool operator!() const { return IsEmpty(); }
-	bool operator==(CWoWObjectGuid const& guid) const { return GetRawValue() == guid.GetRawValue(); }
-	bool operator!=(CWoWObjectGuid const& guid) const { return GetRawValue() != guid.GetRawValue(); }
-	bool operator< (CWoWObjectGuid const& guid) const { return GetRawValue() < guid.GetRawValue(); }
+	bool operator==(CWoWGuid const& guid) const { return GetRawValue() == guid.GetRawValue(); }
+	bool operator!=(CWoWGuid const& guid) const { return GetRawValue() != guid.GetRawValue(); }
+	bool operator< (CWoWGuid const& guid) const { return GetRawValue() < guid.GetRawValue(); }
 
 	static char const* GetTypeName(EWoWObjectHighGuid high);
 	char const* GetTypeName() const { return !IsEmpty() ? GetTypeName(GetHigh()) : "None"; }
@@ -140,12 +140,12 @@ private:
 
 	bool HasEntry() const { return HasEntry(GetHigh()); }
 
-	static CWoWObjectGuid Global(EWoWObjectHighGuid type, CounterType_t counter);
-	static CWoWObjectGuid MapSpecific(EWoWObjectHighGuid type, uint32 entry, CounterType_t counter);
+	static CWoWGuid Global(EWoWObjectHighGuid type, CounterType_t counter);
+	static CWoWGuid MapSpecific(EWoWObjectHighGuid type, uint32 entry, CounterType_t counter);
 
-	explicit CWoWObjectGuid(uint32 const&) = delete;                 // no implementation, used to catch wrong type assignment
-	CWoWObjectGuid(EWoWObjectHighGuid, uint32, uint64 counter) = delete;       // no implementation, used to catch wrong type assignment
-	CWoWObjectGuid(EWoWObjectHighGuid, uint64 counter) = delete;               // no implementation, used to catch wrong type assignment
+	explicit CWoWGuid(uint32 const&) = delete;                 // no implementation, used to catch wrong type assignment
+	CWoWGuid(EWoWObjectHighGuid, uint32, uint64 counter) = delete;       // no implementation, used to catch wrong type assignment
+	CWoWGuid(EWoWObjectHighGuid, uint64 counter) = delete;               // no implementation, used to catch wrong type assignment
 
 	uint64 _guid;
 };
@@ -154,9 +154,9 @@ private:
 namespace std
 {
 	template<>
-	struct hash<CWoWObjectGuid>
+	struct hash<CWoWGuid>
 	{
-		size_t operator()(const CWoWObjectGuid& Guid) const noexcept
+		size_t operator()(const CWoWGuid& Guid) const noexcept
 		{
 			return Guid.GetRawValue();
 		}
@@ -164,5 +164,5 @@ namespace std
 }
 
 
-CByteBuffer& operator<<(CByteBuffer& buf, CWoWObjectGuid const& guid);
-CByteBuffer& operator>>(CByteBuffer& buf, CWoWObjectGuid&       guid);
+CByteBuffer& operator<<(CByteBuffer& buf, CWoWGuid const& guid);
+CByteBuffer& operator>>(CByteBuffer& buf, CWoWGuid&       guid);

@@ -8,11 +8,11 @@ class ZN_API WoWDynamicObject
 	: public WoWObject
 {
 public:
-	WoWDynamicObject(CWoWObjectGuid Guid);
+	WoWDynamicObject(CWoWGuid Guid);
 	virtual ~WoWDynamicObject();
 
 public:
-	static std::shared_ptr<WoWDynamicObject> Create(IScene& Scene, CWoWObjectGuid Guid);
+	static std::shared_ptr<WoWDynamicObject> Create(IScene& Scene, CWoWGuid Guid);
 
 private:
 

@@ -62,12 +62,13 @@ enum ZN_API ObjectTypeMask : uint16
 };*/
 
 class ZN_API WoWObject
+	: public std::enable_shared_from_this<WoWObject>
 {
 public:
-	WoWObject(CWoWObjectGuid Guid);
+	WoWObject(CWoWGuid Guid);
 	virtual ~WoWObject();
 
-	CWoWObjectGuid GetWoWGUID() const { return m_GUID; }
+	CWoWGuid GetWoWGUID() const { return m_GUID; }
 	uint16 GetObjectType() const { return m_ObjectType; }
 	bool IsWoWType(uint16 mask) const { return (mask & m_ObjectType) != 0; }
 
@@ -77,13 +78,12 @@ public:
 	virtual void OnValuesUpdated(const UpdateMask& Mask);
 
 public: // Creation
-	static std::shared_ptr<WoWObject> Create(IScene& Scene, CWoWObjectGuid Guid);
-	virtual void AfterCreate(IScene& Scene);
+	static std::shared_ptr<WoWObject> Create(IScene& Scene, CWoWGuid Guid);
 	virtual void Destroy();
 
 
 protected:
-	CWoWObjectGuid m_GUID;
+	CWoWGuid m_GUID;
 	CWoWObjectValues m_Values;
 	uint16 m_ObjectType;
 };

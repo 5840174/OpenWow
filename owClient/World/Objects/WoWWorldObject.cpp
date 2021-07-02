@@ -9,7 +9,7 @@
 #include "../World.h"
 #include "WoWGameObjectMOTransport.h"
 
-CWoWWorldObject::CWoWWorldObject(IScene& Scene, CWoWWorld& WoWWorld, CWoWObjectGuid Guid)
+CWoWWorldObject::CWoWWorldObject(IScene& Scene, CWoWWorld& WoWWorld, CWoWGuid Guid)
 	: WoWObject(Guid)
 	, m_Scene(Scene)
 	, m_WoWWorld(WoWWorld)

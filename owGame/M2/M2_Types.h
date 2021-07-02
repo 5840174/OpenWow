@@ -350,7 +350,19 @@ struct SM2_Particle
 		uint32 unk0x10000 : 1;             // ChooseRandomTexture
 		uint32 unk0x20000 : 1;             // STYLE: "Outward" particles, most emitters have this and their particles move away from the origin, when they don't the particles start at origin+(speed*life) and move towards the origin.
 		uint32 unk0x40000 : 1;             // STYLE: unknown. In a large proportion of particles this seems to be simply the opposite of the above flag, but in some (e.g. voidgod.m2 or wingedlionmount.m2) both flags are true.
-		uint32 : 13;
+		uint32 ScaleVaryAffectIndependently : 1;             // If set, ScaleVary affects x and y independently; if not set, ScaleVary.x affects x and y uniformly, and ScaleVary.y is not used.
+		
+		uint32 unk0x100000 : 1;
+		uint32 unk0x200000 : 1;            // Random FlipBookStart
+		uint32 unk0x400000 : 1;            // Ignores Distance (or 0x4000000?!, CMapObjDef::SetDoodadEmittersIgnoresDistance has this one)
+		uint32 IsGravityCompressed : 1;    // gravity values are compressed vectors instead of z-axis values (see Compressed Particle Gravity below)
+		
+		uint32 unk0x1000000 : 1;           // bone generator = bone, not joint
+		uint32 unk0x2000000 : 1;
+		uint32 unk0x4000000 : 1;           // do not throttle emission rate based on distance
+		uint32 unk0x8000000 : 1;
+
+		uint32 : 4;
 	} flags;
 
 	glm::vec3 Position;						// The position. Relative to the following bone.
@@ -377,28 +389,34 @@ struct SM2_Particle
 	uint16 textureDimensions_rows;            // for tiled DiffuseTextures
 	uint16 textureDimensions_columns;
 
+
 	M2Track<float> emissionSpeed;             // Base velocity at which particles are emitted.
 	M2Track<float> speedVariation;            // Random variation in particle emission speed. (range: 0 to 1)
 	
+
 	M2Track<float> verticalRange;             // Drifting away vertically. (range: 0 to pi) For plane generators, this is the maximum polar angle of the initial velocity; 
 											  // 0 makes the velocity straight up (+z). For sphere generators, this is the maximum elevation of the initial position; 
 											  // 0 makes the initial position entirely in the x-y plane (z=0).
 	
+
 	M2Track<float> horizontalRange;           // They can do it horizontally too! (range: 0 to 2*pi) For plane generators, this is the maximum azimuth angle of the initial velocity; 
 											  // 0 makes the velocity have no sideways (y-axis) component. 
 											  // For sphere generators, this is the maximum azimuth angle of the initial position.
 
 	M2Track<float> gravity;                   // Not necessarily a float; see below.
 
-	M2Track<float> lifespan;
+
+	M2Track<float> lifespan;                  // Number of seconds each particle continues to be drawn after its creation.[1]
 #if WOW_CLIENT_VERSION >= WOW_WOTLK_3_3_5
 	float lifespanVary;                       // An individual particle's lifespan is added to by lifespanVary * random(-1, 1)
 #endif
+
 
 	M2Track<float> emissionRate;
 #if WOW_CLIENT_VERSION >= WOW_WOTLK_3_3_5
 	float emissionRateVary;                   // This adds to the base emissionRate value the same way as lifespanVary. The random value is different every update.
 #endif
+
 
 	M2Track<float> emissionAreaLength;        // For plane generators, this is the width of the plane in the x-axis.
 											  // For sphere generators, this is the minimum radius.
@@ -429,6 +447,7 @@ struct SM2_Particle
 	float twinkleSpeed;                       // twinkleFPS; has something to do with the spread
 	float twinklePercent;                     // same mechanic as MDL twinkleOnOff but non-binary in 0.11.0
 	CRange twinkleScale;                     // min, max
+	
 	float burstMultiplier;                    // ivelScale; requires (flags & 0x40)
 	float drag;                               // For a non-zero values, instead of travelling linearly the particles seem to slow down sooner. Speed is multiplied by exp( -drag * t ).
 

@@ -8,9 +8,8 @@
 // Additional
 #include "../World.h"
 
-WoWGameObject::WoWGameObject(IScene& Scene, CWoWWorld& WoWWorld, CWoWObjectGuid Guid)
+WoWGameObject::WoWGameObject(IScene& Scene, CWoWWorld& WoWWorld, CWoWGuid Guid)
 	: CWoWWorldObject(Scene, WoWWorld, Guid)
-	, templateCreated(false)
 {
 	m_ObjectType |= TYPEMASK_GAMEOBJECT;
 	m_Values.SetValuesCount(GAMEOBJECT_END);
@@ -24,14 +23,10 @@ void WoWGameObject::OnValueUpdated(uint16 index)
 {
 	if (index == OBJECT_FIELD_ENTRY)
 	{
-		CWoWObjectGuid::EntryType_t obtainedEntry = m_Values.GetUInt32Value(index);
-		if (obtainedEntry != 0)
+		CWoWGuid::EntryType_t objectEntryID = m_Values.GetUInt32Value(index);
+		if (m_GameObjectTemplate == nullptr)
 		{
-			if (false == templateCreated && m_GameObjectTemplate == nullptr)
-			{
-				GetWoWWorld().GetClientCache().SendQueryResponceWithCallback(obtainedEntry, GetWoWGUID(), std::bind(&WoWGameObject::OnTemplateCallback, this, std::placeholders::_1, std::placeholders::_2));
-				templateCreated = true;
-			}
+			GetWoWWorld().GetClientCache().SendGameObjectQueryResponce(objectEntryID, GetWoWGUID(), std::dynamic_pointer_cast<WoWGameObject>(shared_from_this()));
 		}
 	}
 }
@@ -40,6 +35,8 @@ void WoWGameObject::OnValuesUpdated(const UpdateMask & Mask)
 {
 	if (Mask.GetBit(GAMEOBJECT_DISPLAYID))
 	{
+		uint32 diplayID = m_Values.GetUInt32Value(GAMEOBJECT_DISPLAYID);
+
 		if (m_HiddenNode != nullptr)
 		{
 			//Log::Warn("WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.");
@@ -49,13 +46,38 @@ void WoWGameObject::OnValuesUpdated(const UpdateMask & Mask)
 		try
 		{
 			CWorldObjectCreator creator(GetScene().GetBaseManager());
-			m_HiddenNode = creator.BuildGameObjectFromDisplayInfo(GetScene().GetBaseManager().GetApplication().GetRenderDevice(), GetScene(), m_Values.GetUInt32Value(GAMEOBJECT_DISPLAYID));
+			m_HiddenNode = creator.BuildGameObjectFromDisplayInfo(GetScene().GetBaseManager().GetApplication().GetRenderDevice(), GetScene(), diplayID);
+
+			//const DBC_CreatureDisplayInfoRecord * creatureDisplayInfo = GetBaseManager().GetManager<CDBCStorage>()->DBC_CreatureDisplayInfo()[diplayID];
+			//if (creatureDisplayInfo == nullptr)
+			//	throw CException("Creature display info '%d' don't found.", diplayID);
+
+			//const DBC_CreatureModelDataRecord* creatureModelDataRecord = GetBaseManager().GetManager<CDBCStorage>()->DBC_CreatureModelData()[creatureDisplayInfo->Get_Model()];
+			//if (creatureModelDataRecord == nullptr)
+			//	throw CException("Creature model data '%d' don't found.", creatureDisplayInfo->Get_Model());
+
+			//float scaleFromCreature = creatureDisplayInfo->Get_Scale();
+			//float scaleFromModel = creatureModelDataRecord->Get_Scale();
+			float scale = m_Values.GetFloatValue(OBJECT_FIELD_SCALE_X);
+			m_HiddenNode->SetScale(glm::vec3(scale));
+		
+
 		}
 		catch (const CException& e)
 		{
 			Log::Error("WoWGameObject::AfterCreate: Exception '%s'.", e.MessageCStr());
 		}
 	}
+}
+
+
+
+//
+// IClientCacheGameobjectResponseListener
+//
+void WoWGameObject::OnTemplate(CWoWGuid::EntryType_t Entry, const std::shared_ptr<SGameObjectQueryResult>& QueryResult)
+{
+	m_GameObjectTemplate = QueryResult;
 }
 
 
@@ -68,32 +90,16 @@ void WoWGameObject::Update(const UpdateEventArgs & e)
 	__super::Update(e);
 }
 
-void WoWGameObject::OnTemplateCallback(CWoWObjectGuid::EntryType_t entry, const std::shared_ptr<SGameObjectQueryResult>& QueryResult)
-{
-	//uint32 idFromValues = GetUInt32Value(OBJECT_FIELD_ENTRY);
-	//if (idFromValues != entry)
-	//{
-	//	Log::Error("WoWGameObject::OnTemplateCallback: %d to %d.", idFromValues, entry);
-	//	return;
-	//}
-
-	m_GameObjectTemplate = QueryResult;
-}
 
 
 
 //
 // Protected
 //
-std::shared_ptr<WoWGameObject> WoWGameObject::Create(CWoWWorld& WoWWorld, IScene& Scene, CWoWObjectGuid Guid)
+std::shared_ptr<WoWGameObject> WoWGameObject::Create(CWoWWorld& WoWWorld, IScene& Scene, CWoWGuid Guid)
 {
 	std::shared_ptr<WoWGameObject> thisObj = MakeShared(WoWGameObject, Scene, WoWWorld, Guid);
 	return thisObj;
-}
-
-void WoWGameObject::AfterCreate(IScene& Scene)
-{
-
 }
 
 void WoWGameObject::Destroy()

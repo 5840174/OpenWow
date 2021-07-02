@@ -23,8 +23,8 @@ void CWorldObjects::Update(const UpdateEventArgs & e)
 	for (const auto& wowPlayer : m_WoWPlayers)
 		wowPlayer.second->Update(e);
 
-	for (const auto& wowgameObject : m_WoWGameObject)
-		wowgameObject.second->Update(e);
+	for (const auto& wowGameObject : m_WoWGameObjects)
+		wowGameObject.second->Update(e);
 
 	for (const auto& wowCorpse : m_WoWCorpses)
 		wowCorpse.second->Update(e);
@@ -32,11 +32,14 @@ void CWorldObjects::Update(const UpdateEventArgs & e)
 
 void CWorldObjects::Accept(IWoWVisitor * WoWVisitor)
 {
-	for (const auto& wowgameObject : m_WoWGameObject)
-		WoWVisitor->VisitWoW(wowgameObject.second);
+	for (const auto& wowUnit : m_WoWUnits)
+		WoWVisitor->VisitWoW(wowUnit.second);
+
+	for (const auto& wowGameObject : m_WoWGameObjects)
+		WoWVisitor->VisitWoW(wowGameObject.second);
 }
 
-std::shared_ptr<WoWObject> CWorldObjects::GetWoWObject(CWoWObjectGuid ObjectGUID)
+std::shared_ptr<WoWObject> CWorldObjects::GetWoWObject(CWoWGuid ObjectGUID)
 {
 	if (ObjectGUID.GetTypeId() == EWoWObjectTypeID::TYPEID_OBJECT)
 	{
@@ -90,8 +93,8 @@ std::shared_ptr<WoWObject> CWorldObjects::GetWoWObject(CWoWObjectGuid ObjectGUID
 	}
 	else if (ObjectGUID.GetTypeId() == EWoWObjectTypeID::TYPEID_GAMEOBJECT)
 	{
-		const auto& objIterator = m_WoWGameObject.find(ObjectGUID);
-		if (objIterator != m_WoWGameObject.end())
+		const auto& objIterator = m_WoWGameObjects.find(ObjectGUID);
+		if (objIterator != m_WoWGameObjects.end())
 			return objIterator->second;
 
 		std::shared_ptr<WoWGameObject> object = nullptr;
@@ -99,7 +102,7 @@ std::shared_ptr<WoWObject> CWorldObjects::GetWoWObject(CWoWObjectGuid ObjectGUID
 			object = WoWGameObjectMOTransport::Create(m_WoWWorld, m_Scene, ObjectGUID);
 		else
 			object = WoWGameObject::Create(m_WoWWorld, m_Scene, ObjectGUID);
-		m_WoWGameObject[ObjectGUID] = object;
+		m_WoWGameObjects[ObjectGUID] = object;
 		return object;
 	}
 	else if (ObjectGUID.GetTypeId() == EWoWObjectTypeID::TYPEID_DYNAMICOBJECT)
@@ -123,10 +126,10 @@ std::shared_ptr<WoWObject> CWorldObjects::GetWoWObject(CWoWObjectGuid ObjectGUID
 		return object;
 	}
 
-	throw CException("CWorldObjects::IsWoWObjectExists: TypeID '%d' is unknown.", ObjectGUID.GetTypeId());
+	throw CException("CWorldObjects::GetWoWObject: TypeID '%d' is unknown.", ObjectGUID.GetTypeId());
 }
 
-bool CWorldObjects::IsWoWObjectExists(CWoWObjectGuid ObjectGUID)
+bool CWorldObjects::IsWoWObjectExists(CWoWGuid ObjectGUID)
 {
 	if (ObjectGUID.GetTypeId() == EWoWObjectTypeID::TYPEID_OBJECT)
 	{
@@ -150,7 +153,7 @@ bool CWorldObjects::IsWoWObjectExists(CWoWObjectGuid ObjectGUID)
 	}
 	else if (ObjectGUID.GetTypeId() == EWoWObjectTypeID::TYPEID_GAMEOBJECT)
 	{
-		return m_WoWGameObject.find(ObjectGUID) != m_WoWGameObject.end();
+		return m_WoWGameObjects.find(ObjectGUID) != m_WoWGameObjects.end();
 	}
 	else if (ObjectGUID.GetTypeId() == EWoWObjectTypeID::TYPEID_DYNAMICOBJECT)
 	{
@@ -166,7 +169,7 @@ bool CWorldObjects::IsWoWObjectExists(CWoWObjectGuid ObjectGUID)
 
 void CWorldObjects::EraseWoWObject(const std::shared_ptr<WoWObject>& WoWObject)
 {
-	CWoWObjectGuid objectGUID(WoWObject->GetWoWGUID());
+	CWoWGuid objectGUID(WoWObject->GetWoWGUID());
 
 	if (objectGUID.GetTypeId() == EWoWObjectTypeID::TYPEID_OBJECT)
 	{
@@ -200,9 +203,9 @@ void CWorldObjects::EraseWoWObject(const std::shared_ptr<WoWObject>& WoWObject)
 	}
 	else if (objectGUID.GetTypeId() == EWoWObjectTypeID::TYPEID_GAMEOBJECT)
 	{
-		auto it = m_WoWGameObject.find(objectGUID);
-		if (it != m_WoWGameObject.end())
-			m_WoWGameObject.erase(it);
+		auto it = m_WoWGameObjects.find(objectGUID);
+		if (it != m_WoWGameObjects.end())
+			m_WoWGameObjects.erase(it);
 	}
 	else if (objectGUID.GetTypeId() == EWoWObjectTypeID::TYPEID_DYNAMICOBJECT)
 	{
@@ -216,4 +219,6 @@ void CWorldObjects::EraseWoWObject(const std::shared_ptr<WoWObject>& WoWObject)
 		if (it != m_WoWCorpses.end())
 			m_WoWCorpses.erase(it);
 	}
+
+	//throw CException("CWorldObjects::EraseWoWObject: TypeID '%d' is unknown.", objectGUID.GetTypeId());
 }

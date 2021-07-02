@@ -102,7 +102,7 @@ void CM2_Comp_Miscellaneous::Load(const SM2_Header& M2Header, const std::shared_
 		const SM2_Particle* m2ParticleSystems = (const SM2_Particle*)(File->getData() + M2Header.particle_emitters.offset);
 		for (uint32 i = 0; i < M2Header.particle_emitters.size; i++)
 		{
-			particleSystems.push_back(std::make_shared<SM2_ParticleSystem_Wrapper>(m_M2Object, File, m2ParticleSystems[i]));
+			particleSystems.push_back(std::make_shared<CM2_Part_ParticleSystem>(m_M2Object, File, m2ParticleSystems[i]));
 		}
 
 		// Animated

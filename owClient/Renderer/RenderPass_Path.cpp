@@ -60,26 +60,43 @@ std::shared_ptr<IRenderPassPipelined> CRenderPass_Path::ConfigurePipeline(std::s
 
 EVisitResult CRenderPass_Path::VisitWoW(const std::shared_ptr<CWoWWorldObject>& WoWWorldObject)
 {
-	auto woWGameObjectMOTransport = std::dynamic_pointer_cast<WoWGameObjectMOTransport>(WoWWorldObject);
-	if (woWGameObjectMOTransport == nullptr)
-		return EVisitResult::AllowVisitChilds;
-
-	const auto& pathID = woWGameObjectMOTransport->GetPathID();
-	if (pathID == 0)
-		return EVisitResult::AllowVisitChilds;
-
-	const auto& wowWorld = woWGameObjectMOTransport->GetWoWWorld();
-
-	uint32 mapID = UINT32_MAX;
-	if (auto map = wowWorld.GetMap())
-		mapID = map->GetMapID();
-
-	const auto& pathRecords = woWGameObjectMOTransport->GetWoWWorld().GetTaxiStorage().GetPathNodes(pathID);
 	std::vector<glm::vec3> pointsXYZ;
-	std::for_each(pathRecords.begin(), pathRecords.end(), [&pointsXYZ, mapID](const CTaxiStorage::STaxiPathNode& Point) {
-		if (mapID == Point.MapID)
-			pointsXYZ.push_back(fromGameToReal(Point.Position));
-	});
+
+	if (auto woWGameObjectMOTransport = std::dynamic_pointer_cast<WoWGameObjectMOTransport>(WoWWorldObject))
+	{
+		const auto& wowPath = woWGameObjectMOTransport->GetWoWPath();
+		if (wowPath == nullptr)
+			return EVisitResult::AllowVisitChilds;
+
+		const auto& wowWorld = woWGameObjectMOTransport->GetWoWWorld();
+
+		uint32 mapID = UINT32_MAX;
+		if (auto map = wowWorld.GetMap())
+			mapID = map->GetMapID();
+
+		const auto& wowPathNodes = wowPath->GetPathNodes();
+		std::for_each(wowPathNodes.begin(), wowPathNodes.end(), [&pointsXYZ, mapID](const std::shared_ptr<CWoWPathNode>& PathNode) {
+			//if (mapID == Point.MapID)
+			glm::vec3 position = PathNode->GetPosition();
+			position.y += 1.0f;
+			pointsXYZ.push_back(position);
+		});
+	}
+
+	if (auto woWUnit = std::dynamic_pointer_cast<WoWUnit>(WoWWorldObject))
+	{
+		const auto& wowPath = woWUnit->m_WoWPath;
+		if (wowPath == nullptr)
+			return EVisitResult::AllowVisitChilds;
+
+		const auto& wowPathNodes = wowPath->GetPathNodes();
+		std::for_each(wowPathNodes.begin(), wowPathNodes.end(), [&pointsXYZ](const std::shared_ptr<CWoWPathNode>& PathNode) {
+			//if (mapID == Point.MapID)
+			glm::vec3 position = PathNode->GetPosition();
+			position.y += 1.0f;
+			pointsXYZ.push_back(position);
+		});
+	}
 
 	if (pointsXYZ.size() < 2)
 		return EVisitResult::AllowVisitChilds;

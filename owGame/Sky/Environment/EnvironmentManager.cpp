@@ -90,7 +90,7 @@ void EnvironmentManager::SetFog()
 
 void EnvironmentManager::LoadDayNightPhases()
 {
-	std::shared_ptr<IFile> f = m_BaseManager.GetManager<IFilesManager>()->Open("World\\dnc.db");
+	auto f = m_BaseManager.GetManager<IFilesManager>()->Open("World\\dnc.db");
 	if (f == nullptr)
 	{
 		Log::Error("DayNightCycle[]: Can't init day-night cycle.");

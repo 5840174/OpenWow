@@ -8,11 +8,11 @@ class ZN_API WoWItem
 	: public WoWObject
 {
 public:
-	WoWItem(CWoWObjectGuid Guid);
+	WoWItem(CWoWGuid Guid);
 	virtual ~WoWItem();
 
 public:
-	static std::shared_ptr<WoWItem> Create(IScene& Scene, CWoWObjectGuid Guid);
+	static std::shared_ptr<WoWItem> Create(IScene& Scene, CWoWGuid Guid);
 
 private:
 

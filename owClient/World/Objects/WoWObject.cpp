@@ -29,7 +29,7 @@ enum OBJECT_UPDATE_FLAGS
 }
 
 
-WoWObject::WoWObject(CWoWObjectGuid Guid)
+WoWObject::WoWObject(CWoWGuid Guid)
 	: m_GUID(Guid)
 	, m_Values(*this)
 	, m_ObjectType(0)
@@ -118,7 +118,7 @@ void WoWObject::ProcessMovementUpdate(CByteBuffer& Bytes)
 			uint64 transportGuid;
 			Bytes.ReadPackedUInt64(transportGuid);
 			if (object)
-				object->TransportID = CWoWObjectGuid(transportGuid);
+				object->TransportID = CWoWGuid(transportGuid);
 
 			glm::vec3 gamePosition;
 			Bytes >> gamePosition.x;
@@ -195,7 +195,7 @@ void WoWObject::ProcessMovementUpdate(CByteBuffer& Bytes)
 	// 0x10
 	if (updateFlags & UPDATEFLAG_LOWGUID)
 	{
-		CWoWObjectGuid::CounterType_t newCounter;
+		CWoWGuid::CounterType_t newCounter;
 		Bytes.read(&newCounter);
 
 		if (GetWoWGUID().GetCounter() != newCounter)
@@ -270,14 +270,10 @@ void WoWObject::OnValuesUpdated(const UpdateMask & Mask)
 //
 // Protected
 //
-std::shared_ptr<WoWObject> WoWObject::Create(IScene& Scene, CWoWObjectGuid Guid)
+std::shared_ptr<WoWObject> WoWObject::Create(IScene& Scene, CWoWGuid Guid)
 {
 	std::shared_ptr<WoWObject> thisObj = std::make_shared<WoWObject>(Guid);
 	return thisObj;
-}
-
-void WoWObject::AfterCreate(IScene& Scene)
-{
 }
 
 void WoWObject::Destroy()

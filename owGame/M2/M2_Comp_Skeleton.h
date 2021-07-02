@@ -51,7 +51,7 @@ private:
 
 
 public:
-	const std::vector<SM2_Part_Bone_Wrapper>& GetBones() const
+	const std::vector<CM2_Part_Bone>& GetBones() const
 	{
 		return m_Bones;
 	}
@@ -66,7 +66,7 @@ public:
 		_ASSERT(static_cast<size_t>(IndexIntoLookup) < m_BonesLookup.size());
 		return m_BonesLookup[static_cast<size_t>(IndexIntoLookup)];
 	}
-	const SM2_Part_Bone_Wrapper& getBoneLookup(uint32 IndexIntoLookup) const
+	const CM2_Part_Bone& getBoneLookup(uint32 IndexIntoLookup) const
 	{
 		_ASSERT(IndexIntoLookup < static_cast<uint32>(m_BonesLookup.size()));
 		int16 indexIntoDirect = m_BonesLookup[IndexIntoLookup];
@@ -84,14 +84,14 @@ public:
 		_ASSERT(static_cast<size_t>(_type) < m_GameBonesLookup.size());
 		return m_GameBonesLookup[static_cast<size_t>(_type)];
 	}
-	const SM2_Part_Bone_Wrapper& getGameBone(M2_GameBoneType _type) const
+	const CM2_Part_Bone& getGameBone(M2_GameBoneType _type) const
 	{
 		int16 indexIntoDirect = GetGameBoneIndex(_type);
 		_ASSERT(indexIntoDirect != -1 && indexIntoDirect < static_cast<int16>(m_Bones.size()));
 		return m_Bones[indexIntoDirect];
 	}
 private:
-	std::vector<SM2_Part_Bone_Wrapper>           m_Bones;
+	std::vector<CM2_Part_Bone>           m_Bones;
 	std::vector<int16>                           m_BonesLookup;
 	std::vector<int16>                           m_GameBonesLookup;
 

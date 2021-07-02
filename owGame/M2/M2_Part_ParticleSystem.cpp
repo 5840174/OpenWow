@@ -5,37 +5,31 @@
 #include "M2_Base_Instance.h"
 
 // General
-#include "M2_ParticleSystem.h"
+#include "M2_Part_ParticleSystem.h"
 
-SM2_ParticleSystem_Wrapper::SM2_ParticleSystem_Wrapper(const CM2& M2Object, const std::shared_ptr<IFile>& File, const SM2_Particle& M2Particle)
+CM2_Part_ParticleSystem::CM2_Part_ParticleSystem(const CM2& M2Object, const std::shared_ptr<IFile>& File, const SM2_Particle& M2Particle)
 	: m_M2Object(M2Object)
 	, m_M2Particle(M2Particle)
 {
-	m_Flags = M2Particle.flags;
 	m_Position = Fix_XZmY(M2Particle.Position);
-	m_Bone = M2Particle.bone;
 	m_Texture = m_M2Object.getMaterials().GetTextureDirectInternal(M2Particle.texture)->GetTexture();
-
-	m_BlendType = M2Particle.blendingType;
-	m_EmitterType = M2Particle.emitterType;
-	order = M2Particle.particleColorIndex > 0 ? -1 : 0; //order = M2Particle.s2;
-
-	m_ParticleType = M2Particle.particleType;
 	
-	// int16 textureTileRotation
-	rows = M2Particle.textureDimensions_rows;
-	cols = M2Particle.textureDimensions_columns;
-
 	emissionSpeed.Initialize(M2Particle.emissionSpeed, File, M2Object.getSkeleton().GetAnimFiles());
 	speedVariation.Initialize(M2Particle.speedVariation, File, M2Object.getSkeleton().GetAnimFiles());
 	verticalRange.Initialize(M2Particle.verticalRange, File, M2Object.getSkeleton().GetAnimFiles());
 	horizontalRange.Initialize(M2Particle.horizontalRange, File, M2Object.getSkeleton().GetAnimFiles());
-	gravity.Initialize(M2Particle.gravity, File, M2Object.getSkeleton().GetAnimFiles());
+	
+	if (GetFlags().IsGravityCompressed)
+		throw CException("ParticleCompressedGravity");
+
+	m_Gravity.Initialize(M2Particle.gravity, File, M2Object.getSkeleton().GetAnimFiles());
+
 	lifespan.Initialize(M2Particle.lifespan, File, M2Object.getSkeleton().GetAnimFiles());
 	emissionRate.Initialize(M2Particle.emissionRate, File, M2Object.getSkeleton().GetAnimFiles());
 	emissionAreaLength.Initialize(M2Particle.emissionAreaLength, File, M2Object.getSkeleton().GetAnimFiles());
 	emissionAreaWidth.Initialize(M2Particle.emissionAreaWidth, File, M2Object.getSkeleton().GetAnimFiles());
-	zSource.Initialize(M2Particle.zSource, File, M2Object.getSkeleton().GetAnimFiles());
+	m_zSource.Initialize(M2Particle.zSource, File, M2Object.getSkeleton().GetAnimFiles());
+	
 	enabled.Initialize(M2Particle.enabledIn, File, M2Object.getSkeleton().GetAnimFiles());
 
 #if WOW_CLIENT_VERSION < WOW_WOTLK_3_3_5
@@ -60,51 +54,41 @@ SM2_ParticleSystem_Wrapper::SM2_ParticleSystem_Wrapper(const CM2& M2Object, cons
 	}
 #endif
 
-	m_Slowdown = M2Particle.drag;
-
-	billboard = !(M2Particle.flags.DONOTBILLBOARD);
-
-	// init tiles
-	for (int i = 0; i < rows*cols; i++)
-	{
-		TexCoordSet tc;
-		initTile(tc.tc, i);
-		tiles.push_back(tc);
-	}
-
-	//printf("Hello!");
+	InitTiles();
 }
 
-SM2_ParticleSystem_Wrapper::~SM2_ParticleSystem_Wrapper()
+CM2_Part_ParticleSystem::~CM2_Part_ParticleSystem()
 {
 }
 
-void SM2_ParticleSystem_Wrapper::update(const CM2_Base_Instance* M2Instance, const UpdateEventArgs& e, float * rem, CM2_ParticleObject * Particles) const
+void CM2_Part_ParticleSystem::update(const CM2_Base_Instance* M2Instance, const UpdateEventArgs& e, float * rem, SGPUM2Particle * Particles) const
 {
-	double deltaTime = e.DeltaTime / 1000.0;
+	float deltaTime = float(e.DeltaTime) / 1000.0f * float(e.DeltaTimeMultiplier);
 	uint32 globalTime = static_cast<uint32>(e.TotalTime);
 
 	uint32 sequence = M2Instance->getAnimator()->getSequenceIndex();
 	uint32 sequenceTime = M2Instance->getAnimator()->getCurrentTime();
 
-	float grav = gravity.GetValue(sequence, sequenceTime, m_M2Object.getSkeleton().getGlobalLoops(), globalTime);
-	float deaccel = zSource.GetValue(sequence, sequenceTime, m_M2Object.getSkeleton().getGlobalLoops(), globalTime);
+	glm::vec3 gravity;
+	gravity = glm::vec3(0.0f, 0.0f, m_Gravity.GetValue(sequence, sequenceTime, m_M2Object.getSkeleton().getGlobalLoops(), globalTime));
+	
+	float deaccel = m_zSource.GetValue(sequence, sequenceTime, m_M2Object.getSkeleton().getGlobalLoops(), globalTime);
 
 	CreateAndDeleteParticles(M2Instance, e, rem, Particles);
 
 	for (size_t i = 0; i < MAX_PARTICLES; i++)
 	{
-		CM2_ParticleObject& p = Particles[i];
+		SGPUM2Particle& p = Particles[i];
 		if (false == p.Active)
 			continue;
 
-		p.speed += (p.down * float(grav * deltaTime)) - (p.dir * float(deaccel * deltaTime));
+		p.speed += (p.down * gravity * deltaTime) - (p.dir * float(deaccel * deltaTime));
 
 		float mspeed = 1.0f;
-		if (m_Slowdown > 0.0f)
-		{
-			mspeed = glm::exp((-1.0f * m_Slowdown) * p.currentTime);
-		}
+
+		if (m_M2Particle.drag != 0.0f)
+			mspeed = glm::exp((-1.0f * m_M2Particle.drag) * p.currentTime);
+
 		p.pos += (p.speed * float(mspeed * deltaTime));
 
 		p.currentTime += deltaTime;
@@ -120,9 +104,9 @@ void SM2_ParticleSystem_Wrapper::update(const CM2_Base_Instance* M2Instance, con
 	}
 }
 
-const IBlendState::BlendMode SM2_ParticleSystem_Wrapper::GetBlendMode() const
+const IBlendState::BlendMode CM2_Part_ParticleSystem::GetBlendMode() const
 {
-	switch (m_BlendType)
+	switch (m_M2Particle.blendingType)
 	{
 		case 0:
 		{
@@ -167,27 +151,35 @@ const IBlendState::BlendMode SM2_ParticleSystem_Wrapper::GetBlendMode() const
 	return IBlendState::BlendMode();
 }
 
-const std::vector<TexCoordSet>& SM2_ParticleSystem_Wrapper::GetTiles() const
+const std::vector<SM2ParticleTileCoords>& CM2_Part_ParticleSystem::GetTiles() const
 {
 	return tiles;
 }
 
-void SM2_ParticleSystem_Wrapper::CreateAndDeleteParticles(const CM2_Base_Instance * M2Instance, const UpdateEventArgs & e, float * rem, CM2_ParticleObject * Particles) const
+void CM2_Part_ParticleSystem::CreateAndDeleteParticles(const CM2_Base_Instance * M2Instance, const UpdateEventArgs & e, float * rem, SGPUM2Particle * Particles) const
 {
-	double deltaTime = e.DeltaTime / 2000.0;
+	double deltaTime = e.DeltaTime / 1000.0 * float(e.DeltaTimeMultiplier);
 	uint32 globalTime = static_cast<uint32>(e.TotalTime);
 	
 	uint32 sequence = M2Instance->getAnimator()->getSequenceIndex();
 	uint32 sequenceTime = M2Instance->getAnimator()->getCurrentTime();
 
-	float frate = emissionRate.GetValue(sequence, sequenceTime, m_M2Object.getSkeleton().getGlobalLoops(), globalTime);
-	float flife = lifespan.GetValue(sequence, sequenceTime, m_M2Object.getSkeleton().getGlobalLoops(), globalTime);
+
+	float emissionRateValue = emissionRate.GetValue(sequence, sequenceTime, m_M2Object.getSkeleton().getGlobalLoops(), globalTime);
+	emissionRateValue += m_M2Particle.emissionRateVary * Random::Range(-1.0f, 1.0f);
+	
+
+	float lifeSpanValue = lifespan.GetValue(sequence, sequenceTime, m_M2Object.getSkeleton().getGlobalLoops(), globalTime);
+	lifeSpanValue += m_M2Particle.lifespanVary * Random::Range(-1.0f, 1.0f);
+
 
 	float ftospawn;
-	if (flife)
-		ftospawn = (deltaTime * frate / flife) + *rem;
+
+	if (lifeSpanValue != 0.0f)
+		ftospawn = (deltaTime * emissionRateValue / lifeSpanValue) + *rem;
 	else
 		ftospawn = *rem;
+
 
 	if (ftospawn < 1.0f)
 	{
@@ -212,67 +204,65 @@ void SM2_ParticleSystem_Wrapper::CreateAndDeleteParticles(const CM2_Base_Instanc
 		if (enabled.IsUsesBySequence(sequence))
 			enabledValue = enabled.GetValue(sequence, sequenceTime, m_M2Object.getSkeleton().getGlobalLoops(), globalTime) != 0;
 
-		if (enabledValue)
+		if (false == enabledValue)
+			return;
+
+		for (int i = 0; i < tospawn; i++)
 		{
-			for (int i = 0; i < tospawn; i++)
+			size_t freeIndex = -1;
+			for (size_t ind = 0; ind < MAX_PARTICLES; ind++)
 			{
-				size_t freeIndex = -1;
-				for (size_t ind = 0; ind < MAX_PARTICLES; ind++)
+				if (false == Particles[ind].Active)
 				{
-					if (false == Particles[ind].Active)
-					{
-						freeIndex = ind;
-						break;
-					}
+					freeIndex = ind;
+					break;
 				}
+			}
 
-				if (freeIndex == -1)
-				{
-					*rem += tospawn - i - 1;
-					break;
-				}
+			if (freeIndex == -1)
+			{
+				*rem += tospawn - i - 1;
+				break;
+			}
 
-				switch (m_EmitterType)
+			switch (m_M2Particle.emitterType)
+			{
+				case 0:
+				case 3:
 				{
-					case 0:
-					case 3:
-					{
-						CM2_ParticleObject p = DefaultGenerator_New(M2Instance, emissionAreaLengthValue, emissionAreaWidthValue, emissionSpeedValue, speedVariationValue, lifespanValue, verticalRangeValue, horizontalRangeValue);
-						p.Active = true;
-						Particles[freeIndex] = p;
-					}
-					break;
-					case 1:
-					{
-						CM2_ParticleObject p = PlaneGenerator_New(M2Instance, emissionAreaLengthValue, emissionAreaWidthValue, emissionSpeedValue, speedVariationValue, lifespanValue, verticalRangeValue, horizontalRangeValue);
-						p.Active = true;
-						Particles[freeIndex] = p;
-					}
-					break;
-					case 2:
-					{
-						CM2_ParticleObject p = SphereGenerator_New(M2Instance, emissionAreaLengthValue, emissionAreaWidthValue, emissionSpeedValue, speedVariationValue, lifespanValue, verticalRangeValue, horizontalRangeValue);
-						p.Active = true;
-						Particles[freeIndex] = p;
-					}
-					break;
-					default:
-					{
-						_ASSERT(false);
-					}
+					SGPUM2Particle p = DefaultGenerator_New(M2Instance, emissionAreaLengthValue, emissionAreaWidthValue, emissionSpeedValue, speedVariationValue, lifespanValue, verticalRangeValue, horizontalRangeValue);
+					p.Active = true;
+					Particles[freeIndex] = p;
 				}
+				break;
+				case 1:
+				{
+					SGPUM2Particle p = PlaneGenerator_New(M2Instance, emissionAreaLengthValue, emissionAreaWidthValue, emissionSpeedValue, speedVariationValue, lifespanValue, verticalRangeValue, horizontalRangeValue);
+					p.Active = true;
+					Particles[freeIndex] = p;
+				}
+				break;
+				case 2:
+				{
+					SGPUM2Particle p = SphereGenerator_New(M2Instance, emissionAreaLengthValue, emissionAreaWidthValue, emissionSpeedValue, speedVariationValue, lifespanValue, verticalRangeValue, horizontalRangeValue);
+					p.Active = true;
+					Particles[freeIndex] = p;
+				}
+				break;
+				default:
+					throw CException("Unknown emitter type");
 			}
 		}
 	}
 }
 
-CM2_ParticleObject SM2_ParticleSystem_Wrapper::DefaultGenerator_New(const CM2_Base_Instance * M2Instance, float w, float l, float spd, float var, float lifespan, float spr, float spr2) const
+SGPUM2Particle CM2_Part_ParticleSystem::DefaultGenerator_New(const CM2_Base_Instance * M2Instance, float w, float l, float spd, float var, float lifespan, float spr, float spr2) const
 {
 	std::shared_ptr<CM2SkeletonBone3D> bone;
 	if (GetBone() != -1)
 		bone = M2Instance->getSkeletonComponent()->GetBone(GetBone());
 
-	CM2_ParticleObject p;
+	SGPUM2Particle p;
 	p.pos = GetPosition();
 	if (bone)
 		p.pos = bone->GetMatrix() * glm::vec4(p.pos, 1.0f);
@@ -294,18 +284,18 @@ CM2_ParticleObject SM2_ParticleSystem_Wrapper::DefaultGenerator_New(const CM2_Ba
 
 	p.currentTime = 0;
 	p.maxTime = lifespan;
-	p.origin = p.pos;
-	p.tile = Random::Range(0, rows * cols - 1);
+	p.creationPoint = p.pos;
+	p.tile = Random::Range(0, m_M2Particle.textureDimensions_rows * m_M2Particle.textureDimensions_columns - 1);
 	return p;
 }
 
-CM2_ParticleObject SM2_ParticleSystem_Wrapper::PlaneGenerator_New(const CM2_Base_Instance * M2Instance, float w, float l, float spd, float var, float lifespan, float spr, float spr2) const
+SGPUM2Particle CM2_Part_ParticleSystem::PlaneGenerator_New(const CM2_Base_Instance * M2Instance, float w, float l, float spd, float var, float lifespan, float spr, float spr2) const
 {
 	std::shared_ptr<CM2SkeletonBone3D> bone;
 	if (GetBone() != -1)
 		bone = M2Instance->getSkeletonComponent()->GetBone(GetBone());
 
-	CM2_ParticleObject p;
+	SGPUM2Particle p;
 
 	//glm::mat4 SpreadMat = CalcSpreadMatrix(spr, spr, 1.0f, 1.0f);
 	//glm::mat4 mrot = bone->GetRotateMatrix() * SpreadMat;
@@ -331,18 +321,18 @@ CM2_ParticleObject SM2_ParticleSystem_Wrapper::PlaneGenerator_New(const CM2_Base
 
 	p.currentTime = 0;
 	p.maxTime = lifespan;
-	p.origin = p.pos;
-	p.tile = Random::Range(0, rows * cols - 1);
+	p.creationPoint = p.pos;
+	p.tile = Random::Range(0, m_M2Particle.textureDimensions_rows * m_M2Particle.textureDimensions_columns - 1);
 	return p;
 }
 
-CM2_ParticleObject SM2_ParticleSystem_Wrapper::SphereGenerator_New(const CM2_Base_Instance * M2Instance, float w, float l, float spd, float var, float lifespan, float spr, float spr2) const
+SGPUM2Particle CM2_Part_ParticleSystem::SphereGenerator_New(const CM2_Base_Instance * M2Instance, float w, float l, float spd, float var, float lifespan, float spr, float spr2) const
 {
 	std::shared_ptr<CM2SkeletonBone3D> bone;
 	if (GetBone() != -1)
 		bone = M2Instance->getSkeletonComponent()->GetBone(GetBone());
 
-	CM2_ParticleObject p;
+	SGPUM2Particle p;
 	glm::vec3 dir;
 
 	float radius = Random::Range(0.0f, 1.0f);
@@ -386,14 +376,14 @@ CM2_ParticleObject SM2_ParticleSystem_Wrapper::SphereGenerator_New(const CM2_Bas
 	p.down = glm::vec3(0, -1.0f, 0);
 	p.currentTime = 0;
 	p.maxTime = lifespan;
-	p.origin = p.pos;
-	p.tile = glm::round(Random::Range(0, rows * cols - 1));
+	p.creationPoint = p.pos;
+	p.tile = glm::round(Random::Range(0, m_M2Particle.textureDimensions_rows * m_M2Particle.textureDimensions_columns - 1));
 	return p;
 }
 
 #if 0
 
-void SM2_ParticleSystem_Wrapper::Render3D(const glm::mat4& _worldMatrix)
+void CM2_Part_ParticleSystem::Render3D(const glm::mat4& _worldMatrix)
 {
 	/*switch (m_BlendType)
 	{
@@ -463,7 +453,7 @@ void SM2_ParticleSystem_Wrapper::Render3D(const glm::mat4& _worldMatrix)
 	/*
 	* type:
 	* 0	 "normal" particle
-	* 1	large quad from the particle's origin to its position (used in Moonwell water effects)
+	* 1	large quad from the particle's creationPoint to its position (used in Moonwell water effects)
 	* 2	seems to be the same as 0 (found some in the Deeprun Tram blinky-lights-sign thing)
 	*/
 	if (m_ParticleType == 0 || m_ParticleType == 2)
@@ -514,8 +504,8 @@ void SM2_ParticleSystem_Wrapper::Render3D(const glm::mat4& _worldMatrix)
 		{
 			vertices.push_back(ParticleVertex(it.pos + bv0 * it.size, it.color, m_Tiles[it.m_TileExists].tc[0]));
 			vertices.push_back(ParticleVertex(it.pos + bv1 * it.size, it.color, m_Tiles[it.m_TileExists].tc[1]));
-			vertices.push_back(ParticleVertex(it.origin + bv1 * it.size, it.color, m_Tiles[it.m_TileExists].tc[2]));
-			vertices.push_back(ParticleVertex(it.origin + bv0 * it.size, it.color, m_Tiles[it.m_TileExists].tc[3]));
+			vertices.push_back(ParticleVertex(it.creationPoint + bv1 * it.size, it.color, m_Tiles[it.m_TileExists].tc[2]));
+			vertices.push_back(ParticleVertex(it.creationPoint + bv0 * it.size, it.color, m_Tiles[it.m_TileExists].tc[3]));
 
 			m_Indices.push_back(cntr + 0);
 			m_Indices.push_back(cntr + 2);
@@ -531,30 +521,22 @@ void SM2_ParticleSystem_Wrapper::Render3D(const glm::mat4& _worldMatrix)
 
 #endif
 
-void SM2_ParticleSystem_Wrapper::initTile(glm::vec2 * tc, int num)
+void CM2_Part_ParticleSystem::InitTiles()
 {
-	glm::vec2 a, b;
-	int x = num % cols;
-	int y = num / cols;
-
-	a.x = x * (1.0f / cols);
-	a.y = y * (1.0f / rows);
-
-	b.x = (x + 1) * (1.0f / cols);
-	b.y = (y + 1) * (1.0f / rows);
-
-	glm::vec2 otc[4];
-	otc[0] = a;
-	otc[1].x = b.x;
-	otc[1].y = a.y;
-
-	otc[2] = b;
-
-	otc[3].x = a.x;
-	otc[3].y = b.y;
-
-	for (int i = 0; i < 4; i++)
+	// init tiles
+	for (int i = 0; i < m_M2Particle.textureDimensions_rows * m_M2Particle.textureDimensions_columns; i++)
 	{
-		tc[(i + 4 - order) & 3] = otc[i];
+		SM2ParticleTileCoords tcs;
+
+		int x = i % m_M2Particle.textureDimensions_columns;
+		int y = i / m_M2Particle.textureDimensions_columns;
+
+		tcs.Start.x = x * (1.0f / m_M2Particle.textureDimensions_columns);
+		tcs.Start.y = y * (1.0f / m_M2Particle.textureDimensions_rows);
+
+		tcs.End.x = (x + 1) * (1.0f / m_M2Particle.textureDimensions_columns);
+		tcs.End.y = (y + 1) * (1.0f / m_M2Particle.textureDimensions_rows);
+
+		tiles.push_back(tcs);
 	}
 }

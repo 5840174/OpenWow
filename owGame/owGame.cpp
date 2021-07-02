@@ -60,7 +60,7 @@ public:
 	}
 	std::string GetName() const override
 	{
-		return "Open WoW main plugin.";
+		return "OpenWoW game plugin";
 	}
 	std::string GetDescription() const override
 	{
@@ -77,9 +77,7 @@ IznPlugin* plugin = nullptr;
 extern "C" __declspec(dllexport) IznPlugin* WINAPI GetPlugin(IBaseManager& BaseManager)
 {
 	if (plugin == nullptr)
-	{
 		plugin = new COpenWoWGamePlguin(BaseManager);
-	}
 
 	return plugin;
 }

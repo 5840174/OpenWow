@@ -20,6 +20,7 @@ struct RibbonVertex
 
 CM2_RibbonEmitters::CM2_RibbonEmitters(const CM2& M2Object, const std::shared_ptr<IFile>& File, const SM2_RibbonEmitter& M2RibbonEmitter) 
 	: m_M2Object(M2Object)
+	, m_M2RibbonEmitter(M2RibbonEmitter)
 	, tcolor(glm::vec4(1.0f))
 {
 	_ASSERT_EXPR(false, L"TODO!");
@@ -45,20 +46,18 @@ CM2_RibbonEmitters::CM2_RibbonEmitters(const CM2& M2Object, const std::shared_pt
 	// TODO: figure out actual correct way to calculate length
 	// in BFD, res is 60 and len is 0.6, the trails are very short (too long here)
 	// in CoT, res and len are like 10 but the trails are supposed to be much longer (too short here)
-	m_EdgesPerSecond = (int)M2RibbonEmitter.edgesPerSecond;
-	m_EdgesLifeTime = M2RibbonEmitter.edgeLifetime;
-	length = (float)m_EdgesPerSecond * m_EdgesLifeTime;
+	length = M2RibbonEmitter.edgesPerSecond * M2RibbonEmitter.edgeLifetime;
 
 	// create first segment
-	RibbonSegment rs;
+	SM2RibbonSegment rs;
 	rs.pos = posValue;
 	rs.len = 0;
-	segs.push_back(rs);
+	m_Segments.push_back(rs);
 }
 
 void CM2_RibbonEmitters::setup(uint16 anim, uint32 time, uint32 _globalTime, const glm::mat4& _worldMatrix)
 {
-	std::shared_ptr<const SM2_Part_Bone_Wrapper> Bone = m_Bone.lock();
+	std::shared_ptr<const CM2_Part_Bone> Bone = m_Bone.lock();
 	_ASSERT(Bone != nullptr);
 
 	_ASSERT_EXPR(false, L"TODO!");
@@ -70,18 +69,18 @@ void CM2_RibbonEmitters::setup(uint16 anim, uint32 time, uint32 _globalTime, con
 	float dlen = glm::length(ntpos - posValue);
 
 	// move first segment
-	RibbonSegment& first = *segs.begin();
-	if (first.len > m_EdgesLifeTime)
+	SM2RibbonSegment& first = *m_Segments.begin();
+	if (first.len > m_M2RibbonEmitter.edgeLifetime)
 	{
 		// add new segment
 		first.back = glm::normalize(posValue - ntpos);
 		first.len0 = first.len;
 
-		RibbonSegment newseg;
+		SM2RibbonSegment newseg;
 		newseg.pos = ntpos;
 		newseg.up = ntup;
 		newseg.len = dlen;
-		segs.push_front(newseg);
+		m_Segments.push_front(newseg);
 	}
 	else
 	{
@@ -93,7 +92,7 @@ void CM2_RibbonEmitters::setup(uint16 anim, uint32 time, uint32 _globalTime, con
 	// kill stuff from the end
 	float l = 0;
 	bool erasemode = false;
-	for (auto it = segs.begin(); it != segs.end(); )
+	for (auto it = m_Segments.begin(); it != m_Segments.end(); )
 	{
 		if (!erasemode)
 		{
@@ -107,11 +106,12 @@ void CM2_RibbonEmitters::setup(uint16 anim, uint32 time, uint32 _globalTime, con
 		}
 		else
 		{
-			segs.erase(it++);
+			m_Segments.erase(it++);
 		}
 	}
 
 	posValue = ntpos;
+
 	if (m_Color.IsUsesBySequence(anim) && m_Alpha.IsUsesBySequence(anim))
 	{
 		tcolor = glm::vec4(m_Color.GetValue(anim, time, m_M2Object.getSkeleton().getGlobalLoops(), _globalTime), m_Alpha.GetValue(anim, time, m_M2Object.getSkeleton().getGlobalLoops(), _globalTime));
@@ -132,24 +132,21 @@ void CM2_RibbonEmitters::Render(const glm::mat4& _world)
 {
 	std::vector<RibbonVertex> vertices;
 
-	std::list<RibbonSegment>::iterator it = segs.begin();
 	float l = 0;
-	for (; it != segs.end(); ++it)
+	for (const auto& segsIt : m_Segments)
 	{
 		float u = l / length;
+		vertices.push_back(RibbonVertex(segsIt.pos + segsIt.up * tabove, glm::vec2(u, 0)));
+		vertices.push_back(RibbonVertex(segsIt.pos - segsIt.up * tbelow, glm::vec2(u, 1)));
 
-		vertices.push_back(RibbonVertex(it->pos + it->up * tabove, glm::vec2(u, 0)));
-		vertices.push_back(RibbonVertex(it->pos - it->up * tbelow, glm::vec2(u, 1)));
-
-		l += it->len;
+		l += segsIt.len;
 	}
 
-	if (segs.size() > 1)
+	if (m_Segments.size() > 1)
 	{
-		// last segment...?
-		--it;
-		vertices.push_back(RibbonVertex(it->pos + it->up * tabove + it->back*(it->len / it->len0), glm::vec2(1, 0)));
-		vertices.push_back(RibbonVertex(it->pos - it->up * tbelow + it->back*(it->len / it->len0), glm::vec2(1, 1)));
+		const auto& lastSegment = m_Segments.back();
+		vertices.push_back(RibbonVertex(lastSegment.pos + lastSegment.up * tabove + lastSegment.back * (lastSegment.len / lastSegment.len0), glm::vec2(1, 0)));
+		vertices.push_back(RibbonVertex(lastSegment.pos - lastSegment.up * tbelow + lastSegment.back * (lastSegment.len / lastSegment.len0), glm::vec2(1, 1)));
 	}
 
 
@@ -165,9 +162,9 @@ void CM2_RibbonEmitters::Render(const glm::mat4& _world)
 
 	glBegin(GL_QUAD_STRIP);
 	{
-		list<RibbonSegment>::iterator it = segs.begin();
+		list<SM2RibbonSegment>::iterator it = m_Segments.begin();
 		float l = 0;
-		for (; it != segs.end(); ++it)
+		for (; it != m_Segments.end(); ++it)
 		{
 			float u = l / length;
 
@@ -180,7 +177,7 @@ void CM2_RibbonEmitters::Render(const glm::mat4& _world)
 			l += it->len;
 		}
 
-		if (segs.size() > 1)
+		if (m_Segments.size() > 1)
 		{
 			// last segment...?
 			--it;

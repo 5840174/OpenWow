@@ -70,7 +70,7 @@
     <ClCompile Include="M2\M2_Skin.cpp" />
     <ClCompile Include="M2\M2_SkinSection.cpp" />
     <ClCompile Include="M2\M2_Skin_Batch.cpp" />
-    <ClCompile Include="M2\M2_ParticleSystem.cpp" />
+    <ClCompile Include="M2\M2_Part_ParticleSystem.cpp" />
     <ClCompile Include="M2\ShaderResolver.cpp" />
     <ClCompile Include="Map\Instances\MapM2Instance.cpp" />
     <ClCompile Include="Map\Instances\MapWMOInstance.cpp" />
@@ -244,8 +244,8 @@
     <ClInclude Include="M2\M2_SkinTypes.h" />
     <ClInclude Include="M2\M2_Skin_Batch.h" />
     <ClInclude Include="M2\M2_Types.h" />
-    <ClInclude Include="M2\M2_Particle.h" />
-    <ClInclude Include="M2\M2_ParticleSystem.h" />
+    <ClInclude Include="M2\M2_Part_Particle.h" />
+    <ClInclude Include="M2\M2_Part_ParticleSystem.h" />
     <ClInclude Include="M2\ShaderResolver.h" />
     <ClInclude Include="Map\Instances\MapM2Instance.h" />
     <ClInclude Include="Map\Instances\MapWMOInstance.h" />

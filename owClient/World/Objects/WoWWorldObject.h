@@ -13,7 +13,7 @@ class ZN_API CWoWWorldObject
 	: public WoWObject
 {
 public:
-	CWoWWorldObject(IScene& Scene, CWoWWorld& WoWWorld, CWoWObjectGuid Guid);
+	CWoWWorldObject(IScene& Scene, CWoWWorld& WoWWorld, CWoWGuid Guid);
 	virtual ~CWoWWorldObject();
 
 	virtual void Update(const UpdateEventArgs& e);
@@ -27,7 +27,7 @@ public:
 
 	// Transport
 	std::weak_ptr<WoWGameObjectMOTransport> TransportObject;
-	CWoWObjectGuid TransportID;
+	CWoWGuid TransportID;
 	glm::vec3 PositionTransportOffset;
 	float OrientationTransportOffset;
 

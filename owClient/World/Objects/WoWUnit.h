@@ -4,6 +4,7 @@
 
 #include "WoWWorldObject.h"
 #include "../../Types/MoveSplineFlag.h"
+#include "../Path/Path.h"
 
 // FORWARD BEGIN
 class CWoWWorld;
@@ -82,7 +83,7 @@ enum MovementFlags : uint32
     MOVEMENTFLAG_MASK_HAS_PLAYER_STATUS_OPCODE = MOVEMENTFLAG_DISABLE_GRAVITY | MOVEMENTFLAG_ROOT | MOVEMENTFLAG_CAN_FLY | MOVEMENTFLAG_WATERWALKING | MOVEMENTFLAG_FALLING_SLOW | MOVEMENTFLAG_HOVER
 };
 
-enum MovementFlags2 : uint32
+enum MovementFlags2 : uint16
 {
     MOVEMENTFLAG2_NONE                     = 0x00000000,
     MOVEMENTFLAG2_NO_STRAFE                = 0x00000001,
@@ -144,13 +145,12 @@ class ZN_API WoWUnit
 	: public CWoWWorldObject
 {
 public:
-	WoWUnit(IScene& Scene, CWoWWorld& WoWWorld, CWoWObjectGuid Guid);
+	WoWUnit(IScene& Scene, CWoWWorld& WoWWorld, CWoWGuid Guid);
 	virtual ~WoWUnit();
 
 	void ProcessMovementPacket(CByteBuffer& Bytes);
 	void ProcessMonsterMove(CByteBuffer& Bytes);
 
-	virtual void OnValueUpdated(uint16 index) override;
 	virtual void OnValuesUpdated(const UpdateMask & Mask) override;
 
 	uint8 GetRace() const { return m_Values.GetByteValue(UNIT_FIELD_BYTES_0, UNIT_BYTES_0_OFFSET_RACE); }
@@ -160,8 +160,8 @@ public:
 	uint8 GetGender() const { return m_Values.GetByteValue(UNIT_FIELD_BYTES_0, UNIT_BYTES_0_OFFSET_GENDER); }
 
 	// Speed
-	float GetSpeed(UnitMoveType MoveType) const;
-	void SetSpeed(UnitMoveType MoveType, float Speed);
+	float GetSpeed(UnitMoveType MoveType) const { return m_Speed[MoveType]; }
+	void SetSpeed(UnitMoveType MoveType, float Speed) { m_Speed[MoveType] = Speed; }
 
 	// MovementFlags
 	uint32 GetMovementFlags() const { return m_MovementFlags; }
@@ -179,11 +179,11 @@ public:
 	void Update(const UpdateEventArgs& e) override;
 
 public:
-	static std::shared_ptr<WoWUnit> Create(CWoWWorld& WoWWorld, IScene& Scene, CWoWObjectGuid Guid);
-	virtual void AfterCreate(IScene& Scene) override;
+	static std::shared_ptr<WoWUnit> Create(CWoWWorld& WoWWorld, IScene& Scene, CWoWGuid Guid);
 	virtual void Destroy() override;
 
 	glm::vec3 DestinationPoint;
+	std::shared_ptr<CWoWPath> m_WoWPath;
 
 
 	CInet_ItemTemplate GetItemDisplayInfoIDByItemID(uint32 ItemID);

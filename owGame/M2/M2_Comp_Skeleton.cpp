@@ -72,7 +72,7 @@ void CM2_Comp_Skeleton::Load(const SM2_Header& M2Header, const std::shared_ptr<I
 			if (m2Bone.IsBillboard())
 				m_IsBillboard = true;
 
-			m_Bones.push_back(SM2_Part_Bone_Wrapper(m_M2Object, File, m2Bone));
+			m_Bones.push_back(CM2_Part_Bone(m_M2Object, File, m2Bone));
 		}
 
 		m_HasBones = true;

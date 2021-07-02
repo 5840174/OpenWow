@@ -85,7 +85,7 @@ void CWorldObjectUpdater::ProcessUpdatePacket(CByteBuffer& Bytes)
 			{
 				uint64 guidValue;
 				Bytes.ReadPackedUInt64(guidValue);
-				CWoWObjectGuid guid(guidValue);
+				CWoWGuid guid(guidValue);
 
 				auto object = m_WoWWorld.GetWorldObjects().GetWoWObject(guid);
 				object->UpdateValues(Bytes);
@@ -97,7 +97,7 @@ void CWorldObjectUpdater::ProcessUpdatePacket(CByteBuffer& Bytes)
 			{
 				uint64 guidValue;
 				Bytes.ReadPackedUInt64(guidValue);
-				CWoWObjectGuid guid(guidValue);
+				CWoWGuid guid(guidValue);
 
 				auto object = m_WoWWorld.GetWorldObjects().GetWoWObject(guid);
 				object->ProcessMovementUpdate(Bytes);
@@ -110,17 +110,14 @@ void CWorldObjectUpdater::ProcessUpdatePacket(CByteBuffer& Bytes)
 			{
 				uint64 guidValue;
 				Bytes.ReadPackedUInt64(guidValue);
-				CWoWObjectGuid guid(guidValue);
+				CWoWGuid guid(guidValue);
 
 				EWoWObjectTypeID typeID;
-				Bytes.read(&typeID);
+				Bytes >> typeID;
 
 				auto object = m_WoWWorld.GetWorldObjects().GetWoWObject(guid);
 				object->ProcessMovementUpdate(Bytes);
 				object->UpdateValues(Bytes);
-
-				//if (typeID != EWoWObjectTypeID::TYPEID_UNIT)
-					object->AfterCreate(m_Scene);
 			}
 			break;
 
@@ -142,7 +139,7 @@ void CWorldObjectUpdater::ProcessUpdatePacket(CByteBuffer& Bytes)
 				auto& worldObjects = m_WoWWorld.GetWorldObjects();
 				for (const auto& outOfRangeGUID : outOfRangeGUIDs)
 				{
-					if (auto object = worldObjects.GetWoWObject(CWoWObjectGuid(outOfRangeGUID)))
+					if (auto object = worldObjects.GetWoWObject(CWoWGuid(outOfRangeGUID)))
 					{
 						object->Destroy();
 						worldObjects.EraseWoWObject(object);

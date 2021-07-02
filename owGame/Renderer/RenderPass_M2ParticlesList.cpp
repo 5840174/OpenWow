@@ -27,13 +27,13 @@ std::shared_ptr<IRenderPassPipelined> CRenderPass_M2ParticlesList::ConfigurePipe
 	__super::ConfigurePipeline(RenderTarget);
 	
 	{
-		std::shared_ptr<IShader> vertexShader = GetRenderDevice().GetObjectsFactory().LoadShader(EShaderType::VertexShader, "3D/Particle.hlsl", "VS_main");
+		std::shared_ptr<IShader> vertexShader = GetRenderDevice().GetObjectsFactory().LoadShader(EShaderType::VertexShader, "shaders_D3D/M2Particle.hlsl", "VS_main");
 		vertexShader->LoadInputLayoutFromReflector();
 		GetPipeline().SetShader(vertexShader);
 	}
 
 	{
-		std::shared_ptr<IShader> geomShader = GetRenderDevice().GetObjectsFactory().LoadShader(EShaderType::GeometryShader, "3D/Particle.hlsl", "GS_Billboard");
+		std::shared_ptr<IShader> geomShader = GetRenderDevice().GetObjectsFactory().LoadShader(EShaderType::GeometryShader, "shaders_D3D/M2Particle.hlsl", "GS_Billboard");
 		
 		m_GeomShaderParticlesBufferParameter = geomShader->GetShaderParameterByName("Particles");
 		_ASSERT(m_GeomShaderParticlesBufferParameter);
@@ -42,7 +42,7 @@ std::shared_ptr<IRenderPassPipelined> CRenderPass_M2ParticlesList::ConfigurePipe
 	}
 
 	{
-		std::shared_ptr<IShader> pixelShader = GetRenderDevice().GetObjectsFactory().LoadShader(EShaderType::PixelShader, "3D/Particle.hlsl", "PS_main");
+		std::shared_ptr<IShader> pixelShader = GetRenderDevice().GetObjectsFactory().LoadShader(EShaderType::PixelShader, "shaders_D3D/M2Particle.hlsl", "PS_main");
 		GetPipeline().SetShader(pixelShader);
 	}
 

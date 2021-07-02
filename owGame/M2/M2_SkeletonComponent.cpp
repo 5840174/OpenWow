@@ -7,7 +7,7 @@
 // General
 #include "M2_SkeletonComponent.h"
 
-CM2SkeletonBone3D::CM2SkeletonBone3D(const SM2_Part_Bone_Wrapper& M2Bone)
+CM2SkeletonBone3D::CM2SkeletonBone3D(const CM2_Part_Bone& M2Bone)
 	: m_M2Bone(M2Bone)
 	, m_PivotPoint(glm::vec3(0.0f))
 	, m_Matrix(glm::mat4(1.0f))

@@ -8,7 +8,7 @@
 // Additional
 #include "../World.h"
 
-WoWPlayer::WoWPlayer(IScene& Scene, CWoWWorld& WoWWorld, CWoWObjectGuid Guid)
+WoWPlayer::WoWPlayer(IScene& Scene, CWoWWorld& WoWWorld, CWoWGuid Guid)
 	: WoWUnit(Scene, WoWWorld, Guid)
 {
 	m_ObjectType |= TYPEMASK_PLAYER;
@@ -97,17 +97,11 @@ void WoWPlayer::OnValuesUpdated(const UpdateMask & Mask)
 //
 // Protected
 //
-std::shared_ptr<WoWPlayer> WoWPlayer::Create(CWoWWorld& WoWWorld, IScene& Scene, CWoWObjectGuid Guid)
+std::shared_ptr<WoWPlayer> WoWPlayer::Create(CWoWWorld& WoWWorld, IScene& Scene, CWoWGuid Guid)
 {
 	std::shared_ptr<WoWPlayer> thisObj = MakeShared(WoWPlayer, Scene, WoWWorld, Guid);
 	return thisObj;
 }
-
-void WoWPlayer::AfterCreate(IScene & Scene)
-{
-	__super::AfterCreate(Scene);
-}
-
 
 void WoWPlayer::Destroy()
 {}

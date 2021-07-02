@@ -1,15 +1,15 @@
 #include "stdafx.h"
 
 // General
-#include "ObjectGUID.h"
+#include "WoWGUID.h"
 
 // Additional
 #include <sstream>
 #include <iomanip>
 
-CWoWObjectGuid const CWoWObjectGuid::Empty = CWoWObjectGuid();
+CWoWGuid const CWoWGuid::Empty = CWoWGuid();
 
-char const* CWoWObjectGuid::GetTypeName(EWoWObjectHighGuid high)
+char const* CWoWGuid::GetTypeName(EWoWObjectHighGuid high)
 {
 	switch (high)
 	{
@@ -30,7 +30,7 @@ char const* CWoWObjectGuid::GetTypeName(EWoWObjectHighGuid high)
 	}
 }
 
-std::string CWoWObjectGuid::ToString() const
+std::string CWoWGuid::ToString() const
 {
 	std::ostringstream str;
 	str << "GUID Full: 0x" << std::hex << std::setw(16) << std::setfill('0') << _guid << std::dec;
@@ -42,24 +42,24 @@ std::string CWoWObjectGuid::ToString() const
 	return str.str();
 }
 
-CWoWObjectGuid CWoWObjectGuid::Global(EWoWObjectHighGuid type, CounterType_t counter)
+CWoWGuid CWoWGuid::Global(EWoWObjectHighGuid type, CounterType_t counter)
 {
-	return CWoWObjectGuid(type, counter);
+	return CWoWGuid(type, counter);
 }
 
-CWoWObjectGuid CWoWObjectGuid::MapSpecific(EWoWObjectHighGuid type, uint32 entry, CounterType_t counter)
+CWoWGuid CWoWGuid::MapSpecific(EWoWObjectHighGuid type, uint32 entry, CounterType_t counter)
 {
-	return CWoWObjectGuid(type, entry, counter);
+	return CWoWGuid(type, entry, counter);
 }
 
 
-CByteBuffer& operator<<(CByteBuffer& buf, const CWoWObjectGuid& guid)
+CByteBuffer& operator<<(CByteBuffer& buf, const CWoWGuid& guid)
 {
 	buf << uint64(guid.GetRawValue());
 	return buf;
 }
 
-CByteBuffer& operator>>(CByteBuffer& buf, CWoWObjectGuid& guid)
+CByteBuffer& operator>>(CByteBuffer& buf, CWoWGuid& guid)
 {
 	uint64 value;
 	buf.readBytes(&value, sizeof(uint64));

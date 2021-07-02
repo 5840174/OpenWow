@@ -38,7 +38,9 @@
     <ClInclude Include="WorldSocket\OpcodesNames.h" />
     <ClInclude Include="WorldSocket\ServerPacket.h" />
     <ClInclude Include="WorldSocket\WorldSocket.h" />
-    <ClInclude Include="World\ObjectGUID.h" />
+    <ClInclude Include="World\Path\Path.h" />
+    <ClInclude Include="World\Path\Point.h" />
+    <ClInclude Include="World\WoWGUID.h" />
     <ClInclude Include="World\Objects\WoWContainer.h" />
     <ClInclude Include="World\Objects\WoWCorpse.h" />
     <ClInclude Include="World\Objects\WoWDynamicObject.h" />
@@ -67,6 +69,7 @@
     <ClCompile Include="Client\ClientCache.cpp" />
     <ClCompile Include="Client\TaxiStorage.cpp" />
     <ClCompile Include="Client\TransportAnimationStorage.cpp" />
+    <ClCompile Include="owClient.cpp" />
     <ClCompile Include="Renderer\RenderPass_Path.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
@@ -75,7 +78,9 @@
     <ClCompile Include="WorldSocket\ClientPacket.cpp" />
     <ClCompile Include="WorldSocket\ServerPacket.cpp" />
     <ClCompile Include="WorldSocket\WorldSocket.cpp" />
-    <ClCompile Include="World\ObjectGUID.cpp" />
+    <ClCompile Include="World\Path\Path.cpp" />
+    <ClCompile Include="World\Path\Point.cpp" />
+    <ClCompile Include="World\WoWGUID.cpp" />
     <ClCompile Include="World\Objects\WoWContainer.cpp" />
     <ClCompile Include="World\Objects\WoWCorpse.cpp" />
     <ClCompile Include="World\Objects\WoWDynamicObject.cpp" />

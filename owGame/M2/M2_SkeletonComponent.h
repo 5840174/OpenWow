@@ -15,7 +15,7 @@ class ZN_API CM2SkeletonBone3D
 	: public std::enable_shared_from_this<CM2SkeletonBone3D>
 {
 public:
-	CM2SkeletonBone3D(const SM2_Part_Bone_Wrapper& M2Bone);
+	CM2SkeletonBone3D(const CM2_Part_Bone& M2Bone);
 	virtual ~CM2SkeletonBone3D();
 
 	// ISkeletonComponentBone3D
@@ -31,7 +31,7 @@ public:
 	void Reset();
 
 private:
-	const SM2_Part_Bone_Wrapper&                   m_M2Bone;
+	const CM2_Part_Bone&                   m_M2Bone;
 	std::weak_ptr<CM2SkeletonBone3D>               m_ParentBone;
 	std::vector<std::shared_ptr<CM2SkeletonBone3D>>m_Childs;
 	glm::vec3                                      m_PivotPoint;

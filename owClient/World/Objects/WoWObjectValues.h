@@ -23,7 +23,7 @@ public:
 	uint8 GetByteValue(uint16 index, uint8 offset) const;
 	int16 GetInt16Value(uint16 index, uint8 offset) const;
 	uint16 GetUInt16Value(uint16 index, uint8 offset) const;
-	CWoWObjectGuid GetGuidValue(uint16 index) const;
+	CWoWGuid GetGuidValue(uint16 index) const;
 
 	void SetInt32Value(uint16 index, int32  value);
 	void SetUInt32Value(uint16 index, uint32  value);

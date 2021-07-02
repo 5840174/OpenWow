@@ -12,7 +12,7 @@
 //
 // CM2ParticleSystem
 //
-CM2ParticleSystem::CM2ParticleSystem(const CM2_Base_Instance& M2Instance, IRenderDevice& RenderDevice, const std::shared_ptr<SM2_ParticleSystem_Wrapper>& M2ParticleSystem)
+CM2ParticleSystem::CM2ParticleSystem(const CM2_Base_Instance& M2Instance, IRenderDevice& RenderDevice, const std::shared_ptr<CM2_Part_ParticleSystem>& M2ParticleSystem)
 	: Object(RenderDevice.GetBaseManager())
 	, m_M2Instance(M2Instance)
 	, m_M2ParticleSystem(M2ParticleSystem)
@@ -57,8 +57,8 @@ void CM2ParticleSystem::Update(const UpdateEventArgs & e)
 
 		SGPUParticle particle = m2P.ToGPUParticle();
 		_ASSERT(m2P.tile < m_M2ParticleSystem->GetTiles().size());
-		particle.TexCoordBegin = m_M2ParticleSystem->GetTiles()[m2P.tile].tc[1];
-		particle.TexCoordEnd = m_M2ParticleSystem->GetTiles()[m2P.tile].tc[3];
+		particle.TexCoordBegin = m_M2ParticleSystem->GetTiles()[m2P.tile].Start;
+		particle.TexCoordEnd = m_M2ParticleSystem->GetTiles()[m2P.tile].End;
 		m_ParticleObjects.push_back(particle);
 	}
 }
