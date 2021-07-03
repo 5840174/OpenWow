@@ -57,29 +57,22 @@ std::shared_ptr<Character> CWorldObjectCreator::BuildCharacterFromTemplate(IRend
 	if (m2Model == nullptr)
 		return nullptr;
 
-	Character_SectionWrapper sectionWrapper(m_BaseManager);
-
 	std::shared_ptr<Character> newCharacter = ((Parent != nullptr) ? Parent : Scene.GetRootSceneNode())->CreateSceneNode<Character>(m2Model);
 	m_BaseManager.GetManager<ILoader>()->AddToLoadQueue(newCharacter);
 
 	// 2. Template
 	{
-		newCharacter->GetTemplate().TemplateSet(b);
+		newCharacter->Template() = b;
 	}
 
 	// 3. Items
-	{
-		newCharacter->RefreshItemVisualData();
-	}
+	newCharacter->RefreshItemVisualData();
 
-	// 5. Character textures
-	{
-		Character_SkinTextureBaker skinTextureBaker(m_BaseManager, RenderDevice);
-		auto skinTexture = skinTextureBaker.createTexture(newCharacter.get());
-		newCharacter->RefreshTextures(sectionWrapper, skinTexture);
-	}
+	// 4. Character textures
+	newCharacter->Refresh_CreateSkinTexture(nullptr);
 
-	newCharacter->RefreshMeshIDs(sectionWrapper);
+	// 5. Geosets
+	newCharacter->RefreshMeshIDs();
 
 	return newCharacter;
 }
@@ -100,8 +93,6 @@ std::shared_ptr<Character> CWorldObjectCreator::BuildCharacterFromDisplayInfo(IR
 	if (m2Model == nullptr)
 		return nullptr;
 
-	Character_SectionWrapper sectionWrapper(m_BaseManager);
-
 	std::shared_ptr<Character> newCharacter = ((Parent != nullptr) ? Parent : Scene.GetRootSceneNode())->CreateSceneNode<Character>(m2Model);
 	m_BaseManager.GetManager<ILoader>()->AddToLoadQueue(newCharacter);
 
@@ -119,43 +110,29 @@ std::shared_ptr<Character> CWorldObjectCreator::BuildCharacterFromDisplayInfo(IR
 		characterTemplate.facialStyle = humanoidRecExtra->Get_FacialHairID();
 
 		// 2.2 Items
-		characterTemplate.ItemsTemplates[EQUIPMENT_SLOT_HEAD] = CInet_ItemTemplate(humanoidRecExtra->Get_Helm(), DBCItem_EInventoryType::HEAD, 0);
-		characterTemplate.ItemsTemplates[EQUIPMENT_SLOT_SHOULDERS] = CInet_ItemTemplate(humanoidRecExtra->Get_Shoulder(), DBCItem_EInventoryType::SHOULDERS, 0);
-		characterTemplate.ItemsTemplates[EQUIPMENT_SLOT_BODY] = CInet_ItemTemplate(humanoidRecExtra->Get_Shirt(), DBCItem_EInventoryType::BODY, 0);
-		characterTemplate.ItemsTemplates[EQUIPMENT_SLOT_CHEST] = CInet_ItemTemplate(humanoidRecExtra->Get_Chest(), DBCItem_EInventoryType::CHEST, 0);
-		characterTemplate.ItemsTemplates[EQUIPMENT_SLOT_WAIST] = CInet_ItemTemplate(humanoidRecExtra->Get_Belt(), DBCItem_EInventoryType::WAIST, 0);
-		characterTemplate.ItemsTemplates[EQUIPMENT_SLOT_LEGS] = CInet_ItemTemplate(humanoidRecExtra->Get_Legs(), DBCItem_EInventoryType::LEGS, 0);
-		characterTemplate.ItemsTemplates[EQUIPMENT_SLOT_FEET] = CInet_ItemTemplate(humanoidRecExtra->Get_Boots(), DBCItem_EInventoryType::FEET, 0);
-		characterTemplate.ItemsTemplates[EQUIPMENT_SLOT_WRISTS] = CInet_ItemTemplate(humanoidRecExtra->Get_Wrist(), DBCItem_EInventoryType::WRISTS, 0);
-		characterTemplate.ItemsTemplates[EQUIPMENT_SLOT_HANDS] = CInet_ItemTemplate(humanoidRecExtra->Get_Gloves(), DBCItem_EInventoryType::HANDS, 0);
-		characterTemplate.ItemsTemplates[EQUIPMENT_SLOT_TABARD] = CInet_ItemTemplate(humanoidRecExtra->Get_Tabard(), DBCItem_EInventoryType::TABARD, 0);
-		//ItemsTemplates[EQUIPMENT_SLOT_BACK] = CInet_ItemTemplate(humanoidRecExtra->Get_Cape(), DBCItem_EInventoryType::CLOAK, 0);
+		characterTemplate.ItemsTemplates[EQUIPMENT_SLOT_HEAD] = CInet_ItemTemplate(humanoidRecExtra->Get_Helm(), DBCItem_EInventoryItemSlot::HEAD, 0);
+		characterTemplate.ItemsTemplates[EQUIPMENT_SLOT_SHOULDERS] = CInet_ItemTemplate(humanoidRecExtra->Get_Shoulder(), DBCItem_EInventoryItemSlot::SHOULDERS, 0);
+		characterTemplate.ItemsTemplates[EQUIPMENT_SLOT_BODY] = CInet_ItemTemplate(humanoidRecExtra->Get_Shirt(), DBCItem_EInventoryItemSlot::BODY, 0);
+		characterTemplate.ItemsTemplates[EQUIPMENT_SLOT_CHEST] = CInet_ItemTemplate(humanoidRecExtra->Get_Chest(), DBCItem_EInventoryItemSlot::CHEST, 0);
+		characterTemplate.ItemsTemplates[EQUIPMENT_SLOT_WAIST] = CInet_ItemTemplate(humanoidRecExtra->Get_Belt(), DBCItem_EInventoryItemSlot::WAIST, 0);
+		characterTemplate.ItemsTemplates[EQUIPMENT_SLOT_LEGS] = CInet_ItemTemplate(humanoidRecExtra->Get_Legs(), DBCItem_EInventoryItemSlot::LEGS, 0);
+		characterTemplate.ItemsTemplates[EQUIPMENT_SLOT_FEET] = CInet_ItemTemplate(humanoidRecExtra->Get_Boots(), DBCItem_EInventoryItemSlot::FEET, 0);
+		characterTemplate.ItemsTemplates[EQUIPMENT_SLOT_WRISTS] = CInet_ItemTemplate(humanoidRecExtra->Get_Wrist(), DBCItem_EInventoryItemSlot::WRISTS, 0);
+		characterTemplate.ItemsTemplates[EQUIPMENT_SLOT_HANDS] = CInet_ItemTemplate(humanoidRecExtra->Get_Gloves(), DBCItem_EInventoryItemSlot::HANDS, 0);
+		characterTemplate.ItemsTemplates[EQUIPMENT_SLOT_TABARD] = CInet_ItemTemplate(humanoidRecExtra->Get_Tabard(), DBCItem_EInventoryItemSlot::TABARD, 0);
+		//ItemsTemplates[EQUIPMENT_SLOT_BACK] = CInet_ItemTemplate(humanoidRecExtra->Get_Cape(), DBCItem_EInventoryItemSlot::CLOAK, 0);
 
-		newCharacter->GetTemplate().TemplateSet(characterTemplate);
+		newCharacter->Template() = characterTemplate;
 	}
 
 	// 3. Items
-	{
-		newCharacter->RefreshItemVisualData();
-	}
+	newCharacter->RefreshItemVisualData();
 
 	// 4. Creature textures
-	{
-		std::string bakedTextureName = humanoidRecExtra->Get_BakedSkin();
-		std::shared_ptr<ITexture> bakedSkinTexture = nullptr;
-		if (false == bakedTextureName.empty())
-		{
-			bakedSkinTexture = m_BaseManager.GetManager<IznTexturesFactory>()->LoadTexture2D("Textures\\BakedNpcTextures\\" + bakedTextureName);
-		}
-		else
-		{
-			bakedSkinTexture = m_BaseManager.GetManager<IznTexturesFactory>()->GetDefaultTexture();
-			Log::Error("CWorldObjectCreator::BuildCharacterFromDisplayInfo: For character '%d' his CreatureDisplayInfoExtraRecord with id '%d' don't contains baked texture.", rec->Get_ID(), humanoidRecExtra->Get_ID());
-		}
-		newCharacter->RefreshTextures(sectionWrapper, bakedSkinTexture);
-	}
+	newCharacter->Refresh_CreateSkinTexture(m_BaseManager.GetManager<IImagesFactory>()->CreateImage("Textures\\BakedNpcTextures\\" + humanoidRecExtra->Get_BakedSkin()));
 
-	newCharacter->RefreshMeshIDs(sectionWrapper);
+	// 5. Geosets
+	newCharacter->RefreshMeshIDs();
 
 	return newCharacter;
 }
@@ -243,7 +220,16 @@ std::shared_ptr<CM2> CWorldObjectCreator::LoadM2(IRenderDevice& RenderDevice, co
 	//if (newName.find("orgrimmarsmokeemitter.mdx") != -1 || newName.find("orgrimmarfloatingembers.mdx") != -1)
 	//	return nullptr;
 
-	auto m2Object = std::make_shared<CM2>(m_BaseManager, RenderDevice, Filename);
+	std::shared_ptr<CM2> m2Object;
+	try
+	{
+		m2Object = MakeShared(CM2, m_BaseManager, RenderDevice, Filename);
+	}
+	catch (const CException& e)
+	{
+		Log::Error("CWorldObjectCreator::LoadM2: Error '%s'.", e.MessageCStr());
+		return nullptr;
+	}
 
 	{
 		std::lock_guard<std::mutex> lock(m_M2Lock);
@@ -291,7 +277,7 @@ std::shared_ptr<CWMO> CWorldObjectCreator::LoadWMO(IRenderDevice& RenderDevice, 
 	//if (newName.find(Utils::ToLower("WORLD\\WMO\\DUNGEON\\AZ_BLACKROCK\\BLACKROCK.WMO")) == std::string::npos)
 	//	return nullptr;
 
-	auto wmoObject = std::make_shared<CWMO>(m_BaseManager, RenderDevice, Filename);
+	auto wmoObject = MakeShared(CWMO, m_BaseManager, RenderDevice, Filename);
 
 	{
 		std::lock_guard<std::mutex> lock(m_WMOLock);

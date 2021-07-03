@@ -118,7 +118,7 @@ std::shared_ptr<IImage> Character_SectionWrapper::getFaceUpperTexture(const CIne
 //-- FañialHair
 //------------------------------------------------------------
 
-std::string Character_SectionWrapper::getFacialHairLowerTexture(const CInet_CharacterTemplate& CharacterTemlate) const
+std::shared_ptr<IImage> Character_SectionWrapper::getFacialHairLowerTexture(const CInet_CharacterTemplate& CharacterTemlate) const
 {
 	for (const auto& i : m_DBCs->DBC_CharSections())
 	{
@@ -126,17 +126,21 @@ std::string Character_SectionWrapper::getFacialHairLowerTexture(const CInet_Char
 			i->Get_GeneralType() == DBC_CharSections_GeneralType::FacialHair &&
 			i->Get_Race() == (uint32)CharacterTemlate.Race &&
 			i->Get_Gender() == (uint32)CharacterTemlate.Gender &&
-			i->Get_Color() == CharacterTemlate.facialStyle
+			i->Get_Type() == CharacterTemlate.facialStyle
 			)
 		{
-			return i->Get_Texture1();
+			std::string textureName = i->Get_Texture1();
+			if (textureName.empty())
+				break;
+
+			return m_BaseManager.GetManager<IImagesFactory>()->CreateImage(textureName);
 		}
 	}
-	_ASSERT(false);
-	return "";
+
+	return nullptr;
 }
 
-std::string Character_SectionWrapper::getFacialHairUpperTexture(const CInet_CharacterTemplate& CharacterTemlate) const
+std::shared_ptr<IImage> Character_SectionWrapper::getFacialHairUpperTexture(const CInet_CharacterTemplate& CharacterTemlate) const
 {
 	for (const auto& i : m_DBCs->DBC_CharSections())
 	{
@@ -144,14 +148,17 @@ std::string Character_SectionWrapper::getFacialHairUpperTexture(const CInet_Char
 			i->Get_GeneralType() == DBC_CharSections_GeneralType::FacialHair &&
 			i->Get_Race() == (uint32)CharacterTemlate.Race &&
 			i->Get_Gender() == (uint32)CharacterTemlate.Gender &&
-			i->Get_Color() == CharacterTemlate.facialStyle
+			i->Get_Type() == CharacterTemlate.facialStyle
 			)
 		{
-			return i->Get_Texture2();
+			std::string textureName = i->Get_Texture2();
+			if (textureName.empty())
+				break;
+			return m_BaseManager.GetManager<IImagesFactory>()->CreateImage(textureName);
 		}
 	}
-	_ASSERT(false);	
-	return "";
+
+	return nullptr;
 }
 
 uint32 Character_SectionWrapper::getFacial01Geoset(const CInet_CharacterTemplate& CharacterTemlate) const
@@ -168,8 +175,8 @@ uint32 Character_SectionWrapper::getFacial01Geoset(const CInet_CharacterTemplate
 		}
 	}
 
-	//_ASSERT(FALSE);
 	return UINT32_MAX;
+	//throw CException("Character_SectionWrapper::getFacial01Geoset: Geoset for Race '%d', Gender '%d', FacialStyle '%d'.", (uint32)CharacterTemlate.Race, (uint32)CharacterTemlate.Gender, CharacterTemlate.facialStyle);
 }
 
 uint32 Character_SectionWrapper::getFacial02Geoset(const CInet_CharacterTemplate& CharacterTemlate) const
@@ -186,8 +193,8 @@ uint32 Character_SectionWrapper::getFacial02Geoset(const CInet_CharacterTemplate
 		}
 	}
 
-	//_ASSERT(FALSE);
 	return UINT32_MAX;
+	//throw CException("Character_SectionWrapper::getFacial02Geoset: Geoset for Race '%d', Gender '%d', FacialStyle '%d'.", (uint32)CharacterTemlate.Race, (uint32)CharacterTemlate.Gender, CharacterTemlate.facialStyle);
 }
 
 uint32 Character_SectionWrapper::getFacial03Geoset(const CInet_CharacterTemplate& CharacterTemlate) const
@@ -204,8 +211,8 @@ uint32 Character_SectionWrapper::getFacial03Geoset(const CInet_CharacterTemplate
 		}
 	}
 
-	//_ASSERT(FALSE);
 	return UINT32_MAX;
+	//throw CException("Character_SectionWrapper::getFacial03Geoset: Geoset for Race '%d', Gender '%d', FacialStyle '%d'.", (uint32)CharacterTemlate.Race, (uint32)CharacterTemlate.Gender, CharacterTemlate.facialStyle);
 }
 
 uint32 Character_SectionWrapper::getFacial16Geoset(const CInet_CharacterTemplate& CharacterTemlate) const
@@ -222,8 +229,8 @@ uint32 Character_SectionWrapper::getFacial16Geoset(const CInet_CharacterTemplate
 		}
 	}
 
-	//_ASSERT(FALSE);
 	return UINT32_MAX;
+	//throw CException("Character_SectionWrapper::getFacial16Geoset: Geoset for Race '%d', Gender '%d', FacialStyle '%d'.", (uint32)CharacterTemlate.Race, (uint32)CharacterTemlate.Gender, CharacterTemlate.facialStyle);
 }
 
 uint32 Character_SectionWrapper::getFacial17Geoset(const CInet_CharacterTemplate& CharacterTemlate) const
@@ -240,8 +247,8 @@ uint32 Character_SectionWrapper::getFacial17Geoset(const CInet_CharacterTemplate
 		}
 	}
 
-	//_ASSERT(FALSE);
 	return UINT32_MAX;
+	//throw CException("Character_SectionWrapper::getFacial17Geoset: Geoset for Race '%d', Gender '%d', FacialStyle '%d'.", (uint32)CharacterTemlate.Race, (uint32)CharacterTemlate.Gender, CharacterTemlate.facialStyle);
 }
 
 
@@ -328,7 +335,6 @@ std::shared_ptr<IImage> Character_SectionWrapper::getHairScalpLowerTexture(const
 		}
 	}
 
-	_ASSERT(false);
 	return nullptr;
 }
 
@@ -352,7 +358,6 @@ std::shared_ptr<IImage> Character_SectionWrapper::getHairScalpUpperTexture(const
 		}
 	}
 
-	_ASSERT(false);
 	return nullptr;
 }
 

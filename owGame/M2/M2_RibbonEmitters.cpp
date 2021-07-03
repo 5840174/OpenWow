@@ -18,7 +18,7 @@ struct RibbonVertex
 	glm::vec2 tex;
 };
 
-CM2_RibbonEmitters::CM2_RibbonEmitters(const CM2& M2Object, const std::shared_ptr<IFile>& File, const SM2_RibbonEmitter& M2RibbonEmitter) 
+CM2_Part_RibbonEmitters::CM2_Part_RibbonEmitters(const CM2& M2Object, const std::shared_ptr<IFile>& File, const SM2_RibbonEmitter& M2RibbonEmitter) 
 	: m_M2Object(M2Object)
 	, m_M2RibbonEmitter(M2RibbonEmitter)
 	, tcolor(glm::vec4(1.0f))
@@ -36,7 +36,7 @@ CM2_RibbonEmitters::CM2_RibbonEmitters(const CM2& M2Object, const std::shared_pt
 		uint16_t* TexturesList = (uint16_t*)(File->getData() + M2RibbonEmitter.textureIndices.offset);
 		// just use the first texture for now; most models I've checked only had one
 		_ASSERT(M2RibbonEmitter.textureIndices.size > 0);
-		m_Texture = m_M2Object.getMaterials().GetTextureDirectInternal(TexturesList[0])->GetTexture();
+		m_Texture = m_M2Object.getMaterials().GetTextureDirect(TexturesList[0])->GetTexture();
 
 		uint16_t* MaterialsList = (uint16_t*)(File->getData() + M2RibbonEmitter.materialIndices.offset);
 		_ASSERT(M2RibbonEmitter.materialIndices.size > 0);
@@ -55,7 +55,7 @@ CM2_RibbonEmitters::CM2_RibbonEmitters(const CM2& M2Object, const std::shared_pt
 	m_Segments.push_back(rs);
 }
 
-void CM2_RibbonEmitters::setup(uint16 anim, uint32 time, uint32 _globalTime, const glm::mat4& _worldMatrix)
+void CM2_Part_RibbonEmitters::setup(uint16 anim, uint32 time, uint32 _globalTime, const glm::mat4& _worldMatrix)
 {
 	std::shared_ptr<const CM2_Part_Bone> Bone = m_Bone.lock();
 	_ASSERT(Bone != nullptr);
@@ -128,7 +128,7 @@ void CM2_RibbonEmitters::setup(uint16 anim, uint32 time, uint32 _globalTime, con
 	}
 }
 
-void CM2_RibbonEmitters::Render(const glm::mat4& _world)
+void CM2_Part_RibbonEmitters::Render(const glm::mat4& _world)
 {
 	std::vector<RibbonVertex> vertices;
 

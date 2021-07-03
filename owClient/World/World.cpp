@@ -52,6 +52,12 @@ void CWoWWorld::EnterWorld(const CInet_CharacterTemplate& SelectedCharacter)
 void CWoWWorld::Update(const UpdateEventArgs & e)
 {
 	m_WorldObjects.Update(e);
+
+	if (m_Map)
+		m_Map->Update(e);
+
+	if (m_SkyManager)
+		m_SkyManager->Update(e);
 }
 
 void CWoWWorld::Accept(IWoWVisitor * WoWVisitor)

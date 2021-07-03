@@ -234,8 +234,13 @@ void WoWUnit::ProcessMonsterMove(CByteBuffer & Bytes)
 		break;
 
 		case MonsterMoveType::MonsterMoveStop:
+		{
+			CommitPositionAndRotation();
 			return;
+		}
 	}
+	
+	auto path = MakeShared(CWoWPath);
 
 	Movement::MoveSplineFlag splineflags;
 	Bytes >> splineflags;
@@ -251,6 +256,7 @@ void WoWUnit::ProcessMonsterMove(CByteBuffer & Bytes)
 
 	int32 duration;
 	Bytes >> duration;
+	path->SetDuration(duration);
 
 	if (splineflags.parabolic)
 	{
@@ -263,9 +269,6 @@ void WoWUnit::ProcessMonsterMove(CByteBuffer & Bytes)
 
 	if (splineflags & Movement::MoveSplineFlag::Mask_CatmullRom)
 	{
-		auto path = MakeShared(CWoWPath);
-		path->SetDuration(duration);
-
 		path->AddPathNode(MakeShared(CWoWPathNode, fromGameToReal(firstSplinePointGame)));
 
 		uint32 pathPointsCnt;
@@ -278,15 +281,10 @@ void WoWUnit::ProcessMonsterMove(CByteBuffer & Bytes)
 			path->AddPathNode(MakeShared(CWoWPathNode, fromGameToReal(gamePathPoint)));
 		}
 		
-		m_WoWPath = path;
-
 		//(splineflags.cyclic)
 	}
 	else // linear
 	{
-		auto path = MakeShared(CWoWPath);
-		path->SetDuration(duration);
-
 		uint32 count;
 		Bytes >> count;
 
@@ -302,20 +300,31 @@ void WoWUnit::ProcessMonsterMove(CByteBuffer & Bytes)
 			uint32 packedPos;
 			Bytes >> packedPos;
 
-			float x2 = ((packedPos      ) & 0x7FF) * 0.25f; // this is offsets to path
-			float y2 = ((packedPos >> 11) & 0x7FF) * 0.25f;
-			float z2 = ((packedPos >> 22) & 0x3FF) * 0.25f;
+			int32_t packedXX = (int)packedPos >>  0 & 0x7FF;
+			int32_t packedYY = (int)packedPos >> 11 & 0x7FF;
+			int32_t packedZZ = (int)packedPos >> 22 & 0x3FF;
+			
+			if (packedXX > 0x400)
+				packedXX -= 0x800;
+			if (packedYY > 0x400)
+				packedYY -= 0x800;
+			if (packedZZ > 0x200)
+				packedZZ -= 0x400;
+
+			float x2 = float(packedXX) / 4.0f;
+			float y2 = float(packedYY) / 4.0f;
+			float z2 = float(packedZZ) / 4.0f;
 
 			glm::vec3 pOffs(x2, y2, z2);
+			glm::vec3 point = fromGameToReal(middle - pOffs);
 
-			path->AddPathNode(MakeShared(CWoWPathNode, fromGameToReal(middle - pOffs)));
+			path->AddPathNode(MakeShared(CWoWPathNode, point));
 		}
 
 		path->AddPathNode(MakeShared(CWoWPathNode, fromGameToReal(lastSplinePointGame)));
-
-		m_WoWPath = path;
 	}
 
+	m_WoWPath = path;
 	CommitPositionAndRotation();
 }
 
@@ -327,7 +336,7 @@ void WoWUnit::OnValuesUpdated(const UpdateMask & Mask)
 
 		if (m_HiddenNode != nullptr)
 		{
-			Log::Warn("WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.");
+			//Log::Warn("WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.");
 			return;
 		}
 
@@ -353,7 +362,7 @@ void WoWUnit::OnValuesUpdated(const UpdateMask & Mask)
 		uint32 mainHandDisplayID = m_Values.GetUInt32Value(UNIT_VIRTUAL_ITEM_SLOT_ID + 0);
 		if (mainHandDisplayID != 0)
 			if (auto hidderNodeAsCharacter = std::dynamic_pointer_cast<Character>(m_HiddenNode))
-				hidderNodeAsCharacter->GetTemplate().ItemsTemplates[EQUIPMENT_SLOT_MAINHAND] = GetItemDisplayInfoIDByItemID(mainHandDisplayID);
+				hidderNodeAsCharacter->Template().ItemsTemplates[EQUIPMENT_SLOT_MAINHAND] = GetItemDisplayInfoIDByItemID(mainHandDisplayID);
 
 		if (auto hidderNodeAsCharacter = std::dynamic_pointer_cast<Character>(m_HiddenNode))
 			hidderNodeAsCharacter->RefreshItemVisualData();
@@ -364,7 +373,7 @@ void WoWUnit::OnValuesUpdated(const UpdateMask & Mask)
 		uint32 offHandDisplayID = m_Values.GetUInt32Value(UNIT_VIRTUAL_ITEM_SLOT_ID + 1);
 		if (offHandDisplayID != 0)
 			if (auto hidderNodeAsCharacter = std::dynamic_pointer_cast<Character>(m_HiddenNode))
-				hidderNodeAsCharacter->GetTemplate().ItemsTemplates[EQUIPMENT_SLOT_OFFHAND] = GetItemDisplayInfoIDByItemID(offHandDisplayID);
+				hidderNodeAsCharacter->Template().ItemsTemplates[EQUIPMENT_SLOT_OFFHAND] = GetItemDisplayInfoIDByItemID(offHandDisplayID);
 
 		if (auto hidderNodeAsCharacter = std::dynamic_pointer_cast<Character>(m_HiddenNode))
 			hidderNodeAsCharacter->RefreshItemVisualData();
@@ -375,23 +384,13 @@ void WoWUnit::OnValuesUpdated(const UpdateMask & Mask)
 		uint32 rangedDisplayID = m_Values.GetUInt32Value(UNIT_VIRTUAL_ITEM_SLOT_ID + 2);
 		if (rangedDisplayID != 0)
 			if (auto hidderNodeAsCharacter = std::dynamic_pointer_cast<Character>(m_HiddenNode))
-				hidderNodeAsCharacter->GetTemplate().ItemsTemplates[EQUIPMENT_SLOT_RANGED] = GetItemDisplayInfoIDByItemID(rangedDisplayID);
+				hidderNodeAsCharacter->Template().ItemsTemplates[EQUIPMENT_SLOT_RANGED] = GetItemDisplayInfoIDByItemID(rangedDisplayID);
 
 		if (auto hidderNodeAsCharacter = std::dynamic_pointer_cast<Character>(m_HiddenNode))
 			hidderNodeAsCharacter->RefreshItemVisualData();
 	}
 }
 
-
-namespace
-{
-float angleBetween(glm::vec3 a, glm::vec3 b, glm::vec3 origin)
-{
-	glm::vec3 da = glm::normalize(a - origin);
-	glm::vec3 db = glm::normalize(b - origin);
-	return glm::acos(glm::dot(da, db));
-}
-}
 
 
 //
@@ -401,8 +400,6 @@ void WoWUnit::Update(const UpdateEventArgs & e)
 {
 	__super::Update(e);
 
-	float speedPerTick = GetSpeed(MOVE_WALK) / 1000.0f * e.DeltaTime;
-
 	if (m_WoWPath)
 	{
 		m_WoWPath->AddCurrTime(e.DeltaTime);
@@ -410,9 +407,6 @@ void WoWUnit::Update(const UpdateEventArgs & e)
 		glm::vec3 NextPoint = m_WoWPath->GetPositionByCurrTime();
 		if (glm::distance(NextPoint, Position) > 0.01f)
 		{
-			
-
-
 			glm::vec3 test = m_WoWPath->GetNextNodePosition();
 
 			glm::vec3 directionVec = glm::normalize(glm::vec3(test.x, 0.0f, test.z) - glm::vec3(Position.x, 0.0f, Position.z));

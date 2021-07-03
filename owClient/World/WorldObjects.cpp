@@ -41,17 +41,7 @@ void CWorldObjects::Accept(IWoWVisitor * WoWVisitor)
 
 std::shared_ptr<WoWObject> CWorldObjects::GetWoWObject(CWoWGuid ObjectGUID)
 {
-	if (ObjectGUID.GetTypeId() == EWoWObjectTypeID::TYPEID_OBJECT)
-	{
-		const auto& objIterator = m_WoWObjects.find(ObjectGUID);
-		if (objIterator != m_WoWObjects.end())
-			return objIterator->second;
-
-		auto object = WoWObject::Create(m_Scene, ObjectGUID);
-		m_WoWObjects[ObjectGUID] = object;
-		return object;
-	}
-	else if (ObjectGUID.GetTypeId() == EWoWObjectTypeID::TYPEID_ITEM)
+	if (ObjectGUID.GetHigh() == EWoWObjectHighGuid::Item)
 	{
 		const auto& objIterator = m_WoWItems.find(ObjectGUID);
 		if (objIterator != m_WoWItems.end())
@@ -61,7 +51,7 @@ std::shared_ptr<WoWObject> CWorldObjects::GetWoWObject(CWoWGuid ObjectGUID)
 		m_WoWItems[ObjectGUID] = object;
 		return object;
 	}
-	else if (ObjectGUID.GetTypeId() == EWoWObjectTypeID::TYPEID_CONTAINER)
+	else if (ObjectGUID.GetHigh() == EWoWObjectHighGuid::Container)
 	{
 		const auto& objIterator = m_WoWContainers.find(ObjectGUID);
 		if (objIterator != m_WoWContainers.end())
@@ -71,7 +61,10 @@ std::shared_ptr<WoWObject> CWorldObjects::GetWoWObject(CWoWGuid ObjectGUID)
 		m_WoWContainers[ObjectGUID] = object;
 		return object;
 	}
-	else if (ObjectGUID.GetTypeId() == EWoWObjectTypeID::TYPEID_UNIT)
+
+
+	// Unit
+	else if (ObjectGUID.GetHigh() == EWoWObjectHighGuid::Unit)
 	{
 		const auto& objIterator = m_WoWUnits.find(ObjectGUID);
 		if (objIterator != m_WoWUnits.end())
@@ -81,7 +74,30 @@ std::shared_ptr<WoWObject> CWorldObjects::GetWoWObject(CWoWGuid ObjectGUID)
 		m_WoWUnits[ObjectGUID] = object;
 		return object;
 	}
-	else if (ObjectGUID.GetTypeId() == EWoWObjectTypeID::TYPEID_PLAYER)
+	else if (ObjectGUID.GetHigh() == EWoWObjectHighGuid::Pet)
+	{
+		const auto& objIterator = m_WoWUnitsPet.find(ObjectGUID);
+		if (objIterator != m_WoWUnitsPet.end())
+			return objIterator->second;
+
+		auto object = WoWUnit::Create(m_WoWWorld, m_Scene, ObjectGUID); // TODO: To Pet
+		m_WoWUnitsPet[ObjectGUID] = object;
+		return object;
+	}
+	else if (ObjectGUID.GetHigh() == EWoWObjectHighGuid::Vehicle)
+	{
+		const auto& objIterator = m_WoWUnitsVehicle.find(ObjectGUID);
+		if (objIterator != m_WoWUnitsVehicle.end())
+			return objIterator->second;
+
+		auto object = WoWUnit::Create(m_WoWWorld, m_Scene, ObjectGUID); // TODO: To Vehicle
+		m_WoWUnitsVehicle[ObjectGUID] = object;
+		return object;
+	}
+
+
+	// Player
+	else if (ObjectGUID.GetHigh() == EWoWObjectHighGuid::Player)
 	{
 		const auto& objIterator = m_WoWPlayers.find(ObjectGUID);
 		if (objIterator != m_WoWPlayers.end())
@@ -91,21 +107,43 @@ std::shared_ptr<WoWObject> CWorldObjects::GetWoWObject(CWoWGuid ObjectGUID)
 		m_WoWPlayers[ObjectGUID] = object;
 		return object;
 	}
-	else if (ObjectGUID.GetTypeId() == EWoWObjectTypeID::TYPEID_GAMEOBJECT)
+
+
+	// GameObjects
+	else if (ObjectGUID.GetHigh() == EWoWObjectHighGuid::GameObject)
 	{
 		const auto& objIterator = m_WoWGameObjects.find(ObjectGUID);
 		if (objIterator != m_WoWGameObjects.end())
 			return objIterator->second;
 
-		std::shared_ptr<WoWGameObject> object = nullptr;
-		if (ObjectGUID.GetHigh() == EWoWObjectHighGuid::Mo_Transport)
-			object = WoWGameObjectMOTransport::Create(m_WoWWorld, m_Scene, ObjectGUID);
-		else
-			object = WoWGameObject::Create(m_WoWWorld, m_Scene, ObjectGUID);
+		auto object = WoWGameObject::Create(m_WoWWorld, m_Scene, ObjectGUID);
 		m_WoWGameObjects[ObjectGUID] = object;
 		return object;
 	}
-	else if (ObjectGUID.GetTypeId() == EWoWObjectTypeID::TYPEID_DYNAMICOBJECT)
+	else if (ObjectGUID.GetHigh() == EWoWObjectHighGuid::Transport)
+	{
+		const auto& objIterator = m_WoWGameObjectsTransport.find(ObjectGUID);
+		if (objIterator != m_WoWGameObjectsTransport.end())
+			return objIterator->second;
+
+		auto object = WoWGameObject::Create(m_WoWWorld, m_Scene, ObjectGUID);
+		m_WoWGameObjectsTransport[ObjectGUID] = object;
+		return object;
+	}
+	else if (ObjectGUID.GetHigh() == EWoWObjectHighGuid::Mo_Transport)
+	{
+		const auto& objIterator = m_WoWGameObjectsMOTransport.find(ObjectGUID);
+		if (objIterator != m_WoWGameObjectsMOTransport.end())
+			return objIterator->second;
+
+		auto object = WoWGameObjectMOTransport::Create(m_WoWWorld, m_Scene, ObjectGUID);
+		m_WoWGameObjectsMOTransport[ObjectGUID] = object;
+		return object;
+	}
+
+
+	// DynamicObject
+	else if (ObjectGUID.GetHigh() == EWoWObjectHighGuid::DynamicObject)
 	{
 		const auto& objIterator = m_WoWDynamicObjects.find(ObjectGUID);
 		if (objIterator != m_WoWDynamicObjects.end())
@@ -115,7 +153,10 @@ std::shared_ptr<WoWObject> CWorldObjects::GetWoWObject(CWoWGuid ObjectGUID)
 		m_WoWDynamicObjects[ObjectGUID] = object;
 		return object;
 	}
-	else if (ObjectGUID.GetTypeId() == EWoWObjectTypeID::TYPEID_CORPSE)
+
+
+	// Corpse
+	else if (ObjectGUID.GetHigh() == EWoWObjectHighGuid::Corpse)
 	{
 		const auto& objIterator = m_WoWCorpses.find(ObjectGUID);
 		if (objIterator != m_WoWCorpses.end())
@@ -126,99 +167,149 @@ std::shared_ptr<WoWObject> CWorldObjects::GetWoWObject(CWoWGuid ObjectGUID)
 		return object;
 	}
 
-	throw CException("CWorldObjects::GetWoWObject: TypeID '%d' is unknown.", ObjectGUID.GetTypeId());
+	throw CException("CWorldObjects::GetWoWObject: TypeID '%d' is unknown.", ObjectGUID.GetHigh());
 }
 
 bool CWorldObjects::IsWoWObjectExists(CWoWGuid ObjectGUID)
 {
-	if (ObjectGUID.GetTypeId() == EWoWObjectTypeID::TYPEID_OBJECT)
-	{
-		return m_WoWObjects.find(ObjectGUID) != m_WoWObjects.end();
-	}
-	else if (ObjectGUID.GetTypeId() == EWoWObjectTypeID::TYPEID_ITEM)
+	if (ObjectGUID.GetHigh() == EWoWObjectHighGuid::Item)
 	{
 		return m_WoWItems.find(ObjectGUID) != m_WoWItems.end();
 	}
-	else if (ObjectGUID.GetTypeId() == EWoWObjectTypeID::TYPEID_CONTAINER)
+	else if (ObjectGUID.GetHigh() == EWoWObjectHighGuid::Container)
 	{
 		return m_WoWContainers.find(ObjectGUID) != m_WoWContainers.end();
 	}
-	else if (ObjectGUID.GetTypeId() == EWoWObjectTypeID::TYPEID_UNIT)
+
+	// Unit
+	else if (ObjectGUID.GetHigh() == EWoWObjectHighGuid::Unit)
 	{
 		return m_WoWUnits.find(ObjectGUID) != m_WoWUnits.end();
 	}
-	else if (ObjectGUID.GetTypeId() == EWoWObjectTypeID::TYPEID_PLAYER)
+	else if (ObjectGUID.GetHigh() == EWoWObjectHighGuid::Pet)
+	{
+		return m_WoWUnitsPet.find(ObjectGUID) != m_WoWUnitsPet.end();
+	}
+	else if (ObjectGUID.GetHigh() == EWoWObjectHighGuid::Vehicle)
+	{
+		return m_WoWUnitsVehicle.find(ObjectGUID) != m_WoWUnitsVehicle.end();
+	}
+
+	// Player
+	else if (ObjectGUID.GetHigh() == EWoWObjectHighGuid::Player)
 	{
 		return m_WoWPlayers.find(ObjectGUID) != m_WoWPlayers.end();
 	}
-	else if (ObjectGUID.GetTypeId() == EWoWObjectTypeID::TYPEID_GAMEOBJECT)
+
+	// GameObjects
+	else if (ObjectGUID.GetHigh() == EWoWObjectHighGuid::GameObject)
 	{
 		return m_WoWGameObjects.find(ObjectGUID) != m_WoWGameObjects.end();
 	}
-	else if (ObjectGUID.GetTypeId() == EWoWObjectTypeID::TYPEID_DYNAMICOBJECT)
+	else if (ObjectGUID.GetHigh() == EWoWObjectHighGuid::Transport)
+	{
+		return m_WoWGameObjectsTransport.find(ObjectGUID) != m_WoWGameObjectsTransport.end();
+	}
+	else if (ObjectGUID.GetHigh() == EWoWObjectHighGuid::Mo_Transport)
+	{
+		return m_WoWGameObjectsMOTransport.find(ObjectGUID) != m_WoWGameObjectsMOTransport.end();
+	}
+
+	// DynamicObject
+	else if (ObjectGUID.GetHigh() == EWoWObjectHighGuid::DynamicObject)
 	{
 		return m_WoWDynamicObjects.find(ObjectGUID) != m_WoWDynamicObjects.end();
 	}
-	else if (ObjectGUID.GetTypeId() == EWoWObjectTypeID::TYPEID_CORPSE)
+
+	// Corpse
+	else if (ObjectGUID.GetHigh() == EWoWObjectHighGuid::Corpse)
 	{
 		return m_WoWCorpses.find(ObjectGUID) != m_WoWCorpses.end();
 	}
 
-	throw CException("CWorldObjects::IsWoWObjectExists: TypeID '%d' is unknown.", ObjectGUID.GetTypeId());
+	throw CException("CWorldObjects::IsWoWObjectExists: TypeID '%d' is unknown.", ObjectGUID.GetHigh());
 }
 
 void CWorldObjects::EraseWoWObject(const std::shared_ptr<WoWObject>& WoWObject)
 {
 	CWoWGuid objectGUID(WoWObject->GetWoWGUID());
 
-	if (objectGUID.GetTypeId() == EWoWObjectTypeID::TYPEID_OBJECT)
-	{
-		auto it = m_WoWObjects.find(objectGUID);
-		if (it != m_WoWObjects.end())
-			m_WoWObjects.erase(it);
-	}
-	else if (objectGUID.GetTypeId() == EWoWObjectTypeID::TYPEID_ITEM)
+	if (objectGUID.GetHigh() == EWoWObjectHighGuid::Item)
 	{
 		auto it = m_WoWItems.find(objectGUID);
 		if (it != m_WoWItems.end())
 			m_WoWItems.erase(it);
 	}
-	else if (objectGUID.GetTypeId() == EWoWObjectTypeID::TYPEID_CONTAINER)
+	else if (objectGUID.GetHigh() == EWoWObjectHighGuid::Container)
 	{
 		auto it = m_WoWContainers.find(objectGUID);
 		if (it != m_WoWContainers.end())
 			m_WoWContainers.erase(it);
 	}
-	else if (objectGUID.GetTypeId() == EWoWObjectTypeID::TYPEID_UNIT)
+
+	// Unit
+	else if (objectGUID.GetHigh() == EWoWObjectHighGuid::Unit)
 	{
 		auto it = m_WoWUnits.find(objectGUID);
 		if (it != m_WoWUnits.end())
 			m_WoWUnits.erase(it);
 	}
-	else if (objectGUID.GetTypeId() == EWoWObjectTypeID::TYPEID_PLAYER)
+	else if (objectGUID.GetHigh() == EWoWObjectHighGuid::Pet)
+	{
+		auto it = m_WoWUnitsPet.find(objectGUID);
+		if (it != m_WoWUnitsPet.end())
+			m_WoWUnitsPet.erase(it);
+	}
+	else if (objectGUID.GetHigh() == EWoWObjectHighGuid::Vehicle)
+	{
+		auto it = m_WoWUnitsVehicle.find(objectGUID);
+		if (it != m_WoWUnitsVehicle.end())
+			m_WoWUnitsVehicle.erase(it);
+	}
+
+	// Player
+	else if (objectGUID.GetHigh() == EWoWObjectHighGuid::Player)
 	{
 		auto it = m_WoWPlayers.find(objectGUID);
 		if (it != m_WoWPlayers.end())
 			m_WoWPlayers.erase(it);
 	}
-	else if (objectGUID.GetTypeId() == EWoWObjectTypeID::TYPEID_GAMEOBJECT)
+
+	// GameObject
+	else if (objectGUID.GetHigh() == EWoWObjectHighGuid::GameObject)
 	{
 		auto it = m_WoWGameObjects.find(objectGUID);
 		if (it != m_WoWGameObjects.end())
 			m_WoWGameObjects.erase(it);
 	}
-	else if (objectGUID.GetTypeId() == EWoWObjectTypeID::TYPEID_DYNAMICOBJECT)
+	else if (objectGUID.GetHigh() == EWoWObjectHighGuid::Transport)
+	{
+		auto it = m_WoWGameObjectsTransport.find(objectGUID);
+		if (it != m_WoWGameObjectsTransport.end())
+			m_WoWGameObjectsTransport.erase(it);
+	}
+	else if (objectGUID.GetHigh() == EWoWObjectHighGuid::Mo_Transport)
+	{
+		auto it = m_WoWGameObjectsMOTransport.find(objectGUID);
+		if (it != m_WoWGameObjectsMOTransport.end())
+			m_WoWGameObjectsMOTransport.erase(it);
+	}
+
+	// DynamicObject
+	else if (objectGUID.GetHigh() == EWoWObjectHighGuid::DynamicObject)
 	{
 		auto it = m_WoWDynamicObjects.find(objectGUID);
 		if (it != m_WoWDynamicObjects.end())
 			m_WoWDynamicObjects.erase(it);
 	}
-	else if (objectGUID.GetTypeId() == EWoWObjectTypeID::TYPEID_CORPSE)
+
+	// Corpse
+	else if (objectGUID.GetHigh() == EWoWObjectHighGuid::Corpse)
 	{
 		auto it = m_WoWCorpses.find(objectGUID);
 		if (it != m_WoWCorpses.end())
 			m_WoWCorpses.erase(it);
 	}
 
-	//throw CException("CWorldObjects::EraseWoWObject: TypeID '%d' is unknown.", objectGUID.GetTypeId());
+	//throw CException("CWorldObjects::EraseWoWObject: TypeID '%d' is unknown.", objectGUID.GetHigh());
 }

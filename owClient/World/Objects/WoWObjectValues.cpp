@@ -22,11 +22,59 @@ void CWoWObjectValues::SetValuesCount(uint16 ValuesCnt)
 void CWoWObjectValues::UpdateValues(CByteBuffer & Bytes)
 {
 	uint8 blocksCnt;
-	Bytes >> (uint8)blocksCnt;
+	Bytes >> (uint8)blocksCnt; // each block has 32 value
+
+	if (blocksCnt == 5)
+	{
+		//if (m_OwnerWoWObject.GetWoWGUID().GetTypeId() != EWoWObjectTypeID::TYPEID_UNIT)
+		//	__debugbreak();
+	}
 
 	UpdateMask mask;
+	mask.TEMP_InitMask(blocksCnt);
+
+	Bytes.readBytes(mask.GetMask(), mask.GetMaskLengthBytes());
+
+	m_uint32Values = new uint32[m_valuesCount];
+	for (uint16 index = 0; index < blocksCnt * 32; index++)
+	{
+		if (mask.GetBit(index))
+		{
+			uint32 value;
+			Bytes >> value;
+
+			if (index < m_valuesCount)
+			{
+				m_uint32Values[index] = value;
+				m_OwnerWoWObject.OnValueUpdated(index);
+			}
+			else
+			{
+				Log::Print("Value '%d' missed!!!!!!!!!!!!", value);
+			}
+		}
+	}
+
+	m_OwnerWoWObject.OnValuesUpdated(mask);
+
+	//UpdateMask mask;
+	//mask.SetCount(blocksCnt * 32 - 31);
+
+
+	/*
+	UpdateMask mask;
 	mask.SetCount(m_valuesCount);
-	Bytes.readBytes(mask.GetMask(), mask.GetLength());
+
+	Bytes.readBytes(mask.GetMask(), mask.GetBlockCount() * 4);
+
+
+	if (blocksCnt != mask.GetBlockCount())
+	{
+		Log::Error("TypeID = %d", m_OwnerWoWObject.GetWoWGUID().GetTypeId());
+		Log::Error("Entry = %d", m_OwnerWoWObject.GetWoWGUID().GetEntry());
+		Log::Error("Counter = %d", m_OwnerWoWObject.GetWoWGUID().GetCounter());
+	}
+
 	_ASSERT(blocksCnt == mask.GetBlockCount());
 
 	m_uint32Values = new uint32[m_valuesCount];
@@ -39,7 +87,7 @@ void CWoWObjectValues::UpdateValues(CByteBuffer & Bytes)
 		}
 	}
 
-	m_OwnerWoWObject.OnValuesUpdated(mask);
+	m_OwnerWoWObject.OnValuesUpdated(mask);*/
 }
 
 

@@ -11,10 +11,10 @@ struct SM2RibbonSegment
 	float len, len0;
 };
 
-class CM2_RibbonEmitters
+class CM2_Part_RibbonEmitters
 {
 public:
-	CM2_RibbonEmitters(const CM2& M2Object, const std::shared_ptr<IFile>& File, const SM2_RibbonEmitter& M2RibbonEmitter);
+	CM2_Part_RibbonEmitters(const CM2& M2Object, const std::shared_ptr<IFile>& File, const SM2_RibbonEmitter& M2RibbonEmitter);
 
 	void setup(uint16 anim, uint32 time, uint32 _globalTime, const glm::mat4& _worldMatrix);
 

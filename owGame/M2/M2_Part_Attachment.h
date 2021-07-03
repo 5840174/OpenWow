@@ -7,7 +7,7 @@
 class CM2;
 // FORWARD END
 
-enum class M2_AttachmentType : uint32
+enum class EM2_AttachmentType : uint32
 {
 	Shield = 0,
 	MountMain = 0,
@@ -98,18 +98,18 @@ enum class M2_AttachmentType : uint32
 };
 
 
-class SM2_Part_Attachment_Wrapper
+class CM2_Part_Attachment
 {
 public:
-	SM2_Part_Attachment_Wrapper(const CM2& M2Object, const std::shared_ptr<IFile>& File, const SM2_Attachment& M2Attachment);
-	virtual ~SM2_Part_Attachment_Wrapper();
+	CM2_Part_Attachment(const CM2& M2Object, const std::shared_ptr<IByteBuffer>& ByteBuffer, const SM2_Attachment& M2Attachment);
+	virtual ~CM2_Part_Attachment();
 
-	M2_AttachmentType GetAttachmentType() const { return m_Type; }
-	uint16 GetBoneIndex() const { return m_BoneIndex; }
-	const glm::vec3& GetPosition() const { return m_Position; }
+	EM2_AttachmentType  GetAttachmentType() const { return m_Type; }
+	uint16              GetBoneIndex() const { return m_BoneIndex; }
+	const glm::vec3&    GetPosition() const { return m_Position; }
 
 private:
-	M2_AttachmentType				    m_Type;
+	EM2_AttachmentType				    m_Type;
 	uint16                              m_BoneIndex;
 	glm::vec3						    m_Position;
 	M2_Animated<uint8>					m_IsAnimateAttached;

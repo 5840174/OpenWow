@@ -65,10 +65,15 @@
 ~FontsManager: Font 'Fonts\consola.ttf' loaded. Size [14].
 ~Loading shader 'shaders_D3D/MapChunk.hlsl':'VS_main'.
 ~Loading shader 'shaders_D3D/MapChunk.hlsl':'PS_main'.
+~Loading shader 'shaders_D3D/WMO.hlsl':'VS_main'.
+~Loading shader 'shaders_D3D/WMO.hlsl':'PS_main'.
 ~Loading shader 'shaders_D3D/M2.hlsl':'VS_main'.
 ~Loading shader 'shaders_D3D/M2.hlsl':'PS_main'.
 ~Loading shader 'shaders_D3D/M2.hlsl':'VS_main'.
 ~Loading shader 'shaders_D3D/M2.hlsl':'PS_main'.
+~Loading shader 'shaders_D3D/M2Particle.hlsl':'VS_main'.
+~Loading shader 'shaders_D3D/M2Particle.hlsl':'GS_Billboard'.
+~Loading shader 'shaders_D3D/M2Particle.hlsl':'PS_main'.
 ~Loading shader '3D/BondingBox.hlsl':'VS_main_Inst'.
 ~Loading shader '3D/BondingBox.hlsl':'PS_main'.
 ~Loading shader 'UI/UIControlCommon.hlsl':'VS_main'.
@@ -86,89 +91,53 @@
 ~Opcode: 'SMSG_CLIENTCACHE_VERSION' (0x4AB). Size: '4' not handled.
 ~Opcode: 'SMSG_TUTORIAL_FLAGS' (0xFD). Size: '32' not handled.
  CWoWClientCharactedSelection::On_SMSG_CHAR_ENUM:: Characters count '1'.
- CWoWClientCharactedSelection::On_SMSG_CHAR_ENUM:: Character [0] name 'Testchar'.
-^CWoWClient::OnCharacterSelected: Character name 'Testchar'.
+ CWoWClientCharactedSelection::On_SMSG_CHAR_ENUM:: Character [0] name 'Asdadasdsdsd'.
+^CWoWClient::OnCharacterSelected: Character name 'Asdadasdsdsd'.
  CTransportAnimationStorage::Initialize: Loaded records for '82' transport entries.
 ~Loading shader '3D/Debug.hlsl':'VS_main'.
 ~Loading shader '3D/Debug.hlsl':'PS_main'.
-!File 'Character\Tauren\Hair00_01.blp' not exists.
-!CImagesFactory: File is nullptr.
-!File 'Character\Tauren\TaurenMaleFaceLower04_18.blp' not exists.
-!CImagesFactory: File is nullptr.
-!File 'Character\Tauren\TaurenMaleFaceLower04_18.blp' not exists.
-!CImagesFactory: File is nullptr.
-!File 'Character\FelOrc\Hair00_00.blp' not exists.
-!CImagesFactory: File is nullptr.
-!File 'Character\FelOrc\Hair00_00.blp' not exists.
-!CImagesFactory: File is nullptr.
-!File 'Character\FelOrc\Hair00_00.blp' not exists.
-!CImagesFactory: File is nullptr.
-!File 'Character\FelOrc\Hair00_00.blp' not exists.
-!CImagesFactory: File is nullptr.
-!File 'Character\FelOrc\Hair00_00.blp' not exists.
-!CImagesFactory: File is nullptr.
-!File 'Character\FelOrc\Hair00_00.blp' not exists.
-!CImagesFactory: File is nullptr.
-!File 'Character\FelOrc\Hair00_00.blp' not exists.
-!CImagesFactory: File is nullptr.
-!File 'Character\FelOrc\Hair00_00.blp' not exists.
-!CImagesFactory: File is nullptr.
-!File 'Character\Tauren\TaurenMaleFaceLower04_18.blp' not exists.
-!CImagesFactory: File is nullptr.
-!File 'Character\Tauren\Hair00_01.blp' not exists.
-!CImagesFactory: File is nullptr.
-!File 'Character\Tauren\TaurenMaleFaceLower04_18.blp' not exists.
-!CImagesFactory: File is nullptr.
-!File 'Character\Tauren\TaurenMaleFaceLower04_18.blp' not exists.
-!CImagesFactory: File is nullptr.
-!File 'Character\Tauren\TaurenMaleFaceLower04_18.blp' not exists.
-!CImagesFactory: File is nullptr.
-!File 'Character\Tauren\TaurenMaleFaceLower04_18.blp' not exists.
-!CImagesFactory: File is nullptr.
-!File 'Character\Tauren\TaurenMaleFaceLower04_18.blp' not exists.
-!CImagesFactory: File is nullptr.
-!File 'Character\Tauren\TaurenMaleFaceLower04_18.blp' not exists.
-!CImagesFactory: File is nullptr.
-!File 'Character\Tauren\Hair00_00.blp' not exists.
-!CImagesFactory: File is nullptr.
-!File 'Character\Tauren\TaurenMaleFaceLower04_18.blp' not exists.
-!CImagesFactory: File is nullptr.
-!File 'Character\Tauren\TaurenMaleFaceLower04_18.blp' not exists.
-!CImagesFactory: File is nullptr.
-!File 'Character\Tauren\TaurenMaleFaceLower04_18.blp' not exists.
-!CImagesFactory: File is nullptr.
-!File 'Character\Tauren\TaurenMaleFaceLower04_18.blp' not exists.
-!CImagesFactory: File is nullptr.
-!File 'Character\Tauren\TaurenMaleFaceLower04_18.blp' not exists.
-!CImagesFactory: File is nullptr.
-!File 'Character\Tauren\TaurenMaleFaceLower04_18.blp' not exists.
-!CImagesFactory: File is nullptr.
-!File 'Character\Tauren\TaurenMaleFaceLower04_18.blp' not exists.
-!CImagesFactory: File is nullptr.
-!File 'Character\Tauren\TaurenMaleFaceLower04_18.blp' not exists.
-!CImagesFactory: File is nullptr.
-!File 'Character\Tauren\TaurenMaleFaceLower04_18.blp' not exists.
-!CImagesFactory: File is nullptr.
-!File 'Character\Tauren\TaurenMaleFaceLower04_18.blp' not exists.
-!CImagesFactory: File is nullptr.
-!File 'Character\Tauren\TaurenMaleFaceLower04_18.blp' not exists.
-!CImagesFactory: File is nullptr.
 ~Opcode: 'SMSG_AURA_UPDATE_ALL' (0x495). Size: '15' not handled.
 ~Opcode: 'SMSG_AURA_UPDATE_ALL' (0x495). Size: '15' not handled.
-~Opcode: 'SMSG_AURA_UPDATE_ALL' (0x495). Size: '23' not handled.
 ~Opcode: 'SMSG_AURA_UPDATE_ALL' (0x495). Size: '15' not handled.
+~Opcode: 'SMSG_AURA_UPDATE_ALL' (0x495). Size: '14' not handled.
+~Opcode: 'SMSG_AURA_UPDATE_ALL' (0x495). Size: '14' not handled.
+~Opcode: 'SMSG_AURA_UPDATE_ALL' (0x495). Size: '30' not handled.
+~Opcode: 'SMSG_AURA_UPDATE_ALL' (0x495). Size: '14' not handled.
+~Opcode: 'SMSG_AURA_UPDATE_ALL' (0x495). Size: '14' not handled.
 ~Opcode: 'SMSG_AURA_UPDATE_ALL' (0x495). Size: '15' not handled.
+~Opcode: 'SMSG_AURA_UPDATE_ALL' (0x495). Size: '14' not handled.
+~Opcode: 'SMSG_AURA_UPDATE_ALL' (0x495). Size: '14' not handled.
+~Opcode: 'SMSG_AURA_UPDATE_ALL' (0x495). Size: '14' not handled.
+~Opcode: 'SMSG_AURA_UPDATE_ALL' (0x495). Size: '14' not handled.
+~Opcode: 'SMSG_AURA_UPDATE_ALL' (0x495). Size: '14' not handled.
+~Opcode: 'SMSG_AURA_UPDATE_ALL' (0x495). Size: '30' not handled.
+~Opcode: 'SMSG_AURA_UPDATE_ALL' (0x495). Size: '14' not handled.
+~Opcode: 'SMSG_AURA_UPDATE_ALL' (0x495). Size: '14' not handled.
+~Opcode: 'SMSG_AURA_UPDATE_ALL' (0x495). Size: '14' not handled.
+~Opcode: 'SMSG_AURA_UPDATE_ALL' (0x495). Size: '14' not handled.
 ~Opcode: 'SMSG_AURA_UPDATE_ALL' (0x495). Size: '15' not handled.
 ~Opcode: 'SMSG_AURA_UPDATE_ALL' (0x495). Size: '15' not handled.
 ~Opcode: 'SMSG_AURA_UPDATE_ALL' (0x495). Size: '15' not handled.
 ~Opcode: 'SMSG_AURA_UPDATE_ALL' (0x495). Size: '15' not handled.
 ~Opcode: 'SMSG_AURA_UPDATE_ALL' (0x495). Size: '15' not handled.
 ~Opcode: 'SMSG_AURA_UPDATE_ALL' (0x495). Size: '15' not handled.
+~Opcode: 'SMSG_AURA_UPDATE_ALL' (0x495). Size: '38' not handled.
+~Opcode: 'SMSG_AURA_UPDATE_ALL' (0x495). Size: '14' not handled.
 ~Opcode: 'SMSG_AURA_UPDATE_ALL' (0x495). Size: '15' not handled.
 ~Opcode: 'SMSG_AURA_UPDATE_ALL' (0x495). Size: '15' not handled.
+~Opcode: 'SMSG_AURA_UPDATE_ALL' (0x495). Size: '14' not handled.
+~Opcode: 'SMSG_AURA_UPDATE_ALL' (0x495). Size: '14' not handled.
+~Opcode: 'SMSG_AURA_UPDATE_ALL' (0x495). Size: '30' not handled.
+~Opcode: 'SMSG_AURA_UPDATE_ALL' (0x495). Size: '14' not handled.
+~Opcode: 'SMSG_AURA_UPDATE_ALL' (0x495). Size: '14' not handled.
+~Opcode: 'SMSG_AURA_UPDATE_ALL' (0x495). Size: '14' not handled.
+~Opcode: 'SMSG_AURA_UPDATE_ALL' (0x495). Size: '14' not handled.
+~Opcode: 'SMSG_AURA_UPDATE_ALL' (0x495). Size: '30' not handled.
+~Opcode: 'SMSG_AURA_UPDATE_ALL' (0x495). Size: '14' not handled.
 ~Opcode: 'SMSG_AURA_UPDATE_ALL' (0x495). Size: '15' not handled.
 ~Opcode: 'SMSG_AURA_UPDATE_ALL' (0x495). Size: '15' not handled.
 ~Opcode: 'SMSG_AURA_UPDATE_ALL' (0x495). Size: '15' not handled.
+~Opcode: 'SMSG_AURA_UPDATE_ALL' (0x495). Size: '22' not handled.
 ~Opcode: 'SMSG_AURA_UPDATE_ALL' (0x495). Size: '15' not handled.
 ~Opcode: 'SMSG_AURA_UPDATE_ALL' (0x495). Size: '15' not handled.
 ~Opcode: 'SMSG_AURA_UPDATE_ALL' (0x495). Size: '15' not handled.
@@ -180,68 +149,57 @@
 ~Opcode: 'SMSG_AURA_UPDATE_ALL' (0x495). Size: '15' not handled.
 ~Opcode: 'SMSG_AURA_UPDATE_ALL' (0x495). Size: '15' not handled.
 ~Opcode: 'SMSG_AURA_UPDATE_ALL' (0x495). Size: '15' not handled.
+~Opcode: 'SMSG_AURA_UPDATE_ALL' (0x495). Size: '31' not handled.
 ~Opcode: 'SMSG_AURA_UPDATE_ALL' (0x495). Size: '15' not handled.
 ~Opcode: 'SMSG_AURA_UPDATE_ALL' (0x495). Size: '15' not handled.
-~Opcode: 'SMSG_AURA_UPDATE_ALL' (0x495). Size: '15' not handled.
-~Opcode: 'SMSG_AURA_UPDATE_ALL' (0x495). Size: '15' not handled.
-~Opcode: 'SMSG_AURA_UPDATE_ALL' (0x495). Size: '15' not handled.
-~Opcode: 'SMSG_AURA_UPDATE_ALL' (0x495). Size: '15' not handled.
-~Opcode: 'SMSG_AURA_UPDATE_ALL' (0x495). Size: '15' not handled.
-~Opcode: 'SMSG_AURA_UPDATE_ALL' (0x495). Size: '15' not handled.
-~Opcode: 'SMSG_AURA_UPDATE_ALL' (0x495). Size: '15' not handled.
-~Opcode: 'SMSG_AURA_UPDATE_ALL' (0x495). Size: '15' not handled.
-~Opcode: 'SMSG_AURA_UPDATE_ALL' (0x495). Size: '15' not handled.
-~Opcode: 'SMSG_AURA_UPDATE_ALL' (0x495). Size: '15' not handled.
-~Opcode: 'SMSG_AURA_UPDATE_ALL' (0x495). Size: '15' not handled.
-~Opcode: 'SMSG_AURA_UPDATE_ALL' (0x495). Size: '15' not handled.
-~Opcode: 'SMSG_AURA_UPDATE_ALL' (0x495). Size: '15' not handled.
-~Opcode: 'SMSG_AURA_UPDATE_ALL' (0x495). Size: '15' not handled.
-~Opcode: 'SMSG_AURA_UPDATE_ALL' (0x495). Size: '15' not handled.
-~Opcode: 'SMSG_AURA_UPDATE_ALL' (0x495). Size: '15' not handled.
-~Opcode: 'SMSG_AURA_UPDATE_ALL' (0x495). Size: '15' not handled.
-~Opcode: 'SMSG_AURA_UPDATE_ALL' (0x495). Size: '15' not handled.
-~Opcode: 'SMSG_AURA_UPDATE_ALL' (0x495). Size: '15' not handled.
-~Opcode: 'SMSG_AURA_UPDATE_ALL' (0x495). Size: '15' not handled.
-~Opcode: 'SMSG_AURA_UPDATE_ALL' (0x495). Size: '15' not handled.
-~Opcode: 'SMSG_AURA_UPDATE_ALL' (0x495). Size: '15' not handled.
-~Opcode: 'SMSG_AURA_UPDATE_ALL' (0x495). Size: '15' not handled.
-~Opcode: 'SMSG_AURA_UPDATE_ALL' (0x495). Size: '15' not handled.
-~Opcode: 'SMSG_AURA_UPDATE_ALL' (0x495). Size: '15' not handled.
-~Opcode: 'SMSG_AURA_UPDATE_ALL' (0x495). Size: '15' not handled.
-~Opcode: 'SMSG_AURA_UPDATE_ALL' (0x495). Size: '15' not handled.
-~Opcode: 'SMSG_AURA_UPDATE_ALL' (0x495). Size: '15' not handled.
-~Opcode: 'SMSG_AURA_UPDATE_ALL' (0x495). Size: '15' not handled.
-~Opcode: 'SMSG_AURA_UPDATE_ALL' (0x495). Size: '15' not handled.
-~Opcode: 'SMSG_AURA_UPDATE_ALL' (0x495). Size: '15' not handled.
-~Opcode: 'SMSG_AURA_UPDATE_ALL' (0x495). Size: '15' not handled.
-~Opcode: 'SMSG_AURA_UPDATE_ALL' (0x495). Size: '15' not handled.
-~Opcode: 'SMSG_AURA_UPDATE_ALL' (0x495). Size: '15' not handled.
-~Opcode: 'SMSG_AURA_UPDATE_ALL' (0x495). Size: '15' not handled.
-~Opcode: 'SMSG_AURA_UPDATE_ALL' (0x495). Size: '15' not handled.
-~Opcode: 'SMSG_AURA_UPDATE_ALL' (0x495). Size: '15' not handled.
+~Opcode: 'SMSG_AURA_UPDATE_ALL' (0x495). Size: '14' not handled.
+~Opcode: 'SMSG_AURA_UPDATE_ALL' (0x495). Size: '14' not handled.
+~Opcode: 'SMSG_AURA_UPDATE_ALL' (0x495). Size: '14' not handled.
+~Opcode: 'SMSG_AURA_UPDATE_ALL' (0x495). Size: '14' not handled.
+~Opcode: 'SMSG_AURA_UPDATE_ALL' (0x495). Size: '14' not handled.
+~Opcode: 'SMSG_AURA_UPDATE_ALL' (0x495). Size: '14' not handled.
+~Opcode: 'SMSG_AURA_UPDATE_ALL' (0x495). Size: '22' not handled.
 ~Opcode: 'SMSG_POWER_UPDATE' (0x480). Size: '7' not handled.
-~Opcode: 'SMSG_POWER_UPDATE' (0x480). Size: '7' not handled.
+~Opcode: 'SMSG_RESYNC_RUNES' (0x487). Size: '16' not handled.
+~Opcode: 'SMSG_RESYNC_RUNES' (0x487). Size: '16' not handled.
+~Opcode: 'SMSG_RESYNC_RUNES' (0x487). Size: '16' not handled.
+~Opcode: 'SMSG_RESYNC_RUNES' (0x487). Size: '16' not handled.
+~Opcode: 'SMSG_RESYNC_RUNES' (0x487). Size: '16' not handled.
+~Opcode: 'SMSG_RESYNC_RUNES' (0x487). Size: '16' not handled.
 ~Opcode: 'SMSG_SET_PROFICIENCY' (0x127). Size: '5' not handled.
 ~Opcode: 'SMSG_SET_PROFICIENCY' (0x127). Size: '5' not handled.
 ~Opcode: 'SMSG_SET_PROFICIENCY' (0x127). Size: '5' not handled.
 ~Opcode: 'SMSG_SET_PROFICIENCY' (0x127). Size: '5' not handled.
 ~Opcode: 'SMSG_SET_PROFICIENCY' (0x127). Size: '5' not handled.
 ~Opcode: 'SMSG_SET_PROFICIENCY' (0x127). Size: '5' not handled.
-~Opcode: 'SMSG_POWER_UPDATE' (0x480). Size: '7' not handled.
-~Opcode: 'SMSG_CANCEL_COMBAT' (0x14E). Size: '0' not handled.
-~Opcode: 'SMSG_AURA_UPDATE_ALL' (0x495). Size: '15' not handled.
+~Opcode: 'SMSG_SET_PROFICIENCY' (0x127). Size: '5' not handled.
+~Opcode: 'SMSG_SET_PROFICIENCY' (0x127). Size: '5' not handled.
+~Opcode: 'SMSG_SET_PROFICIENCY' (0x127). Size: '5' not handled.
+~Opcode: 'SMSG_SET_PROFICIENCY' (0x127). Size: '5' not handled.
+~Opcode: 'SMSG_SET_PROFICIENCY' (0x127). Size: '5' not handled.
+~Opcode: 'SMSG_SET_PROFICIENCY' (0x127). Size: '5' not handled.
+~Opcode: 'SMSG_SET_PCT_SPELL_MODIFIER' (0x267). Size: '6' not handled.
+~Opcode: 'SMSG_SET_PCT_SPELL_MODIFIER' (0x267). Size: '6' not handled.
+~Opcode: 'SMSG_SET_PCT_SPELL_MODIFIER' (0x267). Size: '6' not handled.
+~Opcode: 'SMSG_SET_PCT_SPELL_MODIFIER' (0x267). Size: '6' not handled.
+~Opcode: 'SMSG_SET_PCT_SPELL_MODIFIER' (0x267). Size: '6' not handled.
+~Opcode: 'SMSG_SET_PCT_SPELL_MODIFIER' (0x267). Size: '6' not handled.
+~Opcode: 'SMSG_SET_PCT_SPELL_MODIFIER' (0x267). Size: '6' not handled.
+~Opcode: 'SMSG_SET_PCT_SPELL_MODIFIER' (0x267). Size: '6' not handled.
+~Opcode: 'SMSG_SET_PCT_SPELL_MODIFIER' (0x267). Size: '6' not handled.
+~Opcode: 'SMSG_AURA_UPDATE' (0x496). Size: '7' not handled.
 ~Opcode: 'MSG_SET_DUNGEON_DIFFICULTY' (0x329). Size: '12' not handled.
-~Sky: [374] is global sky.
- Map[Expansion01]: Id = '530'. Preloading...
- Map[Expansion01]: InstanceType = '0'.
- Map[Expansion01]: MapType = '1'.
- Map[Expansion01]: IsBattleGround = '0'.
- Map[Expansion01]: Name = 'Запределье'.
- Map[Expansion01]: AreaTableID = '0'.
- Map[Expansion01]: AllianceDescr = ''.
- Map[Expansion01]: HordeDescr = ''.
- Map[Expansion01]: CorpseMapID = '0'.
- Map[Expansion01]: Id [530]. Loading...
+~Sky: [1768] is global sky.
+ Map[DeathKnightStart]: Id = '609'. Preloading...
+ Map[DeathKnightStart]: InstanceType = '0'.
+ Map[DeathKnightStart]: MapType = '29'.
+ Map[DeathKnightStart]: IsBattleGround = '0'.
+ Map[DeathKnightStart]: Name = 'Черный оплот'.
+ Map[DeathKnightStart]: AreaTableID = '0'.
+ Map[DeathKnightStart]: AllianceDescr = ''.
+ Map[DeathKnightStart]: HordeDescr = ''.
+ Map[DeathKnightStart]: CorpseMapID = '0'.
+ Map[��z�]: Id [609]. Loading...
 ^CMapWDL: Low WMOs count [0].
 ~MapWDT: Global WMO exists [false].
 ~Opcode: 'SMSG_ACCOUNT_DATA_TIMES' (0x209). Size: '29' not handled.
@@ -252,222 +210,61 @@
 ~Opcode: 'SMSG_BIND_POINT_UPDATE' (0x155). Size: '20' not handled.
 ~Opcode: 'SMSG_TALENTS_INFO' (0x4C0). Size: '21' not handled.
 ~Opcode: 'SMSG_INSTANCE_DIFFICULTY' (0x33B). Size: '8' not handled.
-~Opcode: 'SMSG_INITIAL_SPELLS' (0x12A). Size: '251' not handled.
+~Opcode: 'SMSG_INITIAL_SPELLS' (0x12A). Size: '425' not handled.
 ~Opcode: 'SMSG_SEND_UNLEARN_SPELLS' (0x41E). Size: '4' not handled.
 ~Opcode: 'SMSG_ACTION_BUTTONS' (0x129). Size: '577' not handled.
 ~Opcode: 'SMSG_INITIALIZE_FACTIONS' (0x122). Size: '644' not handled.
-~Opcode: 'SMSG_ALL_ACHIEVEMENT_DATA' (0x47D). Size: '1445' not handled.
+~Opcode: 'SMSG_ALL_ACHIEVEMENT_DATA' (0x47D). Size: '1481' not handled.
 ~Opcode: 'SMSG_EQUIPMENT_SET_LIST' (0x4BC). Size: '4' not handled.
 ~Opcode: 'SMSG_LOGIN_SET_TIME_SPEED' (0x42). Size: '12' not handled.
 ~Opcode: 'SMSG_SET_FORCED_REACTIONS' (0x2A5). Size: '4' not handled.
-@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
-@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
-@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
-@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
-@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
-@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
-@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
-@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
-@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
-@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
-@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
-@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
-@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
-@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
-@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
-@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
-@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
-@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
-@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
-@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
-@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
-@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
-@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
-@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
-@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
-@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
-@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
-@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
-@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
-@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
-@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
-@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
-@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
-@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
-@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
-@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
-@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
-@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
-@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
-@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
-@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
-@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
-@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
-@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
-@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
-@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
-@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
-@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
-@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
-@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
-@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
-@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
-@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
-@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
-@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
-@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
-@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
-@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
-@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
-@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
-@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
-@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
-@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
-@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
-@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
-@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
-@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
-@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
-@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
-@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
-@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
-@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
-@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
-@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
-@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
-@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
-@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
-@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
-@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
-@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
-@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
-@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
-@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
-@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
-@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
-@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
-@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
-@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
-@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
-@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
-@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
-@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
-@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
-@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
-@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
-@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
-@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
-@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
-@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
-@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
-@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
-@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
-@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
-@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
-@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
-@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
-@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
-@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
-@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
-@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
-@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
-@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
-@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
-@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
-@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
-@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
-@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
-@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
-@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
-@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
-@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
-@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
-@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
-@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
-@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
-@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
-@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
-@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
-@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
-@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
-@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
-@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
-@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
-@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
-@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
-@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
-@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
-@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
-@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
-@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
-@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
-@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
-@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
-@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
-@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
-@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
-@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
-@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
-@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
-@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
-@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
-@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
-@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
-@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
-@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
-@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
-@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
-@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
-@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
-@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
-@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
-@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
-@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
-@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
-@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
-@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
-@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
-@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
-@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
-@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
-@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
-@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
-@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
-@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
-@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
-@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
-@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
-@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
-@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
-@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
-@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
-@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
-@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
-@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
-@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
-@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
-@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
-@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
-@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
-@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
-@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
-@WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.
+~Opcode: 'SMSG_RESYNC_RUNES' (0x487). Size: '16' not handled.
+ Value '12' missed!!!!!!!!!!!!
+ Value '12' missed!!!!!!!!!!!!
+ Value '12' missed!!!!!!!!!!!!
+ Value '12' missed!!!!!!!!!!!!
 ~Opcode: 'SMSG_AURA_UPDATE_ALL' (0x495). Size: '15' not handled.
 ~Opcode: 'SMSG_AURA_UPDATE_ALL' (0x495). Size: '15' not handled.
-~Opcode: 'SMSG_AURA_UPDATE_ALL' (0x495). Size: '23' not handled.
 ~Opcode: 'SMSG_AURA_UPDATE_ALL' (0x495). Size: '15' not handled.
+~Opcode: 'SMSG_AURA_UPDATE_ALL' (0x495). Size: '14' not handled.
+~Opcode: 'SMSG_AURA_UPDATE_ALL' (0x495). Size: '14' not handled.
+~Opcode: 'SMSG_AURA_UPDATE_ALL' (0x495). Size: '30' not handled.
+~Opcode: 'SMSG_AURA_UPDATE_ALL' (0x495). Size: '14' not handled.
+~Opcode: 'SMSG_AURA_UPDATE_ALL' (0x495). Size: '14' not handled.
 ~Opcode: 'SMSG_AURA_UPDATE_ALL' (0x495). Size: '15' not handled.
+~Opcode: 'SMSG_AURA_UPDATE_ALL' (0x495). Size: '14' not handled.
+~Opcode: 'SMSG_AURA_UPDATE_ALL' (0x495). Size: '14' not handled.
+~Opcode: 'SMSG_AURA_UPDATE_ALL' (0x495). Size: '14' not handled.
+~Opcode: 'SMSG_AURA_UPDATE_ALL' (0x495). Size: '14' not handled.
+~Opcode: 'SMSG_AURA_UPDATE_ALL' (0x495). Size: '14' not handled.
+~Opcode: 'SMSG_AURA_UPDATE_ALL' (0x495). Size: '30' not handled.
+~Opcode: 'SMSG_AURA_UPDATE_ALL' (0x495). Size: '14' not handled.
+~Opcode: 'SMSG_AURA_UPDATE_ALL' (0x495). Size: '14' not handled.
+~Opcode: 'SMSG_AURA_UPDATE_ALL' (0x495). Size: '14' not handled.
+~Opcode: 'SMSG_AURA_UPDATE_ALL' (0x495). Size: '14' not handled.
 ~Opcode: 'SMSG_AURA_UPDATE_ALL' (0x495). Size: '15' not handled.
 ~Opcode: 'SMSG_AURA_UPDATE_ALL' (0x495). Size: '15' not handled.
 ~Opcode: 'SMSG_AURA_UPDATE_ALL' (0x495). Size: '15' not handled.
 ~Opcode: 'SMSG_AURA_UPDATE_ALL' (0x495). Size: '15' not handled.
 ~Opcode: 'SMSG_AURA_UPDATE_ALL' (0x495). Size: '15' not handled.
 ~Opcode: 'SMSG_AURA_UPDATE_ALL' (0x495). Size: '15' not handled.
+~Opcode: 'SMSG_AURA_UPDATE_ALL' (0x495). Size: '38' not handled.
+~Opcode: 'SMSG_AURA_UPDATE_ALL' (0x495). Size: '14' not handled.
 ~Opcode: 'SMSG_AURA_UPDATE_ALL' (0x495). Size: '15' not handled.
 ~Opcode: 'SMSG_AURA_UPDATE_ALL' (0x495). Size: '15' not handled.
+~Opcode: 'SMSG_AURA_UPDATE_ALL' (0x495). Size: '14' not handled.
+~Opcode: 'SMSG_AURA_UPDATE_ALL' (0x495). Size: '14' not handled.
+~Opcode: 'SMSG_AURA_UPDATE_ALL' (0x495). Size: '30' not handled.
+~Opcode: 'SMSG_AURA_UPDATE_ALL' (0x495). Size: '14' not handled.
+~Opcode: 'SMSG_AURA_UPDATE_ALL' (0x495). Size: '14' not handled.
+~Opcode: 'SMSG_AURA_UPDATE_ALL' (0x495). Size: '14' not handled.
+~Opcode: 'SMSG_AURA_UPDATE_ALL' (0x495). Size: '14' not handled.
+~Opcode: 'SMSG_AURA_UPDATE_ALL' (0x495). Size: '30' not handled.
+~Opcode: 'SMSG_AURA_UPDATE_ALL' (0x495). Size: '14' not handled.
 ~Opcode: 'SMSG_AURA_UPDATE_ALL' (0x495). Size: '15' not handled.
 ~Opcode: 'SMSG_AURA_UPDATE_ALL' (0x495). Size: '15' not handled.
 ~Opcode: 'SMSG_AURA_UPDATE_ALL' (0x495). Size: '15' not handled.
+~Opcode: 'SMSG_AURA_UPDATE_ALL' (0x495). Size: '22' not handled.
 ~Opcode: 'SMSG_AURA_UPDATE_ALL' (0x495). Size: '15' not handled.
 ~Opcode: 'SMSG_AURA_UPDATE_ALL' (0x495). Size: '15' not handled.
 ~Opcode: 'SMSG_AURA_UPDATE_ALL' (0x495). Size: '15' not handled.
@@ -479,47 +276,17 @@
 ~Opcode: 'SMSG_AURA_UPDATE_ALL' (0x495). Size: '15' not handled.
 ~Opcode: 'SMSG_AURA_UPDATE_ALL' (0x495). Size: '15' not handled.
 ~Opcode: 'SMSG_AURA_UPDATE_ALL' (0x495). Size: '15' not handled.
+~Opcode: 'SMSG_AURA_UPDATE_ALL' (0x495). Size: '31' not handled.
 ~Opcode: 'SMSG_AURA_UPDATE_ALL' (0x495). Size: '15' not handled.
 ~Opcode: 'SMSG_AURA_UPDATE_ALL' (0x495). Size: '15' not handled.
-~Opcode: 'SMSG_AURA_UPDATE_ALL' (0x495). Size: '15' not handled.
-~Opcode: 'SMSG_AURA_UPDATE_ALL' (0x495). Size: '15' not handled.
-~Opcode: 'SMSG_AURA_UPDATE_ALL' (0x495). Size: '15' not handled.
-~Opcode: 'SMSG_AURA_UPDATE_ALL' (0x495). Size: '15' not handled.
-~Opcode: 'SMSG_AURA_UPDATE_ALL' (0x495). Size: '15' not handled.
-~Opcode: 'SMSG_AURA_UPDATE_ALL' (0x495). Size: '15' not handled.
-~Opcode: 'SMSG_AURA_UPDATE_ALL' (0x495). Size: '15' not handled.
-~Opcode: 'SMSG_AURA_UPDATE_ALL' (0x495). Size: '15' not handled.
-~Opcode: 'SMSG_AURA_UPDATE_ALL' (0x495). Size: '15' not handled.
-~Opcode: 'SMSG_AURA_UPDATE_ALL' (0x495). Size: '15' not handled.
-~Opcode: 'SMSG_AURA_UPDATE_ALL' (0x495). Size: '15' not handled.
-~Opcode: 'SMSG_AURA_UPDATE_ALL' (0x495). Size: '15' not handled.
-~Opcode: 'SMSG_AURA_UPDATE_ALL' (0x495). Size: '15' not handled.
-~Opcode: 'SMSG_AURA_UPDATE_ALL' (0x495). Size: '15' not handled.
-~Opcode: 'SMSG_AURA_UPDATE_ALL' (0x495). Size: '15' not handled.
-~Opcode: 'SMSG_AURA_UPDATE_ALL' (0x495). Size: '15' not handled.
-~Opcode: 'SMSG_AURA_UPDATE_ALL' (0x495). Size: '15' not handled.
-~Opcode: 'SMSG_AURA_UPDATE_ALL' (0x495). Size: '15' not handled.
-~Opcode: 'SMSG_AURA_UPDATE_ALL' (0x495). Size: '15' not handled.
-~Opcode: 'SMSG_AURA_UPDATE_ALL' (0x495). Size: '15' not handled.
-~Opcode: 'SMSG_AURA_UPDATE_ALL' (0x495). Size: '15' not handled.
-~Opcode: 'SMSG_AURA_UPDATE_ALL' (0x495). Size: '15' not handled.
-~Opcode: 'SMSG_AURA_UPDATE_ALL' (0x495). Size: '15' not handled.
-~Opcode: 'SMSG_AURA_UPDATE_ALL' (0x495). Size: '15' not handled.
-~Opcode: 'SMSG_AURA_UPDATE_ALL' (0x495). Size: '15' not handled.
-~Opcode: 'SMSG_AURA_UPDATE_ALL' (0x495). Size: '15' not handled.
-~Opcode: 'SMSG_AURA_UPDATE_ALL' (0x495). Size: '15' not handled.
-~Opcode: 'SMSG_AURA_UPDATE_ALL' (0x495). Size: '15' not handled.
-~Opcode: 'SMSG_AURA_UPDATE_ALL' (0x495). Size: '15' not handled.
-~Opcode: 'SMSG_AURA_UPDATE_ALL' (0x495). Size: '15' not handled.
-~Opcode: 'SMSG_AURA_UPDATE_ALL' (0x495). Size: '15' not handled.
-~Opcode: 'SMSG_AURA_UPDATE_ALL' (0x495). Size: '15' not handled.
-~Opcode: 'SMSG_AURA_UPDATE_ALL' (0x495). Size: '15' not handled.
-~Opcode: 'SMSG_AURA_UPDATE_ALL' (0x495). Size: '15' not handled.
-~Opcode: 'SMSG_AURA_UPDATE_ALL' (0x495). Size: '15' not handled.
-~Opcode: 'SMSG_AURA_UPDATE_ALL' (0x495). Size: '15' not handled.
-~Opcode: 'SMSG_AURA_UPDATE_ALL' (0x495). Size: '15' not handled.
-~Opcode: 'SMSG_AURA_UPDATE_ALL' (0x495). Size: '15' not handled.
-~Opcode: 'SMSG_INIT_WORLD_STATES' (0x2C2). Size: '206' not handled.
+~Opcode: 'SMSG_AURA_UPDATE_ALL' (0x495). Size: '14' not handled.
+~Opcode: 'SMSG_AURA_UPDATE_ALL' (0x495). Size: '14' not handled.
+~Opcode: 'SMSG_AURA_UPDATE_ALL' (0x495). Size: '14' not handled.
+~Opcode: 'SMSG_AURA_UPDATE_ALL' (0x495). Size: '14' not handled.
+~Opcode: 'SMSG_AURA_UPDATE_ALL' (0x495). Size: '14' not handled.
+~Opcode: 'SMSG_AURA_UPDATE_ALL' (0x495). Size: '14' not handled.
+~Opcode: 'SMSG_AURA_UPDATE_ALL' (0x495). Size: '22' not handled.
+~Opcode: 'SMSG_INIT_WORLD_STATES' (0x2C2). Size: '78' not handled.
 ~Opcode: 'SMSG_UPDATE_WORLD_STATE' (0x2C3). Size: '8' not handled.
 ~Opcode: 'SMSG_UPDATE_WORLD_STATE' (0x2C3). Size: '8' not handled.
 ~Opcode: 'SMSG_UPDATE_WORLD_STATE' (0x2C3). Size: '8' not handled.
@@ -527,636 +294,81 @@
 ~Opcode: 'SMSG_UPDATE_WORLD_STATE' (0x2C3). Size: '8' not handled.
 ~Opcode: 'SMSG_UPDATE_WORLD_STATE' (0x2C3). Size: '8' not handled.
 ~Opcode: 'SMSG_SPELL_GO' (0x132). Size: '36' not handled.
-~Opcode: 'SMSG_QUESTGIVER_STATUS_MULTIPLE' (0x418). Size: '175' not handled.
-~Opcode: 'SMSG_TAXINODE_STATUS' (0x1AB). Size: '9' not handled.
-~Opcode: 'MSG_SET_RAID_DIFFICULTY' (0x4EB). Size: '12' not handled.
-^NOTIFICATION: GM mode is ON
-~Opcode: 'SMSG_SPELL_GO' (0x132). Size: '47' not handled.
-~Opcode: 'SMSG_SPELL_GO' (0x132). Size: '47' not handled.
-~Opcode: 'SMSG_SPELL_GO' (0x132). Size: '47' not handled.
-~Opcode: 'SMSG_SPELL_GO' (0x132). Size: '47' not handled.
-~Opcode: 'SMSG_SPELL_START' (0x131). Size: '31' not handled.
-~Opcode: 'SMSG_SPELL_GO' (0x132). Size: '42' not handled.
-~Opcode: 'SMSG_SPELL_GO' (0x132). Size: '47' not handled.
-~Opcode: 'SMSG_SPELL_GO' (0x132). Size: '47' not handled.
-~Opcode: 'SMSG_SPELL_GO' (0x132). Size: '47' not handled.
-~Opcode: 'SMSG_SPELL_GO' (0x132). Size: '47' not handled.
-~Opcode: 'SMSG_SPELL_GO' (0x132). Size: '47' not handled.
-~Opcode: 'SMSG_SPELL_GO' (0x132). Size: '47' not handled.
-~Opcode: 'SMSG_SPELL_GO' (0x132). Size: '47' not handled.
-^Selected node '37,167576' = 'Creature\Felhound\FelHound.m2'.
-^Selected node '39,690144' = 'Character\Scourge\Female\ScourgeFemale.m2'.
-~Opcode: 'SMSG_SPELL_GO' (0x132). Size: '47' not handled.
-~Opcode: 'SMSG_SPELL_GO' (0x132). Size: '47' not handled.
-~Opcode: 'SMSG_SPELL_GO' (0x132). Size: '47' not handled.
-~Opcode: 'SMSG_SPELL_GO' (0x132). Size: '47' not handled.
-~Opcode: 'SMSG_SPELL_GO' (0x132). Size: '47' not handled.
-~Opcode: 'SMSG_SPELL_GO' (0x132). Size: '47' not handled.
-~Opcode: 'SMSG_SPELL_GO' (0x132). Size: '47' not handled.
-~Opcode: 'SMSG_SPELL_GO' (0x132). Size: '47' not handled.
-~Opcode: 'SMSG_SPELL_GO' (0x132). Size: '47' not handled.
-~Opcode: 'SMSG_SPELL_GO' (0x132). Size: '47' not handled.
-~Opcode: 'SMSG_SPELL_GO' (0x132). Size: '47' not handled.
-~Opcode: 'SMSG_SPELL_GO' (0x132). Size: '47' not handled.
-~Opcode: 'MSG_MOVE_HEARTBEAT' (0xEE). Size: '48' not handled.
-~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '48' not handled.
-~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '48' not handled.
-~Opcode: 'SMSG_EMOTE' (0x103). Size: '12' not handled.
-~Opcode: 'SMSG_SPELL_GO' (0x132). Size: '47' not handled.
-~Opcode: 'MSG_MOVE_HEARTBEAT' (0xEE). Size: '48' not handled.
-~Opcode: 'MSG_MOVE_HEARTBEAT' (0xEE). Size: '48' not handled.
-~Opcode: 'SMSG_SPELL_GO' (0x132). Size: '47' not handled.
-~Opcode: 'MSG_MOVE_HEARTBEAT' (0xEE). Size: '48' not handled.
-~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '48' not handled.
-~Opcode: 'MSG_MOVE_HEARTBEAT' (0xEE). Size: '48' not handled.
-~Opcode: 'SMSG_SPELL_GO' (0x132). Size: '47' not handled.
-~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '48' not handled.
-~Opcode: 'MSG_MOVE_HEARTBEAT' (0xEE). Size: '48' not handled.
-~Opcode: 'MSG_MOVE_FALL_LAND' (0xC9). Size: '32' not handled.
-~Opcode: 'SMSG_SPELL_GO' (0x132). Size: '47' not handled.
-~Opcode: 'SMSG_SPELL_GO' (0x132). Size: '47' not handled.
-~Opcode: 'SMSG_MOVE_SET_CAN_FLY' (0x343). Size: '6' not handled.
-~Opcode: 'SMSG_SPELL_GO' (0x132). Size: '47' not handled.
-~Opcode: 'CMSG_MOVE_SET_FLY' (0x346). Size: '36' not handled.
-~Opcode: 'MSG_MOVE_START_ASCEND' (0x359). Size: '36' not handled.
-~Opcode: 'SMSG_SPELL_START' (0x131). Size: '31' not handled.
-~Opcode: 'SMSG_SPELL_GO' (0x132). Size: '42' not handled.
-~Opcode: 'MSG_MOVE_HEARTBEAT' (0xEE). Size: '36' not handled.
-^---Create WoWGameObjectMOTransport with Type 'MoTransport', Entry '0', Counter '9'
-~Opcode: 'MSG_MOVE_STOP_ASCEND' (0x35A). Size: '36' not handled.
-~Opcode: 'SMSG_SPELL_GO' (0x132). Size: '47' not handled.
-~Opcode: 'SMSG_SPELL_GO' (0x132). Size: '47' not handled.
-~Opcode: 'SMSG_SPELL_GO' (0x132). Size: '47' not handled.
-~Opcode: 'MSG_MOVE_SET_WALK_SPEED' (0xD1). Size: '40' not handled.
-~Opcode: 'MSG_MOVE_SET_RUN_SPEED' (0xCD). Size: '40' not handled.
-~Opcode: 'MSG_MOVE_SET_SWIM_SPEED' (0xD3). Size: '40' not handled.
-~Opcode: 'MSG_MOVE_SET_FLIGHT_SPEED' (0x37E). Size: '40' not handled.
-~Opcode: 'MSG_MOVE_START_ASCEND' (0x359). Size: '36' not handled.
-~Opcode: 'SMSG_SPELL_GO' (0x132). Size: '47' not handled.
-~Opcode: 'MSG_MOVE_HEARTBEAT' (0xEE). Size: '36' not handled.
-~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '36' not handled.
-~Opcode: 'MSG_MOVE_SET_PITCH' (0xDB). Size: '36' not handled.
-~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '36' not handled.
-~Opcode: 'MSG_MOVE_SET_PITCH' (0xDB). Size: '36' not handled.
-~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '36' not handled.
-~Opcode: 'MSG_MOVE_SET_PITCH' (0xDB). Size: '36' not handled.
-~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '36' not handled.
-~Opcode: 'MSG_MOVE_SET_PITCH' (0xDB). Size: '36' not handled.
-~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '36' not handled.
-~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '36' not handled.
-~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '36' not handled.
-~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '36' not handled.
-~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '36' not handled.
-~Opcode: 'SMSG_SPELL_GO' (0x132). Size: '47' not handled.
-~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '36' not handled.
-~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '36' not handled.
-~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '36' not handled.
-~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '36' not handled.
-~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '36' not handled.
-~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '36' not handled.
-~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '36' not handled.
-~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '36' not handled.
-~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '36' not handled.
-~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '36' not handled.
-~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '36' not handled.
-~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '36' not handled.
-~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '36' not handled.
-~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '36' not handled.
-~Opcode: 'SMSG_SPELL_GO' (0x132). Size: '47' not handled.
-~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '36' not handled.
-~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '36' not handled.
-~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '36' not handled.
-~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '36' not handled.
-~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '36' not handled.
-~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '36' not handled.
-~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '36' not handled.
-~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '36' not handled.
-~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '36' not handled.
-~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '36' not handled.
-~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '36' not handled.
-~Opcode: 'MSG_MOVE_SET_PITCH' (0xDB). Size: '36' not handled.
-~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '36' not handled.
-~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '36' not handled.
-~Opcode: 'MSG_MOVE_START_FORWARD' (0xB5). Size: '36' not handled.
-~Opcode: 'SMSG_SPELL_GO' (0x132). Size: '47' not handled.
-~Opcode: 'MSG_MOVE_SET_PITCH' (0xDB). Size: '36' not handled.
-~Opcode: 'MSG_MOVE_SET_PITCH' (0xDB). Size: '36' not handled.
-~Opcode: 'MSG_MOVE_SET_PITCH' (0xDB). Size: '36' not handled.
-~Opcode: 'MSG_MOVE_SET_PITCH' (0xDB). Size: '36' not handled.
-~Opcode: 'MSG_MOVE_SET_PITCH' (0xDB). Size: '36' not handled.
-~Opcode: 'SMSG_SPELL_START' (0x131). Size: '31' not handled.
-~Opcode: 'SMSG_SPELL_GO' (0x132). Size: '42' not handled.
-~Opcode: 'MSG_MOVE_SET_PITCH' (0xDB). Size: '36' not handled.
-~Opcode: 'SMSG_SPELL_GO' (0x132). Size: '47' not handled.
-~Opcode: 'MSG_MOVE_HEARTBEAT' (0xEE). Size: '36' not handled.
-~Opcode: 'MSG_MOVE_SET_PITCH' (0xDB). Size: '36' not handled.
-~Opcode: 'SMSG_SPELL_GO' (0x132). Size: '47' not handled.
-~Opcode: 'MSG_MOVE_HEARTBEAT' (0xEE). Size: '36' not handled.
-~Opcode: 'MSG_MOVE_STOP_ASCEND' (0x35A). Size: '36' not handled.
-~Opcode: 'MSG_MOVE_STOP' (0xB7). Size: '36' not handled.
-~Opcode: 'SMSG_SPELL_GO' (0x132). Size: '47' not handled.
-~Opcode: 'SMSG_SPELL_GO' (0x132). Size: '47' not handled.
-~Opcode: 'SMSG_SPELL_GO' (0x132). Size: '47' not handled.
-~Opcode: 'SMSG_SPELL_GO' (0x132). Size: '47' not handled.
-~Opcode: 'SMSG_SPELL_GO' (0x132). Size: '47' not handled.
-~Opcode: 'SMSG_SPELL_GO' (0x132). Size: '47' not handled.
-~Opcode: 'SMSG_SPELL_START' (0x131). Size: '31' not handled.
-~Opcode: 'SMSG_SPELL_GO' (0x132). Size: '42' not handled.
-~Opcode: 'SMSG_SPELL_GO' (0x132). Size: '47' not handled.
-~Opcode: 'SMSG_SPELL_GO' (0x132). Size: '47' not handled.
-~Opcode: 'SMSG_SPELL_GO' (0x132). Size: '47' not handled.
-~Opcode: 'SMSG_SPELL_GO' (0x132). Size: '47' not handled.
-~Opcode: 'SMSG_SPELL_GO' (0x132). Size: '47' not handled.
-~Opcode: 'SMSG_SPELL_GO' (0x132). Size: '47' not handled.
-~Opcode: 'SMSG_SPELL_GO' (0x132). Size: '47' not handled.
-~Opcode: 'SMSG_SPELL_GO' (0x132). Size: '47' not handled.
-~Opcode: 'SMSG_SPELL_GO' (0x132). Size: '47' not handled.
-~Opcode: 'SMSG_SPELL_GO' (0x132). Size: '47' not handled.
-~Opcode: 'SMSG_SPELL_GO' (0x132). Size: '47' not handled.
-~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '36' not handled.
-~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '36' not handled.
-~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '36' not handled.
-~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '36' not handled.
-~Opcode: 'SMSG_SPELL_GO' (0x132). Size: '47' not handled.
-~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '36' not handled.
-~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '36' not handled.
-~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '36' not handled.
-~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '36' not handled.
-~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '36' not handled.
-~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '36' not handled.
-~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '36' not handled.
-~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '36' not handled.
-~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '36' not handled.
-~Opcode: 'SMSG_SPELL_GO' (0x132). Size: '47' not handled.
-~Opcode: 'SMSG_SPELL_GO' (0x132). Size: '47' not handled.
-~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '36' not handled.
-~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '36' not handled.
-~Opcode: 'MSG_MOVE_START_STRAFE_LEFT' (0xB8). Size: '36' not handled.
-~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '36' not handled.
-~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '36' not handled.
-~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '36' not handled.
-~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '36' not handled.
-~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '36' not handled.
-~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '36' not handled.
-~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '36' not handled.
-~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '36' not handled.
-~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '36' not handled.
-~Opcode: 'MSG_MOVE_STOP_STRAFE' (0xBA). Size: '36' not handled.
-~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '36' not handled.
-~Opcode: 'MSG_MOVE_START_STRAFE_RIGHT' (0xB9). Size: '36' not handled.
-~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '36' not handled.
-~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '36' not handled.
-~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '36' not handled.
-~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '36' not handled.
-~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '36' not handled.
-~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '36' not handled.
-~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '36' not handled.
-~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '36' not handled.
-~Opcode: 'MSG_MOVE_START_FORWARD' (0xB5). Size: '36' not handled.
-~Opcode: 'SMSG_SPELL_GO' (0x132). Size: '47' not handled.
-~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '36' not handled.
-~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '36' not handled.
-~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '36' not handled.
-~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '36' not handled.
-~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '36' not handled.
-~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '36' not handled.
-~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '36' not handled.
-~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '36' not handled.
-~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '36' not handled.
-~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '36' not handled.
-~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '36' not handled.
-~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '36' not handled.
-~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '36' not handled.
-~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '36' not handled.
-~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '36' not handled.
-~Opcode: 'MSG_MOVE_STOP' (0xB7). Size: '36' not handled.
-~Opcode: 'MSG_MOVE_STOP_STRAFE' (0xBA). Size: '36' not handled.
-~Opcode: 'SMSG_SPELL_GO' (0x132). Size: '47' not handled.
-~Opcode: 'MSG_MOVE_START_STRAFE_LEFT' (0xB8). Size: '36' not handled.
-~Opcode: 'SMSG_EMOTE' (0x103). Size: '12' not handled.
-~Opcode: 'MSG_MOVE_STOP_STRAFE' (0xBA). Size: '36' not handled.
-~Opcode: 'MSG_MOVE_START_BACKWARD' (0xB6). Size: '36' not handled.
-~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '36' not handled.
-~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '36' not handled.
-~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '36' not handled.
-~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '36' not handled.
-~Opcode: 'MSG_MOVE_SET_PITCH' (0xDB). Size: '36' not handled.
-~Opcode: 'MSG_MOVE_START_STRAFE_LEFT' (0xB8). Size: '36' not handled.
-~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '36' not handled.
-~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '36' not handled.
-~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '36' not handled.
-~Opcode: 'MSG_MOVE_STOP_STRAFE' (0xBA). Size: '36' not handled.
-~Opcode: 'SMSG_SPELL_GO' (0x132). Size: '47' not handled.
-~Opcode: 'MSG_MOVE_START_STRAFE_RIGHT' (0xB9). Size: '36' not handled.
-~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '36' not handled.
-~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '36' not handled.
-~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '36' not handled.
-~Opcode: 'MSG_MOVE_STOP' (0xB7). Size: '36' not handled.
-~Opcode: 'MSG_MOVE_HEARTBEAT' (0xEE). Size: '36' not handled.
-~Opcode: 'MSG_MOVE_STOP_STRAFE' (0xBA). Size: '36' not handled.
-~Opcode: 'SMSG_SPELL_GO' (0x132). Size: '47' not handled.
-~Opcode: 'SMSG_SPELL_GO' (0x132). Size: '47' not handled.
-~Opcode: 'SMSG_SPELL_GO' (0x132). Size: '47' not handled.
-~Opcode: 'SMSG_SPELL_GO' (0x132). Size: '47' not handled.
-~Opcode: 'MSG_MOVE_SET_PITCH' (0xDB). Size: '36' not handled.
-~Opcode: 'MSG_MOVE_SET_PITCH' (0xDB). Size: '36' not handled.
-~Opcode: 'MSG_MOVE_SET_PITCH' (0xDB). Size: '36' not handled.
-~Opcode: 'SMSG_SPELL_GO' (0x132). Size: '47' not handled.
-~Opcode: 'SMSG_SPELL_START' (0x131). Size: '31' not handled.
-~Opcode: 'SMSG_SPELL_GO' (0x132). Size: '42' not handled.
-~Opcode: 'SMSG_SPELL_GO' (0x132). Size: '47' not handled.
-~Opcode: 'SMSG_SPELL_GO' (0x132). Size: '47' not handled.
-~Opcode: 'MSG_MOVE_SET_PITCH' (0xDB). Size: '36' not handled.
-~Opcode: 'MSG_MOVE_SET_PITCH' (0xDB). Size: '36' not handled.
-~Opcode: 'MSG_MOVE_SET_PITCH' (0xDB). Size: '36' not handled.
-~Opcode: 'SMSG_SPELL_GO' (0x132). Size: '47' not handled.
-~Opcode: 'SMSG_SPELL_GO' (0x132). Size: '47' not handled.
-~Opcode: 'SMSG_SPELL_GO' (0x132). Size: '47' not handled.
-~Opcode: 'SMSG_SPELL_GO' (0x132). Size: '47' not handled.
-~Opcode: 'SMSG_SPELL_GO' (0x132). Size: '47' not handled.
-~Opcode: 'SMSG_SPELL_GO' (0x132). Size: '47' not handled.
-~Opcode: 'SMSG_SPELL_GO' (0x132). Size: '47' not handled.
-~Opcode: 'SMSG_SPELL_START' (0x131). Size: '31' not handled.
-~Opcode: 'SMSG_SPELL_GO' (0x132). Size: '42' not handled.
-^Selected node '147,608429' = 'Character\Tauren\Male\TaurenMale.m2'.
-~Opcode: 'SMSG_SPELL_GO' (0x132). Size: '47' not handled.
-~Opcode: 'SMSG_SPELL_GO' (0x132). Size: '47' not handled.
-~Opcode: 'SMSG_SPELL_GO' (0x132). Size: '47' not handled.
-~Opcode: 'SMSG_SPELL_GO' (0x132). Size: '47' not handled.
-~Opcode: 'SMSG_SPELL_GO' (0x132). Size: '47' not handled.
-~Opcode: 'SMSG_SPELL_GO' (0x132). Size: '47' not handled.
-~Opcode: 'SMSG_EMOTE' (0x103). Size: '12' not handled.
-~Opcode: 'SMSG_SPELL_GO' (0x132). Size: '47' not handled.
-~Opcode: 'SMSG_SPELL_GO' (0x132). Size: '47' not handled.
-~Opcode: 'SMSG_SPELL_GO' (0x132). Size: '47' not handled.
-~Opcode: 'SMSG_SPELL_START' (0x131). Size: '31' not handled.
-~Opcode: 'SMSG_SPELL_GO' (0x132). Size: '42' not handled.
-~Opcode: 'SMSG_SPELL_GO' (0x132). Size: '47' not handled.
-~Opcode: 'SMSG_SPELL_GO' (0x132). Size: '47' not handled.
-~Opcode: 'SMSG_SPELL_GO' (0x132). Size: '47' not handled.
-^Selected node '44,304920' = 'WORLD\GENERIC\ORC\PASSIVE DOODADS\ORCFENCE\ORCFENCE.M2'.
-~Opcode: 'SMSG_SPELL_GO' (0x132). Size: '47' not handled.
-~Opcode: 'SMSG_SPELL_GO' (0x132). Size: '47' not handled.
-~Opcode: 'SMSG_SPELL_GO' (0x132). Size: '47' not handled.
-~Opcode: 'SMSG_SPELL_GO' (0x132). Size: '47' not handled.
-~Opcode: 'SMSG_SPELL_GO' (0x132). Size: '47' not handled.
-~Opcode: 'SMSG_SPELL_GO' (0x132). Size: '47' not handled.
-~Opcode: 'SMSG_SPELL_GO' (0x132). Size: '47' not handled.
-~Opcode: 'SMSG_SPELL_GO' (0x132). Size: '47' not handled.
-~Opcode: 'SMSG_SPELL_GO' (0x132). Size: '47' not handled.
-~Opcode: 'SMSG_EMOTE' (0x103). Size: '12' not handled.
-~Opcode: 'SMSG_SPELL_GO' (0x132). Size: '47' not handled.
-~Opcode: 'SMSG_SPELL_GO' (0x132). Size: '47' not handled.
-^Selected node '31,571407' = 'Character\Tauren\Male\TaurenMale.m2'.
-~Opcode: 'SMSG_SPELL_GO' (0x132). Size: '47' not handled.
-~Opcode: 'SMSG_SPELL_GO' (0x132). Size: '47' not handled.
-~Opcode: 'SMSG_SPELL_GO' (0x132). Size: '47' not handled.
-~Opcode: 'SMSG_SPELL_GO' (0x132). Size: '47' not handled.
-^Selected node '21,278931' = 'Character\Tauren\Male\TaurenMale.m2'.
-^Selected node '22,084465' = 'Character\Troll\Male\TrollMale.m2'.
-~Opcode: 'SMSG_SPELL_GO' (0x132). Size: '47' not handled.
-~Opcode: 'SMSG_SPELL_START' (0x131). Size: '31' not handled.
-~Opcode: 'SMSG_SPELL_GO' (0x132). Size: '42' not handled.
-~Opcode: 'SMSG_SPELL_GO' (0x132). Size: '47' not handled.
-~Opcode: 'SMSG_SPELL_GO' (0x132). Size: '47' not handled.
-~Opcode: 'SMSG_SPELL_GO' (0x132). Size: '47' not handled.
-~Opcode: 'SMSG_SPELL_GO' (0x132). Size: '47' not handled.
-~Opcode: 'SMSG_SPELL_GO' (0x132). Size: '47' not handled.
-~Opcode: 'SMSG_SPELL_GO' (0x132). Size: '47' not handled.
-~Opcode: 'SMSG_SPELL_GO' (0x132). Size: '47' not handled.
-^Selected node '26,355318' = 'Character\Troll\Male\TrollMale.m2'.
-~Opcode: 'SMSG_SPELL_GO' (0x132). Size: '47' not handled.
-~Opcode: 'SMSG_SPELL_GO' (0x132). Size: '47' not handled.
-~Opcode: 'SMSG_SPELL_GO' (0x132). Size: '47' not handled.
-~Opcode: 'SMSG_SPELL_START' (0x131). Size: '31' not handled.
-~Opcode: 'SMSG_SPELL_GO' (0x132). Size: '42' not handled.
-~Opcode: 'SMSG_SPELL_GO' (0x132). Size: '47' not handled.
-~Opcode: 'SMSG_SPELL_GO' (0x132). Size: '47' not handled.
-~Opcode: 'SMSG_SPELL_GO' (0x132). Size: '47' not handled.
-~Opcode: 'SMSG_SPELL_GO' (0x132). Size: '47' not handled.
-~Opcode: 'SMSG_SPELL_GO' (0x132). Size: '47' not handled.
-~Opcode: 'SMSG_SPELL_GO' (0x132). Size: '47' not handled.
-~Opcode: 'SMSG_SPELL_GO' (0x132). Size: '47' not handled.
-~Opcode: 'SMSG_SPELL_GO' (0x132). Size: '47' not handled.
-~Opcode: 'SMSG_SPELL_GO' (0x132). Size: '47' not handled.
-~Opcode: 'SMSG_SPELL_GO' (0x132). Size: '47' not handled.
-~Opcode: 'SMSG_SPELL_GO' (0x132). Size: '47' not handled.
-~Opcode: 'SMSG_SPELL_START' (0x131). Size: '31' not handled.
-~Opcode: 'SMSG_SPELL_GO' (0x132). Size: '42' not handled.
-~Opcode: 'SMSG_SPELL_GO' (0x132). Size: '47' not handled.
-~Opcode: 'SMSG_SPELL_GO' (0x132). Size: '47' not handled.
-~Opcode: 'SMSG_SPELL_GO' (0x132). Size: '47' not handled.
-~Opcode: 'SMSG_SPELL_GO' (0x132). Size: '47' not handled.
-~Opcode: 'SMSG_SPELL_GO' (0x132). Size: '47' not handled.
-~Opcode: 'SMSG_SPELL_GO' (0x132). Size: '47' not handled.
-~Opcode: 'SMSG_SPELL_GO' (0x132). Size: '47' not handled.
-~Opcode: 'SMSG_SPELL_GO' (0x132). Size: '47' not handled.
-~Opcode: 'SMSG_EMOTE' (0x103). Size: '12' not handled.
-~Opcode: 'SMSG_SPELL_GO' (0x132). Size: '47' not handled.
-~Opcode: 'SMSG_SPELL_GO' (0x132). Size: '47' not handled.
-~Opcode: 'SMSG_SPELL_GO' (0x132). Size: '47' not handled.
-~Opcode: 'SMSG_SPELL_GO' (0x132). Size: '47' not handled.
-~Opcode: 'SMSG_EMOTE' (0x103). Size: '12' not handled.
-~Opcode: 'SMSG_SPELL_GO' (0x132). Size: '47' not handled.
-~Opcode: 'SMSG_SPELL_GO' (0x132). Size: '47' not handled.
-~Opcode: 'SMSG_SPELL_GO' (0x132). Size: '47' not handled.
-~Opcode: 'SMSG_SPELL_GO' (0x132). Size: '47' not handled.
-~Opcode: 'SMSG_SPELL_START' (0x131). Size: '31' not handled.
-~Opcode: 'SMSG_SPELL_GO' (0x132). Size: '42' not handled.
-~Opcode: 'SMSG_SPELL_GO' (0x132). Size: '47' not handled.
-~Opcode: 'SMSG_SPELL_GO' (0x132). Size: '47' not handled.
-~Opcode: 'SMSG_SPELL_GO' (0x132). Size: '47' not handled.
-~Opcode: 'SMSG_SPELL_GO' (0x132). Size: '47' not handled.
-~Opcode: 'SMSG_SPELL_GO' (0x132). Size: '47' not handled.
-~Opcode: 'SMSG_SPELL_GO' (0x132). Size: '47' not handled.
-~Opcode: 'SMSG_SPELL_GO' (0x132). Size: '47' not handled.
-~Opcode: 'SMSG_SPELL_GO' (0x132). Size: '47' not handled.
-~Opcode: 'SMSG_SPELL_GO' (0x132). Size: '47' not handled.
-~Opcode: 'SMSG_SPELL_GO' (0x132). Size: '47' not handled.
-~Opcode: 'SMSG_SPELL_GO' (0x132). Size: '47' not handled.
-~Opcode: 'SMSG_SPELL_GO' (0x132). Size: '47' not handled.
-~Opcode: 'SMSG_SPELL_START' (0x131). Size: '31' not handled.
-~Opcode: 'SMSG_SPELL_GO' (0x132). Size: '42' not handled.
-~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '36' not handled.
-~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '36' not handled.
-~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '36' not handled.
-~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '36' not handled.
-~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '36' not handled.
-~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '36' not handled.
-~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '36' not handled.
-~Opcode: 'MSG_MOVE_START_FORWARD' (0xB5). Size: '36' not handled.
-~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '36' not handled.
-~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '36' not handled.
-~Opcode: 'SMSG_SPELL_GO' (0x132). Size: '47' not handled.
-~Opcode: 'MSG_MOVE_HEARTBEAT' (0xEE). Size: '36' not handled.
-~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '36' not handled.
-~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '36' not handled.
-~Opcode: 'MSG_MOVE_START_STRAFE_RIGHT' (0xB9). Size: '36' not handled.
-~Opcode: 'MSG_MOVE_STOP_STRAFE' (0xBA). Size: '36' not handled.
-~Opcode: 'SMSG_SPELL_GO' (0x132). Size: '47' not handled.
-~Opcode: 'MSG_MOVE_SET_PITCH' (0xDB). Size: '36' not handled.
-~Opcode: 'MSG_MOVE_STOP' (0xB7). Size: '36' not handled.
-~Opcode: 'SMSG_SPELL_GO' (0x132). Size: '47' not handled.
-~Opcode: 'MSG_MOVE_START_FORWARD' (0xB5). Size: '36' not handled.
-~Opcode: 'MSG_MOVE_START_TURN_LEFT' (0xBC). Size: '36' not handled.
-~Opcode: 'MSG_MOVE_STOP_TURN' (0xBE). Size: '36' not handled.
-~Opcode: 'MSG_MOVE_START_ASCEND' (0x359). Size: '36' not handled.
-~Opcode: 'SMSG_SPELL_GO' (0x132). Size: '47' not handled.
-~Opcode: 'MSG_MOVE_STOP_ASCEND' (0x35A). Size: '36' not handled.
-~Opcode: 'MSG_MOVE_START_TURN_RIGHT' (0xBD). Size: '36' not handled.
-~Opcode: 'MSG_MOVE_STOP_TURN' (0xBE). Size: '36' not handled.
-~Opcode: 'MSG_MOVE_START_TURN_LEFT' (0xBC). Size: '36' not handled.
-~Opcode: 'MSG_MOVE_STOP_TURN' (0xBE). Size: '36' not handled.
-~Opcode: 'SMSG_SPELL_GO' (0x132). Size: '47' not handled.
-~Opcode: 'MSG_MOVE_HEARTBEAT' (0xEE). Size: '36' not handled.
-~Opcode: 'MSG_MOVE_START_TURN_RIGHT' (0xBD). Size: '36' not handled.
-~Opcode: 'MSG_MOVE_STOP_TURN' (0xBE). Size: '36' not handled.
-~Opcode: 'MSG_MOVE_START_TURN_LEFT' (0xBC). Size: '36' not handled.
-~Opcode: 'SMSG_SPELL_GO' (0x132). Size: '47' not handled.
-~Opcode: 'MSG_MOVE_STOP_TURN' (0xBE). Size: '36' not handled.
-~Opcode: 'MSG_MOVE_HEARTBEAT' (0xEE). Size: '36' not handled.
-~Opcode: 'SMSG_SPELL_GO' (0x132). Size: '47' not handled.
-~Opcode: 'MSG_MOVE_HEARTBEAT' (0xEE). Size: '36' not handled.
-~Opcode: 'MSG_MOVE_HEARTBEAT' (0xEE). Size: '36' not handled.
-~Opcode: 'SMSG_SPELL_GO' (0x132). Size: '47' not handled.
-~Opcode: 'MSG_MOVE_HEARTBEAT' (0xEE). Size: '36' not handled.
-~Opcode: 'MSG_MOVE_START_STRAFE_RIGHT' (0xB9). Size: '36' not handled.
-~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '36' not handled.
-~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '36' not handled.
-~Opcode: 'SMSG_SPELL_GO' (0x132). Size: '47' not handled.
-~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '36' not handled.
-~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '36' not handled.
-~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '36' not handled.
-~Opcode: 'MSG_MOVE_STOP' (0xB7). Size: '36' not handled.
-~Opcode: 'MSG_MOVE_STOP_STRAFE' (0xBA). Size: '36' not handled.
-~Opcode: 'SMSG_SPELL_GO' (0x132). Size: '47' not handled.
-~Opcode: 'MSG_MOVE_START_FORWARD' (0xB5). Size: '36' not handled.
-~Opcode: 'MSG_MOVE_START_STRAFE_RIGHT' (0xB9). Size: '36' not handled.
-~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '36' not handled.
-~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '36' not handled.
-~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '36' not handled.
-~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '36' not handled.
-~Opcode: 'SMSG_SPELL_GO' (0x132). Size: '47' not handled.
-~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '36' not handled.
-~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '36' not handled.
-~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '36' not handled.
-~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '36' not handled.
-~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '36' not handled.
-~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '36' not handled.
-~Opcode: 'MSG_MOVE_STOP' (0xB7). Size: '36' not handled.
-~Opcode: 'MSG_MOVE_STOP_STRAFE' (0xBA). Size: '36' not handled.
-~Opcode: 'SMSG_EMOTE' (0x103). Size: '12' not handled.
-~Opcode: 'SMSG_SPELL_GO' (0x132). Size: '47' not handled.
-~Opcode: 'SMSG_SPELL_START' (0x131). Size: '31' not handled.
-~Opcode: 'SMSG_SPELL_GO' (0x132). Size: '42' not handled.
-~Opcode: 'SMSG_SPELL_GO' (0x132). Size: '47' not handled.
+~Opcode: 'SMSG_AURA_UPDATE_ALL' (0x495). Size: '26' not handled.
+~Opcode: 'SMSG_QUESTGIVER_STATUS_MULTIPLE' (0x418). Size: '13' not handled.
+~Opcode: 'SMSG_AURA_UPDATE' (0x496). Size: '10' not handled.
+~Opcode: 'SMSG_AURA_UPDATE' (0x496). Size: '10' not handled.
+~Opcode: 'SMSG_AURA_UPDATE' (0x496). Size: '10' not handled.
 ~Opcode: 'SMSG_AURA_UPDATE_ALL' (0x495). Size: '15' not handled.
-~Opcode: 'SMSG_SPELL_GO' (0x132). Size: '47' not handled.
-~Opcode: 'SMSG_SPELL_GO' (0x132). Size: '47' not handled.
-^Selected node '0,395229' = 'WORLD\GENERIC\ORC\PASSIVE DOODADS\ORCFENCE\ORCFENCE.M2'.
-^Selected node '1,401367' = 'WORLD\GENERIC\ORC\PASSIVE DOODADS\BURNTOUTPOSTS\BURNTOUTPOST02.M2'.
-^Selected node '1,820904' = 'Character\Orc\Male\OrcMale.m2'.
-^Selected node '6,667839' = 'WORLD\GENERIC\ORC\PASSIVE DOODADS\JUGS\ORCJUG01.M2'.
-~Opcode: 'SMSG_SPELL_GO' (0x132). Size: '47' not handled.
-~Opcode: 'SMSG_EMOTE' (0x103). Size: '12' not handled.
-~Opcode: 'MSG_MOVE_START_FORWARD' (0xB5). Size: '36' not handled.
-~Opcode: 'CMSG_MOVE_SET_FLY' (0x346). Size: '32' not handled.
-~Opcode: 'MSG_MOVE_FALL_LAND' (0xC9). Size: '32' not handled.
-~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
-~Opcode: 'MSG_MOVE_STOP' (0xB7). Size: '32' not handled.
-~Opcode: 'SMSG_SPELL_GO' (0x132). Size: '47' not handled.
-~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
-~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
-~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
-~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
-~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
-~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
-~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
-~Opcode: 'SMSG_EMOTE' (0x103). Size: '12' not handled.
-~Opcode: 'MSG_MOVE_START_STRAFE_LEFT' (0xB8). Size: '32' not handled.
-~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '32' not handled.
-~Opcode: 'CMSG_MOVE_SET_FLY' (0x346). Size: '36' not handled.
-~Opcode: 'SMSG_SPELL_GO' (0x132). Size: '47' not handled.
-~Opcode: 'MSG_MOVE_STOP_STRAFE' (0xBA). Size: '36' not handled.
-~Opcode: 'MSG_MOVE_START_ASCEND' (0x359). Size: '36' not handled.
-~Opcode: 'MSG_MOVE_STOP_ASCEND' (0x35A). Size: '36' not handled.
-~Opcode: 'MSG_MOVE_START_FORWARD' (0xB5). Size: '36' not handled.
-~Opcode: 'SMSG_SPELL_GO' (0x132). Size: '47' not handled.
-~Opcode: 'MSG_MOVE_STOP' (0xB7). Size: '36' not handled.
-~Opcode: 'MSG_MOVE_START_FORWARD' (0xB5). Size: '36' not handled.
-~Opcode: 'MSG_MOVE_STOP' (0xB7). Size: '36' not handled.
-~Opcode: 'MSG_MOVE_START_ASCEND' (0x359). Size: '36' not handled.
-~Opcode: 'MSG_MOVE_STOP_ASCEND' (0x35A). Size: '36' not handled.
-~Opcode: 'SMSG_SPELL_GO' (0x132). Size: '47' not handled.
-~Opcode: 'MSG_MOVE_START_ASCEND' (0x359). Size: '36' not handled.
-~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '36' not handled.
-~Opcode: 'MSG_MOVE_START_STRAFE_LEFT' (0xB8). Size: '36' not handled.
-~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '36' not handled.
-~Opcode: 'MSG_MOVE_START_FORWARD' (0xB5). Size: '36' not handled.
-~Opcode: 'MSG_MOVE_STOP_ASCEND' (0x35A). Size: '36' not handled.
-~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '36' not handled.
-~Opcode: 'MSG_MOVE_STOP_STRAFE' (0xBA). Size: '36' not handled.
-~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '36' not handled.
-~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '36' not handled.
-~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '36' not handled.
-~Opcode: 'SMSG_SPELL_GO' (0x132). Size: '47' not handled.
-~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '36' not handled.
-~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '36' not handled.
-~Opcode: 'MSG_MOVE_START_ASCEND' (0x359). Size: '36' not handled.
-~Opcode: 'MSG_MOVE_SET_FACING' (0xDA). Size: '36' not handled.
-~Opcode: 'MSG_MOVE_SET_PITCH' (0xDB). Size: '36' not handled.
-~Opcode: 'MSG_MOVE_SET_PITCH' (0xDB). Size: '36' not handled.
-~Opcode: 'MSG_MOVE_HEARTBEAT' (0xEE). Size: '36' not handled.
-~Opcode: 'MSG_MOVE_STOP_ASCEND' (0x35A). Size: '36' not handled.
-~Opcode: 'SMSG_SPELL_GO' (0x132). Size: '47' not handled.
-~Opcode: 'MSG_MOVE_HEARTBEAT' (0xEE). Size: '36' not handled.
-~Opcode: 'MSG_MOVE_STOP' (0xB7). Size: '36' not handled.
-^Selected node '0,283306' = 'WORLD\GENERIC\ORC\PASSIVE DOODADS\ORCFENCE\ORCFENCE.M2'.
-^Selected node '1,708981' = 'Character\Orc\Male\OrcMale.m2'.
-^Selected node '2,815430' = 'WORLD\GENERIC\ORC\PASSIVE DOODADS\BURNTOUTPOSTS\BURNTOUTPOST02.M2'.
-~Opcode: 'SMSG_SPELL_GO' (0x132). Size: '47' not handled.
-~Opcode: 'SMSG_EMOTE' (0x103). Size: '12' not handled.
-~Opcode: 'SMSG_SPELL_GO' (0x132). Size: '47' not handled.
-~Opcode: 'SMSG_SPELL_GO' (0x132). Size: '47' not handled.
-~Opcode: 'SMSG_SPELL_START' (0x131). Size: '31' not handled.
-~Opcode: 'SMSG_SPELL_GO' (0x132). Size: '42' not handled.
-~Opcode: 'SMSG_SPELL_GO' (0x132). Size: '47' not handled.
-~Opcode: 'SMSG_SPELL_GO' (0x132). Size: '47' not handled.
-~Opcode: 'SMSG_EMOTE' (0x103). Size: '12' not handled.
-~Opcode: 'SMSG_SPELL_GO' (0x132). Size: '47' not handled.
-^Selected node '55,809879' = 'WORLD\AZEROTH\ELWYNN\PASSIVEDOODADS\CATAPULT\CATAPULT.M2'.
-^Selected node '57,098038' = 'Character\Orc\Male\OrcMale.m2'.
-~Opcode: 'SMSG_SPELL_GO' (0x132). Size: '47' not handled.
-~Opcode: 'SMSG_SPELL_GO' (0x132). Size: '47' not handled.
-~Opcode: 'SMSG_SPELL_GO' (0x132). Size: '47' not handled.
-~Opcode: 'SMSG_EMOTE' (0x103). Size: '12' not handled.
-~Opcode: 'SMSG_SPELL_GO' (0x132). Size: '47' not handled.
-~Opcode: 'SMSG_SPELL_GO' (0x132). Size: '47' not handled.
-~Opcode: 'SMSG_SPELL_GO' (0x132). Size: '47' not handled.
-~Opcode: 'SMSG_SPELL_GO' (0x132). Size: '47' not handled.
-~Opcode: 'SMSG_SPELL_GO' (0x132). Size: '47' not handled.
-~Opcode: 'SMSG_SPELL_GO' (0x132). Size: '47' not handled.
-~Opcode: 'SMSG_SPELL_GO' (0x132). Size: '47' not handled.
-~Opcode: 'SMSG_SPELL_START' (0x131). Size: '31' not handled.
-~Opcode: 'SMSG_SPELL_GO' (0x132). Size: '42' not handled.
-^Selected node '21,654064' = 'Creature\Felhound\FelHound.m2'.
-~Opcode: 'SMSG_SPELL_GO' (0x132). Size: '47' not handled.
-~Opcode: 'SMSG_SPELL_GO' (0x132). Size: '47' not handled.
-~Opcode: 'SMSG_SPELL_GO' (0x132). Size: '47' not handled.
-~Opcode: 'SMSG_SPELL_GO' (0x132). Size: '47' not handled.
-~Opcode: 'SMSG_SPELL_GO' (0x132). Size: '47' not handled.
-~Opcode: 'SMSG_SPELL_GO' (0x132). Size: '47' not handled.
-~Opcode: 'SMSG_SPELL_GO' (0x132). Size: '47' not handled.
-^Selected node '141,813461' = 'WORLD\GENERIC\PASSIVEDOODADS\PARTICLEEMITTERS\BLACKSMITH_SMOKE.M2'.
-^Selected node '386,825256' = 'WORLD\EXPANSION01\DOODADS\HELLFIREPENINSULA\FIREWALL\HELLFIRE_FEL_FIREWALL_01.M2'.
-~Opcode: 'SMSG_SPELL_GO' (0x132). Size: '47' not handled.
-~Opcode: 'SMSG_SPELL_GO' (0x132). Size: '47' not handled.
-~Opcode: 'SMSG_SPELL_GO' (0x132). Size: '47' not handled.
-^Selected node '137,002274' = 'WORLD\GENERIC\TAUREN\PASSIVE DOODADS\TOTEMS\TAURENTOTEM01.M2'.
-~Opcode: 'SMSG_SPELL_GO' (0x132). Size: '47' not handled.
-~Opcode: 'SMSG_SPELL_GO' (0x132). Size: '47' not handled.
-~Opcode: 'SMSG_SPELL_GO' (0x132). Size: '47' not handled.
-~Opcode: 'SMSG_SPELL_GO' (0x132). Size: '47' not handled.
-~Opcode: 'SMSG_EMOTE' (0x103). Size: '12' not handled.
-~Opcode: 'SMSG_SPELL_START' (0x131). Size: '31' not handled.
-~Opcode: 'SMSG_SPELL_GO' (0x132). Size: '42' not handled.
-~Opcode: 'SMSG_SPELL_GO' (0x132). Size: '47' not handled.
-~Opcode: 'SMSG_SPELL_GO' (0x132). Size: '47' not handled.
-~Opcode: 'SMSG_HIGHEST_THREAT_UPDATE' (0x482). Size: '29' not handled.
-~Opcode: 'SMSG_SPELL_START' (0x131). Size: '31' not handled.
-~Opcode: 'SMSG_SPELL_GO' (0x132). Size: '42' not handled.
+~Opcode: 'SMSG_AURA_UPDATE_ALL' (0x495). Size: '15' not handled.
+~Opcode: 'SMSG_AURA_UPDATE_ALL' (0x495). Size: '15' not handled.
+~Opcode: 'SMSG_SPELLLOGEXECUTE' (0x24C). Size: '30' not handled.
+~Opcode: 'SMSG_AURA_UPDATE_ALL' (0x495). Size: '31' not handled.
+~Opcode: 'SMSG_SPELLLOGEXECUTE' (0x24C). Size: '30' not handled.
+~Opcode: 'SMSG_SPELLLOGEXECUTE' (0x24C). Size: '30' not handled.
+~Opcode: 'SMSG_SPELLLOGEXECUTE' (0x24C). Size: '30' not handled.
+~Opcode: 'SMSG_SPELLLOGEXECUTE' (0x24C). Size: '30' not handled.
+~Opcode: 'SMSG_AURA_UPDATE_ALL' (0x495). Size: '15' not handled.
+~Opcode: 'SMSG_GAMEOBJECT_DESPAWN_ANIM' (0x215). Size: '8' not handled.
+~Opcode: 'SMSG_SPELLLOGEXECUTE' (0x24C). Size: '30' not handled.
+~Opcode: 'SMSG_SPELLLOGEXECUTE' (0x24C). Size: '30' not handled.
+~Opcode: 'SMSG_SPELLLOGEXECUTE' (0x24C). Size: '30' not handled.
+~Opcode: 'SMSG_SPELLLOGEXECUTE' (0x24C). Size: '30' not handled.
+~Opcode: 'SMSG_SPELLLOGEXECUTE' (0x24C). Size: '30' not handled.
+~Opcode: 'SMSG_SPELLLOGEXECUTE' (0x24C). Size: '30' not handled.
+~Opcode: 'SMSG_SPELLLOGEXECUTE' (0x24C). Size: '30' not handled.
+~Opcode: 'SMSG_AURA_UPDATE_ALL' (0x495). Size: '15' not handled.
 ~Opcode: 'SMSG_AURA_UPDATE' (0x496). Size: '15' not handled.
-~Opcode: 'SMSG_AI_REACTION' (0x13C). Size: '12' not handled.
-~Opcode: 'SMSG_ATTACK_START' (0x143). Size: '16' not handled.
-~Opcode: 'SMSG_SPELL_GO' (0x132). Size: '47' not handled.
-~Opcode: 'SMSG_SPELL_GO' (0x132). Size: '47' not handled.
-~Opcode: 'SMSG_SPELL_GO' (0x132). Size: '47' not handled.
-~Opcode: 'SMSG_SPELL_GO' (0x132). Size: '47' not handled.
-~Opcode: 'SMSG_SPELL_GO' (0x132). Size: '47' not handled.
-~Opcode: 'SMSG_SPELL_GO' (0x132). Size: '47' not handled.
-~Opcode: 'SMSG_SPELL_GO' (0x132). Size: '47' not handled.
-~Opcode: 'SMSG_SPELL_GO' (0x132). Size: '47' not handled.
-~Opcode: 'SMSG_SPELL_START' (0x131). Size: '31' not handled.
-~Opcode: 'SMSG_SPELL_GO' (0x132). Size: '42' not handled.
-~Opcode: 'SMSG_SPELL_GO' (0x132). Size: '47' not handled.
-~Opcode: 'SMSG_SPELL_GO' (0x132). Size: '47' not handled.
-~Opcode: 'SMSG_SPELL_GO' (0x132). Size: '47' not handled.
-~Opcode: 'SMSG_SPELL_GO' (0x132). Size: '47' not handled.
-~Opcode: 'SMSG_SPELL_GO' (0x132). Size: '47' not handled.
-~Opcode: 'SMSG_SPELL_GO' (0x132). Size: '47' not handled.
-~Opcode: 'SMSG_SPELL_GO' (0x132). Size: '47' not handled.
-~Opcode: 'SMSG_EMOTE' (0x103). Size: '12' not handled.
-~Opcode: 'SMSG_SPELL_GO' (0x132). Size: '47' not handled.
-~Opcode: 'SMSG_SPELL_GO' (0x132). Size: '47' not handled.
-~Opcode: 'SMSG_SPELL_GO' (0x132). Size: '47' not handled.
-~Opcode: 'SMSG_SPELL_GO' (0x132). Size: '47' not handled.
-~Opcode: 'SMSG_SPELL_GO' (0x132). Size: '47' not handled.
-~Opcode: 'SMSG_SPELL_GO' (0x132). Size: '47' not handled.
-~Opcode: 'SMSG_SPELL_GO' (0x132). Size: '47' not handled.
-^Selected node '0,000000' = 'Creature\Infernal\Infernal.m2'.
-~Opcode: 'SMSG_SPELL_GO' (0x132). Size: '47' not handled.
-~Opcode: 'SMSG_SPELL_START' (0x131). Size: '31' not handled.
-~Opcode: 'SMSG_SPELL_GO' (0x132). Size: '42' not handled.
-~Opcode: 'SMSG_SPELL_GO' (0x132). Size: '47' not handled.
-~Opcode: 'SMSG_SPELL_GO' (0x132). Size: '47' not handled.
-~Opcode: 'SMSG_SPELL_GO' (0x132). Size: '47' not handled.
-~Opcode: 'SMSG_SPELL_GO' (0x132). Size: '47' not handled.
-~Opcode: 'SMSG_SPELL_GO' (0x132). Size: '47' not handled.
-^Selected node '167,384689' = 'WORLD\AZEROTH\BURNINGSTEPPES\PASSIVEDOODADS\ORCSLEEPMATS\ORCSLEEPMAT03.M2'.
-~Opcode: 'SMSG_SPELL_GO' (0x132). Size: '47' not handled.
+~Opcode: 'SMSG_GAMEOBJECT_DESPAWN_ANIM' (0x215). Size: '8' not handled.
+~Opcode: 'SMSG_GAMEOBJECT_DESPAWN_ANIM' (0x215). Size: '8' not handled.
 ~Opcode: 'SMSG_AURA_UPDATE_ALL' (0x495). Size: '15' not handled.
-~Opcode: 'SMSG_SPELL_GO' (0x132). Size: '47' not handled.
-~Opcode: 'SMSG_SPELL_GO' (0x132). Size: '47' not handled.
-~Opcode: 'SMSG_SPELL_GO' (0x132). Size: '47' not handled.
-~Opcode: 'SMSG_SPELL_GO' (0x132). Size: '47' not handled.
-~Opcode: 'SMSG_SPELL_GO' (0x132). Size: '47' not handled.
-~Opcode: 'SMSG_EMOTE' (0x103). Size: '12' not handled.
-~Opcode: 'SMSG_SPELL_GO' (0x132). Size: '47' not handled.
-~Opcode: 'SMSG_SPELL_GO' (0x132). Size: '47' not handled.
-~Opcode: 'SMSG_SPELL_GO' (0x132). Size: '47' not handled.
-~Opcode: 'SMSG_SPELL_GO' (0x132). Size: '47' not handled.
-~Opcode: 'SMSG_SPELL_START' (0x131). Size: '31' not handled.
-~Opcode: 'SMSG_SPELL_GO' (0x132). Size: '42' not handled.
-~Opcode: 'SMSG_SPELL_GO' (0x132). Size: '47' not handled.
-~Opcode: 'SMSG_SPELL_GO' (0x132). Size: '47' not handled.
-~Opcode: 'SMSG_SPELL_GO' (0x132). Size: '47' not handled.
-^Selected node '0,000000' = 'Creature\Infernal\Infernal.m2'.
-~Opcode: 'SMSG_SPELL_GO' (0x132). Size: '47' not handled.
-^Selected node '0,000000' = 'Creature\Infernal\Infernal.m2'.
-^Selected node '305,586639' = 'WORLD\EXPANSION01\DOODADS\HELLFIREPENINSULA\WAGONS\ORCWAGON07.M2'.
-~Opcode: 'SMSG_SPELL_GO' (0x132). Size: '47' not handled.
-~Opcode: 'SMSG_SPELL_GO' (0x132). Size: '47' not handled.
-~Opcode: 'SMSG_SPELL_GO' (0x132). Size: '47' not handled.
-~Opcode: 'SMSG_SPELL_START' (0x131). Size: '31' not handled.
-~Opcode: 'SMSG_SPELL_GO' (0x132). Size: '42' not handled.
-~Opcode: 'SMSG_SPELL_GO' (0x132). Size: '47' not handled.
-~Opcode: 'SMSG_SPELL_GO' (0x132). Size: '47' not handled.
-~Opcode: 'SMSG_SPELL_GO' (0x132). Size: '47' not handled.
-~Opcode: 'SMSG_SPELL_GO' (0x132). Size: '47' not handled.
-~Opcode: 'SMSG_SPELL_GO' (0x132). Size: '47' not handled.
-~Opcode: 'SMSG_SPELL_GO' (0x132). Size: '47' not handled.
-~Opcode: 'SMSG_SPELL_GO' (0x132). Size: '47' not handled.
-~Opcode: 'SMSG_SPELL_GO' (0x132). Size: '47' not handled.
-~Opcode: 'SMSG_SPELL_GO' (0x132). Size: '47' not handled.
-~Opcode: 'SMSG_SPELL_GO' (0x132). Size: '47' not handled.
-~Opcode: 'SMSG_EMOTE' (0x103). Size: '12' not handled.
-~Opcode: 'SMSG_SPELL_GO' (0x132). Size: '47' not handled.
-~Opcode: 'SMSG_SPELL_GO' (0x132). Size: '47' not handled.
-~Opcode: 'SMSG_EMOTE' (0x103). Size: '12' not handled.
-~Opcode: 'SMSG_SPELL_GO' (0x132). Size: '47' not handled.
-~Opcode: 'SMSG_SPELL_GO' (0x132). Size: '47' not handled.
-~Opcode: 'SMSG_SPELL_GO' (0x132). Size: '47' not handled.
-~Opcode: 'SMSG_EMOTE' (0x103). Size: '12' not handled.
-@WndProc: WM_CLOSE.
-@WndProc: WM_DESTROY.
-~Opcode: 'SMSG_SPELL_GO' (0x132). Size: '47' not handled.
-~Scene destroyed.
-@SOCKET DISCONNECTED.
-~CAuthSocket: Deleted.
-@SOCKET DISCONNECTED.
-~~RenderWindowBase
-@SaveToLocalFile: File 'D:\OpenWow\OpenWow//settings.xml' already exists and will be removed.
-^Loader thread stopped.
-^Loader thread stopped.
-^Loader thread stopped.
-^Loader thread stopped.
+~Opcode: 'SMSG_SPELLLOGEXECUTE' (0x24C). Size: '30' not handled.
+~Opcode: 'SMSG_SPELL_START' (0x131). Size: '38' not handled.
+~Opcode: 'SMSG_SPELL_GO' (0x132). Size: '48' not handled.
+~Opcode: 'SMSG_SPELLLOGEXECUTE' (0x24C). Size: '30' not handled.
+~Opcode: 'SMSG_SPELLLOGEXECUTE' (0x24C). Size: '30' not handled.
+~Opcode: 'SMSG_AURA_UPDATE_ALL' (0x495). Size: '15' not handled.
+~Opcode: 'SMSG_SPELLLOGEXECUTE' (0x24C). Size: '31' not handled.
+~Opcode: 'SMSG_SPLINE_MOVE_ROOT' (0x31A). Size: '7' not handled.
+~Opcode: 'SMSG_AURA_UPDATE' (0x496). Size: '30' not handled.
+~Opcode: 'SMSG_AURA_UPDATE_ALL' (0x495). Size: '14' not handled.
+^Selected node '34,552734' = 'WORLD\LORDAERON\TIRISFALGLADE\PASSIVEDOODADS\TREES\TIRISFALLGLADECANOPYTREE02.M2'.
+~Opcode: 'SMSG_GAMEOBJECT_DESPAWN_ANIM' (0x215). Size: '8' not handled.
+~Opcode: 'SMSG_SPELLLOGEXECUTE' (0x24C). Size: '30' not handled.
+~Opcode: 'SMSG_SPELLLOGEXECUTE' (0x24C). Size: '30' not handled.
+~Opcode: 'SMSG_SPELLLOGEXECUTE' (0x24C). Size: '30' not handled.
+~Opcode: 'SMSG_SPELLLOGEXECUTE' (0x24C). Size: '30' not handled.
+~Opcode: 'SMSG_AURA_UPDATE' (0x496). Size: '12' not handled.
+~Opcode: 'SMSG_SPLINE_MOVE_UNROOT' (0x304). Size: '7' not handled.
+~Opcode: 'SMSG_SPELLLOGEXECUTE' (0x24C). Size: '30' not handled.
+~Opcode: 'SMSG_SPELL_START' (0x131). Size: '38' not handled.
+~Opcode: 'SMSG_SPELL_GO' (0x132). Size: '48' not handled.
+~Opcode: 'SMSG_SPELLLOGEXECUTE' (0x24C). Size: '30' not handled.
+~Opcode: 'SMSG_SPELLLOGEXECUTE' (0x24C). Size: '30' not handled.
+~Opcode: 'SMSG_SPELLLOGEXECUTE' (0x24C). Size: '30' not handled.
+~Opcode: 'SMSG_SPELLLOGEXECUTE' (0x24C). Size: '30' not handled.
+~Opcode: 'SMSG_SPELLLOGEXECUTE' (0x24C). Size: '29' not handled.
+~Opcode: 'SMSG_SPELLLOGEXECUTE' (0x24C). Size: '31' not handled.
+~Opcode: 'SMSG_SPLINE_MOVE_ROOT' (0x31A). Size: '7' not handled.
+~Opcode: 'SMSG_AURA_UPDATE' (0x496). Size: '30' not handled.
+~Opcode: 'SMSG_AURA_UPDATE_ALL' (0x495). Size: '15' not handled.
+~Opcode: 'SMSG_GAMEOBJECT_DESPAWN_ANIM' (0x215). Size: '8' not handled.
+~Opcode: 'SMSG_SPELLLOGEXECUTE' (0x24C). Size: '30' not handled.
+~Opcode: 'SMSG_SPELLLOGEXECUTE' (0x24C). Size: '30' not handled.
+~Opcode: 'SMSG_SPELLLOGEXECUTE' (0x24C). Size: '30' not handled.
+~Opcode: 'SMSG_AURA_UPDATE_ALL' (0x495). Size: '15' not handled.
+~Opcode: 'SMSG_AURA_UPDATE' (0x496). Size: '15' not handled.
+~Opcode: 'SMSG_GAMEOBJECT_DESPAWN_ANIM' (0x215). Size: '8' not handled.
+~Opcode: 'SMSG_SPELLLOGEXECUTE' (0x24C). Size: '30' not handled.
+~Opcode: 'SMSG_SPELL_START' (0x131). Size: '38' not handled.
+~Opcode: 'SMSG_SPELL_GO' (0x132). Size: '48' not handled.
+~Opcode: 'SMSG_SPELLLOGEXECUTE' (0x24C). Size: '30' not handled.
+~Opcode: 'SMSG_SPELLLOGEXECUTE' (0x24C). Size: '30' not handled.
+~Opcode: 'SMSG_SPELLLOGEXECUTE' (0x24C). Size: '30' not handled.
+~Opcode: 'SMSG_SPELLLOGEXECUTE' (0x24C). Size: '30' not handled.
+~Opcode: 'SMSG_SPELLLOGEXECUTE' (0x24C). Size: '31' not handled.
+~Opcode: 'SMSG_SPELLLOGEXECUTE' (0x24C). Size: '30' not handled.
+~Opcode: 'SMSG_SPELLLOGEXECUTE' (0x24C). Size: '29' not handled.
+~Opcode: 'SMSG_SPELLLOGEXECUTE' (0x24C). Size: '30' not handled.
+~Opcode: 'SMSG_AURA_UPDATE_ALL' (0x495). Size: '15' not handled.
+~Opcode: 'SMSG_AURA_UPDATE' (0x496). Size: '15' not handled.

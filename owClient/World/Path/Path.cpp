@@ -47,6 +47,7 @@ int32 CWoWPath::GetDuration() const
 void CWoWPath::SetDuration(int32 Duration)
 {
 	m_FullPathDuration = Duration;
+	CalculateTimes();
 }
 
 int32 CWoWPath::GetCurrTime() const
@@ -72,24 +73,21 @@ glm::vec3 CWoWPath::GetPositionByCurrTime() const
 	if (m_Nodes.size() == 1)
 		return m_Nodes.begin()->Node->GetPosition();
 
-	size_t index = 0;
-	for (size_t i = m_Nodes.size() - 2; i >= 0; i--)
-	{
-		if (GetCurrTime() >= m_Nodes.at(i).Time)
-		{
-			index = i;
-			break;
-		}
-	}
+	size_t currentNodeIndex = GetCurrentNodeIndex();
 
-	auto currNode = m_Nodes.at(index);
-	auto nextNode = m_Nodes.at(index + 1);
+	auto currNode = m_Nodes.at(currentNodeIndex);
+	uint32 timeBeginsFromCurrentPoint = GetCurrTime() - currNode.Timestamp;
 
-	int32 timeLength = nextNode.Time - currNode.Time;
+	// Unit waits on point
+	if (timeBeginsFromCurrentPoint < currNode.Node->GetTimeDelay())
+		return currNode.Node->GetPosition();
+
+	auto nextNode = m_Nodes.at(currentNodeIndex + 1);
+	int32 timeLength = nextNode.Timestamp - currNode.Timestamp;
 	if (timeLength == 0.0f)
 		return currNode.Node->GetPosition();
 
-	float positionForInterpolation = float(GetCurrTime() - currNode.Time) / float(timeLength);
+	float positionForInterpolation = float(timeBeginsFromCurrentPoint - currNode.Node->GetTimeDelay()) / float(timeLength);
 	if (positionForInterpolation < 0.0f || positionForInterpolation > 1.0f)
 		throw CException("Incorrect interpolationValue");
 
@@ -101,17 +99,9 @@ glm::vec3 CWoWPath::GetNextNodePosition() const
 	if (m_Nodes.size() == 1)
 		return m_Nodes.begin()->Node->GetPosition();
 
-	size_t index = 0;
-	for (size_t i = m_Nodes.size() - 2; i >= 0; i--)
-	{
-		if (GetCurrTime() >= m_Nodes.at(i).Time)
-		{
-			index = i;
-			break;
-		}
-	}
+	size_t currentNodeIndex = GetCurrentNodeIndex();
 
-	auto nextNode = m_Nodes.at(index + 1);
+	auto nextNode = m_Nodes.at(currentNodeIndex + 1);
 	return nextNode.Node->GetPosition();
 }
 
@@ -122,36 +112,40 @@ void CWoWPath::CalculateTimes()
 
 	m_FullPathLength = 0.0f;
 
-	auto& firstPathNode = (*m_Nodes.begin());
-	firstPathNode.DistanceFromPreviousPoint = 0.0f;
+	auto& firstNode = (*m_Nodes.begin());
+	glm::vec3 previousNodePosition = firstNode.Node->GetPosition();
 
-	glm::vec3 lastPosition = firstPathNode.Node->GetPosition();
-
-	for (size_t i = 1; i < m_Nodes.size(); i++)
+	for (auto& nodesIt : m_Nodes)
 	{
-		auto& currentPathNode = m_Nodes.at(i);
-		glm::vec3 currentNodePosition = currentPathNode.Node->GetPosition();
+		glm::vec3 currentNodePosition = nodesIt.Node->GetPosition();
 
-		float distance = glm::distance(currentNodePosition, lastPosition);
+		float distance = glm::distance(currentNodePosition, previousNodePosition);
 		m_FullPathLength += distance;
-		currentPathNode.DistanceFromPreviousPoint = distance;
+		nodesIt.DistanceToPreviousPoint = distance;
 
-		lastPosition = currentNodePosition;
+		previousNodePosition = currentNodePosition;
 	}
+
+	uint32 timeWithoutStopOnNodes = m_FullPathDuration;
+	for (const auto& nodesIt : m_Nodes)
+		timeWithoutStopOnNodes -= nodesIt.Node->GetTimeDelay();
+	if (timeWithoutStopOnNodes < 0)
+		throw CException("FullPathDuration must include all nodes TimeDelays!");
 
 	float distanceSumma = 0.0f;
-	for (size_t i = 0; i < m_Nodes.size(); i++)
+	uint32 timeSumma = 0;
+	for (auto& nodesIt : m_Nodes)
 	{
-		auto& currentPathNode = m_Nodes.at(i);
-
-		distanceSumma += currentPathNode.DistanceFromPreviousPoint;
-
+		distanceSumma += nodesIt.DistanceToPreviousPoint;
+		
 		float distanceKoeff = distanceSumma / m_FullPathLength;
-		int32 calculatedTime = float(m_FullPathDuration) * distanceKoeff;
-		currentPathNode.Time = calculatedTime;
+		int32 calculatedTime = float(timeWithoutStopOnNodes) * distanceKoeff;
+		nodesIt.Timestamp = calculatedTime + timeSumma;
+
+		timeSumma += nodesIt.Node->GetTimeDelay();
 	}
 
-	auto nodesIt = m_Nodes.begin();
+	/*auto nodesIt = m_Nodes.begin();
 	while (nodesIt != m_Nodes.end())
 	{
 		if (nodesIt == m_Nodes.begin())
@@ -160,12 +154,28 @@ void CWoWPath::CalculateTimes()
 			continue;
 		}
 
-		if (nodesIt->DistanceFromPreviousPoint == 0.0f)
+		if (nodesIt->DistanceToPreviousPoint == 0.0f && nodesIt)
 		{
 			nodesIt = m_Nodes.erase(nodesIt);
 			continue;
 		}
 
 		nodesIt++;
+	}*/
+}
+
+size_t CWoWPath::GetCurrentNodeIndex() const
+{
+	if (m_Nodes.size() == 1)
+		return 0;
+
+	size_t findedIndex = 0;
+	for (size_t i = 0; i < m_Nodes.size() - 1; i++)
+	{
+		const auto& node = m_Nodes.at(i);
+		if (node.Timestamp <= GetCurrTime())
+			findedIndex = i;
 	}
+
+	return findedIndex;
 }

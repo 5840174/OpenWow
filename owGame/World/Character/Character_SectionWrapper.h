@@ -21,8 +21,8 @@ public:
 	std::shared_ptr<IImage> getFaceUpperTexture(const CInet_CharacterTemplate& CharacterTemlate) const;
 
 	// FacialHair
-	std::string getFacialHairLowerTexture(const CInet_CharacterTemplate& CharacterTemlate) const;
-	std::string getFacialHairUpperTexture(const CInet_CharacterTemplate& CharacterTemlate) const;
+	std::shared_ptr<IImage> getFacialHairLowerTexture(const CInet_CharacterTemplate& CharacterTemlate) const;
+	std::shared_ptr<IImage> getFacialHairUpperTexture(const CInet_CharacterTemplate& CharacterTemlate) const;
 	uint32 getFacial01Geoset(const CInet_CharacterTemplate& CharacterTemlate) const;
 	uint32 getFacial02Geoset(const CInet_CharacterTemplate& CharacterTemlate) const;
 	uint32 getFacial03Geoset(const CInet_CharacterTemplate& CharacterTemlate) const;

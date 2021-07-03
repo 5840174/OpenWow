@@ -166,7 +166,9 @@ private:
     std::vector<T> m_ValuesHermiteIn;
     std::vector<T> m_ValuesHermiteOut;
 };
+
 #else
+
 template <class T, class D = T, class Conv = NoConvert<T> >
 class M2_Animated
 {
@@ -176,7 +178,7 @@ public:
 		, m_GlobalSecIndex(-1)
 	{}
 
-	inline void Initialize(const M2Track<D>& b, const std::shared_ptr<IFile>& File, const std::vector<std::shared_ptr<IFile>>& AnimFiles, T fixfunc(const T&) = NoFix)
+	inline void Initialize(const M2Track<D>& b, const std::shared_ptr<IByteBuffer>& ByteBuffer, const std::vector<std::shared_ptr<IFile>>& AnimFiles, T fixfunc(const T&) = NoFix)
 	{
 		m_Type = b.interpolation_type;
 		m_GlobalSecIndex = b.global_sequence;
@@ -190,8 +192,8 @@ public:
 		m_ValuesHermiteOut.resize(b.values.size);
 
 		// times
-		M2Array<uint32>* pHeadTimes = (M2Array<uint32>*)(File->getData() + b.timestamps.offset);
-		M2Array<D>* pHeadValues = (M2Array<D>*)(File->getData() + b.values.offset);
+		M2Array<uint32>* pHeadTimes = (M2Array<uint32>*)(ByteBuffer->getData() + b.timestamps.offset);
+		M2Array<D>* pHeadValues = (M2Array<D>*)(ByteBuffer->getData() + b.values.offset);
 		for (uint32 j = 0; j < GetCount(); j++)
 		{
 			uint32* times = nullptr;
@@ -205,10 +207,10 @@ public:
 			}
 			else
 			{
-				_ASSERT(pHeadTimes[j].offset < File->getSize());
-				times = (uint32*)(File->getData() + pHeadTimes[j].offset);
-				_ASSERT(pHeadValues[j].offset < File->getSize());
-				values = (D*)(File->getData() + pHeadValues[j].offset);
+				_ASSERT(pHeadTimes[j].offset < ByteBuffer->getSize());
+				times = (uint32*)(ByteBuffer->getData() + pHeadTimes[j].offset);
+				_ASSERT(pHeadValues[j].offset < ByteBuffer->getSize());
+				values = (D*)(ByteBuffer->getData() + pHeadValues[j].offset);
 			}
 
 			_ASSERT(times != nullptr);
@@ -221,19 +223,19 @@ public:
 			{
 				switch (m_Type)
 				{
-				case Interpolations::None:
-				case Interpolations::Linear:
-					m_Values[j].push_back(fixfunc(Conv::conv(values[i])));
-					break;
+					case Interpolations::None:
+					case Interpolations::Linear:
+						m_Values[j].push_back(fixfunc(Conv::conv(values[i])));
+						break;
 
-				case Interpolations::Hermite:
-					m_Values[j].push_back(fixfunc(Conv::conv(values[i * 3 + 0])));
-					m_ValuesHermiteIn[j].push_back(fixfunc(Conv::conv(values[i * 3 + 1])));
-					m_ValuesHermiteOut[j].push_back(fixfunc(Conv::conv(values[i * 3 + 2])));
-					break;
+					case Interpolations::Hermite:
+						m_Values[j].push_back(fixfunc(Conv::conv(values[i * 3 + 0])));
+						m_ValuesHermiteIn[j].push_back(fixfunc(Conv::conv(values[i * 3 + 1])));
+						m_ValuesHermiteOut[j].push_back(fixfunc(Conv::conv(values[i * 3 + 2])));
+						break;
 
-					//default:
-					//	_ASSERT_EXPR(false, "M2_Animated: Unknown interpolation type.");
+						//default:
+						//	_ASSERT_EXPR(false, "M2_Animated: Unknown interpolation type.");
 				}
 			}
 		}

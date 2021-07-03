@@ -11,68 +11,115 @@
 
 Character::Character(IScene& Scene, const std::shared_ptr<CM2>& M2Object)
 	: Creature(Scene, M2Object)
+	, m_IsNPCBakedTexturePresent(false)
 {
 	for (uint32 i = 0; i < (size_t)MeshIDType::Count; i++)
 		m_MeshID[i] = 1;
 
-	setMeshEnabled(MeshIDType::Ears, (uint32)EarsStyles::Enabled);
-	setMeshEnabled(MeshIDType::Eyeglows, (uint32)EyeglowsStyles::Racial);
+	setMeshEnabled(MeshIDType::Ears07, (uint32)EarsStyles::Enabled);
+	setMeshEnabled(MeshIDType::Eyeglows17, (uint32)EyeglowsStyles::Racial);
 }
 
 Character::~Character()
-{
-}
-
-
-	//CM2_Base_Instance::Render3D();
-
-	/*for (uint32 slot = 0; slot < INVENTORY_SLOT_BAG_END; slot++)
-	{
-		if (slot == EQUIPMENT_SLOT_HEAD && (m_Template.Flags & CHARACTER_FLAG_HIDE_HELM))
-		{
-			continue;
-		}
-
-		m_VisualItems[slot]->Render3D();
-	}*/
-
-
-
-
+{}
 
 void Character::RefreshItemVisualData()
 {
 	for (uint32 i = 0; i < INVENTORY_SLOT_BAG_END; i++)
 	{
-		DBCItem_EInventoryType itemInventoryType = static_cast<DBCItem_EInventoryType>(i);
-		std::shared_ptr<CItem_VisualData> itemVisualData = m_VisualItems[itemInventoryType];
+		DBCItem_EInventoryItemSlot itemInventoryType = static_cast<DBCItem_EInventoryItemSlot>(i);
+		const auto& itemVisualData = m_VisualItems[itemInventoryType];
 		
-		itemVisualData->TemplateSet(m_Template.ItemsTemplates[i]);
+		itemVisualData->Template() = m_Template.ItemsTemplates[i];
 		GetBaseManager().GetManager<ILoader>()->AddToLoadQueue(itemVisualData);
+	}
+}
+
+void Character::Refresh_CreateSkinTexture(std::shared_ptr<IImage> BakedSkinImage)
+{
+	if (m_BackedSkinImage == nullptr)
+	{
+		if (BakedSkinImage != nullptr)
+		{
+			m_IsNPCBakedTexturePresent = true;
+			m_BackedSkinImage = BakedSkinImage;
+		}
+		else
+		{
+			m_BackedSkinImage = Character_SkinTextureBaker(GetBaseManager()).CreateCharacterSkinImage(GetTemplate());
+		}
+	}
+
+	Character_SectionWrapper sectionWrapper(GetBaseManager());
+
+	setSpecialTexture(SM2_Texture::Type::SKIN,       GetBaseManager().GetManager<IznTexturesFactory>()->LoadTexture2D(m_BackedSkinImage));
+	setSpecialTexture(SM2_Texture::Type::SKIN_EXTRA, GetBaseManager().GetManager<IznTexturesFactory>()->LoadTexture2D(sectionWrapper.getSkinExtraTexture(GetTemplate())));
+	setSpecialTexture(SM2_Texture::Type::CHAR_HAIR,  GetBaseManager().GetManager<IznTexturesFactory>()->LoadTexture2D(sectionWrapper.getHairTexture(GetTemplate())));
+}
+
+void Character::Refresh_AddItemsToSkinTexture()
+{
+	if (false == m_IsNPCBakedTexturePresent) // NCPBakedTexture already contains all items
+	{
+		auto skinImageWithItems = Character_SkinTextureBaker(GetBaseManager()).CreateCharacterSkinWithItemsImage(m_BackedSkinImage, this);
+		setSpecialTexture(SM2_Texture::Type::SKIN, GetBaseManager().GetManager<IznTexturesFactory>()->LoadTexture2D(skinImageWithItems));
+	}
+
+	// Cloak is special texture
+	auto& cloakVisualItem = m_VisualItems[static_cast<DBCItem_EInventoryItemSlot>(EQUIPMENT_SLOT_BACK)];
+	if (cloakVisualItem->GetTemplate().InventoryType != (uint8)DBCItem_EInventoryItemSlot::NON_EQUIP)
+	{
+		if (cloakVisualItem->getObjectComponents().size() != 1)
+			return;
+		auto cloackImage = cloakVisualItem->getObjectComponents()[0].texture;
+		setSpecialTexture(SM2_Texture::Type::OBJECT_SKIN, GetBaseManager().GetManager<IznTexturesFactory>()->LoadTexture2D(cloackImage));
+	}
+}
+
+void Character::RefreshMeshIDs()
+{
+	Character_SectionWrapper sectionWrapper(GetBaseManager());
+
+	if (sectionWrapper.getHairShowScalp(GetTemplate()))
+		setMeshEnabled(MeshIDType::SkinAndHair, 1);
+	else
+		setMeshEnabled(MeshIDType::SkinAndHair, sectionWrapper.getHairGeoset(GetTemplate()));
+
+	setMeshEnabled(MeshIDType::Facial01,   sectionWrapper.getFacial01Geoset(GetTemplate()));
+	setMeshEnabled(MeshIDType::Facial02,   sectionWrapper.getFacial02Geoset(GetTemplate()));
+	setMeshEnabled(MeshIDType::Facial03,   sectionWrapper.getFacial03Geoset(GetTemplate()));
+	setMeshEnabled(MeshIDType::Unk16,      sectionWrapper.getFacial16Geoset(GetTemplate()));
+	setMeshEnabled(MeshIDType::Eyeglows17, sectionWrapper.getFacial17Geoset(GetTemplate()));
+
+
+	for (uint32 i = 0; i < INVENTORY_SLOT_BAG_END; i++)
+	{
+		DBCItem_EInventoryItemSlot itemInventoryType = static_cast<DBCItem_EInventoryItemSlot>(i);
+		const auto& itemVisualData = m_VisualItems[itemInventoryType];
 
 		if (i == EQUIPMENT_SLOT_HEAD)
 		{
 			if ((m_Template.Flags & CHARACTER_FLAG_HIDE_HELM))
 			{
-				setMeshEnabled(MeshIDType::Ears, (uint32)EarsStyles::Enabled);
+				setMeshEnabled(MeshIDType::Ears07, (uint32)EarsStyles::Enabled);
 				continue;
 			}
 			else
 			{
-				setMeshEnabled(MeshIDType::Ears, (uint32)EarsStyles::None);
+				setMeshEnabled(MeshIDType::Ears07, (uint32)EarsStyles::None);
 			}
 		}
 		else if (i == EQUIPMENT_SLOT_BACK)
 		{
 			if ((m_Template.Flags & CHARACTER_FLAG_HIDE_CLOAK))
 			{
-				setMeshEnabled(MeshIDType::Cloak, 1);
+				setMeshEnabled(MeshIDType::Cloak15, 1);
 				continue;
 			}
-            else
-            {
+			else
+			{
 
-            }
+			}
 		}
 
 		for (const auto& geoset : itemVisualData->getGeosetComponents())
@@ -82,41 +129,13 @@ void Character::RefreshItemVisualData()
 	}
 }
 
-void Character::RefreshTextures(const Character_SectionWrapper& SectionWrapper, std::shared_ptr<ITexture> SkinTexture)
-{
-	setSpecialTexture(SM2_Texture::Type::SKIN, SkinTexture);
-	setSpecialTexture(SM2_Texture::Type::SKIN_EXTRA, GetBaseManager().GetManager<IznTexturesFactory>()->LoadTexture2D(SectionWrapper.getSkinExtraTexture(GetTemplate())));
-	setSpecialTexture(SM2_Texture::Type::CHAR_HAIR, GetBaseManager().GetManager<IznTexturesFactory>()->LoadTexture2D(SectionWrapper.getHairTexture(GetTemplate())));
-
-	// Cloak
-	std::shared_ptr<const CItem_VisualData> item = m_VisualItems[static_cast<DBCItem_EInventoryType>(EQUIPMENT_SLOT_BACK)];
-	if (item->m_InventoryType != (uint8)DBCItem_EInventoryType::NON_EQUIP)
-	{
-		_ASSERT(item->getObjectComponents().size() == 1);
-		auto cloackImage = item->getObjectComponents()[0].texture;
-		setSpecialTexture(SM2_Texture::Type::OBJECT_SKIN, GetBaseManager().GetManager<IznTexturesFactory>()->LoadTexture2D(cloackImage));
-	}
-}
-
-void Character::RefreshMeshIDs(const Character_SectionWrapper& SectionWrapper)
-{
-	if (SectionWrapper.getHairShowScalp(GetTemplate()))
-		setMeshEnabled(MeshIDType::SkinAndHair, 1);
-	else
-		setMeshEnabled(MeshIDType::SkinAndHair, SectionWrapper.getHairGeoset(GetTemplate()));
-
-	setMeshEnabled(MeshIDType::Facial1,  SectionWrapper.getFacial01Geoset(GetTemplate()));
-	setMeshEnabled(MeshIDType::Facial2,  SectionWrapper.getFacial02Geoset(GetTemplate()));
-	setMeshEnabled(MeshIDType::Facial3,  SectionWrapper.getFacial03Geoset(GetTemplate()));
-	setMeshEnabled(MeshIDType::Unk16,    SectionWrapper.getFacial16Geoset(GetTemplate()));
-	setMeshEnabled(MeshIDType::Eyeglows, SectionWrapper.getFacial17Geoset(GetTemplate()));
-}
-
 
 
 void Character::setMeshEnabled(MeshIDType _type, uint32 _value)
 {
-	_ASSERT(_type < MeshIDType::Count);
+	if (_type >= MeshIDType::Count)
+		throw CException("Character::setMeshEnabledL: MeshType '%d' out of bounds.", (uint32)_type);
+
 	if (_value == UINT32_MAX)
 		return;
 
@@ -170,7 +189,17 @@ void Character::Initialize()
 	GetColliderComponent()->SetDebugDrawMode(true);
 
 	for (uint32 slot = 0; slot < INVENTORY_SLOT_BAG_END; slot++) // TODO: Move to constuctor
-		m_VisualItems[static_cast<DBCItem_EInventoryType>(slot)] = std::make_shared<CItem_VisualData>(getM2().GetBaseManager(), getM2().GetRenderDevice(), std::dynamic_pointer_cast<Character>(shared_from_this()));
+		m_VisualItems[static_cast<DBCItem_EInventoryItemSlot>(slot)] = MakeShared(CCharacterVisualItem, getM2().GetBaseManager(), getM2().GetRenderDevice(), std::dynamic_pointer_cast<Character>(shared_from_this()));
+}
+
+
+
+//
+// ILoadable
+//
+bool Character::Load()
+{
+	return __super::Load();
 }
 
 #endif

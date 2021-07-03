@@ -179,7 +179,7 @@ void CWMO_Group_Instance::CreatePortals(const std::shared_ptr<CWMO_Base_Instance
 
 		Plane plane(portalsVertices[0], portalsVertices[1], portalsVertices[2]);
 
-		AddPortal(std::make_shared<CWMOPortalInstance>(roomInnerInstance, roomOuterInstance, portalsVertices, plane));
+		AddPortal(MakeShared(CWMOPortalInstance, roomInnerInstance, roomOuterInstance, portalsVertices, plane));
 	}
 }
 

@@ -91,7 +91,7 @@ void WoWObject::ProcessMovementUpdate(CByteBuffer& Bytes)
 			if (object)
 				object->Orientation = glm::degrees(gameOrientation + glm::half_pi<float>());
 
-			if (GetWoWGUID().GetTypeId() == EWoWObjectTypeID::TYPEID_CORPSE)
+			if (GetWoWGUID().GetHigh() == EWoWObjectHighGuid::Corpse)
 			{
 				float gameOrientation2;
 				Bytes >> gameOrientation2;

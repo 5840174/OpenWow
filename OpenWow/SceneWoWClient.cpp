@@ -51,8 +51,8 @@ void CSceneWoWClient::Initialize()
 
 		SetCameraController(MakeShared(CFreeCameraController));
 		GetCameraController()->SetCamera(cameraNode->GetComponentT<ICameraComponent3D>());
-		GetCameraController()->GetCamera()->SetPerspectiveProjection(75.0f, static_cast<float>(GetRenderWindow().GetWindowWidth()) / static_cast<float>(GetRenderWindow().GetWindowHeight()), 1.0f, 2500.0f);
-		GetCameraController()->GetCamera()->SetPosition(glm::vec3(100.0f));
+		GetCameraController()->GetCamera()->SetPerspectiveProjection(65.0f, static_cast<float>(GetRenderWindow().GetWindowWidth()) / static_cast<float>(GetRenderWindow().GetWindowHeight()), 0.5f, 2500.0f);
+		GetCameraController()->GetCamera()->SetPosition(glm::vec3(10.0f));
 		GetCameraController()->GetCamera()->SetYaw(225);
 		GetCameraController()->GetCamera()->SetPitch(-45);
 	}
@@ -63,6 +63,10 @@ void CSceneWoWClient::Initialize()
 	m_RendererStatisticText->SetLocalPosition(glm::vec2(5.0f, 200.0f));
 	m_RendererStatisticText->SetText("");
 	
+	auto faceLower = GetBaseManager().GetManager<IImagesFactory>()->CreateImage(GetBaseManager().GetManager<IFilesManager>()->Open("Character\\SCOURGE\\MALE\\ScourgeMaleFaceLower05_04.blp"));
+	auto faceUpper = GetBaseManager().GetManager<IImagesFactory>()->CreateImage(GetBaseManager().GetManager<IFilesManager>()->Open("Character\\SCOURGE\\MALE\\ScourgeMaleFaceUpper08_03.blp"));
+
+
 	m_WowClient = std::make_unique<CWoWClient>(*this, "localhost");
 	m_WowClient->BeginConnect("test2", "test2");
 }

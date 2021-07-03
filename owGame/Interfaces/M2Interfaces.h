@@ -16,7 +16,7 @@ ZN_INTERFACE ZN_API IowM2BaseInstance
 	// CM2_Base_Instance
 	virtual const CM2& getM2() const = 0;
 
-	virtual void Attach(M2_AttachmentType AttachmentType) = 0;
+	virtual void Attach(EM2_AttachmentType AttachmentType) = 0;
 	virtual void Detach() = 0;
 	virtual void UpdateAttachPositionAfterSkeletonUpdate() = 0;
 

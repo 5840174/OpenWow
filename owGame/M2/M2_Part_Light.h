@@ -7,11 +7,11 @@ class CM2;
 class CM2_Base_Instance;
 // FORWARD END
 
-class SM2_Part_Light_Wrapper
+class CM2_Part_Light
 {
 public:
-	SM2_Part_Light_Wrapper(const CM2& M2Object, const std::shared_ptr<IFile>& File, const SM2_Light& M2Light);
-	virtual ~SM2_Part_Light_Wrapper();
+	CM2_Part_Light(const CM2& M2Object, const std::shared_ptr<IByteBuffer>& ByteBuffer, const SM2_Light& M2Light);
+	virtual ~CM2_Part_Light();
 
 	std::shared_ptr<ILight> GetLight(const CM2_Base_Instance* M2Instance, uint32 globalTime) const;
 	int16     GetAttachBone() const { return m_M2Light.bone; }

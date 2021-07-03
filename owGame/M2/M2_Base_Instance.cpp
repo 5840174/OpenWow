@@ -10,7 +10,7 @@ CM2_Base_Instance::CM2_Base_Instance(IScene& Scene, const std::shared_ptr<CM2>& 
 	: CSceneNode(Scene)
 	, CLoadableObject(M2Object)
 	, m_M2(M2Object)
-	, m_AttachmentType(M2_AttachmentType::NotAttached)
+	, m_AttachmentType(EM2_AttachmentType::NotAttached)
 	, m_Color(glm::vec4(1.0f, 1.0f, 1.0f, 1.0f))
 	, m_Alpha(1.0f)
 {
@@ -37,18 +37,18 @@ const CM2& CM2_Base_Instance::getM2() const
 	return *m_M2;
 }
 
-void CM2_Base_Instance::Attach(M2_AttachmentType AttachmentType)
+void CM2_Base_Instance::Attach(EM2_AttachmentType AttachmentType)
 {
 	m_AttachmentType = AttachmentType;
 }
 void CM2_Base_Instance::Detach()
 {
-	m_AttachmentType = M2_AttachmentType::NotAttached;
+	m_AttachmentType = EM2_AttachmentType::NotAttached;
 }
 
 void CM2_Base_Instance::UpdateAttachPositionAfterSkeletonUpdate()
 {
-	if (m_AttachmentType == M2_AttachmentType::NotAttached)
+	if (m_AttachmentType == EM2_AttachmentType::NotAttached)
 		return;
 
 	UpdateLocalTransform();
@@ -149,14 +149,14 @@ bool CM2_Base_Instance::Delete()
 //
 glm::mat4 CM2_Base_Instance::CalculateLocalTransform() const
 {
-	if (m_AttachmentType != M2_AttachmentType::NotAttached)
+	if (m_AttachmentType != EM2_AttachmentType::NotAttached)
 	{
 		if (auto parent = GetParent())
 		{
 			auto parentM2Instance = std::dynamic_pointer_cast<CM2_Base_Instance>(parent);
 			_ASSERT(parentM2Instance != nullptr);
 
-			uint16 boneIndex = parentM2Instance->getM2().getMiscellaneous().getAttachment(m_AttachmentType).GetBoneIndex();
+			uint16 boneIndex = parentM2Instance->getM2().getMiscellaneous().getAttachment(m_AttachmentType)->GetBoneIndex();
 
 			const auto& bone = parentM2Instance->getSkeletonComponent()->GetBone(boneIndex);
 			glm::mat4 relMatrix = glm::translate(bone->GetPivotPoint());

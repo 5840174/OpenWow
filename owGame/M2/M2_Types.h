@@ -140,6 +140,7 @@ struct SM2_Texture
 	enum Type : uint32
 	{
 		NONE = 0,			// Texture given in filename
+
 		SKIN,				// Skin // Body + clothes
 		OBJECT_SKIN,		// Object Skin // Item, Capes("Item\ObjectComponents\Cape\*.blp")
 		WEAPON_BLADE,		// Weapon Blade // Used on several models but not used in the client as far as I see.Armor Reflect ?

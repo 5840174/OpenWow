@@ -6,11 +6,13 @@
 CWoWPathNode::CWoWPathNode()
 	: m_Position(glm::vec3(0.0f))
 	, m_MapID(-1)
+	, m_TimeDelay(0)
 {}
 
 CWoWPathNode::CWoWPathNode(const glm::vec3& Point)
 	: m_Position(Point)
 	, m_MapID(-1)
+	, m_TimeDelay(0)
 {}
 
 CWoWPathNode::~CWoWPathNode()

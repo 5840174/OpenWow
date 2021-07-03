@@ -434,7 +434,7 @@ bool CWMOGroup::Load()
 	size_t currentIntex = 0;
 	for (const auto& WMOGroupBatchProto : WMOBatchs)
 	{
-		std::shared_ptr<WMO_Group_Part_Batch> batch = std::make_shared<WMO_Group_Part_Batch>(m_RenderDevice, m_WMO, WMOGroupBatchProto);
+		auto batch = MakeShared(WMO_Group_Part_Batch, m_RenderDevice, m_WMO, WMOGroupBatchProto);
 		if (currentIntex < m_GroupHeader.transBatchCount)
 		{
 			batch->SetBatchType(WMO_Group_Part_Batch::EBatchType::BatchType_Trans);

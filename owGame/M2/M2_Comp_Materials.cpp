@@ -164,14 +164,14 @@ bool CM2_Comp_Materials::IsAnimTextures() const
 std::shared_ptr<const CM2_Part_Color> CM2_Comp_Materials::GetColorDirect(uint32 Index) const
 {
 	if (Index >= m_Colors.size())
-		throw CException("GetColorDirect direct index out of bounds.");
+		throw CException("CM2_Comp_Materials::GetColorDirect: direct index out of bounds.");
 	return (m_Colors[Index]);
 }
 
 std::shared_ptr<const CM2_Part_Material> CM2_Comp_Materials::GetMaterialDirect(uint32 Index) const
 {
 	if (Index >= m_Materials.size())
-		throw CException("GetMaterialDirect direct index out of bounds.");
+		throw CException("CM2_Comp_Materials::GetMaterialDirect direct index out of bounds.");
 	return (m_Materials[Index]);
 }
 
@@ -180,52 +180,52 @@ std::shared_ptr<const CM2_Part_Material> CM2_Comp_Materials::GetMaterialDirect(u
 //
 // Textures
 //
-std::shared_ptr<const CM2_Part_Texture> CM2_Comp_Materials::GetTextureDirectInternal(uint32 Index) const // Used in Emitters
-{
-	if (Index >= static_cast<uint32>(m_Textures.size()))
-		throw CException("GetTextureDirectInternal direct index out of bounds.");
-	return m_Textures[Index];
-}
-
 std::shared_ptr<const CM2_Part_Texture> CM2_Comp_Materials::GetTexture(uint32 Index) const
 {
-	if (Index >= m_TexturesLookup.size())
-		throw CException("GetTexture lookup index out of bounds.");
-
-	int16 newIndex = m_TexturesLookup[Index];
-	if (newIndex == -1)
+	int16 directIndex = GetTextureLookup(Index);
+	if (directIndex == -1)
 		return nullptr;
+	return GetTextureDirect(directIndex);
+}
 
-	if (newIndex >= static_cast<int16>(m_Textures.size()))
-		throw CException("GetTexture direct index out of bounds.");
+int16 CM2_Comp_Materials::GetTextureLookup(uint32 Index) const
+{
+	if (Index >= m_TexturesLookup.size())
+		throw CException("CM2_Comp_Materials::GetTextureLookup: lookup index out of bounds.");
+	return m_TexturesLookup[Index];
+}
 
-	return (m_Textures[newIndex]);
+std::shared_ptr<const CM2_Part_Texture> CM2_Comp_Materials::GetTextureDirect(uint32 Index) const // Used in Emitters
+{
+	if (Index >= static_cast<uint32>(m_Textures.size()))
+		throw CException("CM2_Comp_Materials::GetTextureDirect: direct index out of bounds.");
+	return m_Textures[Index];
 }
 
 int16 CM2_Comp_Materials::GetTextureUnit(uint32 Index) const
 {
 	if (Index >= static_cast<uint32>(m_TexturesUnitLookup.size()))
-		throw CException("GetTextureUnit direct index out of bounds.");
+		throw CException("CM2_Comp_Materials::GetTextureUnit: direct index out of bounds.");
 
 	return m_TexturesUnitLookup[Index];
 }
 
 std::shared_ptr<const CM2_Part_TextureWeight> CM2_Comp_Materials::GetTextureWeight(uint32 Index) const
 {
-	int16 newIndex = GetTextureWeightLookup(Index);
-	if (newIndex == -1)
+	int16 directIndex = GetTextureWeightLookup(Index);
+	if (directIndex == -1)
 		return nullptr;
 
-	if (newIndex >= static_cast<int16>(m_TextureWeights.size()))
-		throw CException("GetTextureWeight direct index out of bounds.");
+	if (directIndex >= static_cast<int16>(m_TextureWeights.size()))
+		throw CException("CM2_Comp_Materials::GetTextureWeight: direct index out of bounds.");
 
-	return m_TextureWeights[newIndex];
+	return m_TextureWeights[directIndex];
 }
 
 int16 CM2_Comp_Materials::GetTextureWeightLookup(uint32 Index) const
 {
 	if (Index >= m_TextureWeightsLookup.size())
-		throw CException("GetTextureWeightLookup lookup index out of bounds.");
+		throw CException("CM2_Comp_Materials::GetTextureWeightLookup: lookup index out of bounds.");
 
 	return m_TextureWeightsLookup[Index];
 }
@@ -237,7 +237,7 @@ std::shared_ptr<const CM2_Part_TextureTransform> CM2_Comp_Materials::GetTextureT
 		return nullptr;
 
 	if (directIndex >= static_cast<int16>(m_TexturesTransform.size()))
-		throw CException("GetTextureTransform direct index out of bounds.");
+		throw CException("CM2_Comp_Materials::GetTextureTransform: direct index out of bounds.");
 
 	return m_TexturesTransform[directIndex];
 }
@@ -245,7 +245,7 @@ std::shared_ptr<const CM2_Part_TextureTransform> CM2_Comp_Materials::GetTextureT
 int16 CM2_Comp_Materials::GetTextureTransformLookup(uint32 Index) const
 {
 	if (Index >= m_TexturesTransformLookup.size())
-		throw CException("GetTextureTransformLookup lookup index out of bounds.");
+		throw CException("CM2_Comp_Materials::GetTextureTransformLookup: lookup index out of bounds.");
 
 	return m_TexturesTransformLookup[Index];
 }
@@ -253,10 +253,10 @@ int16 CM2_Comp_Materials::GetTextureTransformLookup(uint32 Index) const
 int16 CM2_Comp_Materials::GetTextureCombiner(uint32 Index) const
 {
 	if (false == m_M2Object.GetHeader().global_flags.flag_use_texture_combiner_combos)
-		throw CException("GetTextureCombiner model hasn't textures combiners.");
+		throw CException("CM2_Comp_Materials::GetTextureCombiner: model hasn't textures combiners.");
 
 	if (Index >= static_cast<uint32>(m_TexturesCombinerLookup.size()))
-		throw CException("GetTextureCombiner direct index out of bounds.");
+		throw CException("CM2_Comp_Materials::GetTextureCombiner: lookup index out of bounds.");
 
 	return m_TexturesCombinerLookup[Index];
 }

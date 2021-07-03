@@ -23,7 +23,7 @@ void CM2_Comp_Miscellaneous::Load(const SM2_Header& M2Header, const std::shared_
 	{
 		const SM2_Attachment* m2Attachments = (const SM2_Attachment*)(File->getData() + M2Header.attachments.offset);
 		for (uint32 i = 0; i < M2Header.attachments.size; i++)
-			m_Attachments.push_back(SM2_Part_Attachment_Wrapper(m_M2Object, File, m2Attachments[i]));
+			m_Attachments.push_back(MakeShared(CM2_Part_Attachment, m_M2Object, File, m2Attachments[i]));
 
 		// Animated
 		m_HasMisc = true;
@@ -44,7 +44,7 @@ void CM2_Comp_Miscellaneous::Load(const SM2_Header& M2Header, const std::shared_
 	{
 		const SM2_Event* m2Events = (const SM2_Event*)(File->getData() + M2Header.events.offset);
 		for (uint32 i = 0; i < M2Header.events.size; i++)
-			m_Events.push_back(SM2_Part_Event_Wrapper(m_M2Object, File, m2Events[i]));
+			m_Events.push_back(MakeShared(CM2_Part_Event, m_M2Object, File, m2Events[i]));
 
 		// Animated
 		m_HasMisc = true;
@@ -55,7 +55,7 @@ void CM2_Comp_Miscellaneous::Load(const SM2_Header& M2Header, const std::shared_
 	{
 		const SM2_Light* m2Lights = (const SM2_Light*)(File->getData() + M2Header.lights.offset);
 		for (uint32 i = 0; i < M2Header.lights.size; i++)
-			m_Lights.push_back(SM2_Part_Light_Wrapper(m_M2Object, File, m2Lights[i]));
+			m_Lights.push_back(MakeShared(CM2_Part_Light, m_M2Object, File, m2Lights[i]));
 
 		// Animated
 		m_HasMisc = true;
@@ -66,7 +66,7 @@ void CM2_Comp_Miscellaneous::Load(const SM2_Header& M2Header, const std::shared_
 	{
 		const SM2_Camera* m2Cameras = (const SM2_Camera*)(File->getData() + M2Header.cameras.offset);
 		for (uint32 i = 0; i < M2Header.cameras.size; i++)
-			m_Cameras.push_back(SM2_Part_Camera_Wrapper(m_M2Object, File, m2Cameras[i]));
+			m_Cameras.push_back(MakeShared(CM2_Part_Camera, m_M2Object, File, m2Cameras[i]));
 
 		// Animated
 		m_HasMisc = true;
@@ -87,7 +87,7 @@ void CM2_Comp_Miscellaneous::Load(const SM2_Header& M2Header, const std::shared_
 		const SM2_RibbonEmitter* m2Ribbons = (const SM2_RibbonEmitter*)(File->getData() + M2Header.ribbon_emitters.offset);
 		for (uint32 i = 0; i < M2Header.ribbon_emitters.size; i++)
 		{
-			std::shared_ptr<CM2_RibbonEmitters> ribbon = std::make_shared<CM2_RibbonEmitters>(m_M2Object, File, m2Ribbons[i]);
+			std::shared_ptr<CM2_Part_RibbonEmitters> ribbon = std::make_shared<CM2_Part_RibbonEmitters>(m_M2Object, File, m2Ribbons[i]);
 			m_RibbonEmitters.push_back(ribbon);
 		}
 
@@ -102,7 +102,7 @@ void CM2_Comp_Miscellaneous::Load(const SM2_Header& M2Header, const std::shared_
 		const SM2_Particle* m2ParticleSystems = (const SM2_Particle*)(File->getData() + M2Header.particle_emitters.offset);
 		for (uint32 i = 0; i < M2Header.particle_emitters.size; i++)
 		{
-			particleSystems.push_back(std::make_shared<CM2_Part_ParticleSystem>(m_M2Object, File, m2ParticleSystems[i]));
+			m_ParticleSystems.push_back(std::make_shared<CM2_Part_ParticleSystem>(m_M2Object, File, m2ParticleSystems[i]));
 		}
 
 		// Animated
@@ -110,4 +110,85 @@ void CM2_Comp_Miscellaneous::Load(const SM2_Header& M2Header, const std::shared_
 	}
 
 
+}
+
+
+
+
+
+
+bool CM2_Comp_Miscellaneous::isAttachmentExists(EM2_AttachmentType Index) const
+{
+	if (static_cast<uint32>(Index) >= static_cast<uint32>(m_AttachmentsLookup.size()))
+		return false;
+	int16 newIndex = getAttachmentLookup(static_cast<uint32>(Index));
+	return (newIndex != -1) && (newIndex < static_cast<int16>(m_Attachments.size()));
+}
+
+std::shared_ptr<const CM2_Part_Attachment> CM2_Comp_Miscellaneous::getAttachment(EM2_AttachmentType Index) const
+{
+	int16 directIndex = getAttachmentLookup(static_cast<uint32>(Index));
+	if (directIndex == -1)
+		return nullptr;
+	return getAttachmentDirect(directIndex);
+}
+
+int16 CM2_Comp_Miscellaneous::getAttachmentLookup(uint32 Index) const
+{
+	if (Index >= static_cast<uint32>(m_AttachmentsLookup.size()))
+		throw CException("CM2_Comp_Miscellaneous::getAttachmentLookup: lookup index out of bounds.");
+	return m_AttachmentsLookup[Index];
+}
+
+std::shared_ptr<const CM2_Part_Attachment> CM2_Comp_Miscellaneous::getAttachmentDirect(int16 Index) const
+{
+	if (Index >= static_cast<int16>(m_Attachments.size()))
+		throw CException("CM2_Comp_Miscellaneous::getAttachmentDirect: direct index out of bounds.");
+	return (m_Attachments[Index]);
+}
+
+std::shared_ptr<const CM2_Part_Event> CM2_Comp_Miscellaneous::getEventDirect(uint32 Index) const
+{
+	if (Index >= static_cast<int16>(m_Events.size()))
+		throw CException("CM2_Comp_Miscellaneous::getEventDirect: direct index out of bounds.");
+	return m_Events[Index];
+}
+
+std::shared_ptr<const CM2_Part_Light> CM2_Comp_Miscellaneous::getLightDirect(uint32 Index) const
+{
+	if (Index >= static_cast<int16>(m_Lights.size()))
+		throw CException("CM2_Comp_Miscellaneous::getLightDirect: direct index out of bounds.");
+
+	return m_Lights[Index];
+}
+
+std::shared_ptr<const CM2_Part_Camera> CM2_Comp_Miscellaneous::getCamera(uint32 Index) const
+{
+	int16 directIndex = getCameraLookup(Index);
+	if (directIndex == -1)
+		return nullptr;
+
+	if (directIndex >= static_cast<int16>(m_Cameras.size()))
+		throw CException("CM2_Comp_Miscellaneous::getCamera: direct index out of bounds.");
+
+	return m_Cameras[directIndex];
+}
+
+int16 CM2_Comp_Miscellaneous::getCameraLookup(uint32 Index) const
+{
+	if (Index >= static_cast<uint32>(m_CamerasLookup.size()))
+		throw CException("CM2_Comp_Miscellaneous::getCameraLookup: lookup index out of bounds.");
+	return m_CamerasLookup[Index];
+}
+
+std::shared_ptr<const CM2_Part_Camera> CM2_Comp_Miscellaneous::getCameraDirect(int16 Index) const
+{
+	if (Index >= static_cast<int16>(m_Cameras.size()))
+		throw CException("CM2_Comp_Miscellaneous::getCameraDirect: direct index out of bounds.");
+	return m_Cameras[Index];
+}
+
+const std::vector<std::shared_ptr<CM2_Part_ParticleSystem>>& CM2_Comp_Miscellaneous::GetParticles() const
+{
+	return m_ParticleSystems;
 }

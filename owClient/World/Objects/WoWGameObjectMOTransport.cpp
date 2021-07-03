@@ -29,7 +29,15 @@ void WoWGameObjectMOTransport::OnValueUpdated(uint16 index)
 	if (index == GAMEOBJECT_DYNAMIC)
 	{
 		uint16 pathProgress = m_Values.GetUInt16Value(GAMEOBJECT_DYNAMIC, 1);
-		m_PathProgress = float(pathProgress) / 65535.0f;
+		m_PathProgress = float(pathProgress) / 65535.0f;		
+	}
+
+	if (index == GAMEOBJECT_LEVEL)
+	{
+		if (m_WoWPath == nullptr)
+			m_WoWPath = MakeShared(CWoWPath);
+		m_WoWPath->SetDuration(m_Values.GetUInt32Value(GAMEOBJECT_LEVEL));
+		m_WoWPath->SetCurrTime(m_PathProgress * float(m_WoWPath->GetDuration()));
 	}
 }
 
@@ -42,15 +50,20 @@ void WoWGameObjectMOTransport::OnTemplate(CWoWGuid::EntryType_t Entry, const std
 
 	const auto& taxiNodes = GetWoWWorld().GetTaxiStorage().GetPathNodes(m_PathID);
 
-	auto path = MakeShared(CWoWPath);
-	for (const auto& taxiNodesIt : taxiNodes)
+	if (m_WoWPath == nullptr)
+		m_WoWPath = MakeShared(CWoWPath);
+
+
+	for (auto it = taxiNodes.begin(); it != taxiNodes.end(); it++)
 	{
-		auto pathNode = MakeShared(CWoWPathNode, fromGameToReal(taxiNodesIt.Position));
-		pathNode->SetMapID(taxiNodesIt.MapID);
-		pathNode->SetTimeDelay(taxiNodesIt.Delay * 1000);
-		path->AddPathNode(pathNode);
-	}
-	m_WoWPath = path;
+		//if (it->MapID != GetWoWWorld().GetMap()->GetMapID())
+		//	continue;
+
+		auto pathNode = MakeShared(CWoWPathNode, fromGameToReal(it->Position));
+		pathNode->SetMapID(it->MapID);
+		pathNode->SetTimeDelay(it->Delay * 1000);
+		m_WoWPath->AddPathNode(pathNode);
+	}	
 }
 
 
@@ -61,6 +74,28 @@ void WoWGameObjectMOTransport::OnTemplate(CWoWGuid::EntryType_t Entry, const std
 void WoWGameObjectMOTransport::Update(const UpdateEventArgs & e)
 {
 	__super::Update(e);
+
+
+	if (m_WoWPath)
+	{
+		m_WoWPath->AddCurrTime(e.DeltaTime);
+
+		if (m_WoWPath->GetPathNodesCount() > 0)
+		{
+			glm::vec3 NextPoint = m_WoWPath->GetPositionByCurrTime();
+			if (glm::distance(NextPoint, Position) > 0.01f)
+			{
+				glm::vec3 test = m_WoWPath->GetNextNodePosition();
+
+				glm::vec3 directionVec = glm::normalize(glm::vec3(test.x, 0.0f, test.z) - glm::vec3(Position.x, 0.0f, Position.z));
+				float yaw = atan2(directionVec.x, directionVec.z);
+
+				Position = NextPoint;
+				Orientation = glm::degrees(yaw + glm::half_pi<float>());
+				CommitPositionAndRotation();
+			}
+		}
+	}
 
 #if 0
 

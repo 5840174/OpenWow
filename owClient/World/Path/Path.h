@@ -25,19 +25,20 @@ public:
 
 private:
 	void CalculateTimes();
+	size_t GetCurrentNodeIndex() const;
 
 private:
 	struct SPathNode
 	{
 		explicit SPathNode(std::shared_ptr<CWoWPathNode> Node_)
 			: Node(Node_)
-			, DistanceFromPreviousPoint(0.0f)
-			, Time(0)
+			, DistanceToPreviousPoint(0.0f)
+			, Timestamp(0)
 		{}
 
 		std::shared_ptr<CWoWPathNode> Node;
-		float DistanceFromPreviousPoint;
-		int32 Time;
+		float DistanceToPreviousPoint;
+		int32 Timestamp;
 	};
 
 private:

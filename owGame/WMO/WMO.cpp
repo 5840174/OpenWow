@@ -94,7 +94,7 @@ bool CWMO::Load()
 	{
 		for (const auto& mat : m_ChunkReader->OpenChunkT<SWMO_MOMT>("MOMT"))
 		{
-			std::shared_ptr<WMO_Part_Material> material = std::make_shared<WMO_Part_Material>(m_RenderDevice, *this, mat);
+			auto material = MakeShared(WMO_Part_Material, m_RenderDevice, *this, mat);
 			material->SetName(m_FileName + "_Material_" + std::to_string(cntr++));
 			m_Materials.push_back(material);
 		}
@@ -167,7 +167,7 @@ bool CWMO::Load()
 	// Lights
 	for (const auto& lt : m_ChunkReader->OpenChunkT<SWMO_MOLT>("MOLT"))
 	{
-		m_Lights.push_back(std::make_shared<WMO_Part_Light>(lt));
+		m_Lights.push_back(MakeShared(WMO_Part_Light, lt));
 	}
 
 	// Doodads set
@@ -236,7 +236,7 @@ bool CWMO::Load()
 	if (portals.size() > 0)
 	{
 #ifdef USE_WMO_PORTALS_CULLING
-		m_PortalController = std::make_shared<CWMO_PortalsController>();
+		m_PortalController = MakeShared(CWMO_PortalsController);
 
 		for (const auto& it : portalsReferences)
 		{

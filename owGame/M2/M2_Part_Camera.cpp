@@ -6,7 +6,7 @@
 // General
 #include "M2_Part_Camera.h"
 
-SM2_Part_Camera_Wrapper::SM2_Part_Camera_Wrapper(const CM2& M2Object, const std::shared_ptr<IFile>& File, const SM2_Camera& M2Camera)
+CM2_Part_Camera::CM2_Part_Camera(const CM2& M2Object, const std::shared_ptr<IByteBuffer>& ByteBuffer, const SM2_Camera& M2Camera)
 	: m_M2Object(M2Object)
 {
 	nearclip = M2Camera.near_clip;
@@ -15,18 +15,18 @@ SM2_Part_Camera_Wrapper::SM2_Part_Camera_Wrapper(const CM2& M2Object, const std:
 	m_PositionBase = Fix_XZmY(M2Camera.position_base);
 	m_TargetBase = Fix_XZmY(M2Camera.target_position_base);
 
-	tPos.Initialize(M2Camera.positions, File, M2Object.getSkeleton().GetAnimFiles(), Fix_XZmY);
-	tTarget.Initialize(M2Camera.target_position, File, M2Object.getSkeleton().GetAnimFiles(), Fix_XZmY);
+	tPos.Initialize(M2Camera.positions, ByteBuffer, M2Object.getSkeleton().GetAnimFiles(), Fix_XZmY);
+	tTarget.Initialize(M2Camera.target_position, ByteBuffer, M2Object.getSkeleton().GetAnimFiles(), Fix_XZmY);
 
-	tRoll.Initialize(M2Camera.roll, File, M2Object.getSkeleton().GetAnimFiles());
+	tRoll.Initialize(M2Camera.roll, ByteBuffer, M2Object.getSkeleton().GetAnimFiles());
 	//fov = M2Camera.fov / sqrtf(1.0f + powf(m_VideoSettings->aspectRatio, 2.0f));;
 }
 
-SM2_Part_Camera_Wrapper::~SM2_Part_Camera_Wrapper()
+CM2_Part_Camera::~CM2_Part_Camera()
 {
 }
 
-void SM2_Part_Camera_Wrapper::calc(uint32 time, uint32 globalTime)
+void CM2_Part_Camera::calc(uint32 time, uint32 globalTime)
 {
 	if (tPos.IsUsesBySequence(0))
 	{
@@ -44,7 +44,7 @@ void SM2_Part_Camera_Wrapper::calc(uint32 time, uint32 globalTime)
 	}
 }
 
-void SM2_Part_Camera_Wrapper::setup(const glm::vec3& _startPoint, float rotate)
+void CM2_Part_Camera::setup(const glm::vec3& _startPoint, float rotate)
 {
 	glm::vec3 u(0, 1, 0);
 
@@ -57,7 +57,7 @@ void SM2_Part_Camera_Wrapper::setup(const glm::vec3& _startPoint, float rotate)
 	//_Render->getCamera()->setViewMatrix(glm::lookAt(pp, tt, u));
 }
 
-void SM2_Part_Camera_Wrapper::getParams(glm::vec3* _position, glm::vec3* _target, float* _fov, float* _nearPlane, float* _farPlane)
+void CM2_Part_Camera::getParams(glm::vec3* _position, glm::vec3* _target, float* _fov, float* _nearPlane, float* _farPlane)
 {
 	*_position = m_PositionBase + pResult;
 	*_target = m_TargetBase + tResult;

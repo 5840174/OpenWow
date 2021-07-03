@@ -136,13 +136,11 @@
     <ClCompile Include="World\Character\Character.cpp" />
     <ClCompile Include="World\Character\Character_SectionWrapper.cpp" />
     <ClCompile Include="World\Character\Character_SkinTextureBaker.cpp" />
-    <ClCompile Include="World\Character\Types\CharacterTemplate.cpp" />
-    <ClCompile Include="World\Character\Types\ItemTemplate.cpp" />
     <ClCompile Include="World\Creature\Creature.cpp" />
     <ClCompile Include="World\GameObject\GameObjectM2.cpp" />
     <ClCompile Include="World\GameObject\GameObjectWMO.cpp" />
     <ClCompile Include="World\Items\Item_M2Instance.cpp" />
-    <ClCompile Include="World\Items\Item_VisualData.cpp" />
+    <ClCompile Include="World\Items\CharacterVisualItem.cpp" />
     <ClCompile Include="World\WorldObjectsCreator.cpp" />
     <ClCompile Include="WoWChunkReader.cpp" />
   </ItemGroup>
@@ -312,7 +310,6 @@
     <ClInclude Include="World\Character\Character.h" />
     <ClInclude Include="World\Character\Character_SectionWrapper.h" />
     <ClInclude Include="World\Character\Character_SkinTextureBaker.h" />
-    <ClInclude Include="World\Character\Types\CharacterEnums.h" />
     <ClInclude Include="World\Character\Types\CharacterTemplate.h" />
     <ClInclude Include="World\Character\Types\ItemTemplate.h" />
     <ClInclude Include="World\Character\Types\Player_Enums.h" />
@@ -320,7 +317,7 @@
     <ClInclude Include="World\GameObject\GameObjectM2.h" />
     <ClInclude Include="World\GameObject\GameObjectWMO.h" />
     <ClInclude Include="World\Items\Item_M2Instance.h" />
-    <ClInclude Include="World\Items\Item_VisualData.h" />
+    <ClInclude Include="World\Items\CharacterVisualItem.h" />
     <ClInclude Include="World\MeshIDEnums.h" />
     <ClInclude Include="World\WorldObjectsCreator.h" />
     <ClInclude Include="WoWChunkReader.h" />

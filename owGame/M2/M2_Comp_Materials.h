@@ -29,13 +29,18 @@ public:
 	std::shared_ptr<const CM2_Part_Color>					GetColorDirect(uint32 Index) const;
 	std::shared_ptr<const CM2_Part_Material>				GetMaterialDirect(uint32 Index) const;
 
-	std::shared_ptr<const CM2_Part_Texture>					GetTextureDirectInternal(uint32 Index) const; // Used in Emitters
 	std::shared_ptr<const CM2_Part_Texture>					GetTexture(uint32 Index) const;
+	int16													GetTextureLookup(uint32 Index) const;
+	std::shared_ptr<const CM2_Part_Texture>					GetTextureDirect(uint32 Index) const; // Used in Emitters
+
 	int16													GetTextureUnit(uint32 Index) const;
+
 	std::shared_ptr<const CM2_Part_TextureWeight>			GetTextureWeight(uint32 Index) const;
 	int16													GetTextureWeightLookup(uint32 Index) const;
+
 	std::shared_ptr<const CM2_Part_TextureTransform>		GetTextureTransform(uint32 Index) const;
 	int16													GetTextureTransformLookup(uint32 Index) const;
+
 	int16													GetTextureCombiner(uint32 Index) const;
 
 private:

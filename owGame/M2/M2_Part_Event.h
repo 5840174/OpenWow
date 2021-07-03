@@ -7,11 +7,11 @@
 class CM2;
 // FORWARD END
 
-class SM2_Part_Event_Wrapper
+class CM2_Part_Event
 {
 public:
-	SM2_Part_Event_Wrapper(const CM2& M2Object, const std::shared_ptr<IFile>& File, const SM2_Event& M2Event);
-	virtual ~SM2_Part_Event_Wrapper();
+	CM2_Part_Event(const CM2& M2Object, const std::shared_ptr<IByteBuffer>& ByteBuffer, const SM2_Event& M2Event);
+	virtual ~CM2_Part_Event();
 
 private:
 	char					m_ID[4];

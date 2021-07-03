@@ -79,7 +79,7 @@ EVisitResult CRenderPass_Path::VisitWoW(const std::shared_ptr<CWoWWorldObject>& 
 			if (mapID == PathNode->GetMapID())
 			{
 				glm::vec3 position = PathNode->GetPosition();
-				position.y += 0.25f;
+				position.y += 0.1f;
 				pointsXYZ.push_back(position);
 			}
 		});
@@ -94,7 +94,7 @@ EVisitResult CRenderPass_Path::VisitWoW(const std::shared_ptr<CWoWWorldObject>& 
 		const auto& wowPathNodes = wowPath->GetPathNodes();
 		std::for_each(wowPathNodes.begin(), wowPathNodes.end(), [&pointsXYZ](const std::shared_ptr<CWoWPathNode>& PathNode) {
 			glm::vec3 position = PathNode->GetPosition();
-			position.y += 0.25f;
+			position.y += 0.1f;
 			pointsXYZ.push_back(position);
 		});
 	}

@@ -36,31 +36,31 @@ void WoWPlayer::OnValuesUpdated(const UpdateMask & Mask)
 		if (Mask.GetBit(UNIT_FIELD_BYTES_0))
 		{
 			auto characterModel = std::dynamic_pointer_cast<Character>(m_HiddenNode);
-			characterModel->GetTemplate().Race = (Race)GetRace();
-			characterModel->GetTemplate().Class = (Class)GetClass();
-			characterModel->GetTemplate().Gender = (Gender)GetGender();
+			characterModel->Template().Race = (Race)GetRace();
+			characterModel->Template().Class = (Class)GetClass();
+			characterModel->Template().Gender = (Gender)GetGender();
 		}
 
 		if (Mask.GetBit(PLAYER_BYTES))
 		{
 			auto characterModel = std::dynamic_pointer_cast<Character>(m_HiddenNode);
 
-			characterModel->GetTemplate().skin = GetSkinId();
-			characterModel->GetTemplate().face = GetFaceId();
-			characterModel->GetTemplate().hairStyle = GetHairStyleId();
-			characterModel->GetTemplate().hairColor = GetHairColorId();
+			characterModel->Template().skin = GetSkinId();
+			characterModel->Template().face = GetFaceId();
+			characterModel->Template().hairStyle = GetHairStyleId();
+			characterModel->Template().hairColor = GetHairColorId();
 		}
 
 		if (Mask.GetBit(PLAYER_BYTES_2))
 		{
 			auto characterModel = std::dynamic_pointer_cast<Character>(m_HiddenNode);
-			characterModel->GetTemplate().facialStyle = GetFacialStyle();
+			characterModel->Template().facialStyle = GetFacialStyle();
 		}
 	
 		if (Mask.GetBit(PLAYER_BYTES_3))
 		{
 			auto characterModel = std::dynamic_pointer_cast<Character>(m_HiddenNode);
-			characterModel->GetTemplate().Gender = (Gender)GetNativeGender();
+			characterModel->Template().Gender = (Gender)GetNativeGender();
 		}
 
 		for (uint16 i = PLAYER_VISIBLE_ITEM_1_ENTRYID; i < PLAYER_VISIBLE_ITEM_19_ENTRYID; i += 2)
@@ -68,21 +68,20 @@ void WoWPlayer::OnValuesUpdated(const UpdateMask & Mask)
 			if (Mask.GetBit(i))
 			{
 				auto characterModel = std::dynamic_pointer_cast<Character>(m_HiddenNode);
-				characterModel->GetTemplate().ItemsTemplates[(i - PLAYER_VISIBLE_ITEM_1_ENTRYID) / 2] = GetItemDisplayInfoIDByItemID(m_Values.GetUInt32Value(i));
+				characterModel->Template().ItemsTemplates[(i - PLAYER_VISIBLE_ITEM_1_ENTRYID) / 2] = GetItemDisplayInfoIDByItemID(m_Values.GetUInt32Value(i));
 			}
 		} 
 
 		if (auto characterModel = std::dynamic_pointer_cast<Character>(m_HiddenNode))
 		{
-			Character_SectionWrapper sectionWrapper(GetBaseManager());
-
+			// Items
 			characterModel->RefreshItemVisualData();
 
-			Character_SkinTextureBaker skinTextureBaker(GetBaseManager(), GetBaseManager().GetApplication().GetRenderDevice());
-			auto skinTexture = skinTextureBaker.createTexture(characterModel.get());
-			characterModel->RefreshTextures(sectionWrapper, skinTexture);
+			// Textures
+			characterModel->Refresh_CreateSkinTexture(nullptr);
 
-			characterModel->RefreshMeshIDs(sectionWrapper);
+			// Geosets
+			characterModel->RefreshMeshIDs();
 		}
 
 

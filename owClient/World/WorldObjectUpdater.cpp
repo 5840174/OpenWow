@@ -112,10 +112,11 @@ void CWorldObjectUpdater::ProcessUpdatePacket(CByteBuffer& Bytes)
 				Bytes.ReadPackedUInt64(guidValue);
 				CWoWGuid guid(guidValue);
 
-				EWoWObjectTypeID typeID;
+				EWoWObjectTypeID typeID; // Different from GUID TypeID for Container TODO
 				Bytes >> typeID;
 
 				auto object = m_WoWWorld.GetWorldObjects().GetWoWObject(guid);
+
 				object->ProcessMovementUpdate(Bytes);
 				object->UpdateValues(Bytes);
 			}

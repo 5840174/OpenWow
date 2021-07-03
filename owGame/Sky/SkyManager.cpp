@@ -25,7 +25,7 @@ bool SkyManager::Load(uint32 MapID)
 	{
 		if (MapID == it->Get_MapID())
 		{
-			std::shared_ptr<Sky> sky = std::make_shared<Sky>(GetBaseManager().GetManager<CDBCStorage>(), it);
+			auto sky = MakeShared(Sky, GetBaseManager().GetManager<CDBCStorage>(), it);
 			skies.push_back(sky);
 		}
 	}
