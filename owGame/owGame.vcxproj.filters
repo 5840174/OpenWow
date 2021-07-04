@@ -1043,6 +1043,9 @@
     <ClInclude Include="World\Items\CharacterItemM2Instance.h">
       <Filter>World\Item</Filter>
     </ClInclude>
+    <ClInclude Include="World\Items\CharacterItemDefines.h">
+      <Filter>World\Item</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="WoWChunkReader.inl">

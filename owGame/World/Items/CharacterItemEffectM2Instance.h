@@ -4,17 +4,25 @@
 
 #include "../../M2/M2_Base_Instance.h"
 
+// FORWARD BEGIN
+class CCharacterItemM2Instance;
+// FORWARD END
+
 class CCharacterItemEffectM2Instance
 	: public CM2_Base_Instance
 {
 public:
-	CCharacterItemEffectM2Instance(IScene& Scene, const std::shared_ptr<CM2>& M2Object);
+	CCharacterItemEffectM2Instance(IScene& Scene, const std::shared_ptr<CM2>& M2Object, const CCharacterItem& CharacterItem);
     virtual ~CCharacterItemEffectM2Instance();
 
-	void AddVisualEffect(std::shared_ptr<CM2_Base_Instance> _visualEffect);
+	const CCharacterItemM2Instance& GetCharacterItemInstance() const;
+	const CCharacterItem& GetCharacterItem() const;
+
+	// ILoadable
+	bool Load() override;
 
 private:
-	std::vector<std::shared_ptr<CM2_Base_Instance>> m_VisualEffects;
+	const CCharacterItem& m_CharacterItem;
 };
 
 #endif

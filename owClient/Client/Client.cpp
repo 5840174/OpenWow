@@ -75,14 +75,14 @@ void CWoWClient::OnCharacterSelected(const SCharacterTemplate & SelectedCharacte
 
 	SelectedCharacter.ToBase64String();
 
-	CWorldObjectCreator creator(m_Scene.GetBaseManager());
-	auto creature = creator.BuildCharacterFromTemplate(m_Scene.GetBaseManager().GetApplication().GetRenderDevice(), m_Scene, SelectedCharacter);
+	//CWorldObjectCreator creator(m_Scene.GetBaseManager());
+	//auto creature = creator.BuildCharacterFromTemplate(m_Scene.GetBaseManager().GetApplication().GetRenderDevice(), m_Scene, SelectedCharacter);
 
 
-	//m_World = std::make_unique<CWoWWorld>(m_Scene, m_WorldSocket);
-	//m_WorldSocket->SetExternalHandler(std::bind(&CWoWWorld::ProcessPacket, m_World.get(), std::placeholders::_1));
+	m_World = std::make_unique<CWoWWorld>(m_Scene, m_WorldSocket);
+	m_WorldSocket->SetExternalHandler(std::bind(&CWoWWorld::ProcessPacket, m_World.get(), std::placeholders::_1));
 
-	//m_World->EnterWorld(SelectedCharacter);
+	m_World->EnterWorld(SelectedCharacter);
 }
 
 #endif

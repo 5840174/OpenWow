@@ -25,7 +25,8 @@ CWMO_Base_Instance::~CWMO_Base_Instance()
 
 const CWMO& CWMO_Base_Instance::getWMO() const
 {
-	_ASSERT(m_WMOObject != nullptr);
+	if (m_WMOObject->GetState() != ILoadable::ELoadableState::Loaded)
+		throw CException("CWMO_Base_Instance::getWMO: WMO object isn't loaded.");
 	return *m_WMOObject;
 }
 

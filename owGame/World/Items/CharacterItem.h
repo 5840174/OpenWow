@@ -5,6 +5,7 @@
 #include "../MeshIDEnums.h"
 #include "../Character/Types/CharacterTemplate.h"
 
+#include "CharacterItemDefines.h"
 #include "CharacterItemM2Instance.h"
 
 // FORWARD BEGIN
@@ -15,7 +16,6 @@ struct ObjectComponent
 {
 	std::shared_ptr<CCharacterItemM2Instance> model;
 	std::shared_ptr<IImage>                   texture;
-	EM2_AttachmentPoint                       attach;
 };
 
 struct GeosetComponent
@@ -30,7 +30,7 @@ class CCharacterItem
 	: public CLoadableObject
 {
 public:
-	CCharacterItem(IBaseManager& BaseManager, IRenderDevice& RenderDevice, const std::shared_ptr<CCharacter>& OwnerCharacter);
+	CCharacterItem(const IBaseManager& BaseManager, IRenderDevice& RenderDevice, const std::shared_ptr<CCharacter>& OwnerCharacter);
 	virtual ~CCharacterItem();
 	
 	SCharacterItemTemplate&              Template()                                             { return m_Template; }
@@ -49,8 +49,8 @@ private:
 	void InitializeItemGeosets();
 	void InitializeItemSkinImages();
 
-	std::shared_ptr<CM2>	LoadItemM2Model(DBCItem_EInventoryItemType _objectType, std::string _modelName);
-	std::shared_ptr<IImage> LoadItemImage (DBCItem_EInventoryItemType _objectType, std::string _textureName);
+	std::shared_ptr<CM2>	LoadItemM2Model(DBCItem_EInventoryItemType ObjectType, std::string _modelName);
+	std::shared_ptr<IImage> LoadItemImage (DBCItem_EInventoryItemType ObjectType, std::string _textureName);
 	std::shared_ptr<IImage> LoadSkinTexture   (DBC_CharComponent_Sections _type, std::string _textureName);
 
 private:
@@ -60,7 +60,7 @@ private:
 	std::shared_ptr<IImage>       m_SkinTextures[static_cast<size_t>(DBC_CharComponent_Sections::ITEMS_COUNT)];
 	
 private: 
-	IBaseManager&                 m_BaseManager;
+	const IBaseManager&           m_BaseManager;
 	IRenderDevice&                m_RenderDevice;
 	CCharacter&                   m_OwnerCharacter;
 };

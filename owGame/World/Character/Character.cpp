@@ -64,8 +64,10 @@ void CCharacter::Refresh_AddItemsToSkinTexture()
 	if (cloakVisualItem->GetTemplate().InventoryType != (uint8)DBCItem_EInventoryItemType::NON_EQUIP)
 	{
 		if (cloakVisualItem->GetModels().size() != 1)
-			throw CException("Character::Refresh_AddItemsToSkinTexture: Cape must contains one object component.");
-
+		{
+			return;
+			//throw CException("Character::Refresh_AddItemsToSkinTexture: Cape must contains one object component.");
+		}
 		auto cloackImage = cloakVisualItem->GetModels()[0].texture;
 		setSpecialTexture(SM2_Texture::Type::OBJECT_SKIN, GetBaseManager().GetManager<IznTexturesFactory>()->LoadTexture2D(cloackImage));
 	}
@@ -137,7 +139,7 @@ void CCharacter::SetItem(uint8 InventorySlot, const SCharacterItemTemplate & Ite
 	if (InventorySlot >= INVENTORY_SLOT_BAG_END)
 		throw CException("CCharacter::SetItem: Incorrect inventory slot '%d'.", InventorySlot);
 
-	auto characterItem = MakeShared(CCharacterItem, getM2().GetBaseManager(), getM2().GetRenderDevice(), std::dynamic_pointer_cast<CCharacter>(shared_from_this()));
+	auto characterItem = MakeShared(CCharacterItem, GetBaseManager(), GetRenderDevice(), std::dynamic_pointer_cast<CCharacter>(shared_from_this()));
 	characterItem->Template() = ItemTemplate;
 	GetBaseManager().GetManager<ILoader>()->AddToLoadQueue(characterItem);
 

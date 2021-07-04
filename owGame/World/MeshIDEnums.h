@@ -12,11 +12,11 @@ enum class EM2GeosetType : uint8
 	Boots05,		// 05** Boots                           : {1 - 5}
 	Unk06,			// 06** Tail (Draenei Female)
 	Ears07,			// 07** Ears                            : {1: (DNE), 2 : ears}
-	Wristbands,		// 08** Wristbands / Sleeves            : {1: (DNE), 2 : normal, 3 : ruffled}
-	Kneepads,		// 09** Kneepads / Legcuffs             : {1: (DNE), 2 : long, 3 : short}
-	Chest,			// 10** Chest                           : {1: (DNE), 2 : Unk (exists but purpose unknown - mesh is in all character models lower half of "Torso Lower")}
-	Pants,			// 11** Pants                           : {1: regular, 2 : short skirt, 4 : armored pants}
-	Tabard,			// 12** Tabard                          : {1: (DNE), 2 : tabard}
+	Wristbands08,	// 08** Wristbands / Sleeves            : {1: (DNE), 2 : normal, 3 : ruffled}
+	Kneepads09,		// 09** Kneepads / Legcuffs             : {1: (DNE), 2 : long, 3 : short}
+	Chest10,		// 10** Chest                           : {1: (DNE), 2 : Unk (exists but purpose unknown - mesh is in all character models lower half of "Torso Lower")}
+	Pants11,		// 11** Pants                           : {1: regular, 2 : short skirt, 4 : armored pants}
+	Tabard12,		// 12** Tabard                          : {1: (DNE), 2 : tabard}
 	Trousers13,		// 13** Trousers                        : {1: legs, 2 : dress}
 	Unk14,			// 14** 
 	Cloak15,		// 15** Cloak                           : {1 - 10: various cloak styles}

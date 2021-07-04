@@ -33,7 +33,8 @@ void CM2_Base_Instance::CreateInstances()
 
 const CM2& CM2_Base_Instance::getM2() const
 {
-	_ASSERT(m_M2 != nullptr);
+	if (m_M2->GetState() != ILoadable::ELoadableState::Loaded)
+		throw CException("CM2_Base_Instance::getM2: M2 object isn't loaded.");
 	return *m_M2;
 }
 
@@ -78,15 +79,6 @@ const std::shared_ptr<ITexture>& CM2_Base_Instance::getSpecialTexture(SM2_Textur
 void CM2_Base_Instance::Initialize()
 {
 	__super::Initialize();
-
-	if (auto colliderComponent = GetComponentT<IColliderComponent>())
-	{
-		colliderComponent->SetCullStrategy(IColliderComponent::ECullStrategy::ByFrustrumAndDistance2D);
-		colliderComponent->SetCullDistance(GetBaseManager().GetManager<ISettings>()->GetGroup("WoWSettings")->GetPropertyT<float>("M2BaseRenderDistance")->Get());
-		colliderComponent->SetBounds(getM2().GetBounds());
-		colliderComponent->SetDebugDrawMode(false);
-		colliderComponent->SetDebugDrawColor(ColorRGBA(0.9f, 0.2f, 0.2f, 0.8f));
-	}
 }
 
 void CM2_Base_Instance::RegisterComponents()
@@ -130,6 +122,15 @@ bool CM2_Base_Instance::Load()
 #ifdef USE_M2_PARTICLES
 	m_ParticleComponent = AddComponentT(MakeShared(CM2ParticlesComponent, *this));
 #endif
+
+	if (auto colliderComponent = GetComponentT<IColliderComponent>())
+	{
+		colliderComponent->SetCullStrategy(IColliderComponent::ECullStrategy::ByFrustrumAndDistance2D);
+		colliderComponent->SetCullDistance(GetBaseManager().GetManager<ISettings>()->GetGroup("WoWSettings")->GetPropertyT<float>("M2BaseRenderDistance")->Get());
+		colliderComponent->SetBounds(getM2().GetBounds());
+		colliderComponent->SetDebugDrawMode(false);
+		colliderComponent->SetDebugDrawColor(ColorRGBA(0.9f, 0.2f, 0.2f, 0.8f));
+	}
 
 	UpdateLocalTransform();
 	CreateInstances();

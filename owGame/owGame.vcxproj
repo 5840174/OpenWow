@@ -317,6 +317,7 @@
     <ClInclude Include="World\Creature\Creature.h" />
     <ClInclude Include="World\GameObject\GameObjectM2.h" />
     <ClInclude Include="World\GameObject\GameObjectWMO.h" />
+    <ClInclude Include="World\Items\CharacterItemDefines.h" />
     <ClInclude Include="World\Items\CharacterItemEffectM2Instance.h" />
     <ClInclude Include="World\Items\CharacterItemM2Instance.h" />
     <ClInclude Include="World\Items\CharacterItem.h" />
