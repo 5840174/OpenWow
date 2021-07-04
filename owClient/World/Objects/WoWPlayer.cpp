@@ -35,7 +35,7 @@ void WoWPlayer::OnValuesUpdated(const UpdateMask & Mask)
 
 		if (Mask.GetBit(UNIT_FIELD_BYTES_0))
 		{
-			auto characterModel = std::dynamic_pointer_cast<Character>(m_HiddenNode);
+			auto characterModel = std::dynamic_pointer_cast<CCharacter>(m_HiddenNode);
 			characterModel->Template().Race = (Race)GetRace();
 			characterModel->Template().Class = (Class)GetClass();
 			characterModel->Template().Gender = (Gender)GetGender();
@@ -43,7 +43,7 @@ void WoWPlayer::OnValuesUpdated(const UpdateMask & Mask)
 
 		if (Mask.GetBit(PLAYER_BYTES))
 		{
-			auto characterModel = std::dynamic_pointer_cast<Character>(m_HiddenNode);
+			auto characterModel = std::dynamic_pointer_cast<CCharacter>(m_HiddenNode);
 
 			characterModel->Template().skin = GetSkinId();
 			characterModel->Template().face = GetFaceId();
@@ -53,13 +53,13 @@ void WoWPlayer::OnValuesUpdated(const UpdateMask & Mask)
 
 		if (Mask.GetBit(PLAYER_BYTES_2))
 		{
-			auto characterModel = std::dynamic_pointer_cast<Character>(m_HiddenNode);
+			auto characterModel = std::dynamic_pointer_cast<CCharacter>(m_HiddenNode);
 			characterModel->Template().facialStyle = GetFacialStyle();
 		}
 	
 		if (Mask.GetBit(PLAYER_BYTES_3))
 		{
-			auto characterModel = std::dynamic_pointer_cast<Character>(m_HiddenNode);
+			auto characterModel = std::dynamic_pointer_cast<CCharacter>(m_HiddenNode);
 			characterModel->Template().Gender = (Gender)GetNativeGender();
 		}
 
@@ -67,15 +67,15 @@ void WoWPlayer::OnValuesUpdated(const UpdateMask & Mask)
 		{
 			if (Mask.GetBit(i))
 			{
-				auto characterModel = std::dynamic_pointer_cast<Character>(m_HiddenNode);
+				auto characterModel = std::dynamic_pointer_cast<CCharacter>(m_HiddenNode);
 				characterModel->Template().ItemsTemplates[(i - PLAYER_VISIBLE_ITEM_1_ENTRYID) / 2] = GetItemDisplayInfoIDByItemID(m_Values.GetUInt32Value(i));
 			}
 		} 
 
-		if (auto characterModel = std::dynamic_pointer_cast<Character>(m_HiddenNode))
+		if (auto characterModel = std::dynamic_pointer_cast<CCharacter>(m_HiddenNode))
 		{
 			// Items
-			characterModel->RefreshItemVisualData();
+			characterModel->RefreshCharacterItemsFromTemplate();
 
 			// Textures
 			characterModel->Refresh_CreateSkinTexture(nullptr);

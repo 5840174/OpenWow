@@ -1,12 +1,9 @@
 #pragma once
 
 enum PlayerSlots
-{
-	// first slot for item stored (in any way in player m_items data)
-	PLAYER_SLOT_START = 0,
-
-	// last+1 slot for item stored (in any way in player m_items data)
-	PLAYER_SLOT_END = 150,
+{	
+	PLAYER_SLOT_START = 0, // first slot for item stored (in any way in player m_items data)
+	PLAYER_SLOT_END = 150, // last+1 slot for item stored (in any way in player m_items data)
 	PLAYER_SLOTS_COUNT = (PLAYER_SLOT_END - PLAYER_SLOT_START)
 };
 
@@ -35,6 +32,7 @@ enum EquipmentSlots : uint8                                 // 19 slots
 	EQUIPMENT_SLOT_OFFHAND = 16,
 	EQUIPMENT_SLOT_RANGED = 17,
 	EQUIPMENT_SLOT_TABARD = 18,
+
 	EQUIPMENT_SLOT_END = 19
 };
 

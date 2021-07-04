@@ -361,33 +361,33 @@ void WoWUnit::OnValuesUpdated(const UpdateMask & Mask)
 	{
 		uint32 mainHandDisplayID = m_Values.GetUInt32Value(UNIT_VIRTUAL_ITEM_SLOT_ID + 0);
 		if (mainHandDisplayID != 0)
-			if (auto hidderNodeAsCharacter = std::dynamic_pointer_cast<Character>(m_HiddenNode))
+			if (auto hidderNodeAsCharacter = std::dynamic_pointer_cast<CCharacter>(m_HiddenNode))
 				hidderNodeAsCharacter->Template().ItemsTemplates[EQUIPMENT_SLOT_MAINHAND] = GetItemDisplayInfoIDByItemID(mainHandDisplayID);
 
-		if (auto hidderNodeAsCharacter = std::dynamic_pointer_cast<Character>(m_HiddenNode))
-			hidderNodeAsCharacter->RefreshItemVisualData();
+		if (auto hidderNodeAsCharacter = std::dynamic_pointer_cast<CCharacter>(m_HiddenNode))
+			hidderNodeAsCharacter->RefreshCharacterItemsFromTemplate();
 	}
 
 	if (Mask.GetBit(UNIT_VIRTUAL_ITEM_SLOT_ID + 1))
 	{
 		uint32 offHandDisplayID = m_Values.GetUInt32Value(UNIT_VIRTUAL_ITEM_SLOT_ID + 1);
 		if (offHandDisplayID != 0)
-			if (auto hidderNodeAsCharacter = std::dynamic_pointer_cast<Character>(m_HiddenNode))
+			if (auto hidderNodeAsCharacter = std::dynamic_pointer_cast<CCharacter>(m_HiddenNode))
 				hidderNodeAsCharacter->Template().ItemsTemplates[EQUIPMENT_SLOT_OFFHAND] = GetItemDisplayInfoIDByItemID(offHandDisplayID);
 
-		if (auto hidderNodeAsCharacter = std::dynamic_pointer_cast<Character>(m_HiddenNode))
-			hidderNodeAsCharacter->RefreshItemVisualData();
+		if (auto hidderNodeAsCharacter = std::dynamic_pointer_cast<CCharacter>(m_HiddenNode))
+			hidderNodeAsCharacter->RefreshCharacterItemsFromTemplate();
 	}
 
 	if (Mask.GetBit(UNIT_VIRTUAL_ITEM_SLOT_ID + 2))
 	{
 		uint32 rangedDisplayID = m_Values.GetUInt32Value(UNIT_VIRTUAL_ITEM_SLOT_ID + 2);
 		if (rangedDisplayID != 0)
-			if (auto hidderNodeAsCharacter = std::dynamic_pointer_cast<Character>(m_HiddenNode))
+			if (auto hidderNodeAsCharacter = std::dynamic_pointer_cast<CCharacter>(m_HiddenNode))
 				hidderNodeAsCharacter->Template().ItemsTemplates[EQUIPMENT_SLOT_RANGED] = GetItemDisplayInfoIDByItemID(rangedDisplayID);
 
-		if (auto hidderNodeAsCharacter = std::dynamic_pointer_cast<Character>(m_HiddenNode))
-			hidderNodeAsCharacter->RefreshItemVisualData();
+		if (auto hidderNodeAsCharacter = std::dynamic_pointer_cast<CCharacter>(m_HiddenNode))
+			hidderNodeAsCharacter->RefreshCharacterItemsFromTemplate();
 	}
 }
 
@@ -437,16 +437,16 @@ void WoWUnit::Destroy()
 		m_HiddenNode->MakeMeOrphan();
 }
 
-CInet_ItemTemplate WoWUnit::GetItemDisplayInfoIDByItemID(uint32 ItemID)
+SCharacterItemTemplate WoWUnit::GetItemDisplayInfoIDByItemID(uint32 ItemID)
 {
 	auto itemRecord = GetBaseManager().GetManager<CDBCStorage>()->DBC_Item()[ItemID];
 	if (itemRecord == nullptr)
 	{
 		Log::Warn("WoWUnit::GetItemDisplayInfoIDByItemID: Item don't contains id '%d'.", ItemID);
-		return CInet_ItemTemplate();
+		return SCharacterItemTemplate();
 	}
 
-	return CInet_ItemTemplate(itemRecord->Get_DisplayInfoID(), itemRecord->Get_InventorySlot(), 0);
+	return SCharacterItemTemplate(itemRecord->Get_DisplayInfoID(), itemRecord->Get_InventorySlot(), 0);
 }
 
 #endif

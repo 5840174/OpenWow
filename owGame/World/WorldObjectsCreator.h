@@ -18,9 +18,9 @@ public:
 #ifdef USE_M2_MODELS
 	// Factory
 	std::shared_ptr<Creature> BuildCreatureFromDisplayInfo(IRenderDevice& RenderDevice, IScene& Scene, uint32 _id, const std::shared_ptr<ISceneNode>& Parent = nullptr);
-	std::shared_ptr<Character> BuildCharacterFromTemplate(IRenderDevice& RenderDevice, IScene& Scene, const CInet_CharacterTemplate& b, const std::shared_ptr<ISceneNode>& Parent = nullptr);
-	std::shared_ptr<Character> BuildCharacterFromDisplayInfo(IRenderDevice& RenderDevice, IScene& Scene, uint32 _id, const std::shared_ptr<ISceneNode>& Parent = nullptr);
-	std::shared_ptr<Character> BuildEmptyCharacterFromDisplayInfo(IRenderDevice& RenderDevice, IScene& Scene, uint32 _id, const std::shared_ptr<ISceneNode>& Parent = nullptr);
+	std::shared_ptr<CCharacter> BuildCharacterFromTemplate(IRenderDevice& RenderDevice, IScene& Scene, const SCharacterTemplate& b, const std::shared_ptr<ISceneNode>& Parent = nullptr);
+	std::shared_ptr<CCharacter> BuildCharacterFromDisplayInfo(IRenderDevice& RenderDevice, IScene& Scene, uint32 _id, const std::shared_ptr<ISceneNode>& Parent = nullptr);
+	std::shared_ptr<CCharacter> BuildEmptyCharacterFromDisplayInfo(IRenderDevice& RenderDevice, IScene& Scene, uint32 _id, const std::shared_ptr<ISceneNode>& Parent = nullptr);
 	std::shared_ptr<ISceneNode> BuildGameObjectFromDisplayInfo(IRenderDevice& RenderDevice, IScene& Scene, uint32 _id, const std::shared_ptr<ISceneNode>& Parent = nullptr);
 #endif
 
@@ -38,7 +38,7 @@ public:
 private:
 #ifdef USE_M2_MODELS
 	std::shared_ptr<CM2> CreateCreatureModel(IRenderDevice& RenderDevice, const DBC_CreatureDisplayInfoRecord* CreatureDisplayInfo);
-	std::shared_ptr<CM2> CreateCharacterModel(IRenderDevice& RenderDevice, const CInet_CharacterTemplate& CharacterTemplate);
+	std::shared_ptr<CM2> CreateCharacterModel(IRenderDevice& RenderDevice, const SCharacterTemplate& CharacterTemplate);
 	std::shared_ptr<CM2> CreateGameObjectM2Model(IRenderDevice& RenderDevice, const DBC_GameObjectDisplayInfoRecord* GameObjectDisplayInfoRecord);
 #endif
 

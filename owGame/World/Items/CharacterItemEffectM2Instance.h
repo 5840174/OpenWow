@@ -4,12 +4,12 @@
 
 #include "../../M2/M2_Base_Instance.h"
 
-class CItem_M2Instance 
+class CCharacterItemEffectM2Instance
 	: public CM2_Base_Instance
 {
 public:
-	CItem_M2Instance(IScene& Scene, const std::shared_ptr<CM2>& M2Object);
-    virtual ~CItem_M2Instance();
+	CCharacterItemEffectM2Instance(IScene& Scene, const std::shared_ptr<CM2>& M2Object);
+    virtual ~CCharacterItemEffectM2Instance();
 
 	void AddVisualEffect(std::shared_ptr<CM2_Base_Instance> _visualEffect);
 

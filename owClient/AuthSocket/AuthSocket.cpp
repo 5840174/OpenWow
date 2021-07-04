@@ -454,7 +454,7 @@ bool CAuthSocket::S_Realmlist(CByteBuffer& _buff)
 		realmListInfos.push_back(rinfo);
     }
 
-	m_WoWClient.OnRealmListSelected(*realmListInfos.begin(), Key);
+	m_WoWClient.OnRealmListSelected(realmListInfos[9], Key);
 
     return true;
 }

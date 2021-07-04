@@ -17,7 +17,7 @@ public:
 	CWoWWorld(IScene& Scene, const std::shared_ptr<CWorldSocket>& Socket);
 	virtual ~CWoWWorld();
 
-	void EnterWorld(const CInet_CharacterTemplate& SelectedCharacter);
+	void EnterWorld(const SCharacterTemplate& SelectedCharacter);
 	void Update(const UpdateEventArgs& e);
 	void Accept(IWoWVisitor * WoWVisitor);
 

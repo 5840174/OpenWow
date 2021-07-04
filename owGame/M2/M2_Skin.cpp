@@ -70,7 +70,7 @@ void CM2_Skin::Load(const SM2_Header& M2Header, const std::shared_ptr<IFile>& Fi
 			indexes[i] = index - sectionProto.vertexStart;
 		}
 
-		m_Sections.push_back(std::make_shared<CM2_SkinSection>(m_RenderDevice, m_M2Model, sectionIndex, sectionProto, vertexes, indexes));
+		m_Sections.push_back(MakeShared(CM2_SkinSection, m_RenderDevice, m_M2Model, sectionIndex, sectionProto, vertexes, indexes));
 	}
 
 	//--

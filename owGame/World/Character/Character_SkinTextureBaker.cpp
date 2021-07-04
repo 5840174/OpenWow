@@ -39,7 +39,7 @@ Character_SkinTextureBaker::Character_SkinTextureBaker(const IBaseManager& BaseM
 	}
 }
 
-std::shared_ptr<IImage> Character_SkinTextureBaker::CreateCharacterSkinImage(const CInet_CharacterTemplate& CharacterTemlate) const
+std::shared_ptr<IImage> Character_SkinTextureBaker::CreateCharacterSkinImage(const SCharacterTemplate& CharacterTemlate) const
 {
 	std::unique_ptr<SRGBColor[]> pixels = std::unique_ptr<SRGBColor[]>(new SRGBColor[cSkinTextureWidth * cSkinTextureHeight]);
 	std::memset(pixels.get(), 0x00, sizeof(SRGBColor) * cSkinTextureWidth * cSkinTextureHeight);
@@ -105,7 +105,7 @@ std::shared_ptr<IImage> Character_SkinTextureBaker::CreateCharacterSkinImage(con
 	return image;
 }
 
-std::shared_ptr<IImage> Character_SkinTextureBaker::CreateCharacterSkinWithItemsImage(std::shared_ptr<IImage> CharacterSkinImage, const Character * Character) const
+std::shared_ptr<IImage> Character_SkinTextureBaker::CreateCharacterSkinWithItemsImage(std::shared_ptr<IImage> CharacterSkinImage, const CCharacter * Character) const
 {
 	std::unique_ptr<SRGBColor[]> pixels = std::unique_ptr<SRGBColor[]>(new SRGBColor[cSkinTextureWidth * cSkinTextureHeight]);
 	std::memset(pixels.get(), 0x00, sizeof(SRGBColor) * cSkinTextureWidth * cSkinTextureHeight);
@@ -115,13 +115,14 @@ std::shared_ptr<IImage> Character_SkinTextureBaker::CreateCharacterSkinWithItems
 
 	for (uint32 inventorySlot = 0; inventorySlot < INVENTORY_SLOT_BAG_END; inventorySlot++)
 	{
-		for (uint32 comp = 0; comp < static_cast<size_t>(DBC_CharComponent_Sections::ITEMS_COUNT); comp++)
+		const auto& characterItem = Character->GetItem(inventorySlot);
+		for (uint32 itemTextureComponent = 0; itemTextureComponent < static_cast<size_t>(DBC_CharComponent_Sections::ITEMS_COUNT); itemTextureComponent++)
 		{
-			auto itemComponentTexture = Character->getItemTextureComponents(static_cast<DBCItem_EInventoryItemSlot>(inventorySlot))->getTextureComponent((DBC_CharComponent_Sections)comp);
+			auto itemComponentTexture = characterItem->GetSkinTexture(static_cast<DBC_CharComponent_Sections>(itemTextureComponent));
 			if (itemComponentTexture == nullptr)
 				continue;
 
-			FillPixels(pixels, (DBC_CharComponent_Sections)comp, itemComponentTexture);
+			FillPixels(pixels, (DBC_CharComponent_Sections)itemTextureComponent, itemComponentTexture);
 		}
 	}
 

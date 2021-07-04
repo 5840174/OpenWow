@@ -23,7 +23,7 @@ public:
 
 	void OnRealmListSelected(const RealmInfo& SelectedRealm, BigNumber Key);
 	
-	void OnCharacterSelected(const CInet_CharacterTemplate& SelectedCharacter);
+	void OnCharacterSelected(const SCharacterTemplate& SelectedCharacter);
 
 
 private:

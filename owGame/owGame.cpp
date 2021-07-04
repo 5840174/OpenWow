@@ -38,18 +38,15 @@ public:
 #elif WOW_CLIENT_VERSION == WOW_BC_2_4_3
 		m_BaseManager.GetManager<IFilesManager>()->AddFilesStorage("MPQStorage", std::make_shared<CMPQFilesStorage>("c:\\_engine\\World of Warcraft 2.4.3\\Data\\", IFilesStorageEx::Priority::PRIOR_HIGH));
 #elif WOW_CLIENT_VERSION == WOW_WOTLK_3_3_5
-		m_BaseManager.GetManager<IFilesManager>()->AddStorage(EFilesStorageType::GAMEDATA, std::make_shared<CMPQFilesStorage>("C:\\Games\\World of Warcraft 3.3.5a\\Data\\"));
+		m_BaseManager.GetManager<IFilesManager>()->AddStorage(EFilesStorageType::GAMEDATA, MakeShared(CMPQFilesStorage, "C:\\Games\\World of Warcraft 3.3.5a\\Data\\"));
 #endif
 		m_BaseManager.GetManager<IFilesManager>()->AddStorage(EFilesStorageType::GAMEDATA, MakeShared(CLocalFilesStorage, "D:\\OpenWow\\_gamedata\\"));
 
 		// BLP
-		m_BaseManager.GetManager<IImagesFactory>()->AddImageLoader(std::make_shared<CImageLoaderT<CImageBLP>>());
+		m_BaseManager.GetManager<IImagesFactory>()->AddImageLoader(MakeShared(CImageLoaderT<CImageBLP>));
 
-		std::shared_ptr<CDBCStorage> dbcStorage = std::make_shared<CDBCStorage>(m_BaseManager);
-		m_BaseManager.AddManager<CDBCStorage>(dbcStorage);
-
-		auto WoWObjectsCreator = std::make_shared<CWorldObjectCreator>(m_BaseManager);
-		m_BaseManager.AddManager<IWoWObjectsCreator>(WoWObjectsCreator);
+		m_BaseManager.AddManager<CDBCStorage>(MakeShared(CDBCStorage, m_BaseManager));
+		m_BaseManager.AddManager<IWoWObjectsCreator>(MakeShared(CWorldObjectCreator, m_BaseManager));
 
 
 		return true;

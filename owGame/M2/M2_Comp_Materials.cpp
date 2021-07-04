@@ -23,7 +23,7 @@ void CM2_Comp_Materials::Load(const SM2_Header& M2Header, const std::shared_ptr<
 		SM2_Color* m2Colors = (SM2_Color*)(File->getData() + M2Header.colors.offset);
 		for (uint32 i = 0; i < M2Header.colors.size; i++)
 		{
-			std::shared_ptr<CM2_Part_Color> color = std::make_shared<CM2_Part_Color>(m_M2Object, File, m2Colors[i]);
+			auto color = std::make_shared<CM2_Part_Color>(m_M2Object, File, m2Colors[i]);
 			m_Colors.push_back(color);
 
 			// Animated
@@ -40,7 +40,7 @@ void CM2_Comp_Materials::Load(const SM2_Header& M2Header, const std::shared_ptr<
 		SM2_Material* m2Materials = (SM2_Material*)(File->getData() + M2Header.materials.offset);
 		for (uint32 i = 0; i < M2Header.materials.size; i++)
 		{
-			std::shared_ptr<CM2_Part_Material> material = std::make_shared<CM2_Part_Material>(m_M2Object.GetBaseManager(), m_M2Object.GetRenderDevice(), m_M2Object, m2Materials[i]);
+			auto material = std::make_shared<CM2_Part_Material>(m_M2Object.GetBaseManager(), m_M2Object.GetRenderDevice(), m_M2Object, m2Materials[i]);
 			m_Materials.push_back(material);
 		}
 	}
@@ -53,7 +53,7 @@ void CM2_Comp_Materials::Load(const SM2_Header& M2Header, const std::shared_ptr<
 		SM2_Texture* m2Textures = (SM2_Texture*)(File->getData() + M2Header.textures.offset);
 		for (uint32 i = 0; i < M2Header.textures.size; i++)
 		{
-			std::shared_ptr<CM2_Part_Texture> texture = std::make_shared<CM2_Part_Texture>(m_M2Object.GetBaseManager(), m_M2Object.GetRenderDevice(), m_M2Object, File, m2Textures[i]);
+			auto texture = std::make_shared<CM2_Part_Texture>(m_M2Object.GetBaseManager(), m_M2Object.GetRenderDevice(), m_M2Object, File, m2Textures[i]);
 			m_Textures.push_back(texture);
 		}
 	}
@@ -92,7 +92,7 @@ void CM2_Comp_Materials::Load(const SM2_Header& M2Header, const std::shared_ptr<
 		SM2_TextureWeight* m2TexturesWeights = (SM2_TextureWeight*)(File->getData() + M2Header.textureWeights.offset);
 		for (uint32 i = 0; i < M2Header.textureWeights.size; i++)
 		{
-			std::shared_ptr<CM2_Part_TextureWeight> textureWeight = std::make_shared<CM2_Part_TextureWeight>(m_M2Object, File, m2TexturesWeights[i]);
+			auto textureWeight = std::make_shared<CM2_Part_TextureWeight>(m_M2Object, File, m2TexturesWeights[i]);
 			m_TextureWeights.push_back(textureWeight);
 
 			// Animated

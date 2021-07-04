@@ -26,7 +26,7 @@ Character_SectionWrapper::~Character_SectionWrapper()
 {
 }
 
-std::shared_ptr<IImage> Character_SectionWrapper::getSkinTexture(const CInet_CharacterTemplate& CharacterTemlate) const
+std::shared_ptr<IImage> Character_SectionWrapper::getSkinTexture(const SCharacterTemplate& CharacterTemlate) const
 {
 	for (const auto& i : m_DBCs->DBC_CharSections())
 	{
@@ -46,7 +46,7 @@ std::shared_ptr<IImage> Character_SectionWrapper::getSkinTexture(const CInet_Cha
 	return nullptr;
 }
 
-std::shared_ptr<IImage> Character_SectionWrapper::getSkinExtraTexture(const CInet_CharacterTemplate& CharacterTemlate) const
+std::shared_ptr<IImage> Character_SectionWrapper::getSkinExtraTexture(const SCharacterTemplate& CharacterTemlate) const
 {
 	for (const auto& i : m_DBCs->DBC_CharSections())
 	{
@@ -70,7 +70,7 @@ std::shared_ptr<IImage> Character_SectionWrapper::getSkinExtraTexture(const CIne
 //-- Face
 //------------------------------------------------------------
 
-std::shared_ptr<IImage> Character_SectionWrapper::getFaceLowerTexture(const CInet_CharacterTemplate& CharacterTemlate) const
+std::shared_ptr<IImage> Character_SectionWrapper::getFaceLowerTexture(const SCharacterTemplate& CharacterTemlate) const
 {
 	for (const auto& i : m_DBCs->DBC_CharSections())
 	{
@@ -92,7 +92,7 @@ std::shared_ptr<IImage> Character_SectionWrapper::getFaceLowerTexture(const CIne
 	return nullptr;
 }
 
-std::shared_ptr<IImage> Character_SectionWrapper::getFaceUpperTexture(const CInet_CharacterTemplate& CharacterTemlate) const
+std::shared_ptr<IImage> Character_SectionWrapper::getFaceUpperTexture(const SCharacterTemplate& CharacterTemlate) const
 {
 	for (const auto& i : m_DBCs->DBC_CharSections())
 	{
@@ -118,7 +118,7 @@ std::shared_ptr<IImage> Character_SectionWrapper::getFaceUpperTexture(const CIne
 //-- FañialHair
 //------------------------------------------------------------
 
-std::shared_ptr<IImage> Character_SectionWrapper::getFacialHairLowerTexture(const CInet_CharacterTemplate& CharacterTemlate) const
+std::shared_ptr<IImage> Character_SectionWrapper::getFacialHairLowerTexture(const SCharacterTemplate& CharacterTemlate) const
 {
 	for (const auto& i : m_DBCs->DBC_CharSections())
 	{
@@ -140,7 +140,7 @@ std::shared_ptr<IImage> Character_SectionWrapper::getFacialHairLowerTexture(cons
 	return nullptr;
 }
 
-std::shared_ptr<IImage> Character_SectionWrapper::getFacialHairUpperTexture(const CInet_CharacterTemplate& CharacterTemlate) const
+std::shared_ptr<IImage> Character_SectionWrapper::getFacialHairUpperTexture(const SCharacterTemplate& CharacterTemlate) const
 {
 	for (const auto& i : m_DBCs->DBC_CharSections())
 	{
@@ -161,7 +161,7 @@ std::shared_ptr<IImage> Character_SectionWrapper::getFacialHairUpperTexture(cons
 	return nullptr;
 }
 
-uint32 Character_SectionWrapper::getFacial01Geoset(const CInet_CharacterTemplate& CharacterTemlate) const
+uint32 Character_SectionWrapper::getFacial01Geoset(const SCharacterTemplate& CharacterTemlate) const
 {
 	for (const auto& i : m_DBCs->DBC_CharacterFacialHairStyles())
 	{
@@ -179,7 +179,7 @@ uint32 Character_SectionWrapper::getFacial01Geoset(const CInet_CharacterTemplate
 	//throw CException("Character_SectionWrapper::getFacial01Geoset: Geoset for Race '%d', Gender '%d', FacialStyle '%d'.", (uint32)CharacterTemlate.Race, (uint32)CharacterTemlate.Gender, CharacterTemlate.facialStyle);
 }
 
-uint32 Character_SectionWrapper::getFacial02Geoset(const CInet_CharacterTemplate& CharacterTemlate) const
+uint32 Character_SectionWrapper::getFacial02Geoset(const SCharacterTemplate& CharacterTemlate) const
 {
 	for (const auto& i : m_DBCs->DBC_CharacterFacialHairStyles())
 	{
@@ -197,7 +197,7 @@ uint32 Character_SectionWrapper::getFacial02Geoset(const CInet_CharacterTemplate
 	//throw CException("Character_SectionWrapper::getFacial02Geoset: Geoset for Race '%d', Gender '%d', FacialStyle '%d'.", (uint32)CharacterTemlate.Race, (uint32)CharacterTemlate.Gender, CharacterTemlate.facialStyle);
 }
 
-uint32 Character_SectionWrapper::getFacial03Geoset(const CInet_CharacterTemplate& CharacterTemlate) const
+uint32 Character_SectionWrapper::getFacial03Geoset(const SCharacterTemplate& CharacterTemlate) const
 {
 	for (const auto& i : m_DBCs->DBC_CharacterFacialHairStyles())
 	{
@@ -215,7 +215,7 @@ uint32 Character_SectionWrapper::getFacial03Geoset(const CInet_CharacterTemplate
 	//throw CException("Character_SectionWrapper::getFacial03Geoset: Geoset for Race '%d', Gender '%d', FacialStyle '%d'.", (uint32)CharacterTemlate.Race, (uint32)CharacterTemlate.Gender, CharacterTemlate.facialStyle);
 }
 
-uint32 Character_SectionWrapper::getFacial16Geoset(const CInet_CharacterTemplate& CharacterTemlate) const
+uint32 Character_SectionWrapper::getFacial16Geoset(const SCharacterTemplate& CharacterTemlate) const
 {
 	for (const auto& i : m_DBCs->DBC_CharacterFacialHairStyles())
 	{
@@ -233,7 +233,7 @@ uint32 Character_SectionWrapper::getFacial16Geoset(const CInet_CharacterTemplate
 	//throw CException("Character_SectionWrapper::getFacial16Geoset: Geoset for Race '%d', Gender '%d', FacialStyle '%d'.", (uint32)CharacterTemlate.Race, (uint32)CharacterTemlate.Gender, CharacterTemlate.facialStyle);
 }
 
-uint32 Character_SectionWrapper::getFacial17Geoset(const CInet_CharacterTemplate& CharacterTemlate) const
+uint32 Character_SectionWrapper::getFacial17Geoset(const SCharacterTemplate& CharacterTemlate) const
 {
 	for (const auto& i : m_DBCs->DBC_CharacterFacialHairStyles())
 	{
@@ -257,7 +257,7 @@ uint32 Character_SectionWrapper::getFacial17Geoset(const CInet_CharacterTemplate
 //-- Hair
 //------------------------------------------------------------
 
-uint32 Character_SectionWrapper::getHairGeoset(const CInet_CharacterTemplate& CharacterTemlate) const
+uint32 Character_SectionWrapper::getHairGeoset(const SCharacterTemplate& CharacterTemlate) const
 {
 	for (const auto& i : m_DBCs->DBC_CharHairGeosets())
 	{
@@ -275,7 +275,7 @@ uint32 Character_SectionWrapper::getHairGeoset(const CInet_CharacterTemplate& Ch
 	return UINT32_MAX;
 }
 
-uint32 Character_SectionWrapper::getHairShowScalp(const CInet_CharacterTemplate& CharacterTemlate) const
+uint32 Character_SectionWrapper::getHairShowScalp(const SCharacterTemplate& CharacterTemlate) const
 {
 	for (const auto& i : m_DBCs->DBC_CharHairGeosets())
 	{
@@ -292,7 +292,7 @@ uint32 Character_SectionWrapper::getHairShowScalp(const CInet_CharacterTemplate&
 	return UINT32_MAX;
 }
 
-std::shared_ptr<IImage> Character_SectionWrapper::getHairTexture(const CInet_CharacterTemplate& CharacterTemlate) const
+std::shared_ptr<IImage> Character_SectionWrapper::getHairTexture(const SCharacterTemplate& CharacterTemlate) const
 {
 	for (const auto& i : m_DBCs->DBC_CharSections())
 	{
@@ -315,7 +315,7 @@ std::shared_ptr<IImage> Character_SectionWrapper::getHairTexture(const CInet_Cha
 	return nullptr;
 }
 
-std::shared_ptr<IImage> Character_SectionWrapper::getHairScalpLowerTexture(const CInet_CharacterTemplate& CharacterTemlate) const
+std::shared_ptr<IImage> Character_SectionWrapper::getHairScalpLowerTexture(const SCharacterTemplate& CharacterTemlate) const
 {
 	for (const auto& i : m_DBCs->DBC_CharSections())
 	{
@@ -338,7 +338,7 @@ std::shared_ptr<IImage> Character_SectionWrapper::getHairScalpLowerTexture(const
 	return nullptr;
 }
 
-std::shared_ptr<IImage> Character_SectionWrapper::getHairScalpUpperTexture(const CInet_CharacterTemplate& CharacterTemlate) const
+std::shared_ptr<IImage> Character_SectionWrapper::getHairScalpUpperTexture(const SCharacterTemplate& CharacterTemlate) const
 {
 	for (const auto& i : m_DBCs->DBC_CharSections())
 	{
@@ -365,7 +365,7 @@ std::shared_ptr<IImage> Character_SectionWrapper::getHairScalpUpperTexture(const
 //-- NAKED
 //------------------------------------------------------------
 
-std::string Character_SectionWrapper::getNakedPelvisTexture(const CInet_CharacterTemplate& CharacterTemlate) const
+std::string Character_SectionWrapper::getNakedPelvisTexture(const SCharacterTemplate& CharacterTemlate) const
 {
 	for (const auto& i : m_DBCs->DBC_CharSections())
 	{
@@ -384,7 +384,7 @@ std::string Character_SectionWrapper::getNakedPelvisTexture(const CInet_Characte
 	return "";
 }
 
-std::string Character_SectionWrapper::getNakedTorsoTexture(const CInet_CharacterTemplate& CharacterTemlate) const
+std::string Character_SectionWrapper::getNakedTorsoTexture(const SCharacterTemplate& CharacterTemlate) const
 {
 	for (const auto& i : m_DBCs->DBC_CharSections())
 	{

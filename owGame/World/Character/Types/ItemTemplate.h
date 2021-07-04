@@ -1,32 +1,32 @@
 #pragma once
 
-struct CInet_ItemTemplate
+struct SCharacterItemTemplate
 {
-	CInet_ItemTemplate() 
-		: ItemDisplayId(0)
-		, InventoryType((uint8)DBCItem_EInventoryItemSlot::NON_EQUIP)
+	SCharacterItemTemplate() 
+		: DisplayId(0)
+		, InventoryType((uint8)DBCItem_EInventoryItemType::NON_EQUIP)
 		, EnchantAuraID(0)
 	{}
 
-	CInet_ItemTemplate(CByteBuffer& b)
+	SCharacterItemTemplate(CByteBuffer& b)
 	{
-		b >> ItemDisplayId;
+		b >> DisplayId;
 		b >> InventoryType;
 		b >> EnchantAuraID;
 	}
 
-	CInet_ItemTemplate(uint32 DisplayId, DBCItem_EInventoryItemSlot InventoryType, uint32 EnchantAuraID) 
-		: ItemDisplayId(DisplayId)
+	SCharacterItemTemplate(uint32 DisplayId, DBCItem_EInventoryItemType InventoryType, uint32 EnchantAuraID) 
+		: DisplayId(DisplayId)
 		, InventoryType((uint8)InventoryType)
 		, EnchantAuraID(EnchantAuraID)
 	{}
 	
 	void TemplatePrint()
 	{
-		Log::Print("Item(%d, (DBCItem_EInventoryItemSlot::List) %d, %d);", ItemDisplayId, InventoryType, EnchantAuraID);
+		Log::Print("Item(%d, (DBCItem_EInventoryItemType::List) %d, %d);", DisplayId, InventoryType, EnchantAuraID);
 	}
 
-	uint32					ItemDisplayId;
+	uint32					DisplayId;
 	uint8 		            InventoryType;
 	uint32					EnchantAuraID;
 };

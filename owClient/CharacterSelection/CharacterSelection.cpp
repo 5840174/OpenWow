@@ -23,10 +23,10 @@ void CWoWClientCharactedSelection::On_SMSG_CHAR_ENUM(CServerPacket & Bytes)
 
 	Log::Print("CWoWClientCharactedSelection::On_SMSG_CHAR_ENUM:: Characters count '%d'.", charCnt);
 
-	std::vector<CInet_CharacterTemplate> characters;
+	std::vector<SCharacterTemplate> characters;
 	for (uint8 i = 0; i < charCnt; i++)
 	{
-		CInet_CharacterTemplate character(Bytes);
+		SCharacterTemplate character(Bytes);
 		characters.push_back(character);
 
 		Log::Print("CWoWClientCharactedSelection::On_SMSG_CHAR_ENUM:: Character [%d] name '%s'.", i, character.Name.c_str());

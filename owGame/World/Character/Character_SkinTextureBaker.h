@@ -3,7 +3,7 @@
 #ifdef USE_M2_MODELS
 
 // FORWARD BEGIN
-class Character;
+class CCharacter;
 // FORWARD END
 
 class ZN_API Character_SkinTextureBaker
@@ -17,8 +17,8 @@ private:
 public:
 	Character_SkinTextureBaker(const IBaseManager& BaseManager);
 
-	std::shared_ptr<IImage> CreateCharacterSkinImage(const CInet_CharacterTemplate& CharacterTemlate) const;
-	std::shared_ptr<IImage> CreateCharacterSkinWithItemsImage(std::shared_ptr<IImage> CharacterSkinImage, const Character* Character) const;
+	std::shared_ptr<IImage> CreateCharacterSkinImage(const SCharacterTemplate& CharacterTemlate) const;
+	std::shared_ptr<IImage> CreateCharacterSkinWithItemsImage(std::shared_ptr<IImage> CharacterSkinImage, const CCharacter* Character) const;
 
 private:
 	void FillWithSkin(const std::unique_ptr<SRGBColor[]>& Pixels, std::shared_ptr<IImage> SkinImage, bool NeedInvertY) const;

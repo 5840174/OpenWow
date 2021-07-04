@@ -34,7 +34,7 @@ void CMapWDL::CreateInsances(const std::shared_ptr<ISceneNode>& Parent) const
 		throw CException("World[%s]: WDL: Error opening.", fileName.c_str());
 
 	// Material
-	m_LowResilutionTileMaterial = std::make_shared<CMapWDLTileMaterial>(m_Map.GetBaseManager().GetApplication().GetRenderDevice());
+	m_LowResilutionTileMaterial = MakeShared(CMapWDLTileMaterial, m_Map.GetBaseManager().GetApplication().GetRenderDevice());
 
 	// Heightmap
 	glm::vec3 lowres[17][17];
@@ -94,7 +94,7 @@ void CMapWDL::CreateInsances(const std::shared_ptr<ISceneNode>& Parent) const
 				std::shared_ptr<IGeometry> geometry = m_Map.GetBaseManager().GetApplication().GetRenderDevice().GetObjectsFactory().CreateGeometry();
 				geometry->SetVertexBuffer(vertices);
 
-				std::shared_ptr<CMapWDLTileModel> model = std::make_shared<CMapWDLTileModel>(m_Map.GetBaseManager().GetApplication().GetRenderDevice(), m_Map, i, j);
+				auto model = MakeShared(CMapWDLTileModel, m_Map.GetBaseManager().GetApplication().GetRenderDevice(), m_Map, i, j);
 				model->AddConnection(m_LowResilutionTileMaterial, geometry);
 
 				Parent->GetComponentT<IModelComponent>()->AddModel(model);

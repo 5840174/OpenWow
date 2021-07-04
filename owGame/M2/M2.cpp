@@ -107,7 +107,7 @@ bool CM2::Load()
 
 			const SM2_SkinProfile* m2Skin = (const SM2_SkinProfile*)skinFile->getData();
 
-			std::shared_ptr<CM2_Skin> skin = std::make_shared<CM2_Skin>(m_BaseManager, m_RenderDevice, *this, *m2Skin);
+			auto skin = MakeShared(CM2_Skin, m_BaseManager, m_RenderDevice, *this, *m2Skin);
 			skin->Load(m_Header, skinFile, m2Vertexes);
 			m_Skins.push_back(skin);
 			break;

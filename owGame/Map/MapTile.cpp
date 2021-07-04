@@ -197,7 +197,7 @@ bool CMapTile::Load()
 			for (const auto& stringsIt : strings)
 			{
 
-				std::shared_ptr<SMapTile_MTEX> textureInfo = std::make_shared<SMapTile_MTEX>();
+				auto textureInfo = MakeShared(SMapTile_MTEX);
 				textureInfo->textureName = stringsIt;
 
 				// PreLoad diffuse texture

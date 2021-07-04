@@ -75,7 +75,7 @@ std::shared_ptr<IFile> CMPQFilesStorage::Open(std::string FileName)
 {
 	std::lock_guard<std::mutex> lock(m_Lock);
 
-	std::shared_ptr<CFile> file = std::make_shared<CFile>(FileName, shared_from_this());
+	std::shared_ptr<CFile> file = MakeShared(CFile, FileName, shared_from_this());
 	CByteBuffer& byteBuffer = file->GetByteBuffer();
 	
 	SMPQFileLocation location = GetFileLocation(file->Path_Name());

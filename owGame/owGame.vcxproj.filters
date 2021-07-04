@@ -348,9 +348,6 @@
     <ClCompile Include="World\Character\Character_SkinTextureBaker.cpp">
       <Filter>World\Character\Helpers</Filter>
     </ClCompile>
-    <ClCompile Include="World\Items\Item_M2Instance.cpp">
-      <Filter>World\Item</Filter>
-    </ClCompile>
     <ClCompile Include="WMO\WMO_Portal_Instance.cpp">
       <Filter>WMO\Instances</Filter>
     </ClCompile>
@@ -492,7 +489,13 @@
     <ClCompile Include="M2\M2_Part_ParticleSystem.cpp">
       <Filter>M2\Parts\Parts_Miscellaneous\Particles</Filter>
     </ClCompile>
-    <ClCompile Include="World\Items\CharacterVisualItem.cpp">
+    <ClCompile Include="World\Items\CharacterItem.cpp">
+      <Filter>World\Item</Filter>
+    </ClCompile>
+    <ClCompile Include="World\Items\CharacterItemEffectM2Instance.cpp">
+      <Filter>World\Item</Filter>
+    </ClCompile>
+    <ClCompile Include="World\Items\CharacterItemM2Instance.cpp">
       <Filter>World\Item</Filter>
     </ClCompile>
   </ItemGroup>
@@ -845,9 +848,6 @@
     <ClInclude Include="World\Character\Character_SkinTextureBaker.h">
       <Filter>World\Character\Helpers</Filter>
     </ClInclude>
-    <ClInclude Include="World\Items\Item_M2Instance.h">
-      <Filter>World\Item</Filter>
-    </ClInclude>
     <ClInclude Include="DBC\Tables\DBC_Item.h">
       <Filter>DBC\Tables\Item</Filter>
     </ClInclude>
@@ -1034,7 +1034,13 @@
     <ClInclude Include="M2\M2_Part_ParticleSystem.h">
       <Filter>M2\Parts\Parts_Miscellaneous\Particles</Filter>
     </ClInclude>
-    <ClInclude Include="World\Items\CharacterVisualItem.h">
+    <ClInclude Include="World\Items\CharacterItem.h">
+      <Filter>World\Item</Filter>
+    </ClInclude>
+    <ClInclude Include="World\Items\CharacterItemEffectM2Instance.h">
+      <Filter>World\Item</Filter>
+    </ClInclude>
+    <ClInclude Include="World\Items\CharacterItemM2Instance.h">
       <Filter>World\Item</Filter>
     </ClInclude>
   </ItemGroup>

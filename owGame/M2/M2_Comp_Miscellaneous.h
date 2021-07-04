@@ -26,8 +26,8 @@ public:
 	bool IsAnimated() const { return m_HasMisc; }
 
 public:
-	bool                                                       isAttachmentExists(EM2_AttachmentType Index) const;
-	std::shared_ptr<const CM2_Part_Attachment>                 getAttachment(EM2_AttachmentType Index) const;
+	bool                                                       isAttachmentExists(EM2_AttachmentPoint Index) const;
+	std::shared_ptr<const CM2_Part_Attachment>                 getAttachment(EM2_AttachmentPoint Index) const;
 	int16                                                      getAttachmentLookup(uint32 Index) const;
 	std::shared_ptr<const CM2_Part_Attachment>                 getAttachmentDirect(int16 Index) const;
 

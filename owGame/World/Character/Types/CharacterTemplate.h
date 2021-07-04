@@ -105,12 +105,12 @@ enum CharacterCustomizeFlags : uint32
 
 #pragma pack(push, 1)
 
-struct ZN_API CInet_CharacterTemplate
+struct ZN_API SCharacterTemplate
 {
-	CInet_CharacterTemplate()
+	SCharacterTemplate()
 		// System
 		: GUID(0)
-		, Name("Default name")
+		, Name("DefaultName")
 		// Race
 		, Race(Race::Human)
 		, Class(Class::Warrior)
@@ -138,10 +138,10 @@ struct ZN_API CInet_CharacterTemplate
 		, PetFamilyId(0)
 	{
 		for (int i = 0; i < INVENTORY_SLOT_BAG_END; i++)
-			ItemsTemplates[i] = CInet_ItemTemplate();
+			ItemsTemplates[i] = SCharacterItemTemplate();
 	}
 
-	CInet_CharacterTemplate(CByteBuffer& b)
+	SCharacterTemplate(CByteBuffer& b)
 	{
 		b >> GUID;
 		b >> Name;
@@ -173,15 +173,71 @@ struct ZN_API CInet_CharacterTemplate
 		b >> PetFamilyId;
 
 		for (int i = 0; i < INVENTORY_SLOT_BAG_END; i++)
-			ItemsTemplates[i] = CInet_ItemTemplate(b);
+			ItemsTemplates[i] = SCharacterItemTemplate(b);
 	}
 
-	void TemplatePrint()
+	bool IsHasCharacterFlag(CharacterFlags Flag)
+	{
+		return Flags & Flag;
+	}
+
+	void TemplatePrint() const
 	{
 		Log::Info("Char %s, -------------------------------------------------------------", Name.c_str());
 		Log::Info("Lvl %d, Race %d, Class %d, Gender %d", Level, Race, Class, Gender);
 		Log::Info("Zone '%d', Map '%d', Pos(%f, %f, %f)", ZoneId, MapId, Position.x, Position.y, Position.z);
 		Log::Info("skin '%d', face '%d', hairStyle '%d', hairColor '%d', facialStyle '%d'", skin, face, hairStyle, hairColor, facialStyle);
+	}
+
+	void ToBase64String() const
+	{
+		CByteBuffer byteBuffer;
+		
+		byteBuffer << GUID;
+		byteBuffer << Name;
+		byteBuffer << Race;
+		byteBuffer << Class;
+		byteBuffer << Gender;
+
+		byteBuffer << skin;
+		byteBuffer << face;
+		byteBuffer << hairStyle;
+		byteBuffer << hairColor;
+		byteBuffer << facialStyle;
+
+		byteBuffer << Level;
+
+		byteBuffer << ZoneId;
+		byteBuffer << MapId;
+		byteBuffer << Position;
+
+		byteBuffer << GuildId;
+
+		byteBuffer << Flags;
+		byteBuffer << CustomizationFlags;
+
+		byteBuffer << IsFirstLogin;
+
+		byteBuffer << PetInfoId;
+		byteBuffer << PetLevel;
+		byteBuffer << PetFamilyId;
+
+		for (uint8 i = 0u; i < INVENTORY_SLOT_BAG_END; i++)
+		{
+			byteBuffer << ItemsTemplates[i].DisplayId;
+			byteBuffer << ItemsTemplates[i].InventoryType;
+			byteBuffer << ItemsTemplates[i].EnchantAuraID;
+		}
+
+		std::string string = Utils::Base64_Encode(byteBuffer.getData(), byteBuffer.getSize());
+		Log::Print("Character '%s' Base64 '%s'", Name.c_str(), string.c_str());
+	}
+
+	void FromBase64String(std::string Base64String)
+	{
+		auto bytes = Utils::Base64_Decode(Base64String);
+		CByteBuffer byteBuffer(std::move(bytes));
+		*this = SCharacterTemplate(byteBuffer);
 	}
 
 	// System
@@ -217,7 +273,7 @@ struct ZN_API CInet_CharacterTemplate
 	uint32						PetFamilyId;
 
 	// Items
-	CInet_ItemTemplate			ItemsTemplates[INVENTORY_SLOT_BAG_END];
+	SCharacterItemTemplate		ItemsTemplates[INVENTORY_SLOT_BAG_END];
 };
 
 #pragma pack(pop)

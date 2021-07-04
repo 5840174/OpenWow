@@ -9,10 +9,10 @@
 CM2_Part_Attachment::CM2_Part_Attachment(const CM2& M2Object, const std::shared_ptr<IByteBuffer>& ByteBuffer, const SM2_Attachment& M2Attachment)
 	: m_M2Object(M2Object)
 {
-	if (M2Attachment.id >= static_cast<uint32>(EM2_AttachmentType::Count))
-		throw CException("CM2_Part_Attachment::CM2_Part_Attachment: AttachmentID not is 'EM2_AttachmentType' bounds.");
+	if (M2Attachment.id >= static_cast<uint32>(EM2_AttachmentPoint::Count))
+		throw CException("CM2_Part_Attachment::CM2_Part_Attachment: AttachmentID not is 'EM2_AttachmentPoint' bounds.");
 
-	m_Type = static_cast<EM2_AttachmentType>(M2Attachment.id);
+	m_Type = static_cast<EM2_AttachmentPoint>(M2Attachment.id);
 	m_BoneIndex = M2Attachment.bone;
 	_ASSERT(m_BoneIndex != UINT16_MAX);
 

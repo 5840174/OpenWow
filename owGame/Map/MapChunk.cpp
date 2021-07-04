@@ -212,7 +212,7 @@ bool CMapChunk::Load()
 	}
 
 	// R, G, B - alphas, A - shadow
-	auto blendBuff = std::make_shared<CImageBase>("", 64, 64, 32, true);
+	auto blendBuff = MakeShared(CImageBase, "", 64, 64, 32, true);
 
 	// Shadows (MCSH)
 	if (m_Header.flags.has_mcsh)
@@ -396,7 +396,7 @@ bool CMapChunk::Load()
 		return true;
 
 	// Material
-	std::shared_ptr<CMapChunkMaterial> mapChunkMaterial = std::make_shared<CMapChunkMaterial>(GetRenderDevice());
+	std::shared_ptr<CMapChunkMaterial> mapChunkMaterial = MakeShared(CMapChunkMaterial, GetRenderDevice());
 
 #if 0
 	// Create chunk texture

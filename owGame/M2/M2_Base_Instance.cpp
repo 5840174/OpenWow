@@ -10,7 +10,7 @@ CM2_Base_Instance::CM2_Base_Instance(IScene& Scene, const std::shared_ptr<CM2>& 
 	: CSceneNode(Scene)
 	, CLoadableObject(M2Object)
 	, m_M2(M2Object)
-	, m_AttachmentType(EM2_AttachmentType::NotAttached)
+	, m_AttachmentType(EM2_AttachmentPoint::NotAttached)
 	, m_Color(glm::vec4(1.0f, 1.0f, 1.0f, 1.0f))
 	, m_Alpha(1.0f)
 {
@@ -37,18 +37,18 @@ const CM2& CM2_Base_Instance::getM2() const
 	return *m_M2;
 }
 
-void CM2_Base_Instance::Attach(EM2_AttachmentType AttachmentType)
+void CM2_Base_Instance::Attach(EM2_AttachmentPoint AttachmentType)
 {
 	m_AttachmentType = AttachmentType;
 }
 void CM2_Base_Instance::Detach()
 {
-	m_AttachmentType = EM2_AttachmentType::NotAttached;
+	m_AttachmentType = EM2_AttachmentPoint::NotAttached;
 }
 
 void CM2_Base_Instance::UpdateAttachPositionAfterSkeletonUpdate()
 {
-	if (m_AttachmentType == EM2_AttachmentType::NotAttached)
+	if (m_AttachmentType == EM2_AttachmentPoint::NotAttached)
 		return;
 
 	UpdateLocalTransform();
@@ -122,13 +122,13 @@ void CM2_Base_Instance::Accept(IVisitor* visitor)
 bool CM2_Base_Instance::Load()
 {
 	if (getM2().isAnimated())
-		m_Animator = std::make_shared<CM2_Animator>(GetBaseManager(), getM2());
+		m_Animator = MakeShared(CM2_Animator, GetBaseManager(), getM2());
 
 	if (getM2().getSkeleton().hasBones())
-		m_SkeletonComponent = AddComponentT(std::make_shared<CM2SkeletonComponent3D>(*this));
+		m_SkeletonComponent = AddComponentT(MakeShared(CM2SkeletonComponent3D, *this));
 
 #ifdef USE_M2_PARTICLES
-	m_ParticleComponent = AddComponentT(std::make_shared<CM2ParticlesComponent>(*this));
+	m_ParticleComponent = AddComponentT(MakeShared(CM2ParticlesComponent, *this));
 #endif
 
 	UpdateLocalTransform();
@@ -149,7 +149,7 @@ bool CM2_Base_Instance::Delete()
 //
 glm::mat4 CM2_Base_Instance::CalculateLocalTransform() const
 {
-	if (m_AttachmentType != EM2_AttachmentType::NotAttached)
+	if (m_AttachmentType != EM2_AttachmentPoint::NotAttached)
 	{
 		if (auto parent = GetParent())
 		{

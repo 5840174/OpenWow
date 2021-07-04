@@ -22,7 +22,7 @@ public:
 	// CM2_Base_Instance
 	const CM2&                          getM2() const;
 
-	void                                Attach(EM2_AttachmentType AttachmentType);
+	void                                Attach(EM2_AttachmentPoint AttachmentType);
 	void                                Detach();
 	void                                UpdateAttachPositionAfterSkeletonUpdate();
 
@@ -59,7 +59,7 @@ protected:
 
 private:
 	// This M2Instance attached to parent
-	EM2_AttachmentType                   m_AttachmentType;
+	EM2_AttachmentPoint                   m_AttachmentType;
 
 	// Color & Alpha
 	glm::vec4                           m_Color;

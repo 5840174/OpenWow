@@ -22,7 +22,7 @@ CM2_Animator::CM2_Animator(const IBaseManager& BaseManager, const CM2& M2Model)
 			const DBC_AnimationDataRecord* dbcAnimationRecord = BaseManager.GetManager<CDBCStorage>()->DBC_AnimationData()[sequence.__animID];
 			_ASSERT(dbcAnimationRecord != nullptr);
 
-			m_Animations.insert(std::make_pair(sequence.__animID, std::make_shared<CM2_Animation>(m_M2Model, sequence, dbcAnimationRecord->Get_Name(), j)));
+			m_Animations.insert(std::make_pair(sequence.__animID, MakeShared(CM2_Animation, m_M2Model, sequence, dbcAnimationRecord->Get_Name(), j)));
 		}
 	}
 

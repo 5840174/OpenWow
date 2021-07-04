@@ -42,7 +42,7 @@ CWoWWorld::~CWoWWorld()
 {
 }
 
-void CWoWWorld::EnterWorld(const CInet_CharacterTemplate& SelectedCharacter)
+void CWoWWorld::EnterWorld(const SCharacterTemplate& SelectedCharacter)
 {
 	CClientPacket p(CMSG_PLAYER_LOGIN);
 	p << SelectedCharacter.GUID;

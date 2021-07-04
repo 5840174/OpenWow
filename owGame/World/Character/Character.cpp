@@ -9,45 +9,39 @@
 #include "Character_SectionWrapper.h"
 #include "Character_SkinTextureBaker.h"
 
-Character::Character(IScene& Scene, const std::shared_ptr<CM2>& M2Object)
+CCharacter::CCharacter(IScene& Scene, const std::shared_ptr<CM2>& M2Object)
 	: Creature(Scene, M2Object)
 	, m_IsNPCBakedTexturePresent(false)
 {
-	for (uint32 i = 0; i < (size_t)MeshIDType::Count; i++)
+	for (uint32 i = 0; i < (size_t)EM2GeosetType::Count; i++)
 		m_MeshID[i] = 1;
 
-	setMeshEnabled(MeshIDType::Ears07, (uint32)EarsStyles::Enabled);
-	setMeshEnabled(MeshIDType::Eyeglows17, (uint32)EyeglowsStyles::Racial);
+	setMeshEnabled(EM2GeosetType::Ears07, (uint32)EarsStyles::Enabled);
+	setMeshEnabled(EM2GeosetType::Eyeglows17, (uint32)EyeglowsStyles::Racial);
 }
 
-Character::~Character()
+CCharacter::~CCharacter()
 {}
 
-void Character::RefreshItemVisualData()
+void CCharacter::RefreshCharacterItemsFromTemplate()
 {
-	for (uint32 i = 0; i < INVENTORY_SLOT_BAG_END; i++)
-	{
-		DBCItem_EInventoryItemSlot itemInventoryType = static_cast<DBCItem_EInventoryItemSlot>(i);
-		const auto& itemVisualData = m_VisualItems[itemInventoryType];
-		
-		itemVisualData->Template() = m_Template.ItemsTemplates[i];
-		GetBaseManager().GetManager<ILoader>()->AddToLoadQueue(itemVisualData);
+	for (uint32 inventorySlot = 0; inventorySlot < INVENTORY_SLOT_BAG_END; inventorySlot++)
+	{	
+		SetItem(inventorySlot, m_Template.ItemsTemplates[inventorySlot]);
 	}
 }
 
-void Character::Refresh_CreateSkinTexture(std::shared_ptr<IImage> BakedSkinImage)
+void CCharacter::Refresh_CreateSkinTexture(std::shared_ptr<IImage> BakedSkinImage)
 {
-	if (m_BackedSkinImage == nullptr)
+	if (BakedSkinImage != nullptr)
 	{
-		if (BakedSkinImage != nullptr)
-		{
-			m_IsNPCBakedTexturePresent = true;
-			m_BackedSkinImage = BakedSkinImage;
-		}
-		else
-		{
-			m_BackedSkinImage = Character_SkinTextureBaker(GetBaseManager()).CreateCharacterSkinImage(GetTemplate());
-		}
+		m_IsNPCBakedTexturePresent = true;
+		m_BackedSkinImage = BakedSkinImage;
+	}
+	else
+	{
+		m_IsNPCBakedTexturePresent = false;
+		m_BackedSkinImage = Character_SkinTextureBaker(GetBaseManager()).CreateCharacterSkinImage(GetTemplate());
 	}
 
 	Character_SectionWrapper sectionWrapper(GetBaseManager());
@@ -57,7 +51,7 @@ void Character::Refresh_CreateSkinTexture(std::shared_ptr<IImage> BakedSkinImage
 	setSpecialTexture(SM2_Texture::Type::CHAR_HAIR,  GetBaseManager().GetManager<IznTexturesFactory>()->LoadTexture2D(sectionWrapper.getHairTexture(GetTemplate())));
 }
 
-void Character::Refresh_AddItemsToSkinTexture()
+void CCharacter::Refresh_AddItemsToSkinTexture()
 {
 	if (false == m_IsNPCBakedTexturePresent) // NCPBakedTexture already contains all items
 	{
@@ -66,54 +60,50 @@ void Character::Refresh_AddItemsToSkinTexture()
 	}
 
 	// Cloak is special texture
-	auto& cloakVisualItem = m_VisualItems[static_cast<DBCItem_EInventoryItemSlot>(EQUIPMENT_SLOT_BACK)];
-	if (cloakVisualItem->GetTemplate().InventoryType != (uint8)DBCItem_EInventoryItemSlot::NON_EQUIP)
+	const auto& cloakVisualItem = m_CharacterItems[EQUIPMENT_SLOT_BACK];
+	if (cloakVisualItem->GetTemplate().InventoryType != (uint8)DBCItem_EInventoryItemType::NON_EQUIP)
 	{
-		if (cloakVisualItem->getObjectComponents().size() != 1)
-			return;
-		auto cloackImage = cloakVisualItem->getObjectComponents()[0].texture;
+		if (cloakVisualItem->GetModels().size() != 1)
+			throw CException("Character::Refresh_AddItemsToSkinTexture: Cape must contains one object component.");
+
+		auto cloackImage = cloakVisualItem->GetModels()[0].texture;
 		setSpecialTexture(SM2_Texture::Type::OBJECT_SKIN, GetBaseManager().GetManager<IznTexturesFactory>()->LoadTexture2D(cloackImage));
 	}
 }
 
-void Character::RefreshMeshIDs()
+void CCharacter::RefreshMeshIDs()
 {
 	Character_SectionWrapper sectionWrapper(GetBaseManager());
 
-	if (sectionWrapper.getHairShowScalp(GetTemplate()))
-		setMeshEnabled(MeshIDType::SkinAndHair, 1);
-	else
-		setMeshEnabled(MeshIDType::SkinAndHair, sectionWrapper.getHairGeoset(GetTemplate()));
-
-	setMeshEnabled(MeshIDType::Facial01,   sectionWrapper.getFacial01Geoset(GetTemplate()));
-	setMeshEnabled(MeshIDType::Facial02,   sectionWrapper.getFacial02Geoset(GetTemplate()));
-	setMeshEnabled(MeshIDType::Facial03,   sectionWrapper.getFacial03Geoset(GetTemplate()));
-	setMeshEnabled(MeshIDType::Unk16,      sectionWrapper.getFacial16Geoset(GetTemplate()));
-	setMeshEnabled(MeshIDType::Eyeglows17, sectionWrapper.getFacial17Geoset(GetTemplate()));
+	setMeshEnabled(EM2GeosetType::SkinAndHair, sectionWrapper.getHairShowScalp(GetTemplate()) ? static_cast<uint32>(SkinAndHairStyles::ShowScalp) : sectionWrapper.getHairGeoset(GetTemplate()));
+	setMeshEnabled(EM2GeosetType::Facial01,    sectionWrapper.getFacial01Geoset(GetTemplate()));
+	setMeshEnabled(EM2GeosetType::Facial02,    sectionWrapper.getFacial02Geoset(GetTemplate()));
+	setMeshEnabled(EM2GeosetType::Facial03,    sectionWrapper.getFacial03Geoset(GetTemplate()));
+	setMeshEnabled(EM2GeosetType::Unk16,       sectionWrapper.getFacial16Geoset(GetTemplate()));
+	setMeshEnabled(EM2GeosetType::Eyeglows17,  sectionWrapper.getFacial17Geoset(GetTemplate()));
 
 
-	for (uint32 i = 0; i < INVENTORY_SLOT_BAG_END; i++)
+	for (size_t inventorySlot = 0; inventorySlot < INVENTORY_SLOT_BAG_END; inventorySlot++)
 	{
-		DBCItem_EInventoryItemSlot itemInventoryType = static_cast<DBCItem_EInventoryItemSlot>(i);
-		const auto& itemVisualData = m_VisualItems[itemInventoryType];
+		const auto& characterItem = m_CharacterItems[inventorySlot];
 
-		if (i == EQUIPMENT_SLOT_HEAD)
+		if (inventorySlot == EQUIPMENT_SLOT_HEAD)
 		{
-			if ((m_Template.Flags & CHARACTER_FLAG_HIDE_HELM))
+			if (m_Template.IsHasCharacterFlag(CHARACTER_FLAG_HIDE_HELM))
 			{
-				setMeshEnabled(MeshIDType::Ears07, (uint32)EarsStyles::Enabled);
+				setMeshEnabled(EM2GeosetType::Ears07, (uint32)EarsStyles::Enabled);
 				continue;
 			}
 			else
 			{
-				setMeshEnabled(MeshIDType::Ears07, (uint32)EarsStyles::None);
+				setMeshEnabled(EM2GeosetType::Ears07, (uint32)EarsStyles::None);
 			}
 		}
-		else if (i == EQUIPMENT_SLOT_BACK)
+		else if (inventorySlot == EQUIPMENT_SLOT_BACK)
 		{
-			if ((m_Template.Flags & CHARACTER_FLAG_HIDE_CLOAK))
+			if (m_Template.IsHasCharacterFlag(CHARACTER_FLAG_HIDE_CLOAK))
 			{
-				setMeshEnabled(MeshIDType::Cloak15, 1);
+				setMeshEnabled(EM2GeosetType::Cloak15, 1);
 				continue;
 			}
 			else
@@ -122,7 +112,7 @@ void Character::RefreshMeshIDs()
 			}
 		}
 
-		for (const auto& geoset : itemVisualData->getGeosetComponents())
+		for (const auto& geoset : characterItem->GetGeosets())
 		{
 			setMeshEnabled(geoset.mesh, geoset.getMeshID());
 		}
@@ -131,23 +121,51 @@ void Character::RefreshMeshIDs()
 
 
 
-void Character::setMeshEnabled(MeshIDType _type, uint32 _value)
+//
+// Items
+//
+std::shared_ptr<CCharacterItem> CCharacter::GetItem(uint8 InventorySlot) const
 {
-	if (_type >= MeshIDType::Count)
-		throw CException("Character::setMeshEnabledL: MeshType '%d' out of bounds.", (uint32)_type);
+	if (InventorySlot >= INVENTORY_SLOT_BAG_END)
+		throw CException("CCharacter::GetItem: Incorrect inventory slot '%d'.", InventorySlot);
+
+	return m_CharacterItems[InventorySlot];
+}
+
+void CCharacter::SetItem(uint8 InventorySlot, const SCharacterItemTemplate & ItemTemplate)
+{
+	if (InventorySlot >= INVENTORY_SLOT_BAG_END)
+		throw CException("CCharacter::SetItem: Incorrect inventory slot '%d'.", InventorySlot);
+
+	auto characterItem = MakeShared(CCharacterItem, getM2().GetBaseManager(), getM2().GetRenderDevice(), std::dynamic_pointer_cast<CCharacter>(shared_from_this()));
+	characterItem->Template() = ItemTemplate;
+	GetBaseManager().GetManager<ILoader>()->AddToLoadQueue(characterItem);
+
+	m_CharacterItems[InventorySlot] = characterItem;
+}
+
+
+
+//
+// Geosets
+//
+void CCharacter::setMeshEnabled(EM2GeosetType M2GeosetType, uint32 _value)
+{
+	if (M2GeosetType >= EM2GeosetType::Count)
+		throw CException("Character::setMeshEnabled: GeosetType '%d' out of bounds.", (uint32)M2GeosetType);
 
 	if (_value == UINT32_MAX)
 		return;
 
-	m_MeshID[(size_t)_type] = _value;
+	m_MeshID[(size_t)M2GeosetType] = _value;
 }
 
-bool Character::isMeshEnabled(uint32 _index) const
+bool CCharacter::isMeshEnabled(uint32 _index) const
 {
 	uint32 div100 = _index / 100;
 	uint32 mod100 = _index % 100;
 
-	//_ASSERT(div100 < MeshIDType::Count);
+	//_ASSERT(div100 < EM2GeosetType::Count);
 	_ASSERT(div100 != 6);
 	_ASSERT(div100 != 14);
 	_ASSERT(div100 != 16);
@@ -155,10 +173,10 @@ bool Character::isMeshEnabled(uint32 _index) const
 	//if (div100 == 3)
 	//	return true;
 
-	for (uint32 i = 0; i < (uint32)MeshIDType::Count; i++)
+	for (uint32 i = 0; i < (uint32)EM2GeosetType::Count; i++)
 	{
 		// Special case for skin
-		if (div100 == (uint32)MeshIDType::SkinAndHair && mod100 == 0)
+		if (div100 == (uint32)EM2GeosetType::SkinAndHair && mod100 == 0)
 		{
 			return true;
 		}
@@ -181,15 +199,12 @@ bool Character::isMeshEnabled(uint32 _index) const
 //
 // ISceneNode
 //
-void Character::Initialize()
+void CCharacter::Initialize()
 {
 	__super::Initialize();
 
 	GetColliderComponent()->SetDebugDrawColor(ColorRGBA(1.0f, 0.0f, 0.0f, 1.0f));
 	GetColliderComponent()->SetDebugDrawMode(true);
-
-	for (uint32 slot = 0; slot < INVENTORY_SLOT_BAG_END; slot++) // TODO: Move to constuctor
-		m_VisualItems[static_cast<DBCItem_EInventoryItemSlot>(slot)] = MakeShared(CCharacterVisualItem, getM2().GetBaseManager(), getM2().GetRenderDevice(), std::dynamic_pointer_cast<Character>(shared_from_this()));
 }
 
 
@@ -197,7 +212,7 @@ void Character::Initialize()
 //
 // ILoadable
 //
-bool Character::Load()
+bool CCharacter::Load()
 {
 	return __super::Load();
 }

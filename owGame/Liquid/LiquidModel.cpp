@@ -12,7 +12,7 @@ CLiquidModel::CLiquidModel(IRenderDevice& RenderDevice)
 	, m_SkyManager(nullptr)
 {
 	m_SkyManager = m_RenderDevice.GetBaseManager().GetManager<SkyManager>();
-	m_Material = std::make_shared<CLiquidMaterial>(m_RenderDevice);
+	m_Material = MakeShared(CLiquidMaterial, m_RenderDevice);
 }
 
 CLiquidModel::~CLiquidModel()

@@ -2,9 +2,10 @@
 
 #include "DBC__File.h"
 
-enum class ZN_API DBCItem_EInventoryItemSlot : uint32
+enum class ZN_API DBCItem_EInventoryItemType : uint32
 {
 	NON_EQUIP = 0,
+
 	HEAD = 1,
 	NECK = 2,
 	SHOULDERS = 3,
@@ -33,21 +34,22 @@ enum class ZN_API DBCItem_EInventoryItemSlot : uint32
 	RANGEDRIGHT = 26,
 	QUIVER = 27,
 	RELIC = 28,
+
 	__Count = 29
 };
 
-static bool isWeapon(DBCItem_EInventoryItemSlot InventoryType)
+static bool isWeapon(DBCItem_EInventoryItemType InventoryType)
 {
-	if (InventoryType == DBCItem_EInventoryItemSlot::WEAPON)
+	if (InventoryType == DBCItem_EInventoryItemType::WEAPON)
 		return true;
 
-	if (InventoryType == DBCItem_EInventoryItemSlot::TWOHWEAPON)
+	if (InventoryType == DBCItem_EInventoryItemType::TWOHWEAPON)
 		return true;
 
-	if (InventoryType == DBCItem_EInventoryItemSlot::WEAPONMAINHAND)
+	if (InventoryType == DBCItem_EInventoryItemType::WEAPONMAINHAND)
 		return true;
 
-	if (InventoryType == DBCItem_EInventoryItemSlot::WEAPONOFFHAND)
+	if (InventoryType == DBCItem_EInventoryItemType::WEAPONOFFHAND)
 		return true;
 
 	return false;
@@ -60,7 +62,7 @@ __DBC_TVALUE(uint32,                     ItemSubclassID,         3);
 __DBC_TVALUE(int32,                      SoundSubclassOverride,  4);
 __DBC_REF_ID(DBC_Material,               MaterialID,             5);
 __DBC_REF_ID(DBC_ItemDisplayInfo,        DisplayInfoID,          6);
-__DBC_TVALUE(DBCItem_EInventoryItemSlot, InventorySlot,          7);
+__DBC_TVALUE(DBCItem_EInventoryItemType, InventorySlot,          7);
 __DBC_TVALUE(uint32,                     SheathID,               8);
 
 DBC_DEF_END

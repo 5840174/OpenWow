@@ -8,7 +8,7 @@
 
 // FORWARD BEGIN
 class CWoWWorld;
-struct CInet_ItemTemplate;
+struct SCharacterItemTemplate;
 // FORWARD END
 
 enum MoveFlags
@@ -182,7 +182,7 @@ public:
 
 	std::shared_ptr<CWoWPath> m_WoWPath;
 
-	CInet_ItemTemplate GetItemDisplayInfoIDByItemID(uint32 ItemID);
+	SCharacterItemTemplate GetItemDisplayInfoIDByItemID(uint32 ItemID);
 
 protected:
 	uint32 m_MovementFlags;

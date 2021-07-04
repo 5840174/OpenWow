@@ -154,13 +154,22 @@ void CSceneWoW::Initialize()
 
 		GetCameraController()->GetCamera()->SetPosition(glm::vec3(0.0f));
 	}
-	else if (true)
+	else if (false)
 	{
 		m_WoWSkyManager->Load(0);
 
 		M2Test();
 
 		GetCameraController()->GetCamera()->SetPosition(glm::vec3(0.0f));
+	}
+	else if (true)
+	{
+		const char* charString = "vmhVAAAAAABZaWVsdAACAwABBAAFBFArEQAAOwIAANhYsUUxiSlE86YiRAAAAAAAAAAAAAAAAACrXgAAUAAAAAEAAACS8gAAAQAAAAAQ+wAAAgAAAAAk/QAAAwAAAAAAAAAAAAAAAAA8/QAABQAAAAC7/AAABgAAAAA1/QAABwAAAACC/wAACAAAAAAy/QAACQAAAACQ8gAACgAAAADQmAAACwAAAADW+QAACwAAAAD0+gAADAAAAAANCgEADAAAAABG+wAAEAAAAACY+gAAEbIAAAAAAAAAAAAAAABz+wAAGgAAAAAAAAAAAAAAAADchwAAEgAAAADchwAAEgAAAADchwAAEgAAAADchwAAEgAAAAA=";
+		SCharacterTemplate character;
+		character.FromBase64String(charString);
+
+		CWorldObjectCreator creator(GetBaseManager());
+		auto creature = creator.BuildCharacterFromTemplate(GetRenderDevice(), *this, character);
 	}
 	else
 	{

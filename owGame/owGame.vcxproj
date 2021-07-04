@@ -139,8 +139,9 @@
     <ClCompile Include="World\Creature\Creature.cpp" />
     <ClCompile Include="World\GameObject\GameObjectM2.cpp" />
     <ClCompile Include="World\GameObject\GameObjectWMO.cpp" />
-    <ClCompile Include="World\Items\Item_M2Instance.cpp" />
-    <ClCompile Include="World\Items\CharacterVisualItem.cpp" />
+    <ClCompile Include="World\Items\CharacterItemEffectM2Instance.cpp" />
+    <ClCompile Include="World\Items\CharacterItemM2Instance.cpp" />
+    <ClCompile Include="World\Items\CharacterItem.cpp" />
     <ClCompile Include="World\WorldObjectsCreator.cpp" />
     <ClCompile Include="WoWChunkReader.cpp" />
   </ItemGroup>
@@ -316,8 +317,9 @@
     <ClInclude Include="World\Creature\Creature.h" />
     <ClInclude Include="World\GameObject\GameObjectM2.h" />
     <ClInclude Include="World\GameObject\GameObjectWMO.h" />
-    <ClInclude Include="World\Items\Item_M2Instance.h" />
-    <ClInclude Include="World\Items\CharacterVisualItem.h" />
+    <ClInclude Include="World\Items\CharacterItemEffectM2Instance.h" />
+    <ClInclude Include="World\Items\CharacterItemM2Instance.h" />
+    <ClInclude Include="World\Items\CharacterItem.h" />
     <ClInclude Include="World\MeshIDEnums.h" />
     <ClInclude Include="World\WorldObjectsCreator.h" />
     <ClInclude Include="WoWChunkReader.h" />

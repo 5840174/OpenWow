@@ -50,34 +50,32 @@ std::shared_ptr<Creature> CWorldObjectCreator::BuildCreatureFromDisplayInfo(IRen
 	return newCreature;
 }
 
-std::shared_ptr<Character> CWorldObjectCreator::BuildCharacterFromTemplate(IRenderDevice& RenderDevice, IScene& Scene, const CInet_CharacterTemplate& b, const std::shared_ptr<ISceneNode>& Parent)
+std::shared_ptr<CCharacter> CWorldObjectCreator::BuildCharacterFromTemplate(IRenderDevice& RenderDevice, IScene& Scene, const SCharacterTemplate& b, const std::shared_ptr<ISceneNode>& Parent)
 {
 	// 1. Load model
-	std::shared_ptr<CM2> m2Model = CreateCharacterModel(RenderDevice, b);
-	if (m2Model == nullptr)
+	auto characterM2Model = CreateCharacterModel(RenderDevice, b);
+	if (characterM2Model == nullptr)
 		return nullptr;
 
-	std::shared_ptr<Character> newCharacter = ((Parent != nullptr) ? Parent : Scene.GetRootSceneNode())->CreateSceneNode<Character>(m2Model);
-	m_BaseManager.GetManager<ILoader>()->AddToLoadQueue(newCharacter);
+	std::shared_ptr<CCharacter> characterM2Instance = ((Parent != nullptr) ? Parent : Scene.GetRootSceneNode())->CreateSceneNode<CCharacter>(characterM2Model);
+	m_BaseManager.GetManager<ILoader>()->AddToLoadQueue(characterM2Instance);
 
 	// 2. Template
-	{
-		newCharacter->Template() = b;
-	}
+	characterM2Instance->Template() = b;
 
 	// 3. Items
-	newCharacter->RefreshItemVisualData();
+	characterM2Instance->RefreshCharacterItemsFromTemplate();
 
 	// 4. Character textures
-	newCharacter->Refresh_CreateSkinTexture(nullptr);
+	characterM2Instance->Refresh_CreateSkinTexture(nullptr);
 
 	// 5. Geosets
-	newCharacter->RefreshMeshIDs();
+	characterM2Instance->RefreshMeshIDs();
 
-	return newCharacter;
+	return characterM2Instance;
 }
 
-std::shared_ptr<Character> CWorldObjectCreator::BuildCharacterFromDisplayInfo(IRenderDevice& RenderDevice, IScene& Scene, uint32 _id, const std::shared_ptr<ISceneNode>& Parent)
+std::shared_ptr<CCharacter> CWorldObjectCreator::BuildCharacterFromDisplayInfo(IRenderDevice& RenderDevice, IScene& Scene, uint32 _id, const std::shared_ptr<ISceneNode>& Parent)
 {
 	const DBC_CreatureDisplayInfoRecord* rec = m_DBCs->DBC_CreatureDisplayInfo()[_id];
 	if (rec == nullptr)
@@ -89,68 +87,64 @@ std::shared_ptr<Character> CWorldObjectCreator::BuildCharacterFromDisplayInfo(IR
 		throw CException("CWorldObjectCreator::BuildCharacterFromDisplayInfo: CreatureDisplayInfoExtra '%d' for CreatureDisplayInfo '%d'.", humanoidRecExtra, _id);
 
 	// 1. Load model
-	auto m2Model = CreateCreatureModel(RenderDevice, rec);
-	if (m2Model == nullptr)
+	auto characterM2Model = CreateCreatureModel(RenderDevice, rec);
+	if (characterM2Model == nullptr)
 		return nullptr;
 
-	std::shared_ptr<Character> newCharacter = ((Parent != nullptr) ? Parent : Scene.GetRootSceneNode())->CreateSceneNode<Character>(m2Model);
-	m_BaseManager.GetManager<ILoader>()->AddToLoadQueue(newCharacter);
+	std::shared_ptr<CCharacter> characterM2Instance = ((Parent != nullptr) ? Parent : Scene.GetRootSceneNode())->CreateSceneNode<CCharacter>(characterM2Model);
+	m_BaseManager.GetManager<ILoader>()->AddToLoadQueue(characterM2Instance);
 
 	// 2. Template
 	{
-		CInet_CharacterTemplate characterTemplate;
-
 		// 2.1 Visual params
-		characterTemplate.Race = (Race)m_DBCs->DBC_ChrRaces()[humanoidRecExtra->Get_Race()]->Get_ID();
-		characterTemplate.Gender = (Gender)humanoidRecExtra->Get_Gender();
-		characterTemplate.skin = humanoidRecExtra->Get_SkinID();
-		characterTemplate.face = humanoidRecExtra->Get_FaceID();
-		characterTemplate.hairStyle = humanoidRecExtra->Get_HairStyleID();
-		characterTemplate.hairColor = humanoidRecExtra->Get_HairColorID();
-		characterTemplate.facialStyle = humanoidRecExtra->Get_FacialHairID();
+		characterM2Instance->Template().Race = static_cast<Race>(m_DBCs->DBC_ChrRaces()[humanoidRecExtra->Get_Race()]->Get_ID());
+		characterM2Instance->Template().Gender = static_cast<Gender>(humanoidRecExtra->Get_Gender());
+		characterM2Instance->Template().skin = humanoidRecExtra->Get_SkinID();
+		characterM2Instance->Template().face = humanoidRecExtra->Get_FaceID();
+		characterM2Instance->Template().hairStyle = humanoidRecExtra->Get_HairStyleID();
+		characterM2Instance->Template().hairColor = humanoidRecExtra->Get_HairColorID();
+		characterM2Instance->Template().facialStyle = humanoidRecExtra->Get_FacialHairID();
 
 		// 2.2 Items
-		characterTemplate.ItemsTemplates[EQUIPMENT_SLOT_HEAD] = CInet_ItemTemplate(humanoidRecExtra->Get_Helm(), DBCItem_EInventoryItemSlot::HEAD, 0);
-		characterTemplate.ItemsTemplates[EQUIPMENT_SLOT_SHOULDERS] = CInet_ItemTemplate(humanoidRecExtra->Get_Shoulder(), DBCItem_EInventoryItemSlot::SHOULDERS, 0);
-		characterTemplate.ItemsTemplates[EQUIPMENT_SLOT_BODY] = CInet_ItemTemplate(humanoidRecExtra->Get_Shirt(), DBCItem_EInventoryItemSlot::BODY, 0);
-		characterTemplate.ItemsTemplates[EQUIPMENT_SLOT_CHEST] = CInet_ItemTemplate(humanoidRecExtra->Get_Chest(), DBCItem_EInventoryItemSlot::CHEST, 0);
-		characterTemplate.ItemsTemplates[EQUIPMENT_SLOT_WAIST] = CInet_ItemTemplate(humanoidRecExtra->Get_Belt(), DBCItem_EInventoryItemSlot::WAIST, 0);
-		characterTemplate.ItemsTemplates[EQUIPMENT_SLOT_LEGS] = CInet_ItemTemplate(humanoidRecExtra->Get_Legs(), DBCItem_EInventoryItemSlot::LEGS, 0);
-		characterTemplate.ItemsTemplates[EQUIPMENT_SLOT_FEET] = CInet_ItemTemplate(humanoidRecExtra->Get_Boots(), DBCItem_EInventoryItemSlot::FEET, 0);
-		characterTemplate.ItemsTemplates[EQUIPMENT_SLOT_WRISTS] = CInet_ItemTemplate(humanoidRecExtra->Get_Wrist(), DBCItem_EInventoryItemSlot::WRISTS, 0);
-		characterTemplate.ItemsTemplates[EQUIPMENT_SLOT_HANDS] = CInet_ItemTemplate(humanoidRecExtra->Get_Gloves(), DBCItem_EInventoryItemSlot::HANDS, 0);
-		characterTemplate.ItemsTemplates[EQUIPMENT_SLOT_TABARD] = CInet_ItemTemplate(humanoidRecExtra->Get_Tabard(), DBCItem_EInventoryItemSlot::TABARD, 0);
-		//ItemsTemplates[EQUIPMENT_SLOT_BACK] = CInet_ItemTemplate(humanoidRecExtra->Get_Cape(), DBCItem_EInventoryItemSlot::CLOAK, 0);
-
-		newCharacter->Template() = characterTemplate;
+		characterM2Instance->Template().ItemsTemplates[EQUIPMENT_SLOT_HEAD] = SCharacterItemTemplate(humanoidRecExtra->Get_Helm(), DBCItem_EInventoryItemType::HEAD, 0);
+		characterM2Instance->Template().ItemsTemplates[EQUIPMENT_SLOT_SHOULDERS] = SCharacterItemTemplate(humanoidRecExtra->Get_Shoulder(), DBCItem_EInventoryItemType::SHOULDERS, 0);
+		characterM2Instance->Template().ItemsTemplates[EQUIPMENT_SLOT_BODY] = SCharacterItemTemplate(humanoidRecExtra->Get_Shirt(), DBCItem_EInventoryItemType::BODY, 0);
+		characterM2Instance->Template().ItemsTemplates[EQUIPMENT_SLOT_CHEST] = SCharacterItemTemplate(humanoidRecExtra->Get_Chest(), DBCItem_EInventoryItemType::CHEST, 0);
+		characterM2Instance->Template().ItemsTemplates[EQUIPMENT_SLOT_WAIST] = SCharacterItemTemplate(humanoidRecExtra->Get_Belt(), DBCItem_EInventoryItemType::WAIST, 0);
+		characterM2Instance->Template().ItemsTemplates[EQUIPMENT_SLOT_LEGS] = SCharacterItemTemplate(humanoidRecExtra->Get_Legs(), DBCItem_EInventoryItemType::LEGS, 0);
+		characterM2Instance->Template().ItemsTemplates[EQUIPMENT_SLOT_FEET] = SCharacterItemTemplate(humanoidRecExtra->Get_Boots(), DBCItem_EInventoryItemType::FEET, 0);
+		characterM2Instance->Template().ItemsTemplates[EQUIPMENT_SLOT_WRISTS] = SCharacterItemTemplate(humanoidRecExtra->Get_Wrist(), DBCItem_EInventoryItemType::WRISTS, 0);
+		characterM2Instance->Template().ItemsTemplates[EQUIPMENT_SLOT_HANDS] = SCharacterItemTemplate(humanoidRecExtra->Get_Gloves(), DBCItem_EInventoryItemType::HANDS, 0);
+		characterM2Instance->Template().ItemsTemplates[EQUIPMENT_SLOT_TABARD] = SCharacterItemTemplate(humanoidRecExtra->Get_Tabard(), DBCItem_EInventoryItemType::TABARD, 0);
+		characterM2Instance->Template().ItemsTemplates[EQUIPMENT_SLOT_BACK] = SCharacterItemTemplate(humanoidRecExtra->Get_Cape(), DBCItem_EInventoryItemType::CLOAK, 0);
 	}
 
 	// 3. Items
-	newCharacter->RefreshItemVisualData();
+	characterM2Instance->RefreshCharacterItemsFromTemplate();
 
 	// 4. Creature textures
-	newCharacter->Refresh_CreateSkinTexture(m_BaseManager.GetManager<IImagesFactory>()->CreateImage("Textures\\BakedNpcTextures\\" + humanoidRecExtra->Get_BakedSkin()));
+	characterM2Instance->Refresh_CreateSkinTexture(m_BaseManager.GetManager<IImagesFactory>()->CreateImage("Textures\\BakedNpcTextures\\" + humanoidRecExtra->Get_BakedSkin()));
 
 	// 5. Geosets
-	newCharacter->RefreshMeshIDs();
+	characterM2Instance->RefreshMeshIDs();
 
-	return newCharacter;
+	return characterM2Instance;
 }
 
-std::shared_ptr<Character> CWorldObjectCreator::BuildEmptyCharacterFromDisplayInfo(IRenderDevice & RenderDevice, IScene & Scene, uint32 _id, const std::shared_ptr<ISceneNode>& Parent)
+std::shared_ptr<CCharacter> CWorldObjectCreator::BuildEmptyCharacterFromDisplayInfo(IRenderDevice & RenderDevice, IScene & Scene, uint32 _id, const std::shared_ptr<ISceneNode>& Parent)
 {
 	const DBC_CreatureDisplayInfoRecord* rec = m_DBCs->DBC_CreatureDisplayInfo()[_id];
 	if (rec == nullptr)
 		throw CException("CWorldObjectCreator::BuildCharacterFromDisplayInfo: CreatureDisplayInfo don't contains id '%d'.", _id);
 
 	// 1. Load model
-	auto m2Model = CreateCreatureModel(RenderDevice, rec);
-	if (m2Model == nullptr)
+	auto characterM2Model = CreateCreatureModel(RenderDevice, rec);
+	if (characterM2Model == nullptr)
 		return nullptr;
 
-	std::shared_ptr<Character> newCharacter = ((Parent != nullptr) ? Parent : Scene.GetRootSceneNode())->CreateSceneNode<Character>(m2Model);
-	m_BaseManager.GetManager<ILoader>()->AddToLoadQueue(newCharacter);
-	return newCharacter;
+	std::shared_ptr<CCharacter> characterM2Instance = ((Parent != nullptr) ? Parent : Scene.GetRootSceneNode())->CreateSceneNode<CCharacter>(characterM2Model);
+	m_BaseManager.GetManager<ILoader>()->AddToLoadQueue(characterM2Instance);
+	return characterM2Instance;
 }
 
 std::shared_ptr<ISceneNode> CWorldObjectCreator::BuildGameObjectFromDisplayInfo(IRenderDevice& RenderDevice, IScene& Scene, uint32 _id, const std::shared_ptr<ISceneNode>& Parent)
@@ -335,7 +329,7 @@ std::shared_ptr<CM2> CWorldObjectCreator::CreateCreatureModel(IRenderDevice& Ren
 	return LoadM2(RenderDevice, modelName);
 }
 
-std::shared_ptr<CM2> CWorldObjectCreator::CreateCharacterModel(IRenderDevice& RenderDevice, const CInet_CharacterTemplate& CharacterTemplate)
+std::shared_ptr<CM2> CWorldObjectCreator::CreateCharacterModel(IRenderDevice& RenderDevice, const SCharacterTemplate& CharacterTemplate)
 {
 	std::string modelClientFileString = m_DBCs->DBC_ChrRaces()[(size_t)CharacterTemplate.Race]->Get_ClientFileString();
 	std::string modelGender = (CharacterTemplate.Gender == Gender::Male) ? "Male" : "Female";

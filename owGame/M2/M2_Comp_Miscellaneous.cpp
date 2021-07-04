@@ -94,22 +94,20 @@ void CM2_Comp_Miscellaneous::Load(const SM2_Header& M2Header, const std::shared_
 		// Animated
 		m_HasMisc = true;
 	}
-
 #endif
+
 	// Particle systems
 	if (M2Header.particle_emitters.size > 0)
 	{
 		const SM2_Particle* m2ParticleSystems = (const SM2_Particle*)(File->getData() + M2Header.particle_emitters.offset);
 		for (uint32 i = 0; i < M2Header.particle_emitters.size; i++)
 		{
-			m_ParticleSystems.push_back(std::make_shared<CM2_Part_ParticleSystem>(m_M2Object, File, m2ParticleSystems[i]));
+			m_ParticleSystems.push_back(MakeShared(CM2_Part_ParticleSystem, m_M2Object, File, m2ParticleSystems[i]));
 		}
 
 		// Animated
 		m_HasMisc = true;
 	}
-
-
 }
 
 
@@ -117,7 +115,7 @@ void CM2_Comp_Miscellaneous::Load(const SM2_Header& M2Header, const std::shared_
 
 
 
-bool CM2_Comp_Miscellaneous::isAttachmentExists(EM2_AttachmentType Index) const
+bool CM2_Comp_Miscellaneous::isAttachmentExists(EM2_AttachmentPoint Index) const
 {
 	if (static_cast<uint32>(Index) >= static_cast<uint32>(m_AttachmentsLookup.size()))
 		return false;
@@ -125,7 +123,7 @@ bool CM2_Comp_Miscellaneous::isAttachmentExists(EM2_AttachmentType Index) const
 	return (newIndex != -1) && (newIndex < static_cast<int16>(m_Attachments.size()));
 }
 
-std::shared_ptr<const CM2_Part_Attachment> CM2_Comp_Miscellaneous::getAttachment(EM2_AttachmentType Index) const
+std::shared_ptr<const CM2_Part_Attachment> CM2_Comp_Miscellaneous::getAttachment(EM2_AttachmentPoint Index) const
 {
 	int16 directIndex = getAttachmentLookup(static_cast<uint32>(Index));
 	if (directIndex == -1)

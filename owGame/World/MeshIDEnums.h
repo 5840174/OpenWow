@@ -2,7 +2,7 @@
 
 #ifdef USE_M2_MODELS
 
-enum class MeshIDType : uint8
+enum class EM2GeosetType : uint8
 {
 	SkinAndHair = 0,// 0: Skin // Hair {1 - 21: various hairstyles}
 	Facial01,		// 01** Facial1                         : {1 - 8: varies} (usually beard, but not always)
@@ -28,6 +28,12 @@ enum class MeshIDType : uint8
 
 	UNK             = 21,
 	Count           = UNK
+};
+
+//00**
+enum class SkinAndHairStyles : uint8
+{
+	ShowScalp = 1
 };
 
 //07**

@@ -100,7 +100,7 @@ CM2SkeletonComponent3D::CM2SkeletonComponent3D(const CM2_Base_Instance& OwnerNod
 	: CComponentBase(OwnerNode)
 {
 	for (const auto& m2Bone : OwnerNode.getM2().getSkeleton().GetBones())
-		m_Bones.push_back(std::make_shared<CM2SkeletonBone3D>(m2Bone));
+		m_Bones.push_back(MakeShared(CM2SkeletonBone3D, m2Bone));
 
 	for (const auto& bone : m_Bones)
 		bone->SetParentAndChildsInternals(m_Bones);
