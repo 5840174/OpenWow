@@ -176,6 +176,8 @@ public:
 	// ISceneNode
 	void Update(const UpdateEventArgs& e) override;
 
+	void ReadMovementInfoPacket(CByteBuffer& Bytes);
+
 public:
 	static std::shared_ptr<WoWUnit> Create(CWoWWorld& WoWWorld, IScene& Scene, CWoWGuid Guid);
 	virtual void Destroy() override;

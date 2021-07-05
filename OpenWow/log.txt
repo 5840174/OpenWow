@@ -71,29 +71,137 @@
 ~Loading shader 'shaders_D3D/WMO.hlsl':'PS_main'.
 ~Loading shader 'shaders_D3D/M2.hlsl':'VS_main'.
 ~Loading shader 'shaders_D3D/M2.hlsl':'PS_main'.
-~Loading shader 'shaders_D3D/M2Particle.hlsl':'VS_main'.
-~Loading shader 'shaders_D3D/M2Particle.hlsl':'GS_Billboard'.
-~Loading shader 'shaders_D3D/M2Particle.hlsl':'PS_main'.
 ~Loading shader '3D/BondingBox.hlsl':'VS_main_Inst'.
 ~Loading shader '3D/BondingBox.hlsl':'PS_main'.
 ~Loading shader 'UI/UIControlCommon.hlsl':'VS_main'.
 ~Loading shader 'UI/UIControlCommon.hlsl':'PS_main'.
 ~Loading shader 'UI/UI_Font.hlsl':'VS_main'.
 ~Loading shader 'UI/UI_Font.hlsl':'PS_main'.
-~Sky: [1768] is global sky.
- Map[DeathKnightStart]: Id = '609'. Preloading...
- Map[DeathKnightStart]: InstanceType = '0'.
- Map[DeathKnightStart]: MapType = '29'.
- Map[DeathKnightStart]: IsBattleGround = '0'.
- Map[DeathKnightStart]: Name = 'Черный оплот'.
- Map[DeathKnightStart]: AreaTableID = '0'.
- Map[DeathKnightStart]: AllianceDescr = ''.
- Map[DeathKnightStart]: HordeDescr = ''.
- Map[DeathKnightStart]: CorpseMapID = '0'.
- Map[��?Ȯ]: Id [609]. Loading...
+^All ok! Server proof equal client calculated server proof!
+^Successfully logined!!!
+^S_Realmlist: Count [1]
+^RealmType: '0', IsLocked: '0', Flag: '0x0', Name: 'Trinity', Address '127.0.0.1:8085', Population: '0,000000', CharacterCount: '1'
+^CWoWClient::OnRealmListSelected: Realm name 'Trinity'.
+@SOCKET DISCONNECTED.
+^Succes access to server!!!
+~Opcode: 'SMSG_ADDON_INFO' (0x2EF). Size: '139' not handled.
+~Opcode: 'SMSG_CLIENTCACHE_VERSION' (0x4AB). Size: '4' not handled.
+~Opcode: 'SMSG_TUTORIAL_FLAGS' (0xFD). Size: '32' not handled.
+ CWoWClientCharactedSelection::On_SMSG_CHAR_ENUM:: Characters count '1'.
+ CWoWClientCharactedSelection::On_SMSG_CHAR_ENUM:: Character [0] name 'Dktest'.
+^CWoWClient::OnCharacterSelected: Character name 'Dktest'.
+ Character 'Dktest' Base64 'DwAAAAAAAABEa3Rlc3QAAgYABgwEBQY39QcAAAAAAAAuI4VFCM4txS7YzUAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAJ8kAAAEAAAAAixkAAAIAAAAALckAAAMAAAAAAAAAAAAAAAAAJskAAAUAAAAAKckAAAYAAAAAK8kAAAcAAAAAKMkAAAgAAAAALMkAAAkAAAAAKskAAAoAAAAAwwMAAAsAAAAAwwMAAAsAAAAAAAAAAAAAAAAAAAAAAAAAAAAASsIAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgUAABIAAAAAAgUAABIAAAAAAgUAABIAAAAAAgUAABIAAAAA'
+ CTransportAnimationStorage::Initialize: Loaded records for '82' transport entries.
+~Loading shader '3D/Debug.hlsl':'VS_main'.
+~Loading shader '3D/Debug.hlsl':'PS_main'.
+~Opcode: 'SMSG_POWER_UPDATE' (0x480). Size: '7' not handled.
+~Opcode: 'SMSG_RESYNC_RUNES' (0x487). Size: '16' not handled.
+~Opcode: 'SMSG_RESYNC_RUNES' (0x487). Size: '16' not handled.
+~Opcode: 'SMSG_RESYNC_RUNES' (0x487). Size: '16' not handled.
+~Opcode: 'SMSG_RESYNC_RUNES' (0x487). Size: '16' not handled.
+~Opcode: 'SMSG_RESYNC_RUNES' (0x487). Size: '16' not handled.
+~Opcode: 'SMSG_RESYNC_RUNES' (0x487). Size: '16' not handled.
+~Opcode: 'SMSG_SET_PROFICIENCY' (0x127). Size: '5' not handled.
+~Opcode: 'SMSG_SET_PROFICIENCY' (0x127). Size: '5' not handled.
+~Opcode: 'SMSG_SET_PROFICIENCY' (0x127). Size: '5' not handled.
+~Opcode: 'SMSG_SET_PROFICIENCY' (0x127). Size: '5' not handled.
+~Opcode: 'SMSG_SET_PROFICIENCY' (0x127). Size: '5' not handled.
+~Opcode: 'SMSG_SET_PROFICIENCY' (0x127). Size: '5' not handled.
+~Opcode: 'SMSG_SET_PROFICIENCY' (0x127). Size: '5' not handled.
+~Opcode: 'SMSG_SET_FLAT_SPELL_MODIFIER' (0x266). Size: '6' not handled.
+~Opcode: 'SMSG_SET_PCT_SPELL_MODIFIER' (0x267). Size: '6' not handled.
+~Opcode: 'SMSG_SET_PROFICIENCY' (0x127). Size: '5' not handled.
+~Opcode: 'SMSG_SET_PROFICIENCY' (0x127). Size: '5' not handled.
+~Opcode: 'SMSG_SET_PROFICIENCY' (0x127). Size: '5' not handled.
+~Opcode: 'SMSG_SET_PROFICIENCY' (0x127). Size: '5' not handled.
+~Opcode: 'SMSG_SET_PROFICIENCY' (0x127). Size: '5' not handled.
+~Opcode: 'SMSG_SET_PCT_SPELL_MODIFIER' (0x267). Size: '6' not handled.
+~Opcode: 'SMSG_SET_PCT_SPELL_MODIFIER' (0x267). Size: '6' not handled.
+~Opcode: 'SMSG_SET_PCT_SPELL_MODIFIER' (0x267). Size: '6' not handled.
+~Opcode: 'SMSG_SET_PCT_SPELL_MODIFIER' (0x267). Size: '6' not handled.
+~Opcode: 'SMSG_SET_PCT_SPELL_MODIFIER' (0x267). Size: '6' not handled.
+~Opcode: 'SMSG_SET_PCT_SPELL_MODIFIER' (0x267). Size: '6' not handled.
+~Opcode: 'SMSG_SET_PCT_SPELL_MODIFIER' (0x267). Size: '6' not handled.
+~Opcode: 'SMSG_SET_PCT_SPELL_MODIFIER' (0x267). Size: '6' not handled.
+~Opcode: 'SMSG_SET_PCT_SPELL_MODIFIER' (0x267). Size: '6' not handled.
+~Opcode: 'SMSG_AURA_UPDATE' (0x496). Size: '7' not handled.
+~Opcode: 'SMSG_CANCEL_COMBAT' (0x14E). Size: '0' not handled.
+~Opcode: 'MSG_SET_DUNGEON_DIFFICULTY' (0x329). Size: '12' not handled.
+~Sky: [1] is global sky.
+ Map[Azeroth]: Id = '0'. Preloading...
+ Map[Azeroth]: InstanceType = '0'.
+ Map[Azeroth]: MapType = '0'.
+ Map[Azeroth]: IsBattleGround = '0'.
+ Map[Azeroth]: Name = 'Восточные королевства'.
+ Map[Azeroth]: AreaTableID = '0'.
+ Map[Azeroth]: AllianceDescr = ''.
+ Map[Azeroth]: HordeDescr = ''.
+ Map[Azeroth]: CorpseMapID = '-1'.
+ Map[Azeroth]: Id [0]. Loading...
 ^CMapWDL: Low WMOs count [0].
 ~MapWDT: Global WMO exists [false].
-!File 'World\Maps\DeathKnightStart\DeathKnightStart_1_0.adt' not exists.
-!File 'World\Maps\DeathKnightStart\DeathKnightStart_0_0.adt' not exists.
-!File 'World\Maps\DeathKnightStart\DeathKnightStart_1_1.adt' not exists.
-!File 'World\Maps\DeathKnightStart\DeathKnightStart_0_1.adt' not exists.
+~Opcode: 'SMSG_ACCOUNT_DATA_TIMES' (0x209). Size: '29' not handled.
+~Opcode: 'SMSG_FEATURE_SYSTEM_STATUS' (0x3C9). Size: '2' not handled.
+^MOTD: Welcome to a Trinity Core server.
+~Opcode: 'SMSG_LEARNED_DANCE_MOVES' (0x455). Size: '8' not handled.
+~Opcode: 'SMSG_CONTACT_LIST' (0x67). Size: '8' not handled.
+~Opcode: 'SMSG_BIND_POINT_UPDATE' (0x155). Size: '20' not handled.
+~Opcode: 'SMSG_TALENTS_INFO' (0x4C0). Size: '21' not handled.
+~Opcode: 'SMSG_INSTANCE_DIFFICULTY' (0x33B). Size: '8' not handled.
+~Opcode: 'SMSG_INITIAL_SPELLS' (0x12A). Size: '419' not handled.
+~Opcode: 'SMSG_SEND_UNLEARN_SPELLS' (0x41E). Size: '4' not handled.
+~Opcode: 'SMSG_ACTION_BUTTONS' (0x129). Size: '577' not handled.
+~Opcode: 'SMSG_INITIALIZE_FACTIONS' (0x122). Size: '644' not handled.
+~Opcode: 'SMSG_ALL_ACHIEVEMENT_DATA' (0x47D). Size: '1433' not handled.
+~Opcode: 'SMSG_EQUIPMENT_SET_LIST' (0x4BC). Size: '4' not handled.
+~Opcode: 'SMSG_LOGIN_SET_TIME_SPEED' (0x42). Size: '12' not handled.
+~Opcode: 'SMSG_SET_FORCED_REACTIONS' (0x2A5). Size: '4' not handled.
+~Opcode: 'SMSG_RESYNC_RUNES' (0x487). Size: '16' not handled.
+ Value '12' missed!!!!!!!!!!!!
+ Value '12' missed!!!!!!!!!!!!
+ Value '12' missed!!!!!!!!!!!!
+ Value '12' missed!!!!!!!!!!!!
+^---Create WoWGameObjectMOTransport with Type 'MoTransport', Entry '0', Counter '1'
+^---Create WoWGameObjectMOTransport with Type 'MoTransport', Entry '0', Counter '5'
+^---Create WoWGameObjectMOTransport with Type 'MoTransport', Entry '0', Counter '6'
+^---Create WoWGameObjectMOTransport with Type 'MoTransport', Entry '0', Counter '4'
+^---Create WoWGameObjectMOTransport with Type 'MoTransport', Entry '0', Counter '7'
+^---Create WoWGameObjectMOTransport with Type 'MoTransport', Entry '0', Counter '10'
+^---Create WoWGameObjectMOTransport with Type 'MoTransport', Entry '0', Counter '17'
+~Opcode: 'SMSG_INIT_WORLD_STATES' (0x2C2). Size: '78' not handled.
+~Opcode: 'SMSG_UPDATE_WORLD_STATE' (0x2C3). Size: '8' not handled.
+~Opcode: 'SMSG_UPDATE_WORLD_STATE' (0x2C3). Size: '8' not handled.
+~Opcode: 'SMSG_UPDATE_WORLD_STATE' (0x2C3). Size: '8' not handled.
+~Opcode: 'SMSG_UPDATE_WORLD_STATE' (0x2C3). Size: '8' not handled.
+~Opcode: 'SMSG_UPDATE_WORLD_STATE' (0x2C3). Size: '8' not handled.
+~Opcode: 'SMSG_UPDATE_WORLD_STATE' (0x2C3). Size: '8' not handled.
+~Opcode: 'SMSG_SPELL_GO' (0x132). Size: '36' not handled.
+~Opcode: 'SMSG_AURA_UPDATE_ALL' (0x495). Size: '18' not handled.
+~Opcode: 'SMSG_QUESTGIVER_STATUS_MULTIPLE' (0x418). Size: '4' not handled.
+^NOTIFICATION: GM mode is ON
+~Opcode: 'SMSG_AURA_UPDATE' (0x496). Size: '10' not handled.
+~Opcode: 'SMSG_AURA_UPDATE' (0x496). Size: '10' not handled.
+!WMO[WORLD\WMO\DUNGEON\LD_STRATHOLME\STRATHOLME_A.WMO]: Skybox [ENVIRONMENTS\STARS\STRATHOLMESKYBOX.MDX]
+^---Create WoWGameObjectMOTransport with Type 'MoTransport', Entry '0', Counter '2'
+~Opcode: 'SMSG_AURA_UPDATE_ALL' (0x495). Size: '18' not handled.
+^---Create WoWGameObjectMOTransport with Type 'MoTransport', Entry '0', Counter '11'
+^---Create WoWGameObjectMOTransport with Type 'MoTransport', Entry '0', Counter '17'
+^---Create WoWGameObjectMOTransport with Type 'MoTransport', Entry '0', Counter '7'
+^---Create WoWGameObjectMOTransport with Type 'MoTransport', Entry '0', Counter '4'
+^---Create WoWGameObjectMOTransport with Type 'MoTransport', Entry '0', Counter '6'
+^---Create WoWGameObjectMOTransport with Type 'MoTransport', Entry '0', Counter '2'
+^---Create WoWGameObjectMOTransport with Type 'MoTransport', Entry '0', Counter '5'
+^---Create WoWGameObjectMOTransport with Type 'MoTransport', Entry '0', Counter '11'
+@WndProc: WM_CLOSE.
+@WndProc: WM_DESTROY.
+~Scene destroyed.
+@SOCKET DISCONNECTED.
+~CAuthSocket: Deleted.
+@SOCKET DISCONNECTED.
+~~RenderWindowBase
+@SaveToLocalFile: File 'D:\OpenWow\OpenWow//settings.xml' already exists and will be removed.
+^LoaderThread: Stopped.
+^LoaderThread: Stopped.
+^LoaderThread: Stopped.
+^LoaderThread: Stopped.
+^DeleterThread: Stopped.

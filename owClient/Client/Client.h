@@ -16,13 +16,16 @@ public:
 	CWoWClient(IScene& Scene, const std::string& AuthServerHost, uint16 AuthServerPort = 3724);
 	virtual ~CWoWClient();
 
-	void Update(const UpdateEventArgs& e/*std::future<void> PromiseExiter*/);
+	void Update(const UpdateEventArgs& e);
+	void UpdateFromThread(std::future<void> PromiseExiter);
 
     // CWoWClient
 	void BeginConnect(const std::string& Username, const std::string& Password);
 
-	void OnRealmListSelected(const RealmInfo& SelectedRealm, BigNumber Key);
+	void OnRealListObtained(const std::vector<SRealmInfo>& Realms, BigNumber Key);
+	void OnRealmListSelected(const SRealmInfo& SelectedRealm, BigNumber Key);
 	
+	void OnCharactersListObtained(const std::vector<SCharacterTemplate>& Characters);
 	void OnCharacterSelected(const SCharacterTemplate& SelectedCharacter);
 
 

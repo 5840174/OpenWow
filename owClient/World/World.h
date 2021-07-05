@@ -31,6 +31,9 @@ public:
 	void S_SMSG_MONSTER_MOVE(CServerPacket& Buffer);
 	void S_SMSG_DESTROY_OBJECT(CServerPacket& Buffer);
 
+	void On_MOVE_Opcode(CServerPacket& Buffer);
+
+
 	// CWoWWorld
 	void AddHandler(Opcodes Opcode, std::function<void(CServerPacket&)> Handler);
 	bool ProcessPacket(CServerPacket& ServerPacket);

@@ -34,78 +34,7 @@ WoWUnit::~WoWUnit()
 
 void WoWUnit::ProcessMovementPacket(CByteBuffer & Bytes)
 {
-	Bytes.read(&m_MovementFlags);
-	Bytes.read(&m_MovementFlagsExtra);
-
-	uint32 timeMS;
-	Bytes >> timeMS;
-
-	glm::vec3 gamePosition;
-	Bytes >> gamePosition.x;
-	Bytes >> gamePosition.y;
-	Bytes >> gamePosition.z;
-	Position = fromGameToReal(gamePosition);
-
-	float gameOrientation;
-	Bytes >> gameOrientation;
-	Orientation = glm::degrees(gameOrientation + glm::half_pi<float>());
-
-	// 0x00000200
-	if (HasMovementFlag(MOVEMENTFLAG_ONTRANSPORT))
-	{
-		uint64 transportGuid;
-		Bytes.ReadPackedUInt64(transportGuid);
-		TransportID = CWoWGuid(transportGuid);
-
-		glm::vec3 gamePositionTransportOffset;
-		Bytes >> gamePositionTransportOffset.x;
-		Bytes >> gamePositionTransportOffset.y;
-		Bytes >> gamePositionTransportOffset.z;
-		PositionTransportOffset = fromGameToReal(gamePositionTransportOffset);
-
-		float gameOrientationTransportOffset;
-		Bytes >> gameOrientationTransportOffset;
-		OrientationTransportOffset = glm::degrees(gameOrientationTransportOffset + glm::half_pi<float>());
-
-		uint32 transportTime;
-		Bytes >> uint32(transportTime);
-
-		int8 transportSeat;
-		Bytes >> int8(transportSeat);
-
-		if (HasExtraMovementFlag(MOVEMENTFLAG2_INTERPOLATED_MOVEMENT))
-		{
-			uint32 transportInterpolatedTime;
-			Bytes >> uint32(transportInterpolatedTime);
-		}
-	}
-	else
-	{
-		TransportID = CWoWGuid(0ull);
-	}
-
-	// 0x02200000
-	if ((HasMovementFlag(MOVEMENTFLAG_SWIMMING | MOVEMENTFLAG_FLYING)) || (HasExtraMovementFlag(MOVEMENTFLAG2_ALWAYS_ALLOW_PITCHING)))
-	{
-		Bytes >> float(m_StrideOrPitch);
-	}
-
-	Bytes >> uint32(m_FallTime);
-
-	// 0x00001000
-	if (HasMovementFlag(MOVEMENTFLAG_FALLING))
-	{
-		Bytes >> float(m_Jump.zspeed);
-		Bytes >> float(m_Jump.sinAngle);
-		Bytes >> float(m_Jump.cosAngle);
-		Bytes >> float(m_Jump.xyspeed);
-	}
-
-	// 0x04000000
-	if (HasMovementFlag(MOVEMENTFLAG_SPLINE_ELEVATION))
-	{
-		Bytes >> float(m_SplineElevation);
-	}
+	ReadMovementInfoPacket(Bytes);
 
 	SetSpeed(MOVE_WALK, Bytes.ReadFloat());
 	SetSpeed(MOVE_RUN, Bytes.ReadFloat());
@@ -424,6 +353,82 @@ void WoWUnit::Update(const UpdateEventArgs & e)
 //
 // Protected
 //
+void WoWUnit::ReadMovementInfoPacket(CByteBuffer & Bytes)
+{
+	Bytes.read(&m_MovementFlags);
+	Bytes.read(&m_MovementFlagsExtra);
+
+	uint32 timeMS;
+	Bytes >> timeMS;
+
+	glm::vec3 gamePosition;
+	Bytes >> gamePosition;
+	Position = fromGameToReal(gamePosition);
+
+	float gameOrientation;
+	Bytes >> gameOrientation;
+	Orientation = glm::degrees(gameOrientation + glm::half_pi<float>());
+
+	// 0x00000200
+	if (HasMovementFlag(MOVEMENTFLAG_ONTRANSPORT))
+	{
+		uint64 transportGuid;
+		Bytes.ReadPackedUInt64(transportGuid);
+		TransportID = CWoWGuid(transportGuid);
+
+		glm::vec3 gamePositionTransportOffset;
+		Bytes >> gamePositionTransportOffset;
+		PositionTransportOffset = fromGameToReal(gamePositionTransportOffset);
+
+		float gameOrientationTransportOffset;
+		Bytes >> gameOrientationTransportOffset;
+		OrientationTransportOffset = glm::degrees(gameOrientationTransportOffset + glm::half_pi<float>());
+
+		uint32 transportTime;
+		Bytes >> uint32(transportTime);
+
+		int8 transportSeat;
+		Bytes >> int8(transportSeat);
+
+		if (HasExtraMovementFlag(MOVEMENTFLAG2_INTERPOLATED_MOVEMENT))
+		{
+			uint32 transportInterpolatedTime;
+			Bytes >> uint32(transportInterpolatedTime);
+		}
+	}
+	else
+	{
+		TransportID = CWoWGuid(0ull);
+	}
+
+	// 0x02200000
+	if ((HasMovementFlag(MOVEMENTFLAG_SWIMMING | MOVEMENTFLAG_FLYING)) || (HasExtraMovementFlag(MOVEMENTFLAG2_ALWAYS_ALLOW_PITCHING)))
+	{
+		Bytes >> float(m_StrideOrPitch);
+	}
+
+	Bytes >> m_FallTime;
+
+	// 0x00001000
+	if (HasMovementFlag(MOVEMENTFLAG_FALLING))
+	{
+		Bytes >> float(m_Jump.zspeed);
+		Bytes >> float(m_Jump.sinAngle);
+		Bytes >> float(m_Jump.cosAngle);
+		Bytes >> float(m_Jump.xyspeed);
+	}
+
+	// 0x04000000
+	if (HasMovementFlag(MOVEMENTFLAG_SPLINE_ELEVATION))
+	{
+		Bytes >> float(m_SplineElevation);
+	}
+
+	CommitPositionAndRotation();
+}
+
+
+
 std::shared_ptr<WoWUnit> WoWUnit::Create(CWoWWorld& WoWWorld, IScene& Scene, CWoWGuid Guid)
 {
 	std::shared_ptr<WoWUnit> thisObj = MakeShared(WoWUnit, Scene, WoWWorld, Guid);

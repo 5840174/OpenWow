@@ -446,15 +446,15 @@ bool CAuthSocket::S_Realmlist(CByteBuffer& _buff)
 
     Log::Green("S_Realmlist: Count [%d]", realmlistSize);
 
-	std::vector<RealmInfo> realmListInfos;
+	std::vector<SRealmInfo> realmListInfos;
     for (uint32 i = 0; i < realmlistSize; i++)
     {
-        RealmInfo rinfo(_buff);
+        SRealmInfo rinfo(_buff);
 		rinfo.ToString();
 		realmListInfos.push_back(rinfo);
     }
 
-	m_WoWClient.OnRealmListSelected(realmListInfos[0], Key);
+	m_WoWClient.OnRealListObtained(realmListInfos, Key);
 
     return true;
 }

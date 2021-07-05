@@ -111,6 +111,7 @@ void CCharacterItem::InitializeItemModels()
 		}
 
 		auto itemModelInstance = m_OwnerCharacter.CreateSceneNode<CCharacterItemM2Instance>(itemModel, *this, ItemObjectComponents[static_cast<size_t>(GetTemplate().InventoryType)].AttachmentPoint[i]);
+		AddChildLoadable(itemModelInstance);
 		m_BaseManager.GetManager<ILoader>()->AddToLoadQueue(itemModelInstance);
 
 		auto itemImage = LoadItemImage((DBCItem_EInventoryItemType)GetTemplate().InventoryType, objectTextureName);

@@ -1,6 +1,6 @@
 #pragma once
 
-class RealmInfo
+class SRealmInfo
 {
 public:
 	enum RealmFlags : uint8
@@ -43,7 +43,7 @@ public:
 	};
 
 public:
-	RealmInfo(CByteBuffer& _buff)
+	SRealmInfo(CByteBuffer& _buff)
 	{
 		_buff.read(&Type);
 		_buff.read(&Locked); // POST_BC_EXP_FLAG

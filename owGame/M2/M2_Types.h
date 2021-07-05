@@ -256,6 +256,7 @@ struct SM2_Light
 		Directional = 0,
 		Point
 	} type;
+
 	int16			    bone;                       // -1 if not attached to a bone
 	glm::vec3		    position;					// relative to bone, if given
 

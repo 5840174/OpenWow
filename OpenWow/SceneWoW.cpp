@@ -215,7 +215,7 @@ void CSceneWoW::Initialize()
 		GetCameraController()->GetCamera()->SetPosition(glm::vec3(0.0f));
 	}
 
-	SetMainMenu();
+	//SetMainMenu();
 
 	GetCameraController()->GetCamera()->SetPosition(glm::vec3(-4500, 0, 620));
 }

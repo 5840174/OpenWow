@@ -91,7 +91,7 @@ void CSceneWoWClient::Initialize()
 	
 
 
-	SetMainMenu();
+	//SetMainMenu();
 
 	m_WowClient = std::make_unique<CWoWClient>(*this, "localhost");
 	m_WowClient->BeginConnect("test2", "test2");

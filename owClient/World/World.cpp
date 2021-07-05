@@ -8,6 +8,50 @@
 // Additional
 #include "Renderer/RenderPass_Path.h"
 
+const Opcodes msgMoveOpcodes[] =
+{
+	MSG_MOVE_HEARTBEAT,
+
+	MSG_MOVE_START_FORWARD,
+	MSG_MOVE_START_BACKWARD,
+	MSG_MOVE_STOP,
+
+	MSG_MOVE_START_STRAFE_LEFT,
+	MSG_MOVE_START_STRAFE_RIGHT,
+	MSG_MOVE_STOP_STRAFE,
+
+	MSG_MOVE_JUMP,
+
+	MSG_MOVE_START_TURN_LEFT,
+	MSG_MOVE_START_TURN_RIGHT,
+	MSG_MOVE_STOP_TURN,
+
+	MSG_MOVE_START_PITCH_UP,
+	MSG_MOVE_START_PITCH_DOWN,
+	MSG_MOVE_STOP_PITCH,
+
+	MSG_MOVE_TELEPORT,
+	MSG_MOVE_TELEPORT_ACK,
+
+	MSG_MOVE_FALL_LAND,
+
+	MSG_MOVE_START_SWIM,
+	MSG_MOVE_STOP_SWIM,
+
+	MSG_MOVE_SET_WALK_SPEED,
+	MSG_MOVE_SET_RUN_SPEED,
+	MSG_MOVE_SET_RUN_BACK_SPEED,
+	MSG_MOVE_SET_SWIM_SPEED,
+	MSG_MOVE_SET_SWIM_BACK_SPEED,
+	MSG_MOVE_SET_TURN_RATE,
+	MSG_MOVE_SET_FLIGHT_SPEED,
+	MSG_MOVE_SET_FLIGHT_BACK_SPEED,
+	MSG_MOVE_SET_PITCH_RATE,
+
+	MSG_MOVE_SET_FACING,
+	MSG_MOVE_SET_PITCH
+};
+
 CWoWWorld::CWoWWorld(IScene& Scene, const std::shared_ptr<CWorldSocket>& Socket)
 	: m_Scene(Scene)
 	, m_Socket(Socket)
@@ -34,6 +78,9 @@ CWoWWorld::CWoWWorld(IScene& Scene, const std::shared_ptr<CWorldSocket>& Socket)
 	AddHandler(SMSG_TIME_SYNC_REQ, std::bind(&CWoWWorld::On_SMSG_TIME_SYNC_REQ, this, std::placeholders::_1));
 	AddHandler(SMSG_MONSTER_MOVE, std::bind(&CWoWWorld::S_SMSG_MONSTER_MOVE, this, std::placeholders::_1));
 	AddHandler(SMSG_DESTROY_OBJECT, std::bind(&CWoWWorld::S_SMSG_DESTROY_OBJECT, this, std::placeholders::_1));
+
+	for (const auto& movementOpcode : msgMoveOpcodes)
+		AddHandler(movementOpcode, std::bind(&CWoWWorld::On_MOVE_Opcode, this, std::placeholders::_1));
 
 	m_Scene.GetRenderer()->Add3DPass(MakeShared(CRenderPass_Path, m_Scene.GetBaseManager().GetApplication().GetRenderDevice(), *this)->ConfigurePipeline(m_Scene.GetRenderWindow().GetRenderTarget()));
 }
@@ -74,16 +121,15 @@ void CWoWWorld::S_SMSG_LOGIN_VERIFY_WORLD(CServerPacket& Buffer)
 	uint32 mapID;
 	Buffer >> mapID;
 
-	float positionX, positionY, positionZ, orientation;
-	Buffer >> positionX;
-	Buffer >> positionY;
-	Buffer >> positionZ;
+	glm::vec3 position;
+	Buffer >> position;
+	float orientation;
 	Buffer >> orientation;
 
 	_ASSERT(Buffer.isEof());
 
-	glm::vec3 position = fromGameToReal(glm::vec3(positionX, positionY, positionZ));
-	position.y += 5.0f;
+	position = fromGameToReal(position);
+	position.y += 3.0f;
 
 	// Skies
 	m_SkyManager->Load(mapID);
@@ -158,6 +204,45 @@ void CWoWWorld::S_SMSG_DESTROY_OBJECT(CServerPacket & Buffer)
 	{
 		object->Destroy();
 		m_WorldObjects.EraseWoWObject(object);
+	}
+}
+
+void CWoWWorld::On_MOVE_Opcode(CServerPacket & Buffer)
+{
+	uint64 guid;
+	Buffer.ReadPackedUInt64(guid);
+	CWoWGuid wowGuid(guid);
+
+	if (auto object = m_WorldObjects.GetWoWObject(wowGuid))
+	{
+		if (auto unit = std::dynamic_pointer_cast<WoWUnit>(object))
+		{
+			unit->ReadMovementInfoPacket(Buffer);
+
+
+			if (Buffer.GetPacketOpcode() == MSG_MOVE_SET_WALK_SPEED ||
+				Buffer.GetPacketOpcode() == MSG_MOVE_SET_RUN_SPEED ||
+				Buffer.GetPacketOpcode() == MSG_MOVE_SET_RUN_BACK_SPEED ||
+				Buffer.GetPacketOpcode() == MSG_MOVE_SET_SWIM_SPEED ||
+				Buffer.GetPacketOpcode() == MSG_MOVE_SET_SWIM_BACK_SPEED ||
+				Buffer.GetPacketOpcode() == MSG_MOVE_SET_TURN_RATE ||
+				Buffer.GetPacketOpcode() == MSG_MOVE_SET_FLIGHT_SPEED ||
+				Buffer.GetPacketOpcode() == MSG_MOVE_SET_FLIGHT_BACK_SPEED ||
+				Buffer.GetPacketOpcode() == MSG_MOVE_SET_PITCH_RATE)
+			{
+				float speed;
+				Buffer >> speed;
+			}
+		}
+		else
+		{
+			Log::Error("Type '%s'", wowGuid.GetTypeName());
+			throw CException("Oh shit2 Type");
+		}
+	}
+	else
+	{
+		throw CException("Oh shit");
 	}
 }
 

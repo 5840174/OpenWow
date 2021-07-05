@@ -11,10 +11,9 @@ CWoWClient::CWoWClient(IScene& Scene, const std::string& AuthServerHost, uint16 
 	m_Host = AuthServerHost;
 	m_Port = AuthServerPort;
 
-	
-	
+
 	//std::future<void> futureObj = m_UpdateThreadExiter.get_future();
-	//m_UpdateThread = std::thread(&CWoWClient::Update, this, std::move(futureObj));
+	//m_UpdateThread = std::thread(&CWoWClient::UpdateFromThread, this, std::move(futureObj));
 	//m_UpdateThread.detach();
 }
 
@@ -25,18 +24,31 @@ CWoWClient::~CWoWClient()
 	//m_UpdateThread.join();
 }
 
-void CWoWClient::Update(const UpdateEventArgs& e/*std::future<void> PromiseExiter*/)
+void CWoWClient::Update(const UpdateEventArgs& e)
 {
-	//while (PromiseExiter.wait_for(std::chrono::milliseconds(0)) == std::future_status::timeout)
+	if (m_AuthSocket && m_AuthSocket->GetStatus() == CSocket::Connected)
+		m_AuthSocket->Update();
+
+	if (m_WorldSocket && m_WorldSocket->GetStatus() == CSocket::Connected)
+		m_WorldSocket->Update();
+
+	//std::lock_guard<std::mutex> lock(m_Scene.GetChildModifyLock());
+
+	if (m_World)
 	{
-		if (m_AuthSocket && m_AuthSocket->GetStatus() == CSocket::Connected)
-			m_AuthSocket->Update();
+		m_World->Update(e);
+	}
+}
 
-		if (m_WorldSocket && m_WorldSocket->GetStatus() == CSocket::Connected)
-			m_WorldSocket->Update();
+void CWoWClient::UpdateFromThread(std::future<void> PromiseExiter)
+{
+	while (PromiseExiter.wait_for(std::chrono::milliseconds(0)) == std::future_status::timeout)
+	{
+		UpdateEventArgs e(1.0f, 1.0f, 123);
+		e.Camera = m_Scene.GetCameraController()->GetCamera().get();
+		e.CameraForCulling = m_Scene.GetCameraController()->GetCamera().get();
 
-		if (m_World)
-			m_World->Update(e);
+		Update(e);
 	}
 }
 
@@ -54,7 +66,12 @@ void CWoWClient::BeginConnect(const std::string& Username, const std::string& Pa
     m_AuthSocket->Open(m_Host, m_Port);
 }
 
-void CWoWClient::OnRealmListSelected(const RealmInfo& SelectedRealm, BigNumber Key)
+void CWoWClient::OnRealListObtained(const std::vector<SRealmInfo>& Realms, BigNumber Key)
+{
+	OnRealmListSelected(Realms[0], Key);
+}
+
+void CWoWClient::OnRealmListSelected(const SRealmInfo& SelectedRealm, BigNumber Key)
 {
 	Log::Green("CWoWClient::OnRealmListSelected: Realm name '%s'.", SelectedRealm.Name.c_str());
 
@@ -67,6 +84,11 @@ void CWoWClient::OnRealmListSelected(const RealmInfo& SelectedRealm, BigNumber K
 	m_WorldSocket->SetExternalHandler(std::bind(&CWoWClientCharactedSelection::ProcessPacket, m_CharacterSelection.get(), std::placeholders::_1));
 }
 
+void CWoWClient::OnCharactersListObtained(const std::vector<SCharacterTemplate>& Characters)
+{
+	OnCharacterSelected(Characters[0]);
+}
+
 void CWoWClient::OnCharacterSelected(const SCharacterTemplate & SelectedCharacter)
 {
 	Log::Green("CWoWClient::OnCharacterSelected: Character name '%s'.", SelectedCharacter.Name.c_str());
@@ -77,7 +99,6 @@ void CWoWClient::OnCharacterSelected(const SCharacterTemplate & SelectedCharacte
 
 	//CWorldObjectCreator creator(m_Scene.GetBaseManager());
 	//auto creature = creator.BuildCharacterFromTemplate(m_Scene.GetBaseManager().GetApplication().GetRenderDevice(), m_Scene, SelectedCharacter);
-
 
 	m_World = std::make_unique<CWoWWorld>(m_Scene, m_WorldSocket);
 	m_WorldSocket->SetExternalHandler(std::bind(&CWoWWorld::ProcessPacket, m_World.get(), std::placeholders::_1));

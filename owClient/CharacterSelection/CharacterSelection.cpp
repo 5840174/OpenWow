@@ -35,7 +35,7 @@ void CWoWClientCharactedSelection::On_SMSG_CHAR_ENUM(CServerPacket & Bytes)
 	if (characters.empty())
 		throw CException("There is no characters.");
 
-	m_WoWClient.OnCharacterSelected(*characters.begin());
+	m_WoWClient.OnCharactersListObtained(characters);
 }
 
 void CWoWClientCharactedSelection::AddHandler(Opcodes Opcode, std::function<void(CServerPacket&)> Handler)

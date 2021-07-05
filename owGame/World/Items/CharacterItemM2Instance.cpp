@@ -92,6 +92,7 @@ void CCharacterItemM2Instance::OnLoaded()
 
 			// M2 Instance
 			auto itemVisualEffectInstance = CreateSceneNode<CCharacterItemEffectM2Instance>(itemVisualEffectModel, m_CharacterItem);
+			AddChildLoadable(itemVisualEffectInstance);
 			GetBaseManager().GetManager<ILoader>()->AddToLoadQueue(itemVisualEffectInstance);
 
 			auto itemModelAttachment = getM2().getMiscellaneous().getAttachment((EM2_AttachmentPoint)itemAttachmentPoint);

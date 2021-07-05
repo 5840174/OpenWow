@@ -146,7 +146,10 @@ void CCharacter::SetItem(uint8 InventorySlot, const SCharacterItemTemplate & Ite
 	m_CharacterItems[InventorySlot] = characterItem;
 
 	if (GetState() == ILoadable::ELoadableState::Loaded)
+	{
+		AddChildLoadable(characterItem);
 		GetBaseManager().GetManager<ILoader>()->AddToLoadQueue(characterItem);
+	}
 }
 
 
@@ -215,7 +218,10 @@ void CCharacter::OnLoaded()
 		
 		// Load all created items
 		if (characterItem->GetState() == ILoadable::ELoadableState::Created)
+		{
+			AddChildLoadable(characterItem);
 			GetBaseManager().GetManager<ILoader>()->AddToLoadQueue(characterItem);
+		}
 	}
 }
 
