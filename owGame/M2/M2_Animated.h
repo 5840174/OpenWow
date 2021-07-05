@@ -261,7 +261,7 @@ public:
 		return false;
 	}
 
-	inline T GetValue(uint16 SequenceIndex, uint32 time, const std::vector<SM2_Loop>& GlobalLoop, const uint32 GlobalTime) const
+	inline T GetValue(uint16 SequenceIndex, uint32 time, const std::vector<SM2_Loop>& GlobalLoop, const uint32 GlobalTime, bool ForceLinear = false) const
 	{
 		if (IsStaticValue())
 		{
@@ -304,16 +304,23 @@ public:
 			uint32 t1 = pTimes.at(pos);
 			uint32 t2 = pTimes.at(pos + 1);
 			float r = static_cast<float>(time - t1) / static_cast<float>(t2 - t1);
-			switch (m_Type)
+			if (false == ForceLinear)
 			{
-				case Interpolations::None:
-					return interpolateNone(r, pData.at(pos), pData.at(pos + 1));
-				case Interpolations::Linear:
-					return interpolateLinear<T>(r, pData.at(pos), pData.at(pos + 1));
-				case Interpolations::Hermite:
-					return interpolateHermite<T>(r, pData.at(pos), pData.at(pos + 1), m_ValuesHermiteIn[SequenceIndex].at(pos), m_ValuesHermiteOut[SequenceIndex].at(pos));
-				default:
-					_ASSERT_EXPR(false, "M2_Animated: Unknown interpolation type.");
+				switch (m_Type)
+				{
+					case Interpolations::None:
+						return interpolateNone(r, pData.at(pos), pData.at(pos + 1));
+					case Interpolations::Linear:
+						return interpolateLinear<T>(r, pData.at(pos), pData.at(pos + 1));
+					case Interpolations::Hermite:
+						return interpolateHermite<T>(r, pData.at(pos), pData.at(pos + 1), m_ValuesHermiteIn[SequenceIndex].at(pos), m_ValuesHermiteOut[SequenceIndex].at(pos));
+					default:
+						_ASSERT_EXPR(false, "M2_Animated: Unknown interpolation type.");
+				}
+			}
+			else
+			{
+				return interpolateLinear<T>(r, pData.at(pos), pData.at(pos + 1));
 			}
 		}
 		else if (! pData.empty())

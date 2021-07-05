@@ -10,13 +10,34 @@
 CM2CameraComponent::CM2CameraComponent(const CM2_Base_Instance& OwnerNode, const std::shared_ptr<const CM2_Part_Camera>& M2Camera)
 	: CSceneNodeComponentBase(OwnerNode)
 	, m_M2Camera(M2Camera)
+	, m_OriginPosition(glm::vec3(0.0f))
+	, m_OriginOrientation(0.0f)
+	, m_OriginMatrix(1.0f)
+	, m_Position(glm::vec3(0.0f))
+	, m_Direction(glm::vec3(0.0f))
 {
+	m_Aspect = float(GetOwnerNode().GetScene().GetRenderWindow().GetWindowWidth()) / float(GetOwnerNode().GetScene().GetRenderWindow().GetWindowHeight());
+
 	GetProperties()->SetName("M2CameraComponent");
 }
 
 CM2CameraComponent::~CM2CameraComponent()
 {}
 
+void CM2CameraComponent::SetOrigin(glm::vec3 Position, float Orientation)
+{
+	m_OriginPosition = Position;
+	m_OriginOrientation = Orientation;
+
+	m_OriginMatrix = glm::translate(m_OriginMatrix, fromGameToReal(m_OriginPosition));
+	m_OriginMatrix = glm::rotate(m_OriginMatrix, m_OriginOrientation + glm::half_pi<float>(), glm::vec3(0.0f, 1.0f, 0.0f));
+}
+
+
+
+//
+// ICameraComponent3D
+//
 void CM2CameraComponent::DoMoveFront(float Value)
 {}
 
@@ -34,7 +55,7 @@ void CM2CameraComponent::SetPosition(glm::vec3 Position)
 
 glm::vec3 CM2CameraComponent::GetPosition() const
 {
-	return glm::vec3();
+	return m_Position;
 }
 
 void CM2CameraComponent::SetDirection(glm::vec3 Direction)
@@ -42,7 +63,7 @@ void CM2CameraComponent::SetDirection(glm::vec3 Direction)
 
 glm::vec3 CM2CameraComponent::GetDirection() const
 {
-	return glm::vec3();
+	return m_Direction;
 }
 
 void CM2CameraComponent::SetYaw(float Yaw)
@@ -110,13 +131,12 @@ void CM2CameraComponent::OnMessage(const ISceneNodeComponent * Component, Compon
 
 void CM2CameraComponent::Update(const UpdateEventArgs & e)
 {
-	float aspect = float(GetOwnerNode().GetScene().GetRenderWindow().GetWindowWidth()) / float(GetOwnerNode().GetScene().GetRenderWindow().GetWindowHeight());
-
-	if (false == m_M2Camera->Calculate(GetM2OwnerNode(), e.TotalTime, aspect, &m_Projection, &m_View))
-		throw CException("CM2CameraComponent");
+	if (false == m_M2Camera->Calculate(GetM2OwnerNode(), e.TotalTime, m_Aspect, m_OriginMatrix, &m_Position, &m_Direction, &m_Projection, &m_View))
+		throw CException("CM2CameraComponent::Update: Exception.");
 
 	m_Inverse_Projection = glm::inverse(m_Projection);
 	m_Inverse_View = glm::inverse(m_View);
+
 	m_Frustum.buildViewFrustum(m_View, m_Projection);
 }
 

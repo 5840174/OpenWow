@@ -17,7 +17,7 @@ static inline glm::quat Fix_XZmYW(const glm::quat& _quat)
 	return glm::quat(_quat.w, _quat.x, _quat.z, -_quat.y);
 }
 
-static inline glm::vec3 fromRealToGame(glm::vec3 p)
+static inline glm::vec3 fromRealToGame(const glm::vec3& p)
 {
 	return glm::vec3(
 		-p.x + C_ZeroPoint,
@@ -30,7 +30,7 @@ static inline glm::vec3 fromRealToGame(glm::vec3 p)
 //-618.518, -4251.67, 38.718, 0
 // X			Y        Z
 //-4251.67, -618.518, 38.718, 0
-static inline glm::vec3 fromGameToReal(glm::vec3 p)
+static inline glm::vec3 fromGameToReal(const glm::vec3& p)
 {
 	return glm::vec3(
 		-p.y + C_ZeroPoint,

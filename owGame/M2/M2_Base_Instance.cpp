@@ -56,7 +56,7 @@ void CM2_Base_Instance::UpdateAttachPositionAfterSkeletonUpdate()
 	UpdateLocalTransform();
 }
 
-std::shared_ptr<ICameraComponent3D> CM2_Base_Instance::CreateCameraComponent(uint16 CameraDirectIndex)
+std::shared_ptr<CM2CameraComponent> CM2_Base_Instance::CreateCameraComponent(uint16 CameraDirectIndex)
 {
 	if (GetState() != ILoadable::ELoadableState::Loaded)
 		throw CException("CM2_Base_Instance not loaded.");

@@ -9,6 +9,10 @@ public:
 	CSceneWoW(IBaseManager& BaseManager, IRenderWindow& RenderWindow);
 	virtual ~CSceneWoW();
 
+	// CSceneWoWClient
+	void SetMainMenu();
+	void RemoveMainMenu();
+
 	// IScene
 	void Initialize() override;
 	void Finalize() override;
@@ -38,4 +42,7 @@ private:
 	std::shared_ptr<IUIControlText> m_RendererStatisticText;
 
 	std::shared_ptr<CUIControlMinimap> minimap;
+
+	std::shared_ptr<ISceneNode> m_DefaultCameraNode;
+	std::shared_ptr<CM2_Base_Instance> m_WoWCameraNode;
 };

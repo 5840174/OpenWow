@@ -32,24 +32,6 @@ void CSceneWoWClient::SetMainMenu()
 
 	auto m2CameraComponent = m_MainMenu->CreateCameraComponent(0);
 	GetCameraController()->SetCamera(m2CameraComponent);
-
-	/*auto camera = m_MainMenu->getM2().getMiscellaneous().getCameraDirect(0);
-	const_cast<CM2_Part_Camera*>(camera.get())->calc(0, 0);
-
-	glm::vec3 cameraPosition;
-	glm::vec3 cameraTarget;
-	float fov;
-	float nearPlane, farPlane;
-
-	camera->getParams(&cameraPosition, &cameraTarget, &fov, &nearPlane, &farPlane);
-
-	float aspect = static_cast<float>(GetRenderWindow().GetWindowWidth()) / static_cast<float>(GetRenderWindow().GetWindowHeight());
-	fov = fov / glm::sqrt(1.0f + glm::pow(aspect, 2.0f));
-	fov = glm::degrees(fov);
-
-	GetCameraController()->GetCamera()->SetPerspectiveProjection(fov, aspect, nearPlane, farPlane);
-	GetCameraController()->GetCamera()->SetPosition(cameraPosition);
-	GetCameraController()->GetCamera()->SetDirection(glm::normalize(cameraTarget - cameraPosition));*/
 }
 
 void CSceneWoWClient::RemoveMainMenu()
@@ -107,9 +89,6 @@ void CSceneWoWClient::Initialize()
 	m_RendererStatisticText->SetLocalPosition(glm::vec2(5.0f, 200.0f));
 	m_RendererStatisticText->SetText("");
 	
-	auto faceLower = GetBaseManager().GetManager<IImagesFactory>()->CreateImage(GetBaseManager().GetManager<IFilesManager>()->Open("Character\\SCOURGE\\MALE\\ScourgeMaleFaceLower05_04.blp"));
-	auto faceUpper = GetBaseManager().GetManager<IImagesFactory>()->CreateImage(GetBaseManager().GetManager<IFilesManager>()->Open("Character\\SCOURGE\\MALE\\ScourgeMaleFaceUpper08_03.blp"));
-
 
 
 	SetMainMenu();

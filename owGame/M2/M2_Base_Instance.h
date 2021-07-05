@@ -27,7 +27,7 @@ public:
 	void                                Detach();
 	void                                UpdateAttachPositionAfterSkeletonUpdate();
 
-	std::shared_ptr<ICameraComponent3D> CreateCameraComponent(uint16 CameraDirectIndex);
+	std::shared_ptr<CM2CameraComponent> CreateCameraComponent(uint16 CameraDirectIndex);
 
 	// Color & Alpha
 	void                                setColor(glm::vec4 _color) { m_Color = _color; }

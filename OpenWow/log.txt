@@ -1,10 +1,10 @@
 ^Log created
-^Plugin 'D:\OpenWow\bin_x64\Debug\znRenderDX11.dll' loaded.
-^Plugin 'D:\OpenWow\bin_x64\Debug\znRenderDX11.dll' successfully added.
-^Plugin 'D:\OpenWow\bin_x64\Debug\owGame.dll' loaded.
-^Plugin 'D:\OpenWow\bin_x64\Debug\owGame.dll' successfully added.
-^Plugin 'D:\OpenWow\bin_x64\Debug\owClient.dll' loaded.
-^Plugin 'D:\OpenWow\bin_x64\Debug\owClient.dll' successfully added.
+^Plugin 'D:\OpenWow\bin_x64\Release\znRenderDX11.dll' loaded.
+^Plugin 'D:\OpenWow\bin_x64\Release\znRenderDX11.dll' successfully added.
+^Plugin 'D:\OpenWow\bin_x64\Release\owGame.dll' loaded.
+^Plugin 'D:\OpenWow\bin_x64\Release\owGame.dll' successfully added.
+^Plugin 'D:\OpenWow\bin_x64\Release\owClient.dll' loaded.
+^Plugin 'D:\OpenWow\bin_x64\Release\owClient.dll' successfully added.
 ~MPQFile[common.MPQ]: Added!
 ~MPQFile[common-2.MPQ]: Added!
 ~MPQFile[expansion.MPQ]: Added!
@@ -80,4 +80,20 @@
 ~Loading shader 'UI/UIControlCommon.hlsl':'PS_main'.
 ~Loading shader 'UI/UI_Font.hlsl':'VS_main'.
 ~Loading shader 'UI/UI_Font.hlsl':'PS_main'.
-!CAuthSocket: Unable to connect to 'localhost:3724'
+~Sky: [1768] is global sky.
+ Map[DeathKnightStart]: Id = '609'. Preloading...
+ Map[DeathKnightStart]: InstanceType = '0'.
+ Map[DeathKnightStart]: MapType = '29'.
+ Map[DeathKnightStart]: IsBattleGround = '0'.
+ Map[DeathKnightStart]: Name = 'Черный оплот'.
+ Map[DeathKnightStart]: AreaTableID = '0'.
+ Map[DeathKnightStart]: AllianceDescr = ''.
+ Map[DeathKnightStart]: HordeDescr = ''.
+ Map[DeathKnightStart]: CorpseMapID = '0'.
+ Map[��?Ȯ]: Id [609]. Loading...
+^CMapWDL: Low WMOs count [0].
+~MapWDT: Global WMO exists [false].
+!File 'World\Maps\DeathKnightStart\DeathKnightStart_1_0.adt' not exists.
+!File 'World\Maps\DeathKnightStart\DeathKnightStart_0_0.adt' not exists.
+!File 'World\Maps\DeathKnightStart\DeathKnightStart_1_1.adt' not exists.
+!File 'World\Maps\DeathKnightStart\DeathKnightStart_0_1.adt' not exists.

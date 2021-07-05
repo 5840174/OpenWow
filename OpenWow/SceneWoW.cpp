@@ -9,8 +9,37 @@ CSceneWoW::CSceneWoW(IBaseManager& BaseManager, IRenderWindow& RenderWindow)
 
 CSceneWoW::~CSceneWoW()
 {
+	GetCameraController()->SetCamera(m_DefaultCameraNode->GetComponentT<ICameraComponent3D>());
 	Log::Info("Scene destroyed.");
 }
+
+void CSceneWoW::SetMainMenu()
+{
+	auto m2Model = GetBaseManager().GetManager<IWoWObjectsCreator>()->LoadM2(GetRenderDevice(), "Cameras\\FlyByDeathKnight.m2");
+	//auto m2Model = GetBaseManager().GetManager<IWoWObjectsCreator>()->LoadM2(GetRenderDevice(), "Cameras\\FlyByHuman.m2");
+
+	m_WoWCameraNode = GetRootSceneNode()->CreateSceneNode<CM2_Base_Instance>(m2Model);
+	GetBaseManager().GetManager<ILoader>()->AddToLoadQueue(m_WoWCameraNode);
+
+	while (m_WoWCameraNode->GetState() < ILoadable::ELoadableState::Loaded)
+		Sleep(1);
+
+	auto m2CameraComponent = m_WoWCameraNode->CreateCameraComponent(0);
+
+	// Human
+	//glm::vec3 origin = glm::vec3(-8945.51953125f, -118.786003112793f, 82.9306030273438f);
+	//float originAngle = 0.191985994577408f;
+
+	// Death knight
+	glm::vec3 origin = glm::vec3(2301.88989257813f, -5346.31982421875f, 88.9572982788086f);
+	float originAngle = 2.16421008110046;
+	m2CameraComponent->SetOrigin(origin, originAngle);
+
+	GetCameraController()->SetCamera(m2CameraComponent);
+}
+
+void CSceneWoW::RemoveMainMenu()
+{}
 
 
 //
@@ -43,12 +72,12 @@ void CSceneWoW::Initialize()
 
 	// Camera
 	{
-		auto cameraNode = CreateSceneNodeT<ISceneNode>();
-		cameraNode->SetName("Camera");
-		cameraNode->AddComponentT(GetBaseManager().GetManager<IObjectsFactory>()->GetClassFactoryCast<IComponentFactory>()->CreateComponentT<ICameraComponent3D>(cSceneNodeCameraComponent, *cameraNode));
+		m_DefaultCameraNode = CreateSceneNodeT<ISceneNode>();
+		m_DefaultCameraNode->SetName("Camera");
+		m_DefaultCameraNode->AddComponentT(GetBaseManager().GetManager<IObjectsFactory>()->GetClassFactoryCast<IComponentFactory>()->CreateComponentT<ICameraComponent3D>(cSceneNodeCameraComponent, *m_DefaultCameraNode));
 
 		SetCameraController(MakeShared(CFreeCameraController));
-		GetCameraController()->SetCamera(cameraNode->GetComponentT<ICameraComponent3D>());
+		GetCameraController()->SetCamera(m_DefaultCameraNode->GetComponentT<ICameraComponent3D>());
 		GetCameraController()->GetCamera()->SetPerspectiveProjection(65.0f, static_cast<float>(GetRenderWindow().GetWindowWidth()) / static_cast<float>(GetRenderWindow().GetWindowHeight()), 0.5f, 2500.0f);
 		GetCameraController()->GetCamera()->SetPosition(glm::vec3(10.0f));
 		GetCameraController()->GetCamera()->SetYaw(225);
@@ -82,9 +111,9 @@ void CSceneWoW::Initialize()
 	//const float y = 30; //1 barrens
 	//const uint32 mapID = 1;
 
-	const float x = 26; //530 outland
-	const float y = 32; //530 outland
-	const uint32 mapID = 530;
+	//const float x = 26; //530 outland
+	//const float y = 32; //530 outland
+	//const uint32 mapID = 530;
 
 	//const float x = 30; //571 nortrend
 	//const float y = 21; //571 nortrend
@@ -100,6 +129,11 @@ void CSceneWoW::Initialize()
 	//const float y = 0; //571 nortrend
 	//const uint32 mapID = 631;
 
+
+	// Death knight
+	const float x = 0; //571 nortrend
+	const float y = 0; //571 nortrend
+	const uint32 mapID = 609;
 
 	if (true)
 	{
@@ -180,6 +214,10 @@ void CSceneWoW::Initialize()
 
 		GetCameraController()->GetCamera()->SetPosition(glm::vec3(0.0f));
 	}
+
+	SetMainMenu();
+
+	GetCameraController()->GetCamera()->SetPosition(glm::vec3(-4500, 0, 620));
 }
 
 void CSceneWoW::Finalize()
