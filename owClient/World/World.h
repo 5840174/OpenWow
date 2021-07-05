@@ -26,13 +26,21 @@ public:
 	void On_SMSG_MOTD(CServerPacket& Buffer);
 	void On_SMSG_NOTIFICATION(CServerPacket& Buffer);
 
+	void On_SMSG_SPELL_GO(CServerPacket & Buffer);
+
+	void On_SMSG_POWER_UPDATE(CServerPacket& Buffer);
+	void On_SMSG_AURA_UPDATE(CServerPacket& Buffer);
+	void On_SMSG_UPDATE_WORLD_STATE(CServerPacket& Buffer);
 	void On_SMSG_TIME_SYNC_REQ(CServerPacket& Buffer);
 
-	void S_SMSG_MONSTER_MOVE(CServerPacket& Buffer);
+	void S_SMSG_MONSTER_MOVE(CServerPacket& Buffer, bool Transport);
 	void S_SMSG_DESTROY_OBJECT(CServerPacket& Buffer);
 
-	void On_MOVE_Opcode(CServerPacket& Buffer);
+	void On_SMSG_EMOTE(CServerPacket& Buffer);
+	void On_SMSG_MESSAGECHAT(CServerPacket& Buffer, bool IsGMMessage);
 
+	void On_MOVE_Opcode(CServerPacket& Buffer);
+	void On_MOVE_UnitSpeedOpcode(CServerPacket& Buffer);
 
 	// CWoWWorld
 	void AddHandler(Opcodes Opcode, std::function<void(CServerPacket&)> Handler);
