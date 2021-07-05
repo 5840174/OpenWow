@@ -23,12 +23,15 @@ CCharacter::CCharacter(IScene& Scene, const std::shared_ptr<CM2>& M2Object)
 CCharacter::~CCharacter()
 {}
 
+
+
+//
+// CCharacter
+//
 void CCharacter::RefreshCharacterItemsFromTemplate()
 {
 	for (uint32 inventorySlot = 0; inventorySlot < INVENTORY_SLOT_BAG_END; inventorySlot++)
-	{	
 		SetItem(inventorySlot, m_Template.ItemsTemplates[inventorySlot]);
-	}
 }
 
 void CCharacter::Refresh_CreateSkinTexture(std::shared_ptr<IImage> BakedSkinImage)
@@ -68,7 +71,7 @@ void CCharacter::Refresh_AddItemsToSkinTexture()
 			return;
 			//throw CException("Character::Refresh_AddItemsToSkinTexture: Cape must contains one object component.");
 		}
-		auto cloackImage = cloakVisualItem->GetModels()[0].texture;
+		auto cloackImage = cloakVisualItem->GetModels()[0].ItemSelfTexture;
 		setSpecialTexture(SM2_Texture::Type::OBJECT_SKIN, GetBaseManager().GetManager<IznTexturesFactory>()->LoadTexture2D(cloackImage));
 	}
 }
@@ -83,7 +86,6 @@ void CCharacter::RefreshMeshIDs()
 	setMeshEnabled(EM2GeosetType::Facial03,    sectionWrapper.getFacial03Geoset(GetTemplate()));
 	setMeshEnabled(EM2GeosetType::Unk16,       sectionWrapper.getFacial16Geoset(GetTemplate()));
 	setMeshEnabled(EM2GeosetType::Eyeglows17,  sectionWrapper.getFacial17Geoset(GetTemplate()));
-
 
 	for (size_t inventorySlot = 0; inventorySlot < INVENTORY_SLOT_BAG_END; inventorySlot++)
 	{
@@ -141,9 +143,10 @@ void CCharacter::SetItem(uint8 InventorySlot, const SCharacterItemTemplate & Ite
 
 	auto characterItem = MakeShared(CCharacterItem, GetBaseManager(), GetRenderDevice(), std::dynamic_pointer_cast<CCharacter>(shared_from_this()));
 	characterItem->Template() = ItemTemplate;
-	GetBaseManager().GetManager<ILoader>()->AddToLoadQueue(characterItem);
-
 	m_CharacterItems[InventorySlot] = characterItem;
+
+	if (GetState() == ILoadable::ELoadableState::Loaded)
+		GetBaseManager().GetManager<ILoader>()->AddToLoadQueue(characterItem);
 }
 
 
@@ -167,30 +170,19 @@ bool CCharacter::isMeshEnabled(uint32 _index) const
 	uint32 div100 = _index / 100;
 	uint32 mod100 = _index % 100;
 
-	//_ASSERT(div100 < EM2GeosetType::Count);
-	_ASSERT(div100 != 6);
-	_ASSERT(div100 != 14);
-	_ASSERT(div100 != 16);
-
-	//if (div100 == 3)
-	//	return true;
+	_ASSERT(div100 < (uint32)EM2GeosetType::Count);
+	_ASSERT(div100 != 6 && div100 != 14 && div100 != 16);
 
 	for (uint32 i = 0; i < (uint32)EM2GeosetType::Count; i++)
 	{
 		// Special case for skin
 		if (div100 == (uint32)EM2GeosetType::SkinAndHair && mod100 == 0)
-		{
 			return true;
-		}
 
 		// Others
 		if (div100 == i)
-		{
 			if (m_MeshID[i] == mod100)
-			{
 				return true;
-			}
-		}
 	}
 
 	return false;
@@ -214,9 +206,17 @@ void CCharacter::Initialize()
 //
 // ILoadable
 //
-bool CCharacter::Load()
+void CCharacter::OnLoaded()
 {
-	return __super::Load();
+	// After character loaded, load items
+	for (size_t inventorySlot = 0; inventorySlot < INVENTORY_SLOT_BAG_END; inventorySlot++)
+	{
+		const auto& characterItem = m_CharacterItems[inventorySlot];
+		
+		// Load all created items
+		if (characterItem->GetState() == ILoadable::ELoadableState::Created)
+			GetBaseManager().GetManager<ILoader>()->AddToLoadQueue(characterItem);
+	}
 }
 
 #endif

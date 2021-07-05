@@ -22,19 +22,21 @@ CM2_Base_Instance::~CM2_Base_Instance()
 	GetBaseManager().GetManager<ILoader>()->AddToDeleteQueue(m_M2);
 }
 
-// CM2_Base_Instance
 
+
+//
+// CM2_Base_Instance
+//
 void CM2_Base_Instance::CreateInstances()
 {
 	getM2().CreateInsances(shared_from_this());
 }
 
-
-
 const CM2& CM2_Base_Instance::getM2() const
 {
-	if (m_M2->GetState() != ILoadable::ELoadableState::Loaded)
-		throw CException("CM2_Base_Instance::getM2: M2 object isn't loaded.");
+	auto state = m_M2->GetState();
+	if (state != ILoadable::ELoadableState::Loaded)
+		throw CException("CM2_Base_Instance::getM2: M2 object isn't loaded. State = '%d'.", state);
 	return *m_M2;
 }
 
@@ -46,13 +48,21 @@ void CM2_Base_Instance::Detach()
 {
 	m_AttachmentType = EM2_AttachmentPoint::NotAttached;
 }
-
 void CM2_Base_Instance::UpdateAttachPositionAfterSkeletonUpdate()
 {
 	if (m_AttachmentType == EM2_AttachmentPoint::NotAttached)
 		return;
 
 	UpdateLocalTransform();
+}
+
+std::shared_ptr<ICameraComponent3D> CM2_Base_Instance::CreateCameraComponent(uint16 CameraDirectIndex)
+{
+	if (GetState() != ILoadable::ELoadableState::Loaded)
+		throw CException("CM2_Base_Instance not loaded.");
+
+	auto m2Camera = getM2().getMiscellaneous().getCameraDirect(CameraDirectIndex);
+	return AddComponentT(MakeShared(CM2CameraComponent, *this, m2Camera));
 }
 
 // Mesh & textures provider
@@ -113,6 +123,15 @@ void CM2_Base_Instance::Accept(IVisitor* visitor)
 //
 bool CM2_Base_Instance::Load()
 {
+	if (auto colliderComponent = GetComponentT<IColliderComponent>())
+	{
+		colliderComponent->SetCullStrategy(IColliderComponent::ECullStrategy::ByFrustrumAndDistance2D);
+		colliderComponent->SetCullDistance(GetBaseManager().GetManager<ISettings>()->GetGroup("WoWSettings")->GetPropertyT<float>("M2BaseRenderDistance")->Get());
+		colliderComponent->SetBounds(getM2().GetBounds());
+		colliderComponent->SetDebugDrawMode(false);
+		colliderComponent->SetDebugDrawColor(ColorRGBA(0.9f, 0.2f, 0.2f, 0.8f));
+	}
+
 	if (getM2().isAnimated())
 		m_Animator = MakeShared(CM2_Animator, GetBaseManager(), getM2());
 
@@ -122,15 +141,6 @@ bool CM2_Base_Instance::Load()
 #ifdef USE_M2_PARTICLES
 	m_ParticleComponent = AddComponentT(MakeShared(CM2ParticlesComponent, *this));
 #endif
-
-	if (auto colliderComponent = GetComponentT<IColliderComponent>())
-	{
-		colliderComponent->SetCullStrategy(IColliderComponent::ECullStrategy::ByFrustrumAndDistance2D);
-		colliderComponent->SetCullDistance(GetBaseManager().GetManager<ISettings>()->GetGroup("WoWSettings")->GetPropertyT<float>("M2BaseRenderDistance")->Get());
-		colliderComponent->SetBounds(getM2().GetBounds());
-		colliderComponent->SetDebugDrawMode(false);
-		colliderComponent->SetDebugDrawColor(ColorRGBA(0.9f, 0.2f, 0.2f, 0.8f));
-	}
 
 	UpdateLocalTransform();
 	CreateInstances();

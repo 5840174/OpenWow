@@ -10,6 +10,8 @@
 CRenderPass_M2ParticlesList::CRenderPass_M2ParticlesList(IRenderDevice& RenderDevice, const std::shared_ptr<IRenderPassCreateTypelessList>& CreateTypelessList)
 	: CRenderPassPipelinedProcessTypelessList(RenderDevice, CreateTypelessList)
 {
+	SetPassName("M2ParticlesList");
+
 	m_Geometry = GetRenderDevice().GetObjectsFactory().CreateGeometry();
 	m_Geometry->SetPrimitiveTopology(PrimitiveTopology::PointList);
 }

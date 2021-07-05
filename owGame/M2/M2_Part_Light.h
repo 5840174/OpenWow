@@ -7,7 +7,7 @@ class CM2;
 class CM2_Base_Instance;
 // FORWARD END
 
-class CM2_Part_Light
+class ZN_API CM2_Part_Light
 {
 public:
 	CM2_Part_Light(const CM2& M2Object, const std::shared_ptr<IByteBuffer>& ByteBuffer, const SM2_Light& M2Light);

@@ -9,7 +9,7 @@ public:
 	CSceneWoW(IBaseManager& BaseManager, IRenderWindow& RenderWindow);
 	virtual ~CSceneWoW();
 
-	// IGameState
+	// IScene
 	void Initialize() override;
 	void Finalize() override;
 

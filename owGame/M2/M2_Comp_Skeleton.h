@@ -10,7 +10,7 @@
 class CM2;
 // FORWARD END
 
-class CM2_Comp_Skeleton
+class ZN_API CM2_Comp_Skeleton
 {
 public:
 	CM2_Comp_Skeleton(const CM2& M2Object);

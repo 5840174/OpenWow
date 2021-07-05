@@ -49,6 +49,7 @@
     <ClCompile Include="M2\M2_AnimationSet.cpp" />
     <ClCompile Include="M2\M2_Animator.cpp" />
     <ClCompile Include="M2\M2_Base_Instance.cpp" />
+    <ClCompile Include="M2\M2_CameraComponent.cpp" />
     <ClCompile Include="M2\M2_ColliderComponent.cpp" />
     <ClCompile Include="M2\M2_Comp_Materials.cpp" />
     <ClCompile Include="M2\M2_Comp_Miscellaneous.cpp" />
@@ -218,6 +219,7 @@
     <ClInclude Include="M2\M2_AnimationSet.h" />
     <ClInclude Include="M2\M2_Animator.h" />
     <ClInclude Include="M2\M2_Base_Instance.h" />
+    <ClInclude Include="M2\M2_CameraComponent.h" />
     <ClInclude Include="M2\M2_ColliderComponent.h" />
     <ClInclude Include="M2\M2_CommonTypes.h" />
     <ClInclude Include="M2\M2_Comp_Materials.h" />

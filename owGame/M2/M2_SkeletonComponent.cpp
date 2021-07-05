@@ -97,7 +97,7 @@ void CM2SkeletonBone3D::Reset()
 // CM2SkeletonComponent3D
 //
 CM2SkeletonComponent3D::CM2SkeletonComponent3D(const CM2_Base_Instance& OwnerNode)
-	: CComponentBase(OwnerNode)
+	: CSceneNodeComponentBase(OwnerNode)
 {
 	for (const auto& m2Bone : OwnerNode.getM2().getSkeleton().GetBones())
 		m_Bones.push_back(MakeShared(CM2SkeletonBone3D, m2Bone));

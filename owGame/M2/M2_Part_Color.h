@@ -7,7 +7,7 @@ class CM2;
 class CM2_Base_Instance;
 // FORWARD END
 
-class CM2_Part_Color
+class ZN_API CM2_Part_Color
 {
 public:
 	CM2_Part_Color(const CM2& M2Object, const std::shared_ptr<IFile>& File, const SM2_Color& M2Color);

@@ -14,7 +14,7 @@ CSceneWoW::~CSceneWoW()
 
 
 //
-// IGameState
+// IScene
 //
 void CSceneWoW::Initialize()
 {
@@ -101,7 +101,7 @@ void CSceneWoW::Initialize()
 	//const uint32 mapID = 631;
 
 
-	if (false)
+	if (true)
 	{
 		m_WoWSkyManager->Load(mapID);
 		
@@ -202,14 +202,17 @@ void CSceneWoW::OnUpdate(UpdateEventArgs & e)
 
 bool CSceneWoW::OnMousePressed(const MouseButtonEventArgs & e, const Ray& RayToWorld)
 {
-	auto selectedNodes = GetFinder().FindIntersection(RayToWorld, nullptr);
-	if (false == selectedNodes.empty())
+	if (e.LeftButton)
 	{
-		for (const auto& selectedNodesIt : selectedNodes)
+		auto selectedNodes = GetFinder().FindIntersection(RayToWorld, nullptr);
+		if (false == selectedNodes.empty())
 		{
-			if (auto m2Node = std::dynamic_pointer_cast<CM2_Base_Instance>(selectedNodesIt.second))
+			for (const auto& selectedNodesIt : selectedNodes)
 			{
-				Log::Green("Selected node '%f' = '%s'.", selectedNodesIt.first, m2Node->getM2().getFilename().c_str());
+				if (auto m2Node = std::dynamic_pointer_cast<CM2_Base_Instance>(selectedNodesIt.second))
+				{
+					Log::Green("Selected node '%f' = '%s'.", selectedNodesIt.first, m2Node->getM2().getFilename().c_str());
+				}
 			}
 		}
 	}

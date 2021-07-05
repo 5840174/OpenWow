@@ -19,7 +19,7 @@ public:
 	const CCharacterItem& GetCharacterItem() const;
 
 	// ILoadable
-	bool Load() override;
+	void OnLoaded() override;
 
 private:
 	const CCharacterItem& m_CharacterItem;

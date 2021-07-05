@@ -46,7 +46,7 @@ private:
 // CM2SkeletonComponent3D
 //
 class ZN_API CM2SkeletonComponent3D
-	: public CComponentBase
+	: public CSceneNodeComponentBase
 {
 public:
 	ZN_OBJECTCLASS(cSceneNodeComponentM2SkeletonComponent);
@@ -59,7 +59,7 @@ public:
 	// ISkeletonComponent3D
 	std::shared_ptr<CM2SkeletonBone3D> GetBone(size_t Index) const;
 
-	// CComponentBase
+	// CSceneNodeComponentBase
 	void Update(const UpdateEventArgs& e) override;
 
 protected:

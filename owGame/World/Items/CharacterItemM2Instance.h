@@ -19,10 +19,10 @@ public:
 	// CCharacterItemM2Instance
 	const CCharacter& GetCharacterInstance() const;
 	const CCharacterItem& GetCharacterItem() const;
-	void AddVisualEffect(std::shared_ptr<CM2_Base_Instance> _visualEffect);
+	//void AddVisualEffect(std::shared_ptr<CM2_Base_Instance> _visualEffect);
 
 	// ILoadable
-	bool Load() override;
+	void OnLoaded() override;
 
 private:
 	const CCharacterItem& m_CharacterItem;

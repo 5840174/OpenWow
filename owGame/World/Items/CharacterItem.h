@@ -14,8 +14,8 @@ class CCharacter;
 
 struct ObjectComponent
 {
-	std::shared_ptr<CCharacterItemM2Instance> model;
-	std::shared_ptr<IImage>                   texture;
+	std::shared_ptr<CCharacterItemM2Instance> ItemM2Instance;
+	std::shared_ptr<IImage>                   ItemSelfTexture;
 };
 
 struct GeosetComponent
@@ -38,7 +38,7 @@ public:
 
 	const std::vector<ObjectComponent>&  GetModels()                                      const { return m_Models; }
 	const std::vector<GeosetComponent>&  GetGeosets()                                     const { return m_Geosets; }
-	const std::shared_ptr<IImage>&       GetSkinTexture(DBC_CharComponent_Sections _type) const { return m_SkinTextures[static_cast<size_t>(_type)]; }
+	const std::shared_ptr<IImage>&       GetSkinComponentImage(DBC_CharComponent_Sections SkinComponent) const { return m_SkinComponentImages[static_cast<size_t>(SkinComponent)]; }
 
 	// CLoadableObject
 	bool Load();
@@ -49,15 +49,15 @@ private:
 	void InitializeItemGeosets();
 	void InitializeItemSkinImages();
 
-	std::shared_ptr<CM2>	LoadItemM2Model(DBCItem_EInventoryItemType ObjectType, std::string _modelName);
-	std::shared_ptr<IImage> LoadItemImage (DBCItem_EInventoryItemType ObjectType, std::string _textureName);
-	std::shared_ptr<IImage> LoadSkinTexture   (DBC_CharComponent_Sections _type, std::string _textureName);
+	std::shared_ptr<CM2>	LoadItemM2Model            (DBCItem_EInventoryItemType ObjectType, std::string _modelName);
+	std::shared_ptr<IImage> LoadItemImage              (DBCItem_EInventoryItemType ObjectType, std::string _textureName);
+	std::shared_ptr<IImage> LoadItemSkinComponentImage (DBC_CharComponent_Sections SkinComponent, std::string _textureName);
 
 private:
 	SCharacterItemTemplate	      m_Template;
 	std::vector<ObjectComponent>  m_Models;
 	std::vector<GeosetComponent>  m_Geosets;
-	std::shared_ptr<IImage>       m_SkinTextures[static_cast<size_t>(DBC_CharComponent_Sections::ITEMS_COUNT)];
+	std::shared_ptr<IImage>       m_SkinComponentImages[static_cast<size_t>(DBC_CharComponent_Sections::ITEMS_COUNT)];
 	
 private: 
 	const IBaseManager&           m_BaseManager;

@@ -7,7 +7,7 @@ class CM2;
 class CM2_Base_Instance;
 // FORWARD END
 
-struct CM2_Part_TextureWeight
+struct ZN_API CM2_Part_TextureWeight
 {
 public:
 	CM2_Part_TextureWeight(const CM2& M2Object, const std::shared_ptr<IFile>& File, const SM2_TextureWeight& M2TextureWeight);

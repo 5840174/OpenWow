@@ -8,6 +8,7 @@
 #include "M2_Animator.h"
 #include "M2_SkeletonComponent.h"
 #include "M2_ParticlesComponent.h"
+#include "M2_CameraComponent.h"
 
 class ZN_API CM2_Base_Instance 
 	: public CSceneNode
@@ -17,14 +18,16 @@ public:
 	CM2_Base_Instance(IScene& Scene, const std::shared_ptr<CM2>& M2Object);
 	virtual ~CM2_Base_Instance();
 
+	// CM2_Base_Instance
 	void                                CreateInstances();
 
-	// CM2_Base_Instance
 	const CM2&                          getM2() const;
 
 	void                                Attach(EM2_AttachmentPoint AttachmentType);
 	void                                Detach();
 	void                                UpdateAttachPositionAfterSkeletonUpdate();
+
+	std::shared_ptr<ICameraComponent3D> CreateCameraComponent(uint16 CameraDirectIndex);
 
 	// Color & Alpha
 	void                                setColor(glm::vec4 _color) { m_Color = _color; }

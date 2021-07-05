@@ -15,7 +15,7 @@ class CM2;
 class CM2_Skin_Batch;
 // FORWARD END
 
-class CM2_Comp_Materials
+class ZN_API CM2_Comp_Materials
 {
 public:
 	CM2_Comp_Materials(const CM2& M2Object);

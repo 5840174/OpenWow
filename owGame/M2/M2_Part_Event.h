@@ -7,7 +7,7 @@
 class CM2;
 // FORWARD END
 
-class CM2_Part_Event
+class ZN_API CM2_Part_Event
 {
 public:
 	CM2_Part_Event(const CM2& M2Object, const std::shared_ptr<IByteBuffer>& ByteBuffer, const SM2_Event& M2Event);

@@ -30,11 +30,14 @@ const CCharacter& CCharacterItemM2Instance::GetCharacterInstance() const
 { 
 	auto parentIsCharacter = GetParent();
 	if (parentIsCharacter == nullptr)
-		throw CException("CCharacterItemM2Instance::GetCharacter: M2Parent must exists.");
+		throw CException("CCharacterItemM2Instance::GetCharacterInstance: M2Parent must exists.");
 
 	if (auto loadable = std::dynamic_pointer_cast<ILoadable>(parentIsCharacter))
-		if (loadable->GetState() != ILoadable::ELoadableState::Loaded)
-			throw CException("CCharacterItemM2Instance::GetCharacter: M2Parent character isn't loaded.");
+	{
+		auto state = loadable->GetState();
+		if (state != ILoadable::ELoadableState::Loaded)
+			throw CException("CCharacterItemM2Instance::GetCharacterInstance: M2Parent Character isn't loaded. State = '%d'.", state);
+	}
 
 	return dynamic_cast<CCharacter&>(*parentIsCharacter);
 }
@@ -42,28 +45,27 @@ const CCharacter& CCharacterItemM2Instance::GetCharacterInstance() const
 const CCharacterItem& CCharacterItemM2Instance::GetCharacterItem() const 
 { 
 	if (auto loadable = dynamic_cast<const ILoadable*>(&m_CharacterItem))
-		if (loadable->GetState() != ILoadable::ELoadableState::Loaded)
-			throw CException("CCharacterItemM2Instance::GetCharacter: M2Parent character isn't loaded.");
+	{
+		auto state = loadable->GetState();
+		if (state != ILoadable::ELoadableState::Loaded)
+			throw CException("CCharacterItemM2Instance::GetCharacterItem: CharacterItem isn't loaded. State = '%d'.", state);
+	}
 
 	return m_CharacterItem; 
 }
 
-void CCharacterItemM2Instance::AddVisualEffect(std::shared_ptr<CM2_Base_Instance> _visualEffect)
-{
-	m_VisualEffects.push_back(_visualEffect);
-}
+//void CCharacterItemM2Instance::AddVisualEffect(std::shared_ptr<CM2_Base_Instance> _visualEffect)
+//{
+//	m_VisualEffects.push_back(_visualEffect);
+//}
 
 
 
 //
 // ILoadable
 //
-bool CCharacterItemM2Instance::Load()
+void CCharacterItemM2Instance::OnLoaded()
 {
-	bool loadResult = __super::Load();
-	if (false == loadResult)
-		return false;
-
 	// Attach to parent (parent is Character)
 	if (auto ownerCharacterAttachment = GetCharacterInstance().getM2().getMiscellaneous().getAttachment(m_AttachmentPoint))
 		Attach(ownerCharacterAttachment->GetAttachmentType());
@@ -102,11 +104,9 @@ bool CCharacterItemM2Instance::Load()
 				//itemVisualEffectInstance->Attach(ownerCharacterAttachmentPoint); // Or attach visual effect to same attachment as item
 			}
 
-			AddVisualEffect(itemVisualEffectInstance);
+			//AddVisualEffect(itemVisualEffectInstance);
 		}
 	}
-
-	return loadResult;
 }
 
 #endif

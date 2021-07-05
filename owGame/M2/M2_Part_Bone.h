@@ -81,7 +81,7 @@ const char* const M2_GameBoneTypeNames[] =
 	"Root"
 };
 
-class CM2_Part_Bone
+class ZN_API CM2_Part_Bone
 {
 public:
 	CM2_Part_Bone(const CM2& M2Object, const std::shared_ptr<IFile>& File, const SM2_Bone& M2Bone);

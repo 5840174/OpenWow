@@ -4,37 +4,31 @@
 
 // FORWARD BEGIN
 class CM2;
+class CM2_Base_Instance;
 // FORWARD END
 
-class CM2_Part_Camera
+class ZN_API CM2_Part_Camera
 {
 public:
 	CM2_Part_Camera(const CM2& M2Model, const std::shared_ptr<IByteBuffer>& File, const SM2_Camera& M2Camera);
 	virtual ~CM2_Part_Camera();
 
-	glm::vec3 GetPosition() const { return pResult; }
-	glm::vec3 getTarget() const { return tResult; }
-
-	void calc(uint32 time, uint32 globalTime);
-	void setup(const glm::vec3& _startPoint, float rotate);
-	void getParams(glm::vec3* _position, glm::vec3* _target, float* _fov, float* _nearPlane, float* _farPlane);
+	bool Calculate(const CM2_Base_Instance* M2Instance, uint32 globalTime, float AspectRatio, glm::mat4 * Projection, glm::mat4 * View) const;
 
 private:
-	float farclip;
-	float nearclip;
+	float m_DFov;
 
-	M2_Animated<glm::vec3> tPos;
+	float m_FarClip;
+	float m_NearClip;
+
 	glm::vec3 m_PositionBase;
-	glm::vec3 pResult;
-
-	M2_Animated<glm::vec3> tTarget;
+	M2_Animated<glm::vec3> m_Positions;
+	
 	glm::vec3 m_TargetBase;
-	glm::vec3 tResult;
-
-	M2_Animated<float> tRoll;
+	M2_Animated<glm::vec3> m_Targets;
+	
+	M2_Animated<float> m_Rolls;
 	float rollResult;
-
-	float fov;
 
 private:
 	const CM2& m_M2Object;

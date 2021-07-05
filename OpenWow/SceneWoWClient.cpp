@@ -16,7 +16,51 @@ CSceneWoWClient::~CSceneWoWClient()
 
 
 //
-// IGameState
+// CSceneWoWClient
+//
+void CSceneWoWClient::SetMainMenu()
+{
+	auto m2Model = GetBaseManager().GetManager<IWoWObjectsCreator>()->LoadM2(GetRenderDevice(), "Interface\\GLUES\\MODELS\\UI_MainMenu_Northrend\\UI_MainMenu_Northrend.M2");
+
+	m_MainMenu = GetRootSceneNode()->CreateSceneNode<CM2_Base_Instance>(m2Model);
+	GetBaseManager().GetManager<ILoader>()->AddToLoadQueue(m_MainMenu);
+
+	while (m_MainMenu->GetState() < ILoadable::ELoadableState::Loaded)
+	{
+		Sleep(5);
+	}
+
+	auto m2CameraComponent = m_MainMenu->CreateCameraComponent(0);
+	GetCameraController()->SetCamera(m2CameraComponent);
+
+	/*auto camera = m_MainMenu->getM2().getMiscellaneous().getCameraDirect(0);
+	const_cast<CM2_Part_Camera*>(camera.get())->calc(0, 0);
+
+	glm::vec3 cameraPosition;
+	glm::vec3 cameraTarget;
+	float fov;
+	float nearPlane, farPlane;
+
+	camera->getParams(&cameraPosition, &cameraTarget, &fov, &nearPlane, &farPlane);
+
+	float aspect = static_cast<float>(GetRenderWindow().GetWindowWidth()) / static_cast<float>(GetRenderWindow().GetWindowHeight());
+	fov = fov / glm::sqrt(1.0f + glm::pow(aspect, 2.0f));
+	fov = glm::degrees(fov);
+
+	GetCameraController()->GetCamera()->SetPerspectiveProjection(fov, aspect, nearPlane, farPlane);
+	GetCameraController()->GetCamera()->SetPosition(cameraPosition);
+	GetCameraController()->GetCamera()->SetDirection(glm::normalize(cameraTarget - cameraPosition));*/
+}
+
+void CSceneWoWClient::RemoveMainMenu()
+{
+
+}
+
+
+
+//
+// IScene
 //
 void CSceneWoWClient::Initialize()
 {
@@ -67,6 +111,9 @@ void CSceneWoWClient::Initialize()
 	auto faceUpper = GetBaseManager().GetManager<IImagesFactory>()->CreateImage(GetBaseManager().GetManager<IFilesManager>()->Open("Character\\SCOURGE\\MALE\\ScourgeMaleFaceUpper08_03.blp"));
 
 
+
+	SetMainMenu();
+
 	m_WowClient = std::make_unique<CWoWClient>(*this, "localhost");
 	m_WowClient->BeginConnect("test2", "test2");
 }
@@ -86,18 +133,22 @@ void CSceneWoWClient::OnUpdate(UpdateEventArgs & e)
 	m_WowClient->Update(e);
 
 	m_RendererStatisticText->SetText(GetRenderer()->GetStatisticText());
+
 }
 
 bool CSceneWoWClient::OnMousePressed(const MouseButtonEventArgs & e, const Ray& RayToWorld)
 {
-	auto selectedNodes = GetFinder().FindIntersection(RayToWorld, nullptr);
-	if (false == selectedNodes.empty())
+	if (e.LeftButton)
 	{
-		for (const auto& selectedNodesIt : selectedNodes)
+		auto selectedNodes = GetFinder().FindIntersection(RayToWorld, nullptr);
+		if (false == selectedNodes.empty())
 		{
-			if (auto m2Node = std::dynamic_pointer_cast<CM2_Base_Instance>(selectedNodesIt.second))
+			for (const auto& selectedNodesIt : selectedNodes)
 			{
-				Log::Green("Selected node '%f' = '%s'.", selectedNodesIt.first, m2Node->getM2().getFilename().c_str());
+				if (auto m2Node = std::dynamic_pointer_cast<CM2_Base_Instance>(selectedNodesIt.second))
+				{
+					Log::Green("Selected node '%f' = '%s'.", selectedNodesIt.first, m2Node->getM2().getFilename().c_str());
+				}
 			}
 		}
 	}

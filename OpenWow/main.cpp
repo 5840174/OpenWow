@@ -10,7 +10,7 @@
 
 void main_internal(int argumentCount, char* arguments[])
 {
-	CApplicationNative_PlatformWindows app;
+	CApplicationNative_PlatformWindows app({ "znRenderDX11.dll" , "owGame.dll", "owClient.dll" /*, "znPluginFBXModels.dll"*/ });
 
 	IRenderDevice& renderDevice = app.CreateRenderDevice(RenderDeviceType::RenderDeviceType_DirectX11);
 

@@ -19,6 +19,7 @@ Texture3	-					-					-					ScalpUpperTexture	-
 Character_SectionWrapper::Character_SectionWrapper(const IBaseManager& BaseManager)
 	: m_BaseManager(BaseManager)
 {
+	m_FilesManager = m_BaseManager.GetManager<IFilesManager>();
 	m_DBCs = m_BaseManager.GetManager<CDBCStorage>();
 }
 
@@ -38,7 +39,8 @@ std::shared_ptr<IImage> Character_SectionWrapper::getSkinTexture(const SCharacte
 			std::string textureName = i->Get_Texture1();
 			if (textureName.empty())
 				break;
-
+			if (false == m_FilesManager->IsFileExists(textureName))
+				break;
 			return m_BaseManager.GetManager<IImagesFactory>()->CreateImage(textureName);
 		}
 	}
@@ -58,7 +60,8 @@ std::shared_ptr<IImage> Character_SectionWrapper::getSkinExtraTexture(const SCha
 			std::string textureName = i->Get_Texture2();
 			if (textureName.empty())
 				break;
-
+			if (false == m_FilesManager->IsFileExists(textureName))
+				break;
 			return m_BaseManager.GetManager<IImagesFactory>()->CreateImage(textureName);
 		}
 	}
@@ -85,7 +88,8 @@ std::shared_ptr<IImage> Character_SectionWrapper::getFaceLowerTexture(const SCha
 			std::string textureName = i->Get_Texture1();
 			if (textureName.empty())
 				break;
-
+			if (false == m_FilesManager->IsFileExists(textureName))
+				break;
 			return m_BaseManager.GetManager<IImagesFactory>()->CreateImage(textureName);
 		}
 	}
@@ -107,7 +111,8 @@ std::shared_ptr<IImage> Character_SectionWrapper::getFaceUpperTexture(const SCha
 			std::string textureName = i->Get_Texture2();
 			if (textureName.empty())
 				break;
-
+			if (false == m_FilesManager->IsFileExists(textureName))
+				break;
 			return m_BaseManager.GetManager<IImagesFactory>()->CreateImage(textureName);
 		}
 	}
@@ -126,13 +131,15 @@ std::shared_ptr<IImage> Character_SectionWrapper::getFacialHairLowerTexture(cons
 			i->Get_GeneralType() == DBC_CharSections_GeneralType::FacialHair &&
 			i->Get_Race() == (uint32)CharacterTemlate.Race &&
 			i->Get_Gender() == (uint32)CharacterTemlate.Gender &&
-			i->Get_Type() == CharacterTemlate.facialStyle
+			i->Get_Type() == CharacterTemlate.facialStyle &&
+			i->Get_Color() == CharacterTemlate.hairColor
 			)
 		{
 			std::string textureName = i->Get_Texture1();
 			if (textureName.empty())
 				break;
-
+			if (false == m_FilesManager->IsFileExists(textureName))
+				break;
 			return m_BaseManager.GetManager<IImagesFactory>()->CreateImage(textureName);
 		}
 	}
@@ -148,11 +155,14 @@ std::shared_ptr<IImage> Character_SectionWrapper::getFacialHairUpperTexture(cons
 			i->Get_GeneralType() == DBC_CharSections_GeneralType::FacialHair &&
 			i->Get_Race() == (uint32)CharacterTemlate.Race &&
 			i->Get_Gender() == (uint32)CharacterTemlate.Gender &&
-			i->Get_Type() == CharacterTemlate.facialStyle
+			i->Get_Type() == CharacterTemlate.facialStyle && 
+			i->Get_Color() == CharacterTemlate.hairColor
 			)
 		{
 			std::string textureName = i->Get_Texture2();
 			if (textureName.empty())
+				break;
+			if (false == m_FilesManager->IsFileExists(textureName))
 				break;
 			return m_BaseManager.GetManager<IImagesFactory>()->CreateImage(textureName);
 		}
@@ -307,7 +317,8 @@ std::shared_ptr<IImage> Character_SectionWrapper::getHairTexture(const SCharacte
 			std::string textureName = i->Get_Texture1();
 			if (textureName.empty())
 				break;
-
+			if (false == m_FilesManager->IsFileExists(textureName))
+				break;
 			return m_BaseManager.GetManager<IImagesFactory>()->CreateImage(textureName);
 		}
 	}
@@ -330,7 +341,8 @@ std::shared_ptr<IImage> Character_SectionWrapper::getHairScalpLowerTexture(const
 			std::string textureName = i->Get_Texture2();
 			if (textureName.empty())
 				break;
-
+			if (false == m_FilesManager->IsFileExists(textureName))
+				break;
 			return m_BaseManager.GetManager<IImagesFactory>()->CreateImage(textureName);
 		}
 	}
@@ -353,7 +365,8 @@ std::shared_ptr<IImage> Character_SectionWrapper::getHairScalpUpperTexture(const
 			std::string textureName = i->Get_Texture3();
 			if (textureName.empty())
 				break;
-
+			if (false == m_FilesManager->IsFileExists(textureName))
+				break;
 			return m_BaseManager.GetManager<IImagesFactory>()->CreateImage(textureName);
 		}
 	}
@@ -380,8 +393,7 @@ std::string Character_SectionWrapper::getNakedPelvisTexture(const SCharacterTemp
 		}
 	}
 
-	_ASSERT(false); 
-	return "";
+	throw CException("Character_SectionWrapper::getNakedPelvisTexture: Texture1 not found for Race '%d', Gender '%d', Skin '%s'.", (uint32)CharacterTemlate.Race, (uint32)CharacterTemlate.Gender, CharacterTemlate.skin);
 }
 
 std::string Character_SectionWrapper::getNakedTorsoTexture(const SCharacterTemplate& CharacterTemlate) const
@@ -399,8 +411,7 @@ std::string Character_SectionWrapper::getNakedTorsoTexture(const SCharacterTempl
 		}
 	}
 
-	_ASSERT(false);
-	return "";
+	throw CException("Character_SectionWrapper::getNakedTorsoTexture: Texture2 not found for Race '%d', Gender '%d', Skin '%s'.", (uint32)CharacterTemlate.Race, (uint32)CharacterTemlate.Gender, CharacterTemlate.skin);
 }
 
 #endif

@@ -15,7 +15,7 @@
 class CM2;
 // FORWARD END
 
-class CM2_Comp_Miscellaneous
+class ZN_API CM2_Comp_Miscellaneous
 {
 public:
 	CM2_Comp_Miscellaneous(const CM2& M2Object);

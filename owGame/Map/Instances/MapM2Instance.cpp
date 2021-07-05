@@ -6,10 +6,11 @@
 #include "MapM2Instance.h"
 
 // Additional
+#include "../MapTile.h"
 
-CMapM2Instance::CMapM2Instance(IScene& Scene, const std::shared_ptr<CM2>& M2Object, const SMapTile_MDDF& _placementInfo) 
+CMapM2Instance::CMapM2Instance(IScene& Scene, const std::shared_ptr<CM2>& M2Object, const SMapTile_MDDF& MDDF)
 	: CM2_Base_Instance(Scene, M2Object)
-	, m_PlacementInfo(_placementInfo)
+	, m_PlacementInfo(MDDF)
 {
 	SetName("CMapM2Instance: " + M2Object->getFilename());
 }
@@ -52,6 +53,27 @@ void CMapM2Instance::Accept(IVisitor* visitor)
 	}
 
 	__super::Accept(visitor);
+}
+
+
+
+//
+// ILoadable
+//
+bool CMapM2Instance::Load()
+{
+	bool loadResult = __super::Load();
+	if (false == loadResult)
+		return false;
+
+	if (auto parent = GetParent())
+	{
+		if (auto parentAsMapTile = std::dynamic_pointer_cast<CMapTile>(parent))
+		{
+			parentAsMapTile->ExtendMapTileBounds(GetComponentT<IColliderComponent>()->GetWorldBounds());
+		}
+	}
+	return true;
 }
 
 

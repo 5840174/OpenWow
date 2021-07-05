@@ -360,9 +360,6 @@ bool CMapTile::Load()
 		if (auto wmo = GetBaseManager().GetManager<IWoWObjectsCreator>()->LoadWMO(GetRenderDevice(), WMOsNames[it.nameIndex], true))
 		{
 			auto inst = CreateSceneNode<CMapWMOInstance>(wmo, it);
-
-			ExtendMapTileBounds(inst->GetComponentT<IColliderComponent>()->GetWorldBounds());
-
 			GetBaseManager().GetManager<ILoader>()->AddToLoadQueue(inst);
 
 			m_WMOsInstances.push_back(inst.get());
@@ -381,9 +378,6 @@ bool CMapTile::Load()
 		if (auto m2 = GetBaseManager().GetManager<IWoWObjectsCreator>()->LoadM2(GetRenderDevice(), m_MDXsNames[it.nameIndex]))
 		{
 			auto inst = CreateSceneNode<CMapM2Instance>(m2, it);
-
-			ExtendMapTileBounds(inst->GetComponentT<IColliderComponent>()->GetWorldBounds());
-
 			GetBaseManager().GetManager<ILoader>()->AddToLoadQueue(inst);
 			
 			m_MDXsInstances.push_back(inst.get());

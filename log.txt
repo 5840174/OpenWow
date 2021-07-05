@@ -1,5 +1,5 @@
 ^Log created
-!Unable to load settings file.
-!--->Unable to open file 'settings.xml'
-^Plugin 'D:\OpenWow\bin_x64\Release\znRenderDX11.dll' loaded.
-^Plugin 'D:\OpenWow\bin_x64\Release\znRenderDX11.dll' successfully added.
+^Plugin 'D:\OpenWow\bin_x64\Debug\znRenderDX11.dll' successfully added.
+^Plugin 'D:\OpenWow\bin_x64\Debug\znPluginFBXModels.dll' successfully added.
+ FBXManager: FBX SDK version 2020.0.1 Release (a950256aa).
+ FBXManager: FBX file format version is 7.7.0.

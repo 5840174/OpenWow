@@ -5,9 +5,12 @@
 // General
 #include "MapWMOInstance.h"
 
-CMapWMOInstance::CMapWMOInstance(IScene& Scene, const std::shared_ptr<CWMO>& WMOObject, const SMapTile_MODF& _placementInfo)
+// Additional
+#include "../MapTile.h"
+
+CMapWMOInstance::CMapWMOInstance(IScene& Scene, const std::shared_ptr<CWMO>& WMOObject, const SMapTile_MODF& MODF)
 	: CWMO_Base_Instance(Scene, WMOObject)
-	, m_PlacementInfo(_placementInfo)
+	, m_PlacementInfo(MODF)
 {
 	SetName("CMapWMOInstance: " + WMOObject->GetFilename());
 }
@@ -62,6 +65,28 @@ void CMapWMOInstance::Accept(IVisitor* visitor)
 	}
 
 	__super::Accept(visitor);
+}
+
+
+
+//
+// ILoadable
+//
+bool CMapWMOInstance::Load()
+{
+	bool loadResult = __super::Load();
+	if (false == loadResult)
+		return false;
+
+	if (auto parent = GetParent())
+	{
+		if (auto parentAsMapTile = std::dynamic_pointer_cast<CMapTile>(parent))
+		{
+			parentAsMapTile->ExtendMapTileBounds(GetComponentT<IColliderComponent>()->GetWorldBounds());
+		}
+	}
+	
+	return true;
 }
 
 

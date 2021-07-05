@@ -42,6 +42,7 @@ public:
 
 private:
 	const IBaseManager& m_BaseManager;
+	IFilesManager* m_FilesManager;
 	CDBCStorage* m_DBCs;
 };
 

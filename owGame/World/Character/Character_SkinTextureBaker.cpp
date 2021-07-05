@@ -118,7 +118,7 @@ std::shared_ptr<IImage> Character_SkinTextureBaker::CreateCharacterSkinWithItems
 		const auto& characterItem = Character->GetItem(inventorySlot);
 		for (uint32 itemTextureComponent = 0; itemTextureComponent < static_cast<size_t>(DBC_CharComponent_Sections::ITEMS_COUNT); itemTextureComponent++)
 		{
-			auto itemComponentTexture = characterItem->GetSkinTexture(static_cast<DBC_CharComponent_Sections>(itemTextureComponent));
+			auto itemComponentTexture = characterItem->GetSkinComponentImage(static_cast<DBC_CharComponent_Sections>(itemTextureComponent));
 			if (itemComponentTexture == nullptr)
 				continue;
 

@@ -498,6 +498,9 @@
     <ClCompile Include="World\Items\CharacterItemM2Instance.cpp">
       <Filter>World\Item</Filter>
     </ClCompile>
+    <ClCompile Include="M2\M2_CameraComponent.cpp">
+      <Filter>M2\SceneNode &amp; Components\Components</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="common.h">
@@ -1045,6 +1048,9 @@
     </ClInclude>
     <ClInclude Include="World\Items\CharacterItemDefines.h">
       <Filter>World\Item</Filter>
+    </ClInclude>
+    <ClInclude Include="M2\M2_CameraComponent.h">
+      <Filter>M2\SceneNode &amp; Components\Components</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

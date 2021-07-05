@@ -13,15 +13,15 @@
 
 namespace
 {
-	char getGenderLetter(Gender Gender)
+	char GetGenderLetter(Gender Gender)
 	{
 		return (Gender == Gender::Male) ? 'M' : (Gender == Gender::Female) ? 'F' : 'U';
 	}
 
-	std::string getTextureComponentName(DBC_CharComponent_Sections _type, std::string _textureName, Gender _gender)
+	std::string GetSkinComponentImageFileName(DBC_CharComponent_Sections _type, std::string _textureName, Gender _gender)
 	{
 		char maleTexture[MAX_PATH];
-		sprintf_s(maleTexture, "Item\\TEXTURECOMPONENTS\\%s\\%s_%c.blp", ItemTextureComponents[static_cast<size_t>(_type)].TexturesFolder, _textureName.c_str(), getGenderLetter(_gender));
+		sprintf_s(maleTexture, "Item\\TEXTURECOMPONENTS\\%s\\%s_%c.blp", ItemTextureComponents[static_cast<size_t>(_type)].TexturesFolder, _textureName.c_str(), GetGenderLetter(_gender));
 		return std::string(maleTexture);
 	}
 }
@@ -85,7 +85,7 @@ void CCharacterItem::InitializeItemModels()
 		if (GetTemplate().InventoryType == (uint8)DBCItem_EInventoryItemType::HEAD)
 		{
 			std::string raceClientPrefixString = m_BaseManager.GetManager<CDBCStorage>()->DBC_ChrRaces()[static_cast<size_t>(m_OwnerCharacter.GetTemplate().Race)]->Get_ClientPrefix();
-			char genderLetter = getGenderLetter(m_OwnerCharacter.GetTemplate().Gender);
+			char genderLetter = GetGenderLetter(m_OwnerCharacter.GetTemplate().Gender);
 
 			char modelPostfix[MAX_PATH];
 			sprintf_s(modelPostfix, "_%s%c", raceClientPrefixString.c_str(), genderLetter);
@@ -103,7 +103,7 @@ void CCharacterItem::InitializeItemModels()
 
 
 		// Create model and node for Item
-		auto itemModel = LoadItemM2Model((DBCItem_EInventoryItemType)GetTemplate().InventoryType, objectFileName);
+		auto itemModel = LoadItemM2Model(static_cast<DBCItem_EInventoryItemType>(GetTemplate().InventoryType), objectFileName);
 		if (itemModel == nullptr)
 		{
 			Log::Error("CCharacterItem::InitializeItemModels: M2Model for item DisplayID '%d' not found.", GetTemplate().DisplayId);
@@ -148,7 +148,7 @@ void CCharacterItem::InitializeItemSkinImages()
 		if (textureComponentName.empty())
 			continue;
 
-		m_SkinTextures[i] = LoadSkinTexture(ItemTextureComponents[i].list, textureComponentName);
+		m_SkinComponentImages[i] = LoadItemSkinComponentImage(ItemTextureComponents[i].list, textureComponentName);
 	}
 }
 
@@ -164,11 +164,11 @@ std::shared_ptr<IImage> CCharacterItem::LoadItemImage(DBCItem_EInventoryItemType
 	return m_BaseManager.GetManager<IImagesFactory>()->CreateImage(imageFilename);
 }
 
-std::shared_ptr<IImage> CCharacterItem::LoadSkinTexture(DBC_CharComponent_Sections _type, std::string _textureName)
+std::shared_ptr<IImage> CCharacterItem::LoadItemSkinComponentImage(DBC_CharComponent_Sections SkinComponent, std::string _textureName)
 {
-	std::string maleTexture = getTextureComponentName(_type, _textureName, Gender::Male);
-	std::string femaleTexture = getTextureComponentName(_type, _textureName, Gender::Female);
-	std::string universalTexture = getTextureComponentName(_type, _textureName, Gender::None);
+	std::string maleTexture = GetSkinComponentImageFileName(SkinComponent, _textureName, Gender::Male);
+	std::string femaleTexture = GetSkinComponentImageFileName(SkinComponent, _textureName, Gender::Female);
+	std::string universalTexture = GetSkinComponentImageFileName(SkinComponent, _textureName, Gender::None);
 
 	IFilesManager* filesManager = m_BaseManager.GetManager<IFilesManager>();
 

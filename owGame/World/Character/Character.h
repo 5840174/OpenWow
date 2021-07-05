@@ -15,10 +15,10 @@ public:
     CCharacter(IScene& Scene, const std::shared_ptr<CM2>& M2Object);
     virtual ~CCharacter();
 
+	// CCharacter
     SCharacterTemplate& Template() { return m_Template; }
 	const SCharacterTemplate& GetTemplate() const { return m_Template; }
 
-	// Refreshers
 	void RefreshCharacterItemsFromTemplate();
 	void Refresh_CreateSkinTexture(std::shared_ptr<IImage> BakedSkinImage);
 	void Refresh_AddItemsToSkinTexture();
@@ -36,7 +36,7 @@ public:
 	void Initialize() override;
 
 	// ILoadable
-	bool Load() override;
+	void OnLoaded() override;
 
 private:
 	SCharacterTemplate			                     m_Template;

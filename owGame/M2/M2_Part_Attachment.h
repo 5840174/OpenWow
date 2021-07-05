@@ -98,7 +98,7 @@ enum class EM2_AttachmentPoint : uint32
 };
 
 
-class CM2_Part_Attachment
+class ZN_API CM2_Part_Attachment
 {
 public:
 	CM2_Part_Attachment(const CM2& M2Object, const std::shared_ptr<IByteBuffer>& ByteBuffer, const SM2_Attachment& M2Attachment);

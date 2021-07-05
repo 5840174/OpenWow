@@ -9,17 +9,20 @@ class ZN_API CMapM2Instance
 	: public CM2_Base_Instance
 {
 public:
-	CMapM2Instance(IScene& Scene, const std::shared_ptr<CM2>& M2Object, const SMapTile_MDDF& _placementInfo);
+	CMapM2Instance(IScene& Scene, const std::shared_ptr<CM2>& M2Object, const SMapTile_MDDF& MDDF);
 	virtual ~CMapM2Instance();
 
 	// ISceneNode
 	void Initialize() override;
 	void Accept(IVisitor* visitor) override;
 
+	// ILoadable
+	bool Load() override;
+
 protected:
 	virtual glm::mat4 CalculateLocalTransform() const override;
 
-private: 
+private:
 	const SMapTile_MDDF m_PlacementInfo;
 
 public:	// Static

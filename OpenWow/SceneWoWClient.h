@@ -7,23 +7,29 @@ public:
 	CSceneWoWClient(IBaseManager& BaseManager, IRenderWindow& RenderWindow);
 	virtual ~CSceneWoWClient();
 
-	// IGameState
+	// CSceneWoWClient
+	void SetMainMenu();
+	void RemoveMainMenu();
+
+	// IScene
 	void Initialize() override;
 	void Finalize() override;
 
-	virtual void OnUpdate(UpdateEventArgs& e) override;
+	void OnUpdate(UpdateEventArgs& e) override;
 
-	virtual bool OnMousePressed(const MouseButtonEventArgs & e, const Ray& RayToWorld) override;
-	virtual void OnMouseMoved(const MouseMotionEventArgs & e, const Ray& RayToWorld) override;
+	bool OnMousePressed(const MouseButtonEventArgs & e, const Ray& RayToWorld) override;
+	void OnMouseMoved(const MouseMotionEventArgs & e, const Ray& RayToWorld) override;
 
 	// Keyboard events
-	virtual bool OnWindowKeyPressed(KeyEventArgs& e) override;
-	virtual void OnWindowKeyReleased(KeyEventArgs& e) override;
+	bool OnWindowKeyPressed(KeyEventArgs& e) override;
+	void OnWindowKeyReleased(KeyEventArgs& e) override;
 
 protected:
-	virtual void InitializeRenderer() override;
+	void InitializeRenderer() override;
 
 private:
+	std::shared_ptr<CM2_Base_Instance> m_MainMenu;
+	
 	std::unique_ptr<CWoWClient> m_WowClient;
 	std::shared_ptr<IUIControlText> m_RendererStatisticText;
 };

@@ -5,11 +5,15 @@
 #include "../../WMO/WMO_Base_Instance.h"
 #include "../Map_Headers.h"
 
+// FORWARD BEGIN
+class CMapTile;
+// FORWARD END
+
 class ZN_API CMapWMOInstance 
 	: public CWMO_Base_Instance
 {
 public:
-	CMapWMOInstance(IScene& Scene, const std::shared_ptr<CWMO>& WMOObject, const SMapTile_MODF& _placementInfo);
+	CMapWMOInstance(IScene& Scene, const std::shared_ptr<CWMO>& WMOObject, const SMapTile_MODF& MODF);
 	virtual ~CMapWMOInstance();
 
 	// CWMO_Base_Instance
@@ -18,6 +22,9 @@ public:
 	// ISceneNode
 	void Initialize() override;
 	void Accept(IVisitor* visitor) override;
+
+	// ILoadable
+	bool Load() override;
 
 protected:
 	virtual glm::mat4 CalculateLocalTransform() const override;
