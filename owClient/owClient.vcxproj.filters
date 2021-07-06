@@ -189,6 +189,9 @@
     <ClInclude Include="Warden\WardenModuleWin.h">
       <Filter>Warden</Filter>
     </ClInclude>
+    <ClInclude Include="Warden\WardenChecks.h">
+      <Filter>Warden</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="World\World.cpp">

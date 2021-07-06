@@ -16,34 +16,60 @@
 // Additional (OpenSSL)
 #include <openssl/md5.h>
 
-CWarden::CWarden(CWorldSocket& WorldSocket, BigNumber Key)
-	: m_WorldSocket(WorldSocket)
-	, _inputCrypto(16)
-	, _outputCrypto(16)
-	, m_WARDEN_SMSG_MODULE_USE_DataSize(0)
-	, m_WARDEN_SMSG_MODULE_CACHE_DataPosition(0)
+
+namespace
 {
-	SHA1Randx WK(Key.AsByteArray().get(), Key.GetNumBytes());
-	WK.Generate(_inputKey, 16);
-	WK.Generate(_outputKey, 16);
-	std::memcpy(_seed, Module.Seed, 16);
-
-	_inputCrypto.Init(_inputKey);
-	_outputCrypto.Init(_outputKey);
-
-	BigNumber bnnn;
-	bnnn.SetHexStr("CC8951AFE76571513777AA97140E890236C50602");
-
-	for (size_t i = 0; i < bnnn.GetNumBytes(); i++)
+	uint32 BuildChecksum(const uint8* data, uint32 length)
 	{
-		Log::Error("Byte '%d'.", bnnn.AsByteArray()[i]);
+		struct keyData
+		{
+			union
+			{
+				struct
+				{
+					uint8 bytes[20];
+				} bytes;
+
+				struct
+				{
+					uint32 ints[5];
+				} ints;
+			};
+		} hash;
+
+		SHA1(data, length, hash.bytes.bytes);
+		uint32 checkSum = 0;
+		for (uint8 i = 0; i < 5; ++i)
+			checkSum = checkSum ^ hash.ints.ints[i];
+
+		return checkSum;
 	}
 }
 
 
-ClientWardenModule* CWarden::GetModuleForClient()
+CWarden::CWarden(CWorldSocket& WorldSocket, BigNumber Key)
+	: m_WorldSocket(WorldSocket)
+	, m_InputCrypto(16)
+	, m_OutputCrypto(16)
+	, m_WARDEN_SMSG_MODULE_USE_DataSize(0)
+	, m_WARDEN_SMSG_MODULE_CACHE_DataPosition(0)
 {
-	ClientWardenModule *mod = new ClientWardenModule;
+	SHA1Randx WK(Key.AsByteArray().get(), Key.GetNumBytes());
+	WK.Generate(m_InputKey, 16);
+	WK.Generate(m_OutputKey, 16);
+	std::memcpy(m_Seed, Module.Seed, 16);
+
+	m_InputCrypto.Init(m_InputKey);
+	m_OutputCrypto.Init(m_OutputKey);
+}
+
+CWarden::~CWarden()
+{}
+
+
+/*SWardenClientModule* CWarden::GetModuleForClient()
+{
+	SWardenClientModule *mod = new SWardenClientModule;
 
 	uint32 length = sizeof(Module.Module);
 
@@ -60,7 +86,7 @@ ClientWardenModule* CWarden::GetModuleForClient()
 	MD5_Final((uint8*)&mod->Id, &ctx);
 
 	return mod;
-}
+}*/
 
 bool CWarden::ProcessPacket(CServerPacket& Buffer)
 {
@@ -91,18 +117,13 @@ bool CWarden::ProcessPacket(CServerPacket& Buffer)
 
 		case WARDEN_SMSG_MODULE_INITIALIZE:
 		{
-			Buffer.seekRelative(-1);
-
-			WardenInitModuleRequest Request;
-			Buffer >> Request;
-
-			Log::Print("CWarden::ProcessPacket: WARDEN_SMSG_MODULE_INITIALIZE Received. Module initialize.");
+			On_WARDEN_SMSG_MODULE_INITIALIZE(Buffer);
 		}
 		break;
 
 		case WARDEN_SMSG_MEM_CHECKS_REQUEST:        // byte len; while (!EOF) { byte unk(1); byte index(++); string module(can be 0); int offset; byte len; byte[] bytes_to_compare[len]; }
 		{
-			throw CException("Unexpected.");
+			throw CException("Not implemented.");
 		}
 		break;
 
@@ -113,7 +134,7 @@ bool CWarden::ProcessPacket(CServerPacket& Buffer)
 		break;
 
 		default:
-			throw CException("CWarden::ProcessPacket: Unknown warden packet type '%d'.", wardenOpcode);
+			throw CException("Warden: ProcessPacket: Unknown packet type '%d'.", wardenOpcode);
 	}
 
 	return true;
@@ -126,7 +147,7 @@ void CWarden::SendWardenPacket(uint8 WardenOpcode, CByteBuffer& Bytes)
 	bytes << Bytes;
 	EncryptData(bytes.getDataEx(), bytes.getSize());
 
-	Log::Print("WARDEN PACKET SEnDED. '%d'", WardenOpcode);
+	Log::Print("Warden: Sending packet Type: '%d'. Size '%d'.", WardenOpcode, Bytes.getSize());
 
 	CClientPacket clientPacket(CMSG_WARDEN_DATA);
 	clientPacket << bytes;
@@ -139,39 +160,15 @@ void CWarden::SendWardenPacket(uint8 WardenOpcode, CByteBuffer& Bytes)
 //
 void CWarden::DecryptData(uint8* buffer, uint32 length)
 {
-	_outputCrypto.UpdateData(length, buffer);
+	m_OutputCrypto.UpdateData(length, buffer);
 }
 
 void CWarden::EncryptData(uint8* buffer, uint32 length)
 {
-	_inputCrypto.UpdateData(length, buffer);
+	m_InputCrypto.UpdateData(length, buffer);
 }
 
-uint32 CWarden::BuildChecksum(const uint8* data, uint32 length)
-{
-	struct keyData
-	{
-		union
-		{
-			struct
-			{
-				uint8 bytes[20];
-			} bytes;
 
-			struct
-			{
-				uint32 ints[5];
-			} ints;
-		};
-	} hash;
-
-	SHA1(data, length, hash.bytes.bytes);
-	uint32 checkSum = 0;
-	for (uint8 i = 0; i < 5; ++i)
-		checkSum = checkSum ^ hash.ints.ints[i];
-
-	return checkSum;
-}
 
 
 
@@ -188,7 +185,7 @@ void CWarden::On_WARDEN_SMSG_MODULE_USE(CServerPacket & Buffer)
 	Buffer >> ModuleId;
 	Buffer >> ModuleKey;
 	Buffer >> Size;
-	Log::Print("CWarden::ProcessPacket: WARDEN_SMSG_MODULE_USE Received. Size = '%d'.", Size);
+	Log::Print("Warden: Received WARDEN_SMSG_MODULE_USE. Module size: '%d'.", Size);
 
 	m_WARDEN_SMSG_MODULE_USE_DataSize = Size;
 	m_WARDEN_SMSG_MODULE_CACHE_DataPosition = 0;
@@ -202,21 +199,20 @@ void CWarden::On_WARDEN_SMSG_MODULE_USE(CServerPacket & Buffer)
 void CWarden::On_WARDEN_SMSG_MODULE_CACHE(CServerPacket & Buffer)
 {
 	uint16 DataSize;
-	uint8 Data[500];
-
 	Buffer >> DataSize;
 	if (DataSize > 500)
-		throw CException("Data size must be less then 500.");
-	Buffer.readBytes(Data, DataSize);
+		throw CException("Warden: WARDEN_SMSG_MODULE_CACHE: Data size must be less then 500.");
+
+	Buffer.seekRelative(DataSize);
 	m_WARDEN_SMSG_MODULE_CACHE_DataPosition += DataSize;
 
-	Log::Print("CWarden::ProcessPacket: WARDEN_SMSG_MODULE_CACHE Received. Size = '%d'. Readed '%d' of '%d'.", DataSize, m_WARDEN_SMSG_MODULE_CACHE_DataPosition, m_WARDEN_SMSG_MODULE_USE_DataSize);
+	//Log::Print("Warden: Received WARDEN_SMSG_MODULE_CACHE. Part size: '%d'. Readed '%d' of '%d'.", DataSize, m_WARDEN_SMSG_MODULE_CACHE_DataPosition, m_WARDEN_SMSG_MODULE_USE_DataSize);
 
 	// SEND
 
 	if (m_WARDEN_SMSG_MODULE_CACHE_DataPosition == m_WARDEN_SMSG_MODULE_USE_DataSize)
 	{
-		Log::Print("CWarden::ProcessPacket: WARDEN_SMSG_MODULE_CACHE Received. All readed. Readed '%d'.", m_WARDEN_SMSG_MODULE_CACHE_DataPosition);
+		Log::Green("Warden: WARDEN_SMSG_MODULE_CACHE: All module readed. Readed '%d'.", m_WARDEN_SMSG_MODULE_CACHE_DataPosition);
 
 		CByteBuffer bytes;
 		SendWardenPacket(WARDEN_CMSG_MODULE_OK, bytes);
@@ -225,6 +221,8 @@ void CWarden::On_WARDEN_SMSG_MODULE_CACHE(CServerPacket & Buffer)
 
 void CWarden::On_WARDEN_SMSG_CHEAT_CHECKS_REQUEST(CServerPacket & Buffer)
 {
+	Log::Print("Warden: Received WARDEN_SMSG_CHEAT_CHECKS_REQUEST");
+
 	// MPQ_CHECK:
 	// LUA_STR_CHECK:
 	// DRIVER_CHECK: 
@@ -248,16 +246,16 @@ void CWarden::On_WARDEN_SMSG_CHEAT_CHECKS_REQUEST(CServerPacket & Buffer)
 
 		strings.push_back(string);
 
-		Log::Print("CWarden::ProcessPacket: WARDEN_SMSG_CHEAT_CHECKS_REQUEST Received. String '%s' Size '%d'.", string.c_str(), strSize);
+		Log::Print("Warden: WARDEN_SMSG_CHEAT_CHECKS_REQUEST: Add string '%s' with size '%d' to cache.", string.c_str(), strSize);
 	} while (true);
 
-	uint8 xorByte = _inputKey[0];
+	uint8 xorByte = m_InputKey[0];
 
 	uint8 timingCheck;
 	Buffer >> timingCheck;
 	timingCheck ^= xorByte;
 	if (timingCheck != TIMING_CHECK)
-		throw CException("TIMING_CHECK mismatchs!!! Stopping.");
+		throw CException("Warden: WARDEN_SMSG_CHEAT_CHECKS_REQUEST: TIMING_CHECK mismatch!");
 
 	std::vector<WardenCheck> wardenChecks;
 
@@ -268,7 +266,7 @@ void CWarden::On_WARDEN_SMSG_CHEAT_CHECKS_REQUEST(CServerPacket & Buffer)
 		Buffer >> wdCheckOpcode;
 
 		WardenCheck wd;
-		wd.Type = wdCheckOpcode ^ xorByte;
+		wd.Type = static_cast<EWardenCheckType>(wdCheckOpcode ^ xorByte);
 		switch (wd.Type)
 		{
 			case MEM_CHECK:
@@ -276,7 +274,7 @@ void CWarden::On_WARDEN_SMSG_CHEAT_CHECKS_REQUEST(CServerPacket & Buffer)
 				uint8 zero;
 				Buffer >> zero;
 				if (zero != 0x00)
-					throw CException("Zero mismatch.");
+					throw CException("Warden: WARDEN_SMSG_CHEAT_CHECKS_REQUEST: Zero mismatch.");
 
 				Buffer >> uint32(wd.Address);
 				Buffer >> uint8(wd.Length);
@@ -287,10 +285,9 @@ void CWarden::On_WARDEN_SMSG_CHEAT_CHECKS_REQUEST(CServerPacket & Buffer)
 			case PAGE_CHECK_A:
 			case PAGE_CHECK_B:
 			{
-				Buffer.readBytes(wd.Data, 16);
+				Buffer.readBytes(wd.Data, sizeof(wd.Data));
 				Buffer >> uint32(wd.Address);
 				Buffer >> uint8(wd.Length);
-				Buffer.seekRelative(1);
 
 				wardenChecks.push_back(wd);
 
@@ -301,43 +298,46 @@ void CWarden::On_WARDEN_SMSG_CHEAT_CHECKS_REQUEST(CServerPacket & Buffer)
 			{
 				uint8 index;
 				Buffer >> index;
-				if (index - uint8(1u) >= strings.size())
-					throw CException("Incorrect string index.");
-				wd.Str = strings.at(index - 1);
+				index -= 1u;
+				if (index >= strings.size())
+					throw CException("Warden: WARDEN_SMSG_CHEAT_CHECKS_REQUEST: Incorrect string index. Index '%d'. Size '%d'", index, strings.size());
+				wd.Str = strings.at(index);
 				wardenChecks.push_back(wd);
 
 				break;
 			}
 			case DRIVER_CHECK:
 			{
-				Buffer.readBytes(wd.Data, 20);
+				Buffer.readBytes(wd.Data, sizeof(wd.Data));
 
 				uint8 index;
 				Buffer >> index;
-				if (index - uint8(1u) >= strings.size())
-					throw CException("Incorrect string index.");
-				wd.Str = strings.at(index - 1);
+				index -= 1u;
+				if (index >= strings.size())
+					throw CException("Warden: WARDEN_SMSG_CHEAT_CHECKS_REQUEST: Incorrect string index. Index '%d'. Size '%d'", index, strings.size());
+				wd.Str = strings.at(index);
 				wardenChecks.push_back(wd);
-
-				break;
 			}
+			break;
+
 			case MODULE_CHECK:
 			{
 				uint32 seed;
 				Buffer >> seed;
 
-				HmacHash hmac(4, (uint8*)&seed);
-				hmac.UpdateData(wd.Str);
-				hmac.Finalize();
-				Buffer.readBytes(hmac.GetDigest(), hmac.GetLength());
-				wardenChecks.push_back(wd);
+				//HmacHash hmac(4, (uint8*)&seed);
+				//hmac.UpdateData(wd.Str);
+				//hmac.Finalize();
 
-				break;
+				uint8 hmacHash[20];
+				Buffer.readBytes(hmacHash, SHA_DIGEST_LENGTH);
+				wardenChecks.push_back(wd);
 			}
+			break;
+
 			case PROC_CHECK:
 			{
-				throw CException("Unexpected.");
-				/*Buffer.readBytes(wd.Data, 20);
+				Buffer.readBytes(wd.Data, 20);
 
 				uint8 index0;
 				Buffer >> index0;
@@ -348,12 +348,14 @@ void CWarden::On_WARDEN_SMSG_CHEAT_CHECKS_REQUEST(CServerPacket & Buffer)
 				Buffer >> uint32(wd.Address);
 				Buffer >> uint8(wd.Length);
 				wardenChecks.push_back(wd);
-				break;*/
+				
 			}
+			break;
+
 			default:
 			{
 				if (wdCheckOpcode != xorByte)
-					throw CException("XOR BYTES MISMATCH.");
+					throw CException("Warden: WARDEN_SMSG_CHEAT_CHECKS_REQUEST: Control XOR byte mismatch!");
 
 				isNeedExit = true;
 				break;
@@ -361,17 +363,29 @@ void CWarden::On_WARDEN_SMSG_CHEAT_CHECKS_REQUEST(CServerPacket & Buffer)
 		}
 	}
 
+	// Send
+
 	Send_WARDEN_CMSG_CHEAT_CHECKS_RESULT(wardenChecks);
+}
+
+void CWarden::On_WARDEN_SMSG_MODULE_INITIALIZE(CServerPacket & Buffer)
+{
+	Buffer.seekRelative(-1);
+
+	SWardenInitModuleRequest Request;
+	Buffer >> Request;
+
+	Log::Print("Warden: Received WARDEN_SMSG_MODULE_INITIALIZE packet.");
 }
 
 void CWarden::On_WARDEN_SMSG_HASH_REQUEST(CServerPacket & Buffer)
 {
+	Log::Print("Warden: Received WARDEN_SMSG_HASH_REQUEST.");
+
 	uint8 seed[16];
 	Buffer >> seed;
-	if (std::memcmp(seed, _seed, 16) != 0)
-		throw CException("Seeds mismatchs!!! Stopping.");
-
-	Log::Print("CWarden::ProcessPacket: WARDEN_SMSG_HASH_REQUEST: Seed received.");
+	if (std::memcmp(seed, m_Seed, 16) != 0)
+		throw CException("Warden: WARDEN_SMSG_HASH_REQUEST: Modules seeds mismatch.");
 
 	// SEND
 
@@ -379,11 +393,11 @@ void CWarden::On_WARDEN_SMSG_HASH_REQUEST(CServerPacket & Buffer)
 	bytes.writeBytes(Module.ClientKeySeedHash, 20);
 	SendWardenPacket(WARDEN_CMSG_HASH_RESULT, bytes);
 
-	memcpy(_inputKey, Module.ClientKeySeed, 16);
-	memcpy(_outputKey, Module.ServerKeySeed, 16);
+	std::memcpy(m_InputKey, Module.ClientKeySeed, 16);
+	std::memcpy(m_OutputKey, Module.ServerKeySeed, 16);
 
-	_inputCrypto.Init(Module.ClientKeySeed);
-	_outputCrypto.Init(Module.ServerKeySeed);
+	m_InputCrypto.Init(m_InputKey);
+	m_OutputCrypto.Init(m_OutputKey);
 }
 
 
@@ -393,33 +407,116 @@ void CWarden::On_WARDEN_SMSG_HASH_REQUEST(CServerPacket & Buffer)
 //
 void CWarden::Send_WARDEN_CMSG_CHEAT_CHECKS_RESULT(const std::vector<WardenCheck>& Checks)
 {
-	if (Checks.size() != 1)
+	if (Checks.empty())
 		return;
 
-	const auto& firstCheck = *Checks.begin();
-	if (firstCheck.Str != "DBFilesClient\\Spell.dbc")
-		return;
+	/*for (const auto& checksIt : Checks)
+	{
+		std::string dataHex;
+		for (size_t i = 0; i < sizeof(checksIt.Data); i++)
+		{
+			char dataHexChar[3];
+			sprintf(dataHexChar, "%02X", checksIt.Data[i]);
+			dataHex += dataHexChar;
+		}
 
+		try
+		{
+			switch (checksIt.Type)
+			{
+				case PAGE_CHECK_A:
+				case PAGE_CHECK_B:
+				case DRIVER_CHECK:
+				case MODULE_CHECK:
+				case LUA_STR_CHECK:
+				case PROC_CHECK:
+				{
 
-	uint8 SpellDBC[20] = { 51, 64, 56, 81, 86, 205, 150, 4, 51, 104, 255, 88, 196, 112, 80, 93, 108, 226, 212, 169 };
+				}
+				break;
 
-	CByteBuffer mpqCheckData;
+				case MEM_CHECK:
+				{
+					Get_MEM_CHECK(checksIt);
+				}
+				break;
+
+				case MPQ_CHECK:
+				{
+					Get_MPQ_CHECK(checksIt);
+				}
+				break;
+			}
+
+			Log::Warn ("Warden: Received check: Type: '%d', Data '%s', Str '%s', Address: '%d', Length '%d'.", checksIt.Type, dataHex.c_str(), checksIt.Str.c_str(), checksIt.Address, checksIt.Length);
+		}
+		catch (const CException& e)
+		{
+			Log::Error("Warden: Received check: Type: '%d', Data '%s', Str '%s', Address: '%d', Length '%d'.", checksIt.Type, dataHex.c_str(), checksIt.Str.c_str(), checksIt.Address, checksIt.Length);
+		}
+	}*/
+
+	CByteBuffer resultCheckData;
 
 	// TIMING_CHECK
-	mpqCheckData << uint8(1);
-	mpqCheckData << uint32(123);
+	{
+		resultCheckData << uint8(1);
+		resultCheckData << uint32(123);
+	}
+	
+	for (const auto& checksIt : Checks)
+	{
+		switch (checksIt.Type)
+		{
+			case PAGE_CHECK_A:
+			case PAGE_CHECK_B:
+			case DRIVER_CHECK:
+			case MODULE_CHECK:
+			{
+				const uint8 byte = 0xE9; // Magic
+				resultCheckData << byte;
+			}
+			break;
 
-	// MPQ CHECK
-	mpqCheckData << uint8(0);
-	mpqCheckData.writeBytes(SpellDBC, 20);
+			case MEM_CHECK:
+			{
+				const auto& memWardenCheckWithResult = Get_MEM_CHECK(checksIt);
+
+				BigNumber bnn;
+				bnn.SetHexStr(memWardenCheckWithResult.Result);
+
+				const uint8 memResult = 0x00; // Magic
+				resultCheckData << memResult;
+				resultCheckData.writeBytes(bnn.AsByteArray(0, false).get(), bnn.GetNumBytes());
+			}
+			break;
+
+			case MPQ_CHECK:
+			{
+				const auto& mpqWardenCheckWithResult = Get_MPQ_CHECK(checksIt);
+
+				BigNumber bnn;
+				bnn.SetHexStr(mpqWardenCheckWithResult.Result);
+
+				const uint8 mpqResult = 0x00; // Magic
+				resultCheckData << mpqResult;
+				resultCheckData.writeBytes(bnn.AsByteArray(0, false).get(), bnn.GetNumBytes());
+			}
+			break;
+
+			case LUA_STR_CHECK:
+			case PROC_CHECK:
+				throw CException("Not implemented.");
+
+			default:
+				throw CException("Unexpected behaviour.");
+		}
+	}
 
 	CByteBuffer bytes;
-	uint16 Length = mpqCheckData.getSize();
-	bytes << Length;
-	uint32 Checksum = BuildChecksum(mpqCheckData.getData(), mpqCheckData.getSize());
-	bytes << Checksum;
-
-	bytes << mpqCheckData;
+	bytes << uint16(resultCheckData.getSize());
+	bytes << BuildChecksum(resultCheckData.getData(), resultCheckData.getSize());
+	bytes << resultCheckData;
 
 	SendWardenPacket(WARDEN_CMSG_CHEAT_CHECKS_RESULT, bytes);
 }

@@ -1,6 +1,6 @@
 #pragma once
 
-enum WardenOpcodes
+enum EWardenOpcodes
 {
 	// Client->Server
 	WARDEN_CMSG_MODULE_MISSING = 0,
@@ -19,7 +19,7 @@ enum WardenOpcodes
 	WARDEN_SMSG_HASH_REQUEST = 5
 };
 
-enum WardenCheckType
+enum EWardenCheckType : uint8
 {
 	MEM_CHECK = 0xF3, // 243: byte moduleNameIndex + uint Offset + byte Len (check to ensure memory isn't modified)
 	PAGE_CHECK_A = 0xB2, // 178: uint Seed + byte[20] SHA1 + uint Addr + byte Len (scans all pages for specified hash)
@@ -34,19 +34,25 @@ enum WardenCheckType
 
 struct WardenCheck
 {
-	uint8 Type;
-	uint8 Data[20];
+	WardenCheck()
+		: Type(TIMING_CHECK)
+		, Address(0)
+		, Length(0)
+	{
+		std::memset(Data, 0x00, sizeof(Data));
+	}
+
+	EWardenCheckType Type;
+	uint8 Data[24];
 	uint32 Address;                                         // PROC_CHECK, MEM_CHECK, PAGE_CHECK
 	uint8 Length;                                           // PROC_CHECK, MEM_CHECK, PAGE_CHECK
 	std::string Str;                                        // LUA, MPQ, DRIVER
-	std::string Comment;
-	uint16 CheckId;
 };
 
 
 #pragma pack(push, 1)
 
-struct WardenInitModuleRequest
+struct SWardenInitModuleRequest
 {
 	uint8 Command1;
 	uint16 Size1;
@@ -76,7 +82,7 @@ struct WardenInitModuleRequest
 	uint8 Function3_set;
 };
 
-struct WardenModuleUse
+struct SWardenModuleUse
 {
 	uint8 Command;
 	uint8 ModuleId[16];
@@ -84,14 +90,14 @@ struct WardenModuleUse
 	uint32 Size;
 };
 
-struct WardenModuleTransfer
+struct SWardenModuleTransfer
 {
 	uint8 Command;
 	uint16 DataSize;
 	uint8 Data[500];
 };
 
-struct WardenHashRequest
+struct SWardenHashRequest
 {
 	uint8 Command;
 	uint8 Seed[16];
@@ -99,7 +105,7 @@ struct WardenHashRequest
 
 #pragma pack(pop)
 
-struct ClientWardenModule
+struct SWardenClientModule
 {
 	uint8 Id[16];
 	uint8 Key[16];

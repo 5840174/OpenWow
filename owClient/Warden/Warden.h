@@ -4,6 +4,7 @@
 #include "../AuthSocket/Cryptography/ARC4.h"
 
 #include "WardenStructs.h"
+#include "WardenChecks.h"
 
 #include "../WorldSocket/ServerPacket.h"
 
@@ -15,8 +16,7 @@ class CWarden
 {
 public:
 	CWarden(CWorldSocket& WorldSocket, BigNumber Key);
-
-	ClientWardenModule* GetModuleForClient();
+	virtual ~CWarden();
 
 	bool ProcessPacket(CServerPacket& Bytes);
 
@@ -26,11 +26,11 @@ private:
 private:
 	void DecryptData(uint8* buffer, uint32 length);
 	void EncryptData(uint8* buffer, uint32 length);
-	uint32 BuildChecksum(uint8 const* data, uint32 length);
 
 	void On_WARDEN_SMSG_MODULE_USE(CServerPacket& Buffer);
 	void On_WARDEN_SMSG_MODULE_CACHE(CServerPacket& Buffer);
 	void On_WARDEN_SMSG_CHEAT_CHECKS_REQUEST(CServerPacket& Buffer);
+	void On_WARDEN_SMSG_MODULE_INITIALIZE(CServerPacket& Buffer);
 	void On_WARDEN_SMSG_HASH_REQUEST(CServerPacket& Buffer);
 
 private:
@@ -39,12 +39,12 @@ private:
 private:
 	CWorldSocket& m_WorldSocket;
 
-	ARC4 _inputCrypto;
-	ARC4 _outputCrypto;
+	ARC4 m_InputCrypto;
+	ARC4 m_OutputCrypto;
 
-	uint8 _inputKey[16];
-	uint8 _outputKey[16];
-	uint8 _seed[16];
+	uint8 m_InputKey[16];
+	uint8 m_OutputKey[16];
+	uint8 m_Seed[16];
 
 	uint16 m_WARDEN_SMSG_MODULE_USE_DataSize;
 	uint16 m_WARDEN_SMSG_MODULE_CACHE_DataPosition;

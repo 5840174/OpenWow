@@ -35,6 +35,7 @@
     <ClInclude Include="Types\UpdateFields.h" />
     <ClInclude Include="Types\UpdateMask.h" />
     <ClInclude Include="Warden\Warden.h" />
+    <ClInclude Include="Warden\WardenChecks.h" />
     <ClInclude Include="Warden\WardenModuleWin.h" />
     <ClInclude Include="Warden\WardenStructs.h" />
     <ClInclude Include="WorldSocket\ClientPacket.h" />
