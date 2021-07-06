@@ -57,7 +57,7 @@ void CWoWClient::UpdateFromThread(std::future<void> PromiseExiter)
 //
 // CWoWClient
 //
-void CWoWClient::BeginConnect(const std::string& Username, const std::string& Password)
+void CWoWClient::Login(const std::string& Username, const std::string& Password)
 {
 	m_Login = Utils::ToUpper(Username);
 	std::string password = Utils::ToUpper(Password);
@@ -66,12 +66,12 @@ void CWoWClient::BeginConnect(const std::string& Username, const std::string& Pa
     m_AuthSocket->Open(m_Host, m_Port);
 }
 
-void CWoWClient::OnRealListObtained(const std::vector<SRealmInfo>& Realms, BigNumber Key)
+void CWoWClient::OnRealmsListObtained(const std::vector<SRealmInfo>& Realms, BigNumber Key)
 {
-	OnRealmListSelected(Realms[9], Key);
+	OnRealmSelected(Realms[0], Key);
 }
 
-void CWoWClient::OnRealmListSelected(const SRealmInfo& SelectedRealm, BigNumber Key)
+void CWoWClient::OnRealmSelected(const SRealmInfo& SelectedRealm, BigNumber Key)
 {
 	Log::Green("CWoWClient::OnRealmListSelected: Realm name '%s'.", SelectedRealm.Name.c_str());
 
@@ -95,15 +95,15 @@ void CWoWClient::OnCharacterSelected(const SCharacterTemplate & SelectedCharacte
 
 	m_CharacterSelection.reset();
 
-	SelectedCharacter.ToBase64String();
+	//SelectedCharacter.ToBase64String();
 
 	//CWorldObjectCreator creator(m_Scene.GetBaseManager());
 	//auto creature = creator.BuildCharacterFromTemplate(m_Scene.GetBaseManager().GetApplication().GetRenderDevice(), m_Scene, SelectedCharacter);
 
-	//m_World = std::make_unique<CWoWWorld>(m_Scene, m_WorldSocket);
-	//m_WorldSocket->SetExternalHandler(std::bind(&CWoWWorld::ProcessPacket, m_World.get(), std::placeholders::_1));
+	m_World = std::make_unique<CWoWWorld>(m_Scene, m_WorldSocket);
+	m_WorldSocket->SetExternalHandler(std::bind(&CWoWWorld::ProcessPacket, m_World.get(), std::placeholders::_1));
 
-	//m_World->EnterWorld(SelectedCharacter);
+	m_World->EnterWorld(SelectedCharacter);
 }
 
 #endif

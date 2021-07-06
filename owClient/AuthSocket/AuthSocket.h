@@ -27,16 +27,16 @@ public:
 	// Handlers
 	void C_SendLogonChallenge();
 
-	bool S_LoginChallenge(CByteBuffer& _buff);
-	bool S_LoginProof(CByteBuffer& _buff);
-	bool S_Realmlist(CByteBuffer& _buff);
+	bool On_AUTH_LOGON_CHALLENGE(CByteBuffer& _buff);
+	bool On_AUTH_LOGON_PROOF(CByteBuffer& _buff);
+	bool On_REALM_LIST(CByteBuffer& _buff);
 
 private:
-	void AddHandler(eAuthCmd AuthCmd, std::function<bool(CByteBuffer&)> Handler);
-	void ProcessHandler(eAuthCmd AuthCmd, CByteBuffer& _buffer);
+	void AddHandler(EAuthCmd AuthCmd, std::function<bool(CByteBuffer&)> Handler);
+	void ProcessHandler(EAuthCmd AuthCmd, CByteBuffer& _buffer);
 
 private:
-	std::unordered_map<eAuthCmd, std::function<void(CByteBuffer&)>> m_Handlers;
+	std::unordered_map<EAuthCmd, std::function<void(CByteBuffer&)>> m_Handlers;
 
 	BigNumber Key;
 	SHA1Hash  MServer;

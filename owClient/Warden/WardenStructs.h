@@ -1,6 +1,6 @@
 #pragma once
 
-enum EWardenOpcodes
+enum EWardenOpcodes : uint8
 {
 	// Client->Server
 	WARDEN_CMSG_MODULE_MISSING = 0,

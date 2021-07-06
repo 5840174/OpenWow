@@ -1,12 +1,14 @@
 #pragma once
 
-enum eAuthCmd : uint8
+enum EAuthCmd : uint8
 {
     AUTH_LOGON_CHALLENGE = 0x00,
     AUTH_LOGON_PROOF = 0x01,
     AUTH_RECONNECT_CHALLENGE = 0x02,
     AUTH_RECONNECT_PROOF = 0x03,
+
     REALM_LIST = 0x10,
+
     XFER_INITIATE = 0x30,
     XFER_DATA = 0x31,
     XFER_ACCEPT = 0x32,
@@ -14,43 +16,32 @@ enum eAuthCmd : uint8
     XFER_CANCEL = 0x34
 };
 
-enum eAuthResults : uint8
+enum EAuthResults : uint8
 {
-    REALM_AUTH_SUCCESS = 0x00,
-    REALM_AUTH_FAILURE = 0x01,                 ///< Unable to connect
-    REALM_AUTH_UNKNOWN1 = 0x02,                 ///< Unable to connect
-    REALM_AUTH_ACCOUNT_BANNED = 0x03,                 ///< This <game> account has been closed and is no longer available for use. Please go to <site>/banned.html for further information.
-    REALM_AUTH_NO_MATCH = 0x04,                 ///< The information you have entered is not valid. Please check the spelling of the account name and password. If you need help in retrieving a lost or stolen password, see <site> for more information
-    REALM_AUTH_UNKNOWN2 = 0x05,                 ///< The information you have entered is not valid. Please check the spelling of the account name and password. If you need help in retrieving a lost or stolen password, see <site> for more information
-    REALM_AUTH_ACCOUNT_IN_USE = 0x06,                 ///< This account is already logged into <game>. Please check the spelling and try again.
-    REALM_AUTH_PREPAID_TIME_LIMIT = 0x07,                 ///< You have used up your prepaid time for this account. Please purchase more to continue playing
-    REALM_AUTH_SERVER_FULL = 0x08,                 ///< Could not log in to <game> at this time. Please try again later.
-    REALM_AUTH_WRONG_BUILD_NUMBER = 0x09,                 ///< Unable to validate game version. This may be caused by file corruption or interference of another program. Please visit <site> for more information and possible solutions to this issue.
-    REALM_AUTH_UPDATE_CLIENT = 0x0a,                 ///< Downloading
-    REALM_AUTH_UNKNOWN3 = 0x0b,                 ///< Unable to connect
-    REALM_AUTH_ACCOUNT_FREEZED = 0x0c,                 ///< This <game> account has been temporarily suspended. Please go to <site>/banned.html for further information
-    REALM_AUTH_UNKNOWN4 = 0x0d,                 ///< Unable to connect
-    REALM_AUTH_UNKNOWN5 = 0x0e,                 ///< Connected.
-    REALM_AUTH_PARENTAL_CONTROL = 0x0f                  ///< Access to this account has been blocked by parental controls. Your settings may be changed in your account preferences at <site>
-};
-
-enum LoginResult : uint8
-{
-    LOGIN_OK                                     = 0x00,
-    LOGIN_FAILED                                 = 0x01,
-    LOGIN_FAILED2                                = 0x02,
-    LOGIN_BANNED                                 = 0x03,
-    LOGIN_UNKNOWN_ACCOUNT                        = 0x04,
-    LOGIN_UNKNOWN_ACCOUNT3                       = 0x05,
-    LOGIN_ALREADYONLINE                          = 0x06,
-    LOGIN_NOTIME                                 = 0x07,
-    LOGIN_DBBUSY                                 = 0x08,
-    LOGIN_BADVERSION                             = 0x09,
-    LOGIN_DOWNLOAD_FILE                          = 0x0A,
-    LOGIN_FAILED3                                = 0x0B,
-    LOGIN_SUSPENDED                              = 0x0C,
-    LOGIN_FAILED4                                = 0x0D,
-    LOGIN_CONNECTED                              = 0x0E,
-    LOGIN_PARENTALCONTROL                        = 0x0F,
-    LOGIN_LOCKED_ENFORCED                        = 0x10
+    WOW_SUCCESS                                  = 0x00,
+    WOW_FAIL_BANNED                              = 0x03,
+    WOW_FAIL_UNKNOWN_ACCOUNT                     = 0x04,
+    WOW_FAIL_INCORRECT_PASSWORD                  = 0x05,
+    WOW_FAIL_ALREADY_ONLINE                      = 0x06,
+    WOW_FAIL_NO_TIME                             = 0x07,
+    WOW_FAIL_DB_BUSY                             = 0x08,
+    WOW_FAIL_VERSION_INVALID                     = 0x09,
+    WOW_FAIL_VERSION_UPDATE                      = 0x0A,
+    WOW_FAIL_INVALID_SERVER                      = 0x0B,
+    WOW_FAIL_SUSPENDED                           = 0x0C,
+    WOW_FAIL_FAIL_NOACCESS                       = 0x0D,
+    WOW_SUCCESS_SURVEY                           = 0x0E,
+    WOW_FAIL_PARENTCONTROL                       = 0x0F,
+    WOW_FAIL_LOCKED_ENFORCED                     = 0x10,
+    WOW_FAIL_TRIAL_ENDED                         = 0x11,
+    WOW_FAIL_USE_BATTLENET                       = 0x12,
+    WOW_FAIL_ANTI_INDULGENCE                     = 0x13,
+    WOW_FAIL_EXPIRED                             = 0x14,
+    WOW_FAIL_NO_GAME_ACCOUNT                     = 0x15,
+    WOW_FAIL_CHARGEBACK                          = 0x16,
+    WOW_FAIL_INTERNET_GAME_ROOM_WITHOUT_BNET     = 0x17,
+    WOW_FAIL_GAME_ACCOUNT_LOCKED                 = 0x18,
+    WOW_FAIL_UNLOCKABLE_LOCK                     = 0x19,
+    WOW_FAIL_CONVERSION_REQUIRED                 = 0x20,
+    WOW_FAIL_DISCONNECTED                        = 0xFF
 };

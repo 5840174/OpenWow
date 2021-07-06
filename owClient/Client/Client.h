@@ -20,14 +20,13 @@ public:
 	void UpdateFromThread(std::future<void> PromiseExiter);
 
     // CWoWClient
-	void BeginConnect(const std::string& Username, const std::string& Password);
+	void Login(const std::string& Username, const std::string& Password);
 
-	void OnRealListObtained(const std::vector<SRealmInfo>& Realms, BigNumber Key);
-	void OnRealmListSelected(const SRealmInfo& SelectedRealm, BigNumber Key);
+	void OnRealmsListObtained(const std::vector<SRealmInfo>& Realms, BigNumber Key);
+	void OnRealmSelected(const SRealmInfo& SelectedRealm, BigNumber Key);
 	
 	void OnCharactersListObtained(const std::vector<SCharacterTemplate>& Characters);
 	void OnCharacterSelected(const SCharacterTemplate& SelectedCharacter);
-
 
 private:
 	std::string                                   m_Host;

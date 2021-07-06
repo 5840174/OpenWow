@@ -21,7 +21,7 @@ public:
 	bool ProcessPacket(CServerPacket& Bytes);
 
 private:
-	void SendWardenPacket(uint8 WardenOpcode, CByteBuffer& Bytes);
+	void SendWardenPacket(EWardenOpcodes WardenOpcode, CByteBuffer& Bytes);
 
 private:
 	void DecryptData(uint8* buffer, uint32 length);

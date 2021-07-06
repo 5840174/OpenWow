@@ -18,9 +18,9 @@ CAuthSocket::CAuthSocket(CWoWClient& WoWClient, const std::string& Login, const 
 	m_LoginPasswordHash.UpdateData((const uint8*)loginPasswordUpperCase.c_str(), loginPasswordUpperCase.length());
 	m_LoginPasswordHash.Finalize();
 
-	AddHandler(AUTH_LOGON_CHALLENGE, std::bind(&CAuthSocket::S_LoginChallenge, this, std::placeholders::_1));
-	AddHandler(AUTH_LOGON_PROOF, std::bind(&CAuthSocket::S_LoginProof, this, std::placeholders::_1));
-	AddHandler(REALM_LIST, std::bind(&CAuthSocket::S_Realmlist, this, std::placeholders::_1));
+	AddHandler(AUTH_LOGON_CHALLENGE, std::bind(&CAuthSocket::On_AUTH_LOGON_CHALLENGE, this, std::placeholders::_1));
+	AddHandler(AUTH_LOGON_PROOF, std::bind(&CAuthSocket::On_AUTH_LOGON_PROOF, this, std::placeholders::_1));
+	AddHandler(REALM_LIST, std::bind(&CAuthSocket::On_REALM_LIST, this, std::placeholders::_1));
 }
 
 CAuthSocket::~CAuthSocket()
@@ -62,7 +62,6 @@ void CAuthSocket::Open(std::string Host, uint16 Port)
 void CAuthSocket::Update()
 {
 	CByteBuffer buffer;
-
 	Receive(buffer, 4096);
 
 	if (buffer.getSize() == 0)
@@ -74,14 +73,9 @@ void CAuthSocket::Update()
 		return;
 	}
 
-	eAuthCmd currHandler;
-	buffer.readBytes(&currHandler, sizeof(uint8));
-	ProcessHandler(currHandler, buffer);
-
-	if (GetStatus() != CSocket::Connected)
-	{
-		//NotifyListeners(&ConnectionListener::OnSocketStateChange, m_TCPSocket.GetStatus());
-	}
+	EAuthCmd authCmd;
+	buffer >> authCmd;
+	ProcessHandler(authCmd, buffer);
 }
 
 //--
@@ -104,13 +98,13 @@ void CAuthSocket::SendData(const uint8* _data, uint32 _count)
 //
 // Private
 //
-void CAuthSocket::AddHandler(eAuthCmd AuthCmd, std::function<bool(CByteBuffer&)> Handler)
+void CAuthSocket::AddHandler(EAuthCmd AuthCmd, std::function<bool(CByteBuffer&)> Handler)
 {
 	_ASSERT(Handler != nullptr);
 	m_Handlers.insert(std::make_pair(AuthCmd, Handler));
 }
 
-void CAuthSocket::ProcessHandler(eAuthCmd AuthCmd, CByteBuffer& _buffer)
+void CAuthSocket::ProcessHandler(EAuthCmd AuthCmd, CByteBuffer& _buffer)
 {
     const auto& handler = m_Handlers.find(AuthCmd);
 	if (handler != m_Handlers.end())
@@ -145,7 +139,7 @@ namespace
 			, IPv4(IPv4)
 		{}
 
-		void Send(CSocket * _socket)
+		void Send(CSocket * Socket)
 		{
 			CByteBuffer bb;
 			bb << (uint8)AUTH_LOGON_CHALLENGE;
@@ -154,9 +148,7 @@ namespace
 			bb << (uint8)0;
 
 			bb.writeBytes(gamename, 4);
-			bb << version1;
-			bb << version2;
-			bb << version3;
+			bb.writeBytes(version, 3);
 			bb << build;
 			bb.writeBytes((const uint8*)"68x", 4);   // x86
 			bb.writeBytes((const uint8*)"niW", 4);   // Win
@@ -166,18 +158,16 @@ namespace
 			bb << (uint8)Login.size();
 			bb.writeBytes(Login.c_str(), Login.length());
 
-			_socket->Send(bb);
+			Socket->Send(bb);
 		}
 
 		//--
 
-		uint8   gamename[4] = {};
-		const uint8 version1 = 3;
-		const uint8 version2 = 3;
-		const uint8 version3 = 5;
+		const uint8 gamename[4] = {};
+		const uint8 version[3] = { 3, 3, 5 };
 		const uint16 build = 12340;
-		uint32 IPv4;
-		std::string	Login;
+		const uint32 IPv4;
+		const std::string Login;
 	};
 }
 
@@ -199,7 +189,7 @@ namespace
 			std::memcpy(M1, _MClient, SHA_DIGEST_LENGTH);
 		}
 
-		void Send(CSocket * _socket)
+		void Send(CSocket * Socket)
 		{
 			CByteBuffer bb;
 			bb << (uint8)AUTH_LOGON_PROOF;
@@ -209,7 +199,7 @@ namespace
 			bb << (uint8)0;
 			bb << (uint8)0;
 
-			_socket->Send(bb);
+			Socket->Send(bb);
 		}
 
 		uint8 A[32];
@@ -217,50 +207,52 @@ namespace
 	};
 }
 
-bool CAuthSocket::S_LoginChallenge(CByteBuffer& _buff)
+bool CAuthSocket::On_AUTH_LOGON_CHALLENGE(CByteBuffer& Buffer)
 {
-    _buff.seekRelative(sizeof(uint8));
+	uint8 zero;
+    Buffer >> zero;
+	if (zero != 0x00)
+		throw CException("CAuthSocket::On_AUTH_LOGON_CHALLENGE: Zeros mismatch.");
 
-    eAuthResults error;
-    _buff.readBytes(&error, 1);
-
-    if (error != eAuthResults::REALM_AUTH_SUCCESS)
+    EAuthResults error;
+    Buffer >> error;
+    if (error != EAuthResults::WOW_SUCCESS)
     {
-        Log::Error("Server challege not accept (0x%X)", error);
+        Log::Error("CAuthSocket::On_AUTH_LOGON_CHALLENGE: Logon challenge don't accept. Error: '0x%20X'.", error);
         return false;
     }
 
 #pragma region Receive and initialize
     // server public key
     uint8 B_raw[32];
-    _buff.readBytes(B_raw, 32);
+    Buffer.readBytes(B_raw, 32);
     BigNumber B;
     B.SetBinary(B_raw, 32);					
 
     // 'g'
     uint8 g_rawLen;
-    _buff.readBytes(&g_rawLen, sizeof(uint8));
+    Buffer.readBytes(&g_rawLen, sizeof(uint8));
     uint8 g_raw[1];
-    _buff.readBytes(g_raw, g_rawLen);
+    Buffer.readBytes(g_raw, g_rawLen);
     BigNumber g;
     g.SetBinary(g_raw, g_rawLen);
 
     // modulus
     uint8 N_rawLen;
-    _buff.readBytes(&N_rawLen, sizeof(uint8));
+    Buffer.readBytes(&N_rawLen, sizeof(uint8));
     uint8 N_raw[32];
-    _buff.readBytes(N_raw, N_rawLen);
+    Buffer.readBytes(N_raw, N_rawLen);
     BigNumber N;
     N.SetBinary(N_raw, N_rawLen);
 
     // s
     uint8 s_raw[32];
-    _buff.readBytes(s_raw, 32);
+    Buffer.readBytes(s_raw, 32);
     BigNumber s;
     s.SetBinary(s_raw, 32);
 
-    _buff.seekRelative(sizeof(uint8) * 16);
-    _buff.seekRelative(sizeof(uint8));
+    Buffer.seekRelative(sizeof(uint8) * 16);
+    Buffer.seekRelative(sizeof(uint8));
     
     //Log::Info("---====== Received from server: ======---");
     //Log::Info("B=%s", B.AsHexStr().c_str());
@@ -387,42 +379,31 @@ bool CAuthSocket::S_LoginChallenge(CByteBuffer& _buff)
     return true;
 }
 
-bool CAuthSocket::S_LoginProof(CByteBuffer& _buff)
+bool CAuthSocket::On_AUTH_LOGON_PROOF(CByteBuffer& Buffer)
 {
-    uint8 error;
-    _buff.read(&error);
+	EAuthResults error;
+    Buffer >> error;
 
-    if (error != eAuthResults::REALM_AUTH_SUCCESS)
+    if (error != EAuthResults::WOW_SUCCESS)
     {
-        switch (error)
-        {
-            case eAuthResults::REALM_AUTH_WRONG_BUILD_NUMBER:
-                Log::Error("REALM_AUTH_WRONG_BUILD_NUMBER");
-            break;
-
-            case eAuthResults::REALM_AUTH_NO_MATCH:
-                Log::Error("REALM_AUTH_NO_MATCH");
-            break;
-        }
-
-        return false;
+		Log::Error("CAuthSocket::On_AUTH_LOGON_PROOF: Logon proof don't accept. Error: '0x%20X'.", error);
+		return false;
     }
 
     uint8 M2[20];
-    _buff.readBytes(M2, 20);
+    Buffer.readBytes(M2, 20);
 
-    uint32 AccountFlags;
-    _buff.read(&AccountFlags);
+    uint32 accountFlags;
+    Buffer.read(&accountFlags);
 
     // Server M must be same with client M
     if (MServer != M2)
     {
-        Log::Error("Server 'M' mismatch!");
+        Log::Error("CAuthSocket::On_AUTH_LOGON_PROOF: Server 'M' mismatch!");
         return false;
     }
 
-    Log::Green("All ok! Server proof equal client calculated server proof!");
-    Log::Green("Successfully logined!!!");
+    Log::Green("CAuthSocket::On_AUTH_LOGON_PROOF: Successfully logined.");
 
     // TODO: refactor realms
 
@@ -434,27 +415,28 @@ bool CAuthSocket::S_LoginProof(CByteBuffer& _buff)
     return true;
 }
 
-bool CAuthSocket::S_Realmlist(CByteBuffer& _buff)
+bool CAuthSocket::On_REALM_LIST(CByteBuffer& _buff)
 {
 	uint16 packetSize;
 	_buff.read(&packetSize);
 
 	// RealmListSizeBuffer
 	_buff.seekRelative(4); // uint32 (0)
-	uint16 realmlistSize;
-    _buff.read(&realmlistSize);
 
-    Log::Green("S_Realmlist: Count [%d]", realmlistSize);
+	uint16 realmlistCount;
+    _buff.read(&realmlistCount);
+
+    Log::Green("CAuthSocket::On_REALM_LIST: Count '%d'.", realmlistCount);
 
 	std::vector<SRealmInfo> realmListInfos;
-    for (uint32 i = 0; i < realmlistSize; i++)
+    for (uint32 i = 0; i < realmlistCount; i++)
     {
         SRealmInfo rinfo(_buff);
 		rinfo.ToString();
 		realmListInfos.push_back(rinfo);
     }
 
-	m_WoWClient.OnRealListObtained(realmListInfos, Key);
+	m_WoWClient.OnRealmsListObtained(realmListInfos, Key);
 
     return true;
 }

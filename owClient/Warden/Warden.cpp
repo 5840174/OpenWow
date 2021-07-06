@@ -44,6 +44,36 @@ namespace
 
 		return checkSum;
 	}
+
+	const char* WardenClientOpcodeToString(EWardenOpcodes Opcode)
+	{
+		switch (Opcode)
+		{
+			case WARDEN_CMSG_MODULE_MISSING: return "MODULE_MISSING";
+			case WARDEN_CMSG_MODULE_OK: return "MODULE_MISSING";
+			case WARDEN_CMSG_CHEAT_CHECKS_RESULT: return "CHEAT_CHECKS_RESULT";
+			case WARDEN_CMSG_MEM_CHECKS_RESULT: return "MEM_CHECKS_RESULT";
+			case WARDEN_CMSG_HASH_RESULT: return "HASH_RESULT";
+			case WARDEN_CMSG_MODULE_FAILED: return "MODULE_FAILED";
+		}
+
+		return "UNKNOWN";
+	}
+
+	const char* WardenServerOpcodeToString(EWardenOpcodes Opcode)
+	{
+		switch (Opcode)
+		{
+			case WARDEN_SMSG_MODULE_USE: return "MODULE_USE";
+			case WARDEN_SMSG_MODULE_CACHE: return "MODULE_CACHE";
+			case WARDEN_SMSG_CHEAT_CHECKS_REQUEST: return "CHEAT_CHECKS_REQUEST";
+			case WARDEN_SMSG_MODULE_INITIALIZE: return "MODULE_INITIALIZE";
+			case WARDEN_SMSG_MEM_CHECKS_REQUEST: return "MEM_CHECKS_REQUEST";
+			case WARDEN_SMSG_HASH_REQUEST: return "HASH_REQUEST";
+		}
+
+		return "UNKNOWN";
+	}
 }
 
 
@@ -92,8 +122,10 @@ bool CWarden::ProcessPacket(CServerPacket& Buffer)
 {
 	DecryptData(Buffer.getDataFromCurrentEx(), Buffer.getSize() - Buffer.getPos());
 
-	uint8 wardenOpcode;
+	EWardenOpcodes wardenOpcode;
 	Buffer >> wardenOpcode;
+
+	Log::Print("Warden: Received '%s'.", WardenServerOpcodeToString(wardenOpcode));
 
 	switch (wardenOpcode)
 	{
@@ -134,20 +166,20 @@ bool CWarden::ProcessPacket(CServerPacket& Buffer)
 		break;
 
 		default:
-			throw CException("Warden: ProcessPacket: Unknown packet type '%d'.", wardenOpcode);
+			throw CException("Warden: Received unknown packet '%d'.", (uint8)wardenOpcode);
 	}
 
 	return true;
 }
 
-void CWarden::SendWardenPacket(uint8 WardenOpcode, CByteBuffer& Bytes)
+void CWarden::SendWardenPacket(EWardenOpcodes WardenOpcode, CByteBuffer& Bytes)
 {
 	CByteBuffer bytes;
 	bytes << WardenOpcode;
 	bytes << Bytes;
 	EncryptData(bytes.getDataEx(), bytes.getSize());
 
-	Log::Print("Warden: Sending packet Type: '%d'. Size '%d'.", WardenOpcode, Bytes.getSize());
+	Log::Print("Warden: Sending '%s'. Size '%d'.", WardenClientOpcodeToString(WardenOpcode), Bytes.getSize());
 
 	CClientPacket clientPacket(CMSG_WARDEN_DATA);
 	clientPacket << bytes;
@@ -185,7 +217,6 @@ void CWarden::On_WARDEN_SMSG_MODULE_USE(CServerPacket & Buffer)
 	Buffer >> ModuleId;
 	Buffer >> ModuleKey;
 	Buffer >> Size;
-	Log::Print("Warden: Received WARDEN_SMSG_MODULE_USE. Module size: '%d'.", Size);
 
 	m_WARDEN_SMSG_MODULE_USE_DataSize = Size;
 	m_WARDEN_SMSG_MODULE_CACHE_DataPosition = 0;
@@ -201,18 +232,17 @@ void CWarden::On_WARDEN_SMSG_MODULE_CACHE(CServerPacket & Buffer)
 	uint16 DataSize;
 	Buffer >> DataSize;
 	if (DataSize > 500)
-		throw CException("Warden: WARDEN_SMSG_MODULE_CACHE: Data size must be less then 500.");
+		throw CException("Warden: SMSG_MODULE_CACHE: Data size must be less then 500.");
 
 	Buffer.seekRelative(DataSize);
 	m_WARDEN_SMSG_MODULE_CACHE_DataPosition += DataSize;
 
-	//Log::Print("Warden: Received WARDEN_SMSG_MODULE_CACHE. Part size: '%d'. Readed '%d' of '%d'.", DataSize, m_WARDEN_SMSG_MODULE_CACHE_DataPosition, m_WARDEN_SMSG_MODULE_USE_DataSize);
 
 	// SEND
 
 	if (m_WARDEN_SMSG_MODULE_CACHE_DataPosition == m_WARDEN_SMSG_MODULE_USE_DataSize)
 	{
-		Log::Green("Warden: WARDEN_SMSG_MODULE_CACHE: All module readed. Readed '%d'.", m_WARDEN_SMSG_MODULE_CACHE_DataPosition);
+		Log::Green("Warden: SMSG_MODULE_CACHE: All module readed. Readed '%d'.", m_WARDEN_SMSG_MODULE_CACHE_DataPosition);
 
 		CByteBuffer bytes;
 		SendWardenPacket(WARDEN_CMSG_MODULE_OK, bytes);
@@ -221,8 +251,6 @@ void CWarden::On_WARDEN_SMSG_MODULE_CACHE(CServerPacket & Buffer)
 
 void CWarden::On_WARDEN_SMSG_CHEAT_CHECKS_REQUEST(CServerPacket & Buffer)
 {
-	Log::Print("Warden: Received WARDEN_SMSG_CHEAT_CHECKS_REQUEST");
-
 	// MPQ_CHECK:
 	// LUA_STR_CHECK:
 	// DRIVER_CHECK: 
@@ -246,7 +274,7 @@ void CWarden::On_WARDEN_SMSG_CHEAT_CHECKS_REQUEST(CServerPacket & Buffer)
 
 		strings.push_back(string);
 
-		Log::Print("Warden: WARDEN_SMSG_CHEAT_CHECKS_REQUEST: Add string '%s' with size '%d' to cache.", string.c_str(), strSize);
+		Log::Print("Warden: SMSG_CHEAT_CHECKS_REQUEST: Add string '%s' with size '%d' to cache.", string.c_str(), strSize);
 	} while (true);
 
 	uint8 xorByte = m_InputKey[0];
@@ -255,7 +283,7 @@ void CWarden::On_WARDEN_SMSG_CHEAT_CHECKS_REQUEST(CServerPacket & Buffer)
 	Buffer >> timingCheck;
 	timingCheck ^= xorByte;
 	if (timingCheck != TIMING_CHECK)
-		throw CException("Warden: WARDEN_SMSG_CHEAT_CHECKS_REQUEST: TIMING_CHECK mismatch!");
+		throw CException("Warden: SMSG_CHEAT_CHECKS_REQUEST: TIMING_CHECK mismatch!");
 
 	std::vector<WardenCheck> wardenChecks;
 
@@ -274,7 +302,7 @@ void CWarden::On_WARDEN_SMSG_CHEAT_CHECKS_REQUEST(CServerPacket & Buffer)
 				uint8 zero;
 				Buffer >> zero;
 				if (zero != 0x00)
-					throw CException("Warden: WARDEN_SMSG_CHEAT_CHECKS_REQUEST: Zero mismatch.");
+					throw CException("Warden: SMSG_CHEAT_CHECKS_REQUEST: Zero mismatch.");
 
 				Buffer >> uint32(wd.Address);
 				Buffer >> uint8(wd.Length);
@@ -300,7 +328,7 @@ void CWarden::On_WARDEN_SMSG_CHEAT_CHECKS_REQUEST(CServerPacket & Buffer)
 				Buffer >> index;
 				index -= 1u;
 				if (index >= strings.size())
-					throw CException("Warden: WARDEN_SMSG_CHEAT_CHECKS_REQUEST: Incorrect string index. Index '%d'. Size '%d'", index, strings.size());
+					throw CException("Warden: SMSG_CHEAT_CHECKS_REQUEST: Incorrect string index. Index '%d'. Size '%d'", index, strings.size());
 				wd.Str = strings.at(index);
 				wardenChecks.push_back(wd);
 
@@ -314,7 +342,7 @@ void CWarden::On_WARDEN_SMSG_CHEAT_CHECKS_REQUEST(CServerPacket & Buffer)
 				Buffer >> index;
 				index -= 1u;
 				if (index >= strings.size())
-					throw CException("Warden: WARDEN_SMSG_CHEAT_CHECKS_REQUEST: Incorrect string index. Index '%d'. Size '%d'", index, strings.size());
+					throw CException("Warden: SMSG_CHEAT_CHECKS_REQUEST: Incorrect string index. Index '%d'. Size '%d'", index, strings.size());
 				wd.Str = strings.at(index);
 				wardenChecks.push_back(wd);
 			}
@@ -337,7 +365,7 @@ void CWarden::On_WARDEN_SMSG_CHEAT_CHECKS_REQUEST(CServerPacket & Buffer)
 
 			case PROC_CHECK:
 			{
-				Buffer.readBytes(wd.Data, 20);
+				Buffer.readBytes(wd.Data, sizeof(wd.Data));
 
 				uint8 index0;
 				Buffer >> index0;
@@ -355,7 +383,7 @@ void CWarden::On_WARDEN_SMSG_CHEAT_CHECKS_REQUEST(CServerPacket & Buffer)
 			default:
 			{
 				if (wdCheckOpcode != xorByte)
-					throw CException("Warden: WARDEN_SMSG_CHEAT_CHECKS_REQUEST: Control XOR byte mismatch!");
+					throw CException("Warden: SMSG_CHEAT_CHECKS_REQUEST: Control XOR byte mismatch!");
 
 				isNeedExit = true;
 				break;
@@ -374,18 +402,14 @@ void CWarden::On_WARDEN_SMSG_MODULE_INITIALIZE(CServerPacket & Buffer)
 
 	SWardenInitModuleRequest Request;
 	Buffer >> Request;
-
-	Log::Print("Warden: Received WARDEN_SMSG_MODULE_INITIALIZE packet.");
 }
 
 void CWarden::On_WARDEN_SMSG_HASH_REQUEST(CServerPacket & Buffer)
 {
-	Log::Print("Warden: Received WARDEN_SMSG_HASH_REQUEST.");
-
 	uint8 seed[16];
 	Buffer >> seed;
 	if (std::memcmp(seed, m_Seed, 16) != 0)
-		throw CException("Warden: WARDEN_SMSG_HASH_REQUEST: Modules seeds mismatch.");
+		throw CException("Warden: SMSG_HASH_REQUEST: Modules seeds mismatch.");
 
 	// SEND
 
