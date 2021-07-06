@@ -68,7 +68,7 @@ void CWoWClient::BeginConnect(const std::string& Username, const std::string& Pa
 
 void CWoWClient::OnRealListObtained(const std::vector<SRealmInfo>& Realms, BigNumber Key)
 {
-	OnRealmListSelected(Realms[0], Key);
+	OnRealmListSelected(Realms[9], Key);
 }
 
 void CWoWClient::OnRealmListSelected(const SRealmInfo& SelectedRealm, BigNumber Key)
@@ -100,10 +100,10 @@ void CWoWClient::OnCharacterSelected(const SCharacterTemplate & SelectedCharacte
 	//CWorldObjectCreator creator(m_Scene.GetBaseManager());
 	//auto creature = creator.BuildCharacterFromTemplate(m_Scene.GetBaseManager().GetApplication().GetRenderDevice(), m_Scene, SelectedCharacter);
 
-	m_World = std::make_unique<CWoWWorld>(m_Scene, m_WorldSocket);
-	m_WorldSocket->SetExternalHandler(std::bind(&CWoWWorld::ProcessPacket, m_World.get(), std::placeholders::_1));
+	//m_World = std::make_unique<CWoWWorld>(m_Scene, m_WorldSocket);
+	//m_WorldSocket->SetExternalHandler(std::bind(&CWoWWorld::ProcessPacket, m_World.get(), std::placeholders::_1));
 
-	m_World->EnterWorld(SelectedCharacter);
+	//m_World->EnterWorld(SelectedCharacter);
 }
 
 #endif

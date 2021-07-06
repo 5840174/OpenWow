@@ -6,22 +6,11 @@
 #include "ServerPacket.h"
 #include "ClientPacket.h"
 
+#include "../Warden/Warden.h"
+
 // FORWARD BEGIN
 class CWoWClient;
 // FORWARD END
-
-struct ServerPktHeader
-{
-    uint16 size;
-    uint16 cmd;
-};
-
-struct ClientPktHeader
-{
-    uint16 size;
-    uint32 cmd;
-};
-
 
 class CWorldSocket
 	: public CTCPSocket
@@ -49,6 +38,8 @@ private: // Used while connect to world
 	void On_SMSG_AUTH_CHALLENGE(CServerPacket& Buffer);
 	void On_SMSG_AUTH_RESPONSE(CServerPacket& Buffer);
 
+	void On_SMSG_WARDEN_DATA(CServerPacket& Buffer);
+
     void CreateAddonsBuffer(CByteBuffer& AddonsBuffer);
 
 private:
@@ -61,6 +52,7 @@ private:
 private:
 	std::string m_Login;
 	BigNumber   m_Key;
+	std::unique_ptr<CWarden> m_Warden;
 };
 
 #endif

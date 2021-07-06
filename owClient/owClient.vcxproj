@@ -20,6 +20,7 @@
     <ClInclude Include="AuthSocket\Cryptography\HMACSHA1.h" />
     <ClInclude Include="AuthSocket\Cryptography\OpenSSLCrypto.h" />
     <ClInclude Include="AuthSocket\Cryptography\SHA1.h" />
+    <ClInclude Include="AuthSocket\Cryptography\SHA1Randx.h" />
     <ClInclude Include="CharacterSelection\CharacterSelection.h" />
     <ClInclude Include="Client\Client.h" />
     <ClInclude Include="Client\ClientCache.h" />
@@ -33,6 +34,9 @@
     <ClInclude Include="Types\MoveSplineFlag.h" />
     <ClInclude Include="Types\UpdateFields.h" />
     <ClInclude Include="Types\UpdateMask.h" />
+    <ClInclude Include="Warden\Warden.h" />
+    <ClInclude Include="Warden\WardenModuleWin.h" />
+    <ClInclude Include="Warden\WardenStructs.h" />
     <ClInclude Include="WorldSocket\ClientPacket.h" />
     <ClInclude Include="WorldSocket\Opcodes.h" />
     <ClInclude Include="WorldSocket\OpcodesNames.h" />
@@ -64,6 +68,7 @@
     <ClCompile Include="AuthSocket\Cryptography\HMACSHA1.cpp" />
     <ClCompile Include="AuthSocket\Cryptography\OpenSSLCrypto.cpp" />
     <ClCompile Include="AuthSocket\Cryptography\SHA1.cpp" />
+    <ClCompile Include="AuthSocket\Cryptography\SHA1Randx.cpp" />
     <ClCompile Include="CharacterSelection\CharacterSelection.cpp" />
     <ClCompile Include="Client\Client.cpp" />
     <ClCompile Include="Client\ClientCache.cpp" />
@@ -75,6 +80,7 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="Warden\Warden.cpp" />
     <ClCompile Include="WorldSocket\ClientPacket.cpp" />
     <ClCompile Include="WorldSocket\ServerPacket.cpp" />
     <ClCompile Include="WorldSocket\WorldSocket.cpp" />

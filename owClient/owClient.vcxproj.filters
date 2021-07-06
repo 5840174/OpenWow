@@ -40,6 +40,9 @@
     <Filter Include="World\Path">
       <UniqueIdentifier>{2d4470d2-8ab6-447f-8fa8-8a57edf3e1b8}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Warden">
+      <UniqueIdentifier>{eae392f7-ea40-40d2-b4cc-613852a03605}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="RealmSelection\RealmInfo.h">
@@ -174,6 +177,18 @@
     <ClInclude Include="World\Path\PathNode.h">
       <Filter>World\Path</Filter>
     </ClInclude>
+    <ClInclude Include="Warden\Warden.h">
+      <Filter>Warden</Filter>
+    </ClInclude>
+    <ClInclude Include="Warden\WardenStructs.h">
+      <Filter>Warden</Filter>
+    </ClInclude>
+    <ClInclude Include="AuthSocket\Cryptography\SHA1Randx.h">
+      <Filter>AuthSocket\Cryptography</Filter>
+    </ClInclude>
+    <ClInclude Include="Warden\WardenModuleWin.h">
+      <Filter>Warden</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="World\World.cpp">
@@ -280,6 +295,12 @@
     </ClCompile>
     <ClCompile Include="World\Path\PathNode.cpp">
       <Filter>World\Path</Filter>
+    </ClCompile>
+    <ClCompile Include="Warden\Warden.cpp">
+      <Filter>Warden</Filter>
+    </ClCompile>
+    <ClCompile Include="AuthSocket\Cryptography\SHA1Randx.cpp">
+      <Filter>AuthSocket\Cryptography</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

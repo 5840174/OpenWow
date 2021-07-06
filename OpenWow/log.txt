@@ -1,10 +1,10 @@
 ^Log created
-^Plugin 'D:\OpenWow\bin_x64\Release\znRenderDX11.dll' loaded.
-^Plugin 'D:\OpenWow\bin_x64\Release\znRenderDX11.dll' successfully added.
-^Plugin 'D:\OpenWow\bin_x64\Release\owGame.dll' loaded.
-^Plugin 'D:\OpenWow\bin_x64\Release\owGame.dll' successfully added.
-^Plugin 'D:\OpenWow\bin_x64\Release\owClient.dll' loaded.
-^Plugin 'D:\OpenWow\bin_x64\Release\owClient.dll' successfully added.
+^Plugin 'D:\OpenWow\bin_x64\Debug\znRenderDX11.dll' loaded.
+^Plugin 'D:\OpenWow\bin_x64\Debug\znRenderDX11.dll' successfully added.
+^Plugin 'D:\OpenWow\bin_x64\Debug\owGame.dll' loaded.
+^Plugin 'D:\OpenWow\bin_x64\Debug\owGame.dll' successfully added.
+^Plugin 'D:\OpenWow\bin_x64\Debug\owClient.dll' loaded.
+^Plugin 'D:\OpenWow\bin_x64\Debug\owClient.dll' successfully added.
 ~MPQFile[common.MPQ]: Added!
 ~MPQFile[common-2.MPQ]: Added!
 ~MPQFile[expansion.MPQ]: Added!
@@ -79,129 +79,94 @@
 ~Loading shader 'UI/UI_Font.hlsl':'PS_main'.
 ^All ok! Server proof equal client calculated server proof!
 ^Successfully logined!!!
-^S_Realmlist: Count [1]
-^RealmType: '0', IsLocked: '0', Flag: '0x0', Name: 'Trinity', Address '127.0.0.1:8085', Population: '0,000000', CharacterCount: '1'
-^CWoWClient::OnRealmListSelected: Realm name 'Trinity'.
+^S_Realmlist: Count [12]
+^RealmType: '1', IsLocked: '0', Flag: '0x0', Name: 'WoW Circle 3.3.5a Fun', Address '54.37.128.19:12373', Population: '0,000000', CharacterCount: '0'
+^RealmType: '1', IsLocked: '0', Flag: '0x0', Name: 'WoW Circle 3.3.5a Fun Prx 1', Address '185.71.65.222:77909', Population: '0,000000', CharacterCount: '0'
+^RealmType: '1', IsLocked: '0', Flag: '0x0', Name: 'WoW Circle 3.3.5a Fun Prx 2', Address '5.252.35.3:77909', Population: '0,000000', CharacterCount: '0'
+^RealmType: '0', IsLocked: '0', Flag: '0x0', Name: 'WoW Circle 3.3.5a x1', Address '51.77.57.12:8131', Population: '0,000000', CharacterCount: '0'
+^RealmType: '0', IsLocked: '0', Flag: '0x0', Name: 'WoW Circle 3.3.5a x1 Prx 1', Address '185.71.65.111:8131', Population: '0,000000', CharacterCount: '0'
+^RealmType: '0', IsLocked: '0', Flag: '0x0', Name: 'WoW Circle 3.3.5a x1 Prx 2', Address '5.252.35.81:8131', Population: '0,000000', CharacterCount: '0'
+^RealmType: '1', IsLocked: '0', Flag: '0x0', Name: 'WoW Circle 3.3.5a x100', Address '51.77.57.14:8130', Population: '0,000000', CharacterCount: '0'
+^RealmType: '1', IsLocked: '0', Flag: '0x0', Name: 'WoW Circle 3.3.5a x100 Prx 1', Address '185.71.65.222:73666', Population: '0,000000', CharacterCount: '0'
+^RealmType: '1', IsLocked: '0', Flag: '0x0', Name: 'WoW Circle 3.3.5a x100 Prx 2', Address '5.252.35.3:73666', Population: '0,000000', CharacterCount: '0'
+^RealmType: '1', IsLocked: '0', Flag: '0x0', Name: 'WoW Circle 3.3.5a x5', Address '145.239.133.17:8129', Population: '0,000000', CharacterCount: '0'
+^RealmType: '1', IsLocked: '0', Flag: '0x0', Name: 'WoW Circle 3.3.5a x5 Prx 1', Address '185.71.65.222:73665', Population: '0,000000', CharacterCount: '0'
+^RealmType: '1', IsLocked: '0', Flag: '0x0', Name: 'WoW Circle 3.3.5a x5 Prx 2', Address '5.252.35.3:73665', Population: '0,000000', CharacterCount: '0'
+^CWoWClient::OnRealmListSelected: Realm name 'WoW Circle 3.3.5a x5'.
 @SOCKET DISCONNECTED.
+!Byte '2'.
+!Byte '6'.
+!Byte '197'.
+!Byte '54'.
+!Byte '2'.
+!Byte '137'.
+!Byte '14'.
+!Byte '20'.
+!Byte '151'.
+!Byte '170'.
+!Byte '119'.
+!Byte '55'.
+!Byte '81'.
+!Byte '113'.
+!Byte '101'.
+!Byte '231'.
+!Byte '175'.
+!Byte '81'.
+!Byte '137'.
+!Byte '204'.
+ CWarden::ProcessPacket: WARDEN_SMSG_MODULE_USE Received. Size = '18756'.
+ WARDEN PACKET SEnDED. '0'
 ^Succes access to server!!!
-~Opcode: 'SMSG_ADDON_INFO' (0x2EF). Size: '139' not handled.
+~Opcode: 'SMSG_ADDON_INFO' (0x2EF). Size: '975' not handled.
 ~Opcode: 'SMSG_CLIENTCACHE_VERSION' (0x4AB). Size: '4' not handled.
 ~Opcode: 'SMSG_TUTORIAL_FLAGS' (0xFD). Size: '32' not handled.
+ CWarden::ProcessPacket: WARDEN_SMSG_MODULE_CACHE Received. Size = '500'. Readed '500' of '18756'.
+ CWarden::ProcessPacket: WARDEN_SMSG_MODULE_CACHE Received. Size = '500'. Readed '1000' of '18756'.
+ CWarden::ProcessPacket: WARDEN_SMSG_MODULE_CACHE Received. Size = '500'. Readed '1500' of '18756'.
+ CWarden::ProcessPacket: WARDEN_SMSG_MODULE_CACHE Received. Size = '500'. Readed '2000' of '18756'.
+ CWarden::ProcessPacket: WARDEN_SMSG_MODULE_CACHE Received. Size = '500'. Readed '2500' of '18756'.
+ CWarden::ProcessPacket: WARDEN_SMSG_MODULE_CACHE Received. Size = '500'. Readed '3000' of '18756'.
+ CWarden::ProcessPacket: WARDEN_SMSG_MODULE_CACHE Received. Size = '500'. Readed '3500' of '18756'.
+ CWarden::ProcessPacket: WARDEN_SMSG_MODULE_CACHE Received. Size = '500'. Readed '4000' of '18756'.
+ CWarden::ProcessPacket: WARDEN_SMSG_MODULE_CACHE Received. Size = '500'. Readed '4500' of '18756'.
+ CWarden::ProcessPacket: WARDEN_SMSG_MODULE_CACHE Received. Size = '500'. Readed '5000' of '18756'.
+ CWarden::ProcessPacket: WARDEN_SMSG_MODULE_CACHE Received. Size = '500'. Readed '5500' of '18756'.
+ CWarden::ProcessPacket: WARDEN_SMSG_MODULE_CACHE Received. Size = '500'. Readed '6000' of '18756'.
+ CWarden::ProcessPacket: WARDEN_SMSG_MODULE_CACHE Received. Size = '500'. Readed '6500' of '18756'.
+ CWarden::ProcessPacket: WARDEN_SMSG_MODULE_CACHE Received. Size = '500'. Readed '7000' of '18756'.
+ CWarden::ProcessPacket: WARDEN_SMSG_MODULE_CACHE Received. Size = '500'. Readed '7500' of '18756'.
+ CWarden::ProcessPacket: WARDEN_SMSG_MODULE_CACHE Received. Size = '500'. Readed '8000' of '18756'.
+ CWarden::ProcessPacket: WARDEN_SMSG_MODULE_CACHE Received. Size = '500'. Readed '8500' of '18756'.
+ CWarden::ProcessPacket: WARDEN_SMSG_MODULE_CACHE Received. Size = '500'. Readed '9000' of '18756'.
+ CWarden::ProcessPacket: WARDEN_SMSG_MODULE_CACHE Received. Size = '500'. Readed '9500' of '18756'.
+ CWarden::ProcessPacket: WARDEN_SMSG_MODULE_CACHE Received. Size = '500'. Readed '10000' of '18756'.
+ CWarden::ProcessPacket: WARDEN_SMSG_MODULE_CACHE Received. Size = '500'. Readed '10500' of '18756'.
+ CWarden::ProcessPacket: WARDEN_SMSG_MODULE_CACHE Received. Size = '500'. Readed '11000' of '18756'.
+ CWarden::ProcessPacket: WARDEN_SMSG_MODULE_CACHE Received. Size = '500'. Readed '11500' of '18756'.
+ CWarden::ProcessPacket: WARDEN_SMSG_MODULE_CACHE Received. Size = '500'. Readed '12000' of '18756'.
+ CWarden::ProcessPacket: WARDEN_SMSG_MODULE_CACHE Received. Size = '500'. Readed '12500' of '18756'.
+ CWarden::ProcessPacket: WARDEN_SMSG_MODULE_CACHE Received. Size = '500'. Readed '13000' of '18756'.
+ CWarden::ProcessPacket: WARDEN_SMSG_MODULE_CACHE Received. Size = '500'. Readed '13500' of '18756'.
+ CWarden::ProcessPacket: WARDEN_SMSG_MODULE_CACHE Received. Size = '500'. Readed '14000' of '18756'.
+ CWarden::ProcessPacket: WARDEN_SMSG_MODULE_CACHE Received. Size = '500'. Readed '14500' of '18756'.
+ CWarden::ProcessPacket: WARDEN_SMSG_MODULE_CACHE Received. Size = '500'. Readed '15000' of '18756'.
+ CWarden::ProcessPacket: WARDEN_SMSG_MODULE_CACHE Received. Size = '500'. Readed '15500' of '18756'.
+ CWarden::ProcessPacket: WARDEN_SMSG_MODULE_CACHE Received. Size = '500'. Readed '16000' of '18756'.
+ CWarden::ProcessPacket: WARDEN_SMSG_MODULE_CACHE Received. Size = '500'. Readed '16500' of '18756'.
+ CWarden::ProcessPacket: WARDEN_SMSG_MODULE_CACHE Received. Size = '500'. Readed '17000' of '18756'.
+ CWarden::ProcessPacket: WARDEN_SMSG_MODULE_CACHE Received. Size = '500'. Readed '17500' of '18756'.
+ CWarden::ProcessPacket: WARDEN_SMSG_MODULE_CACHE Received. Size = '500'. Readed '18000' of '18756'.
+ CWarden::ProcessPacket: WARDEN_SMSG_MODULE_CACHE Received. Size = '500'. Readed '18500' of '18756'.
+ CWarden::ProcessPacket: WARDEN_SMSG_MODULE_CACHE Received. Size = '256'. Readed '18756' of '18756'.
+ CWarden::ProcessPacket: WARDEN_SMSG_MODULE_CACHE Received. All readed. Readed '18756'.
+ WARDEN PACKET SEnDED. '1'
  CWoWClientCharactedSelection::On_SMSG_CHAR_ENUM:: Characters count '1'.
- CWoWClientCharactedSelection::On_SMSG_CHAR_ENUM:: Character [0] name 'Dktest'.
-^CWoWClient::OnCharacterSelected: Character name 'Dktest'.
- Character 'Dktest' Base64 'DwAAAAAAAABEa3Rlc3QAAgYABgwEBQY39QcAAAAAAAAuI4VFCM4txS7YzUAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAJ8kAAAEAAAAAixkAAAIAAAAALckAAAMAAAAAAAAAAAAAAAAAJskAAAUAAAAAKckAAAYAAAAAK8kAAAcAAAAAKMkAAAgAAAAALMkAAAkAAAAAKskAAAoAAAAAwwMAAAsAAAAAwwMAAAsAAAAAAAAAAAAAAAAAAAAAAAAAAAAASsIAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgUAABIAAAAAAgUAABIAAAAAAgUAABIAAAAAAgUAABIAAAAA'
- CTransportAnimationStorage::Initialize: Loaded records for '82' transport entries.
-~Loading shader '3D/Debug.hlsl':'VS_main'.
-~Loading shader '3D/Debug.hlsl':'PS_main'.
-~Opcode: 'SMSG_POWER_UPDATE' (0x480). Size: '7' not handled.
-~Opcode: 'SMSG_RESYNC_RUNES' (0x487). Size: '16' not handled.
-~Opcode: 'SMSG_RESYNC_RUNES' (0x487). Size: '16' not handled.
-~Opcode: 'SMSG_RESYNC_RUNES' (0x487). Size: '16' not handled.
-~Opcode: 'SMSG_RESYNC_RUNES' (0x487). Size: '16' not handled.
-~Opcode: 'SMSG_RESYNC_RUNES' (0x487). Size: '16' not handled.
-~Opcode: 'SMSG_RESYNC_RUNES' (0x487). Size: '16' not handled.
-~Opcode: 'SMSG_SET_PROFICIENCY' (0x127). Size: '5' not handled.
-~Opcode: 'SMSG_SET_PROFICIENCY' (0x127). Size: '5' not handled.
-~Opcode: 'SMSG_SET_PROFICIENCY' (0x127). Size: '5' not handled.
-~Opcode: 'SMSG_SET_PROFICIENCY' (0x127). Size: '5' not handled.
-~Opcode: 'SMSG_SET_PROFICIENCY' (0x127). Size: '5' not handled.
-~Opcode: 'SMSG_SET_PROFICIENCY' (0x127). Size: '5' not handled.
-~Opcode: 'SMSG_SET_PROFICIENCY' (0x127). Size: '5' not handled.
-~Opcode: 'SMSG_SET_FLAT_SPELL_MODIFIER' (0x266). Size: '6' not handled.
-~Opcode: 'SMSG_SET_PCT_SPELL_MODIFIER' (0x267). Size: '6' not handled.
-~Opcode: 'SMSG_SET_PROFICIENCY' (0x127). Size: '5' not handled.
-~Opcode: 'SMSG_SET_PROFICIENCY' (0x127). Size: '5' not handled.
-~Opcode: 'SMSG_SET_PROFICIENCY' (0x127). Size: '5' not handled.
-~Opcode: 'SMSG_SET_PROFICIENCY' (0x127). Size: '5' not handled.
-~Opcode: 'SMSG_SET_PROFICIENCY' (0x127). Size: '5' not handled.
-~Opcode: 'SMSG_SET_PCT_SPELL_MODIFIER' (0x267). Size: '6' not handled.
-~Opcode: 'SMSG_SET_PCT_SPELL_MODIFIER' (0x267). Size: '6' not handled.
-~Opcode: 'SMSG_SET_PCT_SPELL_MODIFIER' (0x267). Size: '6' not handled.
-~Opcode: 'SMSG_SET_PCT_SPELL_MODIFIER' (0x267). Size: '6' not handled.
-~Opcode: 'SMSG_SET_PCT_SPELL_MODIFIER' (0x267). Size: '6' not handled.
-~Opcode: 'SMSG_SET_PCT_SPELL_MODIFIER' (0x267). Size: '6' not handled.
-~Opcode: 'SMSG_SET_PCT_SPELL_MODIFIER' (0x267). Size: '6' not handled.
-~Opcode: 'SMSG_SET_PCT_SPELL_MODIFIER' (0x267). Size: '6' not handled.
-~Opcode: 'SMSG_SET_PCT_SPELL_MODIFIER' (0x267). Size: '6' not handled.
-~Opcode: 'SMSG_AURA_UPDATE' (0x496). Size: '7' not handled.
-~Opcode: 'SMSG_CANCEL_COMBAT' (0x14E). Size: '0' not handled.
-~Opcode: 'MSG_SET_DUNGEON_DIFFICULTY' (0x329). Size: '12' not handled.
-~Sky: [1] is global sky.
- Map[Azeroth]: Id = '0'. Preloading...
- Map[Azeroth]: InstanceType = '0'.
- Map[Azeroth]: MapType = '0'.
- Map[Azeroth]: IsBattleGround = '0'.
- Map[Azeroth]: Name = 'Восточные королевства'.
- Map[Azeroth]: AreaTableID = '0'.
- Map[Azeroth]: AllianceDescr = ''.
- Map[Azeroth]: HordeDescr = ''.
- Map[Azeroth]: CorpseMapID = '-1'.
- Map[Azeroth]: Id [0]. Loading...
-^CMapWDL: Low WMOs count [0].
-~MapWDT: Global WMO exists [false].
-~Opcode: 'SMSG_ACCOUNT_DATA_TIMES' (0x209). Size: '29' not handled.
-~Opcode: 'SMSG_FEATURE_SYSTEM_STATUS' (0x3C9). Size: '2' not handled.
-^MOTD: Welcome to a Trinity Core server.
-~Opcode: 'SMSG_LEARNED_DANCE_MOVES' (0x455). Size: '8' not handled.
-~Opcode: 'SMSG_CONTACT_LIST' (0x67). Size: '8' not handled.
-~Opcode: 'SMSG_BIND_POINT_UPDATE' (0x155). Size: '20' not handled.
-~Opcode: 'SMSG_TALENTS_INFO' (0x4C0). Size: '21' not handled.
-~Opcode: 'SMSG_INSTANCE_DIFFICULTY' (0x33B). Size: '8' not handled.
-~Opcode: 'SMSG_INITIAL_SPELLS' (0x12A). Size: '419' not handled.
-~Opcode: 'SMSG_SEND_UNLEARN_SPELLS' (0x41E). Size: '4' not handled.
-~Opcode: 'SMSG_ACTION_BUTTONS' (0x129). Size: '577' not handled.
-~Opcode: 'SMSG_INITIALIZE_FACTIONS' (0x122). Size: '644' not handled.
-~Opcode: 'SMSG_ALL_ACHIEVEMENT_DATA' (0x47D). Size: '1433' not handled.
-~Opcode: 'SMSG_EQUIPMENT_SET_LIST' (0x4BC). Size: '4' not handled.
-~Opcode: 'SMSG_LOGIN_SET_TIME_SPEED' (0x42). Size: '12' not handled.
-~Opcode: 'SMSG_SET_FORCED_REACTIONS' (0x2A5). Size: '4' not handled.
-~Opcode: 'SMSG_RESYNC_RUNES' (0x487). Size: '16' not handled.
- Value '12' missed!!!!!!!!!!!!
- Value '12' missed!!!!!!!!!!!!
- Value '12' missed!!!!!!!!!!!!
- Value '12' missed!!!!!!!!!!!!
-^---Create WoWGameObjectMOTransport with Type 'MoTransport', Entry '0', Counter '1'
-^---Create WoWGameObjectMOTransport with Type 'MoTransport', Entry '0', Counter '5'
-^---Create WoWGameObjectMOTransport with Type 'MoTransport', Entry '0', Counter '6'
-^---Create WoWGameObjectMOTransport with Type 'MoTransport', Entry '0', Counter '4'
-^---Create WoWGameObjectMOTransport with Type 'MoTransport', Entry '0', Counter '7'
-^---Create WoWGameObjectMOTransport with Type 'MoTransport', Entry '0', Counter '10'
-^---Create WoWGameObjectMOTransport with Type 'MoTransport', Entry '0', Counter '17'
-~Opcode: 'SMSG_INIT_WORLD_STATES' (0x2C2). Size: '78' not handled.
-~Opcode: 'SMSG_UPDATE_WORLD_STATE' (0x2C3). Size: '8' not handled.
-~Opcode: 'SMSG_UPDATE_WORLD_STATE' (0x2C3). Size: '8' not handled.
-~Opcode: 'SMSG_UPDATE_WORLD_STATE' (0x2C3). Size: '8' not handled.
-~Opcode: 'SMSG_UPDATE_WORLD_STATE' (0x2C3). Size: '8' not handled.
-~Opcode: 'SMSG_UPDATE_WORLD_STATE' (0x2C3). Size: '8' not handled.
-~Opcode: 'SMSG_UPDATE_WORLD_STATE' (0x2C3). Size: '8' not handled.
-~Opcode: 'SMSG_SPELL_GO' (0x132). Size: '36' not handled.
-~Opcode: 'SMSG_AURA_UPDATE_ALL' (0x495). Size: '18' not handled.
-~Opcode: 'SMSG_QUESTGIVER_STATUS_MULTIPLE' (0x418). Size: '4' not handled.
-^NOTIFICATION: GM mode is ON
-~Opcode: 'SMSG_AURA_UPDATE' (0x496). Size: '10' not handled.
-~Opcode: 'SMSG_AURA_UPDATE' (0x496). Size: '10' not handled.
-!WMO[WORLD\WMO\DUNGEON\LD_STRATHOLME\STRATHOLME_A.WMO]: Skybox [ENVIRONMENTS\STARS\STRATHOLMESKYBOX.MDX]
-^---Create WoWGameObjectMOTransport with Type 'MoTransport', Entry '0', Counter '2'
-~Opcode: 'SMSG_AURA_UPDATE_ALL' (0x495). Size: '18' not handled.
-^---Create WoWGameObjectMOTransport with Type 'MoTransport', Entry '0', Counter '11'
-^---Create WoWGameObjectMOTransport with Type 'MoTransport', Entry '0', Counter '17'
-^---Create WoWGameObjectMOTransport with Type 'MoTransport', Entry '0', Counter '7'
-^---Create WoWGameObjectMOTransport with Type 'MoTransport', Entry '0', Counter '4'
-^---Create WoWGameObjectMOTransport with Type 'MoTransport', Entry '0', Counter '6'
-^---Create WoWGameObjectMOTransport with Type 'MoTransport', Entry '0', Counter '2'
-^---Create WoWGameObjectMOTransport with Type 'MoTransport', Entry '0', Counter '5'
-^---Create WoWGameObjectMOTransport with Type 'MoTransport', Entry '0', Counter '11'
-@WndProc: WM_CLOSE.
-@WndProc: WM_DESTROY.
-~Scene destroyed.
-@SOCKET DISCONNECTED.
-~CAuthSocket: Deleted.
-@SOCKET DISCONNECTED.
-~~RenderWindowBase
-@SaveToLocalFile: File 'D:\OpenWow\OpenWow//settings.xml' already exists and will be removed.
-^LoaderThread: Stopped.
-^LoaderThread: Stopped.
-^LoaderThread: Stopped.
-^LoaderThread: Stopped.
-^DeleterThread: Stopped.
+ CWoWClientCharactedSelection::On_SMSG_CHAR_ENUM:: Character [0] name 'Yielt'.
+^CWoWClient::OnCharacterSelected: Character name 'Yielt'.
+ Character 'Yielt' Base64 'vmhVAAAAAABZaWVsdAACAwABBAAFBFArEQAAOwIAAGCEuEXpjSBEqFUhRAAAAAAAAAAAAAAAAACrXgAAUAAAAAEAAACS8gAAAQAAAAAQ+wAAAgAAAAAk/QAAAwAAAAAAAAAAAAAAAAA8/QAABQAAAAC7/AAABgAAAAA1/QAABwAAAACC/wAACAAAAAAy/QAACQAAAACQ8gAACgAAAADQmAAACwAAAADW+QAACwAAAAD0+gAADAAAAAANCgEADAAAAABG+wAAEAAAAACY+gAAEbIAAAAAAAAAAAAAAABz+wAAGgAAAAAAAAAAAAAAAADchwAAEgAAAADchwAAEgAAAADchwAAEgAAAADchwAAEgAAAAA='
+ CWarden::ProcessPacket: WARDEN_SMSG_HASH_REQUEST: Seed received.
+ WARDEN PACKET SEnDED. '4'
+ CWarden::ProcessPacket: WARDEN_SMSG_MODULE_INITIALIZE Received. Module initialize.
+ CWarden::ProcessPacket: WARDEN_SMSG_CHEAT_CHECKS_REQUEST Received. String 'DBFilesClient\Spell.dbc' Size '23'.
+ WARDEN PACKET SEnDED. '2'
+ CWarden::ProcessPacket: WARDEN_SMSG_MODULE_INITIALIZE Received. Module initialize.

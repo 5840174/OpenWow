@@ -17,8 +17,11 @@ CWorldSocket::CWorldSocket(const std::string& Login, BigNumber Key)
 	, m_Login(Login)
 	, m_Key(Key)
 {
+	m_Warden = std::make_unique<CWarden>(*this, m_Key);
+
 	AddHandler(SMSG_AUTH_CHALLENGE, std::bind(&CWorldSocket::On_SMSG_AUTH_CHALLENGE, this, std::placeholders::_1));
-	AddHandler(SMSG_AUTH_RESPONSE, std::bind(&CWorldSocket::On_SMSG_AUTH_RESPONSE, this, std::placeholders::_1));
+	AddHandler(SMSG_AUTH_RESPONSE,  std::bind(&CWorldSocket::On_SMSG_AUTH_RESPONSE, this, std::placeholders::_1));
+	AddHandler(SMSG_WARDEN_DATA,    std::bind(&CWorldSocket::On_SMSG_WARDEN_DATA, this, std::placeholders::_1));
 }
 
 CWorldSocket::~CWorldSocket()
@@ -56,75 +59,72 @@ void CWorldSocket::Open(std::string Host, uint16 Port)
 
 void CWorldSocket::Update()
 {
-	//while (true)
+	CByteBuffer buffer;
+	Receive(buffer, 4096 * 16);
+
+	if (buffer.getSize() == 0)
 	{
-		CByteBuffer buffer;
-		Receive(buffer, 4096 * 16);
-
-		if (buffer.getSize() == 0)
+		if (GetStatus() != CSocket::Connected)
 		{
-			if (GetStatus() != CSocket::Connected)
-			{
-				//NotifyListeners(&ConnectionListener::OnSocketStateChange, m_TCPSocket.GetStatus());
-			}
-			return;
+			Log::Error("DISCONNECTED.");
 		}
+		return;
+	}
 
-		// Append to current packet
-		if (m_CurrentPacket != nullptr)
-		{
-			Packet2(buffer);
-		}
+	// Append to current packet
+	if (m_CurrentPacket != nullptr)
+	{
+		Packet2(buffer);
+	}
 
-		while (false == buffer.isEof())
-		{
-			uint8* data = buffer.getDataFromCurrentEx();
-			uint8  sizeBytes = sizeof(uint16);
-			uint32 size = 0;
-			uint16 cmd = 0;
+	while (false == buffer.isEof())
+	{
+		uint8* data = buffer.getDataFromCurrentEx();
+		uint8  sizeBytes = sizeof(uint16);
+		uint32 size = 0;
+		uint16 cmd = 0;
 
 #if 1
-			// 1. Decrypt size
-			m_WoWCryptoUtils.DecryptRecv(data + 0, 1);
-			uint8 firstByte = data[0];
+		// 1. Decrypt size
+		m_WoWCryptoUtils.DecryptRecv(data + 0, 1);
+		uint8 firstByte = data[0];
 
-			// 2. Decrypt other size
-			if ((firstByte & 0x80) != 0)
-			{
-				sizeBytes = 3;
-				m_WoWCryptoUtils.DecryptRecv(data + 1, 1 + sizeBytes);
-				size = (((data[0] & 0x7F) << 16) | (data[1] << 8) | data[2]);
-				cmd = ((data[4] << 8) | data[3]);
-			}
-			else
-			{
-				sizeBytes = 2;
-				m_WoWCryptoUtils.DecryptRecv(data + 1, 1 + sizeBytes);
-				size = ((data[0] << 8) | data[1]);
-				cmd = ((data[3] << 8) | data[2]);
-			}
-#else
-			// Decrypt size and header
-			m_WoWCryptoUtils.DecryptRecv(data + 0, sizeof(uint16) + sizeof(uint16));
-
-			// Check compressed packets
-			_ASSERT((data[0] & 0x80) == 0);
-
-			// Size and opcode
+		// 2. Decrypt other size
+		if ((firstByte & 0x80) != 0)
+		{
+			sizeBytes = 3;
+			m_WoWCryptoUtils.DecryptRecv(data + 1, 1 + sizeBytes);
+			size = (((data[0] & 0x7F) << 16) | (data[1] << 8) | data[2]);
+			cmd = ((data[4] << 8) | data[3]);
+		}
+		else
+		{
+			sizeBytes = 2;
+			m_WoWCryptoUtils.DecryptRecv(data + 1, 1 + sizeBytes);
 			size = ((data[0] << 8) | data[1]);
 			cmd = ((data[3] << 8) | data[2]);
+		}
+#else
+		// Decrypt size and header
+		m_WoWCryptoUtils.DecryptRecv(data + 0, sizeof(uint16) + sizeof(uint16));
+
+		// Check compressed packets
+		_ASSERT((data[0] & 0x80) == 0);
+
+		// Size and opcode
+		size = ((data[0] << 8) | data[1]);
+		cmd = ((data[3] << 8) | data[2]);
 #endif
 
-			// DEBUG
-			//_ASSERT(cmd < Opcodes::NUM_MSG_TYPES);
-			//Log::Green("CWorldSocket: Command '%s' (0x%X) size=%d", OpcodesNames[cmd], cmd, size);
+		// DEBUG
+		//_ASSERT(cmd < Opcodes::NUM_MSG_TYPES);
+		//Log::Green("CWorldSocket: Command '%s' (0x%X) size=%d", OpcodesNames[cmd], cmd, size);
 
-			// Seek to data
-			buffer.seekRelative(sizeBytes /*Size*/ + sizeof(uint16) /*Opcode*/);
+		// Seek to data
+		buffer.seekRelative(sizeBytes /*Size*/ + sizeof(uint16) /*Opcode*/);
 
-			Packet1(size - sizeof(uint16) /*Opcode*/, static_cast<Opcodes>(cmd));
-			Packet2(buffer);
-		}
+		Packet1(size - sizeof(uint16) /*Opcode*/, static_cast<Opcodes>(cmd));
+		Packet2(buffer);
 	}
 }
 
@@ -251,9 +251,6 @@ void CWorldSocket::On_SMSG_AUTH_CHALLENGE(CServerPacket& _buff)
 	_buff.readBytes(&serverRandomSeed, 4);
 	_buff.seekRelative(32);
 
-
-
-
 	BigNumber clientRandomSeed;
     clientRandomSeed.SetRand(4 * 8);
 
@@ -372,6 +369,12 @@ void CWorldSocket::On_SMSG_AUTH_RESPONSE(CServerPacket& _buff)
 	{
 		Log::Warn("Auth failed");
 	}
+}
+
+void CWorldSocket::On_SMSG_WARDEN_DATA(CServerPacket& Buffer)
+{
+	if (m_Warden)
+		m_Warden->ProcessPacket(Buffer);
 }
 
 
