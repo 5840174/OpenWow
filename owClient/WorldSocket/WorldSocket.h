@@ -3,9 +3,6 @@
 #ifdef ENABLE_WOW_CLIENT
 
 #include "../AuthSocket/AuthCrypt.h"
-#include "ServerPacket.h"
-#include "ClientPacket.h"
-
 #include "../Warden/Warden.h"
 
 // FORWARD BEGIN

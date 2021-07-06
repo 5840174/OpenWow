@@ -1,7 +1,5 @@
 #pragma once
 
-#include "../WorldSocket/ServerPacket.h"
-
 // FORWARD BEGIN
 class CWoWWorld;
 // FORWARD END
@@ -16,7 +14,7 @@ public:
 	void On_SMSG_UPDATE_OBJECT(CServerPacket& Buffer);
 
 private:
-	void ProcessUpdatePacket(CByteBuffer& Packet);
+	void ProcessUpdatePacket(CServerPacket& Packet);
 
 private:
 	CWoWWorld& m_WoWWorld;

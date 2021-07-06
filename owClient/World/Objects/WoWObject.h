@@ -72,8 +72,8 @@ public:
 	uint16 GetObjectType() const { return m_ObjectType; }
 	bool IsWoWType(uint16 mask) const { return (mask & m_ObjectType) != 0; }
 
-	void ProcessMovementUpdate(CByteBuffer& Bytes);
-	void UpdateValues(CByteBuffer& Bytes);
+	void ProcessMovementUpdate(CServerPacket& Bytes);
+	void UpdateValues(CServerPacket& Bytes);
 	virtual void OnValueUpdated(uint16 index);
 	virtual void OnValuesUpdated(const UpdateMask& Mask);
 

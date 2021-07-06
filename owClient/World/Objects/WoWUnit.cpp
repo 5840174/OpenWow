@@ -32,7 +32,7 @@ WoWUnit::~WoWUnit()
 {
 }
 
-void WoWUnit::ProcessMovementPacket(CByteBuffer & Bytes)
+void WoWUnit::ProcessMovementPacket(CServerPacket & Bytes)
 {
 	ReadMovementInfoPacket(Bytes);
 
@@ -121,7 +121,7 @@ void WoWUnit::ProcessMovementPacket(CByteBuffer & Bytes)
 	CommitPositionAndRotation();
 }
 
-void WoWUnit::ProcessMonsterMove(CByteBuffer & Bytes)
+void WoWUnit::ProcessMonsterMove(CServerPacket& Bytes)
 {
 	glm::vec3 firstSplinePointGame;
 	Bytes >> firstSplinePointGame;
@@ -353,7 +353,7 @@ void WoWUnit::Update(const UpdateEventArgs & e)
 //
 // Protected
 //
-void WoWUnit::ReadMovementInfoPacket(CByteBuffer & Bytes)
+void WoWUnit::ReadMovementInfoPacket(CServerPacket & Bytes)
 {
 	Bytes.read(&m_MovementFlags);
 	Bytes.read(&m_MovementFlagsExtra);

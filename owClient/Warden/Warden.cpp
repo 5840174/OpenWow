@@ -10,7 +10,6 @@
 #include "AuthSocket/Cryptography/SHA1Randx.h"
 #include "AuthSocket/Cryptography/HMACSHA1.h"
 
-#include "WorldSocket/ClientPacket.h"
 #include "WardenModuleWin.h"
 
 // Additional (OpenSSL)

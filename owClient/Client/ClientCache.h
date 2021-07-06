@@ -2,8 +2,6 @@
 
 #ifdef ENABLE_WOW_CLIENT
 
-#include "../WorldSocket/ServerPacket.h"
-
 #include "ClientCacheTemplates.h"
 
 // FORWARD BEGIN

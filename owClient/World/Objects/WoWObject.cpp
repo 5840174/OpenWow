@@ -41,7 +41,7 @@ WoWObject::WoWObject(CWoWGuid Guid)
 WoWObject::~WoWObject()
 {}
 
-void WoWObject::ProcessMovementUpdate(CByteBuffer& Bytes)
+void WoWObject::ProcessMovementUpdate(CServerPacket& Bytes)
 {
 	CWoWWorldObject* object = dynamic_cast<CWoWWorldObject*>(this);;
 
@@ -191,7 +191,7 @@ void WoWObject::ProcessMovementUpdate(CByteBuffer& Bytes)
 		object->CommitPositionAndRotation();
 }
 
-void WoWObject::UpdateValues(CByteBuffer& Bytes)
+void WoWObject::UpdateValues(CServerPacket& Bytes)
 {
 	m_Values.UpdateValues(Bytes);
 }

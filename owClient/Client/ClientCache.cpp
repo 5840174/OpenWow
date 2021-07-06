@@ -5,8 +5,6 @@
 
 // Additional
 #include "World/World.h"
-#include "WorldSocket/ClientPacket.h"
-
 
 CClientCache::CClientCache(CWoWWorld & world)
 	: m_World(world)

@@ -178,7 +178,7 @@
  Map[Azeroth]: AllianceDescr = ''.
  Map[Azeroth]: HordeDescr = ''.
  Map[Azeroth]: CorpseMapID = '-1'.
- Map[Ðq×®e]: Id [0]. Loading...
+ Map[ z$Œ]: Id [0]. Loading...
 ^CMapWDL: Low WMOs count [0].
 ~MapWDT: Global WMO exists [false].
 ~Opcode: 'SMSG_ACCOUNT_DATA_TIMES' (0x209). Size: '29' not handled.
@@ -205,22 +205,16 @@
 ^---Create WoWGameObjectMOTransport with Type 'MoTransport', Entry '0', Counter '1'
 ^---Create WoWGameObjectMOTransport with Type 'MoTransport', Entry '0', Counter '4'
 ^---Create WoWGameObjectMOTransport with Type 'MoTransport', Entry '0', Counter '5'
-^---Create WoWGameObjectMOTransport with Type 'MoTransport', Entry '0', Counter '6'
+^---Create WoWGameObjectMOTransport with Type 'MoTransport', Entry '0', Counter '10'
 ^---Create WoWGameObjectMOTransport with Type 'MoTransport', Entry '0', Counter '17'
 ~Opcode: 'SMSG_INIT_WORLD_STATES' (0x2C2). Size: '78' not handled.
 ~Opcode: 'SMSG_AURA_UPDATE_ALL' (0x495). Size: '18' not handled.
 ~Opcode: 'SMSG_QUESTGIVER_STATUS_MULTIPLE' (0x418). Size: '4' not handled.
 ^NOTIFICATION: GM mode is ON
-@WndProc: WM_CLOSE.
-@WndProc: WM_DESTROY.
-~Scene destroyed.
-@SOCKET DISCONNECTED.
-~CAuthSocket: Deleted.
-@SOCKET DISCONNECTED.
-~~RenderWindowBase
-@SaveToLocalFile: File 'D:\OpenWow\OpenWow//settings.xml' already exists and will be removed.
-^LoaderThread: Stopped.
-^LoaderThread: Stopped.
-^LoaderThread: Stopped.
-^LoaderThread: Stopped.
-^DeleterThread: Stopped.
+ Warden: Received 'CHEAT_CHECKS_REQUEST'.
+ Warden: Sending 'CHEAT_CHECKS_RESULT'. Size '13'.
+ Warden: Received 'CHEAT_CHECKS_REQUEST'.
+ Warden: Sending 'CHEAT_CHECKS_RESULT'. Size '13'.
+ Warden: Received 'CHEAT_CHECKS_REQUEST'.
+ Warden: Sending 'CHEAT_CHECKS_RESULT'. Size '13'.
+^---Create WoWGameObjectMOTransport with Type 'MoTransport', Entry '0', Counter '11'

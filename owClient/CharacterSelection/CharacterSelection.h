@@ -1,7 +1,5 @@
 #pragma once
 
-#include "../WorldSocket/ServerPacket.h"
-
 // FORWARD BEGIN
 class CWoWClient;
 // FORWARD END

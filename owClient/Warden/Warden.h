@@ -6,8 +6,6 @@
 #include "WardenStructs.h"
 #include "WardenChecks.h"
 
-#include "../WorldSocket/ServerPacket.h"
-
 // FORWARD BEGIN
 class CWorldSocket;
 // FORWARD END

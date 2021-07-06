@@ -148,8 +148,8 @@ public:
 	WoWUnit(IScene& Scene, CWoWWorld& WoWWorld, CWoWGuid Guid);
 	virtual ~WoWUnit();
 
-	void ProcessMovementPacket(CByteBuffer& Bytes);
-	void ProcessMonsterMove(CByteBuffer& Bytes);
+	void ProcessMovementPacket(CServerPacket& Bytes);
+	void ProcessMonsterMove(CServerPacket& Bytes);
 
 	virtual void OnValuesUpdated(const UpdateMask & Mask) override;
 
@@ -176,7 +176,7 @@ public:
 	// ISceneNode
 	void Update(const UpdateEventArgs& e) override;
 
-	void ReadMovementInfoPacket(CByteBuffer& Bytes);
+	void ReadMovementInfoPacket(CServerPacket& Bytes);
 
 public:
 	static std::shared_ptr<WoWUnit> Create(CWoWWorld& WoWWorld, IScene& Scene, CWoWGuid Guid);

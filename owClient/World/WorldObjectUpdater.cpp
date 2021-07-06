@@ -43,7 +43,7 @@ void CWorldObjectUpdater::On_SMSG_COMPRESSED_UPDATE_OBJECT(CServerPacket& Buffer
 	uint32 dataSize;
 	Buffer >> dataSize;
 
-	CByteBuffer uncompressed;
+	CServerPacket uncompressed(dataSize,  Buffer.GetPacketOpcode());
 	uncompressed.writeDummy(dataSize);
 	uncompressed.seek(0);
 
@@ -69,7 +69,7 @@ void CWorldObjectUpdater::On_SMSG_UPDATE_OBJECT(CServerPacket& Buffer)
 //
 // Private
 //
-void CWorldObjectUpdater::ProcessUpdatePacket(CByteBuffer& Bytes)
+void CWorldObjectUpdater::ProcessUpdatePacket(CServerPacket& Bytes)
 {
 	uint32 BlocksCount;
 	Bytes >> BlocksCount;
