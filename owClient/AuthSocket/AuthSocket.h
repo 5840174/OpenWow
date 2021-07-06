@@ -25,8 +25,6 @@ public:
 	void SendData(const uint8* _data, uint32 _count);
 
 	// Handlers
-	void C_SendLogonChallenge();
-
 	bool On_AUTH_LOGON_CHALLENGE(CByteBuffer& _buff);
 	bool On_AUTH_LOGON_PROOF(CByteBuffer& _buff);
 	bool On_REALM_LIST(CByteBuffer& _buff);

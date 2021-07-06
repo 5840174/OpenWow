@@ -8,6 +8,50 @@
 // General
 #include "AuthSocket.h"
 
+namespace
+{
+	struct SAuthChallenge
+		: public CByteBuffer
+	{
+		SAuthChallenge(std::string Login, uint32 IPv4)
+		{
+			(*this) << (uint8)AUTH_LOGON_CHALLENGE;
+			(*this) << (uint8)6;
+			(*this) << (uint8)(Login.size() + 30);
+			(*this) << (uint8)0;
+
+			(*this).writeBytes(gamename, 4);
+			(*this).writeBytes(version, 3);
+			(*this) << build;
+			(*this).writeBytes((const uint8*)"68x", 4);   // x86
+			(*this).writeBytes((const uint8*)"niW", 4);   // Win
+			(*this).writeBytes((const uint8*)"URur", 4);  // enUS
+			(*this) << (uint32)180;
+			(*this) << IPv4;
+			(*this) << (uint8)Login.size();
+			(*this).writeBytes(Login.c_str(), Login.length());
+		}
+
+		const uint8 gamename[4] = {};
+		const uint8 version[3] = { 3, 3, 5 };
+		const uint16 build = 12340;
+	};
+
+	struct SAuthProof
+		: public CByteBuffer
+	{
+		SAuthProof(uint8* A, const uint8* MClient)
+		{
+			(*this) << (uint8)AUTH_LOGON_PROOF;
+			(*this).writeBytes(A, 32);
+			(*this).writeBytes(MClient, SHA_DIGEST_LENGTH);
+			(*this).writeDummy(20);
+			(*this) << (uint8)0;
+			(*this) << (uint8)0;
+		}
+	};
+}
+
 CAuthSocket::CAuthSocket(CWoWClient& WoWClient, const std::string& Login, const std::string& Password)
     : m_WoWClient(WoWClient)
 	, m_Login(Login)
@@ -56,7 +100,7 @@ void CAuthSocket::Open(std::string Host, uint16 Port)
 
 	SetBlocking(false);
 
-	C_SendLogonChallenge();
+	SendData(SAuthChallenge(m_Login, GetMyIP()));
 }
 
 void CAuthSocket::Update()
@@ -113,98 +157,6 @@ void CAuthSocket::ProcessHandler(EAuthCmd AuthCmd, CByteBuffer& _buffer)
 	}
 	else
 		throw CException("CAuthSocket::ProcessHandler: Handler for AuthCmd '0x%X' not found.", AuthCmd);
-}
-
-//-- Client to server
-
-namespace
-{
-	unsigned long GetMyIP(CSocket* socket)
-	{
-		struct sockaddr_in sa;
-		socklen_t sockaddr_length = sizeof(struct sockaddr_in);
-		if (::getsockname(socket->GetHandle(), (struct sockaddr *)&sa, (socklen_t*)&sockaddr_length) == -1)
-			memset(&sa, 0, sizeof(sa));
-
-		unsigned long a;
-		memcpy(&a, &sa.sin_addr, 4);
-		return a;
-	}
-
-
-	struct AuthChallenge_C
-	{
-		AuthChallenge_C(std::string Login, uint32 IPv4)
-			: Login(Login)
-			, IPv4(IPv4)
-		{}
-
-		void Send(CSocket * Socket)
-		{
-			CByteBuffer bb;
-			bb << (uint8)AUTH_LOGON_CHALLENGE;
-			bb << (uint8)6;
-			bb << (uint8)(Login.size() + 30);
-			bb << (uint8)0;
-
-			bb.writeBytes(gamename, 4);
-			bb.writeBytes(version, 3);
-			bb << build;
-			bb.writeBytes((const uint8*)"68x", 4);   // x86
-			bb.writeBytes((const uint8*)"niW", 4);   // Win
-			bb.writeBytes((const uint8*)"URur", 4);  // enUS
-			bb << (uint32)180;
-			bb << IPv4;
-			bb << (uint8)Login.size();
-			bb.writeBytes(Login.c_str(), Login.length());
-
-			Socket->Send(bb);
-		}
-
-		//--
-
-		const uint8 gamename[4] = {};
-		const uint8 version[3] = { 3, 3, 5 };
-		const uint16 build = 12340;
-		const uint32 IPv4;
-		const std::string Login;
-	};
-}
-
-void CAuthSocket::C_SendLogonChallenge()
-{
-    AuthChallenge_C challenge(m_Login, GetMyIP(this));
-    challenge.Send(this);
-}
-
-//-- Server to client
-
-namespace
-{
-	struct AuthProof_C
-	{
-		AuthProof_C(uint8* _A, const uint8* _MClient)
-		{
-			std::memcpy(A, _A, 32);
-			std::memcpy(M1, _MClient, SHA_DIGEST_LENGTH);
-		}
-
-		void Send(CSocket * Socket)
-		{
-			CByteBuffer bb;
-			bb << (uint8)AUTH_LOGON_PROOF;
-			bb.writeBytes(A, 32);
-			bb.writeBytes(M1, SHA_DIGEST_LENGTH);
-			bb.writeDummy(20);
-			bb << (uint8)0;
-			bb << (uint8)0;
-
-			Socket->Send(bb);
-		}
-
-		uint8 A[32];
-		uint8 M1[SHA_DIGEST_LENGTH];
-	};
 }
 
 bool CAuthSocket::On_AUTH_LOGON_CHALLENGE(CByteBuffer& Buffer)
@@ -366,8 +318,8 @@ bool CAuthSocket::On_AUTH_LOGON_CHALLENGE(CByteBuffer& Buffer)
     //Log::Info("MC=%s", MClient.toString().c_str());
 #pragma endregion
 
-    AuthProof_C authProof(A.AsByteArray(32).get(), MClient.GetDigest());
-    authProof.Send(this);
+	// Send proof
+	SendData(SAuthProof(A.AsByteArray(32).get(), MClient.GetDigest()));
 
     // Expected proof for server
     MServer.Initialize();
@@ -415,23 +367,23 @@ bool CAuthSocket::On_AUTH_LOGON_PROOF(CByteBuffer& Buffer)
     return true;
 }
 
-bool CAuthSocket::On_REALM_LIST(CByteBuffer& _buff)
+bool CAuthSocket::On_REALM_LIST(CByteBuffer& Buffer)
 {
 	uint16 packetSize;
-	_buff.read(&packetSize);
+	Buffer.read(&packetSize);
 
 	// RealmListSizeBuffer
-	_buff.seekRelative(4); // uint32 (0)
+	Buffer.seekRelative(4); // uint32 (0)
 
 	uint16 realmlistCount;
-    _buff.read(&realmlistCount);
+	Buffer.read(&realmlistCount);
 
     Log::Green("CAuthSocket::On_REALM_LIST: Count '%d'.", realmlistCount);
 
 	std::vector<SRealmInfo> realmListInfos;
     for (uint32 i = 0; i < realmlistCount; i++)
     {
-        SRealmInfo rinfo(_buff);
+        SRealmInfo rinfo(Buffer);
 		rinfo.ToString();
 		realmListInfos.push_back(rinfo);
     }
