@@ -20,10 +20,10 @@ struct ObjectComponent
 
 struct GeosetComponent
 {
-	EM2GeosetType     mesh;
-	uint32            value;
+	EM2GeosetType mesh;
+	uint32        value;
 
-	uint32            getMeshID() const { return 1 + value; }
+	uint32        getMeshID() const { return 1 + value; }
 };
 
 class CCharacterItem 
@@ -35,14 +35,16 @@ public:
 	
 	SCharacterItemTemplate&              Template()                                             { return m_Template; }
 	const SCharacterItemTemplate&        GetTemplate()                                    const { return m_Template; }
+	bool                                 IsExists()                                       const { return GetTemplate().DisplayId != 0 && GetTemplate().InventoryType != (uint8)DBCItem_EInventoryItemType::NON_EQUIP; }
 
 	const std::vector<ObjectComponent>&  GetModels()                                      const { return m_Models; }
 	const std::vector<GeosetComponent>&  GetGeosets()                                     const { return m_Geosets; }
 	const std::shared_ptr<IImage>&       GetSkinComponentImage(DBC_CharComponent_Sections SkinComponent) const { return m_SkinComponentImages[static_cast<size_t>(SkinComponent)]; }
 
-	// CLoadableObject
-	bool Load();
-	bool Delete();
+	// ILoadable
+	bool Load() override;
+	bool Delete() override;
+	void OnLoaded() override;
 
 private:
 	void InitializeItemModels();

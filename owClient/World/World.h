@@ -44,6 +44,8 @@ public:
 	void On_SMSG_MESSAGECHAT(CServerPacket& Buffer, bool IsGMMessage);
 
 	void On_MOVE_Opcode(CServerPacket& Buffer);
+	void On_MSG_MOVE_TIME_SKIPPED(CServerPacket& Buffer);
+
 	void On_MOVE_UnitSpeedOpcode(CServerPacket& Buffer);
 
 	// CWoWWorld

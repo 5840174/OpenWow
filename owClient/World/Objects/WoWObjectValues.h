@@ -14,7 +14,7 @@ public:
 	virtual ~CWoWObjectValues();
 
 	void SetValuesCount(uint16 ValuesCnt);
-	void UpdateValues(CByteBuffer& Bytes);
+	void Do_UPDATETYPE_VALUES(CByteBuffer& Bytes);
 
 	const int32& GetInt32Value(uint16 index) const;
 	const uint32& GetUInt32Value(uint16 index) const;

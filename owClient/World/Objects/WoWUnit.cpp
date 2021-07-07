@@ -24,7 +24,7 @@ namespace
 WoWUnit::WoWUnit(IScene& Scene, CWoWWorld& WoWWorld, CWoWGuid Guid)
 	: CWoWWorldObject(Scene, WoWWorld, Guid)
 {
-	m_ObjectType |= TYPEMASK_UNIT;
+	//m_ObjectType |= TYPEMASK_UNIT;
 	m_Values.SetValuesCount(UNIT_END);
 }
 
@@ -121,7 +121,7 @@ void WoWUnit::ProcessMovementPacket(CServerPacket & Bytes)
 	CommitPositionAndRotation();
 }
 
-void WoWUnit::ProcessMonsterMove(CServerPacket& Bytes)
+void WoWUnit::Do_MonsterMove(CServerPacket& Bytes)
 {
 	glm::vec3 firstSplinePointGame;
 	Bytes >> firstSplinePointGame;
@@ -291,10 +291,7 @@ void WoWUnit::OnValuesUpdated(const UpdateMask & Mask)
 		uint32 mainHandDisplayID = m_Values.GetUInt32Value(UNIT_VIRTUAL_ITEM_SLOT_ID + 0);
 		if (mainHandDisplayID != 0)
 			if (auto hidderNodeAsCharacter = std::dynamic_pointer_cast<CCharacter>(m_HiddenNode))
-				hidderNodeAsCharacter->Template().ItemsTemplates[EQUIPMENT_SLOT_MAINHAND] = GetItemDisplayInfoIDByItemID(mainHandDisplayID);
-
-		if (auto hidderNodeAsCharacter = std::dynamic_pointer_cast<CCharacter>(m_HiddenNode))
-			hidderNodeAsCharacter->RefreshCharacterItemsFromTemplate();
+				hidderNodeAsCharacter->SetItem(EQUIPMENT_SLOT_MAINHAND, GetItemDisplayInfoIDByItemID(mainHandDisplayID));
 	}
 
 	if (Mask.GetBit(UNIT_VIRTUAL_ITEM_SLOT_ID + 1))
@@ -302,10 +299,7 @@ void WoWUnit::OnValuesUpdated(const UpdateMask & Mask)
 		uint32 offHandDisplayID = m_Values.GetUInt32Value(UNIT_VIRTUAL_ITEM_SLOT_ID + 1);
 		if (offHandDisplayID != 0)
 			if (auto hidderNodeAsCharacter = std::dynamic_pointer_cast<CCharacter>(m_HiddenNode))
-				hidderNodeAsCharacter->Template().ItemsTemplates[EQUIPMENT_SLOT_OFFHAND] = GetItemDisplayInfoIDByItemID(offHandDisplayID);
-
-		if (auto hidderNodeAsCharacter = std::dynamic_pointer_cast<CCharacter>(m_HiddenNode))
-			hidderNodeAsCharacter->RefreshCharacterItemsFromTemplate();
+				hidderNodeAsCharacter->SetItem(EQUIPMENT_SLOT_OFFHAND, GetItemDisplayInfoIDByItemID(offHandDisplayID));
 	}
 
 	if (Mask.GetBit(UNIT_VIRTUAL_ITEM_SLOT_ID + 2))
@@ -313,10 +307,10 @@ void WoWUnit::OnValuesUpdated(const UpdateMask & Mask)
 		uint32 rangedDisplayID = m_Values.GetUInt32Value(UNIT_VIRTUAL_ITEM_SLOT_ID + 2);
 		if (rangedDisplayID != 0)
 			if (auto hidderNodeAsCharacter = std::dynamic_pointer_cast<CCharacter>(m_HiddenNode))
-				hidderNodeAsCharacter->Template().ItemsTemplates[EQUIPMENT_SLOT_RANGED] = GetItemDisplayInfoIDByItemID(rangedDisplayID);
+				hidderNodeAsCharacter->SetItem(EQUIPMENT_SLOT_RANGED, GetItemDisplayInfoIDByItemID(rangedDisplayID));
 
 		if (auto hidderNodeAsCharacter = std::dynamic_pointer_cast<CCharacter>(m_HiddenNode))
-			hidderNodeAsCharacter->RefreshCharacterItemsFromTemplate();
+			hidderNodeAsCharacter->Refresh_CharacterItemsFromTemplate();
 	}
 }
 
@@ -358,8 +352,8 @@ void WoWUnit::ReadMovementInfoPacket(CServerPacket & Bytes)
 	Bytes.read(&m_MovementFlags);
 	Bytes.read(&m_MovementFlagsExtra);
 
-	uint32 timeMS;
-	Bytes >> timeMS;
+	uint32 gameTimeMS;
+	Bytes >> gameTimeMS;
 
 	glm::vec3 gamePosition;
 	Bytes >> gamePosition;
@@ -369,7 +363,6 @@ void WoWUnit::ReadMovementInfoPacket(CServerPacket & Bytes)
 	Bytes >> gameOrientation;
 	Orientation = glm::degrees(gameOrientation + glm::half_pi<float>());
 
-	// 0x00000200
 	if (HasMovementFlag(MOVEMENTFLAG_ONTRANSPORT))
 	{
 		uint64 transportGuid;
@@ -401,7 +394,6 @@ void WoWUnit::ReadMovementInfoPacket(CServerPacket & Bytes)
 		TransportID = CWoWGuid(0ull);
 	}
 
-	// 0x02200000
 	if ((HasMovementFlag(MOVEMENTFLAG_SWIMMING | MOVEMENTFLAG_FLYING)) || (HasExtraMovementFlag(MOVEMENTFLAG2_ALWAYS_ALLOW_PITCHING)))
 	{
 		Bytes >> float(m_StrideOrPitch);
@@ -409,7 +401,6 @@ void WoWUnit::ReadMovementInfoPacket(CServerPacket & Bytes)
 
 	Bytes >> m_FallTime;
 
-	// 0x00001000
 	if (HasMovementFlag(MOVEMENTFLAG_FALLING))
 	{
 		Bytes >> float(m_Jump.zspeed);
@@ -418,7 +409,6 @@ void WoWUnit::ReadMovementInfoPacket(CServerPacket & Bytes)
 		Bytes >> float(m_Jump.xyspeed);
 	}
 
-	// 0x04000000
 	if (HasMovementFlag(MOVEMENTFLAG_SPLINE_ELEVATION))
 	{
 		Bytes >> float(m_SplineElevation);

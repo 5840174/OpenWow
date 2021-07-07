@@ -12,47 +12,47 @@
 
 namespace
 {
-enum OBJECT_UPDATE_FLAGS
-{
-	UPDATEFLAG_NONE = 0x0000,
-	UPDATEFLAG_SELF = 0x0001,
-	UPDATEFLAG_TRANSPORT = 0x0002,
-	UPDATEFLAG_HAS_TARGET = 0x0004,
-	UPDATEFLAG_UNKNOWN = 0x0008,
-	UPDATEFLAG_LOWGUID = 0x0010,
-	UPDATEFLAG_LIVING = 0x0020,
-	UPDATEFLAG_STATIONARY_POSITION = 0x0040,
-	UPDATEFLAG_VEHICLE = 0x0080,
-	UPDATEFLAG_POSITION = 0x0100,
-	UPDATEFLAG_ROTATION = 0x0200
-};
+	enum OBJECT_UPDATE_FLAGS : uint16
+	{
+		UPDATEFLAG_NONE = 0x0000,
+		UPDATEFLAG_SELF = 0x0001,
+		UPDATEFLAG_TRANSPORT = 0x0002,
+		UPDATEFLAG_HAS_TARGET = 0x0004,
+		UPDATEFLAG_UNKNOWN = 0x0008,
+		UPDATEFLAG_LOWGUID = 0x0010,
+		UPDATEFLAG_LIVING = 0x0020,
+		UPDATEFLAG_STATIONARY_POSITION = 0x0040,
+		UPDATEFLAG_VEHICLE = 0x0080,
+		UPDATEFLAG_POSITION = 0x0100,
+		UPDATEFLAG_ROTATION = 0x0200
+	};
 }
 
 
 WoWObject::WoWObject(CWoWGuid Guid)
 	: m_GUID(Guid)
 	, m_Values(*this)
-	, m_ObjectType(0)
+	//, m_ObjectType(0)
 {
-	m_ObjectType |= TYPEMASK_OBJECT;
+	//m_ObjectType |= TYPEMASK_OBJECT;
 	m_Values.SetValuesCount(OBJECT_END);
 }
 
 WoWObject::~WoWObject()
 {}
 
-void WoWObject::ProcessMovementUpdate(CServerPacket& Bytes)
+void WoWObject::Do_UPDATETYPE_MOVEMENT(CServerPacket& Bytes)
 {
 	CWoWWorldObject* object = dynamic_cast<CWoWWorldObject*>(this);;
 
-	uint16 updateFlags;
+	OBJECT_UPDATE_FLAGS updateFlags;
 	Bytes >> updateFlags;
 
 	if (updateFlags & UPDATEFLAG_LIVING)
 	{
-		WoWUnit* unit = dynamic_cast<WoWUnit*>(this);
-		if (IsWoWType(TYPEMASK_UNIT))
+		if (GetWoWGUID().GetTypeId() == EWoWObjectTypeID::TYPEID_UNIT || GetWoWGUID().GetTypeId() == EWoWObjectTypeID::TYPEID_PLAYER)
 		{
+			WoWUnit* unit = dynamic_cast<WoWUnit*>(this);
 			unit->ProcessMovementPacket(Bytes);
 		}
 	}
@@ -76,7 +76,7 @@ void WoWObject::ProcessMovementUpdate(CServerPacket& Bytes)
 				Bytes >> gamePositionTransportOffset;
 				if (object)
 					object->PositionTransportOffset = fromGameToReal(gamePositionTransportOffset);
-				//Log::Error("WoWObject::ProcessMovementUpdate: transportGuid != 0.");
+				//Log::Error("WoWObject::Do_UPDATETYPE_MOVEMENT: transportGuid != 0.");
 			}
 			else
 			{
@@ -119,8 +119,6 @@ void WoWObject::ProcessMovementUpdate(CServerPacket& Bytes)
 					object->Orientation = glm::degrees(gameOrientation + glm::half_pi<float>());
 			}
 		}
-
-
 	}
 
 	// 0x8
@@ -154,7 +152,6 @@ void WoWObject::ProcessMovementUpdate(CServerPacket& Bytes)
 		{
 			uint32 pathProgress;
 			Bytes >> pathProgress;
-		//	Log::Warn("Path progress = '%d'", pathProgress);
 		}
 		else
 		{
@@ -162,13 +159,11 @@ void WoWObject::ProcessMovementUpdate(CServerPacket& Bytes)
 		}
 	}
 
-	// 0x80
 	if (updateFlags & UPDATEFLAG_VEHICLE)
 	{
 		Bytes.seekRelative(8);
 	}
 
-	// 0x200
 	if (updateFlags & UPDATEFLAG_ROTATION)
 	{
 		/*static const int32 PACK_YZ = 1 << 20;
@@ -191,9 +186,9 @@ void WoWObject::ProcessMovementUpdate(CServerPacket& Bytes)
 		object->CommitPositionAndRotation();
 }
 
-void WoWObject::UpdateValues(CServerPacket& Bytes)
+void WoWObject::Do_UPDATETYPE_VALUES(CServerPacket& Bytes)
 {
-	m_Values.UpdateValues(Bytes);
+	m_Values.Do_UPDATETYPE_VALUES(Bytes);
 }
 
 void WoWObject::OnValueUpdated(uint16 index)
@@ -207,12 +202,6 @@ void WoWObject::OnValuesUpdated(const UpdateMask & Mask)
 //
 // Protected
 //
-std::shared_ptr<WoWObject> WoWObject::Create(IScene& Scene, CWoWGuid Guid)
-{
-	std::shared_ptr<WoWObject> thisObj = std::make_shared<WoWObject>(Guid);
-	return thisObj;
-}
-
 void WoWObject::Destroy()
 {}
 

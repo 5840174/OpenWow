@@ -15,7 +15,6 @@ public:
 	CCharacterItemEffectM2Instance(IScene& Scene, const std::shared_ptr<CM2>& M2Object, const CCharacterItem& CharacterItem);
     virtual ~CCharacterItemEffectM2Instance();
 
-	const CCharacterItemM2Instance& GetCharacterItemInstance() const;
 	const CCharacterItem& GetCharacterItem() const;
 
 	// ILoadable

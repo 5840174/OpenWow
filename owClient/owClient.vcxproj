@@ -44,6 +44,7 @@
     <ClInclude Include="WorldSocket\PacketsQueue.h" />
     <ClInclude Include="WorldSocket\ServerPacket.h" />
     <ClInclude Include="WorldSocket\WorldSocket.h" />
+    <ClInclude Include="World\Objects\Helpers\MovementHelper.h" />
     <ClInclude Include="World\Path\Path.h" />
     <ClInclude Include="World\Path\PathNode.h" />
     <ClInclude Include="World\WoWGUID.h" />

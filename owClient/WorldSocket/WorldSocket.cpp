@@ -127,7 +127,7 @@ void CWorldSocket::Update()
 			}
 			else
 			{
-				Log::Info("Opcode: '%s' (0x%X). Size: '%d' not handled.", OpcodesNames[(*packet).GetPacketOpcode()], (*packet).GetPacketOpcode(), (*packet).GetPacketSize());
+				//Log::Info("Opcode: '%s' (0x%X). Size: '%d' not handled.", OpcodesNames[(*packet).GetPacketOpcode()], (*packet).GetPacketOpcode(), (*packet).GetPacketSize());
 			}
 		}
 	}

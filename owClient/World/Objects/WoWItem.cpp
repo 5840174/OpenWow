@@ -8,7 +8,7 @@
 WoWItem::WoWItem(CWoWGuid Guid)
 	: WoWObject(Guid)
 {
-	m_ObjectType |= TYPEMASK_ITEM;
+	//m_ObjectType |= TYPEMASK_ITEM;
 	m_Values.SetValuesCount(ITEM_END);
 }
 

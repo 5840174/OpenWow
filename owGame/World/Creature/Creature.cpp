@@ -10,11 +10,11 @@ m_FileName="Creature\\Alexstrasza\\Alexstrasza.m2"
 
 */
 
-Creature::Creature(IScene& Scene, const std::shared_ptr<CM2>& M2Object)
+CCreature::CCreature(IScene& Scene, const std::shared_ptr<CM2>& M2Object)
 	: CM2_Base_Instance(Scene, M2Object)
 {}
 
-Creature::~Creature()
+CCreature::~CCreature()
 {}
 
 
@@ -22,7 +22,7 @@ Creature::~Creature()
 //
 // ISceneNode
 //
-void Creature::Initialize()
+void CCreature::Initialize()
 {
 	__super::Initialize();
 

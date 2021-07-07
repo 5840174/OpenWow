@@ -11,7 +11,7 @@
 WoWGameObject::WoWGameObject(IScene& Scene, CWoWWorld& WoWWorld, CWoWGuid Guid)
 	: CWoWWorldObject(Scene, WoWWorld, Guid)
 {
-	m_ObjectType |= TYPEMASK_GAMEOBJECT;
+	//m_ObjectType |= TYPEMASK_GAMEOBJECT;
 	m_Values.SetValuesCount(GAMEOBJECT_END);
 }
 

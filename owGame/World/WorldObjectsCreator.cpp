@@ -14,7 +14,7 @@ CWorldObjectCreator::CWorldObjectCreator(IBaseManager & BaseManager)
 //
 // Factory
 //
-std::shared_ptr<Creature> CWorldObjectCreator::BuildCreatureFromDisplayInfo(IRenderDevice& RenderDevice, IScene& Scene, uint32 _id, const std::shared_ptr<ISceneNode>& Parent)
+std::shared_ptr<CCreature> CWorldObjectCreator::BuildCreatureFromDisplayInfo(IRenderDevice& RenderDevice, IScene& Scene, uint32 _id, const std::shared_ptr<ISceneNode>& Parent)
 {
 	const DBC_CreatureDisplayInfoRecord* rec = m_DBCs->DBC_CreatureDisplayInfo()[_id];
 	if (rec == nullptr)
@@ -30,7 +30,7 @@ std::shared_ptr<Creature> CWorldObjectCreator::BuildCreatureFromDisplayInfo(IRen
 	if (m2Model == nullptr)
 		return nullptr;
 
-	std::shared_ptr<Creature> newCreature = ((Parent != nullptr) ? Parent : Scene.GetRootSceneNode())->CreateSceneNode<Creature>(m2Model);
+	std::shared_ptr<CCreature> newCreature = ((Parent != nullptr) ? Parent : Scene.GetRootSceneNode())->CreateSceneNode<CCreature>(m2Model);
 	m_BaseManager.GetManager<ILoader>()->AddToLoadQueue(newCreature);
 	newCreature->setAlpha(static_cast<float>(rec->Get_Opacity()) / 255.0f);
 	newCreature->SetScale(glm::vec3(rec->Get_Scale()));
@@ -64,13 +64,13 @@ std::shared_ptr<CCharacter> CWorldObjectCreator::BuildCharacterFromTemplate(IRen
 	characterM2Instance->Template() = b;
 
 	// 3. Items
-	characterM2Instance->RefreshCharacterItemsFromTemplate();
+	//characterM2Instance->Refresh_CharacterItemsFromTemplate();
 
 	// 4. Character textures
-	characterM2Instance->Refresh_CreateSkinTexture(nullptr);
+	//characterM2Instance->Refresh_SkinImageFromTemplate();
 
 	// 5. Geosets
-	characterM2Instance->RefreshMeshIDs();
+	//characterM2Instance->RefreshMeshIDs();
 
 	return characterM2Instance;
 }
@@ -119,14 +119,16 @@ std::shared_ptr<CCharacter> CWorldObjectCreator::BuildCharacterFromDisplayInfo(I
 		characterM2Instance->Template().ItemsTemplates[EQUIPMENT_SLOT_BACK] = SCharacterItemTemplate(humanoidRecExtra->Get_Cape(), DBCItem_EInventoryItemType::CLOAK, 0);
 	}
 
+	characterM2Instance->SetNPCBakedImage(m_BaseManager.GetManager<IImagesFactory>()->CreateImage("Textures\\BakedNpcTextures\\" + humanoidRecExtra->Get_BakedSkin()));
+
 	// 3. Items
-	characterM2Instance->RefreshCharacterItemsFromTemplate();
+	//characterM2Instance->Refresh_CharacterItemsFromTemplate();
 
 	// 4. Creature textures
-	characterM2Instance->Refresh_CreateSkinTexture(m_BaseManager.GetManager<IImagesFactory>()->CreateImage("Textures\\BakedNpcTextures\\" + humanoidRecExtra->Get_BakedSkin()));
+	//characterM2Instance->Refresh_SkinImageFromTemplate();
 
 	// 5. Geosets
-	characterM2Instance->RefreshMeshIDs();
+	//characterM2Instance->RefreshMeshIDs();
 
 	return characterM2Instance;
 }

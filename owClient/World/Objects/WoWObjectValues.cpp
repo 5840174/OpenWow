@@ -23,7 +23,7 @@ void CWoWObjectValues::SetValuesCount(uint16 ValuesCnt)
 	m_valuesCount = ValuesCnt;
 }
 
-void CWoWObjectValues::UpdateValues(CByteBuffer & Bytes)
+void CWoWObjectValues::Do_UPDATETYPE_VALUES(CByteBuffer & Bytes)
 {
 	uint8 blocksCnt;
 	Bytes >> blocksCnt; // each block has 32 value

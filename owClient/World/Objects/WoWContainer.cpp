@@ -8,7 +8,7 @@
 CWoWContainer::CWoWContainer(CWoWGuid Guid)
 	: WoWItem(Guid)
 {
-	m_ObjectType |= TYPEMASK_CONTAINER;
+	//m_ObjectType |= TYPEMASK_CONTAINER;
 	m_Values.SetValuesCount(CONTAINER_END);
 }
 

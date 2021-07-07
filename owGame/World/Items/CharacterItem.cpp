@@ -52,15 +52,26 @@ bool CCharacterItem::Load()
 	InitializeItemGeosets();
 	InitializeItemSkinImages();
 
-	m_OwnerCharacter.Refresh_AddItemsToSkinTexture();
-	m_OwnerCharacter.RefreshMeshIDs();
-
 	return true;
 }
 
 bool CCharacterItem::Delete()
 {
+
 	return false;
+}
+
+void CCharacterItem::OnLoaded()
+{
+	if (false == IsExists())
+		return;
+
+	if (GetTemplate().InventoryType == (uint8)DBCItem_EInventoryItemType::CLOAK)
+		if (m_Models.size() != 1)
+			throw CException("ASdasdasd");
+
+	m_OwnerCharacter.Refresh_SkinWithItemsImage();
+	m_OwnerCharacter.RefreshMeshIDs();
 }
 
 
@@ -110,9 +121,13 @@ void CCharacterItem::InitializeItemModels()
 			continue;
 		}
 
-		auto itemModelInstance = m_OwnerCharacter.CreateSceneNode<CCharacterItemM2Instance>(itemModel, *this, ItemObjectComponents[static_cast<size_t>(GetTemplate().InventoryType)].AttachmentPoint[i]);
+		auto attachmentPoint = ItemObjectComponents[static_cast<size_t>(GetTemplate().InventoryType)].AttachmentPoint[i];
+		auto itemModelInstance = m_OwnerCharacter.CreateSceneNode<CCharacterItemM2Instance>(itemModel, *this, attachmentPoint);
 		AddChildLoadable(itemModelInstance);
 		m_BaseManager.GetManager<ILoader>()->AddToLoadQueue(itemModelInstance);
+
+		if (auto ownerCharacterAttachment = m_OwnerCharacter.getM2().getMiscellaneous().getAttachment(attachmentPoint))
+			itemModelInstance->Attach(ownerCharacterAttachment->GetAttachmentType());
 
 		auto itemImage = LoadItemImage((DBCItem_EInventoryItemType)GetTemplate().InventoryType, objectTextureName);
 		itemModelInstance->setSpecialTexture(SM2_Texture::Type::OBJECT_SKIN, m_BaseManager.GetManager<IznTexturesFactory>()->LoadTexture2D(itemImage));

@@ -91,7 +91,7 @@ void CWorldObjectUpdater::ProcessUpdatePacket(CServerPacket& Bytes)
 					throw CException("Object not exists");
 
 				auto object = m_WoWWorld.GetWorldObjects().GetWoWObject(guid);
-				object->UpdateValues(Bytes);
+				object->Do_UPDATETYPE_VALUES(Bytes);
 			}
 			break;
 
@@ -106,7 +106,7 @@ void CWorldObjectUpdater::ProcessUpdatePacket(CServerPacket& Bytes)
 					throw CException("Object not exists");
 
 				auto object = m_WoWWorld.GetWorldObjects().GetWoWObject(guid);
-				object->ProcessMovementUpdate(Bytes);
+				object->Do_UPDATETYPE_MOVEMENT(Bytes);
 			}
 			break;
 
@@ -123,8 +123,8 @@ void CWorldObjectUpdater::ProcessUpdatePacket(CServerPacket& Bytes)
 
 				auto object = m_WoWWorld.GetWorldObjects().CreateWoWObject(guid, typeID);
 
-				object->ProcessMovementUpdate(Bytes);
-				object->UpdateValues(Bytes);
+				object->Do_UPDATETYPE_MOVEMENT(Bytes);
+				object->Do_UPDATETYPE_VALUES(Bytes);
 			}
 			break;
 

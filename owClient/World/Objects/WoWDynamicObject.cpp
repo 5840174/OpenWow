@@ -8,7 +8,7 @@
 WoWDynamicObject::WoWDynamicObject(CWoWGuid Guid)
 	: WoWObject(Guid)
 {
-	m_ObjectType |= TYPEMASK_DYNAMICOBJECT;
+	//m_ObjectType |= TYPEMASK_DYNAMICOBJECT;
 	m_Values.SetValuesCount(DYNAMICOBJECT_END);
 }
 

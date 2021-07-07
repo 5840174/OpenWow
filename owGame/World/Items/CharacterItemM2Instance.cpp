@@ -26,22 +26,6 @@ CCharacterItemM2Instance::~CCharacterItemM2Instance()
 //
 // CCharacterItemM2Instance
 //
-const CCharacter& CCharacterItemM2Instance::GetCharacterInstance() const 
-{ 
-	auto parentIsCharacter = GetParent();
-	if (parentIsCharacter == nullptr)
-		throw CException("CCharacterItemM2Instance::GetCharacterInstance: M2Parent must exists.");
-
-	if (auto loadable = std::dynamic_pointer_cast<ILoadable>(parentIsCharacter))
-	{
-		auto state = loadable->GetState();
-		if (state != ILoadable::ELoadableState::Loaded)
-			throw CException("CCharacterItemM2Instance::GetCharacterInstance: M2Parent Character isn't loaded. State = '%d'.", state);
-	}
-
-	return dynamic_cast<CCharacter&>(*parentIsCharacter);
-}
-
 const CCharacterItem& CCharacterItemM2Instance::GetCharacterItem() const 
 { 
 	if (auto loadable = dynamic_cast<const ILoadable*>(&m_CharacterItem))
@@ -67,8 +51,8 @@ const CCharacterItem& CCharacterItemM2Instance::GetCharacterItem() const
 void CCharacterItemM2Instance::OnLoaded()
 {
 	// Attach to parent (parent is Character)
-	if (auto ownerCharacterAttachment = GetCharacterInstance().getM2().getMiscellaneous().getAttachment(m_AttachmentPoint))
-		Attach(ownerCharacterAttachment->GetAttachmentType());
+	//if (auto ownerCharacterAttachment = GetCharacterInstance().getM2().getMiscellaneous().getAttachment(m_AttachmentPoint))
+	//	Attach(ownerCharacterAttachment->GetAttachmentType());
 
 	// Item enchants
 	const DBC_ItemVisualsRecord* itemVisualsRecord = GetBaseManager().GetManager<CDBCStorage>()->DBC_ItemVisuals()[GetCharacterItem().GetTemplate().EnchantAuraID];

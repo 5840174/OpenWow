@@ -9,7 +9,7 @@
 #include "Types/CharacterTemplate.h"
 
 class ZN_API CCharacter 
-	: public Creature
+	: public CCreature
 {
 public:
     CCharacter(IScene& Scene, const std::shared_ptr<CM2>& M2Object);
@@ -19,9 +19,11 @@ public:
     SCharacterTemplate& Template() { return m_Template; }
 	const SCharacterTemplate& GetTemplate() const { return m_Template; }
 
-	void RefreshCharacterItemsFromTemplate();
-	void Refresh_CreateSkinTexture(std::shared_ptr<IImage> BakedSkinImage);
-	void Refresh_AddItemsToSkinTexture();
+	void SetNPCBakedImage(std::shared_ptr<IImage> BakedNPCImage);
+
+	void Refresh_CharacterItemsFromTemplate();
+	void Refresh_SkinImageFromTemplate();
+	void Refresh_SkinWithItemsImage();
 	void RefreshMeshIDs();
 
 	// Items

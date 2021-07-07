@@ -107,8 +107,12 @@ CWoWWorld::CWoWWorld(IScene& Scene, const std::shared_ptr<CWorldSocket>& Socket)
 	AddHandler(SMSG_GM_MESSAGECHAT, std::bind(&CWoWWorld::On_SMSG_MESSAGECHAT, this, std::placeholders::_1, true));
 
 	// MSG_MOVE
-	for (const auto& movementOpcode : msgMoveOpcodes)
-		AddHandler(movementOpcode, std::bind(&CWoWWorld::On_MOVE_Opcode, this, std::placeholders::_1));
+	{
+		for (const auto& movementOpcode : msgMoveOpcodes)
+			AddHandler(movementOpcode, std::bind(&CWoWWorld::On_MOVE_Opcode, this, std::placeholders::_1));
+
+		AddHandler(MSG_MOVE_TIME_SKIPPED, std::bind(&CWoWWorld::On_MSG_MOVE_TIME_SKIPPED, this, std::placeholders::_1));
+	}
 
 	// SMSG_SPLINE
 	for (const auto& smsgSplineOpcode : msgUnitsMoveOpcodes)
@@ -343,7 +347,7 @@ void CWoWWorld::S_SMSG_MONSTER_MOVE(CServerPacket & Buffer, bool Transport)
 	if (auto object = m_WorldObjects.GetWoWObject(guid))
 	{
 		auto objectAsUnit = std::dynamic_pointer_cast<WoWUnit>(object);
-		objectAsUnit->ProcessMonsterMove(Buffer);
+		objectAsUnit->Do_MonsterMove(Buffer);
 	}
 }
 
@@ -596,7 +600,6 @@ void CWoWWorld::On_MOVE_Opcode(CServerPacket & Buffer)
 		{
 			unit->ReadMovementInfoPacket(Buffer);
 
-
 			if (Buffer.GetPacketOpcode() == MSG_MOVE_SET_WALK_SPEED ||
 				Buffer.GetPacketOpcode() == MSG_MOVE_SET_RUN_SPEED ||
 				Buffer.GetPacketOpcode() == MSG_MOVE_SET_RUN_BACK_SPEED ||
@@ -621,6 +624,16 @@ void CWoWWorld::On_MOVE_Opcode(CServerPacket & Buffer)
 	{
 		throw CException("Oh shit");
 	}
+}
+
+void CWoWWorld::On_MSG_MOVE_TIME_SKIPPED(CServerPacket & Buffer)
+{
+	uint64 guid;
+	Buffer.ReadPackedUInt64(guid);
+	CWoWGuid wowGuid(guid);
+
+	uint32 timeSkipped;
+	Buffer >> timeSkipped;
 }
 
 void CWoWWorld::On_MOVE_UnitSpeedOpcode(CServerPacket & Buffer)

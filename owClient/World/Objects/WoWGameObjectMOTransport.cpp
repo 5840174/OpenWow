@@ -144,7 +144,7 @@ void WoWGameObjectMOTransport::Update(const UpdateEventArgs & e)
 std::shared_ptr<WoWGameObjectMOTransport> WoWGameObjectMOTransport::Create(CWoWWorld & WoWWorld, IScene & Scene, CWoWGuid Guid)
 {
 	std::shared_ptr<WoWGameObjectMOTransport> thisObj = MakeShared(WoWGameObjectMOTransport, Scene, WoWWorld, Guid);
-	Log::Green("---Create WoWGameObjectMOTransport with Type '%s', Entry '%d', Counter '%d'", Guid.GetTypeName(), Guid.GetEntry(), Guid.GetCounter());
+	//Log::Green("---Create WoWGameObjectMOTransport with Type '%s', Entry '%d', Counter '%d'", Guid.GetTypeName(), Guid.GetEntry(), Guid.GetCounter());
 	return thisObj;
 }
 

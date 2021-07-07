@@ -11,7 +11,7 @@
 WoWPlayer::WoWPlayer(IScene& Scene, CWoWWorld& WoWWorld, CWoWGuid Guid)
 	: WoWUnit(Scene, WoWWorld, Guid)
 {
-	m_ObjectType |= TYPEMASK_PLAYER;
+	//m_ObjectType |= TYPEMASK_PLAYER;
 	m_Values.SetValuesCount(PLAYER_END);
 }
 
@@ -70,20 +70,20 @@ void WoWPlayer::OnValuesUpdated(const UpdateMask & Mask)
 			if (Mask.GetBit(i))
 			{
 				auto characterModel = std::dynamic_pointer_cast<CCharacter>(m_HiddenNode);
-				characterModel->Template().ItemsTemplates[(i - PLAYER_VISIBLE_ITEM_1_ENTRYID) / 2] = GetItemDisplayInfoIDByItemID(m_Values.GetUInt32Value(i));
+				characterModel->SetItem((i - PLAYER_VISIBLE_ITEM_1_ENTRYID) / 2, GetItemDisplayInfoIDByItemID(m_Values.GetUInt32Value(i)));
 			}
 		} 
 
 		if (auto characterModel = std::dynamic_pointer_cast<CCharacter>(m_HiddenNode))
 		{
 			// Items
-			characterModel->RefreshCharacterItemsFromTemplate();
+			//characterModel->Refresh_CharacterItemsFromTemplate();
 
 			// Textures
-			characterModel->Refresh_CreateSkinTexture(nullptr);
+			//characterModel->Refresh_SkinImageFromTemplate();
 
 			// Geosets
-			characterModel->RefreshMeshIDs();
+			//characterModel->RefreshMeshIDs();
 		}
 
 

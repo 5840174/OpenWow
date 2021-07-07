@@ -10,7 +10,7 @@
 #include "Character_SkinTextureBaker.h"
 
 CCharacter::CCharacter(IScene& Scene, const std::shared_ptr<CM2>& M2Object)
-	: Creature(Scene, M2Object)
+	: CCreature(Scene, M2Object)
 	, m_IsNPCBakedTexturePresent(false)
 {
 	for (uint32 i = 0; i < (size_t)EM2GeosetType::Count; i++)
@@ -21,29 +21,34 @@ CCharacter::CCharacter(IScene& Scene, const std::shared_ptr<CM2>& M2Object)
 }
 
 CCharacter::~CCharacter()
-{}
+{
+	Log::Warn("Characted deleted.");
+}
 
 
 
 //
 // CCharacter
 //
-void CCharacter::RefreshCharacterItemsFromTemplate()
+void CCharacter::SetNPCBakedImage(std::shared_ptr<IImage> BakedNPCImage)
+{
+	m_IsNPCBakedTexturePresent = true;
+	m_BackedSkinImage = BakedNPCImage;
+}
+
+void CCharacter::Refresh_CharacterItemsFromTemplate()
 {
 	for (uint32 inventorySlot = 0; inventorySlot < INVENTORY_SLOT_BAG_END; inventorySlot++)
 		SetItem(inventorySlot, m_Template.ItemsTemplates[inventorySlot]);
 }
 
-void CCharacter::Refresh_CreateSkinTexture(std::shared_ptr<IImage> BakedSkinImage)
+void CCharacter::Refresh_SkinImageFromTemplate()
 {
-	if (BakedSkinImage != nullptr)
+	if (m_BackedSkinImage == nullptr)
 	{
-		m_IsNPCBakedTexturePresent = true;
-		m_BackedSkinImage = BakedSkinImage;
-	}
-	else
-	{
-		m_IsNPCBakedTexturePresent = false;
+		if (m_IsNPCBakedTexturePresent)
+			throw CException("Backed NPC skin iamge not exists, but m_IsNPCBakedTexturePresent is true.");
+
 		m_BackedSkinImage = Character_SkinTextureBaker(GetBaseManager()).CreateCharacterSkinImage(GetTemplate());
 	}
 
@@ -54,23 +59,23 @@ void CCharacter::Refresh_CreateSkinTexture(std::shared_ptr<IImage> BakedSkinImag
 	setSpecialTexture(SM2_Texture::Type::CHAR_HAIR,  GetBaseManager().GetManager<IznTexturesFactory>()->LoadTexture2D(sectionWrapper.getHairTexture(GetTemplate())));
 }
 
-void CCharacter::Refresh_AddItemsToSkinTexture()
+void CCharacter::Refresh_SkinWithItemsImage()
 {
 	if (false == m_IsNPCBakedTexturePresent) // NCPBakedTexture already contains all items
 	{
+		if (m_BackedSkinImage == nullptr)
+			throw CException("Unable to refresh items.");
+
 		auto skinImageWithItems = Character_SkinTextureBaker(GetBaseManager()).CreateCharacterSkinWithItemsImage(m_BackedSkinImage, this);
 		setSpecialTexture(SM2_Texture::Type::SKIN, GetBaseManager().GetManager<IznTexturesFactory>()->LoadTexture2D(skinImageWithItems));
 	}
 
 	// Cloak is special texture
-	const auto& cloakVisualItem = m_CharacterItems[EQUIPMENT_SLOT_BACK];
-	if (cloakVisualItem->GetTemplate().InventoryType != (uint8)DBCItem_EInventoryItemType::NON_EQUIP)
+	const auto& cloakVisualItem = GetItem(EQUIPMENT_SLOT_BACK);
+	if (cloakVisualItem != nullptr && cloakVisualItem->GetState() == ILoadable::ELoadableState::Loaded && cloakVisualItem->IsExists())
 	{
 		if (cloakVisualItem->GetModels().size() != 1)
-		{
-			return;
-			//throw CException("Character::Refresh_AddItemsToSkinTexture: Cape must contains one object component.");
-		}
+			throw CException("Character::Refresh_AddItemsToSkinTexture: Cape must contains one object component.");
 		auto cloackImage = cloakVisualItem->GetModels()[0].ItemSelfTexture;
 		setSpecialTexture(SM2_Texture::Type::OBJECT_SKIN, GetBaseManager().GetManager<IznTexturesFactory>()->LoadTexture2D(cloackImage));
 	}
@@ -78,8 +83,8 @@ void CCharacter::Refresh_AddItemsToSkinTexture()
 
 void CCharacter::RefreshMeshIDs()
 {
+	// From template
 	Character_SectionWrapper sectionWrapper(GetBaseManager());
-
 	setMeshEnabled(EM2GeosetType::SkinAndHair, sectionWrapper.getHairShowScalp(GetTemplate()) ? static_cast<uint32>(SkinAndHairStyles::ShowScalp) : sectionWrapper.getHairGeoset(GetTemplate()));
 	setMeshEnabled(EM2GeosetType::Facial01,    sectionWrapper.getFacial01Geoset(GetTemplate()));
 	setMeshEnabled(EM2GeosetType::Facial02,    sectionWrapper.getFacial02Geoset(GetTemplate()));
@@ -87,9 +92,12 @@ void CCharacter::RefreshMeshIDs()
 	setMeshEnabled(EM2GeosetType::Unk16,       sectionWrapper.getFacial16Geoset(GetTemplate()));
 	setMeshEnabled(EM2GeosetType::Eyeglows17,  sectionWrapper.getFacial17Geoset(GetTemplate()));
 
+	// From items
 	for (size_t inventorySlot = 0; inventorySlot < INVENTORY_SLOT_BAG_END; inventorySlot++)
 	{
-		const auto& characterItem = m_CharacterItems[inventorySlot];
+		const auto& characterItem = GetItem(inventorySlot);
+		if (characterItem == nullptr || characterItem->GetState() != ILoadable::ELoadableState::Loaded || false == characterItem->IsExists())
+			continue;
 
 		if (inventorySlot == EQUIPMENT_SLOT_HEAD)
 		{
@@ -133,6 +141,9 @@ std::shared_ptr<CCharacterItem> CCharacter::GetItem(uint8 InventorySlot) const
 	if (InventorySlot >= INVENTORY_SLOT_BAG_END)
 		throw CException("CCharacter::GetItem: Incorrect inventory slot '%d'.", InventorySlot);
 
+	//if (m_CharacterItems[InventorySlot] && m_CharacterItems[InventorySlot]->GetState() != ILoadable::ELoadableState::Loaded)
+	//	throw CException("Item isn't exists.");
+
 	return m_CharacterItems[InventorySlot];
 }
 
@@ -142,6 +153,7 @@ void CCharacter::SetItem(uint8 InventorySlot, const SCharacterItemTemplate & Ite
 		throw CException("CCharacter::SetItem: Incorrect inventory slot '%d'.", InventorySlot);
 
 	auto characterItem = MakeShared(CCharacterItem, GetBaseManager(), GetRenderDevice(), std::dynamic_pointer_cast<CCharacter>(shared_from_this()));
+	Template().ItemsTemplates[InventorySlot] = ItemTemplate;
 	characterItem->Template() = ItemTemplate;
 	m_CharacterItems[InventorySlot] = characterItem;
 
@@ -211,13 +223,18 @@ void CCharacter::Initialize()
 //
 void CCharacter::OnLoaded()
 {
-	// After character loaded, load items
+	if (getM2().GetState() != ILoadable::ELoadableState::Loaded)
+		throw CException("Unexpected behaviour.");
+
+	Refresh_SkinImageFromTemplate();
+	Refresh_CharacterItemsFromTemplate();
+
+	RefreshMeshIDs();
+
 	for (size_t inventorySlot = 0; inventorySlot < INVENTORY_SLOT_BAG_END; inventorySlot++)
 	{
-		const auto& characterItem = m_CharacterItems[inventorySlot];
-		
-		// Load all created items
-		if (characterItem->GetState() == ILoadable::ELoadableState::Created)
+		const auto& characterItem = GetItem(inventorySlot);
+		if (characterItem && characterItem->GetState() < ILoadable::ELoadableState::Loaded && characterItem->IsExists())
 		{
 			AddChildLoadable(characterItem);
 			GetBaseManager().GetManager<ILoader>()->AddToLoadQueue(characterItem);

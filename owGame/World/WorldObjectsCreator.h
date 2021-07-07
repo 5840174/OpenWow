@@ -17,7 +17,7 @@ public:
 
 #ifdef USE_M2_MODELS
 	// Factory
-	std::shared_ptr<Creature> BuildCreatureFromDisplayInfo(IRenderDevice& RenderDevice, IScene& Scene, uint32 _id, const std::shared_ptr<ISceneNode>& Parent = nullptr);
+	std::shared_ptr<CCreature> BuildCreatureFromDisplayInfo(IRenderDevice& RenderDevice, IScene& Scene, uint32 _id, const std::shared_ptr<ISceneNode>& Parent = nullptr);
 	std::shared_ptr<CCharacter> BuildCharacterFromTemplate(IRenderDevice& RenderDevice, IScene& Scene, const SCharacterTemplate& b, const std::shared_ptr<ISceneNode>& Parent = nullptr);
 	std::shared_ptr<CCharacter> BuildCharacterFromDisplayInfo(IRenderDevice& RenderDevice, IScene& Scene, uint32 _id, const std::shared_ptr<ISceneNode>& Parent = nullptr);
 	std::shared_ptr<CCharacter> BuildEmptyCharacterFromDisplayInfo(IRenderDevice& RenderDevice, IScene& Scene, uint32 _id, const std::shared_ptr<ISceneNode>& Parent = nullptr);

@@ -17,7 +17,6 @@ public:
     virtual ~CCharacterItemM2Instance();
 
 	// CCharacterItemM2Instance
-	const CCharacter& GetCharacterInstance() const;
 	const CCharacterItem& GetCharacterItem() const;
 	//void AddVisualEffect(std::shared_ptr<CM2_Base_Instance> _visualEffect);
 
