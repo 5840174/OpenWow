@@ -74,33 +74,13 @@ CAuthSocket::~CAuthSocket()
 
 void CAuthSocket::Open(std::string Host, uint16 Port)
 {
-	bool result = false;
-
-	if (::isdigit(Host.at(0)))
-	{
-		IPAddress addr(Host);
-
-		result = Connect(addr, Port);
-	}
-	else
-	{
-		for (auto addr : Dns::Resolve(Host))
-		{
-			result = Connect(addr, Port);
-			if (result)
-				break;
-		}
-	}
-
-	if (false == result)
+	if (false == Connect(Host, Port))
 	{
 		Log::Error("CAuthSocket: Unable to connect to '%s:%d'", Host.c_str(), Port);
 		return;
 	}
 
 	SetBlocking(false);
-
-	SendData(SAuthChallenge(m_Login, GetMyIP()));
 }
 
 void CAuthSocket::Update()
@@ -124,17 +104,21 @@ void CAuthSocket::Update()
 
 //--
 
+void CAuthSocket::OnConnected()
+{
+	Log::Green("CAuthSocket::OnConnected.");
+	SendData(SAuthChallenge(m_Login, GetMyIP()));
+}
+
+void CAuthSocket::OnDisconnected()
+{
+	Log::Warn("CAuthSocket::OnDisconnected.");
+}
+
 void CAuthSocket::SendData(const IByteBuffer& _bb)
 {
 	Send(_bb.getData(), _bb.getSize());
 }
-void CAuthSocket::SendData(const uint8* _data, uint32 _count)
-{
-	Send(_data, _count);
-}
-
-
-
 
 
 

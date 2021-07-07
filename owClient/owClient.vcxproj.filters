@@ -25,9 +25,6 @@
     <Filter Include="WorldSocket">
       <UniqueIdentifier>{b30546f9-53e7-4b84-97ec-08dd5094518e}</UniqueIdentifier>
     </Filter>
-    <Filter Include="World\Objects">
-      <UniqueIdentifier>{3c00e6b3-0286-4ce5-b1fb-963eab4eef6f}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Common">
       <UniqueIdentifier>{60b69401-f8f6-45e9-97d9-e4bd0b6b3f60}</UniqueIdentifier>
     </Filter>
@@ -42,6 +39,12 @@
     </Filter>
     <Filter Include="Warden">
       <UniqueIdentifier>{eae392f7-ea40-40d2-b4cc-613852a03605}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="World\WorldObjects">
+      <UniqueIdentifier>{3c00e6b3-0286-4ce5-b1fb-963eab4eef6f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="World\SimpleObjects">
+      <UniqueIdentifier>{393bab26-3a23-4404-a17b-ade3d3dfbe49}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -66,38 +69,32 @@
     <ClInclude Include="World\WorldObjectUpdater.h">
       <Filter>World</Filter>
     </ClInclude>
-    <ClInclude Include="World\Objects\WoWContainer.h">
-      <Filter>World\Objects</Filter>
-    </ClInclude>
     <ClInclude Include="World\Objects\WoWCorpse.h">
-      <Filter>World\Objects</Filter>
+      <Filter>World\WorldObjects</Filter>
     </ClInclude>
     <ClInclude Include="World\Objects\WoWDynamicObject.h">
-      <Filter>World\Objects</Filter>
+      <Filter>World\WorldObjects</Filter>
     </ClInclude>
     <ClInclude Include="World\Objects\WoWGameObject.h">
-      <Filter>World\Objects</Filter>
+      <Filter>World\WorldObjects</Filter>
     </ClInclude>
     <ClInclude Include="World\Objects\WoWGameObjectMOTransport.h">
-      <Filter>World\Objects</Filter>
-    </ClInclude>
-    <ClInclude Include="World\Objects\WoWItem.h">
-      <Filter>World\Objects</Filter>
+      <Filter>World\WorldObjects</Filter>
     </ClInclude>
     <ClInclude Include="World\Objects\WoWObject.h">
-      <Filter>World\Objects</Filter>
+      <Filter>World\WorldObjects</Filter>
     </ClInclude>
     <ClInclude Include="World\Objects\WoWObjectValues.h">
-      <Filter>World\Objects</Filter>
+      <Filter>World\WorldObjects</Filter>
     </ClInclude>
     <ClInclude Include="World\Objects\WoWPlayer.h">
-      <Filter>World\Objects</Filter>
+      <Filter>World\WorldObjects</Filter>
     </ClInclude>
     <ClInclude Include="World\Objects\WoWUnit.h">
-      <Filter>World\Objects</Filter>
+      <Filter>World\WorldObjects</Filter>
     </ClInclude>
     <ClInclude Include="World\Objects\WoWWorldObject.h">
-      <Filter>World\Objects</Filter>
+      <Filter>World\WorldObjects</Filter>
     </ClInclude>
     <ClInclude Include="WorldSocket\ClientPacket.h">
       <Filter>WorldSocket</Filter>
@@ -192,6 +189,15 @@
     <ClInclude Include="Warden\WardenChecks.h">
       <Filter>Warden</Filter>
     </ClInclude>
+    <ClInclude Include="WorldSocket\PacketsQueue.h">
+      <Filter>WorldSocket</Filter>
+    </ClInclude>
+    <ClInclude Include="World\Objects\WoWItem.h">
+      <Filter>World\SimpleObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="World\Objects\WoWContainer.h">
+      <Filter>World\SimpleObjects</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="World\World.cpp">
@@ -203,38 +209,32 @@
     <ClCompile Include="World\WorldObjectUpdater.cpp">
       <Filter>World</Filter>
     </ClCompile>
-    <ClCompile Include="World\Objects\WoWContainer.cpp">
-      <Filter>World\Objects</Filter>
-    </ClCompile>
     <ClCompile Include="World\Objects\WoWCorpse.cpp">
-      <Filter>World\Objects</Filter>
+      <Filter>World\WorldObjects</Filter>
     </ClCompile>
     <ClCompile Include="World\Objects\WoWDynamicObject.cpp">
-      <Filter>World\Objects</Filter>
+      <Filter>World\WorldObjects</Filter>
     </ClCompile>
     <ClCompile Include="World\Objects\WoWGameObject.cpp">
-      <Filter>World\Objects</Filter>
+      <Filter>World\WorldObjects</Filter>
     </ClCompile>
     <ClCompile Include="World\Objects\WoWGameObjectMOTransport.cpp">
-      <Filter>World\Objects</Filter>
-    </ClCompile>
-    <ClCompile Include="World\Objects\WoWItem.cpp">
-      <Filter>World\Objects</Filter>
+      <Filter>World\WorldObjects</Filter>
     </ClCompile>
     <ClCompile Include="World\Objects\WoWObject.cpp">
-      <Filter>World\Objects</Filter>
+      <Filter>World\WorldObjects</Filter>
     </ClCompile>
     <ClCompile Include="World\Objects\WoWObjectValues.cpp">
-      <Filter>World\Objects</Filter>
+      <Filter>World\WorldObjects</Filter>
     </ClCompile>
     <ClCompile Include="World\Objects\WoWPlayer.cpp">
-      <Filter>World\Objects</Filter>
+      <Filter>World\WorldObjects</Filter>
     </ClCompile>
     <ClCompile Include="World\Objects\WoWUnit.cpp">
-      <Filter>World\Objects</Filter>
+      <Filter>World\WorldObjects</Filter>
     </ClCompile>
     <ClCompile Include="World\Objects\WoWWorldObject.cpp">
-      <Filter>World\Objects</Filter>
+      <Filter>World\WorldObjects</Filter>
     </ClCompile>
     <ClCompile Include="WorldSocket\ClientPacket.cpp">
       <Filter>WorldSocket</Filter>
@@ -304,6 +304,15 @@
     </ClCompile>
     <ClCompile Include="AuthSocket\Cryptography\SHA1Randx.cpp">
       <Filter>AuthSocket\Cryptography</Filter>
+    </ClCompile>
+    <ClCompile Include="WorldSocket\PacketsQueue.cpp">
+      <Filter>WorldSocket</Filter>
+    </ClCompile>
+    <ClCompile Include="World\Objects\WoWItem.cpp">
+      <Filter>World\SimpleObjects</Filter>
+    </ClCompile>
+    <ClCompile Include="World\Objects\WoWContainer.cpp">
+      <Filter>World\SimpleObjects</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

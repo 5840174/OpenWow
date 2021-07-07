@@ -3,6 +3,8 @@
 #ifdef ENABLE_WOW_CLIENT
 
 #include "../AuthSocket/AuthCrypt.h"
+#include "PacketsQueue.h"
+
 #include "../Warden/Warden.h"
 
 // FORWARD BEGIN
@@ -18,16 +20,14 @@ public:
 
 	void Open(std::string Host, uint16 Port);
 	void Update();
+	void UpdateFromThread(std::future<void> PromiseExiter);
 
 	// CWorldSocket
+	void OnConnected() override;
+	void OnDisconnected() override;
     void SendPacket(CClientPacket& Packet);
 	void SetExternalHandler(std::function<bool(CServerPacket&)> Handler);
-	
-private: // Packets contructor
-	void Packet1(uint16 Size, Opcodes Opcode);
-	void Packet2(CByteBuffer& _buf);
-	
-
+		
 private: // Used while connect to world
 	void AddHandler(Opcodes Opcode, std::function<void(CServerPacket&)> Handler);
 	bool ProcessPacket(CServerPacket& ServerPacket);
@@ -40,11 +40,15 @@ private: // Used while connect to world
     void CreateAddonsBuffer(CByteBuffer& AddonsBuffer);
 
 private:
+	std::thread                                   m_UpdateThread;
+	std::promise<void>					          m_UpdateThreadExiter;
+
+private:
 	AuthCrypt                                     m_WoWCryptoUtils;
-    std::unique_ptr<CServerPacket>                m_CurrentPacket;
+	CPacketsQueue                                 m_PacketsQueue;
 
 	std::unordered_map<Opcodes, std::function<void(CServerPacket&)>> m_Handlers;
-	std::function<bool(CServerPacket&)>  m_ExternalHandler;
+	std::function<bool(CServerPacket&)> m_ExternalHandler;
 
 private:
 	std::string m_Login;

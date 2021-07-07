@@ -115,10 +115,9 @@ void CSceneWoW::Initialize()
 	//const float y = 32; //530 outland
 	//const uint32 mapID = 530;
 
-	//const float x = 30; //571 nortrend
-	//const float y = 21; //571 nortrend
-	//const uint32 mapID = 571;
-
+	const float x = 30; //571 nortrend
+	const float y = 21; //571 nortrend
+	const uint32 mapID = 571;
 
 	//const float x = 32; //571 44
 	//const float y = 32; //571 44
@@ -129,11 +128,10 @@ void CSceneWoW::Initialize()
 	//const float y = 0; //571 nortrend
 	//const uint32 mapID = 631;
 
-
 	// Death knight
-	const float x = 0; //571 nortrend
-	const float y = 0; //571 nortrend
-	const uint32 mapID = 609;
+	//const float x = 0; //571 nortrend
+	//const float y = 0; //571 nortrend
+	//const uint32 mapID = 609;
 
 	if (true)
 	{
@@ -216,8 +214,6 @@ void CSceneWoW::Initialize()
 	}
 
 	//SetMainMenu();
-
-	GetCameraController()->GetCamera()->SetPosition(glm::vec3(-4500, 0, 620));
 }
 
 void CSceneWoW::Finalize()

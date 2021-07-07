@@ -12,9 +12,82 @@
 #include "AuthSocket/Cryptography/SHA1.h"
 
 
+namespace
+{
+	enum EAuthResponseDetailCodes : uint8
+	{
+		AUTH_OK = 0x0C,
+		AUTH_FAILED = 0x0D,
+		AUTH_REJECT = 0x0E,
+		AUTH_BAD_SERVER_PROOF = 0x0F,
+		AUTH_UNAVAILABLE = 0x10,
+		AUTH_SYSTEM_ERROR = 0x11,
+		AUTH_BILLING_ERROR = 0x12,
+		AUTH_BILLING_EXPIRED = 0x13,
+		AUTH_VERSION_MISMATCH = 0x14,
+		AUTH_UNKNOWN_ACCOUNT = 0x15,
+		AUTH_INCORRECT_PASSWORD = 0x16,
+		AUTH_SESSION_EXPIRED = 0x17,
+		AUTH_SERVER_SHUTTING_DOWN = 0x18,
+		AUTH_ALREADY_LOGGING_IN = 0x19,
+		AUTH_LOGIN_SERVER_NOT_FOUND = 0x1A,
+		AUTH_WAIT_QUEUE = 0x1B,
+		AUTH_BANNED = 0x1C,
+		AUTH_ALREADY_ONLINE = 0x1D,
+		AUTH_NO_TIME = 0x1E,
+		AUTH_DB_BUSY = 0x1F,
+		AUTH_SUSPENDED = 0x20,
+		AUTH_PARENTAL_CONTROL = 0x21,
+		AUTH_LOCKED_ENFORCED = 0x02, /// Unsure
+	};
+
+
+	void Packet1(uint16 Size, Opcodes Opcode, std::shared_ptr<CServerPacket> * Packet)
+	{
+		*Packet = std::make_unique<CServerPacket>(Size, Opcode);
+	}
+
+	void Packet2(CByteBuffer& Buffer, std::shared_ptr<CServerPacket> * Packet, CPacketsQueue& Queue)
+	{
+		uint32 needToRead = (*Packet)->GetPacketSize() - (*Packet)->getSize();
+		if (needToRead > 0)
+		{
+			uint32 incomingBufferSize = Buffer.getSize() - Buffer.getPos();
+
+			if (needToRead > incomingBufferSize)
+				needToRead = incomingBufferSize;
+
+			if (needToRead > 0)
+			{
+				// Fill data
+				_ASSERT(Buffer.getPos() + needToRead <= Buffer.getSize());
+				(*Packet)->writeBytes(Buffer.getDataFromCurrent(), needToRead);
+
+				Buffer.seekRelative(needToRead);
+				//Log::Info("Packet[%s] readed '%d' of %d'.", OpcodesNames[m_CurrentPacket->GetPacketOpcode()].c_str(), m_CurrentPacket->getSize(), m_CurrentPacket->GetPacketSize());
+			}
+		}
+
+		// Check if we read full packet
+		if ((*Packet)->IsComplete())
+		{
+			//CServerPacket packet(**Packet);
+
+			Queue.Add(std::move(*Packet));
+			(*Packet).reset();
+			Packet = nullptr;
+
+			//m_CurrentPacket.reset();
+		}
+		else
+		{
+			//Log::Info("Packet[%s] is incomplete. Size '%d' of %d'.", OpcodesNames[m_CurrentPacket->GetPacketOpcode()].c_str(), m_CurrentPacket->getSize(), m_CurrentPacket->GetPacketSize());
+		}
+	}
+}
+
 CWorldSocket::CWorldSocket(const std::string& Login, BigNumber Key)
-	: m_CurrentPacket(nullptr)
-	, m_Login(Login)
+	: m_Login(Login)
 	, m_Key(Key)
 {
 	m_Warden = std::make_unique<CWarden>(*this, m_Key);
@@ -26,105 +99,111 @@ CWorldSocket::CWorldSocket(const std::string& Login, BigNumber Key)
 
 CWorldSocket::~CWorldSocket()
 {
+	m_UpdateThreadExiter.set_value();
+	_ASSERT(m_UpdateThread.joinable());
+	m_UpdateThread.join();
 }
 
 void CWorldSocket::Open(std::string Host, uint16 Port)
 {
-	bool result = false;
-
-	if (::isdigit(Host.at(0)))
-	{
-		IPAddress addr(Host);
-
-		result = Connect(addr, Port);
-	}
-	else
-	{
-		for (auto addr : Dns::Resolve(Host))
-		{
-			result = Connect(addr, Port);
-			if (result)
-				break;
-		}
-	}
-
-	if (false == result)
+	if (false == Connect(Host, Port))
 	{
 		Log::Error("CWorldSocket: Unable to connect to '%s:%d'", Host.c_str(), Port);
 		return;
 	}
 
-	SetBlocking(false);
+	SetBlocking(true);
 }
 
 void CWorldSocket::Update()
 {
-	CByteBuffer buffer;
-	Receive(buffer, 4096 * 16);
-
-	if (buffer.getSize() == 0)
+	while (const auto& packet = m_PacketsQueue.GetNextItem())
 	{
-		if (GetStatus() != CSocket::Connected)
+		if (false == ProcessPacket(*packet))
 		{
-			Log::Error("DISCONNECTED.");
+			if ((*packet).GetPacketOpcode() >= NUM_MSG_TYPES)
+			{
+				Log::Error("Opcode: ID '%d' (0x%X) is bigger then maximum opcode ID. Size: '%d'.", (*packet).GetPacketOpcode(), (*packet).GetPacketOpcode(), (*packet).GetPacketSize());
+			}
+			else
+			{
+				Log::Info("Opcode: '%s' (0x%X). Size: '%d' not handled.", OpcodesNames[(*packet).GetPacketOpcode()], (*packet).GetPacketOpcode(), (*packet).GetPacketSize());
+			}
 		}
-		return;
 	}
+}
 
-	// Append to current packet
-	if (m_CurrentPacket != nullptr)
-	{
-		Packet2(buffer);
-	}
+void CWorldSocket::UpdateFromThread(std::future<void> PromiseExiter)
+{
+	std::shared_ptr<CServerPacket> m_CurrentPacket;
 
-	while (false == buffer.isEof())
+	while (PromiseExiter.wait_for(std::chrono::milliseconds(0)) == std::future_status::timeout)
 	{
-		uint8* data = buffer.getDataFromCurrentEx();
-		uint8  sizeBytes = sizeof(uint16);
-		uint32 size = 0;
-		uint16 cmd = 0;
+		CByteBuffer buffer;
+		Receive(buffer, 4096 * 16);
+
+		if (buffer.getSize() == 0)
+		{
+			if (GetStatus() != CSocket::Connected)
+				Log::Error("DISCONNECTED.");
+			continue;
+		}
+
+		// Append to current packet
+		if (m_CurrentPacket != nullptr)
+		{
+			Packet2(buffer, &m_CurrentPacket, m_PacketsQueue);
+		}
+
+		while (false == buffer.isEof())
+		{
+			uint8* data = buffer.getDataFromCurrentEx();
+			uint8  sizeBytes = sizeof(uint16);
+			uint32 size = 0;
+			uint16 cmd = 0;
 
 #if 1
-		// 1. Decrypt size
-		m_WoWCryptoUtils.DecryptRecv(data + 0, 1);
-		uint8 firstByte = data[0];
+			// 1. Decrypt size
+			m_WoWCryptoUtils.DecryptRecv(data + 0, 1);
+			uint8 firstByte = data[0];
 
-		// 2. Decrypt other size
-		if ((firstByte & 0x80) != 0)
-		{
-			sizeBytes = 3;
-			m_WoWCryptoUtils.DecryptRecv(data + 1, 1 + sizeBytes);
-			size = (((data[0] & 0x7F) << 16) | (data[1] << 8) | data[2]);
-			cmd = ((data[4] << 8) | data[3]);
-		}
-		else
-		{
-			sizeBytes = 2;
-			m_WoWCryptoUtils.DecryptRecv(data + 1, 1 + sizeBytes);
+			// 2. Decrypt other size
+			if ((firstByte & 0x80) != 0)
+			{
+				sizeBytes = 3;
+				m_WoWCryptoUtils.DecryptRecv(data + 1, 1 + sizeBytes);
+				size = (((data[0] & 0x7F) << 16) | (data[1] << 8) | data[2]);
+				cmd = ((data[4] << 8) | data[3]);
+			}
+			else
+			{
+				sizeBytes = 2;
+				m_WoWCryptoUtils.DecryptRecv(data + 1, 1 + sizeBytes);
+				size = ((data[0] << 8) | data[1]);
+				cmd = ((data[3] << 8) | data[2]);
+			}
+#else
+			// Decrypt size and header
+			m_WoWCryptoUtils.DecryptRecv(data + 0, sizeof(uint16) + sizeof(uint16));
+
+			// Check compressed packets
+			_ASSERT((data[0] & 0x80) == 0);
+
+			// Size and opcode
 			size = ((data[0] << 8) | data[1]);
 			cmd = ((data[3] << 8) | data[2]);
-		}
-#else
-		// Decrypt size and header
-		m_WoWCryptoUtils.DecryptRecv(data + 0, sizeof(uint16) + sizeof(uint16));
-
-		// Check compressed packets
-		_ASSERT((data[0] & 0x80) == 0);
-
-		// Size and opcode
-		size = ((data[0] << 8) | data[1]);
-		cmd = ((data[3] << 8) | data[2]);
 #endif
 
-		// DEBUG
-		//_ASSERT(cmd < Opcodes::NUM_MSG_TYPES);
-		//Log::Green("CWorldSocket: Command '%s' (0x%X) size=%d", OpcodesNames[cmd], cmd, size);
+			// DEBUG
+			//_ASSERT(cmd < Opcodes::NUM_MSG_TYPES);
+			//Log::Green("CWorldSocket: Command '%s' (0x%X) size=%d", OpcodesNames[cmd], cmd, size);
 
-		// Seek to data
-		buffer.seekRelative(sizeBytes /*Size*/ + sizeof(uint16) /*Opcode*/);
+			// Seek to data
+			buffer.seekRelative(sizeBytes /*Size*/ + sizeof(uint16) /*Opcode*/);
 
-		Packet1(size - sizeof(uint16) /*Opcode*/, static_cast<Opcodes>(cmd));
-		Packet2(buffer);
+			Packet1(size - sizeof(uint16) /*Opcode*/, static_cast<Opcodes>(cmd), &m_CurrentPacket);
+			Packet2(buffer, &m_CurrentPacket, m_PacketsQueue);
+		}
 	}
 }
 
@@ -133,6 +212,20 @@ void CWorldSocket::Update()
 //
 // CWorldSocket
 //
+void CWorldSocket::OnConnected()
+{
+	Log::Green("CWorldSocket::OnConnected.");
+
+	std::future<void> futureObj = m_UpdateThreadExiter.get_future();
+	m_UpdateThread = std::thread(&CWorldSocket::UpdateFromThread, this, std::move(futureObj));
+	m_UpdateThread.detach();
+}
+
+void CWorldSocket::OnDisconnected()
+{
+	Log::Warn("CWorldSocket::OnDisconnected.");
+}
+
 void CWorldSocket::SendPacket(CClientPacket& Packet)
 {
     Packet.Complete();
@@ -148,62 +241,6 @@ void CWorldSocket::SetExternalHandler(std::function<bool(CServerPacket&)> Handle
 	m_ExternalHandler = Handler;
 }
 
-
-
-//
-// Packets contructor
-//
-void CWorldSocket::Packet1(uint16 Size, Opcodes Opcode)
-{
-    m_CurrentPacket = std::make_unique<CServerPacket>(Size, Opcode);
-}
-
-void CWorldSocket::Packet2(CByteBuffer& _buf)
-{
-	_ASSERT(m_CurrentPacket != nullptr);
-
-    uint32 needToRead = m_CurrentPacket->GetPacketSize() - m_CurrentPacket->getSize();
-    if (needToRead > 0)
-    {
-        uint32 incomingBufferSize = _buf.getSize() - _buf.getPos();
-
-        if (needToRead > incomingBufferSize)
-            needToRead = incomingBufferSize;
-
-		if (needToRead > 0)
-		{
-			// Fill data
-			_ASSERT(_buf.getPos() + needToRead <= _buf.getSize());
-			m_CurrentPacket->writeBytes( _buf.getDataFromCurrent(), needToRead);
-
-			_buf.seekRelative(needToRead);
-			//Log::Info("Packet[%s] readed '%d' of %d'.", OpcodesNames[m_CurrentPacket->GetPacketOpcode()].c_str(), m_CurrentPacket->getSize(), m_CurrentPacket->GetPacketSize());
-		}
-    }
-
-    // Check if we read full packet
-    if (m_CurrentPacket->IsComplete())
-    {
-		CServerPacket packet(*m_CurrentPacket);
-		if (false == ProcessPacket(packet))
-		{
-			if (m_CurrentPacket->GetPacketOpcode() >= NUM_MSG_TYPES)
-			{
-				Log::Error("Opcode: ID '%d' (0x%X) is bigger then maximum opcode ID. Size: '%d'.", m_CurrentPacket->GetPacketOpcode(), m_CurrentPacket->GetPacketOpcode(), m_CurrentPacket->GetPacketSize());
-			}
-			else
-			{
-				Log::Info("Opcode: '%s' (0x%X). Size: '%d' not handled.", OpcodesNames[m_CurrentPacket->GetPacketOpcode()], m_CurrentPacket->GetPacketOpcode(), m_CurrentPacket->GetPacketSize());
-			}
-		}
-
-        m_CurrentPacket.reset();
-    }
-    else
-    {
-        //Log::Info("Packet[%s] is incomplete. Size '%d' of %d'.", OpcodesNames[m_CurrentPacket->GetPacketOpcode()].c_str(), m_CurrentPacket->getSize(), m_CurrentPacket->GetPacketSize());
-    }
-}
 
 
 
@@ -243,13 +280,15 @@ bool CWorldSocket::ProcessPacket(CServerPacket& ServerPacket)
 //
 // Handlers
 //
-void CWorldSocket::On_SMSG_AUTH_CHALLENGE(CServerPacket& _buff)
+void CWorldSocket::On_SMSG_AUTH_CHALLENGE(CServerPacket& Buffer)
 {
 	// Receive
 	uint32 serverRandomSeed; 
-	_buff.seekRelative(4);
-	_buff.readBytes(&serverRandomSeed, 4);
-	_buff.seekRelative(32);
+	Buffer.seekRelative(4);
+	Buffer.readBytes(&serverRandomSeed, 4);
+	Buffer.seekRelative(32);
+
+
 
 	BigNumber clientRandomSeed;
     clientRandomSeed.SetRand(4 * 8);
@@ -312,8 +351,7 @@ void CWorldSocket::On_SMSG_AUTH_CHALLENGE(CServerPacket& _buff)
     // We must pass addons to connect to private servers
     CByteBuffer addonsBuffer;
 	CreateAddonsBuffer(addonsBuffer);
-
-    p.writeBytes(addonsBuffer.getData(), addonsBuffer.getSize());
+    p << addonsBuffer;
 
     SendPacket(p);
 
@@ -321,54 +359,22 @@ void CWorldSocket::On_SMSG_AUTH_CHALLENGE(CServerPacket& _buff)
     m_WoWCryptoUtils.Init(&m_Key);
 }
 
-void CWorldSocket::On_SMSG_AUTH_RESPONSE(CServerPacket& _buff)
+void CWorldSocket::On_SMSG_AUTH_RESPONSE(CServerPacket& Buffer)
 {
-	enum CommandDetail : uint8
-	{
-        AUTH_OK = 0x0C,
-        AUTH_FAILED = 0x0D,
-        AUTH_REJECT = 0x0E,
-        AUTH_BAD_SERVER_PROOF = 0x0F,
-        AUTH_UNAVAILABLE = 0x10,
-        AUTH_SYSTEM_ERROR = 0x11,
-        AUTH_BILLING_ERROR = 0x12,
-        AUTH_BILLING_EXPIRED = 0x13,
-        AUTH_VERSION_MISMATCH = 0x14,
-        AUTH_UNKNOWN_ACCOUNT = 0x15,
-        AUTH_INCORRECT_PASSWORD = 0x16,
-        AUTH_SESSION_EXPIRED = 0x17,
-        AUTH_SERVER_SHUTTING_DOWN = 0x18,
-        AUTH_ALREADY_LOGGING_IN = 0x19,
-        AUTH_LOGIN_SERVER_NOT_FOUND = 0x1A,
-        AUTH_WAIT_QUEUE = 0x1B,
-        AUTH_BANNED = 0x1C,
-        AUTH_ALREADY_ONLINE = 0x1D,
-        AUTH_NO_TIME = 0x1E,
-        AUTH_DB_BUSY = 0x1F,
-        AUTH_SUSPENDED = 0x20,
-        AUTH_PARENTAL_CONTROL = 0x21,
-        AUTH_LOCKED_ENFORCED = 0x02, /// Unsure
-	};
+	EAuthResponseDetailCodes responseCode;
+	Buffer >> responseCode;
+	Buffer.seekRelative(Buffer.getSize() - Buffer.getPos());
 
-	CommandDetail detail;
-	_buff.readBytes(&detail, sizeof(uint8));
-	_buff.seekRelative(_buff.getSize() - _buff.getPos());
+	if (responseCode != EAuthResponseDetailCodes::AUTH_OK)
+	{
+		Log::Error("CWorldSocket::On_SMSG_AUTH_RESPONSE: Response isn't OK. Code '0x%20X'", responseCode);
+		return;
+	}
 
-	if (detail == CommandDetail::AUTH_OK)
-	{
-        CClientPacket p(CMSG_CHAR_ENUM);
-		SendPacket(p);
+	Log::Green("CWorldSocket::On_SMSG_AUTH_RESPONSE: Response is OK!");
 
-		Log::Green("Succes access to server!!!");
-	}
-	else if (detail == CommandDetail::AUTH_WAIT_QUEUE)
-	{
-		Log::Warn("You in queue!");
-	}
-	else if (detail == CommandDetail::AUTH_FAILED)
-	{
-		Log::Warn("Auth failed");
-	}
+	CClientPacket p(CMSG_CHAR_ENUM);
+	SendPacket(p);
 }
 
 void CWorldSocket::On_SMSG_WARDEN_DATA(CServerPacket& Buffer)

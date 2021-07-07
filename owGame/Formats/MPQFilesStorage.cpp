@@ -60,9 +60,9 @@ CMPQFilesStorage::CMPQFilesStorage(std::string _path)
 
 CMPQFilesStorage::~CMPQFilesStorage()
 {
-	for (auto it : m_OpenArchives)
+	for (const auto& it : m_OpenArchives)
 	{
-		libmpq__archive_close(it);
+		libmpq__archive_close(it.get()->Archive);
 	}
 }
 
@@ -73,23 +73,25 @@ CMPQFilesStorage::~CMPQFilesStorage()
 //
 std::shared_ptr<IFile> CMPQFilesStorage::Open(std::string FileName)
 {
-	std::lock_guard<std::mutex> lock(m_Lock);
+	//std::lock_guard<std::mutex> lock(m_Lock);
 
-	std::shared_ptr<CFile> file = MakeShared(CFile, FileName, shared_from_this());
+	auto file = MakeShared(CFile, FileName, shared_from_this());
 	CByteBuffer& byteBuffer = file->GetByteBuffer();
 	
-	SMPQFileLocation location = GetFileLocation(file->Path_Name());
-	if (!location.exists)
+	SMPQFileLocation& location = GetFileLocation(file->Path_Name());
+	if (false == location.exists)
 		return nullptr;
 
+	std::lock_guard<std::mutex> lock(location.archive->ArchiveLock);
+
 	libmpq__off_t size;
-	libmpq__file_size_unpacked(location.archive, location.fileNumber, &size);
+	libmpq__file_size_unpacked(location.archive->Archive, location.fileNumber, &size);
 	_ASSERT(size < 1024 * 1024 * 500);
 
 	// Allocate space and set data
 	std::vector<uint8> buffer;
 	buffer.resize(size);
-	libmpq__file_read(location.archive, location.fileNumber, &buffer[0], size, &size);
+	libmpq__file_read(location.archive->Archive, location.fileNumber, &buffer[0], size, &size);
 
 	byteBuffer = std::move(CByteBuffer(std::move(buffer)));
 
@@ -100,13 +102,13 @@ std::shared_ptr<IFile> CMPQFilesStorage::Open(std::string FileName)
 
 size_t CMPQFilesStorage::GetSize(std::string FileName) const
 {
-	std::lock_guard<std::mutex> lock(m_Lock);
+	//std::lock_guard<std::mutex> lock(m_Lock);
 
-	SMPQFileLocation location = GetFileLocation(FileName);
+	SMPQFileLocation& location = GetFileLocation(FileName);
 	if (location.exists)
 	{
 		libmpq__off_t size;
-		libmpq__file_size_unpacked(location.archive, location.fileNumber, &size);
+		libmpq__file_size_unpacked(location.archive->Archive, location.fileNumber, &size);
 		return size;
 	}
 
@@ -115,7 +117,7 @@ size_t CMPQFilesStorage::GetSize(std::string FileName) const
 
 bool CMPQFilesStorage::IsExists(std::string FileName) const
 {
-	std::lock_guard<std::mutex> lock(m_Lock);
+	//std::lock_guard<std::mutex> lock(m_Lock);
 	return GetFileLocation(FileName).exists;
 }
 
@@ -161,7 +163,7 @@ void CMPQFilesStorage::AddArchive(std::string filename)
 		return;
 	}
 
-	m_OpenArchives.push_back(mpq_a);
+	m_OpenArchives.push_back(std::make_shared<SMPQArchive>(mpq_a));
 	Log::Info("MPQFile[%s]: Added!", filename.c_str());
 }
 
@@ -169,14 +171,14 @@ SMPQFileLocation CMPQFilesStorage::GetFileLocation(const std::string& filename) 
 {
 	for (auto& i = m_OpenArchives.rbegin(); i != m_OpenArchives.rend(); ++i)
 	{
-		mpq_archive_s* mpq_a = *i;
+		auto mpqArchive = (i)->get();
 
 		uint32 filenum;
-		if (libmpq__file_number(mpq_a, filename.c_str(), &filenum) == LIBMPQ_ERROR_EXIST)
+		if (libmpq__file_number(mpqArchive->Archive, filename.c_str(), &filenum) == LIBMPQ_ERROR_EXIST)
 			continue;
 
-		return SMPQFileLocation(mpq_a, filenum);
+		return SMPQFileLocation(mpqArchive, filenum);
 	}
 
-	return SMPQFileLocation();
+	return m_DefaultMPQFileLocation;
 }

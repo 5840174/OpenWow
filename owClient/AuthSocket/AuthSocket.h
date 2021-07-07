@@ -21,15 +21,15 @@ public:
 	void Open(std::string Host, uint16 Port);
 	void Update();
 
+	void OnConnected() override;
+	void OnDisconnected() override;
 	void SendData(const IByteBuffer& _bb);
-	void SendData(const uint8* _data, uint32 _count);
 
-	// Handlers
+private: // Handlers
 	bool On_AUTH_LOGON_CHALLENGE(CByteBuffer& _buff);
 	bool On_AUTH_LOGON_PROOF(CByteBuffer& _buff);
 	bool On_REALM_LIST(CByteBuffer& _buff);
 
-private:
 	void AddHandler(EAuthCmd AuthCmd, std::function<bool(CByteBuffer&)> Handler);
 	void ProcessHandler(EAuthCmd AuthCmd, CByteBuffer& _buffer);
 

@@ -92,6 +92,7 @@ CWoWWorld::CWoWWorld(IScene& Scene, const std::shared_ptr<CWorldSocket>& Socket)
 
 	AddHandler(SMSG_POWER_UPDATE, std::bind(&CWoWWorld::On_SMSG_POWER_UPDATE, this, std::placeholders::_1));
 	AddHandler(SMSG_AURA_UPDATE, std::bind(&CWoWWorld::On_SMSG_AURA_UPDATE, this, std::placeholders::_1));
+	AddHandler(SMSG_AURA_UPDATE_ALL, std::bind(&CWoWWorld::On_SMSG_AURA_UPDATE_ALL, this, std::placeholders::_1));
 	AddHandler(SMSG_UPDATE_WORLD_STATE, std::bind(&CWoWWorld::On_SMSG_UPDATE_WORLD_STATE, this, std::placeholders::_1));
 	
 	AddHandler(SMSG_TIME_SYNC_REQ, std::bind(&CWoWWorld::On_SMSG_TIME_SYNC_REQ, this, std::placeholders::_1));
@@ -255,6 +256,22 @@ void CWoWWorld::On_SMSG_AURA_UPDATE(CServerPacket & Buffer)
 	uint64 packedGUIDTarget;
 	Buffer.ReadPackedUInt64(packedGUIDTarget);
 
+	Do_AuraUpdate(Buffer);
+}
+
+void CWoWWorld::On_SMSG_AURA_UPDATE_ALL(CServerPacket & Buffer)
+{
+	uint64 packedGUIDTarget;
+	Buffer.ReadPackedUInt64(packedGUIDTarget);
+
+	while (false == Buffer.isEof())
+	{
+		Do_AuraUpdate(Buffer);
+	}
+}
+
+void CWoWWorld::Do_AuraUpdate(CServerPacket & Buffer)
+{
 	uint8 auraSlot;
 	Buffer >> auraSlot;
 
@@ -321,7 +338,7 @@ void CWoWWorld::S_SMSG_MONSTER_MOVE(CServerPacket & Buffer, bool Transport)
 
 	CWoWGuid guid(packedGUID);
 	if (guid.GetTypeId() != EWoWObjectTypeID::TYPEID_UNIT)
-		throw CException("CWoWWorld::S_SMSG_MONSTER_MOVE: Movement packet accept only EWoWObjectTypeID::TYPEID_UNIT.");
+		throw CException("CWoWWorld::S_SMSG_MONSTER_MOVE: Movement packet accept only TYPEID_UNIT. TypeID: '%s'.", guid.GetTypeName());
 
 	if (auto object = m_WorldObjects.GetWoWObject(guid))
 	{

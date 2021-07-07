@@ -23,6 +23,8 @@ void WoWPlayer::OnValuesUpdated(const UpdateMask & Mask)
 {
 	if (Mask.GetBit(UNIT_FIELD_DISPLAYID))
 	{
+		//return;
+
 		if (m_HiddenNode != nullptr)
 		{
 			//Log::Warn("WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.");

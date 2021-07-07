@@ -24,6 +24,7 @@ public:
 	void Update(const UpdateEventArgs& e);
 	void Accept(IWoWVisitor * WoWVisitor);
 
+	std::shared_ptr<WoWObject> CreateWoWObject(CWoWGuid ObjectGUID, EWoWObjectTypeID TypeID);
 	std::shared_ptr<WoWObject> GetWoWObject(CWoWGuid ObjectGUID);
 	bool IsWoWObjectExists(CWoWGuid ObjectGUID);
 	void EraseWoWObject(const std::shared_ptr<WoWObject>& WoWObject);
@@ -36,7 +37,6 @@ private:
 	//std::map<CWoWGuid, std::shared_ptr<WoWObject>>         m_WoWObjects;
 
 	std::map<CWoWGuid, std::shared_ptr<WoWItem>>           m_WoWItems;
-	std::map<CWoWGuid, std::shared_ptr<CWoWContainer>>     m_WoWContainers;
 
 	std::map<CWoWGuid, std::shared_ptr<WoWUnit>>           m_WoWUnits;
 	std::map<CWoWGuid, std::shared_ptr<WoWUnit>>           m_WoWUnitsPet;

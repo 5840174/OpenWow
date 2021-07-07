@@ -2,6 +2,17 @@
 
 #include <libmpq/libmpq/mpq.h>
 
+struct SMPQArchive
+{
+	SMPQArchive(mpq_archive_s* Archive_)
+		: Archive(Archive_)
+	{
+	}
+
+	mpq_archive_s* Archive;
+	std::mutex ArchiveLock;
+};
+
 struct SMPQFileLocation
 {
 	SMPQFileLocation() :
@@ -10,14 +21,14 @@ struct SMPQFileLocation
 		exists(false)
 	{}
 
-	SMPQFileLocation(mpq_archive* _archive, uint32 _fileNumber) :
+	SMPQFileLocation(SMPQArchive* _archive, uint32 _fileNumber) :
 		archive(_archive),
 		fileNumber(_fileNumber),
 		exists(true)
 	{}
 
 	bool exists;
-	mpq_archive* archive;
+	SMPQArchive* archive;
 	uint32 fileNumber;
 };
 
@@ -35,11 +46,12 @@ public:
 
 	// CMPQFilesStorage
 	void AddArchive(std::string _filename);
-	SMPQFileLocation GetFileLocation(const std::string& _filename) const ;
+	SMPQFileLocation GetFileLocation(const std::string& _filename) const;
 
 private:
 	const std::string           m_Path;
 
-	std::vector<mpq_archive_s*> m_OpenArchives;
-	mutable std::mutex m_Lock;
+	mutable SMPQFileLocation m_DefaultMPQFileLocation;
+	std::vector<std::shared_ptr<SMPQArchive>> m_OpenArchives;
+	//mutable std::mutex m_Lock;
 };

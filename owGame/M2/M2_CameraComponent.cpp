@@ -18,7 +18,9 @@ CM2CameraComponent::CM2CameraComponent(const CM2_Base_Instance& OwnerNode, const
 {
 	m_Aspect = float(GetOwnerNode().GetScene().GetRenderWindow().GetWindowWidth()) / float(GetOwnerNode().GetScene().GetRenderWindow().GetWindowHeight());
 
+#ifndef ZENON_ENGINE_ONLY_RUNTIME
 	GetProperties()->SetName("M2CameraComponent");
+#endif
 }
 
 CM2CameraComponent::~CM2CameraComponent()

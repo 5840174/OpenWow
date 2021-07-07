@@ -87,6 +87,9 @@ void CWorldObjectUpdater::ProcessUpdatePacket(CServerPacket& Bytes)
 				Bytes.ReadPackedUInt64(guidValue);
 				CWoWGuid guid(guidValue);
 
+				if (false == m_WoWWorld.GetWorldObjects().IsWoWObjectExists(guid))
+					throw CException("Object not exists");
+
 				auto object = m_WoWWorld.GetWorldObjects().GetWoWObject(guid);
 				object->UpdateValues(Bytes);
 			}
@@ -98,6 +101,9 @@ void CWorldObjectUpdater::ProcessUpdatePacket(CServerPacket& Bytes)
 				uint64 guidValue;
 				Bytes.ReadPackedUInt64(guidValue);
 				CWoWGuid guid(guidValue);
+
+				if (false == m_WoWWorld.GetWorldObjects().IsWoWObjectExists(guid))
+					throw CException("Object not exists");
 
 				auto object = m_WoWWorld.GetWorldObjects().GetWoWObject(guid);
 				object->ProcessMovementUpdate(Bytes);
@@ -115,7 +121,7 @@ void CWorldObjectUpdater::ProcessUpdatePacket(CServerPacket& Bytes)
 				EWoWObjectTypeID typeID; // Different from GUID TypeID for Container TODO
 				Bytes >> typeID;
 
-				auto object = m_WoWWorld.GetWorldObjects().GetWoWObject(guid);
+				auto object = m_WoWWorld.GetWorldObjects().CreateWoWObject(guid, typeID);
 
 				object->ProcessMovementUpdate(Bytes);
 				object->UpdateValues(Bytes);
@@ -125,7 +131,7 @@ void CWorldObjectUpdater::ProcessUpdatePacket(CServerPacket& Bytes)
 
 			case OBJECT_UPDATE_TYPE::UPDATETYPE_OUT_OF_RANGE_OBJECTS:
 			{
-				std::vector<uint64> outOfRangeGUIDs;
+				std::vector<CWoWGuid> outOfRangeGUIDs;
 
 				uint32 outOfRangeGUIDsCount;
 				Bytes >> (uint32)outOfRangeGUIDsCount;
@@ -134,13 +140,16 @@ void CWorldObjectUpdater::ProcessUpdatePacket(CServerPacket& Bytes)
 				{
 					uint64 guid;
 					Bytes.ReadPackedUInt64(guid);
-					outOfRangeGUIDs[i] = guid;
+					outOfRangeGUIDs[i] = CWoWGuid(guid);
 				}
 
 				auto& worldObjects = m_WoWWorld.GetWorldObjects();
 				for (const auto& outOfRangeGUID : outOfRangeGUIDs)
 				{
-					if (auto object = worldObjects.GetWoWObject(CWoWGuid(outOfRangeGUID)))
+					if (false == m_WoWWorld.GetWorldObjects().IsWoWObjectExists(outOfRangeGUID))
+						throw CException("Object not exists");
+
+					if (auto object = worldObjects.GetWoWObject(outOfRangeGUID))
 					{
 						object->Destroy();
 						worldObjects.EraseWoWObject(object);

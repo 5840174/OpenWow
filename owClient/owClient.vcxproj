@@ -41,6 +41,7 @@
     <ClInclude Include="WorldSocket\ClientPacket.h" />
     <ClInclude Include="WorldSocket\Opcodes.h" />
     <ClInclude Include="WorldSocket\OpcodesNames.h" />
+    <ClInclude Include="WorldSocket\PacketsQueue.h" />
     <ClInclude Include="WorldSocket\ServerPacket.h" />
     <ClInclude Include="WorldSocket\WorldSocket.h" />
     <ClInclude Include="World\Path\Path.h" />
@@ -83,6 +84,7 @@
     </ClCompile>
     <ClCompile Include="Warden\Warden.cpp" />
     <ClCompile Include="WorldSocket\ClientPacket.cpp" />
+    <ClCompile Include="WorldSocket\PacketsQueue.cpp" />
     <ClCompile Include="WorldSocket\ServerPacket.cpp" />
     <ClCompile Include="WorldSocket\WorldSocket.cpp" />
     <ClCompile Include="World\Path\Path.cpp" />

@@ -433,7 +433,7 @@ void CWarden::Send_WARDEN_CMSG_CHEAT_CHECKS_RESULT(const std::vector<WardenCheck
 	if (Checks.empty())
 		return;
 
-	/*for (const auto& checksIt : Checks)
+	for (const auto& checksIt : Checks)
 	{
 		std::string dataHex;
 		for (size_t i = 0; i < sizeof(checksIt.Data); i++)
@@ -471,13 +471,13 @@ void CWarden::Send_WARDEN_CMSG_CHEAT_CHECKS_RESULT(const std::vector<WardenCheck
 				break;
 			}
 
-			Log::Warn ("Warden: Received check: Type: '%d', Data '%s', Str '%s', Address: '%d', Length '%d'.", checksIt.Type, dataHex.c_str(), checksIt.Str.c_str(), checksIt.Address, checksIt.Length);
+			//Log::Warn ("Warden: Received check: Type: '%d', Data '%s', Str '%s', Address: '%d', Length '%d'.", checksIt.Type, dataHex.c_str(), checksIt.Str.c_str(), checksIt.Address, checksIt.Length);
 		}
 		catch (const CException& e)
 		{
-			Log::Error("Warden: Received check: Type: '%d', Data '%s', Str '%s', Address: '%d', Length '%d'.", checksIt.Type, dataHex.c_str(), checksIt.Str.c_str(), checksIt.Address, checksIt.Length);
+			Log::Error("Warden: Received check: Type: '%d', Data '%s', Str '%s', Address: '%d', Length '%d'. -- UNKNOWN", checksIt.Type, dataHex.c_str(), checksIt.Str.c_str(), checksIt.Address, checksIt.Length);
 		}
-	}*/
+	}
 
 	CByteBuffer resultCheckData;
 

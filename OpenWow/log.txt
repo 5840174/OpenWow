@@ -1,10 +1,10 @@
 ^Log created
-^Plugin 'D:\OpenWow\bin_x64\Debug\znRenderDX11.dll' loaded.
-^Plugin 'D:\OpenWow\bin_x64\Debug\znRenderDX11.dll' successfully added.
-^Plugin 'D:\OpenWow\bin_x64\Debug\owGame.dll' loaded.
-^Plugin 'D:\OpenWow\bin_x64\Debug\owGame.dll' successfully added.
-^Plugin 'D:\OpenWow\bin_x64\Debug\owClient.dll' loaded.
-^Plugin 'D:\OpenWow\bin_x64\Debug\owClient.dll' successfully added.
+^Plugin 'D:\OpenWow\bin_x64\Release\znRenderDX11.dll' loaded.
+^Plugin 'D:\OpenWow\bin_x64\Release\znRenderDX11.dll' successfully added.
+^Plugin 'D:\OpenWow\bin_x64\Release\owGame.dll' loaded.
+^Plugin 'D:\OpenWow\bin_x64\Release\owGame.dll' successfully added.
+^Plugin 'D:\OpenWow\bin_x64\Release\owClient.dll' loaded.
+^Plugin 'D:\OpenWow\bin_x64\Release\owClient.dll' successfully added.
 ~MPQFile[common.MPQ]: Added!
 ~MPQFile[common-2.MPQ]: Added!
 ~MPQFile[expansion.MPQ]: Added!
@@ -71,17 +71,32 @@
 ~Loading shader 'shaders_D3D/WMO.hlsl':'PS_main'.
 ~Loading shader 'shaders_D3D/M2.hlsl':'VS_main'.
 ~Loading shader 'shaders_D3D/M2.hlsl':'PS_main'.
+~Loading shader 'shaders_D3D/M2.hlsl':'VS_main_Inst'.
+~Loading shader 'shaders_D3D/M2.hlsl':'PS_main'.
 ~Loading shader '3D/BondingBox.hlsl':'VS_main_Inst'.
 ~Loading shader '3D/BondingBox.hlsl':'PS_main'.
 ~Loading shader 'UI/UIControlCommon.hlsl':'VS_main'.
 ~Loading shader 'UI/UIControlCommon.hlsl':'PS_main'.
 ~Loading shader 'UI/UI_Font.hlsl':'VS_main'.
 ~Loading shader 'UI/UI_Font.hlsl':'PS_main'.
+^CAuthSocket::OnConnected.
 ^CAuthSocket::On_AUTH_LOGON_PROOF: Successfully logined.
-^CAuthSocket::On_REALM_LIST: Count '1'.
-^RealmType: '0', IsLocked: '0', Flag: '0x0', Name: 'Trinity', Address '127.0.0.1:8085', Population: '0,000000', CharacterCount: '1'
-^CWoWClient::OnRealmListSelected: Realm name 'Trinity'.
-@SOCKET DISCONNECTED.
+^CAuthSocket::On_REALM_LIST: Count '12'.
+^RealmType: '1', IsLocked: '0', Flag: '0x0', Name: 'WoW Circle 3.3.5a Fun', Address '51.77.57.12:12373', Population: '0,000000', CharacterCount: '0'
+^RealmType: '1', IsLocked: '0', Flag: '0x0', Name: 'WoW Circle 3.3.5a Fun Prx 1', Address '185.71.65.222:77909', Population: '0,000000', CharacterCount: '0'
+^RealmType: '1', IsLocked: '0', Flag: '0x0', Name: 'WoW Circle 3.3.5a Fun Prx 2', Address '5.252.35.3:77909', Population: '0,000000', CharacterCount: '0'
+^RealmType: '0', IsLocked: '0', Flag: '0x0', Name: 'WoW Circle 3.3.5a x1', Address '51.77.57.14:8131', Population: '0,000000', CharacterCount: '0'
+^RealmType: '0', IsLocked: '0', Flag: '0x0', Name: 'WoW Circle 3.3.5a x1 Prx 1', Address '185.71.65.111:8131', Population: '0,000000', CharacterCount: '0'
+^RealmType: '0', IsLocked: '0', Flag: '0x0', Name: 'WoW Circle 3.3.5a x1 Prx 2', Address '5.252.35.81:8131', Population: '0,000000', CharacterCount: '0'
+^RealmType: '1', IsLocked: '0', Flag: '0x0', Name: 'WoW Circle 3.3.5a x100', Address '51.77.57.12:8130', Population: '0,000000', CharacterCount: '0'
+^RealmType: '1', IsLocked: '0', Flag: '0x0', Name: 'WoW Circle 3.3.5a x100 Prx 1', Address '185.71.65.222:73666', Population: '0,000000', CharacterCount: '0'
+^RealmType: '1', IsLocked: '0', Flag: '0x0', Name: 'WoW Circle 3.3.5a x100 Prx 2', Address '5.252.35.3:73666', Population: '0,000000', CharacterCount: '0'
+^RealmType: '1', IsLocked: '0', Flag: '0x0', Name: 'WoW Circle 3.3.5a x5', Address '51.77.57.14:8129', Population: '0,000000', CharacterCount: '0'
+^RealmType: '1', IsLocked: '0', Flag: '0x0', Name: 'WoW Circle 3.3.5a x5 Prx 1', Address '185.71.65.222:73665', Population: '0,000000', CharacterCount: '0'
+^RealmType: '1', IsLocked: '0', Flag: '0x0', Name: 'WoW Circle 3.3.5a x5 Prx 2', Address '5.252.35.3:73665', Population: '0,000000', CharacterCount: '0'
+^CWoWClient::OnRealmListSelected: Realm name 'WoW Circle 3.3.5a x5'.
+@CAuthSocket::OnDisconnected.
+^CWorldSocket::OnConnected.
  Warden: Received 'MODULE_USE'.
  Warden: Sending 'MODULE_MISSING'. Size '0'.
  Warden: Received 'MODULE_CACHE'.
@@ -124,25 +139,26 @@
  Warden: Received 'MODULE_CACHE'.
 ^Warden: SMSG_MODULE_CACHE: All module readed. Readed '18756'.
  Warden: Sending 'MODULE_MISSING'. Size '0'.
-^Succes access to server!!!
-~Opcode: 'SMSG_ADDON_INFO' (0x2EF). Size: '139' not handled.
+^CWorldSocket::On_SMSG_AUTH_RESPONSE: Response is OK!
+~Opcode: 'SMSG_ADDON_INFO' (0x2EF). Size: '975' not handled.
 ~Opcode: 'SMSG_CLIENTCACHE_VERSION' (0x4AB). Size: '4' not handled.
 ~Opcode: 'SMSG_TUTORIAL_FLAGS' (0xFD). Size: '32' not handled.
  Warden: Received 'HASH_REQUEST'.
  Warden: Sending 'HASH_RESULT'. Size '20'.
- Warden: Received 'MODULE_INITIALIZE'.
  CWoWClientCharactedSelection::On_SMSG_CHAR_ENUM:: Characters count '1'.
- CWoWClientCharactedSelection::On_SMSG_CHAR_ENUM:: Character [0] name 'Dktest'.
-^CWoWClient::OnCharacterSelected: Character name 'Dktest'.
+ CWoWClientCharactedSelection::On_SMSG_CHAR_ENUM:: Character [0] name 'Yielt'.
+^CWoWClient::OnCharacterSelected: Character name 'Yielt'.
  CTransportAnimationStorage::Initialize: Loaded records for '82' transport entries.
 ~Loading shader '3D/Debug.hlsl':'VS_main'.
 ~Loading shader '3D/Debug.hlsl':'PS_main'.
-~Opcode: 'SMSG_RESYNC_RUNES' (0x487). Size: '16' not handled.
-~Opcode: 'SMSG_RESYNC_RUNES' (0x487). Size: '16' not handled.
-~Opcode: 'SMSG_RESYNC_RUNES' (0x487). Size: '16' not handled.
-~Opcode: 'SMSG_RESYNC_RUNES' (0x487). Size: '16' not handled.
-~Opcode: 'SMSG_RESYNC_RUNES' (0x487). Size: '16' not handled.
-~Opcode: 'SMSG_RESYNC_RUNES' (0x487). Size: '16' not handled.
+ Warden: Received 'MODULE_INITIALIZE'.
+~Opcode: 'SMSG_SET_PROFICIENCY' (0x127). Size: '5' not handled.
+~Opcode: 'SMSG_SET_PROFICIENCY' (0x127). Size: '5' not handled.
+~Opcode: 'SMSG_SET_PROFICIENCY' (0x127). Size: '5' not handled.
+~Opcode: 'SMSG_SET_PROFICIENCY' (0x127). Size: '5' not handled.
+~Opcode: 'SMSG_SET_PROFICIENCY' (0x127). Size: '5' not handled.
+~Opcode: 'SMSG_SET_PROFICIENCY' (0x127). Size: '5' not handled.
+~Opcode: 'SMSG_SET_PROFICIENCY' (0x127). Size: '5' not handled.
 ~Opcode: 'SMSG_SET_PROFICIENCY' (0x127). Size: '5' not handled.
 ~Opcode: 'SMSG_SET_PROFICIENCY' (0x127). Size: '5' not handled.
 ~Opcode: 'SMSG_SET_PROFICIENCY' (0x127). Size: '5' not handled.
@@ -151,12 +167,15 @@
 ~Opcode: 'SMSG_SET_PROFICIENCY' (0x127). Size: '5' not handled.
 ~Opcode: 'SMSG_SET_PROFICIENCY' (0x127). Size: '5' not handled.
 ~Opcode: 'SMSG_SET_FLAT_SPELL_MODIFIER' (0x266). Size: '6' not handled.
-~Opcode: 'SMSG_SET_PCT_SPELL_MODIFIER' (0x267). Size: '6' not handled.
 ~Opcode: 'SMSG_SET_PROFICIENCY' (0x127). Size: '5' not handled.
 ~Opcode: 'SMSG_SET_PROFICIENCY' (0x127). Size: '5' not handled.
 ~Opcode: 'SMSG_SET_PROFICIENCY' (0x127). Size: '5' not handled.
-~Opcode: 'SMSG_SET_PROFICIENCY' (0x127). Size: '5' not handled.
-~Opcode: 'SMSG_SET_PROFICIENCY' (0x127). Size: '5' not handled.
+~Opcode: 'SMSG_SET_PCT_SPELL_MODIFIER' (0x267). Size: '6' not handled.
+~Opcode: 'SMSG_SET_PCT_SPELL_MODIFIER' (0x267). Size: '6' not handled.
+~Opcode: 'SMSG_SET_PCT_SPELL_MODIFIER' (0x267). Size: '6' not handled.
+~Opcode: 'SMSG_SET_PCT_SPELL_MODIFIER' (0x267). Size: '6' not handled.
+~Opcode: 'SMSG_SET_FLAT_SPELL_MODIFIER' (0x266). Size: '6' not handled.
+~Opcode: 'SMSG_SET_FLAT_SPELL_MODIFIER' (0x266). Size: '6' not handled.
 ~Opcode: 'SMSG_SET_PCT_SPELL_MODIFIER' (0x267). Size: '6' not handled.
 ~Opcode: 'SMSG_SET_PCT_SPELL_MODIFIER' (0x267). Size: '6' not handled.
 ~Opcode: 'SMSG_SET_PCT_SPELL_MODIFIER' (0x267). Size: '6' not handled.
@@ -166,55 +185,1360 @@
 ~Opcode: 'SMSG_SET_PCT_SPELL_MODIFIER' (0x267). Size: '6' not handled.
 ~Opcode: 'SMSG_SET_PCT_SPELL_MODIFIER' (0x267). Size: '6' not handled.
 ~Opcode: 'SMSG_SET_PCT_SPELL_MODIFIER' (0x267). Size: '6' not handled.
-~Opcode: 'SMSG_CANCEL_COMBAT' (0x14E). Size: '0' not handled.
+~Opcode: 'SMSG_SET_PCT_SPELL_MODIFIER' (0x267). Size: '6' not handled.
+~Opcode: 'SMSG_SET_PCT_SPELL_MODIFIER' (0x267). Size: '6' not handled.
+~Opcode: 'SMSG_SET_PCT_SPELL_MODIFIER' (0x267). Size: '6' not handled.
+~Opcode: 'SMSG_SET_PCT_SPELL_MODIFIER' (0x267). Size: '6' not handled.
+~Opcode: 'SMSG_SET_PCT_SPELL_MODIFIER' (0x267). Size: '6' not handled.
+~Opcode: 'SMSG_SET_FLAT_SPELL_MODIFIER' (0x266). Size: '6' not handled.
+~Opcode: 'SMSG_SET_FLAT_SPELL_MODIFIER' (0x266). Size: '6' not handled.
+~Opcode: 'SMSG_SET_FLAT_SPELL_MODIFIER' (0x266). Size: '6' not handled.
+~Opcode: 'SMSG_SET_PCT_SPELL_MODIFIER' (0x267). Size: '6' not handled.
+~Opcode: 'SMSG_SET_PCT_SPELL_MODIFIER' (0x267). Size: '6' not handled.
+~Opcode: 'SMSG_SET_PCT_SPELL_MODIFIER' (0x267). Size: '6' not handled.
+~Opcode: 'SMSG_SET_PCT_SPELL_MODIFIER' (0x267). Size: '6' not handled.
+~Opcode: 'SMSG_SET_PCT_SPELL_MODIFIER' (0x267). Size: '6' not handled.
+~Opcode: 'SMSG_SET_PCT_SPELL_MODIFIER' (0x267). Size: '6' not handled.
+~Opcode: 'SMSG_SET_PCT_SPELL_MODIFIER' (0x267). Size: '6' not handled.
+~Opcode: 'SMSG_SET_FLAT_SPELL_MODIFIER' (0x266). Size: '6' not handled.
+~Opcode: 'SMSG_SET_FLAT_SPELL_MODIFIER' (0x266). Size: '6' not handled.
+~Opcode: 'SMSG_SET_FLAT_SPELL_MODIFIER' (0x266). Size: '6' not handled.
+~Opcode: 'SMSG_SET_FLAT_SPELL_MODIFIER' (0x266). Size: '6' not handled.
+~Opcode: 'SMSG_SET_FLAT_SPELL_MODIFIER' (0x266). Size: '6' not handled.
+~Opcode: 'SMSG_SET_FLAT_SPELL_MODIFIER' (0x266). Size: '6' not handled.
+~Opcode: 'SMSG_SET_FLAT_SPELL_MODIFIER' (0x266). Size: '6' not handled.
+~Opcode: 'SMSG_SET_PCT_SPELL_MODIFIER' (0x267). Size: '6' not handled.
+~Opcode: 'SMSG_SET_FLAT_SPELL_MODIFIER' (0x266). Size: '6' not handled.
+~Opcode: 'SMSG_SET_PCT_SPELL_MODIFIER' (0x267). Size: '6' not handled.
+~Opcode: 'SMSG_SET_PCT_SPELL_MODIFIER' (0x267). Size: '6' not handled.
+~Opcode: 'SMSG_SET_PCT_SPELL_MODIFIER' (0x267). Size: '6' not handled.
+~Opcode: 'SMSG_SET_PCT_SPELL_MODIFIER' (0x267). Size: '6' not handled.
+~Opcode: 'SMSG_SET_PCT_SPELL_MODIFIER' (0x267). Size: '6' not handled.
+~Opcode: 'SMSG_SET_PCT_SPELL_MODIFIER' (0x267). Size: '6' not handled.
+~Opcode: 'SMSG_SET_PCT_SPELL_MODIFIER' (0x267). Size: '6' not handled.
+~Opcode: 'SMSG_FORCE_RUN_SPEED_CHANGE' (0xE2). Size: '13' not handled.
+~Opcode: 'SMSG_FORCE_WALK_SPEED_CHANGE' (0x2DA). Size: '12' not handled.
+~Opcode: 'SMSG_SET_FLAT_SPELL_MODIFIER' (0x266). Size: '6' not handled.
+~Opcode: 'SMSG_SET_FLAT_SPELL_MODIFIER' (0x266). Size: '6' not handled.
+~Opcode: 'SMSG_SET_PCT_SPELL_MODIFIER' (0x267). Size: '6' not handled.
+~Opcode: 'SMSG_SET_FLAT_SPELL_MODIFIER' (0x266). Size: '6' not handled.
 ~Opcode: 'MSG_SET_DUNGEON_DIFFICULTY' (0x329). Size: '12' not handled.
-~Sky: [1] is global sky.
- Map[Azeroth]: Id = '0'. Preloading...
- Map[Azeroth]: InstanceType = '0'.
- Map[Azeroth]: MapType = '0'.
- Map[Azeroth]: IsBattleGround = '0'.
- Map[Azeroth]: Name = 'Восточные королевства'.
- Map[Azeroth]: AreaTableID = '0'.
- Map[Azeroth]: AllianceDescr = ''.
- Map[Azeroth]: HordeDescr = ''.
- Map[Azeroth]: CorpseMapID = '-1'.
- Map[ z$�]: Id [0]. Loading...
-^CMapWDL: Low WMOs count [0].
+~Sky: [752] is global sky.
+ Map[Northrend]: Id = '571'. Preloading...
+ Map[Northrend]: InstanceType = '0'.
+ Map[Northrend]: MapType = '29'.
+ Map[Northrend]: IsBattleGround = '0'.
+ Map[Northrend]: Name = 'Нордскол'.
+ Map[Northrend]: AreaTableID = '0'.
+ Map[Northrend]: AllianceDescr = ''.
+ Map[Northrend]: HordeDescr = ''.
+ Map[Northrend]: CorpseMapID = '0'.
+ Map[Northrend]: Id [571]. Loading...
+^CMapWDL: Low WMOs count [4].
 ~MapWDT: Global WMO exists [false].
 ~Opcode: 'SMSG_ACCOUNT_DATA_TIMES' (0x209). Size: '29' not handled.
 ~Opcode: 'SMSG_FEATURE_SYSTEM_STATUS' (0x3C9). Size: '2' not handled.
-^MOTD: Welcome to a Trinity Core server.
+^MOTD: Welcome to World of Warcraft Server - WoW Circle
 ~Opcode: 'SMSG_LEARNED_DANCE_MOVES' (0x455). Size: '8' not handled.
-~Opcode: 'SMSG_CONTACT_LIST' (0x67). Size: '8' not handled.
+~Opcode: 'SMSG_CONTACT_LIST' (0x67). Size: '73' not handled.
 ~Opcode: 'SMSG_BIND_POINT_UPDATE' (0x155). Size: '20' not handled.
-~Opcode: 'SMSG_TALENTS_INFO' (0x4C0). Size: '21' not handled.
+~Opcode: 'SMSG_TALENTS_INFO' (0x4C0). Size: '270' not handled.
 ~Opcode: 'SMSG_INSTANCE_DIFFICULTY' (0x33B). Size: '8' not handled.
-~Opcode: 'SMSG_INITIAL_SPELLS' (0x12A). Size: '419' not handled.
+~Opcode: 'SMSG_INITIAL_SPELLS' (0x12A). Size: '3521' not handled.
 ~Opcode: 'SMSG_SEND_UNLEARN_SPELLS' (0x41E). Size: '4' not handled.
 ~Opcode: 'SMSG_ACTION_BUTTONS' (0x129). Size: '577' not handled.
 ~Opcode: 'SMSG_INITIALIZE_FACTIONS' (0x122). Size: '644' not handled.
-~Opcode: 'SMSG_ALL_ACHIEVEMENT_DATA' (0x47D). Size: '1433' not handled.
+~Opcode: 'SMSG_ALL_ACHIEVEMENT_DATA' (0x47D). Size: '27013' not handled.
+~Opcode: 'SMSG_EQUIPMENT_SET_LIST' (0x4BC). Size: '4' not handled.
 ~Opcode: 'SMSG_EQUIPMENT_SET_LIST' (0x4BC). Size: '4' not handled.
 ~Opcode: 'SMSG_LOGIN_SET_TIME_SPEED' (0x42). Size: '12' not handled.
 ~Opcode: 'SMSG_SET_FORCED_REACTIONS' (0x2A5). Size: '4' not handled.
-~Opcode: 'SMSG_RESYNC_RUNES' (0x487). Size: '16' not handled.
- Value '12' missed!!!!!!!!!!!!
- Value '12' missed!!!!!!!!!!!!
- Value '12' missed!!!!!!!!!!!!
- Value '12' missed!!!!!!!!!!!!
-^---Create WoWGameObjectMOTransport with Type 'MoTransport', Entry '0', Counter '1'
-^---Create WoWGameObjectMOTransport with Type 'MoTransport', Entry '0', Counter '4'
-^---Create WoWGameObjectMOTransport with Type 'MoTransport', Entry '0', Counter '5'
-^---Create WoWGameObjectMOTransport with Type 'MoTransport', Entry '0', Counter '10'
+^---Create WoWGameObjectMOTransport with Type 'MoTransport', Entry '0', Counter '16'
 ^---Create WoWGameObjectMOTransport with Type 'MoTransport', Entry '0', Counter '17'
-~Opcode: 'SMSG_INIT_WORLD_STATES' (0x2C2). Size: '78' not handled.
-~Opcode: 'SMSG_AURA_UPDATE_ALL' (0x495). Size: '18' not handled.
-~Opcode: 'SMSG_QUESTGIVER_STATUS_MULTIPLE' (0x418). Size: '4' not handled.
-^NOTIFICATION: GM mode is ON
- Warden: Received 'CHEAT_CHECKS_REQUEST'.
- Warden: Sending 'CHEAT_CHECKS_RESULT'. Size '13'.
- Warden: Received 'CHEAT_CHECKS_REQUEST'.
- Warden: Sending 'CHEAT_CHECKS_RESULT'. Size '13'.
- Warden: Received 'CHEAT_CHECKS_REQUEST'.
- Warden: Sending 'CHEAT_CHECKS_RESULT'. Size '13'.
+^---Create WoWGameObjectMOTransport with Type 'MoTransport', Entry '0', Counter '18'
+^---Create WoWGameObjectMOTransport with Type 'MoTransport', Entry '0', Counter '19'
+^---Create WoWGameObjectMOTransport with Type 'MoTransport', Entry '0', Counter '10'
 ^---Create WoWGameObjectMOTransport with Type 'MoTransport', Entry '0', Counter '11'
+^---Create WoWGameObjectMOTransport with Type 'MoTransport', Entry '0', Counter '12'
+^---Create WoWGameObjectMOTransport with Type 'MoTransport', Entry '0', Counter '14'
+^---Create WoWGameObjectMOTransport with Type 'MoTransport', Entry '0', Counter '15'
+!CImageBLP: Unable to load PLP file 'TCB_CrystalSong_B.blp'.
+!File 'TILESET\Terrain Cube Maps\TCB_CrystalSong_B_s.blp' not exists.
+~Opcode: 'SMSG_ATTACK_STOP' (0x144). Size: '9' not handled.
+~Opcode: 'SMSG_CANCEL_COMBAT' (0x14E). Size: '0' not handled.
+~Opcode: 'SMSG_WEATHER' (0x2F4). Size: '9' not handled.
+~Opcode: 'SMSG_INIT_WORLD_STATES' (0x2C2). Size: '110' not handled.
+~Opcode: 'SMSG_QUESTGIVER_STATUS_MULTIPLE' (0x418). Size: '67' not handled.
+ []: |cFF00a550На этой неделе доступен Наксрамас на героической сложности!|r
+ []: ВНИМАНИЕ! Вы не можете удалять/продавать/распылять предметы высокого уровня. Причина: изменение подсети, из которой происходит вход в игру или в личный кабинет на сайте, было 2021-07-04_02-11-05 - менее 7 суток назад. Чтобы не зависеть от изменения подсети, включите двухфакторную авторизацию. https://cutt.ly/wow2fa
+~Opcode: 'SMSG_PET_SPELLS' (0x179). Size: '188' not handled.
+~Opcode: 'SMSG_TALENTS_INFO' (0x4C0). Size: '51' not handled.
+~Opcode: 'MSG_MOVE_TIME_SKIPPED' (0x319). Size: '8' not handled.
+~Opcode: 'SMSG_SPELLLOGEXECUTE' (0x24C). Size: '24' not handled.
+~Opcode: 'MSG_MOVE_TIME_SKIPPED' (0x319). Size: '8' not handled.
+~Opcode: 'SMSG_SPELL_START' (0x131). Size: '29' not handled.
+~Opcode: 'MSG_MOVE_TIME_SKIPPED' (0x319). Size: '8' not handled.
+~Opcode: 'MSG_MOVE_TIME_SKIPPED' (0x319). Size: '8' not handled.
+~Opcode: 'MSG_MOVE_TIME_SKIPPED' (0x319). Size: '8' not handled.
+~Opcode: 'SMSG_ATTACK_STOP' (0x144). Size: '9' not handled.
+~Opcode: 'MSG_MOVE_TIME_SKIPPED' (0x319). Size: '8' not handled.
+~Opcode: 'MSG_MOVE_TIME_SKIPPED' (0x319). Size: '8' not handled.
+~Opcode: 'SMSG_SPELLLOGEXECUTE' (0x24C). Size: '24' not handled.
+~Opcode: 'MSG_MOVE_TIME_SKIPPED' (0x319). Size: '8' not handled.
+~Opcode: 'SMSG_SPELL_START' (0x131). Size: '29' not handled.
+~Opcode: 'SMSG_SPELL_START' (0x131). Size: '29' not handled.
+~Opcode: 'SMSG_PERIODICAURALOG' (0x24E). Size: '33' not handled.
+~Opcode: 'MSG_MOVE_TIME_SKIPPED' (0x319). Size: '8' not handled.
+~Opcode: 'SMSG_SPELL_START' (0x131). Size: '35' not handled.
+~Opcode: 'MSG_MOVE_TIME_SKIPPED' (0x319). Size: '8' not handled.
+~Opcode: 'SMSG_SPELLLOGEXECUTE' (0x24C). Size: '24' not handled.
+~Opcode: 'MSG_MOVE_TIME_SKIPPED' (0x319). Size: '8' not handled.
+~Opcode: 'MSG_MOVE_TIME_SKIPPED' (0x319). Size: '8' not handled.
+~Opcode: 'SMSG_SPELL_START' (0x131). Size: '29' not handled.
+~Opcode: 'SMSG_SPELL_START' (0x131). Size: '29' not handled.
+~Opcode: 'SMSG_ATTACK_STOP' (0x144). Size: '9' not handled.
+~Opcode: 'MSG_MOVE_TIME_SKIPPED' (0x319). Size: '8' not handled.
+~Opcode: 'MSG_MOVE_TIME_SKIPPED' (0x319). Size: '8' not handled.
+~Opcode: 'MSG_MOVE_TIME_SKIPPED' (0x319). Size: '8' not handled.
+~Opcode: 'MSG_MOVE_TIME_SKIPPED' (0x319). Size: '8' not handled.
+~Opcode: 'SMSG_SPELLLOGEXECUTE' (0x24C). Size: '24' not handled.
+~Opcode: 'SMSG_SPELL_START' (0x131). Size: '29' not handled.
+~Opcode: 'MSG_MOVE_TIME_SKIPPED' (0x319). Size: '8' not handled.
+~Opcode: 'SMSG_ATTACK_STOP' (0x144). Size: '9' not handled.
+~Opcode: 'MSG_MOVE_TIME_SKIPPED' (0x319). Size: '8' not handled.
+~Opcode: 'SMSG_SPELLLOGEXECUTE' (0x24C). Size: '24' not handled.
+~Opcode: 'MSG_MOVE_TIME_SKIPPED' (0x319). Size: '8' not handled.
+~Opcode: 'SMSG_SPELL_START' (0x131). Size: '29' not handled.
+~Opcode: 'SMSG_SPELLLOGEXECUTE' (0x24C). Size: '24' not handled.
+~Opcode: 'SMSG_SPELL_START' (0x131). Size: '35' not handled.
+~Opcode: 'SMSG_PLAYER_VEHICLE_DATA' (0x4A7). Size: '8' not handled.
+~Opcode: 'SMSG_ATTACK_STOP' (0x144). Size: '9' not handled.
+~Opcode: 'MSG_MOVE_TIME_SKIPPED' (0x319). Size: '8' not handled.
+~Opcode: 'MSG_MOVE_TIME_SKIPPED' (0x319). Size: '8' not handled.
+~Opcode: 'MSG_MOVE_TIME_SKIPPED' (0x319). Size: '8' not handled.
+~Opcode: 'SMSG_BREAK_TARGET' (0x152). Size: '8' not handled.
+~Opcode: 'SMSG_SPLINE_MOVE_ROOT' (0x31A). Size: '8' not handled.
+~Opcode: 'SMSG_BREAK_TARGET' (0x152). Size: '8' not handled.
+~Opcode: 'SMSG_SPLINE_MOVE_ROOT' (0x31A). Size: '8' not handled.
+~Opcode: 'SMSG_SPELLLOGEXECUTE' (0x24C). Size: '24' not handled.
+~Opcode: 'MSG_MOVE_TIME_SKIPPED' (0x319). Size: '8' not handled.
+~Opcode: 'SMSG_SPELL_START' (0x131). Size: '29' not handled.
+~Opcode: 'MSG_MOVE_TIME_SKIPPED' (0x319). Size: '8' not handled.
+~Opcode: 'MSG_MOVE_TIME_SKIPPED' (0x319). Size: '8' not handled.
+~Opcode: 'MSG_MOVE_TIME_SKIPPED' (0x319). Size: '8' not handled.
+~Opcode: 'SMSG_SPELLLOGEXECUTE' (0x24C). Size: '24' not handled.
+~Opcode: 'SMSG_SPELL_START' (0x131). Size: '29' not handled.
+~Opcode: 'MSG_MOVE_TIME_SKIPPED' (0x319). Size: '8' not handled.
+~Opcode: 'MSG_MOVE_TIME_SKIPPED' (0x319). Size: '8' not handled.
+~Opcode: 'MSG_MOVE_TIME_SKIPPED' (0x319). Size: '8' not handled.
+~Opcode: 'SMSG_SPELL_START' (0x131). Size: '35' not handled.
+~Opcode: 'SMSG_SPELLLOGEXECUTE' (0x24C). Size: '24' not handled.
+~Opcode: 'SMSG_SPELLLOGEXECUTE' (0x24C). Size: '24' not handled.
+~Opcode: 'MSG_MOVE_TIME_SKIPPED' (0x319). Size: '8' not handled.
+~Opcode: 'SMSG_SPELL_START' (0x131). Size: '29' not handled.
+~Opcode: 'MSG_MOVE_TIME_SKIPPED' (0x319). Size: '8' not handled.
+~Opcode: 'MSG_MOVE_TIME_SKIPPED' (0x319). Size: '8' not handled.
+ []: ха
+~Opcode: 'SMSG_SPELL_START' (0x131). Size: '31' not handled.
+~Opcode: 'MSG_MOVE_TIME_SKIPPED' (0x319). Size: '8' not handled.
+~Opcode: 'MSG_MOVE_TIME_SKIPPED' (0x319). Size: '8' not handled.
+~Opcode: 'SMSG_SPELLLOGEXECUTE' (0x24C). Size: '24' not handled.
+~Opcode: 'MSG_MOVE_TIME_SKIPPED' (0x319). Size: '8' not handled.
+~Opcode: 'MSG_MOVE_TIME_SKIPPED' (0x319). Size: '8' not handled.
+~Opcode: 'SMSG_SPELL_START' (0x131). Size: '29' not handled.
+~Opcode: 'MSG_MOVE_TIME_SKIPPED' (0x319). Size: '8' not handled.
+~Opcode: 'MSG_MOVE_TIME_SKIPPED' (0x319). Size: '8' not handled.
+~Opcode: 'MSG_MOVE_TIME_SKIPPED' (0x319). Size: '8' not handled.
+~Opcode: 'SMSG_SPELLLOGEXECUTE' (0x24C). Size: '24' not handled.
+~Opcode: 'SMSG_SPELL_START' (0x131). Size: '29' not handled.
+~Opcode: 'SMSG_PERIODICAURALOG' (0x24E). Size: '33' not handled.
+~Opcode: 'MSG_MOVE_TIME_SKIPPED' (0x319). Size: '8' not handled.
+~Opcode: 'SMSG_ATTACK_STOP' (0x144). Size: '9' not handled.
+~Opcode: 'SMSG_ATTACK_STOP' (0x144). Size: '9' not handled.
+~Opcode: 'SMSG_ATTACK_STOP' (0x144). Size: '9' not handled.
+~Opcode: 'MSG_MOVE_TIME_SKIPPED' (0x319). Size: '8' not handled.
+~Opcode: 'SMSG_SPELL_START' (0x131). Size: '35' not handled.
+~Opcode: 'SMSG_SPLINE_MOVE_SET_RUN_MODE' (0x30D). Size: '8' not handled.
+~Opcode: 'SMSG_SPELLLOGEXECUTE' (0x24C). Size: '24' not handled.
+~Opcode: 'MSG_MOVE_TIME_SKIPPED' (0x319). Size: '8' not handled.
+~Opcode: 'SMSG_SPELL_START' (0x131). Size: '29' not handled.
+~Opcode: 'MSG_MOVE_TIME_SKIPPED' (0x319). Size: '8' not handled.
+~Opcode: 'MSG_MOVE_TIME_SKIPPED' (0x319). Size: '8' not handled.
+~Opcode: 'SMSG_SPELLLOGEXECUTE' (0x24C). Size: '24' not handled.
+~Opcode: 'MSG_MOVE_TIME_SKIPPED' (0x319). Size: '8' not handled.
+~Opcode: 'SMSG_SPELL_START' (0x131). Size: '29' not handled.
+~Opcode: 'MSG_MOVE_TIME_SKIPPED' (0x319). Size: '8' not handled.
+~Opcode: 'MSG_MOVE_TIME_SKIPPED' (0x319). Size: '8' not handled.
+~Opcode: 'MSG_MOVE_TIME_SKIPPED' (0x319). Size: '8' not handled.
+~Opcode: 'SMSG_SPELLLOGEXECUTE' (0x24C). Size: '24' not handled.
+~Opcode: 'SMSG_ATTACK_STOP' (0x144). Size: '9' not handled.
+~Opcode: 'SMSG_SPELL_START' (0x131). Size: '29' not handled.
+~Opcode: 'SMSG_SPELL_START' (0x131). Size: '35' not handled.
+~Opcode: 'MSG_MOVE_TIME_SKIPPED' (0x319). Size: '8' not handled.
+~Opcode: 'SMSG_SPELL_START' (0x131). Size: '29' not handled.
+~Opcode: 'MSG_MOVE_TIME_SKIPPED' (0x319). Size: '8' not handled.
+~Opcode: 'MSG_MOVE_TIME_SKIPPED' (0x319). Size: '8' not handled.
+~Opcode: 'SMSG_SPELLLOGEXECUTE' (0x24C). Size: '24' not handled.
+~Opcode: 'MSG_MOVE_TIME_SKIPPED' (0x319). Size: '8' not handled.
+~Opcode: 'SMSG_SPELL_START' (0x131). Size: '29' not handled.
+~Opcode: 'SMSG_ATTACK_STOP' (0x144). Size: '13' not handled.
+~Opcode: 'MSG_MOVE_TIME_SKIPPED' (0x319). Size: '8' not handled.
+~Opcode: 'SMSG_SPELLLOGEXECUTE' (0x24C). Size: '24' not handled.
+~Opcode: 'MSG_MOVE_TIME_SKIPPED' (0x319). Size: '8' not handled.
+~Opcode: 'SMSG_SPELL_START' (0x131). Size: '29' not handled.
+~Opcode: 'SMSG_SPELL_START' (0x131). Size: '29' not handled.
+~Opcode: 'SMSG_ATTACK_STOP' (0x144). Size: '9' not handled.
+~Opcode: 'MSG_MOVE_TIME_SKIPPED' (0x319). Size: '8' not handled.
+~Opcode: 'SMSG_ATTACK_STOP' (0x144). Size: '9' not handled.
+~Opcode: 'SMSG_SPELL_START' (0x131). Size: '35' not handled.
+~Opcode: 'SMSG_ATTACK_STOP' (0x144). Size: '9' not handled.
+~Opcode: 'MSG_MOVE_TIME_SKIPPED' (0x319). Size: '8' not handled.
+~Opcode: 'SMSG_SPELLLOGEXECUTE' (0x24C). Size: '24' not handled.
+~Opcode: 'SMSG_SPELL_START' (0x131). Size: '29' not handled.
+~Opcode: 'MSG_MOVE_TIME_SKIPPED' (0x319). Size: '8' not handled.
+~Opcode: 'SMSG_SPELLLOGEXECUTE' (0x24C). Size: '24' not handled.
+ Warden: Received 'CHEAT_CHECKS_REQUEST'.
+ Warden: SMSG_CHEAT_CHECKS_REQUEST: Add string 'DBFilesClient\Spell.dbc' with size '23' to cache.
+ Warden: Sending 'CHEAT_CHECKS_RESULT'. Size '32'.
+ Warden: Received 'MODULE_INITIALIZE'.
+~Opcode: 'MSG_MOVE_TIME_SKIPPED' (0x319). Size: '8' not handled.
+~Opcode: 'SMSG_SPELLLOGEXECUTE' (0x24C). Size: '24' not handled.
+~Opcode: 'MSG_MOVE_TIME_SKIPPED' (0x319). Size: '8' not handled.
+~Opcode: 'SMSG_SPELL_START' (0x131). Size: '29' not handled.
+~Opcode: 'SMSG_SPELL_START' (0x131). Size: '29' not handled.
+~Opcode: 'SMSG_ATTACK_STOP' (0x144). Size: '9' not handled.
+~Opcode: 'MSG_MOVE_TIME_SKIPPED' (0x319). Size: '8' not handled.
+~Opcode: 'SMSG_SPELL_START' (0x131). Size: '29' not handled.
+~Opcode: 'MSG_MOVE_TIME_SKIPPED' (0x319). Size: '8' not handled.
+~Opcode: 'SMSG_SPELL_START' (0x131). Size: '35' not handled.
+~Opcode: 'SMSG_SPELLLOGEXECUTE' (0x24C). Size: '24' not handled.
+~Opcode: 'MSG_MOVE_TIME_SKIPPED' (0x319). Size: '8' not handled.
+~Opcode: 'SMSG_SPELL_START' (0x131). Size: '29' not handled.
+~Opcode: 'SMSG_PERIODICAURALOG' (0x24E). Size: '33' not handled.
+~Opcode: 'MSG_MOVE_TIME_SKIPPED' (0x319). Size: '8' not handled.
+~Opcode: 'MSG_MOVE_TIME_SKIPPED' (0x319). Size: '8' not handled.
+~Opcode: 'SMSG_ATTACK_STOP' (0x144). Size: '9' not handled.
+~Opcode: 'SMSG_SPELLLOGEXECUTE' (0x24C). Size: '24' not handled.
+~Opcode: 'SMSG_SPELL_START' (0x131). Size: '29' not handled.
+~Opcode: 'MSG_MOVE_TIME_SKIPPED' (0x319). Size: '8' not handled.
+~Opcode: 'SMSG_ATTACK_STOP' (0x144). Size: '9' not handled.
+~Opcode: 'CMSG_MOVE_SET_FLY' (0x346). Size: '50' not handled.
+~Opcode: 'SMSG_SPELL_START' (0x131). Size: '31' not handled.
+~Opcode: 'SMSG_HIGHEST_THREAT_UPDATE' (0x482). Size: '23' not handled.
+~Opcode: 'SMSG_AI_REACTION' (0x13C). Size: '12' not handled.
+~Opcode: 'SMSG_ATTACK_START' (0x143). Size: '16' not handled.
+~Opcode: 'SMSG_ATTACK_STOP' (0x144). Size: '9' not handled.
+~Opcode: 'MSG_MOVE_TIME_SKIPPED' (0x319). Size: '8' not handled.
+~Opcode: 'MSG_MOVE_TIME_SKIPPED' (0x319). Size: '8' not handled.
+~Opcode: 'SMSG_SPELLLOGEXECUTE' (0x24C). Size: '24' not handled.
+~Opcode: 'MSG_MOVE_TIME_SKIPPED' (0x319). Size: '8' not handled.
+~Opcode: 'SMSG_SPELL_START' (0x131). Size: '29' not handled.
+~Opcode: 'SMSG_ATTACK_STOP' (0x144). Size: '9' not handled.
+~Opcode: 'SMSG_SPELL_START' (0x131). Size: '35' not handled.
+^---Create WoWGameObjectMOTransport with Type 'MoTransport', Entry '0', Counter '13'
+~Opcode: 'MSG_MOVE_TIME_SKIPPED' (0x319). Size: '8' not handled.
+~Opcode: 'MSG_MOVE_TIME_SKIPPED' (0x319). Size: '8' not handled.
+~Opcode: 'CMSG_MOVE_SET_FLY' (0x346). Size: '38' not handled.
+~Opcode: 'SMSG_SPELLLOGEXECUTE' (0x24C). Size: '24' not handled.
+~Opcode: 'MSG_MOVE_TIME_SKIPPED' (0x319). Size: '8' not handled.
+~Opcode: 'SMSG_SPELL_START' (0x131). Size: '29' not handled.
+~Opcode: 'SMSG_THREAT_UPDATE' (0x483). Size: '19' not handled.
+~Opcode: 'SMSG_ATTACKERSTATEUPDATE' (0x14A). Size: '45' not handled.
+~Opcode: 'SMSG_ATTACK_STOP' (0x144). Size: '9' not handled.
+~Opcode: 'MSG_MOVE_TIME_SKIPPED' (0x319). Size: '8' not handled.
+~Opcode: 'SMSG_SPELL_START' (0x131). Size: '29' not handled.
+~Opcode: 'MSG_MOVE_TIME_SKIPPED' (0x319). Size: '8' not handled.
+~Opcode: 'MSG_MOVE_TIME_SKIPPED' (0x319). Size: '8' not handled.
+~Opcode: 'MSG_MOVE_TIME_SKIPPED' (0x319). Size: '8' not handled.
+!--->LoaderThread: OnLoaded() exception 'CCharacterItemM2Instance::GetCharacterItem: CharacterItem isn't loaded. State = '1''.
+~Opcode: 'MSG_MOVE_TIME_SKIPPED' (0x319). Size: '8' not handled.
+~Opcode: 'SMSG_SPELLLOGEXECUTE' (0x24C). Size: '24' not handled.
+~Opcode: 'SMSG_SPELL_START' (0x131). Size: '29' not handled.
+~Opcode: 'SMSG_SPELL_START' (0x131). Size: '31' not handled.
+~Opcode: 'SMSG_AI_REACTION' (0x13C). Size: '12' not handled.
+~Opcode: 'SMSG_ATTACK_START' (0x143). Size: '16' not handled.
+~Opcode: 'SMSG_HIGHEST_THREAT_UPDATE' (0x482). Size: '23' not handled.
+~Opcode: 'SMSG_ATTACK_STOP' (0x144). Size: '9' not handled.
+~Opcode: 'MSG_MOVE_TIME_SKIPPED' (0x319). Size: '8' not handled.
+~Opcode: 'SMSG_ATTACK_START' (0x143). Size: '16' not handled.
+~Opcode: 'SMSG_ATTACK_START' (0x143). Size: '16' not handled.
+~Opcode: 'SMSG_ATTACK_START' (0x143). Size: '16' not handled.
+~Opcode: 'MSG_MOVE_TIME_SKIPPED' (0x319). Size: '8' not handled.
+~Opcode: 'SMSG_SPELL_START' (0x131). Size: '35' not handled.
+~Opcode: 'SMSG_THREAT_UPDATE' (0x483). Size: '19' not handled.
+~Opcode: 'SMSG_SPELLLOGEXECUTE' (0x24C). Size: '24' not handled.
+~Opcode: 'MSG_MOVE_UPDATE_CAN_FLY' (0x3AD). Size: '34' not handled.
+~Opcode: 'MSG_MOVE_TIME_SKIPPED' (0x319). Size: '8' not handled.
+~Opcode: 'MSG_MOVE_TIME_SKIPPED' (0x319). Size: '8' not handled.
+~Opcode: 'SMSG_SPELL_START' (0x131). Size: '29' not handled.
+~Opcode: 'SMSG_SPELL_START' (0x131). Size: '31' not handled.
+~Opcode: 'SMSG_ATTACK_STOP' (0x144). Size: '9' not handled.
+!--->LoaderThread: OnLoaded() exception 'CCharacterItemM2Instance::GetCharacterItem: CharacterItem isn't loaded. State = '1''.
+~Opcode: 'SMSG_ATTACK_START' (0x143). Size: '16' not handled.
+~Opcode: 'SMSG_ATTACK_START' (0x143). Size: '16' not handled.
+ []: В РС 25 гер. Ласт слот Хпал гс 6.2+ Анр не триня
+~Opcode: 'MSG_MOVE_TIME_SKIPPED' (0x319). Size: '8' not handled.
+~Opcode: 'SMSG_THREAT_UPDATE' (0x483). Size: '19' not handled.
+~Opcode: 'MSG_MOVE_TIME_SKIPPED' (0x319). Size: '8' not handled.
+~Opcode: 'SMSG_SPELL_START' (0x131). Size: '29' not handled.
+~Opcode: 'SMSG_SPELLLOGEXECUTE' (0x24C). Size: '24' not handled.
+~Opcode: 'MSG_MOVE_TIME_SKIPPED' (0x319). Size: '8' not handled.
+~Opcode: 'SMSG_SPELL_START' (0x131). Size: '29' not handled.
+~Opcode: 'SMSG_ATTACKERSTATEUPDATE' (0x14A). Size: '45' not handled.
+~Opcode: 'SMSG_SPELLDAMAGESHIELD' (0x24F). Size: '32' not handled.
+~Opcode: 'SMSG_ATTACK_STOP' (0x144). Size: '9' not handled.
+~Opcode: 'SMSG_ATTACK_START' (0x143). Size: '16' not handled.
+~Opcode: 'SMSG_ATTACK_START' (0x143). Size: '16' not handled.
+~Opcode: 'MSG_MOVE_TIME_SKIPPED' (0x319). Size: '8' not handled.
+~Opcode: 'MSG_MOVE_TIME_SKIPPED' (0x319). Size: '8' not handled.
+~Opcode: 'SMSG_THREAT_UPDATE' (0x483). Size: '19' not handled.
+~Opcode: 'SMSG_ATTACK_START' (0x143). Size: '16' not handled.
+~Opcode: 'SMSG_ATTACK_START' (0x143). Size: '16' not handled.
+~Opcode: 'SMSG_SPELLLOGEXECUTE' (0x24C). Size: '24' not handled.
+~Opcode: 'SMSG_ATTACK_START' (0x143). Size: '16' not handled.
+~Opcode: 'MSG_MOVE_TIME_SKIPPED' (0x319). Size: '8' not handled.
+~Opcode: 'MSG_MOVE_TIME_SKIPPED' (0x319). Size: '8' not handled.
+~Opcode: 'MSG_MOVE_TIME_SKIPPED' (0x319). Size: '8' not handled.
+!--->LoaderThread: OnLoaded() exception 'CCharacterItemM2Instance::GetCharacterItem: CharacterItem isn't loaded. State = '1''.
+~Opcode: 'SMSG_SPELL_START' (0x131). Size: '29' not handled.
+~Opcode: 'SMSG_ATTACK_START' (0x143). Size: '16' not handled.
+~Opcode: 'SMSG_ATTACK_START' (0x143). Size: '16' not handled.
+~Opcode: 'SMSG_ATTACK_START' (0x143). Size: '16' not handled.
+~Opcode: 'SMSG_ATTACK_START' (0x143). Size: '16' not handled.
+~Opcode: 'SMSG_ATTACK_START' (0x143). Size: '16' not handled.
+~Opcode: 'SMSG_ATTACK_START' (0x143). Size: '16' not handled.
+~Opcode: 'SMSG_ATTACK_START' (0x143). Size: '16' not handled.
+~Opcode: 'SMSG_ATTACK_START' (0x143). Size: '16' not handled.
+~Opcode: 'SMSG_SPELLLOGEXECUTE' (0x24C). Size: '24' not handled.
+~Opcode: 'SMSG_ATTACK_STOP' (0x144). Size: '9' not handled.
+~Opcode: 'MSG_MOVE_TIME_SKIPPED' (0x319). Size: '8' not handled.
+~Opcode: 'SMSG_ATTACK_START' (0x143). Size: '16' not handled.
+~Opcode: 'SMSG_ATTACK_START' (0x143). Size: '16' not handled.
+~Opcode: 'SMSG_ATTACK_START' (0x143). Size: '16' not handled.
+~Opcode: 'SMSG_SPELL_START' (0x131). Size: '36' not handled.
+~Opcode: 'SMSG_SPELLNONMELEEDAMAGELOG' (0x250). Size: '43' not handled.
+~Opcode: 'SMSG_SPELLENERGIZELOG' (0x151). Size: '20' not handled.
+~Opcode: 'SMSG_SPELL_START' (0x131). Size: '29' not handled.
+~Opcode: 'SMSG_ATTACKERSTATEUPDATE' (0x14A). Size: '45' not handled.
+~Opcode: 'MSG_MOVE_TIME_SKIPPED' (0x319). Size: '8' not handled.
+~Opcode: 'SMSG_SPELL_START' (0x131). Size: '35' not handled.
+~Opcode: 'SMSG_THREAT_UPDATE' (0x483). Size: '19' not handled.
+~Opcode: 'MSG_MOVE_TIME_SKIPPED' (0x319). Size: '8' not handled.
+~Opcode: 'SMSG_ATTACK_START' (0x143). Size: '16' not handled.
+~Opcode: 'SMSG_ATTACK_START' (0x143). Size: '16' not handled.
+~Opcode: 'SMSG_ATTACK_START' (0x143). Size: '16' not handled.
+~Opcode: 'SMSG_ATTACK_STOP' (0x144). Size: '9' not handled.
+~Opcode: 'SMSG_ATTACK_STOP' (0x144). Size: '9' not handled.
+~Opcode: 'SMSG_ATTACK_STOP' (0x144). Size: '9' not handled.
+~Opcode: 'SMSG_ATTACKERSTATEUPDATE' (0x14A). Size: '45' not handled.
+~Opcode: 'SMSG_SPELLDAMAGESHIELD' (0x24F). Size: '32' not handled.
+!--->LoaderThread: OnLoaded() exception 'CCharacterItemM2Instance::GetCharacterItem: CharacterItem isn't loaded. State = '1''.
+~Opcode: 'MSG_MOVE_TIME_SKIPPED' (0x319). Size: '8' not handled.
+~Opcode: 'MSG_MOVE_TIME_SKIPPED' (0x319). Size: '8' not handled.
+~Opcode: 'SMSG_SPELLLOGEXECUTE' (0x24C). Size: '24' not handled.
+~Opcode: 'MSG_MOVE_TIME_SKIPPED' (0x319). Size: '8' not handled.
+!--->LoaderThread: OnLoaded() exception 'CCharacterItemM2Instance::GetCharacterInstance: M2Parent must exists'.
+~Opcode: 'SMSG_SPELL_START' (0x131). Size: '29' not handled.
+~Opcode: 'MSG_MOVE_TIME_SKIPPED' (0x319). Size: '8' not handled.
+!--->LoaderThread: OnLoaded() exception 'CCharacterItemM2Instance::GetCharacterItem: CharacterItem isn't loaded. State = '1''.
+~Opcode: 'CMSG_MOVE_SET_FLY' (0x346). Size: '50' not handled.
+~Opcode: 'SMSG_THREAT_UPDATE' (0x483). Size: '19' not handled.
+~Opcode: 'SMSG_ATTACK_START' (0x143). Size: '16' not handled.
+~Opcode: 'SMSG_PERIODICAURALOG' (0x24E). Size: '33' not handled.
+~Opcode: 'MSG_MOVE_TIME_SKIPPED' (0x319). Size: '8' not handled.
+!--->LoaderThread: OnLoaded() exception 'CCharacterItemM2Instance::GetCharacterItem: CharacterItem isn't loaded. State = '1''.
+~Opcode: 'SMSG_SPELL_START' (0x131). Size: '29' not handled.
+~Opcode: 'SMSG_PERIODICAURALOG' (0x24E). Size: '28' not handled.
+~Opcode: 'SMSG_ATTACK_STOP' (0x144). Size: '9' not handled.
+~Opcode: 'SMSG_DISMOUNT' (0x3AC). Size: '4' not handled.
+~Opcode: 'SMSG_PLAYER_VEHICLE_DATA' (0x4A7). Size: '8' not handled.
+~Opcode: 'SMSG_SPLINE_MOVE_UNROOT' (0x304). Size: '8' not handled.
+~Opcode: 'SMSG_SPLINE_MOVE_UNROOT' (0x304). Size: '8' not handled.
+!--->LoaderThread: OnLoaded() exception 'CCharacterItemM2Instance::GetCharacterItem: CharacterItem isn't loaded. State = '1''.
+~Opcode: 'SMSG_SPELL_START' (0x131). Size: '29' not handled.
+~Opcode: 'SMSG_SPELLLOGEXECUTE' (0x24C). Size: '24' not handled.
+~Opcode: 'MSG_MOVE_TIME_SKIPPED' (0x319). Size: '8' not handled.
+~Opcode: 'CMSG_MOVE_SET_FLY' (0x346). Size: '38' not handled.
+~Opcode: 'SMSG_SPELL_START' (0x131). Size: '29' not handled.
+~Opcode: 'SMSG_THREAT_UPDATE' (0x483). Size: '19' not handled.
+~Opcode: 'MSG_MOVE_TIME_SKIPPED' (0x319). Size: '8' not handled.
+~Opcode: 'SMSG_ATTACK_START' (0x143). Size: '16' not handled.
+~Opcode: 'SMSG_ATTACK_START' (0x143). Size: '16' not handled.
+~Opcode: 'SMSG_ATTACK_START' (0x143). Size: '16' not handled.
+~Opcode: 'SMSG_ATTACK_STOP' (0x144). Size: '9' not handled.
+~Opcode: 'SMSG_ATTACK_STOP' (0x144). Size: '9' not handled.
+~Opcode: 'SMSG_ATTACKERSTATEUPDATE' (0x14A). Size: '45' not handled.
+~Opcode: 'SMSG_SPELLDAMAGESHIELD' (0x24F). Size: '32' not handled.
+~Opcode: 'SMSG_ATTACK_STOP' (0x144). Size: '9' not handled.
+~Opcode: 'MSG_MOVE_TIME_SKIPPED' (0x319). Size: '8' not handled.
+~Opcode: 'MSG_MOVE_TIME_SKIPPED' (0x319). Size: '8' not handled.
+~Opcode: 'SMSG_SPELLLOGEXECUTE' (0x24C). Size: '24' not handled.
+~Opcode: 'SMSG_SPELLLOGEXECUTE' (0x24C). Size: '24' not handled.
+~Opcode: 'MSG_MOVE_TIME_SKIPPED' (0x319). Size: '8' not handled.
+~Opcode: 'SMSG_SPELL_START' (0x131). Size: '29' not handled.
+~Opcode: 'SMSG_SPELL_START' (0x131). Size: '29' not handled.
+~Opcode: 'SMSG_SPELLNONMELEEDAMAGELOG' (0x250). Size: '43' not handled.
+~Opcode: 'SMSG_SPELLHEALLOG' (0x150). Size: '26' not handled.
+~Opcode: 'SMSG_SPELLNONMELEEDAMAGELOG' (0x250). Size: '43' not handled.
+~Opcode: 'SMSG_SPELLNONMELEEDAMAGELOG' (0x250). Size: '43' not handled.
+~Opcode: 'SMSG_SPELLENERGIZELOG' (0x151). Size: '20' not handled.
+~Opcode: 'SMSG_SPELLENERGIZELOG' (0x151). Size: '20' not handled.
+~Opcode: 'SMSG_SPELLHEALLOG' (0x150). Size: '26' not handled.
+~Opcode: 'MSG_MOVE_TIME_SKIPPED' (0x319). Size: '8' not handled.
+~Opcode: 'SMSG_SPELL_START' (0x131). Size: '29' not handled.
+~Opcode: 'SMSG_THREAT_UPDATE' (0x483). Size: '19' not handled.
+~Opcode: 'SMSG_PERIODICAURALOG' (0x24E). Size: '44' not handled.
+~Opcode: 'SMSG_PERIODICAURALOG' (0x24E). Size: '28' not handled.
+~Opcode: 'SMSG_SPELL_START' (0x131). Size: '31' not handled.
+~Opcode: 'MSG_MOVE_TIME_SKIPPED' (0x319). Size: '8' not handled.
+~Opcode: 'SMSG_SPELL_START' (0x131). Size: '35' not handled.
+~Opcode: 'SMSG_ATTACK_START' (0x143). Size: '16' not handled.
+~Opcode: 'SMSG_ATTACK_START' (0x143). Size: '16' not handled.
+~Opcode: 'SMSG_ATTACK_START' (0x143). Size: '16' not handled.
+~Opcode: 'MSG_MOVE_TIME_SKIPPED' (0x319). Size: '8' not handled.
+~Opcode: 'SMSG_SPELL_START' (0x131). Size: '29' not handled.
+~Opcode: 'SMSG_SPELLNONMELEEDAMAGELOG' (0x250). Size: '43' not handled.
+~Opcode: 'SMSG_SPELLDAMAGESHIELD' (0x24F). Size: '32' not handled.
+~Opcode: 'SMSG_THREAT_UPDATE' (0x483). Size: '19' not handled.
+~Opcode: 'SMSG_SPELLLOGEXECUTE' (0x24C). Size: '24' not handled.
+~Opcode: 'SMSG_ATTACK_START' (0x143). Size: '16' not handled.
+~Opcode: 'SMSG_ATTACK_START' (0x143). Size: '16' not handled.
+~Opcode: 'SMSG_ATTACK_START' (0x143). Size: '16' not handled.
+~Opcode: 'SMSG_ATTACK_STOP' (0x144). Size: '9' not handled.
+~Opcode: 'SMSG_ATTACK_STOP' (0x144). Size: '9' not handled.
+~Opcode: 'MSG_MOVE_TIME_SKIPPED' (0x319). Size: '8' not handled.
+~Opcode: 'SMSG_SPELL_START' (0x131). Size: '29' not handled.
+~Opcode: 'SMSG_ATTACK_STOP' (0x144). Size: '9' not handled.
+~Opcode: 'SMSG_ATTACK_STOP' (0x144). Size: '9' not handled.
+~Opcode: 'SMSG_ATTACK_START' (0x143). Size: '16' not handled.
+~Opcode: 'SMSG_ATTACK_START' (0x143). Size: '16' not handled.
+~Opcode: 'SMSG_ATTACK_START' (0x143). Size: '16' not handled.
+~Opcode: 'MSG_MOVE_TIME_SKIPPED' (0x319). Size: '8' not handled.
+~Opcode: 'MSG_MOVE_TIME_SKIPPED' (0x319). Size: '8' not handled.
+~Opcode: 'MSG_MOVE_TIME_SKIPPED' (0x319). Size: '8' not handled.
+~Opcode: 'SMSG_SPELL_START' (0x131). Size: '29' not handled.
+~Opcode: 'MSG_MOVE_TIME_SKIPPED' (0x319). Size: '8' not handled.
+~Opcode: 'SMSG_THREAT_UPDATE' (0x483). Size: '19' not handled.
+~Opcode: 'SMSG_PERIODICAURALOG' (0x24E). Size: '28' not handled.
+~Opcode: 'SMSG_SPELLLOGEXECUTE' (0x24C). Size: '24' not handled.
+~Opcode: 'MSG_MOVE_TIME_SKIPPED' (0x319). Size: '8' not handled.
+~Opcode: 'SMSG_SPELL_START' (0x131). Size: '29' not handled.
+~Opcode: 'SMSG_PERIODICAURALOG' (0x24E). Size: '44' not handled.
+~Opcode: 'SMSG_ATTACK_START' (0x143). Size: '16' not handled.
+~Opcode: 'SMSG_ATTACK_START' (0x143). Size: '16' not handled.
+~Opcode: 'MSG_MOVE_TIME_SKIPPED' (0x319). Size: '8' not handled.
+~Opcode: 'CMSG_MOVE_SET_FLY' (0x346). Size: '50' not handled.
+~Opcode: 'SMSG_ATTACKERSTATEUPDATE' (0x14A). Size: '45' not handled.
+~Opcode: 'SMSG_SPELLNONMELEEDAMAGELOG' (0x250). Size: '43' not handled.
+~Opcode: 'SMSG_SPELLENERGIZELOG' (0x151). Size: '20' not handled.
+~Opcode: 'SMSG_SPELLENERGIZELOG' (0x151). Size: '20' not handled.
+~Opcode: 'SMSG_THREAT_UPDATE' (0x483). Size: '19' not handled.
+~Opcode: 'SMSG_ATTACKERSTATEUPDATE' (0x14A). Size: '45' not handled.
+~Opcode: 'MSG_MOVE_TIME_SKIPPED' (0x319). Size: '8' not handled.
+~Opcode: 'SMSG_SPELLLOGEXECUTE' (0x24C). Size: '24' not handled.
+~Opcode: 'MSG_MOVE_TIME_SKIPPED' (0x319). Size: '8' not handled.
+!--->LoaderThread: OnLoaded() exception 'CCharacterItemM2Instance::GetCharacterItem: CharacterItem isn't loaded. State = '1''.
+~Opcode: 'SMSG_SPELL_START' (0x131). Size: '29' not handled.
+~Opcode: 'SMSG_PERIODICAURALOG' (0x24E). Size: '44' not handled.
+~Opcode: 'SMSG_ATTACK_STOP' (0x144). Size: '9' not handled.
+~Opcode: 'SMSG_SPELLLOGEXECUTE' (0x24C). Size: '24' not handled.
+~Opcode: 'SMSG_ATTACK_START' (0x143). Size: '16' not handled.
+~Opcode: 'SMSG_ATTACK_START' (0x143). Size: '16' not handled.
+~Opcode: 'SMSG_ATTACK_START' (0x143). Size: '16' not handled.
+~Opcode: 'SMSG_SPELL_START' (0x131). Size: '29' not handled.
+~Opcode: 'SMSG_SPELL_START' (0x131). Size: '36' not handled.
+~Opcode: 'SMSG_SPELLNONMELEEDAMAGELOG' (0x250). Size: '43' not handled.
+~Opcode: 'SMSG_SPELLNONMELEEDAMAGELOG' (0x250). Size: '43' not handled.
+~Opcode: 'SMSG_SPELLENERGIZELOG' (0x151). Size: '20' not handled.
+~Opcode: 'SMSG_LOOT_LIST' (0x3F9). Size: '10' not handled.
+~Opcode: 'SMSG_ATTACK_STOP' (0x144). Size: '15' not handled.
+~Opcode: 'SMSG_ATTACK_STOP' (0x144). Size: '15' not handled.
+~Opcode: 'SMSG_THREAT_CLEAR' (0x485). Size: '7' not handled.
+~Opcode: 'SMSG_ATTACK_STOP' (0x144). Size: '12' not handled.
+~Opcode: 'SMSG_ATTACK_STOP' (0x144). Size: '9' not handled.
+~Opcode: 'SMSG_PERIODICAURALOG' (0x24E). Size: '28' not handled.
+~Opcode: 'MSG_MOVE_TIME_SKIPPED' (0x319). Size: '8' not handled.
+~Opcode: 'SMSG_THREAT_UPDATE' (0x483). Size: '19' not handled.
+~Opcode: 'SMSG_SPELLLOGEXECUTE' (0x24C). Size: '24' not handled.
+~Opcode: 'SMSG_SPELLLOGEXECUTE' (0x24C). Size: '24' not handled.
+~Opcode: 'MSG_MOVE_TIME_SKIPPED' (0x319). Size: '8' not handled.
+~Opcode: 'SMSG_SPELL_START' (0x131). Size: '29' not handled.
+~Opcode: 'MSG_MOVE_TIME_SKIPPED' (0x319). Size: '8' not handled.
+~Opcode: 'SMSG_SPELL_START' (0x131). Size: '29' not handled.
+~Opcode: 'SMSG_ATTACKERSTATEUPDATE' (0x14A). Size: '45' not handled.
+~Opcode: 'SMSG_SPELLDAMAGESHIELD' (0x24F). Size: '32' not handled.
+~Opcode: 'MSG_MOVE_TIME_SKIPPED' (0x319). Size: '8' not handled.
+~Opcode: 'SMSG_SPELLLOGEXECUTE' (0x24C). Size: '24' not handled.
+~Opcode: 'MSG_MOVE_TIME_SKIPPED' (0x319). Size: '8' not handled.
+~Opcode: 'SMSG_SPELLLOGEXECUTE' (0x24C). Size: '24' not handled.
+~Opcode: 'SMSG_ATTACK_START' (0x143). Size: '16' not handled.
+~Opcode: 'SMSG_SPELL_START' (0x131). Size: '29' not handled.
+~Opcode: 'SMSG_PERIODICAURALOG' (0x24E). Size: '28' not handled.
+~Opcode: 'MSG_MOVE_TIME_SKIPPED' (0x319). Size: '8' not handled.
+~Opcode: 'SMSG_THREAT_UPDATE' (0x483). Size: '19' not handled.
+~Opcode: 'SMSG_ATTACK_STOP' (0x144). Size: '9' not handled.
+~Opcode: 'MSG_MOVE_TIME_SKIPPED' (0x319). Size: '8' not handled.
+!--->LoaderThread: OnLoaded() exception 'CCharacterItemM2Instance::GetCharacterItem: CharacterItem isn't loaded. State = '1''.
+~Opcode: 'SMSG_ATTACK_STOP' (0x144). Size: '9' not handled.
+~Opcode: 'SMSG_SPELLLOGEXECUTE' (0x24C). Size: '24' not handled.
+~Opcode: 'MSG_MOVE_TIME_SKIPPED' (0x319). Size: '8' not handled.
+~Opcode: 'MSG_MOVE_TIME_SKIPPED' (0x319). Size: '8' not handled.
+~Opcode: 'SMSG_SPELL_START' (0x131). Size: '29' not handled.
+~Opcode: 'SMSG_SPELL_START' (0x131). Size: '29' not handled.
+~Opcode: 'SMSG_ATTACK_STOP' (0x144). Size: '9' not handled.
+~Opcode: 'SMSG_PERIODICAURALOG' (0x24E). Size: '44' not handled.
+~Opcode: 'SMSG_SPELLLOGEXECUTE' (0x24C). Size: '24' not handled.
+~Opcode: 'SMSG_PERIODICAURALOG' (0x24E). Size: '33' not handled.
+~Opcode: 'MSG_MOVE_TIME_SKIPPED' (0x319). Size: '8' not handled.
+~Opcode: 'SMSG_SPELL_START' (0x131). Size: '29' not handled.
+~Opcode: 'SMSG_PERIODICAURALOG' (0x24E). Size: '28' not handled.
+~Opcode: 'SMSG_SPELLLOGEXECUTE' (0x24C). Size: '24' not handled.
+~Opcode: 'MSG_MOVE_TIME_SKIPPED' (0x319). Size: '8' not handled.
+~Opcode: 'SMSG_SPELL_START' (0x131). Size: '29' not handled.
+~Opcode: 'SMSG_THREAT_UPDATE' (0x483). Size: '19' not handled.
+~Opcode: 'SMSG_SPELLLOGEXECUTE' (0x24C). Size: '24' not handled.
+~Opcode: 'MSG_MOVE_TIME_SKIPPED' (0x319). Size: '8' not handled.
+~Opcode: 'SMSG_ATTACKERSTATEUPDATE' (0x14A). Size: '45' not handled.
+~Opcode: 'SMSG_ATTACK_STOP' (0x144). Size: '9' not handled.
+~Opcode: 'SMSG_ATTACK_STOP' (0x144). Size: '9' not handled.
+~Opcode: 'SMSG_ATTACK_STOP' (0x144). Size: '9' not handled.
+~Opcode: 'SMSG_SPELL_START' (0x131). Size: '29' not handled.
+~Opcode: 'SMSG_PERIODICAURALOG' (0x24E). Size: '44' not handled.
+~Opcode: 'SMSG_ATTACKERSTATEUPDATE' (0x14A). Size: '45' not handled.
+~Opcode: 'MSG_MOVE_TIME_SKIPPED' (0x319). Size: '8' not handled.
+~Opcode: 'CMSG_MOVE_FALL_RESET' (0x2CA). Size: '50' not handled.
+~Opcode: 'SMSG_SPELLLOGEXECUTE' (0x24C). Size: '24' not handled.
+~Opcode: 'SMSG_ATTACK_STOP' (0x144). Size: '9' not handled.
+~Opcode: 'MSG_MOVE_TIME_SKIPPED' (0x319). Size: '8' not handled.
+~Opcode: 'SMSG_SPELL_START' (0x131). Size: '29' not handled.
+~Opcode: 'MSG_MOVE_TIME_SKIPPED' (0x319). Size: '8' not handled.
+~Opcode: 'SMSG_PERIODICAURALOG' (0x24E). Size: '28' not handled.
+~Opcode: 'MSG_MOVE_TIME_SKIPPED' (0x319). Size: '8' not handled.
+~Opcode: 'SMSG_GAMEOBJECT_DESPAWN_ANIM' (0x215). Size: '8' not handled.
+~Opcode: 'SMSG_THREAT_UPDATE' (0x483). Size: '19' not handled.
+~Opcode: 'SMSG_SPELLLOGEXECUTE' (0x24C). Size: '24' not handled.
+~Opcode: 'MSG_MOVE_TIME_SKIPPED' (0x319). Size: '8' not handled.
+~Opcode: 'SMSG_SPELL_START' (0x131). Size: '29' not handled.
+~Opcode: 'SMSG_PERIODICAURALOG' (0x24E). Size: '44' not handled.
+~Opcode: 'SMSG_SPELLNONMELEEDAMAGELOG' (0x250). Size: '43' not handled.
+~Opcode: 'SMSG_ATTACK_STOP' (0x144). Size: '9' not handled.
+~Opcode: 'SMSG_SPELL_START' (0x131). Size: '36' not handled.
+~Opcode: 'SMSG_SPELLNONMELEEDAMAGELOG' (0x250). Size: '43' not handled.
+~Opcode: 'SMSG_LOOT_LIST' (0x3F9). Size: '10' not handled.
+~Opcode: 'SMSG_ATTACK_STOP' (0x144). Size: '15' not handled.
+~Opcode: 'SMSG_ATTACK_STOP' (0x144). Size: '15' not handled.
+~Opcode: 'SMSG_THREAT_CLEAR' (0x485). Size: '7' not handled.
+~Opcode: 'SMSG_ATTACK_STOP' (0x144). Size: '12' not handled.
+~Opcode: 'MSG_MOVE_TIME_SKIPPED' (0x319). Size: '8' not handled.
+~Opcode: 'SMSG_SPELLLOGEXECUTE' (0x24C). Size: '24' not handled.
+~Opcode: 'SMSG_ATTACK_STOP' (0x144). Size: '9' not handled.
+~Opcode: 'SMSG_SPELLLOGEXECUTE' (0x24C). Size: '24' not handled.
+~Opcode: 'MSG_MOVE_TIME_SKIPPED' (0x319). Size: '8' not handled.
+~Opcode: 'SMSG_SPELL_START' (0x131). Size: '29' not handled.
+~Opcode: 'SMSG_PERIODICAURALOG' (0x24E). Size: '28' not handled.
+~Opcode: 'SMSG_SPELLLOGEXECUTE' (0x24C). Size: '24' not handled.
+~Opcode: 'MSG_MOVE_TIME_SKIPPED' (0x319). Size: '8' not handled.
+~Opcode: 'MSG_MOVE_TIME_SKIPPED' (0x319). Size: '8' not handled.
+~Opcode: 'SMSG_SPELL_START' (0x131). Size: '29' not handled.
+~Opcode: 'MSG_MOVE_TIME_SKIPPED' (0x319). Size: '8' not handled.
+~Opcode: 'SMSG_SPELLLOGEXECUTE' (0x24C). Size: '24' not handled.
+~Opcode: 'MSG_MOVE_TIME_SKIPPED' (0x319). Size: '8' not handled.
+~Opcode: 'SMSG_SPELL_START' (0x131). Size: '29' not handled.
+~Opcode: 'SMSG_ATTACK_STOP' (0x144). Size: '9' not handled.
+~Opcode: 'SMSG_SPELLLOGEXECUTE' (0x24C). Size: '24' not handled.
+~Opcode: 'SMSG_ATTACK_STOP' (0x144). Size: '9' not handled.
+~Opcode: 'MSG_MOVE_UPDATE_CAN_FLY' (0x3AD). Size: '34' not handled.
+~Opcode: 'MSG_MOVE_TIME_SKIPPED' (0x319). Size: '8' not handled.
+~Opcode: 'SMSG_SPELL_START' (0x131). Size: '29' not handled.
+~Opcode: 'MSG_MOVE_TIME_SKIPPED' (0x319). Size: '8' not handled.
+~Opcode: 'MSG_MOVE_TIME_SKIPPED' (0x319). Size: '8' not handled.
+~Opcode: 'SMSG_PERIODICAURALOG' (0x24E). Size: '28' not handled.
+~Opcode: 'SMSG_ATTACK_STOP' (0x144). Size: '9' not handled.
+~Opcode: 'MSG_MOVE_TIME_SKIPPED' (0x319). Size: '8' not handled.
+~Opcode: 'MSG_MOVE_TIME_SKIPPED' (0x319). Size: '8' not handled.
+~Opcode: 'MSG_MOVE_TIME_SKIPPED' (0x319). Size: '8' not handled.
+~Opcode: 'SMSG_SPELLLOGEXECUTE' (0x24C). Size: '24' not handled.
+!--->LoaderThread: OnLoaded() exception 'CCharacterItemM2Instance::GetCharacterInstance: M2Parent must exists'.
+!--->LoaderThread: OnLoaded() exception 'CCharacterItemM2Instance::GetCharacterInstance: M2Parent must exists'.
+~Opcode: 'SMSG_SPELL_START' (0x131). Size: '29' not handled.
+~Opcode: 'MSG_MOVE_TIME_SKIPPED' (0x319). Size: '8' not handled.
+~Opcode: 'MSG_MOVE_TIME_SKIPPED' (0x319). Size: '8' not handled.
+~Opcode: 'SMSG_SPELL_FAILURE' (0x133). Size: '10' not handled.
+~Opcode: 'SMSG_SPELL_FAILED_OTHER' (0x2A6). Size: '10' not handled.
+~Opcode: 'SMSG_ATTACK_STOP' (0x144). Size: '9' not handled.
+~Opcode: 'MSG_MOVE_TIME_SKIPPED' (0x319). Size: '8' not handled.
+~Opcode: 'SMSG_SPELLLOGEXECUTE' (0x24C). Size: '24' not handled.
+~Opcode: 'MSG_MOVE_TIME_SKIPPED' (0x319). Size: '8' not handled.
+~Opcode: 'MSG_MOVE_TIME_SKIPPED' (0x319). Size: '8' not handled.
+~Opcode: 'SMSG_SPELL_START' (0x131). Size: '29' not handled.
+~Opcode: 'SMSG_PERIODICAURALOG' (0x24E). Size: '28' not handled.
+~Opcode: 'SMSG_ATTACK_STOP' (0x144). Size: '9' not handled.
+~Opcode: 'MSG_MOVE_TIME_SKIPPED' (0x319). Size: '8' not handled.
+~Opcode: 'MSG_MOVE_TIME_SKIPPED' (0x319). Size: '8' not handled.
+~Opcode: 'SMSG_SPELL_START' (0x131). Size: '36' not handled.
+~Opcode: 'MSG_MOVE_TIME_SKIPPED' (0x319). Size: '8' not handled.
+~Opcode: 'MSG_MOVE_TIME_SKIPPED' (0x319). Size: '8' not handled.
+~Opcode: 'SMSG_SPELLLOGEXECUTE' (0x24C). Size: '24' not handled.
+~Opcode: 'SMSG_SPELL_START' (0x131). Size: '29' not handled.
+!--->LoaderThread: OnLoaded() exception 'CCharacterItemM2Instance::GetCharacterItem: CharacterItem isn't loaded. State = '1''.
+~Opcode: 'SMSG_SPELLLOGEXECUTE' (0x24C). Size: '24' not handled.
+~Opcode: 'MSG_MOVE_TIME_SKIPPED' (0x319). Size: '8' not handled.
+~Opcode: 'MSG_MOVE_TIME_SKIPPED' (0x319). Size: '8' not handled.
+~Opcode: 'SMSG_SPELL_START' (0x131). Size: '29' not handled.
+~Opcode: 'SMSG_PERIODICAURALOG' (0x24E). Size: '33' not handled.
+~Opcode: 'MSG_MOVE_TIME_SKIPPED' (0x319). Size: '8' not handled.
+~Opcode: 'SMSG_PERIODICAURALOG' (0x24E). Size: '28' not handled.
+~Opcode: 'MSG_MOVE_TIME_SKIPPED' (0x319). Size: '8' not handled.
+~Opcode: 'SMSG_SPELLLOGEXECUTE' (0x24C). Size: '24' not handled.
+~Opcode: 'SMSG_SPLINE_MOVE_GRAVITY_DISABLE' (0x4D3). Size: '7' not handled.
+~Opcode: 'MSG_MOVE_TIME_SKIPPED' (0x319). Size: '8' not handled.
+~Opcode: 'SMSG_SPELL_START' (0x131). Size: '29' not handled.
+^Selected node '2,958008' = 'Character\Troll\Female\TrollFemale.m2'.
+^Selected node '9,768555' = 'WORLD\EXPANSION02\DOODADS\DALARAN\DALARAN_DOUGHNUT_STAND.M2'.
+^Selected node '12,227539' = 'Character\BloodElf\Female\BloodElfFemale.m2'.
+^Selected node '13,622167' = 'Creature\DruidOwlbear\DruidOwlBearTauren.m2'.
+^Selected node '109,475586' = 'WORLD\EXPANSION02\DOODADS\DALARAN\TREE\DALARANBIGTREE_01.M2'.
+^Selected node '110,702759' = 'WORLD\EXPANSION02\DOODADS\DALARAN\TREE\DALARANTREE_01.M2'.
+^Selected node '125,054893' = 'WORLD\EXPANSION01\DOODADS\GENERIC\BLOODELF\DRAPERY\BE_DRAPERY_05.M2'.
+^Selected node '146,278580' = 'WORLD\EXPANSION01\DOODADS\GENERIC\BLOODELF\DRAPERY\BE_DRAPERY_05.M2'.
+^Selected node '147,492142' = 'WORLD\EXPANSION01\DOODADS\GENERIC\BLOODELF\DRAPERY\BE_DRAPERY_05.M2'.
+^Selected node '158,541656' = 'WORLD\EXPANSION02\DOODADS\DALARAN\TREE\DALARANTREE_01.M2'.
+~Opcode: 'MSG_MOVE_TIME_SKIPPED' (0x319). Size: '8' not handled.
+~Opcode: 'SMSG_ATTACK_STOP' (0x144). Size: '9' not handled.
+~Opcode: 'MSG_MOVE_TIME_SKIPPED' (0x319). Size: '8' not handled.
+~Opcode: 'SMSG_SPELLLOGEXECUTE' (0x24C). Size: '24' not handled.
+~Opcode: 'MSG_MOVE_TIME_SKIPPED' (0x319). Size: '8' not handled.
+~Opcode: 'MSG_MOVE_TIME_SKIPPED' (0x319). Size: '8' not handled.
+~Opcode: 'SMSG_SPELL_START' (0x131). Size: '29' not handled.
+~Opcode: 'MSG_MOVE_TIME_SKIPPED' (0x319). Size: '8' not handled.
+~Opcode: 'SMSG_PERIODICAURALOG' (0x24E). Size: '28' not handled.
+~Opcode: 'SMSG_SPELL_START' (0x131). Size: '33' not handled.
+~Opcode: 'MSG_MOVE_TIME_SKIPPED' (0x319). Size: '8' not handled.
+~Opcode: 'SMSG_ATTACK_STOP' (0x144). Size: '12' not handled.
+~Opcode: 'SMSG_SPELLLOGEXECUTE' (0x24C). Size: '24' not handled.
+~Opcode: 'SMSG_PLAY_SPELL_VISUAL' (0x1F3). Size: '12' not handled.
+~Opcode: 'SMSG_PLAY_SPELL_IMPACT' (0x1F7). Size: '12' not handled.
+~Opcode: 'SMSG_SPELL_START' (0x131). Size: '29' not handled.
+!--->LoaderThread: OnLoaded() exception 'CCharacterItemM2Instance::GetCharacterItem: CharacterItem isn't loaded. State = '1''.
+~Opcode: 'MSG_MOVE_TIME_SKIPPED' (0x319). Size: '8' not handled.
+~Opcode: 'MSG_MOVE_TIME_SKIPPED' (0x319). Size: '8' not handled.
+~Opcode: 'SMSG_SPELL_START' (0x131). Size: '33' not handled.
+~Opcode: 'SMSG_SPELL_START' (0x131). Size: '31' not handled.
+~Opcode: 'SMSG_SPELLLOGEXECUTE' (0x24C). Size: '24' not handled.
+~Opcode: 'MSG_MOVE_TIME_SKIPPED' (0x319). Size: '8' not handled.
+~Opcode: 'SMSG_SPELL_START' (0x131). Size: '29' not handled.
+~Opcode: 'SMSG_PLAY_SPELL_VISUAL' (0x1F3). Size: '12' not handled.
+~Opcode: 'SMSG_PLAY_SPELL_IMPACT' (0x1F7). Size: '12' not handled.
+~Opcode: 'SMSG_PERIODICAURALOG' (0x24E). Size: '28' not handled.
+~Opcode: 'SMSG_SPELLLOGEXECUTE' (0x24C). Size: '24' not handled.
+~Opcode: 'MSG_MOVE_TIME_SKIPPED' (0x319). Size: '8' not handled.
+~Opcode: 'SMSG_SPELL_START' (0x131). Size: '29' not handled.
+~Opcode: 'MSG_MOVE_TIME_SKIPPED' (0x319). Size: '8' not handled.
+~Opcode: 'MSG_MOVE_TIME_SKIPPED' (0x319). Size: '8' not handled.
+~Opcode: 'SMSG_SPELL_START' (0x131). Size: '35' not handled.
+~Opcode: 'SMSG_PLAY_SPELL_VISUAL' (0x1F3). Size: '12' not handled.
+~Opcode: 'SMSG_PLAY_SPELL_IMPACT' (0x1F7). Size: '12' not handled.
+~Opcode: 'MSG_MOVE_TIME_SKIPPED' (0x319). Size: '8' not handled.
+~Opcode: 'SMSG_SPELL_START' (0x131). Size: '29' not handled.
+~Opcode: 'SMSG_SPELLLOGEXECUTE' (0x24C). Size: '24' not handled.
+~Opcode: 'SMSG_SPELL_START' (0x131). Size: '29' not handled.
+~Opcode: 'MSG_MOVE_TIME_SKIPPED' (0x319). Size: '8' not handled.
+~Opcode: 'SMSG_PLAY_SPELL_VISUAL' (0x1F3). Size: '12' not handled.
+~Opcode: 'SMSG_PLAY_SPELL_IMPACT' (0x1F7). Size: '12' not handled.
+~Opcode: 'MSG_MOVE_FEATHER_FALL' (0x2B0). Size: '34' not handled.
+~Opcode: 'SMSG_PERIODICAURALOG' (0x24E). Size: '28' not handled.
+!--->LoaderThread: OnLoaded() exception 'CCharacterItemM2Instance::GetCharacterItem: CharacterItem isn't loaded. State = '1''.
+~Opcode: 'MSG_MOVE_TIME_SKIPPED' (0x319). Size: '8' not handled.
+~Opcode: 'SMSG_SPELLLOGEXECUTE' (0x24C). Size: '24' not handled.
+~Opcode: 'MSG_MOVE_TIME_SKIPPED' (0x319). Size: '8' not handled.
+~Opcode: 'SMSG_SPELL_START' (0x131). Size: '29' not handled.
+~Opcode: 'SMSG_SPELL_START' (0x131). Size: '29' not handled.
+~Opcode: 'SMSG_PLAY_SPELL_VISUAL' (0x1F3). Size: '12' not handled.
+~Opcode: 'SMSG_PLAY_SPELL_IMPACT' (0x1F7). Size: '12' not handled.
+~Opcode: 'SMSG_SPELLHEALLOG' (0x150). Size: '26' not handled.
+~Opcode: 'MSG_MOVE_TIME_SKIPPED' (0x319). Size: '8' not handled.
+~Opcode: 'SMSG_SPELLLOGEXECUTE' (0x24C). Size: '24' not handled.
+ Warden: Received 'CHEAT_CHECKS_REQUEST'.
+ Warden: Sending 'CHEAT_CHECKS_RESULT'. Size '23'.
+~Opcode: 'SMSG_SPELL_START' (0x131). Size: '29' not handled.
+~Opcode: 'SMSG_SPELLLOGEXECUTE' (0x24C). Size: '24' not handled.
+~Opcode: 'MSG_MOVE_TIME_SKIPPED' (0x319). Size: '8' not handled.
+~Opcode: 'SMSG_SPELL_START' (0x131). Size: '29' not handled.
+!--->LoaderThread: OnLoaded() exception 'CCharacterItemM2Instance::GetCharacterInstance: M2Parent must exists'.
+!--->LoaderThread: OnLoaded() exception 'CCharacterItemM2Instance::GetCharacterInstance: M2Parent must exists'.
+~Opcode: 'SMSG_ATTACK_STOP' (0x144). Size: '9' not handled.
+~Opcode: 'SMSG_PERIODICAURALOG' (0x24E). Size: '28' not handled.
+~Opcode: 'SMSG_PLAY_SPELL_VISUAL' (0x1F3). Size: '12' not handled.
+~Opcode: 'SMSG_PLAY_SPELL_IMPACT' (0x1F7). Size: '12' not handled.
+~Opcode: 'SMSG_SPELL_START' (0x131). Size: '36' not handled.
+~Opcode: 'MSG_MOVE_UPDATE_CAN_FLY' (0x3AD). Size: '34' not handled.
+~Opcode: 'MSG_MOVE_TIME_SKIPPED' (0x319). Size: '8' not handled.
+~Opcode: 'MSG_MOVE_TIME_SKIPPED' (0x319). Size: '8' not handled.
+~Opcode: 'SMSG_SPELL_START' (0x131). Size: '29' not handled.
+~Opcode: 'SMSG_SPELLLOGEXECUTE' (0x24C). Size: '24' not handled.
+~Opcode: 'SMSG_SPELL_START' (0x131). Size: '29' not handled.
+~Opcode: 'SMSG_GAMEOBJECT_DESPAWN_ANIM' (0x215). Size: '8' not handled.
+~Opcode: 'MSG_MOVE_TIME_SKIPPED' (0x319). Size: '8' not handled.
+~Opcode: 'MSG_MOVE_TIME_SKIPPED' (0x319). Size: '8' not handled.
+~Opcode: 'SMSG_PERIODICAURALOG' (0x24E). Size: '33' not handled.
+!--->LoaderThread: OnLoaded() exception 'CCharacterItemM2Instance::GetCharacterInstance: M2Parent must exists'.
+!--->LoaderThread: OnLoaded() exception 'CCharacterItemM2Instance::GetCharacterItem: CharacterItem isn't loaded. State = '1''.
+~Opcode: 'MSG_MOVE_TIME_SKIPPED' (0x319). Size: '8' not handled.
+~Opcode: 'SMSG_SPELLLOGEXECUTE' (0x24C). Size: '24' not handled.
+~Opcode: 'MSG_MOVE_TIME_SKIPPED' (0x319). Size: '8' not handled.
+~Opcode: 'SMSG_SPELL_START' (0x131). Size: '29' not handled.
+~Opcode: 'MSG_MOVE_TIME_SKIPPED' (0x319). Size: '8' not handled.
+!--->LoaderThread: OnLoaded() exception 'CCharacterItemM2Instance::GetCharacterItem: CharacterItem isn't loaded. State = '1''.
+~Opcode: 'SMSG_ATTACK_STOP' (0x144). Size: '9' not handled.
+!--->LoaderThread: OnLoaded() exception 'CCharacterItemM2Instance::GetCharacterItem: CharacterItem isn't loaded. State = '1''.
+~Opcode: 'SMSG_SPELLLOGEXECUTE' (0x24C). Size: '24' not handled.
+~Opcode: 'SMSG_SPELLLOGEXECUTE' (0x24C). Size: '24' not handled.
+~Opcode: 'MSG_MOVE_TIME_SKIPPED' (0x319). Size: '8' not handled.
+~Opcode: 'SMSG_SPELL_START' (0x131). Size: '29' not handled.
+~Opcode: 'SMSG_SPELL_START' (0x131). Size: '29' not handled.
+~Opcode: 'MSG_MOVE_TIME_SKIPPED' (0x319). Size: '8' not handled.
+~Opcode: 'SMSG_ATTACK_STOP' (0x144). Size: '12' not handled.
+~Opcode: 'MSG_MOVE_TIME_SKIPPED' (0x319). Size: '8' not handled.
+~Opcode: 'SMSG_SPELL_START' (0x131). Size: '29' not handled.
+~Opcode: 'SMSG_SPELLLOGEXECUTE' (0x24C). Size: '24' not handled.
+~Opcode: 'SMSG_SPELLLOGEXECUTE' (0x24C). Size: '24' not handled.
+!--->LoaderThread: OnLoaded() exception 'CCharacterItemM2Instance::GetCharacterItem: CharacterItem isn't loaded. State = '1''.
+~Opcode: 'SMSG_SPELL_START' (0x131). Size: '29' not handled.
+~Opcode: 'SMSG_SPELL_START' (0x131). Size: '29' not handled.
+~Opcode: 'MSG_MOVE_TIME_SKIPPED' (0x319). Size: '8' not handled.
+~Opcode: 'SMSG_SPELL_START' (0x131). Size: '31' not handled.
+~Opcode: 'MSG_MOVE_TIME_SKIPPED' (0x319). Size: '8' not handled.
+~Opcode: 'SMSG_SPELL_START' (0x131). Size: '33' not handled.
+~Opcode: 'SMSG_SPELL_START' (0x131). Size: '29' not handled.
+~Opcode: 'SMSG_ATTACK_STOP' (0x144). Size: '9' not handled.
+~Opcode: 'SMSG_SPELLLOGEXECUTE' (0x24C). Size: '24' not handled.
+!--->LoaderThread: OnLoaded() exception 'CCharacterItemM2Instance::GetCharacterItem: CharacterItem isn't loaded. State = '1''.
+!--->LoaderThread: OnLoaded() exception 'CCharacterItemM2Instance::GetCharacterItem: CharacterItem isn't loaded. State = '1''.
+~Opcode: 'MSG_MOVE_TIME_SKIPPED' (0x319). Size: '8' not handled.
+~Opcode: 'MSG_MOVE_TIME_SKIPPED' (0x319). Size: '8' not handled.
+~Opcode: 'SMSG_SPELL_START' (0x131). Size: '29' not handled.
+~Opcode: 'MSG_MOVE_TIME_SKIPPED' (0x319). Size: '8' not handled.
+~Opcode: 'SMSG_SPELL_START' (0x131). Size: '33' not handled.
+~Opcode: 'MSG_MOVE_TIME_SKIPPED' (0x319). Size: '8' not handled.
+~Opcode: 'MSG_MOVE_TIME_SKIPPED' (0x319). Size: '8' not handled.
+~Opcode: 'SMSG_SPELLLOGEXECUTE' (0x24C). Size: '24' not handled.
+~Opcode: 'MSG_MOVE_TIME_SKIPPED' (0x319). Size: '8' not handled.
+~Opcode: 'SMSG_SPELL_START' (0x131). Size: '29' not handled.
+~Opcode: 'MSG_MOVE_UPDATE_CAN_FLY' (0x3AD). Size: '34' not handled.
+~Opcode: 'SMSG_ATTACK_STOP' (0x144). Size: '9' not handled.
+~Opcode: 'SMSG_SPELLLOGEXECUTE' (0x24C). Size: '24' not handled.
+~Opcode: 'MSG_MOVE_TIME_SKIPPED' (0x319). Size: '8' not handled.
+~Opcode: 'MSG_MOVE_TIME_SKIPPED' (0x319). Size: '8' not handled.
+~Opcode: 'SMSG_SPELL_START' (0x131). Size: '35' not handled.
+~Opcode: 'SMSG_SPELL_START' (0x131). Size: '29' not handled.
+~Opcode: 'SMSG_ATTACK_STOP' (0x144). Size: '9' not handled.
+~Opcode: 'SMSG_ATTACK_STOP' (0x144). Size: '9' not handled.
+~Opcode: 'MSG_MOVE_TIME_SKIPPED' (0x319). Size: '8' not handled.
+~Opcode: 'SMSG_SPELLLOGEXECUTE' (0x24C). Size: '24' not handled.
+~Opcode: 'MSG_MOVE_TIME_SKIPPED' (0x319). Size: '8' not handled.
+~Opcode: 'MSG_MOVE_TIME_SKIPPED' (0x319). Size: '8' not handled.
+~Opcode: 'SMSG_SPELL_START' (0x131). Size: '29' not handled.
+~Opcode: 'SMSG_SPELLHEALLOG' (0x150). Size: '26' not handled.
+~Opcode: 'SMSG_SPELLENERGIZELOG' (0x151). Size: '20' not handled.
+~Opcode: 'SMSG_SPELLLOGEXECUTE' (0x24C). Size: '24' not handled.
+~Opcode: 'SMSG_ATTACK_STOP' (0x144). Size: '9' not handled.
+~Opcode: 'MSG_MOVE_TIME_SKIPPED' (0x319). Size: '8' not handled.
+~Opcode: 'SMSG_ATTACK_STOP' (0x144). Size: '9' not handled.
+~Opcode: 'SMSG_SPELLLOGEXECUTE' (0x24C). Size: '24' not handled.
+~Opcode: 'MSG_MOVE_TIME_SKIPPED' (0x319). Size: '8' not handled.
+~Opcode: 'SMSG_SPELL_START' (0x131). Size: '33' not handled.
+~Opcode: 'SMSG_SPELL_START' (0x131). Size: '29' not handled.
+~Opcode: 'SMSG_ATTACK_STOP' (0x144). Size: '9' not handled.
+~Opcode: 'MSG_MOVE_TIME_SKIPPED' (0x319). Size: '8' not handled.
+~Opcode: 'MSG_MOVE_TIME_SKIPPED' (0x319). Size: '8' not handled.
+~Opcode: 'MSG_MOVE_TIME_SKIPPED' (0x319). Size: '8' not handled.
+~Opcode: 'MSG_MOVE_TIME_SKIPPED' (0x319). Size: '8' not handled.
+~Opcode: 'CMSG_MOVE_SET_FLY' (0x346). Size: '38' not handled.
+~Opcode: 'MSG_MOVE_START_ASCEND' (0x359). Size: '38' not handled.
+~Opcode: 'SMSG_SPELLLOGEXECUTE' (0x24C). Size: '24' not handled.
+~Opcode: 'SMSG_SPELL_START' (0x131). Size: '29' not handled.
+~Opcode: 'SMSG_ATTACK_STOP' (0x144). Size: '9' not handled.
+~Opcode: 'MSG_MOVE_TIME_SKIPPED' (0x319). Size: '8' not handled.
+~Opcode: 'MSG_MOVE_TIME_SKIPPED' (0x319). Size: '8' not handled.
+~Opcode: 'MSG_MOVE_STOP_ASCEND' (0x35A). Size: '38' not handled.
+~Opcode: 'CMSG_MOVE_FALL_RESET' (0x2CA). Size: '50' not handled.
+~Opcode: 'SMSG_SPELLLOGEXECUTE' (0x24C). Size: '24' not handled.
+~Opcode: 'MSG_MOVE_TIME_SKIPPED' (0x319). Size: '8' not handled.
+~Opcode: 'SMSG_SPELL_START' (0x131). Size: '29' not handled.
+~Opcode: 'SMSG_SPELL_START' (0x131). Size: '29' not handled.
+~Opcode: 'SMSG_PERIODICAURALOG' (0x24E). Size: '33' not handled.
+~Opcode: 'SMSG_ATTACK_STOP' (0x144). Size: '9' not handled.
+~Opcode: 'MSG_MOVE_TIME_SKIPPED' (0x319). Size: '8' not handled.
+!--->LoaderThread: OnLoaded() exception 'CCharacterItemM2Instance::GetCharacterItem: CharacterItem isn't loaded. State = '1''.
+~Opcode: 'SMSG_SPELLHEALLOG' (0x150). Size: '26' not handled.
+~Opcode: 'SMSG_SPELLLOGEXECUTE' (0x24C). Size: '24' not handled.
+~Opcode: 'MSG_MOVE_TIME_SKIPPED' (0x319). Size: '8' not handled.
+~Opcode: 'SMSG_SPELL_START' (0x131). Size: '29' not handled.
+~Opcode: 'SMSG_SPLINE_MOVE_START_SWIM' (0x30B). Size: '7' not handled.
+~Opcode: 'SMSG_SPELL_START' (0x131). Size: '29' not handled.
+~Opcode: 'MSG_MOVE_START_ASCEND' (0x359). Size: '38' not handled.
+~Opcode: 'SMSG_ATTACK_STOP' (0x144). Size: '9' not handled.
+~Opcode: 'MSG_MOVE_TIME_SKIPPED' (0x319). Size: '8' not handled.
+~Opcode: 'SMSG_SPELL_START' (0x131). Size: '33' not handled.
+~Opcode: 'MSG_MOVE_STOP_ASCEND' (0x35A). Size: '38' not handled.
+~Opcode: 'MSG_MOVE_TIME_SKIPPED' (0x319). Size: '8' not handled.
+~Opcode: 'MSG_MOVE_TIME_SKIPPED' (0x319). Size: '8' not handled.
+~Opcode: 'SMSG_SPELLLOGEXECUTE' (0x24C). Size: '24' not handled.
+~Opcode: 'MSG_MOVE_TIME_SKIPPED' (0x319). Size: '8' not handled.
+~Opcode: 'MSG_MOVE_TIME_SKIPPED' (0x319). Size: '8' not handled.
+~Opcode: 'MSG_MOVE_START_ASCEND' (0x359). Size: '38' not handled.
+~Opcode: 'MSG_MOVE_STOP_ASCEND' (0x35A). Size: '38' not handled.
+~Opcode: 'SMSG_SPELL_START' (0x131). Size: '29' not handled.
+~Opcode: 'MSG_MOVE_TIME_SKIPPED' (0x319). Size: '8' not handled.
+~Opcode: 'SMSG_SPELL_START' (0x131). Size: '29' not handled.
+~Opcode: 'SMSG_SPELL_START' (0x131). Size: '37' not handled.
+~Opcode: 'MSG_MOVE_TIME_SKIPPED' (0x319). Size: '8' not handled.
+~Opcode: 'SMSG_ATTACK_STOP' (0x144). Size: '9' not handled.
+~Opcode: 'SMSG_SPELLLOGEXECUTE' (0x24C). Size: '24' not handled.
+~Opcode: 'MSG_MOVE_TIME_SKIPPED' (0x319). Size: '8' not handled.
+~Opcode: 'SMSG_SPELL_START' (0x131). Size: '29' not handled.
+~Opcode: 'SMSG_ATTACK_STOP' (0x144). Size: '9' not handled.
+~Opcode: 'SMSG_ATTACK_STOP' (0x144). Size: '9' not handled.
+~Opcode: 'MSG_MOVE_TIME_SKIPPED' (0x319). Size: '8' not handled.
+~Opcode: 'MSG_MOVE_FEATHER_FALL' (0x2B0). Size: '34' not handled.
+!--->LoaderThread: OnLoaded() exception 'CCharacterItemM2Instance::GetCharacterInstance: M2Parent must exists'.
+!--->LoaderThread: OnLoaded() exception 'CCharacterItemM2Instance::GetCharacterInstance: M2Parent must exists'.
+~Opcode: 'MSG_MOVE_TIME_SKIPPED' (0x319). Size: '8' not handled.
+~Opcode: 'MSG_MOVE_TIME_SKIPPED' (0x319). Size: '8' not handled.
+!CImageBLP: Unable to load PLP file 'TCB_CrystalSong_B.blp'.
+!File 'TILESET\Terrain Cube Maps\TCB_CrystalSong_B_s.blp' not exists.
+~Opcode: 'SMSG_SPELLLOGEXECUTE' (0x24C). Size: '24' not handled.
+~Opcode: 'SMSG_SPELLLOGEXECUTE' (0x24C). Size: '24' not handled.
+~Opcode: 'SMSG_SPELL_START' (0x131). Size: '29' not handled.
+~Opcode: 'SMSG_SPELL_START' (0x131). Size: '29' not handled.
+~Opcode: 'SMSG_SPELL_START' (0x131). Size: '29' not handled.
+~Opcode: 'SMSG_SPELLHEALLOG' (0x150). Size: '26' not handled.
+~Opcode: 'SMSG_ATTACK_STOP' (0x144). Size: '9' not handled.
+~Opcode: 'MSG_MOVE_TIME_SKIPPED' (0x319). Size: '8' not handled.
+~Opcode: 'MSG_MOVE_TIME_SKIPPED' (0x319). Size: '8' not handled.
+~Opcode: 'SMSG_SPELL_START' (0x131). Size: '33' not handled.
+~Opcode: 'MSG_MOVE_TIME_SKIPPED' (0x319). Size: '8' not handled.
+~Opcode: 'SMSG_ATTACK_STOP' (0x144). Size: '9' not handled.
+~Opcode: 'SMSG_SPELLLOGEXECUTE' (0x24C). Size: '24' not handled.
+~Opcode: 'SMSG_SPELL_START' (0x131). Size: '35' not handled.
+~Opcode: 'SMSG_SPELL_START' (0x131). Size: '31' not handled.
+~Opcode: 'SMSG_SPELLLOGEXECUTE' (0x24C). Size: '24' not handled.
+~Opcode: 'MSG_MOVE_TIME_SKIPPED' (0x319). Size: '8' not handled.
+~Opcode: 'SMSG_SPELL_START' (0x131). Size: '29' not handled.
+~Opcode: 'MSG_MOVE_TIME_SKIPPED' (0x319). Size: '8' not handled.
+~Opcode: 'SMSG_SPELL_START' (0x131). Size: '29' not handled.
+~Opcode: 'SMSG_SPELLLOGEXECUTE' (0x24C). Size: '24' not handled.
+~Opcode: 'MSG_MOVE_TIME_SKIPPED' (0x319). Size: '8' not handled.
+~Opcode: 'SMSG_SPELL_START' (0x131). Size: '29' not handled.
+~Opcode: 'MSG_MOVE_TIME_SKIPPED' (0x319). Size: '8' not handled.
+~Opcode: 'SMSG_ATTACK_STOP' (0x144). Size: '9' not handled.
+~Opcode: 'MSG_MOVE_TIME_SKIPPED' (0x319). Size: '8' not handled.
+~Opcode: 'SMSG_SPELLLOGEXECUTE' (0x24C). Size: '24' not handled.
+~Opcode: 'SMSG_SPELL_START' (0x131). Size: '29' not handled.
+~Opcode: 'SMSG_SPELLHEALLOG' (0x150). Size: '26' not handled.
+~Opcode: 'SMSG_SPELLENERGIZELOG' (0x151). Size: '20' not handled.
+~Opcode: 'MSG_MOVE_TIME_SKIPPED' (0x319). Size: '8' not handled.
+~Opcode: 'SMSG_SPELLLOGEXECUTE' (0x24C). Size: '24' not handled.
+~Opcode: 'SMSG_SPELL_START' (0x131). Size: '29' not handled.
+~Opcode: 'SMSG_SPELL_START' (0x131). Size: '29' not handled.
+~Opcode: 'MSG_MOVE_TIME_SKIPPED' (0x319). Size: '8' not handled.
+~Opcode: 'SMSG_ATTACK_STOP' (0x144). Size: '9' not handled.
+~Opcode: 'SMSG_SPELLLOGEXECUTE' (0x24C). Size: '24' not handled.
+~Opcode: 'MSG_MOVE_TIME_SKIPPED' (0x319). Size: '8' not handled.
+~Opcode: 'SMSG_SPELL_START' (0x131). Size: '29' not handled.
+~Opcode: 'SMSG_SPLINE_MOVE_STOP_SWIM' (0x30C). Size: '7' not handled.
+~Opcode: 'MSG_MOVE_TIME_SKIPPED' (0x319). Size: '8' not handled.
+~Opcode: 'MSG_MOVE_TIME_SKIPPED' (0x319). Size: '8' not handled.
+~Opcode: 'SMSG_PERIODICAURALOG' (0x24E). Size: '33' not handled.
+~Opcode: 'SMSG_SPELLLOGEXECUTE' (0x24C). Size: '24' not handled.
+~Opcode: 'MSG_MOVE_TIME_SKIPPED' (0x319). Size: '8' not handled.
+~Opcode: 'SMSG_SPELL_START' (0x131). Size: '29' not handled.
+~Opcode: 'MSG_MOVE_TIME_SKIPPED' (0x319). Size: '8' not handled.
+~Opcode: 'SMSG_ATTACK_STOP' (0x144). Size: '9' not handled.
+~Opcode: 'MSG_MOVE_TIME_SKIPPED' (0x319). Size: '8' not handled.
+~Opcode: 'SMSG_SPELLLOGEXECUTE' (0x24C). Size: '24' not handled.
+~Opcode: 'SMSG_SPELL_START' (0x131). Size: '29' not handled.
+~Opcode: 'SMSG_SPELLLOGEXECUTE' (0x24C). Size: '24' not handled.
+~Opcode: 'MSG_MOVE_TIME_SKIPPED' (0x319). Size: '8' not handled.
+~Opcode: 'SMSG_SPELLLOGEXECUTE' (0x24C). Size: '24' not handled.
+~Opcode: 'SMSG_SPELLLOGEXECUTE' (0x24C). Size: '24' not handled.
+~Opcode: 'MSG_MOVE_TIME_SKIPPED' (0x319). Size: '8' not handled.
+~Opcode: 'SMSG_SPELL_START' (0x131). Size: '29' not handled.
+~Opcode: 'SMSG_SPELLLOGEXECUTE' (0x24C). Size: '24' not handled.
+~Opcode: 'MSG_MOVE_TIME_SKIPPED' (0x319). Size: '8' not handled.
+~Opcode: 'SMSG_SPELL_START' (0x131). Size: '29' not handled.
+~Opcode: 'MSG_MOVE_TIME_SKIPPED' (0x319). Size: '8' not handled.
+~Opcode: 'SMSG_SPELL_START' (0x131). Size: '29' not handled.
+!--->LoaderThread: OnLoaded() exception 'CCharacterItemM2Instance::GetCharacterInstance: M2Parent must exists'.
+!--->LoaderThread: OnLoaded() exception 'CCharacterItemM2Instance::GetCharacterItem: CharacterItem isn't loaded. State = '1''.
+~Opcode: 'SMSG_SPELL_START' (0x131). Size: '33' not handled.
+!--->LoaderThread: OnLoaded() exception 'CCharacterItemM2Instance::GetCharacterInstance: M2Parent must exists'.
+~Opcode: 'SMSG_ATTACK_STOP' (0x144). Size: '9' not handled.
+~Opcode: 'SMSG_SPELLLOGEXECUTE' (0x24C). Size: '24' not handled.
+~Opcode: 'MSG_MOVE_TIME_SKIPPED' (0x319). Size: '8' not handled.
+~Opcode: 'SMSG_SPELL_START' (0x131). Size: '29' not handled.
+~Opcode: 'MSG_MOVE_TIME_SKIPPED' (0x319). Size: '8' not handled.
+~Opcode: 'MSG_MOVE_TIME_SKIPPED' (0x319). Size: '8' not handled.
+~Opcode: 'MSG_MOVE_TIME_SKIPPED' (0x319). Size: '8' not handled.
+!--->LoaderThread: OnLoaded() exception 'CCharacterItemM2Instance::GetCharacterItem: CharacterItem isn't loaded. State = '1''.
+!--->LoaderThread: OnLoaded() exception 'CCharacterItemM2Instance::GetCharacterItem: CharacterItem isn't loaded. State = '1''.
+~Opcode: 'MSG_MOVE_TIME_SKIPPED' (0x319). Size: '8' not handled.
+~Opcode: 'SMSG_SPELLLOGEXECUTE' (0x24C). Size: '24' not handled.
+~Opcode: 'SMSG_SPELL_START' (0x131). Size: '29' not handled.
+~Opcode: 'SMSG_SPELL_START' (0x131). Size: '35' not handled.
+~Opcode: 'MSG_MOVE_TIME_SKIPPED' (0x319). Size: '8' not handled.
+~Opcode: 'MSG_MOVE_ROOT' (0xEC). Size: '38' not handled.
+~Opcode: 'SMSG_SPELL_START' (0x131). Size: '29' not handled.
+~Opcode: 'SMSG_ATTACK_STOP' (0x144). Size: '9' not handled.
+~Opcode: 'MSG_MOVE_TIME_SKIPPED' (0x319). Size: '8' not handled.
+~Opcode: 'MSG_MOVE_TIME_SKIPPED' (0x319). Size: '8' not handled.
+~Opcode: 'SMSG_SPELLLOGEXECUTE' (0x24C). Size: '24' not handled.
+~Opcode: 'SMSG_SPELLLOGEXECUTE' (0x24C). Size: '24' not handled.
+!--->LoaderThread: OnLoaded() exception 'CCharacterItemM2Instance::GetCharacterItem: CharacterItem isn't loaded. State = '1''.
+!--->LoaderThread: OnLoaded() exception 'CCharacterItemM2Instance::GetCharacterItem: CharacterItem isn't loaded. State = '1''.
+~Opcode: 'MSG_MOVE_TIME_SKIPPED' (0x319). Size: '8' not handled.
+~Opcode: 'SMSG_SPELL_START' (0x131). Size: '29' not handled.
+~Opcode: 'SMSG_SPELL_START' (0x131). Size: '29' not handled.
+~Opcode: 'SMSG_SPELL_START' (0x131). Size: '29' not handled.
+~Opcode: 'MSG_MOVE_TIME_SKIPPED' (0x319). Size: '8' not handled.
+~Opcode: 'MSG_MOVE_TIME_SKIPPED' (0x319). Size: '8' not handled.
+~Opcode: 'MSG_MOVE_TIME_SKIPPED' (0x319). Size: '8' not handled.
+~Opcode: 'SMSG_SPELL_START' (0x131). Size: '35' not handled.
+~Opcode: 'SMSG_SPELL_START' (0x131). Size: '29' not handled.
+~Opcode: 'SMSG_ATTACK_STOP' (0x144). Size: '9' not handled.
+~Opcode: 'SMSG_SPELLLOGEXECUTE' (0x24C). Size: '24' not handled.
+~Opcode: 'MSG_MOVE_TIME_SKIPPED' (0x319). Size: '8' not handled.
+~Opcode: 'SMSG_SPELL_START' (0x131). Size: '29' not handled.
+~Opcode: 'SMSG_SPELL_START' (0x131). Size: '29' not handled.
+!--->LoaderThread: OnLoaded() exception 'CCharacterItemM2Instance::GetCharacterItem: CharacterItem isn't loaded. State = '1''.
+!--->LoaderThread: OnLoaded() exception 'CCharacterItemM2Instance::GetCharacterInstance: M2Parent must exists'.
+~Opcode: 'MSG_MOVE_TIME_SKIPPED' (0x319). Size: '8' not handled.
+~Opcode: 'SMSG_ATTACK_STOP' (0x144). Size: '9' not handled.
+~Opcode: 'MSG_MOVE_TIME_SKIPPED' (0x319). Size: '8' not handled.
+~Opcode: 'SMSG_SPELLLOGEXECUTE' (0x24C). Size: '24' not handled.
+~Opcode: 'MSG_MOVE_TIME_SKIPPED' (0x319). Size: '8' not handled.
+~Opcode: 'SMSG_ATTACK_STOP' (0x144). Size: '9' not handled.
+~Opcode: 'SMSG_SPELLLOGEXECUTE' (0x24C). Size: '24' not handled.
+~Opcode: 'MSG_MOVE_TIME_SKIPPED' (0x319). Size: '8' not handled.
+~Opcode: 'SMSG_SPELL_START' (0x131). Size: '29' not handled.
+~Opcode: 'SMSG_GAMEOBJECT_DESPAWN_ANIM' (0x215). Size: '8' not handled.
+~Opcode: 'MSG_MOVE_TIME_SKIPPED' (0x319). Size: '8' not handled.
+~Opcode: 'SMSG_SPELL_START' (0x131). Size: '29' not handled.
+~Opcode: 'SMSG_ATTACK_STOP' (0x144). Size: '9' not handled.
+~Opcode: 'MSG_MOVE_TIME_SKIPPED' (0x319). Size: '8' not handled.
+~Opcode: 'SMSG_PERIODICAURALOG' (0x24E). Size: '33' not handled.
+~Opcode: 'MSG_MOVE_TIME_SKIPPED' (0x319). Size: '8' not handled.
+~Opcode: 'SMSG_SPELLLOGEXECUTE' (0x24C). Size: '24' not handled.
+~Opcode: 'SMSG_ATTACK_STOP' (0x144). Size: '9' not handled.
+~Opcode: 'MSG_MOVE_TIME_SKIPPED' (0x319). Size: '8' not handled.
+!--->LoaderThread: OnLoaded() exception 'CCharacterItemM2Instance::GetCharacterInstance: M2Parent must exists'.
+!--->LoaderThread: OnLoaded() exception 'CCharacterItemM2Instance::GetCharacterInstance: M2Parent must exists'.
+~Opcode: 'SMSG_SPELL_START' (0x131). Size: '29' not handled.
+~Opcode: 'SMSG_SPELLLOGEXECUTE' (0x24C). Size: '24' not handled.
+~Opcode: 'SMSG_SPELL_START' (0x131). Size: '29' not handled.
+~Opcode: 'SMSG_SPELL_START' (0x131). Size: '29' not handled.
+~Opcode: 'MSG_MOVE_TIME_SKIPPED' (0x319). Size: '8' not handled.
+~Opcode: 'MSG_MOVE_TIME_SKIPPED' (0x319). Size: '8' not handled.
+!--->LoaderThread: OnLoaded() exception 'CCharacterItemM2Instance::GetCharacterItem: CharacterItem isn't loaded. State = '1''.
+~Opcode: 'SMSG_ATTACK_STOP' (0x144). Size: '9' not handled.
+~Opcode: 'SMSG_SPELLLOGEXECUTE' (0x24C). Size: '24' not handled.
+~Opcode: 'MSG_MOVE_TIME_SKIPPED' (0x319). Size: '8' not handled.
+~Opcode: 'SMSG_SPELL_START' (0x131). Size: '29' not handled.
+~Opcode: 'MSG_MOVE_TIME_SKIPPED' (0x319). Size: '8' not handled.
+~Opcode: 'MSG_MOVE_TIME_SKIPPED' (0x319). Size: '8' not handled.
+!CImageBLP: Unable to load PLP file 'TCB_CrystalSong_B.blp'.
+!CImageBLP: Unable to load PLP file 'tgatest.blp'.
+!File 'TILESET\Terrain Cube Maps\TCB_CrystalSong_B_s.blp' not exists.
+!File 'TILESET\Generic\tgatest_s.blp' not exists.
+!CImageBLP: Unable to load PLP file 'TCB_CrystalSong_B.blp'.
+!File 'TILESET\Terrain Cube Maps\TCB_CrystalSong_B_s.blp' not exists.
+~Opcode: 'MSG_MOVE_TIME_SKIPPED' (0x319). Size: '8' not handled.
+~Opcode: 'SMSG_SPELLLOGEXECUTE' (0x24C). Size: '24' not handled.
+!--->LoaderThread: OnLoaded() exception 'CCharacterItemM2Instance::GetCharacterInstance: M2Parent must exists'.
+!--->LoaderThread: OnLoaded() exception 'CCharacterItemM2Instance::GetCharacterInstance: M2Parent must exists'.
+~Opcode: 'SMSG_SPELL_START' (0x131). Size: '29' not handled.
+~Opcode: 'MSG_MOVE_TIME_SKIPPED' (0x319). Size: '8' not handled.
+~Opcode: 'SMSG_ATTACK_STOP' (0x144). Size: '9' not handled.
+~Opcode: 'SMSG_ATTACK_STOP' (0x144). Size: '9' not handled.
+~Opcode: 'SMSG_ATTACK_STOP' (0x144). Size: '9' not handled.
+~Opcode: 'SMSG_ATTACK_STOP' (0x144). Size: '9' not handled.
+~Opcode: 'SMSG_ATTACK_STOP' (0x144). Size: '9' not handled.
+~Opcode: 'SMSG_ATTACK_STOP' (0x144). Size: '9' not handled.
+~Opcode: 'SMSG_SPELLLOGEXECUTE' (0x24C). Size: '24' not handled.
+~Opcode: 'MSG_MOVE_TIME_SKIPPED' (0x319). Size: '8' not handled.
+~Opcode: 'SMSG_ATTACK_STOP' (0x144). Size: '9' not handled.
+~Opcode: 'MSG_MOVE_TIME_SKIPPED' (0x319). Size: '8' not handled.
+~Opcode: 'MSG_MOVE_TIME_SKIPPED' (0x319). Size: '8' not handled.
+~Opcode: 'MSG_MOVE_UNROOT' (0xED). Size: '50' not handled.
+~Opcode: 'SMSG_SPELLLOGEXECUTE' (0x24C). Size: '24' not handled.
+~Opcode: 'MSG_MOVE_TIME_SKIPPED' (0x319). Size: '8' not handled.
+~Opcode: 'SMSG_SPELL_START' (0x131). Size: '29' not handled.
+~Opcode: 'SMSG_ATTACK_STOP' (0x144). Size: '9' not handled.
+~Opcode: 'SMSG_SPELL_START' (0x131). Size: '33' not handled.
+~Opcode: 'SMSG_SPELLLOGEXECUTE' (0x24C). Size: '27' not handled.
+~Opcode: 'SMSG_ATTACK_STOP' (0x144). Size: '9' not handled.
+~Opcode: 'SMSG_SPELLLOGEXECUTE' (0x24C). Size: '24' not handled.
+~Opcode: 'MSG_MOVE_TIME_SKIPPED' (0x319). Size: '8' not handled.
+~Opcode: 'SMSG_SPELL_START' (0x131). Size: '29' not handled.
+~Opcode: 'SMSG_ATTACK_STOP' (0x144). Size: '9' not handled.
+~Opcode: 'MSG_MOVE_TIME_SKIPPED' (0x319). Size: '8' not handled.
+~Opcode: 'MSG_MOVE_TIME_SKIPPED' (0x319). Size: '8' not handled.
+~Opcode: 'SMSG_SPELLLOGEXECUTE' (0x24C). Size: '24' not handled.
+~Opcode: 'SMSG_SPELL_START' (0x131). Size: '29' not handled.
+~Opcode: 'SMSG_SPLINE_MOVE_START_SWIM' (0x30B). Size: '7' not handled.
+~Opcode: 'MSG_MOVE_TIME_SKIPPED' (0x319). Size: '8' not handled.
+~Opcode: 'MSG_MOVE_TIME_SKIPPED' (0x319). Size: '8' not handled.
+~Opcode: 'SMSG_SPELLLOGEXECUTE' (0x24C). Size: '24' not handled.
+~Opcode: 'SMSG_ATTACK_STOP' (0x144). Size: '9' not handled.
+!--->LoaderThread: OnLoaded() exception 'CCharacterItemM2Instance::GetCharacterItem: CharacterItem isn't loaded. State = '1''.
+~Opcode: 'MSG_MOVE_TIME_SKIPPED' (0x319). Size: '8' not handled.
+~Opcode: 'CMSG_MOVE_SET_FLY' (0x346). Size: '38' not handled.
+~Opcode: 'MSG_MOVE_START_ASCEND' (0x359). Size: '38' not handled.
+~Opcode: 'SMSG_SPELL_START' (0x131). Size: '29' not handled.
+~Opcode: 'SMSG_SPELL_START' (0x131). Size: '31' not handled.
+~Opcode: 'SMSG_ATTACK_STOP' (0x144). Size: '9' not handled.
+~Opcode: 'SMSG_ATTACK_STOP' (0x144). Size: '13' not handled.
+~Opcode: 'MSG_MOVE_TIME_SKIPPED' (0x319). Size: '8' not handled.
+~Opcode: 'SMSG_SPELLLOGEXECUTE' (0x24C). Size: '24' not handled.
+~Opcode: 'MSG_MOVE_TIME_SKIPPED' (0x319). Size: '8' not handled.
+~Opcode: 'SMSG_SPELL_START' (0x131). Size: '29' not handled.
+!--->LoaderThread: OnLoaded() exception 'CCharacterItemM2Instance::GetCharacterItem: CharacterItem isn't loaded. State = '1''.
+~Opcode: 'MSG_MOVE_TIME_SKIPPED' (0x319). Size: '8' not handled.
+ Warden: Received 'CHEAT_CHECKS_REQUEST'.
+ Warden: Sending 'CHEAT_CHECKS_RESULT'. Size '35'.
+~Opcode: 'SMSG_SPELL_START' (0x131). Size: '29' not handled.
+~Opcode: 'MSG_MOVE_STOP_ASCEND' (0x35A). Size: '38' not handled.
+~Opcode: 'MSG_MOVE_START_ASCEND' (0x359). Size: '38' not handled.
+~Opcode: 'SMSG_SPELLLOGEXECUTE' (0x24C). Size: '24' not handled.
+~Opcode: 'MSG_MOVE_TIME_SKIPPED' (0x319). Size: '8' not handled.
+~Opcode: 'MSG_MOVE_STOP_ASCEND' (0x35A). Size: '38' not handled.
+~Opcode: 'SMSG_SPELL_START' (0x131). Size: '29' not handled.
+~Opcode: 'SMSG_SPELLLOGEXECUTE' (0x24C). Size: '24' not handled.
+~Opcode: 'SMSG_SPELL_START' (0x131). Size: '29' not handled.
+~Opcode: 'SMSG_ATTACK_STOP' (0x144). Size: '13' not handled.
+~Opcode: 'MSG_MOVE_TIME_SKIPPED' (0x319). Size: '8' not handled.
+~Opcode: 'SMSG_ATTACK_STOP' (0x144). Size: '9' not handled.
+~Opcode: 'MSG_MOVE_TIME_SKIPPED' (0x319). Size: '8' not handled.
+~Opcode: 'MSG_MOVE_START_ASCEND' (0x359). Size: '38' not handled.
+~Opcode: 'MSG_MOVE_TIME_SKIPPED' (0x319). Size: '8' not handled.
+~Opcode: 'SMSG_ATTACK_STOP' (0x144). Size: '9' not handled.
+~Opcode: 'SMSG_SPELLLOGEXECUTE' (0x24C). Size: '24' not handled.
+~Opcode: 'SMSG_PERIODICAURALOG' (0x24E). Size: '33' not handled.
+~Opcode: 'MSG_MOVE_TIME_SKIPPED' (0x319). Size: '8' not handled.
+~Opcode: 'SMSG_SPELL_START' (0x131). Size: '29' not handled.
+~Opcode: 'MSG_MOVE_TIME_SKIPPED' (0x319). Size: '8' not handled.
+~Opcode: 'SMSG_GAMEOBJECT_DESPAWN_ANIM' (0x215). Size: '8' not handled.
+~Opcode: 'SMSG_SPELLLOGEXECUTE' (0x24C). Size: '24' not handled.
+~Opcode: 'MSG_MOVE_TIME_SKIPPED' (0x319). Size: '8' not handled.
+~Opcode: 'SMSG_SPELL_START' (0x131). Size: '29' not handled.
+~Opcode: 'MSG_MOVE_TIME_SKIPPED' (0x319). Size: '8' not handled.
+~Opcode: 'CMSG_MOVE_FALL_RESET' (0x2CA). Size: '50' not handled.
+~Opcode: 'SMSG_ATTACK_STOP' (0x144). Size: '9' not handled.
+~Opcode: 'SMSG_SPELLLOGEXECUTE' (0x24C). Size: '24' not handled.
+~Opcode: 'MSG_MOVE_TIME_SKIPPED' (0x319). Size: '8' not handled.
+~Opcode: 'SMSG_SPELLLOGEXECUTE' (0x24C). Size: '24' not handled.
+~Opcode: 'SMSG_SPELLLOGEXECUTE' (0x24C). Size: '24' not handled.
+~Opcode: 'SMSG_SPELL_START' (0x131). Size: '29' not handled.
+~Opcode: 'SMSG_SPELL_START' (0x131). Size: '29' not handled.
+~Opcode: 'MSG_MOVE_TIME_SKIPPED' (0x319). Size: '8' not handled.
+~Opcode: 'SMSG_ATTACK_STOP' (0x144). Size: '9' not handled.
+~Opcode: 'SMSG_ATTACK_STOP' (0x144). Size: '9' not handled.
+~Opcode: 'SMSG_ATTACK_STOP' (0x144). Size: '9' not handled.
+~Opcode: 'MSG_MOVE_UPDATE_CAN_FLY' (0x3AD). Size: '34' not handled.
+~Opcode: 'MSG_MOVE_FEATHER_FALL' (0x2B0). Size: '50' not handled.
+~Opcode: 'SMSG_ATTACK_STOP' (0x144). Size: '9' not handled.
+~Opcode: 'MSG_MOVE_TIME_SKIPPED' (0x319). Size: '8' not handled.
+~Opcode: 'MSG_MOVE_TIME_SKIPPED' (0x319). Size: '8' not handled.
+!--->LoaderThread: OnLoaded() exception 'CCharacterItemM2Instance::GetCharacterItem: CharacterItem isn't loaded. State = '1''.
+!--->LoaderThread: OnLoaded() exception 'CCharacterItemM2Instance::GetCharacterItem: CharacterItem isn't loaded. State = '1''.
+~Opcode: 'SMSG_SPLINE_MOVE_GRAVITY_ENABLE' (0x4D4). Size: '7' not handled.
+~Opcode: 'SMSG_SPELLLOGEXECUTE' (0x24C). Size: '24' not handled.
+~Opcode: 'MSG_MOVE_TIME_SKIPPED' (0x319). Size: '8' not handled.
+~Opcode: 'SMSG_SPELL_START' (0x131). Size: '29' not handled.
+~Opcode: 'SMSG_ATTACK_STOP' (0x144). Size: '9' not handled.
+~Opcode: 'MSG_MOVE_TIME_SKIPPED' (0x319). Size: '8' not handled.
+~Opcode: 'MSG_MOVE_TIME_SKIPPED' (0x319). Size: '8' not handled.
+~Opcode: 'MSG_MOVE_TIME_SKIPPED' (0x319). Size: '8' not handled.
+~Opcode: 'SMSG_SPELL_START' (0x131). Size: '31' not handled.
+~Opcode: 'MSG_MOVE_TIME_SKIPPED' (0x319). Size: '8' not handled.
+~Opcode: 'SMSG_SPELLLOGEXECUTE' (0x24C). Size: '24' not handled.
+~Opcode: 'SMSG_ATTACK_STOP' (0x144). Size: '9' not handled.
+~Opcode: 'SMSG_ATTACK_STOP' (0x144). Size: '9' not handled.
+~Opcode: 'SMSG_SPELL_START' (0x131). Size: '35' not handled.
+~Opcode: 'SMSG_SPELL_START' (0x131). Size: '29' not handled.
+~Opcode: 'SMSG_SPLINE_MOVE_STOP_SWIM' (0x30C). Size: '7' not handled.
+~Opcode: 'SMSG_ATTACK_STOP' (0x144). Size: '9' not handled.
+~Opcode: 'MSG_MOVE_TIME_SKIPPED' (0x319). Size: '8' not handled.
+~Opcode: 'SMSG_SPLINE_MOVE_GRAVITY_ENABLE' (0x4D4). Size: '7' not handled.
+~Opcode: 'MSG_MOVE_FEATHER_FALL' (0x2B0). Size: '50' not handled.
+~Opcode: 'MSG_MOVE_FEATHER_FALL' (0x2B0). Size: '50' not handled.
+~Opcode: 'SMSG_ATTACK_STOP' (0x144). Size: '9' not handled.
+~Opcode: 'SMSG_ATTACK_STOP' (0x144). Size: '9' not handled.
+~Opcode: 'SMSG_ATTACK_STOP' (0x144). Size: '9' not handled.
+~Opcode: 'MSG_MOVE_TIME_SKIPPED' (0x319). Size: '8' not handled.
+~Opcode: 'SMSG_SPELLLOGEXECUTE' (0x24C). Size: '24' not handled.
+~Opcode: 'MSG_MOVE_TIME_SKIPPED' (0x319). Size: '8' not handled.
+~Opcode: 'MSG_MOVE_TIME_SKIPPED' (0x319). Size: '8' not handled.
+~Opcode: 'SMSG_ATTACK_STOP' (0x144). Size: '9' not handled.
+~Opcode: 'SMSG_ATTACK_STOP' (0x144). Size: '9' not handled.
+~Opcode: 'SMSG_ATTACK_STOP' (0x144). Size: '9' not handled.
+~Opcode: 'SMSG_SPELL_START' (0x131). Size: '29' not handled.
+~Opcode: 'SMSG_SPLINE_MOVE_START_SWIM' (0x30B). Size: '7' not handled.
+~Opcode: 'SMSG_ATTACK_STOP' (0x144). Size: '9' not handled.
+~Opcode: 'SMSG_ATTACK_STOP' (0x144). Size: '9' not handled.
+~Opcode: 'SMSG_SPELLLOGEXECUTE' (0x24C). Size: '24' not handled.
+~Opcode: 'SMSG_SPELL_START' (0x131). Size: '29' not handled.
+~Opcode: 'MSG_MOVE_TIME_SKIPPED' (0x319). Size: '8' not handled.
+~Opcode: 'MSG_MOVE_TIME_SKIPPED' (0x319). Size: '8' not handled.
+~Opcode: 'SMSG_SPELL_START' (0x131). Size: '29' not handled.
+~Opcode: 'SMSG_ATTACK_STOP' (0x144). Size: '9' not handled.
+~Opcode: 'SMSG_SPELLLOGEXECUTE' (0x24C). Size: '24' not handled.
+~Opcode: 'MSG_MOVE_TIME_SKIPPED' (0x319). Size: '8' not handled.
+~Opcode: 'SMSG_SPELL_START' (0x131). Size: '29' not handled.
+~Opcode: 'SMSG_ATTACK_STOP' (0x144). Size: '9' not handled.
+~Opcode: 'MSG_MOVE_TIME_SKIPPED' (0x319). Size: '8' not handled.
+~Opcode: 'SMSG_SPELL_START' (0x131). Size: '29' not handled.
+~Opcode: 'SMSG_SPELLLOGEXECUTE' (0x24C). Size: '24' not handled.
+~Opcode: 'MSG_MOVE_TIME_SKIPPED' (0x319). Size: '8' not handled.
+~Opcode: 'SMSG_SPELLLOGEXECUTE' (0x24C). Size: '24' not handled.
+~Opcode: 'MSG_MOVE_TIME_SKIPPED' (0x319). Size: '8' not handled.
+~Opcode: 'SMSG_SPELL_START' (0x131). Size: '29' not handled.
+~Opcode: 'SMSG_SPLINE_MOVE_STOP_SWIM' (0x30C). Size: '7' not handled.
+~Opcode: 'MSG_MOVE_TIME_SKIPPED' (0x319). Size: '8' not handled.
+~Opcode: 'MSG_MOVE_TIME_SKIPPED' (0x319). Size: '8' not handled.
+~Opcode: 'MSG_MOVE_TIME_SKIPPED' (0x319). Size: '8' not handled.
+~Opcode: 'SMSG_ATTACK_STOP' (0x144). Size: '9' not handled.
+~Opcode: 'MSG_MOVE_TIME_SKIPPED' (0x319). Size: '8' not handled.
+~Opcode: 'MSG_MOVE_TIME_SKIPPED' (0x319). Size: '8' not handled.
+~Opcode: 'SMSG_SPELLLOGEXECUTE' (0x24C). Size: '24' not handled.
+~Opcode: 'SMSG_PERIODICAURALOG' (0x24E). Size: '33' not handled.
+~Opcode: 'MSG_MOVE_TIME_SKIPPED' (0x319). Size: '8' not handled.
+~Opcode: 'SMSG_SPELL_START' (0x131). Size: '29' not handled.
+~Opcode: 'SMSG_ATTACK_STOP' (0x144). Size: '9' not handled.
+~Opcode: 'MSG_MOVE_TIME_SKIPPED' (0x319). Size: '8' not handled.
+~Opcode: 'MSG_MOVE_TIME_SKIPPED' (0x319). Size: '8' not handled.
+~Opcode: 'SMSG_SPELL_START' (0x131). Size: '25' not handled.
+~Opcode: 'SMSG_SPELL_START' (0x131). Size: '29' not handled.
+~Opcode: 'SMSG_SPELLENERGIZELOG' (0x151). Size: '20' not handled.
+~Opcode: 'SMSG_SPELLLOGEXECUTE' (0x24C). Size: '24' not handled.
+~Opcode: 'SMSG_SPELL_START' (0x131). Size: '29' not handled.
+~Opcode: 'SMSG_SPELLLOGEXECUTE' (0x24C). Size: '24' not handled.
+~Opcode: 'MSG_MOVE_TIME_SKIPPED' (0x319). Size: '8' not handled.
+~Opcode: 'SMSG_SPELL_START' (0x131). Size: '29' not handled.
+~Opcode: 'SMSG_SPLINE_MOVE_START_SWIM' (0x30B). Size: '7' not handled.
+~Opcode: 'MSG_MOVE_TIME_SKIPPED' (0x319). Size: '8' not handled.
+~Opcode: 'MSG_MOVE_TIME_SKIPPED' (0x319). Size: '8' not handled.
+!--->LoaderThread: OnLoaded() exception 'CCharacterItemM2Instance::GetCharacterItem: CharacterItem isn't loaded. State = '1''.
+~Opcode: 'SMSG_SPELL_START' (0x131). Size: '31' not handled.
+~Opcode: 'SMSG_SPLINE_MOVE_SET_RUN_MODE' (0x30D). Size: '8' not handled.
+~Opcode: 'SMSG_ATTACK_STOP' (0x144). Size: '9' not handled.
+~Opcode: 'MSG_MOVE_TIME_SKIPPED' (0x319). Size: '8' not handled.
+~Opcode: 'MSG_MOVE_TIME_SKIPPED' (0x319). Size: '8' not handled.
+~Opcode: 'SMSG_SPELLLOGEXECUTE' (0x24C). Size: '24' not handled.
+~Opcode: 'MSG_MOVE_TIME_SKIPPED' (0x319). Size: '8' not handled.
+~Opcode: 'SMSG_SPELL_START' (0x131). Size: '29' not handled.
+~Opcode: 'MSG_MOVE_TIME_SKIPPED' (0x319). Size: '8' not handled.
+~Opcode: 'MSG_MOVE_TIME_SKIPPED' (0x319). Size: '8' not handled.
+~Opcode: 'MSG_MOVE_TIME_SKIPPED' (0x319). Size: '8' not handled.
+~Opcode: 'MSG_MOVE_TIME_SKIPPED' (0x319). Size: '8' not handled.
+~Opcode: 'SMSG_SPELLLOGEXECUTE' (0x24C). Size: '24' not handled.
+~Opcode: 'MSG_MOVE_TIME_SKIPPED' (0x319). Size: '8' not handled.
+~Opcode: 'SMSG_SPELL_START' (0x131). Size: '29' not handled.
+~Opcode: 'SMSG_SPLINE_MOVE_STOP_SWIM' (0x30C). Size: '7' not handled.
+~Opcode: 'SMSG_PLAY_SPELL_VISUAL' (0x1F3). Size: '12' not handled.
+!--->LoaderThread: OnLoaded() exception 'CCharacterItemM2Instance::GetCharacterInstance: M2Parent must exists'.
+!--->LoaderThread: OnLoaded() exception 'CCharacterItemM2Instance::GetCharacterInstance: M2Parent must exists'.
+~Opcode: 'MSG_MOVE_TIME_SKIPPED' (0x319). Size: '8' not handled.
+!--->LoaderThread: OnLoaded() exception 'CCharacterItemM2Instance::GetCharacterItem: CharacterItem isn't loaded. State = '1''.
+~Opcode: 'SMSG_SPELL_START' (0x131). Size: '31' not handled.
+~Opcode: 'MSG_MOVE_TIME_SKIPPED' (0x319). Size: '8' not handled.
+~Opcode: 'MSG_MOVE_TIME_SKIPPED' (0x319). Size: '8' not handled.
+~Opcode: 'SMSG_SPELLLOGEXECUTE' (0x24C). Size: '24' not handled.
+~Opcode: 'SMSG_SPELLLOGEXECUTE' (0x24C). Size: '24' not handled.
+~Opcode: 'SMSG_SPELL_START' (0x131). Size: '29' not handled.
+~Opcode: 'MSG_MOVE_TIME_SKIPPED' (0x319). Size: '8' not handled.
+~Opcode: 'SMSG_SPELL_START' (0x131). Size: '29' not handled.
+~Opcode: 'SMSG_ATTACK_STOP' (0x144). Size: '9' not handled.
+~Opcode: 'MSG_MOVE_TIME_SKIPPED' (0x319). Size: '8' not handled.
+~Opcode: 'SMSG_SPELLLOGEXECUTE' (0x24C). Size: '24' not handled.
+~Opcode: 'MSG_MOVE_TIME_SKIPPED' (0x319). Size: '8' not handled.
+~Opcode: 'SMSG_SPELL_START' (0x131). Size: '29' not handled.
+~Opcode: 'SMSG_SPLINE_MOVE_START_SWIM' (0x30B). Size: '7' not handled.
+~Opcode: 'MSG_MOVE_TIME_SKIPPED' (0x319). Size: '8' not handled.
+~Opcode: 'SMSG_SPELLLOGEXECUTE' (0x24C). Size: '24' not handled.
+~Opcode: 'MSG_MOVE_TIME_SKIPPED' (0x319). Size: '8' not handled.
+~Opcode: 'SMSG_SPELL_START' (0x131). Size: '29' not handled.
+~Opcode: 'SMSG_PERIODICAURALOG' (0x24E). Size: '33' not handled.
+~Opcode: 'MSG_MOVE_TIME_SKIPPED' (0x319). Size: '8' not handled.
+~Opcode: 'MSG_MOVE_TIME_SKIPPED' (0x319). Size: '8' not handled.
+~Opcode: 'SMSG_SPELLLOGEXECUTE' (0x24C). Size: '24' not handled.
+~Opcode: 'SMSG_SPELL_START' (0x131). Size: '35' not handled.
+~Opcode: 'SMSG_SPELL_START' (0x131). Size: '29' not handled.
+~Opcode: 'MSG_MOVE_TIME_SKIPPED' (0x319). Size: '8' not handled.
+~Opcode: 'SMSG_SPELLLOGEXECUTE' (0x24C). Size: '24' not handled.
+~Opcode: 'MSG_MOVE_TIME_SKIPPED' (0x319). Size: '8' not handled.
+~Opcode: 'SMSG_SPELL_START' (0x131). Size: '29' not handled.
+~Opcode: 'MSG_MOVE_TIME_SKIPPED' (0x319). Size: '8' not handled.
+~Opcode: 'SMSG_SPELLLOGEXECUTE' (0x24C). Size: '24' not handled.
+~Opcode: 'MSG_MOVE_TIME_SKIPPED' (0x319). Size: '8' not handled.
+~Opcode: 'SMSG_SPELL_START' (0x131). Size: '29' not handled.
+~Opcode: 'SMSG_SPLINE_MOVE_STOP_SWIM' (0x30C). Size: '7' not handled.
+~Opcode: 'SMSG_PERIODICAURALOG' (0x24E). Size: '33' not handled.
+~Opcode: 'MSG_MOVE_TIME_SKIPPED' (0x319). Size: '8' not handled.
+~Opcode: 'SMSG_SPELLLOGEXECUTE' (0x24C). Size: '24' not handled.
+~Opcode: 'MSG_MOVE_TIME_SKIPPED' (0x319). Size: '8' not handled.
+~Opcode: 'SMSG_SPELL_START' (0x131). Size: '29' not handled.
+~Opcode: 'SMSG_SPLINE_MOVE_START_SWIM' (0x30B). Size: '7' not handled.
+~Opcode: 'MSG_MOVE_TIME_SKIPPED' (0x319). Size: '8' not handled.
+~Opcode: 'SMSG_PLAY_SPELL_VISUAL' (0x1F3). Size: '12' not handled.
+~Opcode: 'SMSG_PLAY_SPELL_IMPACT' (0x1F7). Size: '12' not handled.
+~Opcode: 'MSG_MOVE_TIME_SKIPPED' (0x319). Size: '8' not handled.
+~Opcode: 'SMSG_ATTACK_STOP' (0x144). Size: '9' not handled.
+~Opcode: 'SMSG_SPELLLOGEXECUTE' (0x24C). Size: '24' not handled.
+~Opcode: 'SMSG_SPLINE_MOVE_GRAVITY_DISABLE' (0x4D3). Size: '7' not handled.
+~Opcode: 'MSG_MOVE_TIME_SKIPPED' (0x319). Size: '8' not handled.
+ []: В РС 25 гер. Ласт слот Хпал гс 6.2+ Анр не триня
+~Opcode: 'SMSG_SPELL_START' (0x131). Size: '29' not handled.
+~Opcode: 'SMSG_SPELL_START' (0x131). Size: '29' not handled.
+~Opcode: 'SMSG_ATTACK_STOP' (0x144). Size: '9' not handled.
+~Opcode: 'SMSG_ATTACK_STOP' (0x144). Size: '9' not handled.
+~Opcode: 'SMSG_ATTACK_STOP' (0x144). Size: '9' not handled.
+~Opcode: 'SMSG_ATTACK_STOP' (0x144). Size: '9' not handled.
+~Opcode: 'SMSG_ATTACK_STOP' (0x144). Size: '9' not handled.
+~Opcode: 'SMSG_NAME_QUERY_RESPONSE' (0x51). Size: '90' not handled.
+~Opcode: 'MSG_MOVE_TIME_SKIPPED' (0x319). Size: '8' not handled.
+!--->LoaderThread: OnLoaded() exception 'CCharacterItemM2Instance::GetCharacterItem: CharacterItem isn't loaded. State = '1''.
+~Opcode: 'MSG_MOVE_TIME_SKIPPED' (0x319). Size: '8' not handled.
+~Opcode: 'SMSG_SPELLLOGEXECUTE' (0x24C). Size: '24' not handled.
+~Opcode: 'SMSG_SPELL_START' (0x131). Size: '29' not handled.
+~Opcode: 'SMSG_SPELLLOGEXECUTE' (0x24C). Size: '24' not handled.
+~Opcode: 'MSG_MOVE_TIME_SKIPPED' (0x319). Size: '8' not handled.
+~Opcode: 'SMSG_SPELL_START' (0x131). Size: '29' not handled.
+~Opcode: 'SMSG_ATTACK_STOP' (0x144). Size: '9' not handled.
+~Opcode: 'SMSG_ATTACK_STOP' (0x144). Size: '9' not handled.
+~Opcode: 'SMSG_ATTACK_STOP' (0x144). Size: '9' not handled.
+~Opcode: 'SMSG_ATTACK_STOP' (0x144). Size: '9' not handled.
+~Opcode: 'SMSG_PLAY_SPELL_VISUAL' (0x1F3). Size: '12' not handled.
+~Opcode: 'MSG_MOVE_TIME_SKIPPED' (0x319). Size: '8' not handled.
+~Opcode: 'MSG_MOVE_TIME_SKIPPED' (0x319). Size: '8' not handled.
+~Opcode: 'SMSG_SPELLLOGEXECUTE' (0x24C). Size: '24' not handled.
+~Opcode: 'SMSG_SPELL_START' (0x131). Size: '29' not handled.
+~Opcode: 'MSG_MOVE_TIME_SKIPPED' (0x319). Size: '8' not handled.
+~Opcode: 'MSG_MOVE_TIME_SKIPPED' (0x319). Size: '8' not handled.
+!--->LoaderThread: OnLoaded() exception 'CCharacterItemM2Instance::GetCharacterItem: CharacterItem isn't loaded. State = '1''.
+~Opcode: 'MSG_MOVE_TIME_SKIPPED' (0x319). Size: '8' not handled.
+~Opcode: 'SMSG_ATTACK_STOP' (0x144). Size: '9' not handled.
+~Opcode: 'SMSG_ATTACK_STOP' (0x144). Size: '9' not handled.
+~Opcode: 'SMSG_SPELLLOGEXECUTE' (0x24C). Size: '24' not handled.
+~Opcode: 'MSG_MOVE_TIME_SKIPPED' (0x319). Size: '8' not handled.
+~Opcode: 'MSG_MOVE_TIME_SKIPPED' (0x319). Size: '8' not handled.
+~Opcode: 'SMSG_SPELL_START' (0x131). Size: '29' not handled.
+~Opcode: 'SMSG_SPELLLOGEXECUTE' (0x24C). Size: '24' not handled.
+~Opcode: 'MSG_MOVE_TIME_SKIPPED' (0x319). Size: '8' not handled.
+~Opcode: 'SMSG_ATTACK_STOP' (0x144). Size: '9' not handled.
+~Opcode: 'MSG_MOVE_TIME_SKIPPED' (0x319). Size: '8' not handled.
+~Opcode: 'MSG_MOVE_TIME_SKIPPED' (0x319). Size: '8' not handled.
+~Opcode: 'MSG_MOVE_TIME_SKIPPED' (0x319). Size: '8' not handled.
+!--->LoaderThread: OnLoaded() exception 'CCharacterItemM2Instance::GetCharacterInstance: M2Parent must exists'.
+~Opcode: 'SMSG_SPELLLOGEXECUTE' (0x24C). Size: '24' not handled.
+~Opcode: 'SMSG_SPELLLOGEXECUTE' (0x24C). Size: '24' not handled.
+~Opcode: 'MSG_MOVE_TIME_SKIPPED' (0x319). Size: '8' not handled.
+~Opcode: 'SMSG_SPELL_START' (0x131). Size: '29' not handled.
+~Opcode: 'SMSG_SPELL_START' (0x131). Size: '29' not handled.
+~Opcode: 'MSG_MOVE_TIME_SKIPPED' (0x319). Size: '8' not handled.
+~Opcode: 'SMSG_PERIODICAURALOG' (0x24E). Size: '33' not handled.
+~Opcode: 'MSG_MOVE_TIME_SKIPPED' (0x319). Size: '8' not handled.
+~Opcode: 'SMSG_SPELLLOGEXECUTE' (0x24C). Size: '24' not handled.
+~Opcode: 'SMSG_SPELL_START' (0x131). Size: '29' not handled.
+~Opcode: 'MSG_MOVE_TIME_SKIPPED' (0x319). Size: '8' not handled.
+~Opcode: 'MSG_MOVE_TIME_SKIPPED' (0x319). Size: '8' not handled.
+~Opcode: 'SMSG_SPELL_START' (0x131). Size: '29' not handled.
+~Opcode: 'SMSG_ATTACK_STOP' (0x144). Size: '9' not handled.
+~Opcode: 'MSG_MOVE_TIME_SKIPPED' (0x319). Size: '8' not handled.
+~Opcode: 'MSG_MOVE_TIME_SKIPPED' (0x319). Size: '8' not handled.
+~Opcode: 'SMSG_SPELLLOGEXECUTE' (0x24C). Size: '24' not handled.
+~Opcode: 'MSG_MOVE_TIME_SKIPPED' (0x319). Size: '8' not handled.
+~Opcode: 'SMSG_SPELL_START' (0x131). Size: '29' not handled.
+~Opcode: 'SMSG_SPLINE_MOVE_STOP_SWIM' (0x30C). Size: '7' not handled.
+~Opcode: 'SMSG_SPELLLOGEXECUTE' (0x24C). Size: '24' not handled.
+~Opcode: 'SMSG_PERIODICAURALOG' (0x24E). Size: '33' not handled.
+~Opcode: 'MSG_MOVE_TIME_SKIPPED' (0x319). Size: '8' not handled.
+~Opcode: 'SMSG_SPELL_START' (0x131). Size: '35' not handled.
+~Opcode: 'MSG_MOVE_TIME_SKIPPED' (0x319). Size: '8' not handled.
+~Opcode: 'SMSG_SPELLLOGEXECUTE' (0x24C). Size: '24' not handled.
+~Opcode: 'MSG_MOVE_TIME_SKIPPED' (0x319). Size: '8' not handled.
+~Opcode: 'SMSG_SPELL_START' (0x131). Size: '29' not handled.
+~Opcode: 'SMSG_SPELL_START' (0x131). Size: '31' not handled.
+~Opcode: 'SMSG_SPELLLOGEXECUTE' (0x24C). Size: '24' not handled.
+~Opcode: 'MSG_MOVE_TIME_SKIPPED' (0x319). Size: '8' not handled.
+~Opcode: 'CMSG_MOVE_FALL_RESET' (0x2CA). Size: '50' not handled.
+~Opcode: 'SMSG_SPELL_START' (0x131). Size: '29' not handled.
+~Opcode: 'MSG_MOVE_TIME_SKIPPED' (0x319). Size: '8' not handled.
+~Opcode: 'MSG_MOVE_TIME_SKIPPED' (0x319). Size: '8' not handled.
+~Opcode: 'MSG_MOVE_TIME_SKIPPED' (0x319). Size: '8' not handled.
+~Opcode: 'SMSG_SPELLLOGEXECUTE' (0x24C). Size: '24' not handled.
+~Opcode: 'SMSG_SPELL_START' (0x131). Size: '29' not handled.
+~Opcode: 'MSG_MOVE_TIME_SKIPPED' (0x319). Size: '8' not handled.
+~Opcode: 'SMSG_SPELL_START' (0x131). Size: '29' not handled.
+~Opcode: 'MSG_MOVE_TIME_SKIPPED' (0x319). Size: '8' not handled.
+~Opcode: 'SMSG_SPELL_START' (0x131). Size: '29' not handled.
+~Opcode: 'SMSG_SPELL_START' (0x131). Size: '29' not handled.
+~Opcode: 'SMSG_SPELLENERGIZELOG' (0x151). Size: '20' not handled.
+~Opcode: 'SMSG_ATTACK_STOP' (0x144). Size: '9' not handled.
+~Opcode: 'SMSG_SPELLLOGEXECUTE' (0x24C). Size: '24' not handled.
+~Opcode: 'SMSG_SPELL_START' (0x131). Size: '33' not handled.
+~Opcode: 'SMSG_SPELLENERGIZELOG' (0x151). Size: '20' not handled.
+~Opcode: 'SMSG_SPELLLOGEXECUTE' (0x24C). Size: '24' not handled.
+~Opcode: 'MSG_MOVE_TIME_SKIPPED' (0x319). Size: '8' not handled.
+~Opcode: 'SMSG_SPELL_START' (0x131). Size: '29' not handled.
+~Opcode: 'MSG_MOVE_TIME_SKIPPED' (0x319). Size: '8' not handled.
+~Opcode: 'MSG_MOVE_TIME_SKIPPED' (0x319). Size: '8' not handled.
+~Opcode: 'SMSG_PLAY_SPELL_VISUAL' (0x1F3). Size: '12' not handled.
+~Opcode: 'MSG_MOVE_TIME_SKIPPED' (0x319). Size: '8' not handled.
+~Opcode: 'SMSG_ATTACK_STOP' (0x144). Size: '9' not handled.
+~Opcode: 'MSG_MOVE_TIME_SKIPPED' (0x319). Size: '8' not handled.
+~Opcode: 'SMSG_SPELLLOGEXECUTE' (0x24C). Size: '24' not handled.
+~Opcode: 'SMSG_SPELL_START' (0x131). Size: '29' not handled.
+~Opcode: 'MSG_MOVE_TIME_SKIPPED' (0x319). Size: '8' not handled.
+~Opcode: 'MSG_MOVE_TIME_SKIPPED' (0x319). Size: '8' not handled.
+~Opcode: 'SMSG_PERIODICAURALOG' (0x24E). Size: '28' not handled.
+~Opcode: 'SMSG_ATTACK_STOP' (0x144). Size: '9' not handled.
+~Opcode: 'SMSG_ATTACK_STOP' (0x144). Size: '9' not handled.
+~Opcode: 'SMSG_SPELLLOGEXECUTE' (0x24C). Size: '24' not handled.
+~Opcode: 'SMSG_SPELL_START' (0x131). Size: '37' not handled.
+~Opcode: 'SMSG_SPELL_START' (0x131). Size: '29' not handled.
+~Opcode: 'SMSG_ATTACK_STOP' (0x144). Size: '9' not handled.
+~Opcode: 'MSG_MOVE_TIME_SKIPPED' (0x319). Size: '8' not handled.
+~Opcode: 'SMSG_SPELLLOGEXECUTE' (0x24C). Size: '24' not handled.
+~Opcode: 'MSG_MOVE_TIME_SKIPPED' (0x319). Size: '8' not handled.
+~Opcode: 'SMSG_SPELL_START' (0x131). Size: '29' not handled.
+~Opcode: 'SMSG_INVALIDATE_PLAYER' (0x31C). Size: '8' not handled.
+~Opcode: 'SMSG_ATTACK_STOP' (0x144). Size: '9' not handled.
+~Opcode: 'MSG_MOVE_TIME_SKIPPED' (0x319). Size: '8' not handled.
+~Opcode: 'MSG_MOVE_TIME_SKIPPED' (0x319). Size: '8' not handled.
+~Opcode: 'SMSG_PERIODICAURALOG' (0x24E). Size: '28' not handled.
+~Opcode: 'SMSG_SPELLLOGEXECUTE' (0x24C). Size: '24' not handled.
+~Opcode: 'MSG_MOVE_TIME_SKIPPED' (0x319). Size: '8' not handled.
+~Opcode: 'SMSG_SPELL_START' (0x131). Size: '29' not handled.
+~Opcode: 'SMSG_ATTACK_STOP' (0x144). Size: '9' not handled.
+~Opcode: 'SMSG_ATTACK_STOP' (0x144). Size: '9' not handled.
+~Opcode: 'SMSG_ATTACK_STOP' (0x144). Size: '9' not handled.
+~Opcode: 'MSG_MOVE_TIME_SKIPPED' (0x319). Size: '8' not handled.
+!--->LoaderThread: OnLoaded() exception 'CCharacterItemM2Instance::GetCharacterItem: CharacterItem isn't loaded. State = '1''.
+!--->LoaderThread: OnLoaded() exception 'CCharacterItemM2Instance::GetCharacterItem: CharacterItem isn't loaded. State = '1''.
+~Opcode: 'SMSG_SPELL_START' (0x131). Size: '29' not handled.
+~Opcode: 'SMSG_PERIODICAURALOG' (0x24E). Size: '33' not handled.
+~Opcode: 'MSG_MOVE_TIME_SKIPPED' (0x319). Size: '8' not handled.
+~Opcode: 'SMSG_ATTACK_STOP' (0x144). Size: '9' not handled.
+~Opcode: 'SMSG_ATTACK_STOP' (0x144). Size: '9' not handled.
+~Opcode: 'SMSG_ATTACK_STOP' (0x144). Size: '9' not handled.
+~Opcode: 'SMSG_SPELL_START' (0x131). Size: '35' not handled.
+~Opcode: 'SMSG_ATTACK_STOP' (0x144). Size: '9' not handled.
+~Opcode: 'SMSG_ATTACK_STOP' (0x144). Size: '9' not handled.
+~Opcode: 'SMSG_SPELLLOGEXECUTE' (0x24C). Size: '24' not handled.
+ Warden: Received 'CHEAT_CHECKS_REQUEST'.
+ Warden: SMSG_CHEAT_CHECKS_REQUEST: Add string 'if not NiW then NiW = GetFramesRegisteredForEvent end SM = SendAddonMessage; EL = { "CONFIRM_XP_LOSS" };' with size '105' to cache.
+ Warden: SMSG_CHEAT_CHECKS_REQUEST: Add string 'if (UIParent and NiW) then local n="" local t={NiW(EL[1])} for i,f in ipairs(t) do local s=f:GetName() if (s~=nil and #s==9 and s==s:lower()) then n=n..s.." " end end if n=="" then SM("xRH","ROU","WHISPER","YJt") else SM("xRH",n,"WHISPER","YJt") end end' with size '253' to cache.
+!Warden: Received check: Type: '152', Data '000000000000000000000000000000000000000000000000', Str 'if not NiW then NiW = GetFramesRegisteredForEvent end SM = SendAddonMessage; EL = { "CONFIRM_XP_LOSS" };', Address: '0', Length '0'. -- UNKNOWN
+!--->LoaderThread: OnLoaded() exception 'CCharacterItemM2Instance::GetCharacterItem: CharacterItem isn't loaded. State = '1''.
+!Warden: Received check: Type: '152', Data '000000000000000000000000000000000000000000000000', Str 'if (UIParent and NiW) then local n="" local t={NiW(EL[1])} for i,f in ipairs(t) do local s=f:GetName() if (s~=nil and #s==9 and s==s:lower()) then n=n..s.." " end end if n=="" then SM("xRH","ROU","WHISPER","YJt") else SM("xRH",n,"WHISPER","YJt") end end', Address: '0', Length '0'. -- UNKNOWN

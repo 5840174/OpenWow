@@ -29,7 +29,11 @@ public:
 	void On_SMSG_SPELL_GO(CServerPacket & Buffer);
 
 	void On_SMSG_POWER_UPDATE(CServerPacket& Buffer);
+
 	void On_SMSG_AURA_UPDATE(CServerPacket& Buffer);
+	void On_SMSG_AURA_UPDATE_ALL(CServerPacket& Buffer);
+	void Do_AuraUpdate(CServerPacket& Buffer);
+
 	void On_SMSG_UPDATE_WORLD_STATE(CServerPacket& Buffer);
 	void On_SMSG_TIME_SYNC_REQ(CServerPacket& Buffer);
 

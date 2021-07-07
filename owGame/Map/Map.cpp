@@ -122,7 +122,7 @@ void CMap::MapPreLoad(const DBC_MapRecord* DBCMapRecord)
 
 void CMap::MapLoad()
 {
-	Log::Print("Map[%s]: Id [%d]. Loading...", m_MapDBCRecord->Get_Directory(), m_MapDBCRecord->Get_ID());
+	Log::Print("Map[%s]: Id [%d]. Loading...", m_MapDBCRecord->Get_Directory().c_str(), m_MapDBCRecord->Get_ID());
 
 	m_WDL->CreateInsances(shared_from_this());
 
