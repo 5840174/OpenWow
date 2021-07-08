@@ -27,11 +27,13 @@ public:
 	// IWoWObjectsCreator
 	void ClearCache() override final;
 #ifdef USE_M2_MODELS
-	std::shared_ptr<CM2> LoadM2(IRenderDevice& RenderDevice, const std::string& Filename, bool ImmediateLoad = false) override final;
+	std::shared_ptr<CM2> LoadM2(IRenderDevice& RenderDevice, const std::string& Filename) override final;
 #endif
+
 #ifdef USE_WMO_MODELS
-	std::shared_ptr<CWMO> LoadWMO(IRenderDevice& RenderDevice, const std::string& Filename, bool ImmediateLoad = false) override final;
+	std::shared_ptr<CWMO> LoadWMO(IRenderDevice& RenderDevice, const std::string& Filename) override final;
 #endif
+
 	void                         InitEGxBlend(IRenderDevice& RenderDevice) override final;
 	std::shared_ptr<IBlendState> GetEGxBlend(uint32 Index) const override final;
 

@@ -160,7 +160,7 @@ void CWMOGroup::CreateInsances(const std::shared_ptr<CWMO_Group_Instance>& Paren
 		const SWMO_MODD& placement = m_WMO.GetDoodadPlacement(doodadPlacementIndex);
 
 		std::string doodadFileName = m_WMO.GetDoodadFileName(placement.flags.nameIndex);
-		if (std::shared_ptr<CM2> m2 = m_BaseManager.GetManager<IWoWObjectsCreator>()->LoadM2(m_RenderDevice, doodadFileName, true))
+		if (std::shared_ptr<CM2> m2 = m_BaseManager.GetManager<IWoWObjectsCreator>()->LoadM2(m_RenderDevice, doodadFileName))
 		{
 			auto inst = Parent->CreateSceneNode<CWMO_Doodad_Instance>(m2, doodadPlacementIndex, placement);
 

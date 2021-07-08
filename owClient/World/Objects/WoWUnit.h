@@ -4,6 +4,7 @@
 
 #include "WoWWorldObject.h"
 #include "Helpers/MovementHelper.h"
+#include "WoWUnitFlags.h"
 #include "../../Types/MoveSplineFlag.h"
 #include "../Path/Path.h"
 
@@ -12,41 +13,7 @@ class CWoWWorld;
 struct SCharacterItemTemplate;
 // FORWARD END
 
-enum UnitDynFlags
-{
-	UNIT_DYNFLAG_LOOTABLE = 0x0001,
-	UNIT_DYNFLAG_TRACK_UNIT = 0x0002,
-	UNIT_DYNFLAG_OTHER_TAGGER = 0x0004,
-	UNIT_DYNFLAG_ROOTED = 0x0008,
-	UNIT_DYNFLAG_SPECIALINFO = 0x0010,
-	UNIT_DYNFLAG_DEAD = 0x0020
-};
 
-
-// FLAGS FOR VALUES
-enum UnitBytes0Offsets : uint8
-{
-	UNIT_BYTES_0_OFFSET_RACE = 0,
-	UNIT_BYTES_0_OFFSET_CLASS = 1,
-	UNIT_BYTES_0_OFFSET_GENDER = 2,
-	UNIT_BYTES_0_OFFSET_POWER_TYPE = 3,
-};
-
-enum UnitBytes1Offsets : uint8
-{
-	UNIT_BYTES_1_OFFSET_STAND_STATE = 0,
-	UNIT_BYTES_1_OFFSET_PET_TALENTS = 1,
-	UNIT_BYTES_1_OFFSET_VIS_FLAG = 2,
-	UNIT_BYTES_1_OFFSET_ANIM_TIER = 3
-};
-
-enum UnitBytes2Offsets : uint8
-{
-	UNIT_BYTES_2_OFFSET_SHEATH_STATE = 0,
-	UNIT_BYTES_2_OFFSET_PVP_FLAG = 1,
-	UNIT_BYTES_2_OFFSET_PET_FLAGS = 2,
-	UNIT_BYTES_2_OFFSET_SHAPESHIFT_FORM = 3
-};
 
 
 class ZN_API WoWUnit
@@ -66,19 +33,15 @@ public:
 	uint8 GetGender() const     { return m_Values.GetByteValue(UNIT_FIELD_BYTES_0, UNIT_BYTES_0_OFFSET_GENDER); }
 
 	// Speed
-	float GetSpeed(UnitMoveType MoveType) const { return m_Speed[MoveType]; }
-	void SetSpeed(UnitMoveType MoveType, float Speed) { m_Speed[MoveType] = Speed; }
+	float GetSpeed(UnitSpeedType MoveType) const { return m_Speed[MoveType]; }
+	void SetSpeed(UnitSpeedType MoveType, float Speed) { m_Speed[MoveType] = Speed; }
 
 	// MovementFlags
 	uint32 GetMovementFlags() const { return m_MovementFlags; }
-	void SetMovementFlags(uint32 flag) { m_MovementFlags = flag; }
-	void AddMovementFlag(uint32 flag) { m_MovementFlags |= flag; }
-	void RemoveMovementFlag(uint32 flag) { m_MovementFlags &= ~flag; }
 	bool HasMovementFlag(uint32 flag) const { return (m_MovementFlags & flag) != 0; }
 
 	// MovementFlags2
 	uint16 GetExtraMovementFlags() const { return m_MovementFlagsExtra; }
-	void AddExtraMovementFlag(uint16 flag) { m_MovementFlagsExtra |= flag; }
 	bool HasExtraMovementFlag(uint16 flag) const { return (m_MovementFlagsExtra & flag) != 0; }
 
 	// ISceneNode

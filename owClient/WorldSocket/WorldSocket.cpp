@@ -61,7 +61,7 @@ namespace
 			{
 				// Fill data
 				_ASSERT(Buffer.getPos() + needToRead <= Buffer.getSize());
-				(*Packet)->writeBytes(Buffer.getDataFromCurrent(), needToRead);
+				(*Packet)->writeBytesInternal(Buffer.getDataFromCurrent(), needToRead);
 
 				Buffer.seekRelative(needToRead);
 				//Log::Info("Packet[%s] readed '%d' of %d'.", OpcodesNames[m_CurrentPacket->GetPacketOpcode()].c_str(), m_CurrentPacket->getSize(), m_CurrentPacket->GetPacketSize());

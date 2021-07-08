@@ -63,15 +63,6 @@ std::shared_ptr<CCharacter> CWorldObjectCreator::BuildCharacterFromTemplate(IRen
 	// 2. Template
 	characterM2Instance->Template() = b;
 
-	// 3. Items
-	//characterM2Instance->Refresh_CharacterItemsFromTemplate();
-
-	// 4. Character textures
-	//characterM2Instance->Refresh_SkinImageFromTemplate();
-
-	// 5. Geosets
-	//characterM2Instance->RefreshMeshIDs();
-
 	return characterM2Instance;
 }
 
@@ -94,41 +85,29 @@ std::shared_ptr<CCharacter> CWorldObjectCreator::BuildCharacterFromDisplayInfo(I
 	std::shared_ptr<CCharacter> characterM2Instance = ((Parent != nullptr) ? Parent : Scene.GetRootSceneNode())->CreateSceneNode<CCharacter>(characterM2Model);
 	m_BaseManager.GetManager<ILoader>()->AddToLoadQueue(characterM2Instance);
 
-	// 2. Template
-	{
-		// 2.1 Visual params
-		characterM2Instance->Template().Race = static_cast<Race>(m_DBCs->DBC_ChrRaces()[humanoidRecExtra->Get_Race()]->Get_ID());
-		characterM2Instance->Template().Gender = static_cast<Gender>(humanoidRecExtra->Get_Gender());
-		characterM2Instance->Template().skin = humanoidRecExtra->Get_SkinID();
-		characterM2Instance->Template().face = humanoidRecExtra->Get_FaceID();
-		characterM2Instance->Template().hairStyle = humanoidRecExtra->Get_HairStyleID();
-		characterM2Instance->Template().hairColor = humanoidRecExtra->Get_HairColorID();
-		characterM2Instance->Template().facialStyle = humanoidRecExtra->Get_FacialHairID();
+	// 2.1 Visual params
+	characterM2Instance->Template().Race        = static_cast<Race>(m_DBCs->DBC_ChrRaces()[humanoidRecExtra->Get_Race()]->Get_ID());
+	characterM2Instance->Template().Gender      = static_cast<Gender>(humanoidRecExtra->Get_Gender());
+	characterM2Instance->Template().skin        = humanoidRecExtra->Get_SkinID();
+	characterM2Instance->Template().face        = humanoidRecExtra->Get_FaceID();
+	characterM2Instance->Template().hairStyle   = humanoidRecExtra->Get_HairStyleID();
+	characterM2Instance->Template().hairColor   = humanoidRecExtra->Get_HairColorID();
+	characterM2Instance->Template().facialStyle = humanoidRecExtra->Get_FacialHairID();
 
-		// 2.2 Items
-		characterM2Instance->Template().ItemsTemplates[EQUIPMENT_SLOT_HEAD] = SCharacterItemTemplate(humanoidRecExtra->Get_Helm(), DBCItem_EInventoryItemType::HEAD, 0);
-		characterM2Instance->Template().ItemsTemplates[EQUIPMENT_SLOT_SHOULDERS] = SCharacterItemTemplate(humanoidRecExtra->Get_Shoulder(), DBCItem_EInventoryItemType::SHOULDERS, 0);
-		characterM2Instance->Template().ItemsTemplates[EQUIPMENT_SLOT_BODY] = SCharacterItemTemplate(humanoidRecExtra->Get_Shirt(), DBCItem_EInventoryItemType::BODY, 0);
-		characterM2Instance->Template().ItemsTemplates[EQUIPMENT_SLOT_CHEST] = SCharacterItemTemplate(humanoidRecExtra->Get_Chest(), DBCItem_EInventoryItemType::CHEST, 0);
-		characterM2Instance->Template().ItemsTemplates[EQUIPMENT_SLOT_WAIST] = SCharacterItemTemplate(humanoidRecExtra->Get_Belt(), DBCItem_EInventoryItemType::WAIST, 0);
-		characterM2Instance->Template().ItemsTemplates[EQUIPMENT_SLOT_LEGS] = SCharacterItemTemplate(humanoidRecExtra->Get_Legs(), DBCItem_EInventoryItemType::LEGS, 0);
-		characterM2Instance->Template().ItemsTemplates[EQUIPMENT_SLOT_FEET] = SCharacterItemTemplate(humanoidRecExtra->Get_Boots(), DBCItem_EInventoryItemType::FEET, 0);
-		characterM2Instance->Template().ItemsTemplates[EQUIPMENT_SLOT_WRISTS] = SCharacterItemTemplate(humanoidRecExtra->Get_Wrist(), DBCItem_EInventoryItemType::WRISTS, 0);
-		characterM2Instance->Template().ItemsTemplates[EQUIPMENT_SLOT_HANDS] = SCharacterItemTemplate(humanoidRecExtra->Get_Gloves(), DBCItem_EInventoryItemType::HANDS, 0);
-		characterM2Instance->Template().ItemsTemplates[EQUIPMENT_SLOT_TABARD] = SCharacterItemTemplate(humanoidRecExtra->Get_Tabard(), DBCItem_EInventoryItemType::TABARD, 0);
-		characterM2Instance->Template().ItemsTemplates[EQUIPMENT_SLOT_BACK] = SCharacterItemTemplate(humanoidRecExtra->Get_Cape(), DBCItem_EInventoryItemType::CLOAK, 0);
-	}
+	// 2.2 Items
+	characterM2Instance->SetItem(EQUIPMENT_SLOT_HEAD, SCharacterItemTemplate(humanoidRecExtra->Get_Helm(), DBCItem_EInventoryItemType::HEAD, 0));
+	characterM2Instance->SetItem(EQUIPMENT_SLOT_SHOULDERS, SCharacterItemTemplate(humanoidRecExtra->Get_Shoulder(), DBCItem_EInventoryItemType::SHOULDERS, 0));
+	characterM2Instance->SetItem(EQUIPMENT_SLOT_BODY, SCharacterItemTemplate(humanoidRecExtra->Get_Shirt(), DBCItem_EInventoryItemType::BODY, 0));
+	characterM2Instance->SetItem(EQUIPMENT_SLOT_CHEST, SCharacterItemTemplate(humanoidRecExtra->Get_Chest(), DBCItem_EInventoryItemType::CHEST, 0));
+	characterM2Instance->SetItem(EQUIPMENT_SLOT_WAIST, SCharacterItemTemplate(humanoidRecExtra->Get_Belt(), DBCItem_EInventoryItemType::WAIST, 0));
+	characterM2Instance->SetItem(EQUIPMENT_SLOT_LEGS, SCharacterItemTemplate(humanoidRecExtra->Get_Legs(), DBCItem_EInventoryItemType::LEGS, 0));
+	characterM2Instance->SetItem(EQUIPMENT_SLOT_FEET, SCharacterItemTemplate(humanoidRecExtra->Get_Boots(), DBCItem_EInventoryItemType::FEET, 0));
+	characterM2Instance->SetItem(EQUIPMENT_SLOT_WRISTS, SCharacterItemTemplate(humanoidRecExtra->Get_Wrist(), DBCItem_EInventoryItemType::WRISTS, 0));
+	characterM2Instance->SetItem(EQUIPMENT_SLOT_HANDS, SCharacterItemTemplate(humanoidRecExtra->Get_Gloves(), DBCItem_EInventoryItemType::HANDS, 0));
+	characterM2Instance->SetItem(EQUIPMENT_SLOT_TABARD, SCharacterItemTemplate(humanoidRecExtra->Get_Tabard(), DBCItem_EInventoryItemType::TABARD, 0));
+	characterM2Instance->SetItem(EQUIPMENT_SLOT_BACK, SCharacterItemTemplate(humanoidRecExtra->Get_Cape(), DBCItem_EInventoryItemType::CLOAK, 0));
 
 	characterM2Instance->SetNPCBakedImage(m_BaseManager.GetManager<IImagesFactory>()->CreateImage("Textures\\BakedNpcTextures\\" + humanoidRecExtra->Get_BakedSkin()));
-
-	// 3. Items
-	//characterM2Instance->Refresh_CharacterItemsFromTemplate();
-
-	// 4. Creature textures
-	//characterM2Instance->Refresh_SkinImageFromTemplate();
-
-	// 5. Geosets
-	//characterM2Instance->RefreshMeshIDs();
 
 	return characterM2Instance;
 }
@@ -188,7 +167,7 @@ void CWorldObjectCreator::ClearCache()
 }
 
 #ifdef USE_M2_MODELS
-std::shared_ptr<CM2> CWorldObjectCreator::LoadM2(IRenderDevice& RenderDevice, const std::string& Filename, bool ImmediateLoad)
+std::shared_ptr<CM2> CWorldObjectCreator::LoadM2(IRenderDevice& RenderDevice, const std::string& Filename)
 {
 	{
 		std::lock_guard<std::mutex> lock(m_M2Lock);
@@ -232,21 +211,21 @@ std::shared_ptr<CM2> CWorldObjectCreator::LoadM2(IRenderDevice& RenderDevice, co
 		m_M2ObjectsWPtrs[Filename] = m2Object;
 	}
 
-	if (ImmediateLoad)
-	{
-		m2Object->Load();
-		m2Object->SetState(ILoadable::ELoadableState::Loaded);
-	}
-	else
-	{
+	//if (ImmediateLoad)
+	//{
+	//	m2Object->Load();
+	//	m2Object->SetState(ILoadable::ELoadableState::Loaded);
+	//}
+	//else
+	//{
 		m_BaseManager.GetManager<ILoader>()->AddToLoadQueue(m2Object);
-	}
+	//}
 
 	return m2Object;
 }
 #endif
 
-std::shared_ptr<CWMO> CWorldObjectCreator::LoadWMO(IRenderDevice& RenderDevice, const std::string& Filename, bool ImmediateLoad)
+std::shared_ptr<CWMO> CWorldObjectCreator::LoadWMO(IRenderDevice& RenderDevice, const std::string& Filename)
 {
 	{
 		std::lock_guard<std::mutex> lock(m_WMOLock);
@@ -280,15 +259,15 @@ std::shared_ptr<CWMO> CWorldObjectCreator::LoadWMO(IRenderDevice& RenderDevice, 
 		m_WMOObjectsWPtrs.insert(std::make_pair(Filename, wmoObject));
 	}
 
-	if (ImmediateLoad)
-	{
-		wmoObject->Load();
-		wmoObject->SetState(ILoadable::ELoadableState::Loaded);
-	}
-	else
-	{
+	//if (ImmediateLoad)
+	//{
+	//	wmoObject->Load();
+	//	wmoObject->SetState(ILoadable::ELoadableState::Loaded);
+	//}
+	//else
+	//{
 		m_BaseManager.GetManager<ILoader>()->AddToLoadQueue(wmoObject);
-	}
+	//}
 
 	//Log::Print("CWorldObjectCreator::LoadWMO: WMO '%s' loaded.", Filename.c_str());
 

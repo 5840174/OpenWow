@@ -357,7 +357,7 @@ bool CMapTile::Load()
 #ifdef USE_WMO_MODELS
 	for (const auto& it : WMOPlacementInfo)
 	{
-		if (auto wmo = GetBaseManager().GetManager<IWoWObjectsCreator>()->LoadWMO(GetRenderDevice(), WMOsNames[it.nameIndex], true))
+		if (auto wmo = GetBaseManager().GetManager<IWoWObjectsCreator>()->LoadWMO(GetRenderDevice(), WMOsNames[it.nameIndex]))
 		{
 			auto inst = CreateSceneNode<CMapWMOInstance>(wmo, it);
 			GetBaseManager().GetManager<ILoader>()->AddToLoadQueue(inst);

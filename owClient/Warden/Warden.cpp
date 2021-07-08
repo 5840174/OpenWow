@@ -328,6 +328,7 @@ void CWarden::On_WARDEN_SMSG_CHEAT_CHECKS_REQUEST(CServerPacket & Buffer)
 				index -= 1u;
 				if (index >= strings.size())
 					throw CException("Warden: SMSG_CHEAT_CHECKS_REQUEST: Incorrect string index. Index '%d'. Size '%d'", index, strings.size());
+
 				wd.Str = strings.at(index);
 				wardenChecks.push_back(wd);
 
@@ -342,6 +343,7 @@ void CWarden::On_WARDEN_SMSG_CHEAT_CHECKS_REQUEST(CServerPacket & Buffer)
 				index -= 1u;
 				if (index >= strings.size())
 					throw CException("Warden: SMSG_CHEAT_CHECKS_REQUEST: Incorrect string index. Index '%d'. Size '%d'", index, strings.size());
+
 				wd.Str = strings.at(index);
 				wardenChecks.push_back(wd);
 			}

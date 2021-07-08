@@ -21,7 +21,7 @@ namespace
 	std::string GetSkinComponentImageFileName(DBC_CharComponent_Sections _type, std::string _textureName, Gender _gender)
 	{
 		char maleTexture[MAX_PATH];
-		sprintf_s(maleTexture, "Item\\TEXTURECOMPONENTS\\%s\\%s_%c.blp", ItemTextureComponents[static_cast<size_t>(_type)].TexturesFolder, _textureName.c_str(), GetGenderLetter(_gender));
+		sprintf_s(maleTexture, "Item\\TEXTURECOMPONENTS\\%s\\%s_%c.blp", ItemTextureComponents[static_cast<size_t>(_type)].ModelsAndTexturesFolder, _textureName.c_str(), GetGenderLetter(_gender));
 		return std::string(maleTexture);
 	}
 }
@@ -45,7 +45,7 @@ CCharacterItem::~CCharacterItem()
 //
 bool CCharacterItem::Load()
 {
-	if (GetTemplate().DisplayId == 0 || GetTemplate().InventoryType == (uint8)DBCItem_EInventoryItemType::NON_EQUIP)
+	if (false == IsExists())
 		return false;
 
 	InitializeItemModels();
@@ -87,34 +87,23 @@ void CCharacterItem::InitializeItemModels()
 
 	for (uint32 i = 0; i < ItemObjectComponents[static_cast<size_t>(GetTemplate().InventoryType)].AttachmentsCount; i++)
 	{
-		std::string objectFileName = itemDisplayInfoRecord->Get_ObjectModelName(i);
+		std::string objectM2ModelFileName = itemDisplayInfoRecord->Get_ObjectModelName(i);
 		std::string objectTextureName = itemDisplayInfoRecord->Get_ObjectTextureName(i);
 
-		if (objectFileName.empty() && GetTemplate().InventoryType != (uint8)DBCItem_EInventoryItemType::CLOAK)
-			continue;
-
-		if (GetTemplate().InventoryType == (uint8)DBCItem_EInventoryItemType::HEAD)
-		{
-			std::string raceClientPrefixString = m_BaseManager.GetManager<CDBCStorage>()->DBC_ChrRaces()[static_cast<size_t>(m_OwnerCharacter.GetTemplate().Race)]->Get_ClientPrefix();
-			char genderLetter = GetGenderLetter(m_OwnerCharacter.GetTemplate().Gender);
-
-			char modelPostfix[MAX_PATH];
-			sprintf_s(modelPostfix, "_%s%c", raceClientPrefixString.c_str(), genderLetter);
-
-			size_t dotPosition = objectFileName.find_last_of('.');
-			_ASSERT(dotPosition != -1);
-			objectFileName.insert(dotPosition, modelPostfix);
-		}
-		else if (GetTemplate().InventoryType == (uint8)DBCItem_EInventoryItemType::CLOAK)
+		if (GetTemplate().InventoryType == (uint8)DBCItem_EInventoryItemType::CLOAK)
 		{
 			auto cloackImage = LoadItemImage(DBCItem_EInventoryItemType::CLOAK, objectTextureName);
 			m_Models.push_back({ nullptr, cloackImage });
 			continue;
 		}
 
+		if (objectM2ModelFileName.empty())
+		{
+			continue;
+		}
 
 		// Create model and node for Item
-		auto itemModel = LoadItemM2Model(static_cast<DBCItem_EInventoryItemType>(GetTemplate().InventoryType), objectFileName);
+		auto itemModel = LoadItemM2Model(static_cast<DBCItem_EInventoryItemType>(GetTemplate().InventoryType), objectM2ModelFileName);
 		if (itemModel == nullptr)
 		{
 			Log::Error("CCharacterItem::InitializeItemModels: M2Model for item DisplayID '%d' not found.", GetTemplate().DisplayId);
@@ -170,13 +159,27 @@ void CCharacterItem::InitializeItemSkinImages()
 
 std::shared_ptr<CM2> CCharacterItem::LoadItemM2Model(DBCItem_EInventoryItemType InventoryItemType, std::string _modelName)
 {
-	std::string itemM2ModelFileName =  "Item\\ObjectComponents\\" + std::string(ItemObjectComponents[static_cast<size_t>(InventoryItemType)].TexturesFolder) + "\\" + _modelName;
+	// Special filename for Head
+	if (InventoryItemType == DBCItem_EInventoryItemType::HEAD)
+	{
+		std::string raceClientPrefixString = m_BaseManager.GetManager<CDBCStorage>()->DBC_ChrRaces()[static_cast<size_t>(m_OwnerCharacter.GetTemplate().Race)]->Get_ClientPrefix();
+		char genderLetter = GetGenderLetter(m_OwnerCharacter.GetTemplate().Gender);
+
+		char modelPostfix[MAX_PATH];
+		sprintf_s(modelPostfix, "_%s%c", raceClientPrefixString.c_str(), genderLetter);
+
+		size_t dotPosition = _modelName.find_last_of('.');
+		_ASSERT(dotPosition != -1);
+		_modelName.insert(dotPosition, modelPostfix);
+	}
+
+	std::string itemM2ModelFileName =  "Item\\ObjectComponents\\" + std::string(ItemObjectComponents[static_cast<size_t>(InventoryItemType)].ModelsAndTexturesFolder) + "\\" + _modelName;
 	return m_BaseManager.GetManager<IWoWObjectsCreator>()->LoadM2(m_RenderDevice, itemM2ModelFileName);
 }
 
 std::shared_ptr<IImage> CCharacterItem::LoadItemImage(DBCItem_EInventoryItemType InventoryItemType, std::string _textureName)
 {
-	std::string imageFilename = "Item\\ObjectComponents\\" + std::string(ItemObjectComponents[static_cast<size_t>(InventoryItemType)].TexturesFolder) + "\\" + _textureName + ".blp";
+	std::string imageFilename = "Item\\ObjectComponents\\" + std::string(ItemObjectComponents[static_cast<size_t>(InventoryItemType)].ModelsAndTexturesFolder) + "\\" + _textureName + ".blp";
 	return m_BaseManager.GetManager<IImagesFactory>()->CreateImage(imageFilename);
 }
 

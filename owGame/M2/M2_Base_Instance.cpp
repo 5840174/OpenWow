@@ -77,7 +77,8 @@ void CM2_Base_Instance::setSpecialTexture(SM2_Texture::Type _type, const std::sh
 }
 const std::shared_ptr<ITexture>& CM2_Base_Instance::getSpecialTexture(SM2_Texture::Type _type) const
 {
-	_ASSERT(_type < SM2_Texture::Type::COUNT);
+	if (_type >= SM2_Texture::Type::COUNT)
+		throw CException("CM2_Base_Instance::getSpecialTexture: Out of bounds.");
 	return m_SpecialTextures[_type];
 }
 

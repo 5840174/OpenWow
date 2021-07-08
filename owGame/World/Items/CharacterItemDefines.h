@@ -12,7 +12,7 @@
 struct
 {
 	DBCItem_EInventoryItemType	ItemType;
-	const char* const			TexturesFolder = "";
+	const char* const			ModelsAndTexturesFolder = "";
 	EM2GeosetType				Geosets[MESHID_MAX_MODS] = MESHID_ALLUNK;
 	uint32						AttachmentsCount = 0;
 	EM2_AttachmentPoint		    AttachmentPoint[ATTACHS_MAX] = { EM2_AttachmentPoint::Count, EM2_AttachmentPoint::Count };
@@ -66,7 +66,7 @@ static const ItemObjectComponents[size_t(DBCItem_EInventoryItemType::__Count)] =
 struct
 {
 	const DBC_CharComponent_Sections list;
-	const char* const TexturesFolder;
+	const char* const ModelsAndTexturesFolder;
 }
 static const ItemTextureComponents[static_cast<size_t>(DBC_CharComponent_Sections::ITEMS_COUNT)] =
 {

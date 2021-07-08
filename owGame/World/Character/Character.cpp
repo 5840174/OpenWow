@@ -152,6 +152,9 @@ void CCharacter::SetItem(uint8 InventorySlot, const SCharacterItemTemplate & Ite
 	if (InventorySlot >= INVENTORY_SLOT_BAG_END)
 		throw CException("CCharacter::SetItem: Incorrect inventory slot '%d'.", InventorySlot);
 
+	if (m_CharacterItems[InventorySlot] != nullptr)
+		GetBaseManager().GetManager<ILoader>()->AddToDeleteQueue(m_CharacterItems[InventorySlot]);
+
 	auto characterItem = MakeShared(CCharacterItem, GetBaseManager(), GetRenderDevice(), std::dynamic_pointer_cast<CCharacter>(shared_from_this()));
 	Template().ItemsTemplates[InventorySlot] = ItemTemplate;
 	characterItem->Template() = ItemTemplate;
