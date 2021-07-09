@@ -87,9 +87,9 @@ public:
 	CM2_Part_Bone(const CM2& M2Object, const std::shared_ptr<IFile>& File, const SM2_Bone& M2Bone);
 	virtual ~CM2_Part_Bone();
 
-	glm::mat4 calcMatrix(const CM2_Base_Instance* M2Instance, uint32 globalTime) const;
-	glm::mat4 calcRotationMatrix(const CM2_Base_Instance* M2Instance, uint32 globalTime) const;
-	glm::mat4 calcBillboardMatrix(const glm::mat4& CalculatedMatrix, const CM2_Base_Instance* M2Instance, const ICameraComponent3D* Camera) const;
+	glm::mat4 calcMatrix(const CM2_Base_Instance& M2Instance, uint32 globalTime) const;
+	glm::mat4 calcRotationMatrix(const CM2_Base_Instance& M2Instance, uint32 globalTime) const;
+	glm::mat4 calcBillboardMatrix(const glm::mat4& CalculatedMatrix, const CM2_Base_Instance& M2Instance, const ICameraComponent3D* Camera) const;
 
 	bool IsInterpolated(uint16 anim) const
 	{

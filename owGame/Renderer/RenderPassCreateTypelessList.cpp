@@ -35,7 +35,7 @@ const std::vector<IRenderPassCreateTypelessList::SGeometryElement>& CRenderPassC
 
 const std::vector<IRenderPassCreateTypelessList::SLightElement>& CRenderPassCreateTypelessList::GetLightList() const
 {
-	throw CException("Not implemented.");
+	return m_LightList;
 }
 
 //
@@ -46,6 +46,7 @@ void CRenderPassCreateTypelessList::PreRender(RenderEventArgs & e)
 	__super::PreRender(e);
 
 	m_NodesList.clear();
+	m_LightList.clear();
 }
 
 void CRenderPassCreateTypelessList::Render(RenderEventArgs & e)
@@ -65,7 +66,7 @@ EVisitResult CRenderPassCreateTypelessList::Visit(const std::shared_ptr<ISceneNo
 			return EVisitResult::Block;
 
 	m_NodesList.push_back(SNodeElement(SceneNode));
-	return EVisitResult::AllowVisitChilds;
+	return EVisitResult::AllowAll;
 }
 
 EVisitResult CRenderPassCreateTypelessList::Visit(const std::shared_ptr<IModel>& Model)
@@ -80,5 +81,8 @@ EVisitResult CRenderPassCreateTypelessList::Visit(const std::shared_ptr<IGeometr
 
 EVisitResult CRenderPassCreateTypelessList::Visit(const std::shared_ptr<ILight>& light)
 {
-	return EVisitResult::Block;
+	_ASSERT(!m_NodesList.empty());
+	const auto& lastNodeElement = m_NodesList.back();
+	m_LightList.push_back(SLightElement(lastNodeElement.SceneNode, light));
+	return EVisitResult::AllowVisitChilds;
 }

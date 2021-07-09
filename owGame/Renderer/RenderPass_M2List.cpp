@@ -33,9 +33,6 @@ CRenderPass_M2List::~CRenderPass_M2List()
 //
 void CRenderPass_M2List::DoRenderM2Model(const CM2_Base_Instance* M2SceneNode, const CM2_Skin* M2Model, UINT InstancesCnt)
 {
-	const ShaderMap& shaders = GetPipeline().GetShaders();
-	const IShader* vertexShader = shaders.at(EShaderType::VertexShader).get();
-
 	for (const auto& geometryMaterialsIt : M2Model->GetGeometryMaterials())
 	{
 		const auto& geometry = M2Model->GetGeometries()[geometryMaterialsIt.first];
@@ -49,60 +46,60 @@ void CRenderPass_M2List::DoRenderM2Model(const CM2_Base_Instance* M2SceneNode, c
 
 		m_ShaderM2GeometryParameter->SetConstantBuffer(geometry->GetGeometryPropsBuffer());
 		m_ShaderM2GeometryParameter->Bind();
-		
-		m_ShaderM2GeometryBonesParameter->SetStructuredBuffer(geometry->GetGeometryBonesBuffer());
-		m_ShaderM2GeometryBonesParameter->Bind();
 		{
-			auto geomInternal = std::dynamic_pointer_cast<IGeometryInternal>(geometry);
-			geomInternal->Render_BindAllBuffers(vertexShader);
-
-			for (const auto& materialsIt : materials)
+			m_ShaderM2GeometryBonesParameter->SetStructuredBuffer(geometry->GetGeometryBonesBuffer());
+			m_ShaderM2GeometryBonesParameter->Bind();
 			{
-				const auto& material = materialsIt;
+				auto geomInternal = std::dynamic_pointer_cast<IGeometryInternal>(geometry);
+				geomInternal->Render_BindAllBuffers(GetPipeline().GetVertexShaderPtr());
 
-				bool isOpaqueGeom = (material->GetM2Material()->getBlendMode() == 0) || (material->GetM2Material()->getBlendMode() == 1);
-				switch (m_DrawMode)
+				for (const auto& materialsIt : materials)
 				{
-					case ERenderPassM2DrawMode::Opaque:
+					const auto& material = materialsIt;
+
+					bool isOpaqueGeom = (material->GetM2Material()->getBlendMode() == 0) || (material->GetM2Material()->getBlendMode() == 1);
+					switch (m_DrawMode)
 					{
-						if (false == isOpaqueGeom)
-							continue;
+						case ERenderPassM2DrawMode::Opaque:
+						{
+							if (false == isOpaqueGeom)
+								continue;
+						}
+						break;
+						case ERenderPassM2DrawMode::Transperent:
+						{
+							if (isOpaqueGeom)
+								continue;
+						}
+						break;
 					}
-					break;
-					case ERenderPassM2DrawMode::Transperent:
+
+					material->GetM2Material()->GetBlendState()->Bind();
+					material->GetM2Material()->GetDepthStencilState()->Bind();
+					material->GetM2Material()->GetRasterizerState()->Bind();
+
+					material->UpdateMaterialProps(GetRenderEventArgs(), M2SceneNode);
+					material->Bind(GetPipeline().GetPixelShaderPtr());
 					{
-						if (isOpaqueGeom)
-							continue;
+						SGeometryDrawArgs geometryDrawArgs = { 0 };
+						//geometryDrawArgs.IndexStartLocation = geom->getProto().indexStart;
+						geometryDrawArgs.IndexCnt = geometry->getProto().indexCount;
+						//geometryDrawArgs.VertexStartLocation = geom->getProto().vertexStart;
+						geometryDrawArgs.VertexCnt = geometry->getProto().vertexCount;
+						geometryDrawArgs.InstanceCnt = InstancesCnt;
+						geomInternal->Render_Draw(geometryDrawArgs);
 					}
-					break;
+					material->Unbind(GetPipeline().GetPixelShaderPtr());
+
+					material->GetM2Material()->GetRasterizerState()->Unbind();
+					material->GetM2Material()->GetDepthStencilState()->Unbind();
+					material->GetM2Material()->GetBlendState()->Unbind();
 				}
 
-				material->GetM2Material()->GetBlendState()->Bind();
-				material->GetM2Material()->GetDepthStencilState()->Bind();
-				material->GetM2Material()->GetRasterizerState()->Bind();
-
-				material->UpdateMaterialProps(GetRenderEventArgs(), M2SceneNode);
-				material->Bind(GetPipeline().GetPixelShaderPtr());
-				{
-					SGeometryDrawArgs geometryDrawArgs = { 0 };
-					//geometryDrawArgs.IndexStartLocation = geom->getProto().indexStart;
-					geometryDrawArgs.IndexCnt = geometry->getProto().indexCount;
-					//geometryDrawArgs.VertexStartLocation = geom->getProto().vertexStart;
-					geometryDrawArgs.VertexCnt = geometry->getProto().vertexCount;
-					geometryDrawArgs.InstanceCnt = InstancesCnt;
-					geomInternal->Render_Draw(geometryDrawArgs);
-				}
-				material->Unbind(GetPipeline().GetPixelShaderPtr());
-
-				material->GetM2Material()->GetRasterizerState()->Unbind();
-				material->GetM2Material()->GetDepthStencilState()->Unbind();
-				material->GetM2Material()->GetBlendState()->Unbind();
+				geomInternal->Render_UnbindAllBuffers(GetPipeline().GetVertexShaderPtr());
 			}
-
-			geomInternal->Render_UnbindAllBuffers(vertexShader);
+			m_ShaderM2GeometryBonesParameter->Unbind();
 		}
-		m_ShaderM2GeometryBonesParameter->Unbind();
-
 		m_ShaderM2GeometryParameter->Unbind();
 	}
 }

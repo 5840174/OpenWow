@@ -49,30 +49,29 @@ VertexShaderOutput VS_main(VertexShaderInput IN)
 	return OUT;
 }
 
-float4 PS_main(VertexShaderOutput IN) : SV_TARGET
+DefferedRenderPSOut PS_main(VertexShaderOutput IN) : SV_TARGET
 {
+	const float2 texCoord = float2(IN.texCoord.x, 1.0f - IN.texCoord.y);
+
+	float4 diffuseColor = float4(0.0f, 0.3f, 1.0f, 1.0f);
+	
 	if ((gLiquidType == LiquidType_Water) || (gLiquidType == LiquidType_Ocean))
 	{	
-		float2 texCoord = float2(IN.texCoord.x, 1.0f - IN.texCoord.y);
 		float waterDepth = DiffuseTexture.Sample(LinearRepeatSampler, texCoord).a;
 
 		float3 resultColor = float3(1.0f, 1.0f, 1.0f) * waterDepth;
 		resultColor += gColorDark * (1.0f - waterDepth);
 		
-		return float4(resultColor, 0.5f + IN.texCoord.z);
+		diffuseColor = float4(resultColor, 0.5f + IN.texCoord.z);
 	}
 	else if ((gLiquidType == LiquidType_Magma) || (gLiquidType == LiquidType_Slime))
 	{
-		return DiffuseTexture.Sample(LinearRepeatSampler, float2(IN.texCoord.x, 1.0f - IN.texCoord.y));
-	}
-	else
-	{
-		return float4(0.0f, 0.3f, 1.0f, 1.0f);
+		diffuseColor = DiffuseTexture.Sample(LinearRepeatSampler, texCoord);
 	}
 	
-	//DefferedRenderPSOut OUT;
-	//OUT.Diffuse = resultColor;
-	//OUT.Specular = float4(1.0f, 1.0f, 1.0f, 1.0f);
-	//OUT.NormalVS = float4(0.0f, 1.0f, 0.0f, 1.0f);
-	//return OUT;
+	DefferedRenderPSOut OUT;
+	OUT.Diffuse = diffuseColor;
+	OUT.Specular = float4(0.0f, 0.0f, 0.0f, 1.0f);
+	OUT.NormalVS = float4(normalize(float3(0.0f, 1.0f, 0.0f)), 0.0f);
+	return OUT;
 }

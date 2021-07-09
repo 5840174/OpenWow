@@ -1,70 +1,32 @@
 #pragma once
 
-#include "M2_Part_Bone.h"
-
 // FORWARD BEGIN
 class CM2;
 class CM2_Base_Instance;
 // FORWARD END
 
+#include "M2_SkeletonBone.h"
 
-//
-// CM2SkeletonBone3D
-//
-class ZN_API CM2SkeletonBone3D
-	: public std::enable_shared_from_this<CM2SkeletonBone3D>
-{
-public:
-	CM2SkeletonBone3D(const CM2_Part_Bone& M2Bone);
-	virtual ~CM2SkeletonBone3D();
-
-	// ISkeletonComponentBone3D
-	const std::weak_ptr<CM2SkeletonBone3D>& GetParentBone() const;
-	const std::vector<std::shared_ptr<CM2SkeletonBone3D>>& GetChilds() const;
-	glm::vec3 GetPivotPoint() const;
-	const glm::mat4& GetMatrix() const;
-	const glm::mat4& GetRotateMatrix() const;
-
-	// Internal
-	void SetParentAndChildsInternals(const std::vector<std::shared_ptr<CM2SkeletonBone3D>>& Bones);
-	void Calculate(const CM2_Base_Instance* M2Instance, const ICameraComponent3D* Camera, uint32 GlobalTime);
-	void Reset();
-
-private:
-	const CM2_Part_Bone&                   m_M2Bone;
-	std::weak_ptr<CM2SkeletonBone3D>               m_ParentBone;
-	std::vector<std::shared_ptr<CM2SkeletonBone3D>>m_Childs;
-	glm::vec3                                      m_PivotPoint;
-	glm::mat4                                      m_Matrix;
-	glm::mat4                                      m_RotateMatrix;
-	bool                                           m_IsCalculated;
-};
-
-
-
-//
-// CM2SkeletonComponent3D
-//
-class ZN_API CM2SkeletonComponent3D
+class ZN_API CM2SkeletonComponent
 	: public CSceneNodeComponentBase
 {
 public:
 	ZN_OBJECTCLASS(cSceneNodeComponentM2SkeletonComponent);
 
-	CM2SkeletonComponent3D(const CM2_Base_Instance& OwnerNode);
-	virtual ~CM2SkeletonComponent3D();
+	CM2SkeletonComponent(const CM2_Base_Instance& OwnerNode);
+	virtual ~CM2SkeletonComponent();
 
 	std::vector<glm::mat4> CreatePose(size_t BoneStartIndex, size_t BonesCount) const;
 
 	// ISkeletonComponent3D
-	std::shared_ptr<CM2SkeletonBone3D> GetBone(size_t Index) const;
+	std::shared_ptr<CM2SkeletonBone> GetBone(size_t Index) const;
 
 	// CSceneNodeComponentBase
 	void Update(const UpdateEventArgs& e) override;
 
 protected:
-	const CM2_Base_Instance* GetM2OwnerNode() const;
+	const CM2_Base_Instance& GetM2OwnerNode() const;
 
 private:
-	std::vector<std::shared_ptr<CM2SkeletonBone3D>> m_Bones;
+	std::vector<std::shared_ptr<CM2SkeletonBone>> m_Bones;
 };

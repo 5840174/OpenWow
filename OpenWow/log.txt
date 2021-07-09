@@ -5,150 +5,26 @@
 ^Plugin 'D:\OpenWow\bin_x64\Release\owGame.dll' successfully added.
 ^Plugin 'D:\OpenWow\bin_x64\Release\owClient.dll' loaded.
 ^Plugin 'D:\OpenWow\bin_x64\Release\owClient.dll' successfully added.
-~MPQFile[common.MPQ]: Added!
-~MPQFile[common-2.MPQ]: Added!
-~MPQFile[expansion.MPQ]: Added!
-~MPQFile[lichking.MPQ]: Added!
-~MPQFile[patch.MPQ]: Added!
-~MPQFile[patch-2.MPQ]: Added!
-~MPQFile[patch-3.MPQ]: Added!
-~MPQFile[ruRU/backup-ruRU.MPQ]: Added!
-~MPQFile[ruRU/base-ruRU.MPQ]: Added!
-~MPQFile[ruRU/expansion-locale-ruRU.MPQ]: Added!
-~MPQFile[ruRU/expansion-speech-ruRU.MPQ]: Added!
-~MPQFile[ruRU/lichking-locale-ruRU.MPQ]: Added!
-~MPQFile[ruRU/lichking-speech-ruRU.MPQ]: Added!
-~MPQFile[ruRU/locale-ruRU.MPQ]: Added!
-~MPQFile[ruRU/speech-ruRU.MPQ]: Added!
-~MPQFile[ruRU/patch-ruRU.MPQ]: Added!
-~MPQFile[ruRU/patch-ruRU-2.MPQ]: Added!
-~MPQFile[ruRU/patch-ruRU-3.MPQ]: Added!
-~DBCFile[AnimationData.dbc]: Fields count = '8'. Records count = '506'.
-~DBCFile[GroundEffectDoodad.dbc]: Fields count = '3'. Records count = '580'.
-~DBCFile[GroundEffectTexture.dbc]: Fields count = '11'. Records count = '24981'.
-~DBCFile[LoadingScreens.dbc]: Fields count = '4'. Records count = '91'.
-~DBCFile[Material.dbc]: Fields count = '5'. Records count = '8'.
-~DBCFile[Map.dbc]: Fields count = '66'. Records count = '135'.
-~DBCFile[TerrainType.dbc]: Fields count = '6'. Records count = '12'.
-~DBCFile[WMOAreaTable.dbc]: Fields count = '28'. Records count = '22550'.
-~DBCFile[WorldSafeLocs.dbc]: Fields count = '22'. Records count = '685'.
-~DBCFile[AreaTable.dbc]: Fields count = '36'. Records count = '2307'.
-~DBCFile[CharacterFacialHairStyles.dbc]: Fields count = '8'. Records count = '222'.
-~DBCFile[CharComponentTextureLayouts.dbc]: Fields count = '3'. Records count = '2'.
-~DBCFile[CharComponentTextureSections.dbc]: Fields count = '7'. Records count = '21'.
-~DBCFile[CharHairGeosets.dbc]: Fields count = '6'. Records count = '339'.
-~DBCFile[CharSections.dbc]: Fields count = '10'. Records count = '8958'.
-~DBCFile[ChrRaces.dbc]: Fields count = '69'. Records count = '21'.
-~DBCFile[CinematicCamera.dbc]: Fields count = '7'. Records count = '14'.
-~DBCFile[CinematicSequences.dbc]: Fields count = '10'. Records count = '14'.
-~DBCFile[CreatureDisplayInfo.dbc]: Fields count = '16'. Records count = '24262'.
-~DBCFile[CreatureDisplayInfoExtra.dbc]: Fields count = '21'. Records count = '15475'.
-~DBCFile[CreatureModelData.dbc]: Fields count = '28'. Records count = '1331'.
-~DBCFile[HelmetGeosetVisData.dbc]: Fields count = '8'. Records count = '21'.
-~DBCFile[Item.dbc]: Fields count = '8'. Records count = '46096'.
-~DBCFile[ItemBagFamily.dbc]: Fields count = '18'. Records count = '16'.
-~DBCFile[ItemClass.dbc]: Fields count = '20'. Records count = '17'.
-~DBCFile[ItemDisplayInfo.dbc]: Fields count = '25'. Records count = '57986'.
-~DBCFile[ItemVisualEffects.dbc]: Fields count = '2'. Records count = '93'.
-~DBCFile[ItemVisuals.dbc]: Fields count = '6'. Records count = '80'.
-~DBCFile[Light.dbc]: Fields count = '15'. Records count = '715'.
-~DBCFile[LightFloatBand.dbc]: Fields count = '34'. Records count = '5100'.
-~DBCFile[LightIntBand.dbc]: Fields count = '34'. Records count = '15300'.
-~DBCFile[LightParams.dbc]: Fields count = '9'. Records count = '850'.
-~DBCFile[LightSkybox.dbc]: Fields count = '3'. Records count = '124'.
-~DBCFile[LiquidType.dbc]: Fields count = '45'. Records count = '26'.
-~DBCFile[GameObjectDisplayInfo.dbc]: Fields count = '19'. Records count = '3790'.
-~DBCFile[TransportAnimation.dbc]: Fields count = '7'. Records count = '5262'.
-~DBCFile[TaxiNodes.dbc]: Fields count = '24'. Records count = '364'.
-~DBCFile[TaxiPath.dbc]: Fields count = '4'. Records count = '915'.
-~DBCFile[TaxiPathNode.dbc]: Fields count = '11'. Records count = '22586'.
 ~FontsManager: Font 'Fonts\consola.ttf' loaded. Size [14].
 ~Loading shader 'shaders_D3D/Sky.hlsl':'VS_main'.
 ~Loading shader 'shaders_D3D/Sky.hlsl':'PS_main'.
+~Loading shader 'shaders_D3D/MapWDL.hlsl':'VS_main'.
+~Loading shader 'shaders_D3D/MapWDL.hlsl':'PS_main'.
 ~Loading shader 'shaders_D3D/MapChunk.hlsl':'VS_main'.
 ~Loading shader 'shaders_D3D/MapChunk.hlsl':'PS_main'.
 ~Loading shader 'shaders_D3D/WMO.hlsl':'VS_main'.
 ~Loading shader 'shaders_D3D/WMO.hlsl':'PS_main'.
 ~Loading shader 'shaders_D3D/M2.hlsl':'VS_main'.
 ~Loading shader 'shaders_D3D/M2.hlsl':'PS_main'.
-~Loading shader 'shaders_D3D/M2.hlsl':'VS_main_Inst'.
-~Loading shader 'shaders_D3D/M2.hlsl':'PS_main'.
-~Loading shader '3D/BondingBox.hlsl':'VS_main_Inst'.
-~Loading shader '3D/BondingBox.hlsl':'PS_main'.
+~Loading shader 'shaders_D3D/Liquid.hlsl':'VS_main'.
+~Loading shader 'shaders_D3D/Liquid.hlsl':'PS_main'.
+~Loading shader '3D/ModelVS.hlsl':'VS_PTN'.
+~Loading shader '3D/Deffered/Deffered_UIQuad.hlsl':'VS_ScreenQuad'.
+~Loading shader '3D/Deffered/Deffered_UIQuad.hlsl':'PS_DeferredLighting'.
 ~Loading shader 'UI/UIControlCommon.hlsl':'VS_main'.
 ~Loading shader 'UI/UIControlCommon.hlsl':'PS_main'.
 ~Loading shader 'UI/UI_Font.hlsl':'VS_main'.
 ~Loading shader 'UI/UI_Font.hlsl':'PS_main'.
-^CAuthSocket::OnConnected.
-^CAuthSocket::On_AUTH_LOGON_PROOF: Successfully logined.
-^CAuthSocket::On_REALM_LIST: Count '12'.
-^RealmType: '1', IsLocked: '0', Flag: '0x0', Name: 'WoW Circle 3.3.5a Fun', Address '54.37.128.19:12373', Population: '0,000000', CharacterCount: '0'
-^RealmType: '1', IsLocked: '0', Flag: '0x0', Name: 'WoW Circle 3.3.5a Fun Prx 1', Address '185.71.65.222:77909', Population: '0,000000', CharacterCount: '0'
-^RealmType: '1', IsLocked: '0', Flag: '0x0', Name: 'WoW Circle 3.3.5a Fun Prx 2', Address '5.252.35.3:77909', Population: '0,000000', CharacterCount: '0'
-^RealmType: '0', IsLocked: '0', Flag: '0x0', Name: 'WoW Circle 3.3.5a x1', Address '145.239.133.17:8131', Population: '0,000000', CharacterCount: '0'
-^RealmType: '0', IsLocked: '0', Flag: '0x0', Name: 'WoW Circle 3.3.5a x1 Prx 1', Address '185.71.65.111:8131', Population: '0,000000', CharacterCount: '0'
-^RealmType: '0', IsLocked: '0', Flag: '0x0', Name: 'WoW Circle 3.3.5a x1 Prx 2', Address '5.252.35.81:8131', Population: '0,000000', CharacterCount: '0'
-^RealmType: '1', IsLocked: '0', Flag: '0x0', Name: 'WoW Circle 3.3.5a x100', Address '51.77.57.14:8130', Population: '0,000000', CharacterCount: '0'
-^RealmType: '1', IsLocked: '0', Flag: '0x0', Name: 'WoW Circle 3.3.5a x100 Prx 1', Address '185.71.65.222:73666', Population: '0,000000', CharacterCount: '0'
-^RealmType: '1', IsLocked: '0', Flag: '0x0', Name: 'WoW Circle 3.3.5a x100 Prx 2', Address '5.252.35.3:73666', Population: '0,000000', CharacterCount: '0'
-^RealmType: '1', IsLocked: '0', Flag: '0x0', Name: 'WoW Circle 3.3.5a x5', Address '54.37.128.19:8129', Population: '0,000000', CharacterCount: '0'
-^RealmType: '1', IsLocked: '0', Flag: '0x0', Name: 'WoW Circle 3.3.5a x5 Prx 1', Address '185.71.65.222:73665', Population: '0,000000', CharacterCount: '0'
-^RealmType: '1', IsLocked: '0', Flag: '0x0', Name: 'WoW Circle 3.3.5a x5 Prx 2', Address '5.252.35.3:73665', Population: '0,000000', CharacterCount: '0'
-^CWoWClient::OnRealmListSelected: Realm name 'WoW Circle 3.3.5a x5'.
-@CAuthSocket::OnDisconnected.
-^CWorldSocket::OnConnected.
- Warden: Received 'MODULE_USE'.
- Warden: Sending 'MODULE_MISSING'. Size '0'.
- Warden: Received 'MODULE_CACHE'.
- Warden: Received 'MODULE_CACHE'.
- Warden: Received 'MODULE_CACHE'.
- Warden: Received 'MODULE_CACHE'.
- Warden: Received 'MODULE_CACHE'.
- Warden: Received 'MODULE_CACHE'.
- Warden: Received 'MODULE_CACHE'.
- Warden: Received 'MODULE_CACHE'.
- Warden: Received 'MODULE_CACHE'.
- Warden: Received 'MODULE_CACHE'.
- Warden: Received 'MODULE_CACHE'.
- Warden: Received 'MODULE_CACHE'.
- Warden: Received 'MODULE_CACHE'.
- Warden: Received 'MODULE_CACHE'.
- Warden: Received 'MODULE_CACHE'.
- Warden: Received 'MODULE_CACHE'.
- Warden: Received 'MODULE_CACHE'.
- Warden: Received 'MODULE_CACHE'.
- Warden: Received 'MODULE_CACHE'.
- Warden: Received 'MODULE_CACHE'.
- Warden: Received 'MODULE_CACHE'.
- Warden: Received 'MODULE_CACHE'.
- Warden: Received 'MODULE_CACHE'.
- Warden: Received 'MODULE_CACHE'.
- Warden: Received 'MODULE_CACHE'.
- Warden: Received 'MODULE_CACHE'.
- Warden: Received 'MODULE_CACHE'.
- Warden: Received 'MODULE_CACHE'.
- Warden: Received 'MODULE_CACHE'.
- Warden: Received 'MODULE_CACHE'.
- Warden: Received 'MODULE_CACHE'.
- Warden: Received 'MODULE_CACHE'.
- Warden: Received 'MODULE_CACHE'.
- Warden: Received 'MODULE_CACHE'.
- Warden: Received 'MODULE_CACHE'.
- Warden: Received 'MODULE_CACHE'.
- Warden: Received 'MODULE_CACHE'.
- Warden: Received 'MODULE_CACHE'.
-^Warden: SMSG_MODULE_CACHE: All module readed. Readed '18756'.
- Warden: Sending 'MODULE_MISSING'. Size '0'.
-^CWorldSocket::On_SMSG_AUTH_RESPONSE: Response is OK!
- Warden: Received 'HASH_REQUEST'.
- Warden: Sending 'HASH_RESULT'. Size '20'.
- CWoWClientCharactedSelection::On_SMSG_CHAR_ENUM:: Characters count '1'.
- CWoWClientCharactedSelection::On_SMSG_CHAR_ENUM:: Character [0] name 'Yielt'.
-^CWoWClient::OnCharacterSelected: Character name 'Yielt'.
- CTransportAnimationStorage::Initialize: Loaded records for '82' transport entries.
-~Loading shader '3D/Debug.hlsl':'VS_main'.
-~Loading shader '3D/Debug.hlsl':'PS_main'.
- Warden: Received 'MODULE_INITIALIZE'.
 ~Sky: [752] is global sky.
  Map[Northrend]: Id = '571'. Preloading...
  Map[Northrend]: InstanceType = '0'.
@@ -162,34 +38,62 @@
  Map[Northrend]: Id [571]. Loading...
 ^CMapWDL: Low WMOs count [4].
 ~MapWDT: Global WMO exists [false].
-^MOTD: Welcome to World of Warcraft Server - WoW Circle
 !CImageBLP: Unable to load PLP file 'TCB_CrystalSong_B.blp'.
 !File 'TILESET\Terrain Cube Maps\TCB_CrystalSong_B_s.blp' not exists.
- []: |cFF00a550На этой неделе доступен Наксрамас на героической сложности!|r
- []: ВНИМАНИЕ! Вы не можете удалять/продавать/распылять предметы высокого уровня. Причина: изменение подсети, из которой происходит вход в игру или в личный кабинет на сайте, было 2021-07-04_02-11-05 - менее 7 суток назад. Чтобы не зависеть от изменения подсети, включите двухфакторную авторизацию. https://cutt.ly/wow2fa
-@Characted deleted.
-@Characted deleted.
- Warden: Received 'CHEAT_CHECKS_REQUEST'.
- Warden: SMSG_CHEAT_CHECKS_REQUEST: Add string 'DBFilesClient\Spell.dbc' with size '23' to cache.
- Warden: Sending 'CHEAT_CHECKS_RESULT'. Size '32'.
- Warden: Received 'MODULE_INITIALIZE'.
-@Characted deleted.
-@Characted deleted.
 !CImageBLP: Unable to load PLP file 'TCB_CrystalSong_B.blp'.
 !File 'TILESET\Terrain Cube Maps\TCB_CrystalSong_B_s.blp' not exists.
- Warden: Received 'CHEAT_CHECKS_REQUEST'.
- Warden: Sending 'CHEAT_CHECKS_RESULT'. Size '23'.
-@Characted deleted.
- [Гризельда Хандерленд]: Добро пожаловать!
-@Characted deleted.
-@Characted deleted.
- Warden: Received 'CHEAT_CHECKS_REQUEST'.
- Warden: Sending 'CHEAT_CHECKS_RESULT'. Size '35'.
-@Characted deleted.
-@Characted deleted.
-@Characted deleted.
- Warden: Received 'CHEAT_CHECKS_REQUEST'.
- Warden: SMSG_CHEAT_CHECKS_REQUEST: Add string 'if not sTC then sTC = GetFramesRegisteredForEvent end SM = SendAddonMessage; EL = { "CONFIRM_XP_LOSS" };' with size '105' to cache.
- Warden: SMSG_CHEAT_CHECKS_REQUEST: Add string 'if (UIParent and sTC) then local n="" local t={sTC(EL[1])} for i,f in ipairs(t) do local s=f:GetName() if (s~=nil and #s==9 and s==s:lower()) then n=n..s.." " end end if n=="" then SM("JDy","Eno","WHISPER","cCx") else SM("JDy",n,"WHISPER","cCx") end end' with size '253' to cache.
-!Warden: Received check: Type: '152', Data '000000000000000000000000000000000000000000000000', Str 'if not sTC then sTC = GetFramesRegisteredForEvent end SM = SendAddonMessage; EL = { "CONFIRM_XP_LOSS" };', Address: '0', Length '0'. -- UNKNOWN
-!Warden: Received check: Type: '152', Data '000000000000000000000000000000000000000000000000', Str 'if (UIParent and sTC) then local n="" local t={sTC(EL[1])} for i,f in ipairs(t) do local s=f:GetName() if (s~=nil and #s==9 and s==s:lower()) then n=n..s.." " end end if n=="" then SM("JDy","Eno","WHISPER","cCx") else SM("JDy",n,"WHISPER","cCx") end end', Address: '0', Length '0'. -- UNKNOWN
+!CImageBLP: Unable to load PLP file 'tgatest.blp'.
+!CImageBLP: Unable to load PLP file 'TCB_CrystalSong_B.blp'.
+!File 'TILESET\Generic\tgatest_s.blp' not exists.
+!File 'TILESET\Terrain Cube Maps\TCB_CrystalSong_B_s.blp' not exists.
+!CImageBLP: Unable to load PLP file 'TCB_CrystalSong_B.blp'.
+!File 'TILESET\Terrain Cube Maps\TCB_CrystalSong_B_s.blp' not exists.
+!CImageBLP: Unable to load PLP file 'tgatest.blp'.
+!File 'TILESET\Generic\tgatest_s.blp' not exists.
+!File 'Tileset\Generic\WaterBlue_s.blp' not exists.
+!CImageBLP: Unable to load PLP file 'TCB_CrystalSong_B.blp'.
+!File 'TILESET\Terrain Cube Maps\TCB_CrystalSong_B_s.blp' not exists.
+!CImageBLP: Unable to load PLP file 'TCB_CrystalSong_B.blp'.
+!File 'TILESET\Terrain Cube Maps\TCB_CrystalSong_B_s.blp' not exists.
+!CImageBLP: Unable to load PLP file 'TCB_CrystalSong_B.blp'.
+!File 'TILESET\Terrain Cube Maps\TCB_CrystalSong_B_s.blp' not exists.
+!CImageBLP: Unable to load PLP file 'tgatest.blp'.
+!File 'TILESET\Generic\tgatest_s.blp' not exists.
+!CImageBLP: Unable to load PLP file 'TCB_CrystalSong_B.blp'.
+!CImageBLP: Unable to load PLP file 'TCB_CrystalSong_B.blp'.
+!File 'TILESET\Terrain Cube Maps\TCB_CrystalSong_B_s.blp' not exists.
+!File 'TILESET\Terrain Cube Maps\TCB_CrystalSong_B_s.blp' not exists.
+!CImageBLP: Unable to load PLP file 'TCB_CrystalSong_B.blp'.
+!File 'TILESET\Terrain Cube Maps\TCB_CrystalSong_B_s.blp' not exists.
+!CImageBLP: Unable to load PLP file 'tgatest.blp'.
+!File 'TILESET\Generic\tgatest_s.blp' not exists.
+!CImageBLP: Unable to load PLP file 'tgatest.blp'.
+!File 'TILESET\Generic\tgatest_s.blp' not exists.
+!CImageBLP: Unable to load PLP file 'TCB_CrystalSong_B.blp'.
+!File 'TILESET\Terrain Cube Maps\TCB_CrystalSong_B_s.blp' not exists.
+!CImageBLP: Unable to load PLP file 'TCB_CrystalSong_B.blp'.
+!File 'TILESET\Terrain Cube Maps\TCB_CrystalSong_B_s.blp' not exists.
+!CImageBLP: Unable to load PLP file 'TCB_CrystalSong_B.blp'.
+!File 'TILESET\Terrain Cube Maps\TCB_CrystalSong_B_s.blp' not exists.
+!CImageBLP: Unable to load PLP file 'TCB_CrystalSong_B.blp'.
+!File 'TILESET\Terrain Cube Maps\TCB_CrystalSong_B_s.blp' not exists.
+!CImageBLP: Unable to load PLP file 'tgatest.blp'.
+!File 'TILESET\Generic\tgatest_s.blp' not exists.
+!CImageBLP: Unable to load PLP file 'TCB_CrystalSong_B.blp'.
+!File 'TILESET\Terrain Cube Maps\TCB_CrystalSong_B_s.blp' not exists.
+!CImageBLP: Unable to load PLP file 'TCB_CrystalSong_B.blp'.
+!File 'TILESET\Terrain Cube Maps\TCB_CrystalSong_B_s.blp' not exists.
+!CImageBLP: Unable to load PLP file 'TCB_SkyBlue_A.blp'.
+!File 'TILESET\Terrain Cube Maps\TCB_SkyBlue_A_s.blp' not exists.
+!CImageBLP: Unable to load PLP file 'TCB_SkyBlue_A.blp'.
+!File 'TILESET\Terrain Cube Maps\TCB_SkyBlue_A_s.blp' not exists.
+!CImageBLP: Unable to load PLP file 'TCB_CrystalSong_B.blp'.
+!File 'TILESET\Terrain Cube Maps\TCB_CrystalSong_B_s.blp' not exists.
+!CImageBLP: Unable to load PLP file 'TCB_CrystalSong_B.blp'.
+!File 'TILESET\Terrain Cube Maps\TCB_CrystalSong_B_s.blp' not exists.
+!CImageBLP: Unable to load PLP file 'tgatest.blp'.
+!CImageBLP: Unable to load PLP file 'TCB_CrystalSong_B.blp'.
+!File 'TILESET\Generic\tgatest_s.blp' not exists.
+!File 'TILESET\Terrain Cube Maps\TCB_CrystalSong_B_s.blp' not exists.
+!CImageBLP: Unable to load PLP file 'TCB_CrystalSong_B.blp'.
+!File 'TILESET\Terrain Cube Maps\TCB_CrystalSong_B_s.blp' not exists.

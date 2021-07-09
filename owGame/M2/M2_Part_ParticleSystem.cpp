@@ -258,7 +258,7 @@ void CM2_Part_ParticleSystem::CreateAndDeleteParticles(const CM2_Base_Instance *
 
 SGPUM2Particle CM2_Part_ParticleSystem::DefaultGenerator_New(const CM2_Base_Instance * M2Instance, float w, float l, float spd, float var, float lifespan, float spr, float spr2) const
 {
-	std::shared_ptr<CM2SkeletonBone3D> bone;
+	std::shared_ptr<CM2SkeletonBone> bone;
 	if (GetBone() != -1)
 		bone = M2Instance->getSkeletonComponent()->GetBone(GetBone());
 
@@ -291,7 +291,7 @@ SGPUM2Particle CM2_Part_ParticleSystem::DefaultGenerator_New(const CM2_Base_Inst
 
 SGPUM2Particle CM2_Part_ParticleSystem::PlaneGenerator_New(const CM2_Base_Instance * M2Instance, float w, float l, float spd, float var, float lifespan, float spr, float spr2) const
 {
-	std::shared_ptr<CM2SkeletonBone3D> bone;
+	std::shared_ptr<CM2SkeletonBone> bone;
 	if (GetBone() != -1)
 		bone = M2Instance->getSkeletonComponent()->GetBone(GetBone());
 
@@ -328,7 +328,7 @@ SGPUM2Particle CM2_Part_ParticleSystem::PlaneGenerator_New(const CM2_Base_Instan
 
 SGPUM2Particle CM2_Part_ParticleSystem::SphereGenerator_New(const CM2_Base_Instance * M2Instance, float w, float l, float spd, float var, float lifespan, float spr, float spr2) const
 {
-	std::shared_ptr<CM2SkeletonBone3D> bone;
+	std::shared_ptr<CM2SkeletonBone> bone;
 	if (GetBone() != -1)
 		bone = M2Instance->getSkeletonComponent()->GetBone(GetBone());
 

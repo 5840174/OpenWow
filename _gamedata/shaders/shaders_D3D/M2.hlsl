@@ -16,14 +16,12 @@ struct VertexShaderInput
 	float2 texCoord1 : TEXCOORD1;
 };
 
-struct VertexShaderOutput
+struct VSOutputM2
 {
-	float4 positionVS : SV_POSITION;
-	float4 positionWS : POSITION;
+	float4 position   : SV_POSITION;  // Clip space position.
 	float4 color      : COLOR0;    
-	float3 normal     : NORMAL0;
-	float2 texCoord0  : TEXCOORD0;
-	float2 texCoord1  : TEXCOORD1;
+	float3 normalVS   : NORMAL0;
+	float4 texCoords  : TEXCOORD0;
 };
 
 #include "shaders_D3D\\M2Utils.hlsl"
@@ -73,9 +71,10 @@ StructuredBuffer<float4x4>    Bones     : register(t4);
 
 
 
-VertexShaderOutput DoVSRender(VertexShaderInput IN, M2PerObject M2PerObject)
+VSOutputM2 DoVSRender(VertexShaderInput IN, M2PerObject M2PerObject)
 {
-	float4 newVertex = float4(0.0f, 0.0f, 0.0f, 0.0f);
+	float4 vertexPosition = float4(0.0f, 0.0f, 0.0f, 0.0f);
+	float3 vertexNormal = float3(0.0f, 0.0f, 0.0f);
 	
 	if (gIsAnimated && gBonesMaxInfluences > 0u)
 	{	
@@ -88,33 +87,36 @@ VertexShaderOutput DoVSRender(VertexShaderInput IN, M2PerObject M2PerObject)
 				//boneIndexes[1] = (IN.boneIndex & 0x00FF0000u >> 16) & 0x000000FFu;
 				//boneIndexes[2] = (IN.boneIndex & 0x0000FF00u >>  8) & 0x000000FFu;
 				//boneIndexes[3] = (IN.boneIndex & 0x000000FFu      ) & 0x000000FFu;
-				newVertex += mul(Bones[(IN.boneIndex[i])], float4(IN.position, 1.0f) * IN.boneWeight[i]);
+				
+				const float4x4 boneMatrix = Bones[(IN.boneIndex[i])];
+				vertexPosition += mul(boneMatrix, float4(IN.position, 1.0f) * IN.boneWeight[i]);
+				vertexNormal += mul((float3x3)boneMatrix, IN.normal * IN.boneWeight[i]);
 			}
 		}
 	}
 	else
 	{
-		newVertex = float4(IN.position, 1.0f);
+		vertexPosition = float4(IN.position, 1.0f);
+		vertexNormal = IN.normal;
 	}
 
-	const float4x4 mvp = mul(PF.Projection, mul(PF.View, M2PerObject.Model));
+	const float4x4 mv = mul(PF.View, M2PerObject.Model);
+	const float4x4 mvp = mul(PF.Projection, mv);
 
-	VertexShaderOutput OUT;
-	OUT.positionVS  = mul(mvp, newVertex);
-	OUT.positionWS  = newVertex;
-	OUT.color       = M2PerObject.Color;
-	OUT.normal      = mul(mvp, float4(IN.normal, 0.0f));
-	OUT.texCoord0   = IN.texCoord0;
-	OUT.texCoord1   = IN.texCoord1;
+	VSOutputM2 OUT;
+	OUT.position  = mul(mvp, vertexPosition);
+	OUT.color     = M2PerObject.Color;
+	OUT.normalVS  = mul((float3x3)mv, vertexNormal);
+	OUT.texCoords = float4(IN.texCoord0, IN.texCoord1);
 	return OUT;
 }
 
-VertexShaderOutput VS_main(VertexShaderInput IN)
+VSOutputM2 VS_main(VertexShaderInput IN)
 {
 	return DoVSRender(IN, M2PO);
 }
 
-VertexShaderOutput VS_main_Inst(VertexShaderInput IN, uint InstanceID : SV_InstanceID)
+VSOutputM2 VS_main_Inst(VertexShaderInput IN, uint InstanceID : SV_InstanceID)
 {
 	return DoVSRender(IN, Instances[InstanceID]);
 }
@@ -128,7 +130,7 @@ VertexShaderOutput VS_main_Inst(VertexShaderInput IN, uint InstanceID : SV_Insta
 static const float cAlphaThreshold_AlphaKey = 224.0f / 255.0f;
 static const float cAlphaThreshold_TransperentKey = 1.0f / 255.0f;
 
-float4 PS_main(VertexShaderOutput IN) : SV_TARGET
+DefferedRenderPSOut PS_main(VSOutputM2 IN) : SV_TARGET
 {
 	float3 colorRGB = /*IN.color.rgb **/ gMaterialColorAndAlpha.rgb;
 	float  colorA   = /*IN.color.a   **/ gMaterialColorAndAlpha.a * gTextureWeight;
@@ -136,8 +138,8 @@ float4 PS_main(VertexShaderOutput IN) : SV_TARGET
 	if (colorA < cAlphaThreshold_TransperentKey)
 		discard;
 
-	float2 tc0 = (gTextureAnimEnable != 0) ? mul(gTextureAnimMatrix, float4(IN.texCoord0, 0.0f, 1.0f)).xy : IN.texCoord0;
-	float2 tc1 = /*(gTextureAnimEnable != 0) ? mul(gTextureAnimMatrix, float4(IN.texCoord0, 0.0f, 1.0f)).xy :*/ IN.texCoord0;
+	float2 tc0 = (gTextureAnimEnable != 0) ? mul(gTextureAnimMatrix, float4(IN.texCoords.xy, 0.0f, 1.0f)).xy : IN.texCoords.xy;
+	float2 tc1 = /*(gTextureAnimEnable != 0) ? mul(gTextureAnimMatrix, float4(IN.texCoords.xy, 0.0f, 1.0f)).xy :*/ IN.texCoords.xy;
 
 	float4 resultColor = Test(gShader, float4(colorRGB, colorA), DiffuseTexture0, DiffuseTexture0Sampler, tc0, DiffuseTexture1, DiffuseTexture1Sampler, tc1);
 	
@@ -156,5 +158,9 @@ float4 PS_main(VertexShaderOutput IN) : SV_TARGET
 			discard;
 	}
 	
-	return resultColor;
+	DefferedRenderPSOut OUT;
+	OUT.Diffuse = resultColor;
+	OUT.Specular = float4(0.0f, 0.0f, 0.0f, 1.0f);
+	OUT.NormalVS = float4(IN.normalVS.xyz, 0.0f);
+	return OUT;
 }

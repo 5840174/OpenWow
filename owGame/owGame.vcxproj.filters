@@ -501,6 +501,9 @@
     <ClCompile Include="M2\M2_CameraComponent.cpp">
       <Filter>M2\SceneNode &amp; Components\Components</Filter>
     </ClCompile>
+    <ClCompile Include="M2\M2_SkeletonBone.cpp">
+      <Filter>M2\SceneNode &amp; Components\Components</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="common.h">
@@ -1050,6 +1053,9 @@
       <Filter>World\Item</Filter>
     </ClInclude>
     <ClInclude Include="M2\M2_CameraComponent.h">
+      <Filter>M2\SceneNode &amp; Components\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="M2\M2_SkeletonBone.h">
       <Filter>M2\SceneNode &amp; Components\Components</Filter>
     </ClInclude>
   </ItemGroup>

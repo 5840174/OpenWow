@@ -27,5 +27,5 @@ private:
 	std::vector<SNodeElement> m_NodesList;
 	//std::vector<SModelElement> m_ModelsList;
 	//std::vector<SGeometryElement> m_GeometryList;
-	//std::vector<SLightElement> m_LightList;
+	std::vector<SLightElement> m_LightList;
 };

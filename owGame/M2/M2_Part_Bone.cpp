@@ -23,10 +23,10 @@ CM2_Part_Bone::~CM2_Part_Bone()
 {
 }
 
-glm::mat4 CM2_Part_Bone::calcMatrix(const CM2_Base_Instance* M2Instance, uint32 globalTime) const
+glm::mat4 CM2_Part_Bone::calcMatrix(const CM2_Base_Instance& M2Instance, uint32 globalTime) const
 {
 	glm::mat4 m(1.0f);
-	if (const auto& animator = M2Instance->getAnimator())
+	if (const auto& animator = M2Instance.getAnimator())
 	{
 		if (IsInterpolated(animator->getSequenceIndex()))
 		{
@@ -48,9 +48,9 @@ glm::mat4 CM2_Part_Bone::calcMatrix(const CM2_Base_Instance* M2Instance, uint32 
 	return m;
 }
 
-glm::mat4 CM2_Part_Bone::calcRotationMatrix(const CM2_Base_Instance * M2Instance, uint32 globalTime) const
+glm::mat4 CM2_Part_Bone::calcRotationMatrix(const CM2_Base_Instance& M2Instance, uint32 globalTime) const
 {
-	if (const auto& animator = M2Instance->getAnimator())
+	if (const auto& animator = M2Instance.getAnimator())
 	{
 		if (m_RotateAnimated.IsUsesBySequence(animator->getSequenceIndex()))
 			return glm::toMat4(m_RotateAnimated.GetValue(animator->getSequenceIndex(), animator->getCurrentTime(), m_M2Object.getSkeleton().getGlobalLoops(), globalTime));
@@ -59,7 +59,7 @@ glm::mat4 CM2_Part_Bone::calcRotationMatrix(const CM2_Base_Instance * M2Instance
 	return glm::mat4(1.0f);
 }
 
-glm::mat4 CM2_Part_Bone::calcBillboardMatrix(const glm::mat4& CalculatedMatrix, const CM2_Base_Instance* M2Instance, const ICameraComponent3D* Camera) const
+glm::mat4 CM2_Part_Bone::calcBillboardMatrix(const glm::mat4& CalculatedMatrix, const CM2_Base_Instance& M2Instance, const ICameraComponent3D* Camera) const
 {
 	glm::mat4 m(1.0f);
 	_ASSERT(IsBillboard());
@@ -68,7 +68,7 @@ glm::mat4 CM2_Part_Bone::calcBillboardMatrix(const glm::mat4& CalculatedMatrix, 
 	{
 		glm::mat4 W = m;
 		W = CalculatedMatrix * W;
-		W = M2Instance->GetWorldTransfom() * W;
+		W = M2Instance.GetWorldTransfom() * W;
 
 		/*auto invertedView = glm::inverse(Camera->GetViewMatrix());
 		W = invertedView * W;

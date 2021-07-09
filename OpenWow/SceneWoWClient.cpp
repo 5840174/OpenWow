@@ -59,7 +59,7 @@ void CSceneWoWClient::Initialize()
 		auto lightComponent = GetBaseManager().GetManager<IObjectsFactory>()->GetClassFactoryCast<IComponentFactory>()->CreateComponentT<CLightComponent>(cSceneNodeLightComponent, *lightNode.get());
 		lightComponent->SetLight(MakeShared(CLight, GetBaseManager()));
 		lightComponent->GetLight()->SetCastShadows(true);
-		lightComponent->GetLight()->SetType(ELightType::Spot);
+		lightComponent->GetLight()->SetType(ELightType::Directional);
 		lightComponent->GetLight()->SetAmbientColor(ColorRGB(0.25f));
 		lightComponent->GetLight()->SetColor(ColorRGB(1.0f, 1.0f, 1.0f));
 		lightComponent->GetLight()->SetRange(1000.0f);
@@ -161,7 +161,7 @@ void CSceneWoWClient::OnWindowKeyReleased(KeyEventArgs & e)
 void CSceneWoWClient::InitializeRenderer()
 {
 	auto wowRenderer = MakeShared(CRendererWoW, GetBaseManager(), *this);
-	wowRenderer->Initialize(GetRenderWindow().GetRenderTarget());
+	wowRenderer->InitializeDeffered(GetRenderWindow().GetRenderTarget());
 	m_ForwardRenderer = wowRenderer;
 	m_DefferedRenderrer = wowRenderer;
 

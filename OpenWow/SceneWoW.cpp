@@ -53,17 +53,18 @@ void CSceneWoW::Initialize()
 	{
 		auto lightNode = CreateSceneNodeT<ISceneNode>();
 		lightNode->SetName("Light");
-		lightNode->SetLocalPosition(glm::vec3(-50.0f, 250.0f, -50.0f));
+		lightNode->SetLocalPosition(glm::vec3(16630, 784, 11400.0f));
+		//lightNode->SetLocalPosition(glm::vec3(-50.0f, 250.0f, -50.0f));
 		lightNode->SetLocalRotationDirection(glm::vec3(-0.5, -0.5f, -0.5f));
 		//lightNode->SetLocalRotationEuler(glm::vec3(45.0f, -45.0f, 0.0f));
 
 		auto lightComponent = GetBaseManager().GetManager<IObjectsFactory>()->GetClassFactoryCast<IComponentFactory>()->CreateComponentT<CLightComponent>(cSceneNodeLightComponent, *lightNode.get());
 		lightComponent->SetLight(MakeShared(CLight, GetBaseManager()));
-		lightComponent->GetLight()->SetCastShadows(true);
+		lightComponent->GetLight()->SetCastShadows(false);
 		lightComponent->GetLight()->SetType(ELightType::Spot);
 		lightComponent->GetLight()->SetAmbientColor(ColorRGB(0.25f));
 		lightComponent->GetLight()->SetColor(ColorRGB(1.0f, 1.0f, 1.0f));
-		lightComponent->GetLight()->SetRange(1000.0f);
+		lightComponent->GetLight()->SetRange(1500.0f);
 		lightComponent->GetLight()->SetIntensity(1.0077f);
 		lightComponent->GetLight()->SetSpotlightAngle(30.0f);
 
@@ -213,6 +214,8 @@ void CSceneWoW::Initialize()
 		GetCameraController()->GetCamera()->SetPosition(glm::vec3(0.0f));
 	}
 
+	GetCameraController()->GetCamera()->SetYaw(-90.0f);
+	GetCameraController()->GetCamera()->SetPitch(75.0f);
 	//SetMainMenu();
 }
 
@@ -280,7 +283,7 @@ void CSceneWoW::OnWindowKeyReleased(KeyEventArgs & e)
 void CSceneWoW::InitializeRenderer()
 {
 	auto wowRenderer = MakeShared(CRendererWoW, GetBaseManager(), *this);
-	wowRenderer->Initialize(GetRenderWindow().GetRenderTarget());
+	wowRenderer->InitializeDeffered(GetRenderWindow().GetRenderTarget());
 	m_ForwardRenderer = wowRenderer;
 	m_DefferedRenderrer = wowRenderer;
 

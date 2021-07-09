@@ -137,7 +137,7 @@ bool CM2_Base_Instance::Load()
 		m_Animator = MakeShared(CM2_Animator, GetBaseManager(), getM2());
 
 	if (getM2().getSkeleton().hasBones())
-		m_SkeletonComponent = AddComponentT(MakeShared(CM2SkeletonComponent3D, *this));
+		m_SkeletonComponent = AddComponentT(MakeShared(CM2SkeletonComponent, *this));
 
 #ifdef USE_M2_PARTICLES
 	m_ParticleComponent = AddComponentT(MakeShared(CM2ParticlesComponent, *this));

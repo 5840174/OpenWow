@@ -6,10 +6,9 @@ struct VertexShaderInput
 	float4 color    : COLOR0;
 };
 
-struct VertexShaderOutput
+struct VSOutputSky
 {
-	float4 positionVS : SV_POSITION;
-	float4 positionWS : POSITION;
+	float4 position : SV_POSITION;
 	float4 color    : COLOR0;
 };
 
@@ -21,22 +20,17 @@ cbuffer Material : register(b2)
 };
 
 
-VertexShaderOutput VS_main(VertexShaderInput IN)
+VSOutputSky VS_main(VertexShaderInput IN)
 {
 	const float4x4 mvp = mul(PF.Projection, mul(PF.View, PO.Model));
 	
-	VertexShaderOutput OUT;
-	OUT.positionVS = mul(mvp, float4(IN.position, 1.0f));
-	OUT.positionWS = float4(IN.position, 1.0f);
+	VSOutputSky OUT;
+	OUT.position = mul(mvp, float4(IN.position, 1.0f));
 	OUT.color = IN.color;
 	return OUT;
 }
 
-float4 PS_main(VertexShaderOutput IN) : SV_TARGET
+float4 PS_main(VSOutputSky IN) : SV_TARGET
 {
-	return float4(IN.color.rgb, 1.0f);
-	
-	//DefferedRenderPSOut OUT;
-	//OUT.Diffuse = float4(IN.color.rgb, 1.0f);
-	//return OUT;
+	return IN.color;
 }
