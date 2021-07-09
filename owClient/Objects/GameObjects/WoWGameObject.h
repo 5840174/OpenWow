@@ -2,7 +2,7 @@
 
 #ifdef ENABLE_WOW_CLIENT
 
-#include "WoWWorldObject.h"
+#include "../Base/WoWWorldObject.h"
 #include "../../Client/ClientCacheTemplates.h"
 
 enum ZN_API GameObjectFlags

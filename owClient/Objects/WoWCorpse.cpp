@@ -6,7 +6,7 @@
 #include "WoWCorpse.h"
 
 // Additional
-#include "../World.h"
+#include "../World/World.h"
 
 WoWCorpse::WoWCorpse(IScene& Scene, CWoWWorld& WoWWorld, CWoWGuid Guid)
 	: CWoWWorldObject(Scene, WoWWorld, Guid)

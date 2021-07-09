@@ -2,7 +2,7 @@
 
 #ifdef ENABLE_WOW_CLIENT
 
-#include "WoWObject.h"
+#include "../Base/WoWObject.h"
 
 class ZN_API WoWItem
 	: public WoWObject

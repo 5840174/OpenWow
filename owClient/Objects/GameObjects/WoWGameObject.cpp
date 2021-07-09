@@ -6,7 +6,7 @@
 #include "WoWGameObject.h"
 
 // Additional
-#include "../World.h"
+#include "../../World/World.h"
 
 WoWGameObject::WoWGameObject(IScene& Scene, CWoWWorld& WoWWorld, CWoWGuid Guid)
 	: CWoWWorldObject(Scene, WoWWorld, Guid)

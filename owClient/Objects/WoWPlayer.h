@@ -2,7 +2,7 @@
 
 #ifdef ENABLE_WOW_CLIENT
 
-#include "WoWUnit.h"
+#include "Units/WoWUnit.h"
 
 // FORWARD BEGIN
 class CWoWWorld;

@@ -4,7 +4,7 @@
 #include "WoWGameObjectMOTransport.h"
 
 // Additional
-#include "../World.h"
+#include "../../World/World.h"
 
 #include "Client/TaxiStorage.h"
 

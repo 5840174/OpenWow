@@ -2,19 +2,15 @@
 
 #ifdef ENABLE_WOW_CLIENT
 
-#include "WoWWorldObject.h"
-#include "Helpers/MovementHelper.h"
+#include "../Base/WoWWorldObject.h"
 #include "WoWUnitFlags.h"
-#include "../../Types/MoveSplineFlag.h"
-#include "../Path/Path.h"
+#include "../Helpers/Spline/MoveSplineFlag.h"
+#include "../Helpers/Spline/Path.h"
 
 // FORWARD BEGIN
 class CWoWWorld;
 struct SCharacterItemTemplate;
 // FORWARD END
-
-
-
 
 class ZN_API WoWUnit
 	: public CWoWWorldObject
@@ -27,6 +23,8 @@ public:
 	void Do_MonsterMove(CServerPacket& Bytes);
 
 	virtual void OnValuesUpdated(const UpdateMask & Mask) override;
+
+	void OnHiddenNodePositionChanged() override;
 
 	uint8 GetRace() const       { return m_Values.GetByteValue(UNIT_FIELD_BYTES_0, UNIT_BYTES_0_OFFSET_RACE); }
 	uint8 GetClass() const      { return m_Values.GetByteValue(UNIT_FIELD_BYTES_0, UNIT_BYTES_0_OFFSET_CLASS); }
@@ -83,6 +81,9 @@ protected:
 	float m_SplineElevation;
 
 	float m_Speed[9];
+
+
+	std::shared_ptr<CCreature> m_MountModel;
 };
 
 #endif

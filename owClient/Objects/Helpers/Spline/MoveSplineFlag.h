@@ -1,22 +1,4 @@
-/*
- * This file is part of the TrinityCore Project. See AUTHORS file for Copyright information
- *
- * This program is free software; you can redistribute it and/or modify it
- * under the terms of the GNU General Public License as published by the
- * Free Software Foundation; either version 2 of the License, or (at your
- * option) any later version.
- *
- * This program is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
- * FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
- * more details.
- *
- * You should have received a copy of the GNU General Public License along
- * with this program. If not, see <http://www.gnu.org/licenses/>.
- */
-
-#ifndef TRINITYSERVER_MOVESPLINEFLAG_H
-#define TRINITYSERVER_MOVESPLINEFLAG_H
+#pragma once
 
 namespace Movement
 {
@@ -71,7 +53,7 @@ public:
     };
 
     inline uint32& raw() { return (uint32&)*this; }
-    inline uint32 const& raw() const { return (uint32 const&)*this; }
+    inline const uint32& raw() const { return (const uint32&)*this; }
 
     MoveSplineFlag() { raw() = 0; }
     MoveSplineFlag(uint32 f) { raw() = f; }
@@ -86,8 +68,8 @@ public:
     uint8 getAnimationId() const { return animId; }
     bool hasAllFlags(uint32 f) const { return (raw() & f) == f; }
     bool hasFlag(uint32 f) const { return (raw() & f) != 0; }
-    uint32 operator & (uint32 f) const { return (raw() & f); }
-    uint32 operator | (uint32 f) const { return (raw() | f); }
+    uint32 operator& (uint32 f) const { return (raw() & f); }
+    uint32 operator| (uint32 f) const { return (raw() | f); }
 
     uint8 animId              : 8;
     bool done                : 1;
@@ -117,5 +99,3 @@ public:
 };
 #pragma pack(pop)
 }
-
-#endif // TRINITYSERVER_MOVESPLINEFLAG_H

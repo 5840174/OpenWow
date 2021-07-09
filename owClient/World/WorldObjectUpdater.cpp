@@ -83,9 +83,8 @@ void CWorldObjectUpdater::ProcessUpdatePacket(CServerPacket& Bytes)
 		{
 			case OBJECT_UPDATE_TYPE::UPDATETYPE_VALUES:
 			{
-				uint64 guidValue;
-				Bytes.ReadPackedUInt64(guidValue);
-				CWoWGuid guid(guidValue);
+				CWoWGuid guid;
+				Bytes.ReadPackedGuid(&guid);
 
 				if (false == m_WoWWorld.GetWorldObjects().IsWoWObjectExists(guid))
 					throw CException("Object not exists");
@@ -98,9 +97,8 @@ void CWorldObjectUpdater::ProcessUpdatePacket(CServerPacket& Bytes)
 
 			case OBJECT_UPDATE_TYPE::UPDATETYPE_MOVEMENT:
 			{
-				uint64 guidValue;
-				Bytes.ReadPackedUInt64(guidValue);
-				CWoWGuid guid(guidValue);
+				CWoWGuid guid;
+				Bytes.ReadPackedGuid(&guid);
 
 				if (false == m_WoWWorld.GetWorldObjects().IsWoWObjectExists(guid))
 					throw CException("Object not exists");
@@ -114,9 +112,8 @@ void CWorldObjectUpdater::ProcessUpdatePacket(CServerPacket& Bytes)
 			case OBJECT_UPDATE_TYPE::UPDATETYPE_CREATE_OBJECT:
 			case OBJECT_UPDATE_TYPE::UPDATETYPE_CREATE_OBJECT2: // isNewObject
 			{
-				uint64 guidValue;
-				Bytes.ReadPackedUInt64(guidValue);
-				CWoWGuid guid(guidValue);
+				CWoWGuid guid;
+				Bytes.ReadPackedGuid(&guid);
 
 				EWoWObjectTypeID typeID; // Different from GUID TypeID for Container TODO
 				Bytes >> typeID;
@@ -131,17 +128,14 @@ void CWorldObjectUpdater::ProcessUpdatePacket(CServerPacket& Bytes)
 
 			case OBJECT_UPDATE_TYPE::UPDATETYPE_OUT_OF_RANGE_OBJECTS:
 			{
-				std::vector<CWoWGuid> outOfRangeGUIDs;
-
 				uint32 outOfRangeGUIDsCount;
-				Bytes >> (uint32)outOfRangeGUIDsCount;
+				Bytes >> outOfRangeGUIDsCount;
+
+				std::vector<CWoWGuid> outOfRangeGUIDs;
 				outOfRangeGUIDs.resize(outOfRangeGUIDsCount);
+
 				for (uint32 i = 0; i < outOfRangeGUIDsCount; i++)
-				{
-					uint64 guid;
-					Bytes.ReadPackedUInt64(guid);
-					outOfRangeGUIDs[i] = CWoWGuid(guid);
-				}
+					Bytes.ReadPackedGuid(&outOfRangeGUIDs[i]);
 
 				auto& worldObjects = m_WoWWorld.GetWorldObjects();
 				for (const auto& outOfRangeGUID : outOfRangeGUIDs)

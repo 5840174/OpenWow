@@ -17,14 +17,16 @@ public:
 	uint32  ReadUInt32();
 	float   ReadFloat();
 	double  ReadDouble();
-	void    ReadPackedUInt64(uint64& guid);
+	void    ReadPackedGuid(CWoWGuid * WoWGuid);
 
 	// IByteBuffer
 	bool readBytes(void* Destination, size_t Size) override;
-	//void writeBytes(const void * Source, size_t BytesCount) override;
+	void writeBytes(const void * Source, size_t BytesCount) override;
+
+	void writeBytesInternal(const void * Source, size_t BytesCount);
 
 protected:
-	void ReadPackedUInt64(uint8 mask, uint64& value);
+	void ReadPackedGuid(uint8 mask, uint64 * value);
 
 private:
     uint16  m_Size;

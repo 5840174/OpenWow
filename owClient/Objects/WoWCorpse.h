@@ -2,7 +2,7 @@
 
 #ifdef ENABLE_WOW_CLIENT
 
-#include "WoWWorldObject.h"
+#include "Base/WoWWorldObject.h"
 
 // FORWARD BEGIN
 class CWoWWorld;

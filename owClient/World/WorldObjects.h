@@ -1,13 +1,14 @@
 #pragma once
 
-#include "Objects/WoWObject.h"
-#include "Objects/WoWItem.h"
-#include "Objects/WoWContainer.h"
-#include "Objects/WoWUnit.h"
-#include "Objects/WoWPlayer.h"
-#include "Objects/WoWGameObject.h"
-#include "Objects/WoWDynamicObject.h"
-#include "Objects/WoWCorpse.h"
+#include "../Objects/Base/WoWObject.h"
+#include "../Objects/Items/WoWItem.h"
+#include "../Objects/Items/WoWContainer.h"
+#include "../Objects/Units/WoWUnit.h"
+#include "../Objects/GameObjects/WoWGameObject.h"
+
+#include "../Objects/WoWPlayer.h"
+#include "../Objects/WoWDynamicObject.h"
+#include "../Objects/WoWCorpse.h"
 
 #include "../Renderer/RenderPass_Path.h"
 

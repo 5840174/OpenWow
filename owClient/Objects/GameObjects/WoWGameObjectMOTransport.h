@@ -3,7 +3,7 @@
 #ifdef ENABLE_WOW_CLIENT
 
 #include "WoWGameObject.h"
-#include "../Path/Path.h"
+#include "../Helpers/Spline/Path.h"
 
 // FORWARD BEGIN
 class CWoWWorld;

@@ -6,8 +6,8 @@
 #include "WoWObject.h"
 
 // Additional
-#include "WoWUnit.h"
-#include "WoWGameObject.h"
+#include "../Units/WoWUnit.h"
+#include "../GameObjects/WoWGameObject.h"
 
 
 namespace
@@ -60,10 +60,10 @@ void WoWObject::Do_UPDATETYPE_MOVEMENT(CServerPacket& Bytes)
 	{
 		if (updateFlags & UPDATEFLAG_POSITION)
 		{
-			uint64 transportGuid;
-			Bytes.ReadPackedUInt64(transportGuid);
+			CWoWGuid transportGuid;
+			Bytes.ReadPackedGuid(&transportGuid);
 			if (object)
-				object->TransportID = CWoWGuid(transportGuid);
+				object->TransportID = transportGuid;
 
 			glm::vec3 gamePosition;
 			Bytes >> gamePosition;
@@ -134,14 +134,14 @@ void WoWObject::Do_UPDATETYPE_MOVEMENT(CServerPacket& Bytes)
 		Bytes.read(&newCounter);
 
 		if (GetWoWGUID().GetCounter() != newCounter)
-			throw CException("Counter error.");
+			throw CException("WoWObject New counter '%s' isn't equal old counter '%d'.", newCounter, GetWoWGUID().GetCounter());
 	}
 
 	// 0x4
 	if (updateFlags & UPDATEFLAG_HAS_TARGET)
 	{
-		uint64 victimGuid;
-		Bytes.ReadPackedUInt64(victimGuid); // MAYBE 0
+		CWoWGuid victimGuid;
+		Bytes.ReadPackedGuid(&victimGuid); // MAYBE 0
 	}
 
 	// 0x2

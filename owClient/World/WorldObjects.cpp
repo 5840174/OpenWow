@@ -5,7 +5,7 @@
 
 // Additional
 #include "World.h"
-#include "Objects/WoWGameObjectMOTransport.h"
+#include "../Objects/GameObjects/WoWGameObjectMOTransport.h"
 
 CWorldObjects::CWorldObjects(CWoWWorld & WoWWorld, IScene & Scene)
 	: m_WoWWorld(WoWWorld)

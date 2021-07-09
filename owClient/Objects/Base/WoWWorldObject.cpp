@@ -6,8 +6,7 @@
 #include "WoWWorldObject.h"
 
 // Additional
-#include "../World.h"
-#include "WoWGameObjectMOTransport.h"
+#include "../../World/World.h"
 
 CWoWWorldObject::CWoWWorldObject(IScene& Scene, CWoWWorld& WoWWorld, CWoWGuid Guid)
 	: WoWObject(Guid)
@@ -42,12 +41,17 @@ void CWoWWorldObject::Update(const UpdateEventArgs & e)
 		//}
 		//else
 		{
+			
 			m_HiddenNode->SetLocalPosition(Position);
 			m_HiddenNode->SetLocalRotationEuler(glm::vec3(0.0f, Orientation, 0.0f));
+			OnHiddenNodePositionChanged();
 			m_HiddenNodeDirty = false;
 		}
 	}
 }
+
+void CWoWWorldObject::OnHiddenNodePositionChanged()
+{}
 
 void CWoWWorldObject::CommitPositionAndRotation()
 {

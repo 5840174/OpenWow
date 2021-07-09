@@ -1,7 +1,7 @@
 #pragma once
 
-#include "../../Types/UpdateMask.h"
-#include "../../Types/UpdateFields.h"
+#include "UpdateMask.h"
+#include "WoWObjectValuesList.h"
 
 // FORWARD BEGIN
 class WoWObject;

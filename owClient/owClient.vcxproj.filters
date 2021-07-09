@@ -16,9 +16,6 @@
     <Filter Include="RealmSelection">
       <UniqueIdentifier>{627d0987-c930-4bfd-bc62-c8748dfa4a3b}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Types">
-      <UniqueIdentifier>{107786eb-56aa-4536-8f81-467a17c51dee}</UniqueIdentifier>
-    </Filter>
     <Filter Include="World">
       <UniqueIdentifier>{eb46a660-0a0c-4202-99f0-ee7b0ba1c4bd}</UniqueIdentifier>
     </Filter>
@@ -34,37 +31,34 @@
     <Filter Include="Client\DBCCache">
       <UniqueIdentifier>{f6ddb1e1-65b6-4a45-8f39-f68c0fac1c9e}</UniqueIdentifier>
     </Filter>
-    <Filter Include="World\Path">
-      <UniqueIdentifier>{2d4470d2-8ab6-447f-8fa8-8a57edf3e1b8}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Warden">
       <UniqueIdentifier>{eae392f7-ea40-40d2-b4cc-613852a03605}</UniqueIdentifier>
     </Filter>
-    <Filter Include="World\WorldObjects">
-      <UniqueIdentifier>{3c00e6b3-0286-4ce5-b1fb-963eab4eef6f}</UniqueIdentifier>
+    <Filter Include="Objects">
+      <UniqueIdentifier>{305be41d-6d10-4f33-90a0-dfda77515bae}</UniqueIdentifier>
     </Filter>
-    <Filter Include="World\BaseClasses">
-      <UniqueIdentifier>{bd85bf93-062c-4785-bef0-e5cc06a44db8}</UniqueIdentifier>
+    <Filter Include="Objects\Base">
+      <UniqueIdentifier>{a78b7db5-b688-45fa-95c6-920d7fa13b4f}</UniqueIdentifier>
     </Filter>
-    <Filter Include="World\Inventory">
-      <UniqueIdentifier>{393bab26-3a23-4404-a17b-ade3d3dfbe49}</UniqueIdentifier>
+    <Filter Include="Objects\Items">
+      <UniqueIdentifier>{ba4591bb-ff79-43a0-a3b4-17ee8bb55e68}</UniqueIdentifier>
     </Filter>
-    <Filter Include="World\Helpers">
-      <UniqueIdentifier>{cb29b2e0-9320-4d4d-a1ee-f79495ee6d0a}</UniqueIdentifier>
+    <Filter Include="Objects\Units">
+      <UniqueIdentifier>{81e6d1db-8032-48d1-a158-6c60ab6d614a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Objects\GameObjects">
+      <UniqueIdentifier>{d5967c2a-aa02-4c16-be04-9fdfde4ccb22}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Objects\Helpers">
+      <UniqueIdentifier>{e9e200b3-98dc-4f0c-8e6b-80c29506478e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Objects\Helpers\Spline">
+      <UniqueIdentifier>{c6d73d1d-5857-4ebb-bf68-45d7f11d4a63}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="RealmSelection\RealmInfo.h">
       <Filter>RealmSelection</Filter>
-    </ClInclude>
-    <ClInclude Include="Types\MoveSplineFlag.h">
-      <Filter>Types</Filter>
-    </ClInclude>
-    <ClInclude Include="Types\UpdateFields.h">
-      <Filter>Types</Filter>
-    </ClInclude>
-    <ClInclude Include="Types\UpdateMask.h">
-      <Filter>Types</Filter>
     </ClInclude>
     <ClInclude Include="World\World.h">
       <Filter>World</Filter>
@@ -74,24 +68,6 @@
     </ClInclude>
     <ClInclude Include="World\WorldObjectUpdater.h">
       <Filter>World</Filter>
-    </ClInclude>
-    <ClInclude Include="World\Objects\WoWCorpse.h">
-      <Filter>World\WorldObjects</Filter>
-    </ClInclude>
-    <ClInclude Include="World\Objects\WoWDynamicObject.h">
-      <Filter>World\WorldObjects</Filter>
-    </ClInclude>
-    <ClInclude Include="World\Objects\WoWGameObject.h">
-      <Filter>World\WorldObjects</Filter>
-    </ClInclude>
-    <ClInclude Include="World\Objects\WoWGameObjectMOTransport.h">
-      <Filter>World\WorldObjects</Filter>
-    </ClInclude>
-    <ClInclude Include="World\Objects\WoWPlayer.h">
-      <Filter>World\WorldObjects</Filter>
-    </ClInclude>
-    <ClInclude Include="World\Objects\WoWUnit.h">
-      <Filter>World\WorldObjects</Filter>
     </ClInclude>
     <ClInclude Include="WorldSocket\ClientPacket.h">
       <Filter>WorldSocket</Filter>
@@ -165,12 +141,6 @@
     <ClInclude Include="World\WoWGUID.h">
       <Filter>World</Filter>
     </ClInclude>
-    <ClInclude Include="World\Path\Path.h">
-      <Filter>World\Path</Filter>
-    </ClInclude>
-    <ClInclude Include="World\Path\PathNode.h">
-      <Filter>World\Path</Filter>
-    </ClInclude>
     <ClInclude Include="Warden\Warden.h">
       <Filter>Warden</Filter>
     </ClInclude>
@@ -189,23 +159,56 @@
     <ClInclude Include="WorldSocket\PacketsQueue.h">
       <Filter>WorldSocket</Filter>
     </ClInclude>
-    <ClInclude Include="World\Objects\WoWItem.h">
-      <Filter>World\Inventory</Filter>
+    <ClInclude Include="Objects\WoWCorpse.h">
+      <Filter>Objects</Filter>
     </ClInclude>
-    <ClInclude Include="World\Objects\WoWContainer.h">
-      <Filter>World\Inventory</Filter>
+    <ClInclude Include="Objects\WoWDynamicObject.h">
+      <Filter>Objects</Filter>
     </ClInclude>
-    <ClInclude Include="World\Objects\WoWObjectValues.h">
-      <Filter>World\BaseClasses</Filter>
+    <ClInclude Include="Objects\WoWPlayer.h">
+      <Filter>Objects</Filter>
     </ClInclude>
-    <ClInclude Include="World\Objects\WoWObject.h">
-      <Filter>World\BaseClasses</Filter>
+    <ClInclude Include="Objects\Helpers\Spline\MoveSplineFlag.h">
+      <Filter>Objects\Helpers\Spline</Filter>
     </ClInclude>
-    <ClInclude Include="World\Objects\WoWWorldObject.h">
-      <Filter>World\BaseClasses</Filter>
+    <ClInclude Include="Objects\Helpers\Spline\Path.h">
+      <Filter>Objects\Helpers\Spline</Filter>
     </ClInclude>
-    <ClInclude Include="World\Objects\Helpers\MovementHelper.h">
-      <Filter>World\Helpers</Filter>
+    <ClInclude Include="Objects\Helpers\Spline\PathNode.h">
+      <Filter>Objects\Helpers\Spline</Filter>
+    </ClInclude>
+    <ClInclude Include="Objects\GameObjects\WoWGameObject.h">
+      <Filter>Objects\GameObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="Objects\GameObjects\WoWGameObjectMOTransport.h">
+      <Filter>Objects\GameObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="Objects\Items\WoWContainer.h">
+      <Filter>Objects\Items</Filter>
+    </ClInclude>
+    <ClInclude Include="Objects\Items\WoWItem.h">
+      <Filter>Objects\Items</Filter>
+    </ClInclude>
+    <ClInclude Include="Objects\Base\UpdateMask.h">
+      <Filter>Objects\Base</Filter>
+    </ClInclude>
+    <ClInclude Include="Objects\Base\WoWObject.h">
+      <Filter>Objects\Base</Filter>
+    </ClInclude>
+    <ClInclude Include="Objects\Base\WoWObjectValues.h">
+      <Filter>Objects\Base</Filter>
+    </ClInclude>
+    <ClInclude Include="Objects\Base\WoWObjectValuesList.h">
+      <Filter>Objects\Base</Filter>
+    </ClInclude>
+    <ClInclude Include="Objects\Base\WoWWorldObject.h">
+      <Filter>Objects\Base</Filter>
+    </ClInclude>
+    <ClInclude Include="Objects\Units\WoWUnit.h">
+      <Filter>Objects\Units</Filter>
+    </ClInclude>
+    <ClInclude Include="Objects\Units\WoWUnitFlags.h">
+      <Filter>Objects\Units</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -217,24 +220,6 @@
     </ClCompile>
     <ClCompile Include="World\WorldObjectUpdater.cpp">
       <Filter>World</Filter>
-    </ClCompile>
-    <ClCompile Include="World\Objects\WoWCorpse.cpp">
-      <Filter>World\WorldObjects</Filter>
-    </ClCompile>
-    <ClCompile Include="World\Objects\WoWDynamicObject.cpp">
-      <Filter>World\WorldObjects</Filter>
-    </ClCompile>
-    <ClCompile Include="World\Objects\WoWGameObject.cpp">
-      <Filter>World\WorldObjects</Filter>
-    </ClCompile>
-    <ClCompile Include="World\Objects\WoWGameObjectMOTransport.cpp">
-      <Filter>World\WorldObjects</Filter>
-    </ClCompile>
-    <ClCompile Include="World\Objects\WoWPlayer.cpp">
-      <Filter>World\WorldObjects</Filter>
-    </ClCompile>
-    <ClCompile Include="World\Objects\WoWUnit.cpp">
-      <Filter>World\WorldObjects</Filter>
     </ClCompile>
     <ClCompile Include="WorldSocket\ClientPacket.cpp">
       <Filter>WorldSocket</Filter>
@@ -293,12 +278,6 @@
     <ClCompile Include="World\WoWGUID.cpp">
       <Filter>World</Filter>
     </ClCompile>
-    <ClCompile Include="World\Path\Path.cpp">
-      <Filter>World\Path</Filter>
-    </ClCompile>
-    <ClCompile Include="World\Path\PathNode.cpp">
-      <Filter>World\Path</Filter>
-    </ClCompile>
     <ClCompile Include="Warden\Warden.cpp">
       <Filter>Warden</Filter>
     </ClCompile>
@@ -308,20 +287,44 @@
     <ClCompile Include="WorldSocket\PacketsQueue.cpp">
       <Filter>WorldSocket</Filter>
     </ClCompile>
-    <ClCompile Include="World\Objects\WoWItem.cpp">
-      <Filter>World\Inventory</Filter>
+    <ClCompile Include="Objects\WoWCorpse.cpp">
+      <Filter>Objects</Filter>
     </ClCompile>
-    <ClCompile Include="World\Objects\WoWContainer.cpp">
-      <Filter>World\Inventory</Filter>
+    <ClCompile Include="Objects\WoWDynamicObject.cpp">
+      <Filter>Objects</Filter>
     </ClCompile>
-    <ClCompile Include="World\Objects\WoWObjectValues.cpp">
-      <Filter>World\BaseClasses</Filter>
+    <ClCompile Include="Objects\WoWPlayer.cpp">
+      <Filter>Objects</Filter>
     </ClCompile>
-    <ClCompile Include="World\Objects\WoWObject.cpp">
-      <Filter>World\BaseClasses</Filter>
+    <ClCompile Include="Objects\Helpers\Spline\Path.cpp">
+      <Filter>Objects\Helpers\Spline</Filter>
     </ClCompile>
-    <ClCompile Include="World\Objects\WoWWorldObject.cpp">
-      <Filter>World\BaseClasses</Filter>
+    <ClCompile Include="Objects\Helpers\Spline\PathNode.cpp">
+      <Filter>Objects\Helpers\Spline</Filter>
+    </ClCompile>
+    <ClCompile Include="Objects\GameObjects\WoWGameObject.cpp">
+      <Filter>Objects\GameObjects</Filter>
+    </ClCompile>
+    <ClCompile Include="Objects\GameObjects\WoWGameObjectMOTransport.cpp">
+      <Filter>Objects\GameObjects</Filter>
+    </ClCompile>
+    <ClCompile Include="Objects\Items\WoWContainer.cpp">
+      <Filter>Objects\Items</Filter>
+    </ClCompile>
+    <ClCompile Include="Objects\Items\WoWItem.cpp">
+      <Filter>Objects\Items</Filter>
+    </ClCompile>
+    <ClCompile Include="Objects\Base\WoWObject.cpp">
+      <Filter>Objects\Base</Filter>
+    </ClCompile>
+    <ClCompile Include="Objects\Base\WoWObjectValues.cpp">
+      <Filter>Objects\Base</Filter>
+    </ClCompile>
+    <ClCompile Include="Objects\Base\WoWWorldObject.cpp">
+      <Filter>Objects\Base</Filter>
+    </ClCompile>
+    <ClCompile Include="Objects\Units\WoWUnit.cpp">
+      <Filter>Objects\Units</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

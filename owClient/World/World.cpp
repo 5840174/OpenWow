@@ -8,62 +8,67 @@
 // Additional
 #include "Renderer/RenderPass_Path.h"
 
-const Opcodes msgMoveOpcodes[] =
+namespace
 {
-	MSG_MOVE_HEARTBEAT,
+	const Opcodes msgMoveOpcodes[] =
+	{
+		MSG_MOVE_HEARTBEAT,
 
-	MSG_MOVE_START_FORWARD,
-	MSG_MOVE_START_BACKWARD,
-	MSG_MOVE_STOP,
+		MSG_MOVE_START_FORWARD,
+		MSG_MOVE_START_BACKWARD,
+		MSG_MOVE_STOP,
 
-	MSG_MOVE_START_STRAFE_LEFT,
-	MSG_MOVE_START_STRAFE_RIGHT,
-	MSG_MOVE_STOP_STRAFE,
+		MSG_MOVE_START_STRAFE_LEFT,
+		MSG_MOVE_START_STRAFE_RIGHT,
+		MSG_MOVE_STOP_STRAFE,
 
-	MSG_MOVE_JUMP,
+		MSG_MOVE_JUMP,
 
-	MSG_MOVE_START_TURN_LEFT,
-	MSG_MOVE_START_TURN_RIGHT,
-	MSG_MOVE_STOP_TURN,
+		MSG_MOVE_START_TURN_LEFT,
+		MSG_MOVE_START_TURN_RIGHT,
+		MSG_MOVE_STOP_TURN,
 
-	MSG_MOVE_START_PITCH_UP,
-	MSG_MOVE_START_PITCH_DOWN,
-	MSG_MOVE_STOP_PITCH,
+		MSG_MOVE_START_PITCH_UP,
+		MSG_MOVE_START_PITCH_DOWN,
+		MSG_MOVE_STOP_PITCH,
 
-	MSG_MOVE_TELEPORT,
-	MSG_MOVE_TELEPORT_ACK,
+		MSG_MOVE_TELEPORT,
+		MSG_MOVE_TELEPORT_ACK,
 
-	MSG_MOVE_FALL_LAND,
+		MSG_MOVE_FALL_LAND,
 
-	MSG_MOVE_START_SWIM,
-	MSG_MOVE_STOP_SWIM,
+		MSG_MOVE_START_SWIM,
+		MSG_MOVE_STOP_SWIM,
 
-	MSG_MOVE_SET_WALK_SPEED,
-	MSG_MOVE_SET_RUN_SPEED,
-	MSG_MOVE_SET_RUN_BACK_SPEED,
-	MSG_MOVE_SET_SWIM_SPEED,
-	MSG_MOVE_SET_SWIM_BACK_SPEED,
-	MSG_MOVE_SET_TURN_RATE,
-	MSG_MOVE_SET_FLIGHT_SPEED,
-	MSG_MOVE_SET_FLIGHT_BACK_SPEED,
-	MSG_MOVE_SET_PITCH_RATE,
+		MSG_MOVE_SET_WALK_SPEED,
+		MSG_MOVE_SET_RUN_SPEED,
+		MSG_MOVE_SET_RUN_BACK_SPEED,
+		MSG_MOVE_SET_SWIM_SPEED,
+		MSG_MOVE_SET_SWIM_BACK_SPEED,
+		MSG_MOVE_SET_TURN_RATE,
+		MSG_MOVE_SET_FLIGHT_SPEED,
+		MSG_MOVE_SET_FLIGHT_BACK_SPEED,
+		MSG_MOVE_SET_PITCH_RATE,
 
-	MSG_MOVE_SET_FACING,
-	MSG_MOVE_SET_PITCH
-};
+		MSG_MOVE_SET_FACING,
+		MSG_MOVE_SET_PITCH
+	};
 
-const Opcodes msgUnitsMoveOpcodes[] =
-{
-	SMSG_SPLINE_SET_WALK_SPEED,
-	SMSG_SPLINE_SET_RUN_SPEED,
-	SMSG_SPLINE_SET_RUN_BACK_SPEED,
-	SMSG_SPLINE_SET_SWIM_SPEED,
-	SMSG_SPLINE_SET_SWIM_BACK_SPEED,
-	SMSG_SPLINE_SET_TURN_RATE,
-	SMSG_SPLINE_SET_FLIGHT_SPEED,
-	SMSG_SPLINE_SET_FLIGHT_BACK_SPEED,
-	SMSG_SPLINE_SET_PITCH_RATE
-};
+	const Opcodes msgUnitsMoveOpcodes[] =
+	{
+		SMSG_SPLINE_SET_WALK_SPEED,
+		SMSG_SPLINE_SET_RUN_SPEED,
+		SMSG_SPLINE_SET_RUN_BACK_SPEED,
+		SMSG_SPLINE_SET_SWIM_SPEED,
+		SMSG_SPLINE_SET_SWIM_BACK_SPEED,
+		SMSG_SPLINE_SET_TURN_RATE,
+		SMSG_SPLINE_SET_FLIGHT_SPEED,
+		SMSG_SPLINE_SET_FLIGHT_BACK_SPEED,
+		SMSG_SPLINE_SET_PITCH_RATE
+	};
+}
+
+
 
 CWoWWorld::CWoWWorld(IScene& Scene, const std::shared_ptr<CWorldSocket>& Socket)
 	: m_Scene(Scene)
@@ -245,8 +250,8 @@ namespace
 
 void CWoWWorld::On_SMSG_POWER_UPDATE(CServerPacket & Buffer)
 {
-	uint64 packedGUID;
-	Buffer.ReadPackedUInt64(packedGUID);
+	CWoWGuid packedGUID;
+	Buffer.ReadPackedGuid(&packedGUID);
 
 	uint8 power;
 	Buffer >> power;
@@ -257,16 +262,16 @@ void CWoWWorld::On_SMSG_POWER_UPDATE(CServerPacket & Buffer)
 
 void CWoWWorld::On_SMSG_AURA_UPDATE(CServerPacket & Buffer)
 {
-	uint64 packedGUIDTarget;
-	Buffer.ReadPackedUInt64(packedGUIDTarget);
+	CWoWGuid packedGUIDTarget;
+	Buffer.ReadPackedGuid(&packedGUIDTarget);
 
 	Do_AuraUpdate(Buffer);
 }
 
 void CWoWWorld::On_SMSG_AURA_UPDATE_ALL(CServerPacket & Buffer)
 {
-	uint64 packedGUIDTarget;
-	Buffer.ReadPackedUInt64(packedGUIDTarget);
+	CWoWGuid packedGUIDTarget;
+	Buffer.ReadPackedGuid(&packedGUIDTarget);
 
 	while (false == Buffer.isEof())
 	{
@@ -296,8 +301,8 @@ void CWoWWorld::Do_AuraUpdate(CServerPacket & Buffer)
 
 	if (false == (auraFlags & AFLAG_CASTER))
 	{
-		uint64 packedGUIDCaster;
-		Buffer.ReadPackedUInt64(packedGUIDCaster);
+		CWoWGuid packedGUIDCaster;
+		Buffer.ReadPackedGuid(&packedGUIDCaster);
 	}
 
 	if (auraFlags & AFLAG_DURATION)
@@ -326,13 +331,13 @@ void CWoWWorld::On_SMSG_TIME_SYNC_REQ(CServerPacket & Buffer)
 
 void CWoWWorld::S_SMSG_MONSTER_MOVE(CServerPacket & Buffer, bool Transport)
 {
-	uint64 packedGUID;
-	Buffer.ReadPackedUInt64(packedGUID);
+	CWoWGuid packedGUID;
+	Buffer.ReadPackedGuid(&packedGUID);
 
 	if (Transport)
 	{
-		uint64 transportPackedGUID;
-		Buffer.ReadPackedUInt64(transportPackedGUID);
+		CWoWGuid transportPackedGUID;
+		Buffer.ReadPackedGuid(&transportPackedGUID);
 
 		uint8 transportSeat;
 		Buffer >> transportSeat;
@@ -340,11 +345,10 @@ void CWoWWorld::S_SMSG_MONSTER_MOVE(CServerPacket & Buffer, bool Transport)
 
 	Buffer.seekRelative(1);
 
-	CWoWGuid guid(packedGUID);
-	if (guid.GetTypeId() != EWoWObjectTypeID::TYPEID_UNIT)
-		throw CException("CWoWWorld::S_SMSG_MONSTER_MOVE: Movement packet accept only TYPEID_UNIT. TypeID: '%s'.", guid.GetTypeName());
+	if (packedGUID.GetTypeId() != EWoWObjectTypeID::TYPEID_UNIT)
+		throw CException("CWoWWorld::S_SMSG_MONSTER_MOVE: Movement packet accept only TYPEID_UNIT. TypeID: '%s'.", packedGUID.GetTypeName());
 
-	if (auto object = m_WorldObjects.GetWoWObject(guid))
+	if (auto object = m_WorldObjects.GetWoWObject(packedGUID))
 	{
 		auto objectAsUnit = std::dynamic_pointer_cast<WoWUnit>(object);
 		objectAsUnit->Do_MonsterMove(Buffer);
@@ -590,11 +594,10 @@ void CWoWWorld::On_SMSG_MESSAGECHAT(CServerPacket & Buffer, bool IsGMMessage)
 
 void CWoWWorld::On_MOVE_Opcode(CServerPacket & Buffer)
 {
-	uint64 guid;
-	Buffer.ReadPackedUInt64(guid);
-	CWoWGuid wowGuid(guid);
+	CWoWGuid guid;
+	Buffer.ReadPackedGuid(&guid);
 
-	if (auto object = m_WorldObjects.GetWoWObject(wowGuid))
+	if (auto object = m_WorldObjects.GetWoWObject(guid))
 	{
 		if (auto unit = std::dynamic_pointer_cast<WoWUnit>(object))
 		{
@@ -616,7 +619,7 @@ void CWoWWorld::On_MOVE_Opcode(CServerPacket & Buffer)
 		}
 		else
 		{
-			Log::Error("Type '%s'", wowGuid.GetTypeName());
+			Log::Error("Type '%s'", guid.GetTypeName());
 			throw CException("Oh shit2 Type");
 		}
 	}
@@ -628,19 +631,17 @@ void CWoWWorld::On_MOVE_Opcode(CServerPacket & Buffer)
 
 void CWoWWorld::On_MSG_MOVE_TIME_SKIPPED(CServerPacket & Buffer)
 {
-	uint64 guid;
-	Buffer.ReadPackedUInt64(guid);
-	CWoWGuid wowGuid(guid);
+	CWoWGuid guid;
+	Buffer.ReadPackedGuid(&guid);
 
 	uint32 timeSkipped;
 	Buffer >> timeSkipped;
 }
 
-void CWoWWorld::On_MOVE_UnitSpeedOpcode(CServerPacket & Buffer)
+void CWoWWorld::On_MOVE_UnitSpeedOpcode(CServerPacket& Buffer)
 {
-	uint64 packedGuid;
-	Buffer.ReadPackedUInt64(packedGuid);
-	CWoWGuid wowGuid(packedGuid);
+	CWoWGuid packedGuid;
+	Buffer.ReadPackedGuid(&packedGuid);
 
 	float speed;
 	Buffer >> speed;

@@ -1,6 +1,6 @@
 #pragma once
 
-#include "../World/Objects/WoWWorldObject.h"
+#include "../Objects/Base/WoWWorldObject.h"
 
 // FORWARD BEGIN
 class CWoWWorldObject;

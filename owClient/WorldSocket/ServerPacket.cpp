@@ -59,13 +59,19 @@ double CServerPacket::ReadDouble()
 	return value;
 }
 
-void CServerPacket::ReadPackedUInt64(uint64& guid)
+void CServerPacket::ReadPackedGuid(CWoWGuid * WoWGuid)
 {
-	guid = 0;
-	uint8_t mask;
-	read(&mask);
+	if (WoWGuid == nullptr)
+		throw CException("CServerPacket::ReadPackedGuid: WoWGuid is nullptr.");
 
-	ReadPackedUInt64(mask, guid);
+	uint8 mask = 0;
+	if (false == read(&mask))
+		throw CException("CServerPacket::ReadPackedGuid: Unable to read packed guid mask.");
+
+	uint64 wowPackedGuidAsUint64 = 0;
+	ReadPackedGuid(mask, &wowPackedGuidAsUint64);
+
+	*WoWGuid = CWoWGuid(wowPackedGuidAsUint64);
 }
 
 
@@ -80,17 +86,22 @@ bool CServerPacket::readBytes(void * Destination, size_t Size)
 	return true;
 }
 
-//void CServerPacket::writeBytes(const void * /*Source*/, size_t /*BytesCount*/)
-//{
-//	throw CException("CServerPacket: writeBytes is not allowed.");
-//}
+void CServerPacket::writeBytes(const void * /*Source*/, size_t /*BytesCount*/)
+{
+	throw CException("CServerPacket: writeBytes is not allowed.");
+}
+
+void CServerPacket::writeBytesInternal(const void * Source, size_t BytesCount)
+{
+	__super::writeBytes(Source, BytesCount);
+}
 
 
 
 //
 // Protected
 //
-void CServerPacket::ReadPackedUInt64(uint8 mask, uint64& value)
+void CServerPacket::ReadPackedGuid(uint8 mask, uint64 * value)
 {
 	for (uint32 i = 0; i < 8; ++i)
 	{
@@ -98,7 +109,7 @@ void CServerPacket::ReadPackedUInt64(uint8 mask, uint64& value)
 		{
 			uint8 byte;
 			CByteBuffer::read(&byte);
-			value |= (uint64(byte) << (i * 8));
+			(*value) |= (uint64(byte) << (i * 8));
 		}
 	}
 }

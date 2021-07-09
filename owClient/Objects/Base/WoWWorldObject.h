@@ -19,6 +19,9 @@ public:
 	virtual void Update(const UpdateEventArgs& e);
 
 
+	virtual void OnHiddenNodePositionChanged();
+
+
 	// Position
 	uint32 MapID;
 	glm::vec3 Position;

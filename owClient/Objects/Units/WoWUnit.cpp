@@ -6,20 +6,7 @@
 #include "WoWUnit.h"
 
 // Additional
-#include "../World.h"
-
-namespace
-{
-	enum MonsterMoveType : uint8
-	{
-		MonsterMoveNormal = 0,
-		MonsterMoveStop = 1,
-		MonsterMoveFacingSpot = 2,
-		MonsterMoveFacingTarget = 3,
-		MonsterMoveFacingAngle = 4
-	};
-}
-
+#include "../../World/World.h"
 
 WoWUnit::WoWUnit(IScene& Scene, CWoWWorld& WoWWorld, CWoWGuid Guid)
 	: CWoWWorldObject(Scene, WoWWorld, Guid)
@@ -36,15 +23,15 @@ void WoWUnit::ProcessMovementPacket(CServerPacket & Bytes)
 {
 	ReadMovementInfoPacket(Bytes);
 
-	SetSpeed(MOVE_WALK, Bytes.ReadFloat());
-	SetSpeed(MOVE_RUN, Bytes.ReadFloat());
-	SetSpeed(MOVE_RUN_BACK, Bytes.ReadFloat());
-	SetSpeed(MOVE_SWIM, Bytes.ReadFloat());
-	SetSpeed(MOVE_SWIM_BACK, Bytes.ReadFloat());
-	SetSpeed(MOVE_FLIGHT, Bytes.ReadFloat());
-	SetSpeed(MOVE_FLIGHT_BACK, Bytes.ReadFloat());
-	SetSpeed(MOVE_TURN_RATE, Bytes.ReadFloat());
-	SetSpeed(MOVE_PITCH_RATE, Bytes.ReadFloat());
+	SetSpeed(UnitSpeedType::MOVE_WALK, Bytes.ReadFloat());
+	SetSpeed(UnitSpeedType::MOVE_RUN, Bytes.ReadFloat());
+	SetSpeed(UnitSpeedType::MOVE_RUN_BACK, Bytes.ReadFloat());
+	SetSpeed(UnitSpeedType::MOVE_SWIM, Bytes.ReadFloat());
+	SetSpeed(UnitSpeedType::MOVE_SWIM_BACK, Bytes.ReadFloat());
+	SetSpeed(UnitSpeedType::MOVE_FLIGHT, Bytes.ReadFloat());
+	SetSpeed(UnitSpeedType::MOVE_FLIGHT_BACK, Bytes.ReadFloat());
+	SetSpeed(UnitSpeedType::MOVE_TURN_RATE, Bytes.ReadFloat());
+	SetSpeed(UnitSpeedType::MOVE_PITCH_RATE, Bytes.ReadFloat());
 
 	if (HasMovementFlag(MOVEMENTFLAG_SPLINE_ENABLED))
 	{
@@ -130,39 +117,46 @@ void WoWUnit::Do_MonsterMove(CServerPacket& Bytes)
 	uint32 splineID;
 	Bytes >> splineID;
 
-	MonsterMoveType monsterMoveType;
+	enum EMonsterMoveType : uint8
+	{
+		MonsterMoveNormal = 0,
+		MonsterMoveStop = 1,
+		MonsterMoveFacingSpot = 2,
+		MonsterMoveFacingTarget = 3,
+		MonsterMoveFacingAngle = 4
+	} monsterMoveType;
 	Bytes >> monsterMoveType;
 
 	switch (monsterMoveType)
 	{
-		case MonsterMoveType::MonsterMoveFacingSpot:
+		case EMonsterMoveType::MonsterMoveFacingSpot:
 		{
 			glm::vec3 targetPoint;
 			Bytes >> targetPoint;
 		}
 		break;
 
-		case MonsterMoveType::MonsterMoveFacingTarget:
+		case EMonsterMoveType::MonsterMoveFacingTarget:
 		{
 			uint64 targetGUID;
 			Bytes >> targetGUID;
 		}
 		break;
 
-		case MonsterMoveType::MonsterMoveFacingAngle:
+		case EMonsterMoveType::MonsterMoveFacingAngle:
 		{
 			float angle;
 			Bytes >> angle;
 		}
 		break;
 
-		case MonsterMoveType::MonsterMoveNormal:
+		case EMonsterMoveType::MonsterMoveNormal:
 		{
 			// normal packet
 		}
 		break;
 
-		case MonsterMoveType::MonsterMoveStop:
+		case EMonsterMoveType::MonsterMoveStop:
 		{
 			CommitPositionAndRotation();
 			return;
@@ -262,7 +256,7 @@ void WoWUnit::OnValuesUpdated(const UpdateMask & Mask)
 	if (Mask.GetBit(UNIT_FIELD_DISPLAYID))
 	{
 		uint32 diplayID = m_Values.GetUInt32Value(UNIT_FIELD_DISPLAYID);
-
+		Log::Error("DisplayId = %d", diplayID);
 		if (m_HiddenNode != nullptr)
 		{
 			//Log::Warn("WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.");
@@ -308,9 +302,29 @@ void WoWUnit::OnValuesUpdated(const UpdateMask & Mask)
 		if (rangedDisplayID != 0)
 			if (auto hidderNodeAsCharacter = std::dynamic_pointer_cast<CCharacter>(m_HiddenNode))
 				hidderNodeAsCharacter->SetItem(EQUIPMENT_SLOT_RANGED, GetItemDisplayInfoIDByItemID(rangedDisplayID));
+	}
 
-		if (auto hidderNodeAsCharacter = std::dynamic_pointer_cast<CCharacter>(m_HiddenNode))
-			hidderNodeAsCharacter->Refresh_CharacterItemsFromTemplate();
+	if (Mask.GetBit(UNIT_FIELD_FLAGS))
+	{
+		uint32 flags = m_Values.GetUInt32Value(UNIT_FIELD_FLAGS);
+		if (flags & UNIT_FLAG_MOUNT)
+		{
+			auto mountDisplayID = m_Values.GetUInt32Value(UNIT_FIELD_MOUNTDISPLAYID);
+
+			CWorldObjectCreator creator(GetScene().GetBaseManager());
+			m_MountModel = creator.BuildCreatureFromDisplayInfo(GetScene().GetBaseManager().GetApplication().GetRenderDevice(), GetScene(), mountDisplayID);
+
+			Log::Error("MountDisplayId = %d", mountDisplayID);
+		}
+	}
+}
+
+void WoWUnit::OnHiddenNodePositionChanged()
+{
+	if (m_MountModel)
+	{
+		m_MountModel->SetLocalPosition(Position);
+		m_MountModel->SetLocalRotationEuler(glm::vec3(0.0f, Orientation, 0.0f));
 	}
 }
 
@@ -365,9 +379,9 @@ void WoWUnit::ReadMovementInfoPacket(CServerPacket & Bytes)
 
 	if (HasMovementFlag(MOVEMENTFLAG_ONTRANSPORT))
 	{
-		uint64 transportGuid;
-		Bytes.ReadPackedUInt64(transportGuid);
-		TransportID = CWoWGuid(transportGuid);
+		CWoWGuid transportGuid;
+		Bytes.ReadPackedGuid(&transportGuid);
+		TransportID = transportGuid;
 
 		glm::vec3 gamePositionTransportOffset;
 		Bytes >> gamePositionTransportOffset;

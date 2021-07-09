@@ -5,7 +5,7 @@
 
 // Additional
 #include "World/World.h"
-#include "World/Objects/WoWGameObjectMOTransport.h"
+#include "Objects/GameObjects/WoWGameObjectMOTransport.h"
 
 CRenderPass_Path::CRenderPass_Path(IRenderDevice& RenderDevice, CWoWWorld& WoWWorld)
 	: RenderPassPipelined(RenderDevice)
