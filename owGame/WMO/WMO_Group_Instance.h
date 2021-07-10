@@ -40,21 +40,18 @@ public:
 	bool IsIndoor() const override final;
 	bool IsOutdoor() const override final;
 	void Reset() override final;
-
 	BoundingBox GetBoundingBox() const override final;
 	bool IsPointInside(const glm::vec3& CameraPosition) const override final;
-
 	void SetVisibilityState(bool Value) override final;
 	bool IsVisible() const override final;
-
 	void SetCalculatedState(bool Value) override final;
 	bool IsCalculated() const override final;
 
 	// CWMO_Group_Instance
+	const CWMOGroup& GetWMOGroup() const;
 	void CreatePortals(const std::shared_ptr<CWMO_Base_Instance>& BaseInstance);
-    const CWMOGroup& GetWMOGroupObject() const { return m_WMOGroupObject; }
-
-	// SceneNode3D
+    
+	// ISceneNode
 	void Initialize() override;
 	void Accept(IVisitor* visitor) override;
 
@@ -65,7 +62,7 @@ private:
 	bool                                          m_Calculated;
 
 private:
-	const CWMOGroup& m_WMOGroupObject;
+	const CWMOGroup& m_WMOGroup;
 };
 
 #endif

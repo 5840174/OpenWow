@@ -61,47 +61,21 @@ enum ESkyParamsNames : uint32
 	SKY_ParamsUnk3
 };
 
-class ZN_API CSkyParams
+struct ZN_API SSkyParams
 {
-public:
-	CSkyParams();
-	virtual ~CSkyParams();
+	SSkyParams();
+	virtual ~SSkyParams();
 
-	const CSkyParams&                                operator+=(const CSkyParams& _s);
-	const CSkyParams&                                operator*=(float _weight);
+	const SSkyParams&                               operator+=(const SSkyParams& Other);
+	const SSkyParams&                               operator*=(float Weight);
 
 	void                                            Clear();
 
-	void                                            SetColor(uint32 ColorType, glm::vec3 Value);
-	glm::vec3                                       GetColor(uint32 ColorType) const;
+	ColorRGB                                        Colors[ESkyColors::SKY_COLOR_COUNT];
+	float                                           Fogs[ESkyFogs::SKY_FOG_COUNT];
+	float                                           WaterAplha[ESkyWaterAlpha::SKY_COUNT];
 
-	void                                            SetFog(uint32 FogType, float Value);
-	float                                           GetFog(uint32 FogType) const;
-
-	void                                            SetHighlightSky(bool Value);
-	bool                                            GetHighlightSky() const;
-
-	void                                            SetSkybox(const DBC_LightSkyboxRecord* Value);
-	const DBC_LightSkyboxRecord*                    GetSkybox() const;
-
-	void                                            SetGlow(float GlowValue);
-	float                                           GetGlow() const;
-
-	void                                            SetWaterAplha(uint32 WaterAlphaType, float Value);
-	float                                           GetWaterAplha(uint32 WaterAlphaType) const;
-
-
-private:
-	glm::vec3                                       m_Colors[ESkyColors::SKY_COLOR_COUNT];
-	float                                           m_Fogs[ESkyFogs::SKY_FOG_COUNT];
-
-	bool					                        m_highlightSky;
-	const DBC_LightSkyboxRecord*                    m_SkyBox;
-	float                                           m_glow;
-	float                                           m_WaterAplha[ESkyWaterAlpha::SKY_COUNT];
-
-	float                                           m_waterShallowAlpha;
-	float                                           m_waterDeepAlpha;
-	float                                           m_oceanShallowAlpha;
-	float                                           m_oceanDeepAlpha;
+	bool					                        HighlightSky;
+	const DBC_LightSkyboxRecord*                    LightSkyBoxRecord;
+	float                                           Glow;
 };

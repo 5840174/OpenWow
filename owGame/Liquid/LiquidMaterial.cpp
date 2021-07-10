@@ -26,12 +26,12 @@ void CLiquidMaterial::SetDeepAlpha(float value)
 	MaterialData().gDeepAlpha = value;
 }
 
-void CLiquidMaterial::SetColorLight(glm::vec3 value)
+void CLiquidMaterial::SetColorLight(ColorRGB value)
 {
 	MaterialData().gColorLight = value;
 }
 
-void CLiquidMaterial::SetColorDark(glm::vec3 value)
+void CLiquidMaterial::SetColorDark(ColorRGB value)
 {
 	MaterialData().gColorDark = value;
 }

@@ -21,7 +21,7 @@ public:
 
 public:
 	glm::vec3 m_Position;
-	glm::vec4 fcolor;
+	ColorRGBA fcolor;
 
 private:
 	const SWMO_MOLT m_WMOLightProto;

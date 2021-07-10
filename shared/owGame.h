@@ -26,7 +26,6 @@
 
 // Sky & Enviorement
 #include "../owGame/Sky/SkyManager.h"
-#include "../owGame/Sky/Environment/EnvironmentManager.h"
 
 // Map 
 #include "../owGame/Map/Map.h"

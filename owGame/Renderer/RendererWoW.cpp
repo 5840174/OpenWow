@@ -111,6 +111,10 @@ void CRendererWoW::InitializeDeffered(std::shared_ptr<IRenderTarget> OutputRende
 {
 	auto gbufferRenderTarget = CreateGBuffer(OutputRenderTarget);
 
+	auto outputRenderTargetWithCustomDepth = GetRenderDevice().GetObjectsFactory().CreateRenderTarget();
+	outputRenderTargetWithCustomDepth->AttachTexture(IRenderTarget::AttachmentPoint::Color0, OutputRenderTarget->GetTexture(IRenderTarget::AttachmentPoint::Color0));
+	outputRenderTargetWithCustomDepth->AttachTexture(IRenderTarget::AttachmentPoint::DepthStencil, gbufferRenderTarget->GetTexture(IRenderTarget::AttachmentPoint::DepthStencil));
+
 	//
 	// BEFORE SCENE
 	//
@@ -131,16 +135,15 @@ void CRendererWoW::InitializeDeffered(std::shared_ptr<IRenderTarget> OutputRende
 	Add3DPass(MakeShared(CRenderPass_MapChunkList, GetRenderDevice(), m_SceneListTypelessPass)->ConfigurePipeline(gbufferRenderTarget));
 	Add3DPass(MakeShared(CRenderPass_WMOList, GetRenderDevice(), m_SceneListTypelessPass)->ConfigurePipeline(gbufferRenderTarget));
 
-	Add3DPass(MakeShared(CRenderPass_M2List, GetRenderDevice(), m_SceneListTypelessPass, ERenderPassM2DrawMode::All)->ConfigurePipeline(gbufferRenderTarget));
+	//Add3DPass(MakeShared(CRenderPass_M2List, GetRenderDevice(), m_SceneListTypelessPass, ERenderPassM2DrawMode::All)->ConfigurePipeline(gbufferRenderTarget));
 	//Add3DPass(MakeShared(CRenderPass_M2List, GetRenderDevice(), m_SceneListTypelessPass, ERenderPassM2DrawMode::Opaque)->ConfigurePipeline(gbufferRenderTarget));
 	//Add3DPass(MakeShared(CRenderPass_M2List, GetRenderDevice(), m_SceneListTypelessPass, ERenderPassM2DrawMode::Transperent)->ConfigurePipeline(gbufferRenderTarget));
 
 	//Add3DPass(MakeShared(CRenderPass_M2InstancedList, GetRenderDevice(), m_SceneListTypelessPass, ERenderPassM2DrawMode::All)->ConfigurePipeline(gbufferRenderTarget));
-	//Add3DPass(MakeShared(CRenderPass_M2InstancedList, GetRenderDevice(), m_SceneListTypelessPass, ERenderPassM2DrawMode::Opaque)->ConfigurePipeline(gbufferRenderTarget));
+	Add3DPass(MakeShared(CRenderPass_M2InstancedList, GetRenderDevice(), m_SceneListTypelessPass, ERenderPassM2DrawMode::Opaque)->ConfigurePipeline(gbufferRenderTarget));
 	//Add3DPass(MakeShared(CRenderPass_M2InstancedList, GetRenderDevice(), m_SceneListTypelessPass, ERenderPassM2DrawMode::Transperent)->ConfigurePipeline(gbufferRenderTarget));
 
-	Add3DPass(MakeShared(CRenderPass_LiquidList, GetRenderDevice(), m_SceneListTypelessPass)->ConfigurePipeline(gbufferRenderTarget));
-	//Add3DPass(MakeShared(CRenderPass_M2ParticlesList, GetRenderDevice(), m_SceneListTypelessPass)->ConfigurePipeline(OutputRenderTarget));
+
 
 
 	// DEFFERED STUFF
@@ -151,6 +154,28 @@ void CRendererWoW::InitializeDeffered(std::shared_ptr<IRenderTarget> OutputRende
 	m_Deffered_UIQuadPass = MakeShared(CPassDeffered_RenderUIQuad, GetRenderDevice(), m_SceneListTypelessPass, gbufferRenderTarget, m_ShadowMapsPass);
 	m_Deffered_UIQuadPass->ConfigurePipeline(OutputRenderTarget);
 	Add3DPass(m_Deffered_UIQuadPass);
+
+
+
+	//
+	// AFTER DEFFERED
+	//
+	Add3DPass(MakeShared(CRenderPass_LiquidList, GetRenderDevice(), m_SceneListTypelessPass)->ConfigurePipeline(outputRenderTargetWithCustomDepth));
+	//Add3DPass(MakeShared(CRenderPass_M2ParticlesList, GetRenderDevice(), m_SceneListTypelessPass)->ConfigurePipeline(outputRenderTargetWithCustomDepth));
+
+	//Add3DPass(MakeShared(CRenderPass_M2List, GetRenderDevice(), m_SceneListTypelessPass, ERenderPassM2DrawMode::Transperent)->ConfigurePipeline(outputRenderTargetWithCustomDepth));
+	Add3DPass(MakeShared(CRenderPass_M2InstancedList, GetRenderDevice(), m_SceneListTypelessPass, ERenderPassM2DrawMode::Transperent)->ConfigurePipeline(outputRenderTargetWithCustomDepth));
+
+
+
+	//
+	// DEBUG
+	//
+	//Add3DPass(MakeShared(CDebugPass, m_RenderDevice, m_Scene)->ConfigurePipeline(OutputRenderTarget));
+	//Add3DPass(MakeShared(CDrawBonesPass, m_Scene)->ConfigurePipeline(OutputRenderTarget));
+	Add3DPass(MakeShared(CDrawBoundingBoxPass, GetRenderDevice(), GetScene())->ConfigurePipeline(OutputRenderTarget));
+	//Add3DPass(MakeShared(CRenderPass_WMOPortalDebug, GetScene())->ConfigurePipeline(outputRenderTargetWithCustomDepth));
+
 
 	//
 	// UI

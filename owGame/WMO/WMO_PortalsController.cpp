@@ -51,7 +51,7 @@ void CWMO_PortalsController::Update(const CWMO_Base_Instance* WMOBaseInstance, c
 			//if (false == portalRoom->GetBoundingBox().isPointInside(cameraTranslate) || false == portalRoom->IsPointInside(cameraTranslate))
 			//	continue;
 
-			//if (false == group->GetWMOGroupObject().m_GroupHeader.flags.HAS_COLLISION)
+			//if (false == group->GetWMOGroup().m_GroupHeader.flags.HAS_COLLISION)
 			//	continue;
 
 			//if (portalRoom->IsOutdoor())

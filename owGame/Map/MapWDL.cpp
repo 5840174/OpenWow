@@ -126,7 +126,7 @@ void CMapWDL::CreateInsances(const std::shared_ptr<ISceneNode>& Parent) const
 void CMapWDL::UpdateCamera(const ICameraComponent3D * camera)
 {
 	if (m_LowResilutionTileMaterial)
-		m_LowResilutionTileMaterial->SetDiffuseColor(glm::vec4(m_Map.GetBaseManager().GetManager<SkyManager>()->GetColor(ESkyColors::SKY_COLOR_FOG), 1.0f));
+		m_LowResilutionTileMaterial->SetDiffuseColor(ColorRGBA(m_Map.GetBaseManager().GetManager<CSkyManager>()->GetColor(ESkyColors::SKY_COLOR_FOG), 1.0f));
 }
 
 void CMapWDL::Load()

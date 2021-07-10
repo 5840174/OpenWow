@@ -111,8 +111,7 @@
     <ClCompile Include="Renderer\RenderPass_WMOList.cpp" />
     <ClCompile Include="Renderer\RenderPass_WMOPortalDebug.cpp" />
     <ClCompile Include="Settings\WoWSettingsGroup.cpp" />
-    <ClCompile Include="Sky\Environment\DayNightPhase.cpp" />
-    <ClCompile Include="Sky\Environment\EnvironmentManager.cpp" />
+    <ClCompile Include="Sky\DayNightPhase.cpp" />
     <ClCompile Include="Sky\Sky.cpp" />
     <ClCompile Include="Sky\SkyManager.cpp" />
     <ClCompile Include="Sky\SkyParams.cpp" />
@@ -287,8 +286,7 @@
     <ClInclude Include="Renderer\RenderPass_WMOList.h" />
     <ClInclude Include="Renderer\RenderPass_WMOPortalDebug.h" />
     <ClInclude Include="Settings\WoWSettingsGroup.h" />
-    <ClInclude Include="Sky\Environment\DayNightPhase.h" />
-    <ClInclude Include="Sky\Environment\EnvironmentManager.h" />
+    <ClInclude Include="Sky\DayNightPhase.h" />
     <ClInclude Include="Sky\Sky.h" />
     <ClInclude Include="Sky\SkyManager.h" />
     <ClInclude Include="Sky\SkyParams.h" />
@@ -335,7 +333,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="DBC\DBC__File.inl" />
-    <None Include="Sky\Sky.inl" />
     <None Include="WoWChunkReader.inl" />
   </ItemGroup>
   <PropertyGroup Label="Globals">

@@ -51,7 +51,7 @@ const CCharacterItem& CCharacterItemM2Instance::GetCharacterItem() const
 void CCharacterItemM2Instance::OnLoaded()
 {
 	// Attach to parent (parent is Character)
-	//if (auto ownerCharacterAttachment = GetCharacterInstance().getM2().getMiscellaneous().getAttachment(m_AttachmentPoint))
+	//if (auto ownerCharacterAttachment = GetCharacterInstance().GetM2().getMiscellaneous().getAttachment(m_AttachmentPoint))
 	//	Attach(ownerCharacterAttachment->GetAttachmentType());
 
 	// Item enchants
@@ -79,7 +79,7 @@ void CCharacterItemM2Instance::OnLoaded()
 			AddChildLoadable(itemVisualEffectInstance);
 			GetBaseManager().GetManager<ILoader>()->AddToLoadQueue(itemVisualEffectInstance);
 
-			auto itemModelAttachment = getM2().getMiscellaneous().getAttachment((EM2_AttachmentPoint)itemAttachmentPoint);
+			auto itemModelAttachment = GetM2().getMiscellaneous().getAttachment((EM2_AttachmentPoint)itemAttachmentPoint);
 			if (itemModelAttachment != nullptr)
 			{
 				itemVisualEffectInstance->Attach(itemModelAttachment->GetAttachmentType()); // Attach visual effect to itemInstace attachment

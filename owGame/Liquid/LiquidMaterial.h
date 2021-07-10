@@ -12,10 +12,10 @@ namespace
 			, gLiquidType(0)
 		{}
 
-		glm::vec3 gColorLight;
+		ColorRGB gColorLight;
 		float gShallowAlpha;
 
-		glm::vec3 gColorDark;
+		ColorRGB gColorDark;
 		float gDeepAlpha;
 
 		uint32 gLiquidType;
@@ -34,8 +34,8 @@ public:
 	// CLiquidMaterial
 	void SetShallowAlpha(float value);
 	void SetDeepAlpha(float value);
-	void SetColorLight(glm::vec3 value);
-	void SetColorDark(glm::vec3 value);
+	void SetColorLight(ColorRGB value);
+	void SetColorDark(ColorRGB value);
 
 	void InitializeTextures(const DBC_LiquidTypeRecord* LiquidTypeRecord);
 	void Update();

@@ -5,10 +5,11 @@ namespace
 __declspec(align(16)) struct CMapWDLTileMaterialProperties
 {
 	CMapWDLTileMaterialProperties()
-		: m_DiffuseColor(1, 1, 1, 1)
+		: DiffuseColor(1, 1, 1, 1)
 	{}
-	glm::vec4   m_DiffuseColor;
-	//-------------------------- ( 32 bytes )
+
+	ColorRGBA DiffuseColor;
+	//-------------------------- ( 16 bytes )
 };
 }
 
@@ -19,6 +20,6 @@ public:
 	CMapWDLTileMaterial(IRenderDevice& RenderDevice);
 	virtual ~CMapWDLTileMaterial();
 
-	const glm::vec4& GetDiffuseColor() const;
-	void SetDiffuseColor(const glm::vec4& diffuse);	
+	const ColorRGBA& GetDiffuseColor() const;
+	void SetDiffuseColor(const ColorRGBA& diffuse);
 };

@@ -126,7 +126,7 @@ bool CSceneWoWClient::OnMousePressed(const MouseButtonEventArgs & e, const Ray& 
 			{
 				if (auto m2Node = std::dynamic_pointer_cast<CM2_Base_Instance>(selectedNodesIt.second))
 				{
-					Log::Green("Selected node '%f' = '%s'.", selectedNodesIt.first, m2Node->getM2().getFilename().c_str());
+					Log::Green("Selected node '%f' = '%s'.", selectedNodesIt.first, m2Node->GetM2().getFilename().c_str());
 				}
 			}
 		}

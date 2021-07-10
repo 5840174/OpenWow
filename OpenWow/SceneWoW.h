@@ -37,12 +37,14 @@ private:
 
 
 private:
-	std::shared_ptr<SkyManager> m_WoWSkyManager;
+	std::shared_ptr<CSkyManager> m_WoWSkyManager;
 	std::shared_ptr<CMap> m_WoWMap;
 	std::shared_ptr<IUIControlText> m_RendererStatisticText;
 
 	std::shared_ptr<CUIControlMinimap> minimap;
 
+	std::shared_ptr<ISceneNode> m_DefaultLightNode;
 	std::shared_ptr<ISceneNode> m_DefaultCameraNode;
+
 	std::shared_ptr<CM2_Base_Instance> m_WoWCameraNode;
 };

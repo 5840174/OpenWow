@@ -15,7 +15,7 @@ CWMO_Group_Instance::CWMO_Group_Instance(IScene& Scene, const std::shared_ptr<CW
 	, CLoadableObject(WMOGroupObject)
 	, m_IsThisRoomVisible(true)
 	, m_Calculated(false)
-	, m_WMOGroupObject(*WMOGroupObject)
+	, m_WMOGroup(*WMOGroupObject)
 {}
 
 CWMO_Group_Instance::~CWMO_Group_Instance()
@@ -29,7 +29,12 @@ CWMO_Group_Instance::~CWMO_Group_Instance()
 //
 bool CWMO_Group_Instance::Load()
 {
-	m_WMOGroupObject.CreateInsances(std::dynamic_pointer_cast<CWMO_Group_Instance>(shared_from_this()));
+	if (auto colliderComponent = GetComponentT<IColliderComponent>())
+	{
+		colliderComponent->SetBounds(GetWMOGroup().GetBoundingBox());
+	}
+
+	GetWMOGroup().CreateInsances(std::dynamic_pointer_cast<CWMO_Group_Instance>(shared_from_this()));
 
 	return true;
 }
@@ -66,12 +71,12 @@ const std::vector<std::weak_ptr<IPortalRoomObject>>& CWMO_Group_Instance::GetRoo
 
 bool CWMO_Group_Instance::IsIndoor() const
 {
-	return m_WMOGroupObject.IsIndoor();
+	return GetWMOGroup().IsIndoor();
 }
 
 bool CWMO_Group_Instance::IsOutdoor() const
 {
-	return m_WMOGroupObject.IsOutdoor();
+	return GetWMOGroup().IsOutdoor();
 }
 
 void CWMO_Group_Instance::Reset()
@@ -145,9 +150,16 @@ bool CWMO_Group_Instance::IsCalculated() const
 //
 // CWMO_Group_Instance
 //
+const CWMOGroup& CWMO_Group_Instance::GetWMOGroup() const
+{
+	if (m_WMOGroup.GetState() != ILoadable::ELoadableState::Loaded)
+		throw CException("CWMO_Group_Instance::GetWMOGroup: WMOGroup object isn't loaded.");
+	return m_WMOGroup;
+}
+
 void CWMO_Group_Instance::CreatePortals(const std::shared_ptr<CWMO_Base_Instance>& BaseInstance)
 {
-	for (const auto& p : m_WMOGroupObject.GetPortals())
+	for (const auto& p : GetWMOGroup().GetPortals())
 	{
 		std::shared_ptr<CWMO_Group_Instance> roomInnerInstance = nullptr;
 		if (p.getGrInner() != -1)
@@ -186,7 +198,7 @@ void CWMO_Group_Instance::CreatePortals(const std::shared_ptr<CWMO_Base_Instance
 
 
 //
-// SceneNode3D
+// ISceneNode
 //
 void CWMO_Group_Instance::Initialize()
 {
@@ -195,7 +207,6 @@ void CWMO_Group_Instance::Initialize()
 	if (auto colliderComponent = GetComponentT<IColliderComponent>())
 	{
 		colliderComponent->SetCullStrategy(IColliderComponent::ECullStrategy::ByFrustrum);
-		colliderComponent->SetBounds(m_WMOGroupObject.GetBoundingBox());
 		colliderComponent->SetDebugDrawMode(false);
 		colliderComponent->SetDebugDrawColor(ColorRGBA(0.8f, 0.6f, 0.2f, 0.8f));
 	}

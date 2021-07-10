@@ -20,7 +20,7 @@ public:
 	BoundingBox GetBoundingBox() const override final;
 	inline void SetVisibilityState(bool _visibility) override { m_PortalVisibilityState = _visibility; }
 		
-	// SceneNode3D
+	// ISceneNode
 	void Initialize() override;
 	void Accept(IVisitor* visitor) override;
 

@@ -35,7 +35,7 @@ BoundingBox CWMO_Doodad_Instance::GetBoundingBox() const
 
 
 //
-// SceneNode3D
+// ISceneNode
 //
 void CWMO_Doodad_Instance::Initialize()
 {

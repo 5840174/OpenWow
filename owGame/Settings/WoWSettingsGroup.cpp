@@ -5,7 +5,7 @@
 
 namespace
 {
-const float cBaseRenderDistance = 250.0f;
+const float cBaseRenderDistance = 750.0f;
 }
 
 CWoWSettingsGroup::CWoWSettingsGroup()

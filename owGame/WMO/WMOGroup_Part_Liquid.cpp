@@ -8,7 +8,7 @@
 CWMOGroup_Part_Liquid::CWMOGroup_Part_Liquid(IRenderDevice& RenderDevice, const CWMO& WMOObject, const CWMOGroup& WMOGroupObject, const std::shared_ptr<IByteBuffer>& Bytes, const SWMOGroup_MLIQ& LiquidHeader, const DBC_LiquidTypeRecord* LiquidType)
 	: CLiquid(RenderDevice, LiquidHeader.A, LiquidHeader.B)
 	, m_WMOObject(WMOObject)
-	, m_WMOGroupObject(WMOGroupObject)
+	, m_WMOGroup(WMOGroupObject)
 	, m_LiquidHeader(LiquidHeader)
 {
 	m_MinHeight = Math::MinFloat;

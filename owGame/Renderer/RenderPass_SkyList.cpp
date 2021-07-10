@@ -59,7 +59,7 @@ std::shared_ptr<IRenderPassPipelined> CRenderPass_SkyList::ConfigurePipeline(std
 //
 EVisitResult CRenderPass_SkyList::Visit(const std::shared_ptr<ISceneNode>& node)
 {
-	if (auto skyManagerInstance = std::dynamic_pointer_cast<SkyManager>(node))
+	if (auto skyManagerInstance = std::dynamic_pointer_cast<CSkyManager>(node))
 		return __super::Visit(skyManagerInstance);
 
 	return EVisitResult::Block;

@@ -23,7 +23,7 @@ public:
 
 private:
 	const CWMO&         m_WMOObject;
-	const CWMOGroup&    m_WMOGroupObject;
+	const CWMOGroup&    m_WMOGroup;
 	SWMOGroup_MLIQ  m_LiquidHeader;
 };
 

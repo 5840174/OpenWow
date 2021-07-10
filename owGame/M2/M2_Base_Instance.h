@@ -19,9 +19,7 @@ public:
 	virtual ~CM2_Base_Instance();
 
 	// CM2_Base_Instance
-	void                                CreateInstances();
-
-	const CM2&                          getM2() const;
+	const CM2&                          GetM2() const;
 
 	void                                Attach(EM2_AttachmentPoint AttachmentType);
 	void                                Detach();

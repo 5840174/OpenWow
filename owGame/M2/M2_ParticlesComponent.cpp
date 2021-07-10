@@ -104,9 +104,9 @@ const std::vector<SGPUParticle>& CM2ParticleSystem::GetGPUParticles() const
 CM2ParticlesComponent::CM2ParticlesComponent(const CM2_Base_Instance& SceneNode)
 	: CParticlesComponent(SceneNode)
 {
-	for (const auto& m2ParticleSystem : GetM2OwnerNode().getM2().getMiscellaneous().GetParticles())
+	for (const auto& m2ParticleSystem : GetM2OwnerNode().GetM2().getMiscellaneous().GetParticles())
 	{
-		AddParticleSystem(MakeShared(CM2ParticleSystem, GetM2OwnerNode(), GetM2OwnerNode().getM2().GetRenderDevice(), m2ParticleSystem));
+		AddParticleSystem(MakeShared(CM2ParticleSystem, GetM2OwnerNode(), GetM2OwnerNode().GetM2().GetRenderDevice(), m2ParticleSystem));
 	}
 }
 

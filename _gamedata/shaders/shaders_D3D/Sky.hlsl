@@ -16,7 +16,7 @@ struct VSOutputSky
 // Uniforms
 cbuffer Material : register(b2)
 {
-   uint   gBlendMode;
+   uint gBlendMode;
 };
 
 
@@ -30,7 +30,11 @@ VSOutputSky VS_main(VertexShaderInput IN)
 	return OUT;
 }
 
-float4 PS_main(VSOutputSky IN) : SV_TARGET
+DefferedRenderPSOut PS_main(VSOutputSky IN) : SV_TARGET
 {
-	return IN.color;
+	DefferedRenderPSOut OUT;
+	OUT.Diffuse = IN.color;
+	OUT.Specular = float4(0.0f, 0.0f, 0.0f, 0.0f);
+	OUT.NormalVS = float4(0.0f, 0.0f, 0.0f, 1.0f);
+	return OUT;
 }

@@ -13,7 +13,11 @@ float4 VS_main(VSInputP IN) : SV_POSITION
 	return mul(mvp, float4(IN.position, 1.0f));
 }
 
-float4 PS_main(float4 Position : SV_POSITION) : SV_TARGET
+DefferedRenderPSOut PS_main(float4 Position : SV_POSITION) : SV_TARGET
 {
-	return DiffuseColor;
+	DefferedRenderPSOut OUT;
+	OUT.Diffuse = DiffuseColor;
+	OUT.Specular = float4(0.0f, 0.0f, 0.0f, 0.0f);
+	OUT.NormalVS = float4(0.0f, 0.0f, 0.0f, 1.0f);
+	return OUT;
 }

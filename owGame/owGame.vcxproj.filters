@@ -73,9 +73,6 @@
     <Filter Include="Sky">
       <UniqueIdentifier>{11ff9745-551e-4ffc-8a44-4649dcd10a25}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Sky\Environment">
-      <UniqueIdentifier>{36ffc6b8-487b-428d-8202-edfaf3cd1128}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Map">
       <UniqueIdentifier>{8e54c6e7-8150-40a4-883e-dd536bae98a1}</UniqueIdentifier>
     </Filter>
@@ -300,12 +297,6 @@
     <ClCompile Include="WMO\WMO_Group_Instance.cpp">
       <Filter>WMO\Instances</Filter>
     </ClCompile>
-    <ClCompile Include="Sky\Environment\DayNightPhase.cpp">
-      <Filter>Sky\Environment</Filter>
-    </ClCompile>
-    <ClCompile Include="Sky\Environment\EnvironmentManager.cpp">
-      <Filter>Sky\Environment</Filter>
-    </ClCompile>
     <ClCompile Include="Map\Instances\MapM2Instance.cpp">
       <Filter>Map\Instances</Filter>
     </ClCompile>
@@ -503,6 +494,9 @@
     </ClCompile>
     <ClCompile Include="M2\M2_SkeletonBone.cpp">
       <Filter>M2\SceneNode &amp; Components\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="Sky\DayNightPhase.cpp">
+      <Filter>Sky</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -797,12 +791,6 @@
     <ClInclude Include="WMO\WMO_Group_Instance.h">
       <Filter>WMO\Instances</Filter>
     </ClInclude>
-    <ClInclude Include="Sky\Environment\DayNightPhase.h">
-      <Filter>Sky\Environment</Filter>
-    </ClInclude>
-    <ClInclude Include="Sky\Environment\EnvironmentManager.h">
-      <Filter>Sky\Environment</Filter>
-    </ClInclude>
     <ClInclude Include="Map\Instances\MapM2Instance.h">
       <Filter>Map\Instances</Filter>
     </ClInclude>
@@ -1058,13 +1046,13 @@
     <ClInclude Include="M2\M2_SkeletonBone.h">
       <Filter>M2\SceneNode &amp; Components\Components</Filter>
     </ClInclude>
+    <ClInclude Include="Sky\DayNightPhase.h">
+      <Filter>Sky</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="WoWChunkReader.inl">
       <Filter>Utils</Filter>
-    </None>
-    <None Include="Sky\Sky.inl">
-      <Filter>Sky</Filter>
     </None>
     <None Include="DBC\DBC__File.inl">
       <Filter>DBC</Filter>

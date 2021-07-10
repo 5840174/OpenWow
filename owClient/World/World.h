@@ -62,7 +62,7 @@ public:
 	const CTransportAnimationStorage& GetTransportAnimationStorage() const { return m_TransportAnimationStorage; }
 
 private: // Game objects and entities
-	std::shared_ptr<SkyManager> m_SkyManager;
+	std::shared_ptr<CSkyManager> m_SkyManager;
 	std::shared_ptr<CMap> m_Map;
 	
 private:

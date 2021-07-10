@@ -23,10 +23,10 @@ CWMO_Base_Instance::~CWMO_Base_Instance()
 
 
 
-const CWMO& CWMO_Base_Instance::getWMO() const
+const CWMO& CWMO_Base_Instance::GetWMO() const
 {
 	if (m_WMOObject->GetState() != ILoadable::ELoadableState::Loaded)
-		throw CException("CWMO_Base_Instance::getWMO: WMO object isn't loaded.");
+		throw CException("CWMO_Base_Instance::GetWMO: WMO object isn't loaded.");
 	return *m_WMOObject;
 }
 
@@ -37,11 +37,11 @@ uint16 CWMO_Base_Instance::GetDoodadSetIndex() const
 
 bool CWMO_Base_Instance::IsDoodadInSet(uint16 doodadIndex) const
 {
-	if (getWMO().IsDoodadInSet(0, doodadIndex))
+	if (GetWMO().IsDoodadInSet(0, doodadIndex))
 		return true;
 
 	if (GetDoodadSetIndex() != 0)
-		return getWMO().IsDoodadInSet(GetDoodadSetIndex(), doodadIndex);
+		return GetWMO().IsDoodadInSet(GetDoodadSetIndex(), doodadIndex);
 
 	return false;
 }
@@ -54,6 +54,14 @@ bool CWMO_Base_Instance::IsDoodadInSet(uint16 doodadIndex) const
 void CWMO_Base_Instance::Initialize()
 {
 	__super::Initialize();
+
+	if (auto colliderComponent = GetComponentT<IColliderComponent>())
+	{
+		colliderComponent->SetCullStrategy(IColliderComponent::ECullStrategy::ByFrustrumAndDistance2D);
+		colliderComponent->SetCullDistance(GetBaseManager().GetManager<ISettings>()->GetGroup("WoWSettings")->GetPropertyT<float>("WMOBaseRenderDistance")->Get());
+		colliderComponent->SetDebugDrawMode(false);
+		colliderComponent->SetDebugDrawColor(ColorRGBA(0.8f, 0.8f, 0.2f, 0.8f));
+	}
 }
 
 void CWMO_Base_Instance::Update(const UpdateEventArgs& e)
@@ -62,7 +70,7 @@ void CWMO_Base_Instance::Update(const UpdateEventArgs& e)
 		return;
 
 #ifdef USE_WMO_PORTALS_CULLING
-	if (auto portalsController = m_WMOObject->GetPortalController())
+	if (auto portalsController = GetWMO().GetPortalController())
 	{
 		portalsController->Update(this, e.CameraForCulling);
 	}
@@ -83,14 +91,10 @@ bool CWMO_Base_Instance::Load()
 {
 	if (auto colliderComponent = GetComponentT<IColliderComponent>())
 	{
-		colliderComponent->SetCullStrategy(IColliderComponent::ECullStrategy::ByFrustrumAndDistance2D);
-		colliderComponent->SetCullDistance(GetBaseManager().GetManager<ISettings>()->GetGroup("WoWSettings")->GetPropertyT<float>("WMOBaseRenderDistance")->Get());
-		colliderComponent->SetBounds(getWMO().GetBounds());
-		colliderComponent->SetDebugDrawMode(false);
-		colliderComponent->SetDebugDrawColor(ColorRGBA(0.8f, 0.8f, 0.2f, 0.8f));
+		colliderComponent->SetBounds(GetWMO().GetBounds());
 	}
 
-	m_WMOObject->CreateInsances(std::dynamic_pointer_cast<CWMO_Base_Instance>(shared_from_this()));
+	GetWMO().CreateInsances(std::dynamic_pointer_cast<CWMO_Base_Instance>(shared_from_this()));
 
 	return true;
 }

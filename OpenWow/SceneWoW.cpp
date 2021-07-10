@@ -51,24 +51,24 @@ void CSceneWoW::Initialize()
 
 	// Light
 	{
-		auto lightNode = CreateSceneNodeT<ISceneNode>();
-		lightNode->SetName("Light");
-		lightNode->SetLocalPosition(glm::vec3(16630, 784, 11400.0f));
-		//lightNode->SetLocalPosition(glm::vec3(-50.0f, 250.0f, -50.0f));
-		lightNode->SetLocalRotationDirection(glm::vec3(-0.5, -0.5f, -0.5f));
-		//lightNode->SetLocalRotationEuler(glm::vec3(45.0f, -45.0f, 0.0f));
+		m_DefaultLightNode = CreateSceneNodeT<ISceneNode>();
+		m_DefaultLightNode->SetName("Light");
+		m_DefaultLightNode->SetLocalPosition(glm::vec3(16630, 784, 11400.0f));
+		//m_DefaultLightNode->SetLocalPosition(glm::vec3(-50.0f, 250.0f, -50.0f));
+		m_DefaultLightNode->SetLocalRotationDirection(glm::vec3(-0.5, -0.5f, -0.5f));
+		//m_DefaultLightNode->SetLocalRotationEuler(glm::vec3(45.0f, -45.0f, 0.0f));
 
-		auto lightComponent = GetBaseManager().GetManager<IObjectsFactory>()->GetClassFactoryCast<IComponentFactory>()->CreateComponentT<CLightComponent>(cSceneNodeLightComponent, *lightNode.get());
+		auto lightComponent = GetBaseManager().GetManager<IObjectsFactory>()->GetClassFactoryCast<IComponentFactory>()->CreateComponentT<CLightComponent>(cSceneNodeLightComponent, *m_DefaultLightNode.get());
 		lightComponent->SetLight(MakeShared(CLight, GetBaseManager()));
 		lightComponent->GetLight()->SetCastShadows(false);
-		lightComponent->GetLight()->SetType(ELightType::Spot);
+		lightComponent->GetLight()->SetType(ELightType::Directional);
 		lightComponent->GetLight()->SetAmbientColor(ColorRGB(0.25f));
 		lightComponent->GetLight()->SetColor(ColorRGB(1.0f, 1.0f, 1.0f));
 		lightComponent->GetLight()->SetRange(1500.0f);
 		lightComponent->GetLight()->SetIntensity(1.0077f);
 		lightComponent->GetLight()->SetSpotlightAngle(30.0f);
 
-		lightNode->AddComponent(cSceneNodeLightComponent, lightComponent);
+		m_DefaultLightNode->AddComponent(cSceneNodeLightComponent, lightComponent);
 	}
 
 	// Camera
@@ -99,8 +99,8 @@ void CSceneWoW::Initialize()
 	GetBaseManager().GetManager<IWoWObjectsCreator>()->InitEGxBlend(GetRenderDevice());
 
 
-	m_WoWSkyManager = GetRootSceneNode()->CreateSceneNode<SkyManager>();
-	GetBaseManager().AddManager<SkyManager>(m_WoWSkyManager);
+	m_WoWSkyManager = GetRootSceneNode()->CreateSceneNode<CSkyManager>();
+	GetBaseManager().AddManager<CSkyManager>(m_WoWSkyManager);
 
 	m_WoWMap = GetRootSceneNode()->CreateSceneNode<CMap>();
 
@@ -232,6 +232,33 @@ void CSceneWoW::OnUpdate(UpdateEventArgs & e)
 	__super::OnUpdate(e);
 
 	m_WoWSkyManager->Update(e);
+
+	{
+		const auto& currentDNPhase = m_WoWSkyManager->GetDNPhase();
+
+		glm::vec3 currDir;
+		ColorRGB colorAmbient = currentDNPhase.ambientColor * currentDNPhase.ambientIntensity;
+		ColorRGB colorDiffuse;
+
+		if (currentDNPhase.dayIntensity > currentDNPhase.nightIntensity)
+		{
+			currDir = currentDNPhase.dayDir;
+			colorDiffuse = currentDNPhase.dayColor * currentDNPhase.dayIntensity;
+		}
+		else
+		{
+			currDir = currentDNPhase.nightDir;
+			colorDiffuse = currentDNPhase.nightColor * currentDNPhase.nightIntensity;
+		}
+
+		colorAmbient = m_WoWSkyManager->GetColor(ESkyColors::SKY_COLOR_GLOBAL_AMBIENT);
+		colorDiffuse = m_WoWSkyManager->GetColor(ESkyColors::SKY_COLOR_GLOBAL_DIFFUSE);
+
+		m_DefaultLightNode->SetLocalRotationDirection(currDir);
+		m_DefaultLightNode->GetComponentT<ILightComponent3D>()->GetLight()->SetAmbientColor(colorAmbient);
+		m_DefaultLightNode->GetComponentT<ILightComponent3D>()->GetLight()->SetColor(colorDiffuse);
+	}
+
 	m_WoWMap->Update(e);
 
 	m_RendererStatisticText->SetText(GetRenderer()->GetStatisticText());
@@ -248,7 +275,7 @@ bool CSceneWoW::OnMousePressed(const MouseButtonEventArgs & e, const Ray& RayToW
 			{
 				if (auto m2Node = std::dynamic_pointer_cast<CM2_Base_Instance>(selectedNodesIt.second))
 				{
-					Log::Green("Selected node '%f' = '%s'.", selectedNodesIt.first, m2Node->getM2().getFilename().c_str());
+					Log::Green("Selected node '%f' = '%s'.", selectedNodesIt.first, m2Node->GetM2().getFilename().c_str());
 				}
 			}
 		}

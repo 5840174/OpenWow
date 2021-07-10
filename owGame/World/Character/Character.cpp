@@ -226,7 +226,7 @@ void CCharacter::Initialize()
 //
 void CCharacter::OnLoaded()
 {
-	if (getM2().GetState() != ILoadable::ELoadableState::Loaded)
+	if (GetM2().GetState() != ILoadable::ELoadableState::Loaded)
 		throw CException("Unexpected behaviour.");
 
 	Refresh_SkinImageFromTemplate();

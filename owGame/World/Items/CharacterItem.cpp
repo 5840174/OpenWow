@@ -115,7 +115,7 @@ void CCharacterItem::InitializeItemModels()
 		AddChildLoadable(itemModelInstance);
 		m_BaseManager.GetManager<ILoader>()->AddToLoadQueue(itemModelInstance);
 
-		if (auto ownerCharacterAttachment = m_OwnerCharacter.getM2().getMiscellaneous().getAttachment(attachmentPoint))
+		if (auto ownerCharacterAttachment = m_OwnerCharacter.GetM2().getMiscellaneous().getAttachment(attachmentPoint))
 			itemModelInstance->Attach(ownerCharacterAttachment->GetAttachmentType());
 
 		auto itemImage = LoadItemImage((DBCItem_EInventoryItemType)GetTemplate().InventoryType, objectTextureName);

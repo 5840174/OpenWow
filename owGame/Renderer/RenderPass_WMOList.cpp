@@ -96,7 +96,7 @@ EVisitResult CRenderPass_WMOList::Visit(const std::shared_ptr<IGeometry>& Geomet
 	auto wmoMaterial = std::dynamic_pointer_cast<WMO_Part_Material>(Material);
 
 	if (m_CurrentWMOBatch)
-		wmoMaterial->SetMOCVExists(m_CurrentWMOGroupInstance->GetWMOGroupObject().GetHeader().flags.HAS_MOCV && m_CurrentWMOBatch->GetBatchType() != WMO_Group_Part_Batch::EBatchType::BatchType_Ext);
+		wmoMaterial->SetMOCVExists(m_CurrentWMOGroupInstance->GetWMOGroup().GetHeader().flags.HAS_MOCV && m_CurrentWMOBatch->GetBatchType() != WMO_Group_Part_Batch::EBatchType::BatchType_Ext);
 
 	wmoMaterial->GetBlendState()->Bind();
 	wmoMaterial->GetRasterizerState()->Bind();

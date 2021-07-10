@@ -27,16 +27,11 @@ CM2_Base_Instance::~CM2_Base_Instance()
 //
 // CM2_Base_Instance
 //
-void CM2_Base_Instance::CreateInstances()
-{
-	getM2().CreateInsances(shared_from_this());
-}
-
-const CM2& CM2_Base_Instance::getM2() const
+const CM2& CM2_Base_Instance::GetM2() const
 {
 	auto state = m_M2->GetState();
 	if (state != ILoadable::ELoadableState::Loaded)
-		throw CException("CM2_Base_Instance::getM2: M2 object isn't loaded. State = '%d'.", state);
+		throw CException("CM2_Base_Instance::GetM2: M2 object isn't loaded. State = '%d'.", state);
 	return *m_M2;
 }
 
@@ -61,7 +56,7 @@ std::shared_ptr<CM2CameraComponent> CM2_Base_Instance::CreateCameraComponent(uin
 	if (GetState() != ILoadable::ELoadableState::Loaded)
 		throw CException("CM2_Base_Instance not loaded.");
 
-	auto m2Camera = getM2().getMiscellaneous().getCameraDirect(CameraDirectIndex);
+	auto m2Camera = GetM2().getMiscellaneous().getCameraDirect(CameraDirectIndex);
 	return AddComponentT(MakeShared(CM2CameraComponent, *this, m2Camera));
 }
 
@@ -90,6 +85,14 @@ const std::shared_ptr<ITexture>& CM2_Base_Instance::getSpecialTexture(SM2_Textur
 void CM2_Base_Instance::Initialize()
 {
 	__super::Initialize();
+
+	if (auto colliderComponent = GetComponentT<IColliderComponent>())
+	{
+		colliderComponent->SetCullStrategy(IColliderComponent::ECullStrategy::ByFrustrumAndDistance2D);
+		colliderComponent->SetCullDistance(GetBaseManager().GetManager<ISettings>()->GetGroup("WoWSettings")->GetPropertyT<float>("M2BaseRenderDistance")->Get());
+		colliderComponent->SetDebugDrawMode(false);
+		colliderComponent->SetDebugDrawColor(ColorRGBA(0.9f, 0.2f, 0.2f, 0.8f));
+	}
 }
 
 void CM2_Base_Instance::RegisterComponents()
@@ -126,17 +129,13 @@ bool CM2_Base_Instance::Load()
 {
 	if (auto colliderComponent = GetComponentT<IColliderComponent>())
 	{
-		colliderComponent->SetCullStrategy(IColliderComponent::ECullStrategy::ByFrustrumAndDistance2D);
-		colliderComponent->SetCullDistance(GetBaseManager().GetManager<ISettings>()->GetGroup("WoWSettings")->GetPropertyT<float>("M2BaseRenderDistance")->Get());
-		colliderComponent->SetBounds(getM2().GetBounds());
-		colliderComponent->SetDebugDrawMode(false);
-		colliderComponent->SetDebugDrawColor(ColorRGBA(0.9f, 0.2f, 0.2f, 0.8f));
+		colliderComponent->SetBounds(GetM2().GetBounds());
 	}
 
-	if (getM2().isAnimated())
-		m_Animator = MakeShared(CM2_Animator, GetBaseManager(), getM2());
+	if (GetM2().isAnimated())
+		m_Animator = MakeShared(CM2_Animator, GetBaseManager(), GetM2());
 
-	if (getM2().getSkeleton().hasBones())
+	if (GetM2().getSkeleton().hasBones())
 		m_SkeletonComponent = AddComponentT(MakeShared(CM2SkeletonComponent, *this));
 
 #ifdef USE_M2_PARTICLES
@@ -144,7 +143,8 @@ bool CM2_Base_Instance::Load()
 #endif
 
 	UpdateLocalTransform();
-	CreateInstances();
+
+	GetM2().CreateInsances(shared_from_this());
 
 	return true;
 }
@@ -168,7 +168,7 @@ glm::mat4 CM2_Base_Instance::CalculateLocalTransform() const
 			auto parentM2Instance = std::dynamic_pointer_cast<CM2_Base_Instance>(parent);
 			_ASSERT(parentM2Instance != nullptr);
 
-			uint16 boneIndex = parentM2Instance->getM2().getMiscellaneous().getAttachment(m_AttachmentType)->GetBoneIndex();
+			uint16 boneIndex = parentM2Instance->GetM2().getMiscellaneous().getAttachment(m_AttachmentType)->GetBoneIndex();
 
 			const auto& bone = parentM2Instance->getSkeletonComponent()->GetBone(boneIndex);
 			glm::mat4 relMatrix = glm::translate(bone->GetPivotPoint());

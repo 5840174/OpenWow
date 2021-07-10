@@ -19,7 +19,7 @@ public:
 	virtual ~CWMO_Base_Instance();
 
 	// CWMO_Base_Instance
-	const CWMO& getWMO() const;
+	const CWMO& GetWMO() const;
 	
 	virtual uint16 GetDoodadSetIndex() const;
 	bool IsDoodadInSet(uint16 doodadIndex) const;

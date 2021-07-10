@@ -35,7 +35,7 @@ WMO_Part_Material::WMO_Part_Material(IRenderDevice& RenderDevice, const CWMO& WM
 
 	//Log::Warn("Shader = [%d], Blend mode [%d]", m_WMOMaterialProto.shader, m_WMOMaterialProto.blendMode);
 
-	glm::vec4 color = fromARGB(WMOMaterialProto.diffColor);
+	ColorRGBA color = fromARGB(WMOMaterialProto.diffColor);
 
 	m_BlendState = RenderDevice.GetBaseManager().GetManager<IWoWObjectsCreator>()->GetEGxBlend(WMOMaterialProto.blendMode);
 

@@ -10,7 +10,7 @@
 CM2SkeletonComponent::CM2SkeletonComponent(const CM2_Base_Instance& OwnerNode)
 	: CSceneNodeComponentBase(OwnerNode)
 {
-	for (const auto& m2Bone : OwnerNode.getM2().getSkeleton().GetBones())
+	for (const auto& m2Bone : OwnerNode.GetM2().getSkeleton().GetBones())
 		m_Bones.push_back(MakeShared(CM2SkeletonBone, m2Bone));
 
 	for (const auto& bone : m_Bones)
@@ -26,7 +26,7 @@ std::vector<glm::mat4> CM2SkeletonComponent::CreatePose(size_t BoneStartIndex, s
 	std::vector<glm::mat4> result;
 	result.reserve(BonesCount);
 	for (size_t i = BoneStartIndex; i < BoneStartIndex + BonesCount; i++)
-		result.push_back(m_Bones[GetM2OwnerNode().getM2().getSkeleton().getBoneLookupIndex(i)]->GetMatrix());
+		result.push_back(m_Bones[GetM2OwnerNode().GetM2().getSkeleton().getBoneLookupIndex(i)]->GetMatrix());
 	return result;
 }
 
