@@ -43,9 +43,6 @@
     <Filter Include="M2\Animations">
       <UniqueIdentifier>{24d1f815-62cb-4320-a2ff-bc9199660f64}</UniqueIdentifier>
     </Filter>
-    <Filter Include="M2\SceneNode &amp; Components">
-      <UniqueIdentifier>{be155204-7f8e-47b8-bbe5-297cc583c228}</UniqueIdentifier>
-    </Filter>
     <Filter Include="M2\Skins">
       <UniqueIdentifier>{eaa7b9b7-5402-4eff-81e6-638a3975d10d}</UniqueIdentifier>
     </Filter>
@@ -99,9 +96,6 @@
     </Filter>
     <Filter Include="World\GameObject">
       <UniqueIdentifier>{77fd2597-a1d4-46aa-b9ea-faa5222f03d0}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="M2\SceneNode &amp; Components\Components">
-      <UniqueIdentifier>{1ba03db0-1477-46e4-89fa-4f374e220f62}</UniqueIdentifier>
     </Filter>
     <Filter Include="M2\Parts">
       <UniqueIdentifier>{be8a504b-1117-41b6-b326-81b305908037}</UniqueIdentifier>
@@ -157,6 +151,12 @@
     <Filter Include="Renderer\Debug">
       <UniqueIdentifier>{653d1bcd-503c-43f5-be28-5c70c171a61e}</UniqueIdentifier>
     </Filter>
+    <Filter Include="M2\Instances">
+      <UniqueIdentifier>{be155204-7f8e-47b8-bbe5-297cc583c228}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="M2\Components">
+      <UniqueIdentifier>{930ad592-9270-4e81-ae77-64bffe81a770}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -181,7 +181,7 @@
       <Filter>M2\Skins</Filter>
     </ClCompile>
     <ClCompile Include="M2\M2_Base_Instance.cpp">
-      <Filter>M2\SceneNode &amp; Components</Filter>
+      <Filter>M2\Instances</Filter>
     </ClCompile>
     <ClCompile Include="M2\M2_Comp_Materials.cpp">
       <Filter>M2\Parts</Filter>
@@ -349,19 +349,7 @@
       <Filter>M2\Animations</Filter>
     </ClCompile>
     <ClCompile Include="M2\M2_Animator.cpp">
-      <Filter>M2\SceneNode &amp; Components</Filter>
-    </ClCompile>
-    <ClCompile Include="M2\M2_ColliderComponent.cpp">
-      <Filter>M2\SceneNode &amp; Components\Components</Filter>
-    </ClCompile>
-    <ClCompile Include="M2\M2_LightComponent.cpp">
-      <Filter>M2\SceneNode &amp; Components\Components</Filter>
-    </ClCompile>
-    <ClCompile Include="M2\M2_SkeletonComponent.cpp">
-      <Filter>M2\SceneNode &amp; Components\Components</Filter>
-    </ClCompile>
-    <ClCompile Include="M2\M2_ParticlesComponent.cpp">
-      <Filter>M2\SceneNode &amp; Components\Components</Filter>
+      <Filter>M2\Instances</Filter>
     </ClCompile>
     <ClCompile Include="Map\MapTileLiquid.cpp">
       <Filter>Map\MapTile</Filter>
@@ -489,14 +477,29 @@
     <ClCompile Include="World\Items\CharacterItemM2Instance.cpp">
       <Filter>World\Item</Filter>
     </ClCompile>
-    <ClCompile Include="M2\M2_CameraComponent.cpp">
-      <Filter>M2\SceneNode &amp; Components\Components</Filter>
-    </ClCompile>
-    <ClCompile Include="M2\M2_SkeletonBone.cpp">
-      <Filter>M2\SceneNode &amp; Components\Components</Filter>
-    </ClCompile>
     <ClCompile Include="Sky\DayNightPhase.cpp">
       <Filter>Sky</Filter>
+    </ClCompile>
+    <ClCompile Include="M2\M2_CameraComponent.cpp">
+      <Filter>M2\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="M2\M2_ColliderComponent.cpp">
+      <Filter>M2\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="M2\M2_LightComponent.cpp">
+      <Filter>M2\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="M2\M2_ParticlesComponent.cpp">
+      <Filter>M2\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="M2\M2_SkeletonBone.cpp">
+      <Filter>M2\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="M2\M2_SkeletonComponent.cpp">
+      <Filter>M2\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="M2\M2_Light.cpp">
+      <Filter>M2\Components</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -645,7 +648,7 @@
       <Filter>M2\Skins</Filter>
     </ClInclude>
     <ClInclude Include="M2\M2_Base_Instance.h">
-      <Filter>M2\SceneNode &amp; Components</Filter>
+      <Filter>M2\Instances</Filter>
     </ClInclude>
     <ClInclude Include="M2\M2_Comp_Materials.h">
       <Filter>M2\Parts</Filter>
@@ -858,19 +861,7 @@
       <Filter>M2\Animations</Filter>
     </ClInclude>
     <ClInclude Include="M2\M2_Animator.h">
-      <Filter>M2\SceneNode &amp; Components</Filter>
-    </ClInclude>
-    <ClInclude Include="M2\M2_ColliderComponent.h">
-      <Filter>M2\SceneNode &amp; Components\Components</Filter>
-    </ClInclude>
-    <ClInclude Include="M2\M2_LightComponent.h">
-      <Filter>M2\SceneNode &amp; Components\Components</Filter>
-    </ClInclude>
-    <ClInclude Include="M2\M2_SkeletonComponent.h">
-      <Filter>M2\SceneNode &amp; Components\Components</Filter>
-    </ClInclude>
-    <ClInclude Include="M2\M2_ParticlesComponent.h">
-      <Filter>M2\SceneNode &amp; Components\Components</Filter>
+      <Filter>M2\Instances</Filter>
     </ClInclude>
     <ClInclude Include="Map\MapTileLiquid.h">
       <Filter>Map\MapTile</Filter>
@@ -1040,14 +1031,29 @@
     <ClInclude Include="World\Items\CharacterItemDefines.h">
       <Filter>World\Item</Filter>
     </ClInclude>
-    <ClInclude Include="M2\M2_CameraComponent.h">
-      <Filter>M2\SceneNode &amp; Components\Components</Filter>
-    </ClInclude>
-    <ClInclude Include="M2\M2_SkeletonBone.h">
-      <Filter>M2\SceneNode &amp; Components\Components</Filter>
-    </ClInclude>
     <ClInclude Include="Sky\DayNightPhase.h">
       <Filter>Sky</Filter>
+    </ClInclude>
+    <ClInclude Include="M2\M2_CameraComponent.h">
+      <Filter>M2\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="M2\M2_ColliderComponent.h">
+      <Filter>M2\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="M2\M2_LightComponent.h">
+      <Filter>M2\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="M2\M2_ParticlesComponent.h">
+      <Filter>M2\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="M2\M2_SkeletonBone.h">
+      <Filter>M2\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="M2\M2_SkeletonComponent.h">
+      <Filter>M2\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="M2\M2_Light.h">
+      <Filter>M2\Components</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

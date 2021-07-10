@@ -9,6 +9,7 @@
 #include "M2_SkeletonComponent.h"
 #include "M2_ParticlesComponent.h"
 #include "M2_CameraComponent.h"
+#include "M2_LightComponent.h"
 
 class ZN_API CM2_Base_Instance 
 	: public CSceneNode
@@ -75,6 +76,7 @@ private:
 #ifdef USE_M2_PARTICLES
 	std::shared_ptr<CM2ParticlesComponent>m_ParticleComponent;
 #endif
+	std::shared_ptr<CM2LightComponent> m_LightComponent;
 
 private:
 	std::shared_ptr<CM2> m_M2;

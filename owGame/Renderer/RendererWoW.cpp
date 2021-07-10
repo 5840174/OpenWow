@@ -115,11 +115,14 @@ void CRendererWoW::InitializeDeffered(std::shared_ptr<IRenderTarget> OutputRende
 	outputRenderTargetWithCustomDepth->AttachTexture(IRenderTarget::AttachmentPoint::Color0, OutputRenderTarget->GetTexture(IRenderTarget::AttachmentPoint::Color0));
 	outputRenderTargetWithCustomDepth->AttachTexture(IRenderTarget::AttachmentPoint::DepthStencil, gbufferRenderTarget->GetTexture(IRenderTarget::AttachmentPoint::DepthStencil));
 
+
+
 	//
 	// BEFORE SCENE
 	//
 	Add3DPass(MakeShared(ClearRenderTargetPass, GetRenderDevice(), OutputRenderTarget));
 	Add3DPass(MakeShared(ClearRenderTargetPass, GetRenderDevice(), gbufferRenderTarget));
+
 
 
 	//
@@ -175,6 +178,7 @@ void CRendererWoW::InitializeDeffered(std::shared_ptr<IRenderTarget> OutputRende
 	//Add3DPass(MakeShared(CDrawBonesPass, m_Scene)->ConfigurePipeline(OutputRenderTarget));
 	Add3DPass(MakeShared(CDrawBoundingBoxPass, GetRenderDevice(), GetScene())->ConfigurePipeline(OutputRenderTarget));
 	//Add3DPass(MakeShared(CRenderPass_WMOPortalDebug, GetScene())->ConfigurePipeline(outputRenderTargetWithCustomDepth));
+
 
 
 	//

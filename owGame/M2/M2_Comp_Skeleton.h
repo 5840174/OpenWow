@@ -51,7 +51,7 @@ private:
 
 
 public:
-	const std::vector<CM2_Part_Bone>& GetBones() const
+	const std::vector<CM2_Part_Bone>& GetBonesDirectArray() const
 	{
 		return m_Bones;
 	}

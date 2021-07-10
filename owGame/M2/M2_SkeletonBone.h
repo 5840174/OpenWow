@@ -27,9 +27,9 @@ public:
 	void Reset();
 
 private:
-	const CM2_Part_Bone&                   m_M2Bone;
-	std::weak_ptr<CM2SkeletonBone>               m_ParentBone;
-	std::vector<std::shared_ptr<CM2SkeletonBone>>m_Childs;
+	const CM2_Part_Bone&                           m_M2Bone;
+	std::weak_ptr<CM2SkeletonBone>                 m_ParentBone;
+	std::vector<std::shared_ptr<CM2SkeletonBone>>  m_Childs;
 	glm::vec3                                      m_PivotPoint;
 	glm::mat4                                      m_Matrix;
 	glm::mat4                                      m_RotateMatrix;

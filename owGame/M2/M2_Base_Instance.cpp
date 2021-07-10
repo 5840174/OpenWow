@@ -108,11 +108,6 @@ void CM2_Base_Instance::Update(const UpdateEventArgs & e)
 
 	if (m_Animator)
 		m_Animator->Update(e.TotalTime, e.DeltaTime);
-
-#ifdef USE_M2_PARTICLES
-	if (m_ParticleComponent)
-		m_ParticleComponent->Update(e);
-#endif
 }
 
 void CM2_Base_Instance::Accept(IVisitor* visitor)
@@ -141,6 +136,8 @@ bool CM2_Base_Instance::Load()
 #ifdef USE_M2_PARTICLES
 	m_ParticleComponent = AddComponentT(MakeShared(CM2ParticlesComponent, *this));
 #endif
+
+	m_LightComponent = AddComponentT(MakeShared(CM2LightComponent, *this));
 
 	UpdateLocalTransform();
 

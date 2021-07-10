@@ -33,6 +33,7 @@ public:
 
 	std::shared_ptr<const CM2_Part_Event>                      getEventDirect(uint32 Index) const;
 	std::shared_ptr<const CM2_Part_Light>                      getLightDirect(uint32 Index) const;
+	const std::vector<std::shared_ptr<CM2_Part_Light>>&        GetLightsDirectArray() const;
 
 	std::shared_ptr<const CM2_Part_Camera>                     getCamera(uint32 Index) const;
 	int16                                                      getCameraLookup(uint32 Index) const;

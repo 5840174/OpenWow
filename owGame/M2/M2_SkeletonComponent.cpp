@@ -10,7 +10,7 @@
 CM2SkeletonComponent::CM2SkeletonComponent(const CM2_Base_Instance& OwnerNode)
 	: CSceneNodeComponentBase(OwnerNode)
 {
-	for (const auto& m2Bone : OwnerNode.GetM2().getSkeleton().GetBones())
+	for (const auto& m2Bone : OwnerNode.GetM2().getSkeleton().GetBonesDirectArray())
 		m_Bones.push_back(MakeShared(CM2SkeletonBone, m2Bone));
 
 	for (const auto& bone : m_Bones)

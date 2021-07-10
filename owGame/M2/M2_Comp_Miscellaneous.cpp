@@ -160,6 +160,11 @@ std::shared_ptr<const CM2_Part_Light> CM2_Comp_Miscellaneous::getLightDirect(uin
 	return m_Lights[Index];
 }
 
+const std::vector<std::shared_ptr<CM2_Part_Light>>& CM2_Comp_Miscellaneous::GetLightsDirectArray() const
+{
+	return m_Lights;
+}
+
 std::shared_ptr<const CM2_Part_Camera> CM2_Comp_Miscellaneous::getCamera(uint32 Index) const
 {
 	int16 directIndex = getCameraLookup(Index);

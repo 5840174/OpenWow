@@ -260,10 +260,10 @@ struct SM2_Light
 	int16			    bone;                       // -1 if not attached to a bone
 	glm::vec3		    position;					// relative to bone, if given
 
-	M2Track<glm::vec3>	ambient_color;
+	M2Track<ColorRGB>	ambient_color;
 	M2Track<float>	    ambient_intensity;			// defaults to 1.0
 
-	M2Track<glm::vec3>	diffuse_color;
+	M2Track<ColorRGB>	diffuse_color;
 	M2Track<float>	    diffuse_intensity;			// defaults to 1.0
 
 	M2Track<float>	    attenuation_start;

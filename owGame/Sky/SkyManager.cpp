@@ -79,7 +79,7 @@ bool CSkyManager::Load(uint32 MapID)
 //
 void CSkyManager::Update(const UpdateEventArgs& e)
 {
-	m_Time.Tick();
+	//m_Time.Tick();
 
 	CalculateCurrentSky(e.CameraForCulling->GetPosition());
 	CalculateCurrentDayNightPhase();
