@@ -7,6 +7,8 @@
 #include "WMO_Doodad_Instance.h"
 #include "WMO_Liquid_Instance.h"
 
+#include "WMO_LightComponent.h"
+
 class ZN_API CWMO_Base_Instance 
 	: public CSceneNode
 	, public CLoadableObject
@@ -42,6 +44,8 @@ public:
 protected:
 	GroupInstances  m_GroupInstances;
 	//GroupInstances  m_OutdoorGroupInstances;
+
+	std::shared_ptr<CWMOLightComponent> m_LightComponent;
 
 private:
 	std::shared_ptr<CWMO> m_WMOObject;

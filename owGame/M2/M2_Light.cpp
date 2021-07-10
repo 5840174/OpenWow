@@ -54,7 +54,7 @@ void CM2Light::Calculate(const CM2_Base_Instance& M2Instance, uint32 GlobalTime)
 		if (m_M2Light.attenuation_end.IsUsesBySequence(animator->getSequenceIndex()))
 			attenEnd = m_M2Light.attenuation_end.GetValue(animator->getSequenceIndex(), animator->getCurrentTime(), M2Instance.GetM2().getSkeleton().getGlobalLoops(), GlobalTime);
 
-		SetRange(attenEnd * 2.0f);
+		SetRange(attenEnd * 1.0f);
 	}
 }
 

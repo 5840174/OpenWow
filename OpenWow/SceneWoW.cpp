@@ -108,17 +108,17 @@ void CSceneWoW::Initialize()
 	//const float y = 28; //0 fire
 	//const uint32 mapID = 0;
 
-	const float x = 40; //1 barrens
-	const float y = 30; //1 barrens
-	const uint32 mapID = 1;
+	//const float x = 40; //1 barrens
+	//const float y = 30; //1 barrens
+	//const uint32 mapID = 1;
 
 	//const float x = 26; //530 outland
 	//const float y = 32; //530 outland
 	//const uint32 mapID = 530;
 
-	//const float x = 30; //571 nortrend
-	//const float y = 21; //571 nortrend
-	//const uint32 mapID = 571;
+	const float x = 30; //571 nortrend
+	const float y = 21; //571 nortrend
+	const uint32 mapID = 571;
 
 	//const float x = 32; //571 44
 	//const float y = 32; //571 44

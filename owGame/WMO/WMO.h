@@ -51,6 +51,8 @@ public:
 
 	std::string GetGroupName(size_t Offset) const { return std::string(m_GroupNames.get() + Offset); }
 
+	const std::vector<std::shared_ptr<WMO_Part_Light>>& GetLights() const { return m_Lights; }
+
 	bool IsDoodadInSet(size_t SetIndex, uint16 DoodadIndex) const { return m_DoodadsSetInfos.at(SetIndex).InSet(DoodadIndex); }
 	std::string GetDoodadFileName(size_t Offset) const { return std::string(m_DoodadsFilenames.get() + Offset); }
 	const SWMO_MODD& GetDoodadPlacement(size_t Index) const { return m_DoodadsPlacementInfos.at(Index); }

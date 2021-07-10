@@ -33,16 +33,37 @@
 ~Loading shader 'UI/UIControlCommon.hlsl':'PS_main'.
 ~Loading shader 'UI/UI_Font.hlsl':'VS_main'.
 ~Loading shader 'UI/UI_Font.hlsl':'PS_main'.
-~Sky: [191] is global sky.
- Map[Kalimdor]: Id = '1'. Preloading...
- Map[Kalimdor]: InstanceType = '0'.
- Map[Kalimdor]: MapType = '0'.
- Map[Kalimdor]: IsBattleGround = '0'.
- Map[Kalimdor]: Name = 'Калимдор'.
- Map[Kalimdor]: AreaTableID = '0'.
- Map[Kalimdor]: AllianceDescr = ''.
- Map[Kalimdor]: HordeDescr = ''.
- Map[Kalimdor]: CorpseMapID = '-1'.
- Map[Kalimdor]: Id [1]. Loading...
-^CMapWDL: Low WMOs count [0].
+~Sky: [752] is global sky.
+ Map[Northrend]: Id = '571'. Preloading...
+ Map[Northrend]: InstanceType = '0'.
+ Map[Northrend]: MapType = '29'.
+ Map[Northrend]: IsBattleGround = '0'.
+ Map[Northrend]: Name = 'Нордскол'.
+ Map[Northrend]: AreaTableID = '0'.
+ Map[Northrend]: AllianceDescr = ''.
+ Map[Northrend]: HordeDescr = ''.
+ Map[Northrend]: CorpseMapID = '0'.
+ Map[Northrend]: Id [571]. Loading...
+^CMapWDL: Low WMOs count [4].
 ~MapWDT: Global WMO exists [false].
+!CImageBLP: Unable to load PLP file 'TCB_CrystalSong_B.blp'.
+!File 'TILESET\Terrain Cube Maps\TCB_CrystalSong_B_s.blp' not exists.
+!CImageBLP: Unable to load PLP file 'TCB_CrystalSong_B.blp'.
+!File 'TILESET\Terrain Cube Maps\TCB_CrystalSong_B_s.blp' not exists.
+!CImageBLP: Unable to load PLP file 'TCB_CrystalSong_B.blp'.
+!File 'TILESET\Terrain Cube Maps\TCB_CrystalSong_B_s.blp' not exists.
+!CImageBLP: Unable to load PLP file 'tgatest.blp'.
+!File 'TILESET\Generic\tgatest_s.blp' not exists.
+!CImageBLP: Unable to load PLP file 'tgatest.blp'.
+!File 'TILESET\Generic\tgatest_s.blp' not exists.
+!CImageBLP: Unable to load PLP file 'tgatest.blp'.
+!File 'TILESET\Generic\tgatest_s.blp' not exists.
+!File 'Tileset\Generic\WaterBlue_s.blp' not exists.
+!CImageBLP: Unable to load PLP file 'TCB_CrystalSong_A.blp'.
+!File 'TILESET\Terrain Cube Maps\TCB_CrystalSong_A_s.blp' not exists.
+!CImageBLP: Unable to load PLP file 'TCB_CrystalSong_A.blp'.
+!File 'TILESET\Terrain Cube Maps\TCB_CrystalSong_A_s.blp' not exists.
+!CImageBLP: Unable to load PLP file 'TCB_CrystalSong_B.blp'.
+!File 'TILESET\Terrain Cube Maps\TCB_CrystalSong_B_s.blp' not exists.
+!CImageBLP: Unable to load PLP file 'TCB_CrystalSong_B.blp'.
+!File 'TILESET\Terrain Cube Maps\TCB_CrystalSong_B_s.blp' not exists.

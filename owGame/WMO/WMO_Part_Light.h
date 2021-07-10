@@ -2,14 +2,6 @@
 
 #ifdef USE_WMO_MODELS
 
-enum LightType
-{
-	OMNI_LGT,
-	SPOT_LGT,
-	DIRECT_LGT,
-	AMBIENT_LGT
-};
-
 #include "WMO_Headers.h"
 
 class WMO_Part_Light 
@@ -17,11 +9,8 @@ class WMO_Part_Light
 public:
 	WMO_Part_Light(const SWMO_MOLT& WMOLightProto);
 
-	void setup(uint32 light);
-
-public:
-	glm::vec3 m_Position;
-	ColorRGBA fcolor;
+	glm::vec3               GetPosition() const { return Fix_XZmY(m_WMOLightProto.pos); }
+	const SWMO_MOLT&        GetProto() const { return m_WMOLightProto; }
 
 private:
 	const SWMO_MOLT m_WMOLightProto;

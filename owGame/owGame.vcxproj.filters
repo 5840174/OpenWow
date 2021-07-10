@@ -157,6 +157,9 @@
     <Filter Include="M2\Components">
       <UniqueIdentifier>{930ad592-9270-4e81-ae77-64bffe81a770}</UniqueIdentifier>
     </Filter>
+    <Filter Include="WMO\Components">
+      <UniqueIdentifier>{6854c26f-2061-4488-bfc7-344ae4e5ffb2}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -500,6 +503,12 @@
     </ClCompile>
     <ClCompile Include="M2\M2_Light.cpp">
       <Filter>M2\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="WMO\WMO_LightComponent.cpp">
+      <Filter>WMO\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="WMO\WMO_Light.cpp">
+      <Filter>WMO\Components</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -1054,6 +1063,12 @@
     </ClInclude>
     <ClInclude Include="M2\M2_Light.h">
       <Filter>M2\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="WMO\WMO_LightComponent.h">
+      <Filter>WMO\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="WMO\WMO_Light.h">
+      <Filter>WMO\Components</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -97,6 +97,8 @@ bool CWMO_Base_Instance::Load()
 
 	GetWMO().CreateInsances(std::dynamic_pointer_cast<CWMO_Base_Instance>(shared_from_this()));
 
+	//m_LightComponent = AddComponentT(MakeShared(CWMOLightComponent, *this));
+
 	return true;
 }
 

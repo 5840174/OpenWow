@@ -125,6 +125,11 @@ struct SWMO_MOLT
 	float _unk1[4];
 	float attenStart;
 	float attenEnd;
+
+	inline ColorRGBA GetColor() const
+	{
+		return fromARGB(color);
+	}
 };
 
 // WMO Doodad set info

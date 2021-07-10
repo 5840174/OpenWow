@@ -137,7 +137,7 @@ bool CM2_Base_Instance::Load()
 	m_ParticleComponent = AddComponentT(MakeShared(CM2ParticlesComponent, *this));
 #endif
 
-	m_LightComponent = AddComponentT(MakeShared(CM2LightComponent, *this));
+	//m_LightComponent = AddComponentT(MakeShared(CM2LightComponent, *this));
 
 	UpdateLocalTransform();
 

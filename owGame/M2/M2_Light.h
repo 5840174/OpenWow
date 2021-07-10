@@ -1,5 +1,9 @@
 #pragma once
 
+// FORWARD BEGIN
+class CM2_Base_Instance;
+// FORWARD END
+
 #include "M2_Part_Light.h"
 
 class ZN_API CM2Light
@@ -14,5 +18,5 @@ public:
 	glm::vec3 GetLightPosition() const;
 
 private:
-	CM2_Part_Light m_M2Light;
+	const CM2_Part_Light m_M2Light;
 };

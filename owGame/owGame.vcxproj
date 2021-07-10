@@ -128,6 +128,8 @@
     <ClCompile Include="WMO\WMOGroup_Part_Batch.cpp" />
     <ClCompile Include="WMO\WMOGroup_Part_CollisionNode.cpp" />
     <ClCompile Include="WMO\WMOGroup_Part_Liquid.cpp" />
+    <ClCompile Include="WMO\WMO_Light.cpp" />
+    <ClCompile Include="WMO\WMO_LightComponent.cpp" />
     <ClCompile Include="WMO\WMO_Liquid_Instance.cpp" />
     <ClCompile Include="WMO\WMO_Part_Fog.cpp" />
     <ClCompile Include="WMO\WMO_Part_Light.cpp" />
@@ -294,6 +296,8 @@
     <ClInclude Include="Sky\SkyParams.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="WMO\WMO.h" />
+    <ClInclude Include="WMO\WMO_Light.h" />
+    <ClInclude Include="WMO\WMO_LightComponent.h" />
     <ClInclude Include="WMO\WMO_Shared.h" />
     <ClInclude Include="WMO\WMO_Base_Instance.h" />
     <ClInclude Include="WMO\WMO_Doodad_Instance.h" />
