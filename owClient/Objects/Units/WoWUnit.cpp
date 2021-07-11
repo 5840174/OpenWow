@@ -21,11 +21,7 @@ WoWUnit::WoWUnit(IScene& Scene, CWoWWorld& WoWWorld, CWoWGuid Guid)
 
 WoWUnit::~WoWUnit()
 {
-	if (auto model = m_UnitModel)
-		GetBaseManager().GetManager<ILoader>()->AddToDeleteQueue(model);
-
-	if (auto model = m_Mount_ModelInstance)
-		GetBaseManager().GetManager<ILoader>()->AddToDeleteQueue(model);
+	//Destroy();
 }
 
 void WoWUnit::ProcessMovementPacket(CServerPacket & Bytes)
@@ -383,6 +379,40 @@ void WoWUnit::Update(const UpdateEventArgs & e)
 
 
 	//
+	// Jump
+	//
+	if (m_Jump_IsJumpingNow)
+	{
+		float timeToSeconds = m_Jump_t / 1000.0f;
+
+		// Y
+		{
+			float speedPerTick = (-1.0f) * m_Jump_z_speed;
+			float gravityPerTick = (-1.0f) * (gravity);
+
+			float y = m_Jump_y0 + (speedPerTick * timeToSeconds) + ((gravityPerTick * timeToSeconds * timeToSeconds) / 2.0f);
+			Position.y = y;
+		}
+
+		// XZ
+		if (m_Jump_xy_speed != 0.0f)
+		{
+			glm::vec2 direction(0.0f);
+			direction.x = - m_Jump_cosAngle; // y
+			direction.y = - m_Jump_sinAngle; // x
+			direction = glm::normalize(direction);
+
+			glm::vec2 xz = m_JumpXZ0 + direction * (m_Jump_xy_speed * timeToSeconds);
+			Position.xz = xz;
+		}
+
+		m_Jump_t += e.DeltaTime;
+
+		CommitPositionAndRotation();
+	}
+
+
+	//
 	// Mount
 	//
 	if (m_Mount_IsDirty)
@@ -478,6 +508,7 @@ void WoWUnit::ReadMovementInfoPacket(CServerPacket & Bytes)
 	}
 
 	Bytes >> m_FallTime;
+	//Log::Info("Flags '%d', '%d', Fall time = '%d'.", m_MovementFlags, m_MovementFlagsExtra, m_FallTime);
 
 	if (HasMovementFlag(MOVEMENTFLAG_FALLING))
 	{
@@ -485,6 +516,27 @@ void WoWUnit::ReadMovementInfoPacket(CServerPacket & Bytes)
 		Bytes >> m_Jump_sinAngle;
 		Bytes >> m_Jump_cosAngle;
 		Bytes >> m_Jump_xy_speed;
+
+		if (false == m_Jump_IsJumpingNow)
+		{
+			m_Jump_y0 = Position.y;		
+			m_JumpXZ0 = glm::vec2(Position.x, Position.z);
+			m_Jump_TopPointTop = false;
+
+			if (m_UnitModel && m_UnitModel->IsLoaded())
+				m_UnitModel->GetAnimatorComponent()->PlayAnimation(EAnimationID::JumpStart, false);
+		}
+
+		m_Jump_t = m_FallTime;
+
+		m_Jump_IsJumpingNow = true;
+	}
+	else
+	{
+		if (m_UnitModel && m_UnitModel->IsLoaded())
+			m_UnitModel->GetAnimatorComponent()->PlayAnimation(EAnimationID::Stand, true);
+
+		m_Jump_IsJumpingNow = false;
 	}
 
 	if (HasMovementFlag(MOVEMENTFLAG_SPLINE_ELEVATION))

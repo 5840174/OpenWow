@@ -133,7 +133,9 @@ std::shared_ptr<WoWPlayer> WoWPlayer::Create(CWoWWorld& WoWWorld, IScene& Scene,
 }
 
 void WoWPlayer::Destroy()
-{}
+{
+	__super::Destroy();
+}
 
 
 

@@ -92,6 +92,11 @@ private: // Jump functional
 	float m_Jump_cosAngle;
 	float m_Jump_xy_speed;
 
+	float m_Jump_y0;
+	float m_Jump_t;
+	glm::vec2 m_JumpXZ0;
+	bool  m_Jump_TopPointTop;
+
 private: // Mount functional
 	bool m_Mount_IsMounted;
 	bool m_Mount_IsDirty;

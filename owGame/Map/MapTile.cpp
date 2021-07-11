@@ -354,7 +354,7 @@ bool CMapTile::Load()
 
 
 	//-- WMOs --------------------------------------------------------------------------
-#ifdef ASD && USE_WMO_MODELS
+#ifdef USE_WMO_MODELS
 	for (const auto& it : WMOPlacementInfo)
 	{
 		if (auto wmo = GetBaseManager().GetManager<IWoWObjectsCreator>()->LoadWMO(GetRenderDevice(), WMOsNames[it.nameIndex]))
@@ -372,7 +372,7 @@ bool CMapTile::Load()
 #endif
 
 	//-- MDXs -------------------------------------------------------------------------
-#ifdef ASD && USE_M2_MODELS
+#ifdef USE_M2_MODELS
 	for (const auto& it : M2PlacementInfo)
 	{
 		if (auto m2 = GetBaseManager().GetManager<IWoWObjectsCreator>()->LoadM2(GetRenderDevice(), m_MDXsNames[it.nameIndex]))
