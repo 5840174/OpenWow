@@ -75,7 +75,7 @@ void CCharacter::Refresh_SkinWithItemsImage()
 
 	// Cloak is special texture
 	const auto& cloakVisualItem = GetItem(EQUIPMENT_SLOT_BACK);
-	if (cloakVisualItem != nullptr && cloakVisualItem->GetState() == ILoadable::ELoadableState::Loaded && cloakVisualItem->IsExists())
+	if (cloakVisualItem != nullptr && cloakVisualItem->IsLoaded() && cloakVisualItem->IsExists())
 	{
 		if (cloakVisualItem->GetModels().size() != 1)
 			throw CException("Character::Refresh_AddItemsToSkinTexture: Cape must contains one object component.");
@@ -99,7 +99,7 @@ void CCharacter::RefreshMeshIDs()
 	for (size_t inventorySlot = 0; inventorySlot < INVENTORY_SLOT_BAG_END; inventorySlot++)
 	{
 		const auto& characterItem = GetItem(inventorySlot);
-		if (characterItem == nullptr || characterItem->GetState() != ILoadable::ELoadableState::Loaded || false == characterItem->IsExists())
+		if (characterItem == nullptr || false == characterItem->IsLoaded() || false == characterItem->IsExists())
 			continue;
 
 		if (inventorySlot == EQUIPMENT_SLOT_HEAD)

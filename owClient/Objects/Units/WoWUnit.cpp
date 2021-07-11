@@ -12,6 +12,8 @@ float gravity = static_cast<float>(19.29110527038574);
 
 WoWUnit::WoWUnit(IScene& Scene, CWoWWorld& WoWWorld, CWoWGuid Guid)
 	: CWoWWorldObject(Scene, WoWWorld, Guid)
+	, m_Mount_IsMounted(false)
+	, m_Mount_IsDirty(false)
 {
 	//m_ObjectType |= TYPEMASK_UNIT;
 	m_Values.SetValuesCount(UNIT_END);
@@ -22,7 +24,7 @@ WoWUnit::~WoWUnit()
 	if (auto model = m_UnitModel)
 		GetBaseManager().GetManager<ILoader>()->AddToDeleteQueue(model);
 
-	if (auto model = m_MountModel)
+	if (auto model = m_Mount_Creature)
 		GetBaseManager().GetManager<ILoader>()->AddToDeleteQueue(model);
 }
 
@@ -287,12 +289,12 @@ void WoWUnit::OnValuesUpdated(const UpdateMask & Mask)
 			Log::Warn("UNIT_VIRTUAL_ITEM_SLOT_ID_RANGED Error.");
 	}
 
-	if (Mask.GetBit(UNIT_FIELD_FLAGS))
+	if (Mask.GetBit(UNIT_FIELD_MOUNTDISPLAYID))
 	{
-		uint32 flags = m_Values.GetUInt32Value(UNIT_FIELD_FLAGS);
-		if (m_Values.GetUInt32Value(UNIT_FIELD_FLAGS) & UNIT_FLAG_MOUNT)
+		uint32 mountDisplayID = m_Values.GetUInt32Value(UNIT_FIELD_MOUNTDISPLAYID);
+		if (mountDisplayID != 0)
 		{
-			OnMounted(m_Values.GetUInt32Value(UNIT_FIELD_MOUNTDISPLAYID));
+			OnMounted(mountDisplayID);
 		}
 		else
 		{
@@ -309,10 +311,10 @@ void WoWUnit::OnHiddenNodePositionChanged()
 		m_UnitModel->SetLocalRotationEuler(glm::vec3(0.0f, Orientation, 0.0f));
 	}
 
-	if (m_MountModel)
+	if (m_Mount_IsMounted)
 	{
-		m_MountModel->SetLocalPosition(Position);
-		m_MountModel->SetLocalRotationEuler(glm::vec3(0.0f, Orientation, 0.0f));
+		m_Mount_Creature->SetLocalPosition(Position);
+		m_Mount_Creature->SetLocalRotationEuler(glm::vec3(0.0f, Orientation, 0.0f));
 
 		if (m_UnitModel)
 		{
@@ -375,6 +377,45 @@ void WoWUnit::Update(const UpdateEventArgs & e)
 			Position = NextPoint;
 			Orientation = glm::degrees(yaw - glm::half_pi<float>());
 			CommitPositionAndRotation();
+		}
+	}
+
+
+
+	//
+	// Mount
+	//
+	if (m_Mount_IsDirty)
+	{
+		if (m_Mount_IsMounted)
+		{
+			if (m_Mount_Creature && m_Mount_Creature->IsLoaded())
+			{
+				if (m_UnitModel && m_UnitModel->IsLoaded())
+				{
+					m_UnitModel->GetAnimatorComponent()->PlayAnimation(91, true);
+					m_UnitModel->Attach(EM2_AttachmentPoint::MountMain);
+
+					m_Mount_Creature->AddChild(m_UnitModel);
+					CommitPositionAndRotation();
+
+					m_Mount_IsDirty = false;
+				}
+			}
+		}
+		else
+		{
+			if (m_UnitModel && m_UnitModel->IsLoaded())
+			{
+				m_UnitModel->GetAnimatorComponent()->PlayAnimation(0, true);
+				m_UnitModel->Detach();
+
+				if (m_UnitModel->GetParent() != GetScene().GetRootSceneNode())
+					GetScene().GetRootSceneNode()->AddChild(m_UnitModel);
+				CommitPositionAndRotation();
+
+				m_Mount_IsDirty = false;
+			}
 		}
 	}
 }
@@ -471,7 +512,7 @@ void WoWUnit::Destroy()
 		GetBaseManager().GetManager<ILoader>()->AddToDeleteQueue(model);
 	}
 
-	if (auto model = m_MountModel)
+	if (auto model = m_Mount_Creature)
 	{
 		model->MakeMeOrphan();
 		GetBaseManager().GetManager<ILoader>()->AddToDeleteQueue(model);
@@ -513,47 +554,42 @@ void WoWUnit::OnDisplayIDChanged(uint32 DisplayID)
 
 	//float scaleFromCreature = creatureDisplayInfo->Get_Scale();
 	//float scaleFromModel = creatureModelDataRecord->Get_Scale();
-	float scale = m_Values.GetFloatValue(OBJECT_FIELD_SCALE_X);
+	float scale = 1.0f;
+	if (m_Values.IsExists(OBJECT_FIELD_SCALE_X))
+		scale = m_Values.GetFloatValue(OBJECT_FIELD_SCALE_X);
 	m_UnitModel->SetScale(glm::vec3(scale));
-
-	if (m_MountModel)
-		m_MountModel->AddChild(m_UnitModel);
 }
 
 void WoWUnit::OnMounted(uint32 MountDisplayID)
 {
-	if (m_MountModel != nullptr)
+	if (m_Mount_IsMounted)
 		return;
 
+	// Delete old mount model
+	if (m_Mount_Creature != nullptr)
+		GetBaseManager().GetManager<ILoader>()->AddToDeleteQueue(m_Mount_Creature);
+
 	CWorldObjectCreator creator(GetScene().GetBaseManager());
-	m_MountModel = creator.BuildCreatureFromDisplayInfo(GetScene().GetBaseManager().GetApplication().GetRenderDevice(), GetScene(), MountDisplayID);
+	m_Mount_Creature = creator.BuildCreatureFromDisplayInfo(GetScene().GetBaseManager().GetApplication().GetRenderDevice(), GetScene(), MountDisplayID);
 
-	while (m_MountModel->GetState() != ILoadable::ELoadableState::Loaded);
-	while (m_UnitModel->GetState() != ILoadable::ELoadableState::Loaded);
-
-	if (m_UnitModel)
-	{
-		m_MountModel->AddChild(m_UnitModel);
-
-		m_UnitModel->GetAnimatorComponent()->PlayAnimation(91, true);
-		m_UnitModel->Attach(EM2_AttachmentPoint::MountMain);
-	}
+	m_Mount_IsMounted = true;
+	m_Mount_IsDirty = true;
 }
 
 void WoWUnit::OnDismounted()
 {
-	if (m_MountModel == nullptr)
+	if (false == m_Mount_IsMounted)
 		return;
+	
+	if (m_Mount_Creature != nullptr)
+	{
+		m_Mount_Creature->MakeMeOrphan();
+		GetBaseManager().GetManager<ILoader>()->AddToDeleteQueue(m_Mount_Creature);
+		m_Mount_Creature = nullptr;
+	}
 
-	m_UnitModel->GetAnimatorComponent()->PlayAnimation(0, true);
-	m_UnitModel->Detach();
-
-	if (m_UnitModel->GetParent() != GetScene().GetRootSceneNode())
-		GetScene().GetRootSceneNode()->AddChild(m_UnitModel);
-	CommitPositionAndRotation();
-
-	m_MountModel->MakeMeOrphan();
-	m_MountModel.reset();
+	m_Mount_IsMounted = false;
+	m_Mount_IsDirty = true;
 }
 
 #endif

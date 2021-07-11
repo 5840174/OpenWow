@@ -22,7 +22,7 @@ CWMO_PortalsController::~CWMO_PortalsController()
 
 void CWMO_PortalsController::Update(const CWMO_Base_Instance* WMOBaseInstance, const ICameraComponent3D* _camera)
 {
-	if (WMOBaseInstance->GetState() != ILoadable::ELoadableState::Loaded)
+	if (false == WMOBaseInstance->IsLoaded())
 		return;
 
 	// Reset all flags

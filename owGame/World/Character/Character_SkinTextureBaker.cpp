@@ -116,7 +116,7 @@ std::shared_ptr<IImage> Character_SkinTextureBaker::CreateCharacterSkinWithItems
 	for (uint32 inventorySlot = 0; inventorySlot < INVENTORY_SLOT_BAG_END; inventorySlot++)
 	{
 		const auto& characterItem = Character->GetItem(inventorySlot);
-		if (characterItem == nullptr || characterItem->GetState() != ILoadable::ELoadableState::Loaded || characterItem->GetTemplate().InventoryType == (uint8)DBCItem_EInventoryItemType::NON_EQUIP)
+		if (characterItem == nullptr || false == characterItem->IsLoaded() || characterItem->GetTemplate().InventoryType == (uint8)DBCItem_EInventoryItemType::NON_EQUIP)
 			continue;
 
 		for (uint32 itemTextureComponent = 0; itemTextureComponent < static_cast<size_t>(DBC_CharComponent_Sections::ITEMS_COUNT); itemTextureComponent++)

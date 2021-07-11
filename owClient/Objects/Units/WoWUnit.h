@@ -47,6 +47,8 @@ public:
 	// ISceneNode
 	void Update(const UpdateEventArgs& e);
 
+
+
 	void ReadMovementInfoPacket(CServerPacket& Bytes);
 
 public:
@@ -94,7 +96,14 @@ protected:
 
 
 	std::shared_ptr<CCreature> m_UnitModel;
-	std::shared_ptr<CCreature> m_MountModel;
+	
+
+private:
+
+	// Mount functional
+	bool m_Mount_IsMounted;
+	bool m_Mount_IsDirty;
+	std::shared_ptr<CCreature> m_Mount_Creature;
 };
 
 ZN_API extern float gravity;

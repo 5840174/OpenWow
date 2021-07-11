@@ -168,11 +168,13 @@ void WoWPlayer::OnDisplayIDChanged(uint32 DisplayID)
 		m_UnitModel = creator.BuildCreatureFromDisplayInfo(GetScene().GetBaseManager().GetApplication().GetRenderDevice(), GetScene(), DisplayID);
 	}
 
-	float scale = m_Values.GetFloatValue(OBJECT_FIELD_SCALE_X);
+	float scale = 1.0f;
+	if (m_Values.IsExists(OBJECT_FIELD_SCALE_X))
+		scale = m_Values.GetFloatValue(OBJECT_FIELD_SCALE_X);
 	m_UnitModel->SetScale(glm::vec3(scale));
 
-	if (m_MountModel)
-		m_MountModel->AddChild(m_UnitModel);
+	//if (m_MountModel)
+	//	m_MountModel->AddChild(m_UnitModel);
 }
 
 
