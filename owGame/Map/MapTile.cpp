@@ -346,6 +346,7 @@ bool CMapTile::Load()
 	{
 		auto chunk = CreateSceneNode<CMapChunk>(*this, chunks[i], f);
 		chunk->AddParentLoadable(std::dynamic_pointer_cast<ILoadable>(shared_from_this()));
+		AddChildLoadable(chunk);
 		GetBaseManager().GetManager<ILoader>()->AddToLoadQueue(chunk);
 
 		m_Chunks.push_back(chunk.get());

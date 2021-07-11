@@ -95,7 +95,9 @@ enum EUnitFields
     UNIT_FIELD_POWER_REGEN_INTERRUPTED_FLAT_MODIFIER = OBJECT_END + 0x0029, // Size: 7, Type: FLOAT, Flags: PRIVATE, OWNER
     UNIT_FIELD_LEVEL                          = OBJECT_END + 0x0030, // Size: 1, Type: INT, Flags: PUBLIC
     UNIT_FIELD_FACTIONTEMPLATE                = OBJECT_END + 0x0031, // Size: 1, Type: INT, Flags: PUBLIC
-    UNIT_VIRTUAL_ITEM_SLOT_ID                 = OBJECT_END + 0x0032, // Size: 3, Type: INT, Flags: PUBLIC
+    UNIT_VIRTUAL_ITEM_SLOT_ID_MAINHAND        = OBJECT_END + 0x0032, // Size: 1, Type: INT, Flags: PUBLIC
+	UNIT_VIRTUAL_ITEM_SLOT_ID_OFFHAND         = OBJECT_END + 0x0033, // Size: 1, Type: INT, Flags: PUBLIC
+	UNIT_VIRTUAL_ITEM_SLOT_ID_RANGED          = OBJECT_END + 0x0034, // Size: 1, Type: INT, Flags: PUBLIC
     UNIT_FIELD_FLAGS                          = OBJECT_END + 0x0035, // Size: 1, Type: INT, Flags: PUBLIC
     UNIT_FIELD_FLAGS_2                        = OBJECT_END + 0x0036, // Size: 1, Type: INT, Flags: PUBLIC
     UNIT_FIELD_AURASTATE                      = OBJECT_END + 0x0037, // Size: 1, Type: INT, Flags: PUBLIC

@@ -83,7 +83,7 @@ void CM2AnimatorComponent::Update(const UpdateEventArgs & e)
 	if (m_IsStopped)
 		return;
 
-	m_AnimTime += e.DeltaTime / 10.0;
+	m_AnimTime += e.DeltaTime;
 	m_CurrentTime = static_cast<uint32>(m_CurrentAnimation->getStart() + m_AnimTime);
 
 	// Animation don't ended

@@ -19,6 +19,11 @@ WoWUnit::WoWUnit(IScene& Scene, CWoWWorld& WoWWorld, CWoWGuid Guid)
 
 WoWUnit::~WoWUnit()
 {
+	if (auto model = m_UnitModel)
+		GetBaseManager().GetManager<ILoader>()->AddToDeleteQueue(model);
+
+	if (auto model = m_MountModel)
+		GetBaseManager().GetManager<ILoader>()->AddToDeleteQueue(model);
 }
 
 void WoWUnit::ProcessMovementPacket(CServerPacket & Bytes)
@@ -258,37 +263,41 @@ void WoWUnit::OnValuesUpdated(const UpdateMask & Mask)
 	if (Mask.GetBit(UNIT_FIELD_DISPLAYID))
 		OnDisplayIDChanged(m_Values.GetUInt32Value(UNIT_FIELD_DISPLAYID));
 
-	if (Mask.GetBit(UNIT_VIRTUAL_ITEM_SLOT_ID + 0))
+	if (Mask.GetBit(UNIT_VIRTUAL_ITEM_SLOT_ID_MAINHAND))
 	{
-		uint32 mainHandDisplayID = m_Values.GetUInt32Value(UNIT_VIRTUAL_ITEM_SLOT_ID + 0);
-		if (mainHandDisplayID != 0)
-			if (auto hidderNodeAsCharacter = std::dynamic_pointer_cast<CCharacter>(m_UnitModel))
-				hidderNodeAsCharacter->SetItem(EQUIPMENT_SLOT_MAINHAND, GetItemDisplayInfoIDByItemID(mainHandDisplayID));
+		if (auto hidderNodeAsCharacter = std::dynamic_pointer_cast<CCharacter>(m_UnitModel))
+			hidderNodeAsCharacter->SetItem(EQUIPMENT_SLOT_MAINHAND, GetItemDisplayInfoIDByItemID(m_Values.GetUInt32Value(UNIT_VIRTUAL_ITEM_SLOT_ID_MAINHAND), 0));
+		else
+			Log::Warn("UNIT_VIRTUAL_ITEM_SLOT_ID_MAINHAND Error.");
 	}
 
-	if (Mask.GetBit(UNIT_VIRTUAL_ITEM_SLOT_ID + 1))
+	if (Mask.GetBit(UNIT_VIRTUAL_ITEM_SLOT_ID_OFFHAND))
 	{
-		uint32 offHandDisplayID = m_Values.GetUInt32Value(UNIT_VIRTUAL_ITEM_SLOT_ID + 1);
-		if (offHandDisplayID != 0)
-			if (auto hidderNodeAsCharacter = std::dynamic_pointer_cast<CCharacter>(m_UnitModel))
-				hidderNodeAsCharacter->SetItem(EQUIPMENT_SLOT_OFFHAND, GetItemDisplayInfoIDByItemID(offHandDisplayID));
+		if (auto hidderNodeAsCharacter = std::dynamic_pointer_cast<CCharacter>(m_UnitModel))
+			hidderNodeAsCharacter->SetItem(EQUIPMENT_SLOT_OFFHAND, GetItemDisplayInfoIDByItemID(m_Values.GetUInt32Value(UNIT_VIRTUAL_ITEM_SLOT_ID_OFFHAND), 0));
+		else
+			Log::Warn("UNIT_VIRTUAL_ITEM_SLOT_ID_OFFHAND Error.");
 	}
 
-	if (Mask.GetBit(UNIT_VIRTUAL_ITEM_SLOT_ID + 2))
+	if (Mask.GetBit(UNIT_VIRTUAL_ITEM_SLOT_ID_RANGED))
 	{
-		uint32 rangedDisplayID = m_Values.GetUInt32Value(UNIT_VIRTUAL_ITEM_SLOT_ID + 2);
-		if (rangedDisplayID != 0)
-			if (auto hidderNodeAsCharacter = std::dynamic_pointer_cast<CCharacter>(m_UnitModel))
-				hidderNodeAsCharacter->SetItem(EQUIPMENT_SLOT_RANGED, GetItemDisplayInfoIDByItemID(rangedDisplayID));
+		if (auto hidderNodeAsCharacter = std::dynamic_pointer_cast<CCharacter>(m_UnitModel))
+			hidderNodeAsCharacter->SetItem(EQUIPMENT_SLOT_RANGED, GetItemDisplayInfoIDByItemID(m_Values.GetUInt32Value(UNIT_VIRTUAL_ITEM_SLOT_ID_RANGED), 0));
+		else
+			Log::Warn("UNIT_VIRTUAL_ITEM_SLOT_ID_RANGED Error.");
 	}
 
 	if (Mask.GetBit(UNIT_FIELD_FLAGS))
 	{
 		uint32 flags = m_Values.GetUInt32Value(UNIT_FIELD_FLAGS);
-		if (flags & UNIT_FLAG_MOUNT)
+		if (m_Values.GetUInt32Value(UNIT_FIELD_FLAGS) & UNIT_FLAG_MOUNT)
+		{
 			OnMounted(m_Values.GetUInt32Value(UNIT_FIELD_MOUNTDISPLAYID));
+		}
 		else
+		{
 			OnDismounted();
+		}
 	}
 }
 
@@ -311,6 +320,35 @@ void WoWUnit::OnHiddenNodePositionChanged()
 			m_UnitModel->SetLocalRotationEuler(glm::vec3(0.0f, 0.0f, 0.0f));
 		}
 	}
+}
+
+
+Race WoWUnit::GetRace() const 
+{ 
+	if (false == m_Values.IsExists(UNIT_FIELD_BYTES_0))
+		throw CException("Value don't exists.");
+	return (Race)m_Values.GetByteValue(UNIT_FIELD_BYTES_0, UNIT_BYTES_0_OFFSET_RACE); 
+}
+
+Class WoWUnit::GetClass() const 
+{ 
+	if (false == m_Values.IsExists(UNIT_FIELD_BYTES_0))
+		throw CException("Value don't exists.");
+	return (Class)m_Values.GetByteValue(UNIT_FIELD_BYTES_0, UNIT_BYTES_0_OFFSET_CLASS); 
+}
+
+Gender WoWUnit::GetGender() const 
+{ 
+	if (false == m_Values.IsExists(UNIT_FIELD_BYTES_0))
+		throw CException("Value don't exists.");
+	return (Gender)m_Values.GetByteValue(UNIT_FIELD_BYTES_0, UNIT_BYTES_0_OFFSET_GENDER); 
+}
+
+uint8 WoWUnit::GetPowerType() const
+{
+	if (false == m_Values.IsExists(UNIT_FIELD_BYTES_0))
+		throw CException("Value don't exists.");
+	return m_Values.GetByteValue(UNIT_FIELD_BYTES_0, UNIT_BYTES_0_OFFSET_POWER_TYPE);
 }
 
 
@@ -427,14 +465,20 @@ std::shared_ptr<WoWUnit> WoWUnit::Create(CWoWWorld& WoWWorld, IScene& Scene, CWo
 
 void WoWUnit::Destroy()
 {
-	if (m_UnitModel)
-		m_UnitModel->MakeMeOrphan();
+	if (auto model = m_UnitModel)
+	{
+		model->MakeMeOrphan();
+		GetBaseManager().GetManager<ILoader>()->AddToDeleteQueue(model);
+	}
 
-	if (m_MountModel)
-		m_UnitModel->MakeMeOrphan();
+	if (auto model = m_MountModel)
+	{
+		model->MakeMeOrphan();
+		GetBaseManager().GetManager<ILoader>()->AddToDeleteQueue(model);
+	}
 }
 
-SCharacterItemTemplate WoWUnit::GetItemDisplayInfoIDByItemID(uint32 ItemID)
+SCharacterItemTemplate WoWUnit::GetItemDisplayInfoIDByItemID(uint32 ItemID, uint32 EnchantID)
 {
 	auto itemRecord = GetBaseManager().GetManager<CDBCStorage>()->DBC_Item()[ItemID];
 	if (itemRecord == nullptr)
@@ -443,7 +487,7 @@ SCharacterItemTemplate WoWUnit::GetItemDisplayInfoIDByItemID(uint32 ItemID)
 		return SCharacterItemTemplate();
 	}
 
-	return SCharacterItemTemplate(itemRecord->Get_DisplayInfoID(), itemRecord->Get_InventorySlot(), 0);
+	return SCharacterItemTemplate(itemRecord->Get_DisplayInfoID(), itemRecord->Get_InventorySlot(), EnchantID);
 }
 
 
@@ -504,7 +548,8 @@ void WoWUnit::OnDismounted()
 	m_UnitModel->GetAnimatorComponent()->PlayAnimation(0, true);
 	m_UnitModel->Detach();
 
-	GetScene().GetRootSceneNode()->AddChild(m_UnitModel);
+	if (m_UnitModel->GetParent() != GetScene().GetRootSceneNode())
+		GetScene().GetRootSceneNode()->AddChild(m_UnitModel);
 	CommitPositionAndRotation();
 
 	m_MountModel->MakeMeOrphan();

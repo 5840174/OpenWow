@@ -345,7 +345,7 @@ void CWoWWorld::S_SMSG_MONSTER_MOVE(CServerPacket & Buffer, bool Transport)
 
 	Buffer.seekRelative(1);
 
-	if (packedGUID.GetTypeId() != EWoWObjectTypeID::TYPEID_UNIT)
+	if (packedGUID.GetTypeId() != EWoWObjectTypeID::TYPEID_UNIT && packedGUID.GetTypeId() != EWoWObjectTypeID::TYPEID_PLAYER)
 		throw CException("CWoWWorld::S_SMSG_MONSTER_MOVE: Movement packet accept only TYPEID_UNIT. TypeID: '%s'.", packedGUID.GetTypeName());
 
 	if (auto object = m_WorldObjects.GetWoWObject(packedGUID))

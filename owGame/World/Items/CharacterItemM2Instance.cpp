@@ -79,15 +79,15 @@ void CCharacterItemM2Instance::OnAfterLoad()
 			itemVisualEffectInstance->AddParentLoadable(std::dynamic_pointer_cast<ILoadable>(shared_from_this()));
 			GetBaseManager().GetManager<ILoader>()->AddToLoadQueue(itemVisualEffectInstance);
 
-			auto itemModelAttachment = GetM2().getMiscellaneous().getAttachment((EM2_AttachmentPoint)itemAttachmentPoint);
-			if (itemModelAttachment != nullptr)
+			if (GetM2().getMiscellaneous().isAttachmentExists((EM2_AttachmentPoint)itemAttachmentPoint))
 			{
+				auto itemModelAttachment = GetM2().getMiscellaneous().getAttachment((EM2_AttachmentPoint)itemAttachmentPoint);
 				itemVisualEffectInstance->Attach(itemModelAttachment->GetAttachmentType()); // Attach visual effect to itemInstace attachment
 			}
-			else
-			{
-				//itemVisualEffectInstance->Attach(ownerCharacterAttachmentPoint); // Or attach visual effect to same attachment as item
-			}
+			//else
+			//{
+			//	itemVisualEffectInstance->Attach(ownerCharacterAttachmentPoint); // Or attach visual effect to same attachment as item
+			//}
 
 			//AddVisualEffect(itemVisualEffectInstance);
 		}

@@ -124,7 +124,7 @@ std::shared_ptr<CCharacter> CWorldObjectCreator::BuildEmptyCharacterFromDisplayI
 		return nullptr;
 
 	std::shared_ptr<CCharacter> characterM2Instance = ((Parent != nullptr) ? Parent : Scene.GetRootSceneNode())->CreateSceneNode<CCharacter>(characterM2Model);
-	m_BaseManager.GetManager<ILoader>()->AddToLoadQueue(characterM2Instance);
+	//m_BaseManager.GetManager<ILoader>()->AddToLoadQueue(characterM2Instance);
 	return characterM2Instance;
 }
 

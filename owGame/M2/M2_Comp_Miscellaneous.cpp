@@ -134,14 +134,14 @@ std::shared_ptr<const CM2_Part_Attachment> CM2_Comp_Miscellaneous::getAttachment
 int16 CM2_Comp_Miscellaneous::getAttachmentLookup(uint32 Index) const
 {
 	if (Index >= static_cast<uint32>(m_AttachmentsLookup.size()))
-		throw CException("CM2_Comp_Miscellaneous::getAttachmentLookup: lookup index out of bounds.");
+		throw CException("CM2_Comp_Miscellaneous::getAttachmentLookup: lookup index out of bounds. %d of %d.", Index, m_AttachmentsLookup.size());
 	return m_AttachmentsLookup[Index];
 }
 
 std::shared_ptr<const CM2_Part_Attachment> CM2_Comp_Miscellaneous::getAttachmentDirect(int16 Index) const
 {
 	if (Index >= static_cast<int16>(m_Attachments.size()))
-		throw CException("CM2_Comp_Miscellaneous::getAttachmentDirect: direct index out of bounds.");
+		throw CException("CM2_Comp_Miscellaneous::getAttachmentDirect: direct index out of bounds. %d of %d.", Index, m_Attachments.size());
 	return (m_Attachments[Index]);
 }
 

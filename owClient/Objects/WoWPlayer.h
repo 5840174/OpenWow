@@ -10,7 +10,7 @@ class CWoWWorld;
 
 namespace
 {
-enum PlayerBytesOffsets
+enum EPlayerBytes1Offsets
 {
 	PLAYER_BYTES_OFFSET_SKIN_ID = 0,
 	PLAYER_BYTES_OFFSET_FACE_ID = 1,
@@ -18,7 +18,7 @@ enum PlayerBytesOffsets
 	PLAYER_BYTES_OFFSET_HAIR_COLOR_ID = 3
 };
 
-enum PlayerBytes2Offsets
+enum EPlayerBytes2Offsets
 {
 	PLAYER_BYTES_2_OFFSET_FACIAL_STYLE = 0,
 	PLAYER_BYTES_2_OFFSET_PARTY_TYPE = 1,
@@ -26,7 +26,7 @@ enum PlayerBytes2Offsets
 	PLAYER_BYTES_2_OFFSET_REST_STATE = 3
 };
 
-enum PlayerBytes3Offsets
+enum EPlayerBytes3Offsets
 {
 	PLAYER_BYTES_3_OFFSET_GENDER = 0,
 	PLAYER_BYTES_3_OFFSET_INEBRIATION = 1,
@@ -45,12 +45,12 @@ public:
 	virtual void OnValuesUpdated(const UpdateMask & Mask) override;
 
 private:
-	uint8 GetSkinId() const { return m_Values.GetByteValue(PLAYER_BYTES, PLAYER_BYTES_OFFSET_SKIN_ID); }
-	uint8 GetFaceId() const { return m_Values.GetByteValue(PLAYER_BYTES, PLAYER_BYTES_OFFSET_FACE_ID); }
-	uint8 GetHairStyleId() const { return m_Values.GetByteValue(PLAYER_BYTES, PLAYER_BYTES_OFFSET_HAIR_STYLE_ID); }
-	uint8 GetHairColorId() const { return m_Values.GetByteValue(PLAYER_BYTES, PLAYER_BYTES_OFFSET_HAIR_COLOR_ID); }
-	uint8 GetFacialStyle() const { return m_Values.GetByteValue(PLAYER_BYTES_2, PLAYER_BYTES_2_OFFSET_FACIAL_STYLE); }
-	uint8 GetNativeGender() const { return m_Values.GetByteValue(PLAYER_BYTES_3, PLAYER_BYTES_3_OFFSET_GENDER); }
+	uint8 GetSkinId() const;
+	uint8 GetFaceId() const;
+	uint8 GetHairStyleId() const;
+	uint8 GetHairColorId() const;
+	uint8 GetFacialStyle() const;
+	uint8 GetNativeGender() const;
 
 public:
 	static std::shared_ptr<WoWPlayer> Create(CWoWWorld& WoWWorld, IScene& Scene, CWoWGuid Guid);

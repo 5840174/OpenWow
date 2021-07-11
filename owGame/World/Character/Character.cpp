@@ -22,7 +22,7 @@ CCharacter::CCharacter(IScene& Scene, const std::shared_ptr<CM2>& M2Object)
 
 CCharacter::~CCharacter()
 {
-	Log::Warn("Characted deleted.");
+	Log::Warn("CCharacter deleted.");
 }
 
 
@@ -159,6 +159,7 @@ void CCharacter::SetItem(uint8 InventorySlot, const SCharacterItemTemplate & Ite
 	//	GetBaseManager().GetManager<ILoader>()->AddToDeleteQueue(m_CharacterItems[InventorySlot]);
 
 	auto characterItem = MakeShared(CCharacterItem, GetBaseManager(), GetRenderDevice(), std::dynamic_pointer_cast<CCharacter>(shared_from_this()));
+	AddChildLoadable(characterItem);
 	Template().ItemsTemplates[InventorySlot] = ItemTemplate;
 	characterItem->Template() = ItemTemplate;
 	m_CharacterItems[InventorySlot] = characterItem;

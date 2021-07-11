@@ -51,6 +51,9 @@ public:
 	virtual void Destroy() override;
 
 protected:
+	virtual void OnDisplayIDChanged(uint32 DisplayID);
+
+protected:
 	std::shared_ptr<SGameObjectQueryResult> m_GameObjectTemplate;
 
 	std::shared_ptr<ISceneNode> m_GameObjectModel;

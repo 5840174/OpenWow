@@ -27,9 +27,10 @@ public:
 	void OnHiddenNodePositionChanged() override;
 
 	// UNIT_FIELD_BYTES_0
-	Race GetRace() const       { return (Race)m_Values.GetByteValue(UNIT_FIELD_BYTES_0, UNIT_BYTES_0_OFFSET_RACE); }
-	Class GetClass() const      { return (Class)m_Values.GetByteValue(UNIT_FIELD_BYTES_0, UNIT_BYTES_0_OFFSET_CLASS); }
-	Gender GetGender() const     { return (Gender)m_Values.GetByteValue(UNIT_FIELD_BYTES_0, UNIT_BYTES_0_OFFSET_GENDER); }
+	Race GetRace() const;
+	Class GetClass() const;
+	Gender GetGender() const;
+	uint8 GetPowerType() const;
 
 	// Speed
 	float GetSpeed(UnitSpeedType MoveType) const        { return m_Speed[MoveType]; }
@@ -54,7 +55,9 @@ public:
 
 	std::shared_ptr<CWoWPath> m_WoWPath;
 
-	SCharacterItemTemplate GetItemDisplayInfoIDByItemID(uint32 ItemID);
+	// HELPERS & UTILS
+	SCharacterItemTemplate GetItemDisplayInfoIDByItemID(uint32 ItemID, uint32 EnchantID);
+
 
 protected:
 	virtual void OnDisplayIDChanged(uint32 DisplayID);

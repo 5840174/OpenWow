@@ -13,9 +13,6 @@
     <Filter Include="AuthSocket\Cryptography">
       <UniqueIdentifier>{b1c0c11e-5348-429b-a68c-3ebbad2d300e}</UniqueIdentifier>
     </Filter>
-    <Filter Include="RealmSelection">
-      <UniqueIdentifier>{627d0987-c930-4bfd-bc62-c8748dfa4a3b}</UniqueIdentifier>
-    </Filter>
     <Filter Include="World">
       <UniqueIdentifier>{eb46a660-0a0c-4202-99f0-ee7b0ba1c4bd}</UniqueIdentifier>
     </Filter>
@@ -54,6 +51,9 @@
     </Filter>
     <Filter Include="Objects\Helpers\Spline">
       <UniqueIdentifier>{c6d73d1d-5857-4ebb-bf68-45d7f11d4a63}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="RealmSelection">
+      <UniqueIdentifier>{627d0987-c930-4bfd-bc62-c8748dfa4a3b}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
