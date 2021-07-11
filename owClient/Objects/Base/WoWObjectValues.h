@@ -13,7 +13,9 @@ public:
 	CWoWObjectValues(WoWObject& OwnerWoWObject);
 	virtual ~CWoWObjectValues();
 
+	uint16 GetValuesCount() const;
 	void SetValuesCount(uint16 ValuesCnt);
+
 	void Do_UPDATETYPE_VALUES(CByteBuffer& Bytes);
 
 	const int32& GetInt32Value(uint16 index) const;

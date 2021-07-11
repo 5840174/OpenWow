@@ -28,6 +28,7 @@ struct GeosetComponent
 
 class CCharacterItem 
 	: public CLoadableObject
+	, public std::enable_shared_from_this<CCharacterItem>
 {
 public:
 	CCharacterItem(const IBaseManager& BaseManager, IRenderDevice& RenderDevice, const std::shared_ptr<CCharacter>& OwnerCharacter);
@@ -44,7 +45,7 @@ public:
 	// ILoadable
 	bool Load() override;
 	bool Delete() override;
-	void OnLoaded() override;
+	void OnAfterLoad() override;
 
 private:
 	void InitializeItemModels();

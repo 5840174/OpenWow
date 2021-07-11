@@ -27,16 +27,16 @@
 ^CAuthSocket::OnConnected.
 ^CAuthSocket::On_AUTH_LOGON_PROOF: Successfully logined.
 ^CAuthSocket::On_REALM_LIST: Count '12'.
-^RealmType: '1', IsLocked: '0', Flag: '0x0', Name: 'WoW Circle 3.3.5a Fun', Address '54.37.128.19:12373', Population: '0,000000', CharacterCount: '0'
+^RealmType: '1', IsLocked: '0', Flag: '0x0', Name: 'WoW Circle 3.3.5a Fun', Address '51.77.57.14:12373', Population: '0,000000', CharacterCount: '0'
 ^RealmType: '1', IsLocked: '0', Flag: '0x0', Name: 'WoW Circle 3.3.5a Fun Prx 1', Address '185.71.65.222:77909', Population: '0,000000', CharacterCount: '0'
 ^RealmType: '1', IsLocked: '0', Flag: '0x0', Name: 'WoW Circle 3.3.5a Fun Prx 2', Address '5.252.35.3:77909', Population: '0,000000', CharacterCount: '0'
-^RealmType: '0', IsLocked: '0', Flag: '0x0', Name: 'WoW Circle 3.3.5a x1', Address '51.77.57.14:8131', Population: '0,000000', CharacterCount: '0'
+^RealmType: '0', IsLocked: '0', Flag: '0x0', Name: 'WoW Circle 3.3.5a x1', Address '54.37.128.19:8131', Population: '0,000000', CharacterCount: '0'
 ^RealmType: '0', IsLocked: '0', Flag: '0x0', Name: 'WoW Circle 3.3.5a x1 Prx 1', Address '185.71.65.111:8131', Population: '0,000000', CharacterCount: '0'
 ^RealmType: '0', IsLocked: '0', Flag: '0x0', Name: 'WoW Circle 3.3.5a x1 Prx 2', Address '5.252.35.81:8131', Population: '0,000000', CharacterCount: '0'
-^RealmType: '1', IsLocked: '0', Flag: '0x0', Name: 'WoW Circle 3.3.5a x100', Address '54.37.128.19:8130', Population: '0,000000', CharacterCount: '0'
+^RealmType: '1', IsLocked: '0', Flag: '0x0', Name: 'WoW Circle 3.3.5a x100', Address '54.37.128.20:8130', Population: '0,000000', CharacterCount: '0'
 ^RealmType: '1', IsLocked: '0', Flag: '0x0', Name: 'WoW Circle 3.3.5a x100 Prx 1', Address '185.71.65.222:73666', Population: '0,000000', CharacterCount: '0'
 ^RealmType: '1', IsLocked: '0', Flag: '0x0', Name: 'WoW Circle 3.3.5a x100 Prx 2', Address '5.252.35.3:73666', Population: '0,000000', CharacterCount: '0'
-^RealmType: '1', IsLocked: '0', Flag: '0x0', Name: 'WoW Circle 3.3.5a x5', Address '51.77.57.14:8129', Population: '0,000000', CharacterCount: '0'
+^RealmType: '1', IsLocked: '0', Flag: '0x0', Name: 'WoW Circle 3.3.5a x5', Address '54.37.128.20:8129', Population: '0,000000', CharacterCount: '0'
 ^RealmType: '1', IsLocked: '0', Flag: '0x0', Name: 'WoW Circle 3.3.5a x5 Prx 1', Address '185.71.65.222:73665', Population: '0,000000', CharacterCount: '0'
 ^RealmType: '1', IsLocked: '0', Flag: '0x0', Name: 'WoW Circle 3.3.5a x5 Prx 2', Address '5.252.35.3:73665', Population: '0,000000', CharacterCount: '0'
 ^CWoWClient::OnRealmListSelected: Realm name 'WoW Circle 3.3.5a x5'.
@@ -65,199 +65,38 @@
 ^MOTD: Welcome to World of Warcraft Server - WoW Circle
 !CImageBLP: Unable to load PLP file 'TCB_CrystalSong_B.blp'.
 !File 'TILESET\Terrain Cube Maps\TCB_CrystalSong_B_s.blp' not exists.
-!DisplayId = 24993
-!DisplayId = 22044
-!DisplayId = 4449
-!DisplayId = 25785
-!DisplayId = 24995
-!DisplayId = 161
-!DisplayId = 850
-!DisplayId = 4449
-!DisplayId = 24993
-!DisplayId = 24235
-!DisplayId = 20763
-!DisplayId = 29833
-!DisplayId = 11686
-!DisplayId = 833
-!DisplayId = 6295
-!DisplayId = 6295
-!DisplayId = 134
-!DisplayId = 28144
-!DisplayId = 26440
-!DisplayId = 28148
-!DisplayId = 26441
-!DisplayId = 25955
-!DisplayId = 26330
-!DisplayId = 25876
-!DisplayId = 25881
-!DisplayId = 16910
-!DisplayId = 28102
-!DisplayId = 8811
-!DisplayId = 28147
-!DisplayId = 28156
-!DisplayId = 27657
-!DisplayId = 901
-!DisplayId = 901
-!DisplayId = 26073
-!DisplayId = 24235
-!DisplayId = 24235
-!DisplayId = 5554
-!DisplayId = 16925
-!DisplayId = 27952
-!DisplayId = 27954
-!DisplayId = 1141
-!DisplayId = 1141
-!DisplayId = 28164
-!DisplayId = 28165
-!DisplayId = 27912
-!DisplayId = 25882
-!DisplayId = 25605
-!DisplayId = 26074
-!DisplayId = 28189
-!DisplayId = 11686
-!DisplayId = 28205
-!DisplayId = 1988
-!DisplayId = 11686
-!DisplayId = 11686
-!DisplayId = 11686
-!DisplayId = 28433
-!DisplayId = 28146
-!DisplayId = 28163
-!DisplayId = 28207
-!DisplayId = 27910
-!DisplayId = 27908
-!DisplayId = 26766
-!DisplayId = 27782
-!DisplayId = 25647
-!DisplayId = 25618
-!DisplayId = 1988
-!DisplayId = 26501
-!DisplayId = 26496
-!DisplayId = 9563
-!DisplayId = 26444
-!DisplayId = 26525
-!DisplayId = 27915
-!DisplayId = 15242
-!DisplayId = 15240
-!DisplayId = 26074
-!DisplayId = 26072
-!DisplayId = 28203
-!DisplayId = 1988
-!DisplayId = 31713
-!MountDisplayId = 31837
-!DisplayId = 23501
-!DisplayId = 24897
-!DisplayId = 24897
-!DisplayId = 24897
-!DisplayId = 24890
-!DisplayId = 24898
-!DisplayId = 24895
-!DisplayId = 24890
-!DisplayId = 24890
-!DisplayId = 24895
-!DisplayId = 24898
-!DisplayId = 24897
-!DisplayId = 24890
-!DisplayId = 24897
-!DisplayId = 24895
-!DisplayId = 24895
-!DisplayId = 24895
-!DisplayId = 24895
-!DisplayId = 24897
-!DisplayId = 24890
-!DisplayId = 24897
-!DisplayId = 24898
-!DisplayId = 24890
-!DisplayId = 24898
-!DisplayId = 24895
-!DisplayId = 24895
-!DisplayId = 24890
-!DisplayId = 24895
-!DisplayId = 24898
-!DisplayId = 24898
-!DisplayId = 24897
-!DisplayId = 24890
-!DisplayId = 11686
-!DisplayId = 11686
-!DisplayId = 11686
-!DisplayId = 28006
-!DisplayId = 27799
-!DisplayId = 25645
-!DisplayId = 25614
-!DisplayId = 26075
-!DisplayId = 25648
-!DisplayId = 25619
-!DisplayId = 25637
-!DisplayId = 25651
-!DisplayId = 25650
-!DisplayId = 25620
-!DisplayId = 26339
-!DisplayId = 26338
-!DisplayId = 25611
-!DisplayId = 29145
-!DisplayId = 26417
-!DisplayId = 26074
-!DisplayId = 30686
-!DisplayId = 1013
-!DisplayId = 16910
-!DisplayId = 28158
-!DisplayId = 1988
  []: |cFF00a550На этой неделе доступен Наксрамас на героической сложности!|r
-!DisplayId = 24235
-!DisplayId = 23337
-!DisplayId = 28456
-!DisplayId = 28200
-!DisplayId = 4449
-!EXCEPTION: 'CCharacterItemM2Instance::GetCharacterItem: CharacterItem isn't loaded. State = '1''.
-!--->LoaderThread: OnLoaded() exception 'CCharacterItemM2Instance::GetCharacterItem: CharacterItem isn't loaded. State = '1''.
-!DisplayId = 802
-!DisplayId = 21271
-!MountDisplayId = 27913
-!MountDisplayId = 27913
+ []: |cff6600ff[Рейтинговое поле боя]:|r Око Бури -- [80-80] начинается!|r
+ []: В ЦЛК 25 Об ласт слот Ршам/Адк гс 5.8+ Анр не трин+оск+бое
+ []: КОЖЭВНИК ПМ! ЕСТЬ ЗАКАЗ! 
 @Characted deleted.
-!DisplayId = 21271
-!MountDisplayId = 27913
-!DisplayId = 25455
-!DisplayId = 24993
- [Гризельда Хандерленд]: Приветствую вас! Пожалуйста, осмотрите мои товары.
-!DisplayId = 23167
-!MountDisplayId = 17700
-!MountDisplayId = 17700
 @Characted deleted.
-!DisplayId = 23167
-!MountDisplayId = 17700
-!DisplayId = 25455
-!DisplayId = 28111
-!DisplayId = 28282
-!DisplayId = 25455
-!EXCEPTION: 'CCharacterItemM2Instance::GetCharacterItem: CharacterItem isn't loaded. State = '1''.
-!--->LoaderThread: OnLoaded() exception 'CCharacterItemM2Instance::GetCharacterItem: CharacterItem isn't loaded. State = '1''.
+ [Гризельда Хандерленд]: Добро пожаловать. Могу я помочь тебе в поисках?
 @Characted deleted.
+ []: В ЦЛК 25 Об ласт слот Ршам/Адк гс 5.8+ Анр не трин+оск+бое
+ []: В цлк 25 нид танк пал ) хилл хпал дц ршам рдрул ) дд фвар крог кот рпал адк ) рдд лок шп фмаг хант от гс 5,7 к 1А не триня 
 !CImageBLP: Unable to load PLP file 'TCB_CrystalSong_B.blp'.
 !File 'TILESET\Terrain Cube Maps\TCB_CrystalSong_B_s.blp' not exists.
-!DisplayId = 25455
+ []: ну что
+ []: В ЦЛК 25 Об ласт слот Ршам/Адк гс 5.8+ Анр не трин+оск+бое
+ []: ракулеты 
+!Can't remove child node '' from nullptr parent.
 @Characted deleted.
-!DisplayId = 24235
-!DisplayId = 28203
+ []: кто не очкует
+ []: В ЦЛК 25 Об ласт слот Ршам/Адк гс 5.8+ Анр не трин+оск+бое
+ []: {череп}{крест}В ОС 25 надо хилы и дд/рдд (сумка анролл){череп}{крест}
+!Can't remove child node '' from nullptr parent.
 @Characted deleted.
-!DisplayId = 17475
-!MountDisplayId = 25833
-!DisplayId = 17475
+ []: {череп}{крест}В ОС 25 надо хилы и дд/рдд (сумка анролл){череп}{крест}
+!CImageBLP: Unable to load PLP file 'tgatest.blp'.
+!File 'TILESET\Generic\tgatest_s.blp' not exists.
+!CImageBLP: Unable to load PLP file 'tgatest.blp'.
+!File 'TILESET\Generic\tgatest_s.blp' not exists.
+!CImageBLP: Unable to load PLP file 'TCB_CrystalSong_B.blp'.
+!File 'TILESET\Terrain Cube Maps\TCB_CrystalSong_B_s.blp' not exists.
 @Characted deleted.
-!DisplayId = 17475
-!MountDisplayId = 25833
-!DisplayId = 28193
-!EXCEPTION: 'CCharacterItemM2Instance::GetCharacterItem: CharacterItem isn't loaded. State = '1''.
-!--->LoaderThread: OnLoaded() exception 'CCharacterItemM2Instance::GetCharacterItem: CharacterItem isn't loaded. State = '1''.
-!EXCEPTION: 'CCharacterItemM2Instance::GetCharacterItem: CharacterItem isn't loaded. State = '1''.
-!--->LoaderThread: OnLoaded() exception 'CCharacterItemM2Instance::GetCharacterItem: CharacterItem isn't loaded. State = '1''.
-!DisplayId = 24235
-!DisplayId = 25455
-!DisplayId = 25785
- []: |cffff0000[Анонс БГ]:|r Низина Арати -- [80-80] Начинается!|r
 @Characted deleted.
-!EXCEPTION: 'CCharacterItemM2Instance::GetCharacterItem: CharacterItem isn't loaded. State = '1''.
-!--->LoaderThread: OnLoaded() exception 'CCharacterItemM2Instance::GetCharacterItem: CharacterItem isn't loaded. State = '1''.
-!DisplayId = 24993
-!DisplayId = 26779
-!DisplayId = 25455
+@Characted deleted.
+!Can't remove child node '' from nullptr parent.
+@Characted deleted.
+@Characted deleted.

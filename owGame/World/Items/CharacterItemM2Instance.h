@@ -21,7 +21,7 @@ public:
 	//void AddVisualEffect(std::shared_ptr<CM2_Base_Instance> _visualEffect);
 
 	// ILoadable
-	void OnLoaded() override;
+	void OnAfterLoad() override;
 
 private:
 	const CCharacterItem& m_CharacterItem;

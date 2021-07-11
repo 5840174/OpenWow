@@ -99,6 +99,7 @@ void CM2_Base_Instance::RegisterComponents()
 {
 	AddComponentT(GetBaseManager().GetManager<IObjectsFactory>()->GetClassFactoryCast<IComponentFactory>()->CreateComponentT<IModelComponent>(cSceneNodeModelsComponent, *this));
 	m_ColliderComponent = AddComponentT(MakeShared(CM2_ColliderComponent, *this));
+	m_AnimatorComponent = AddComponentT(MakeShared(CM2AnimatorComponent, *this));
 }
 
 void CM2_Base_Instance::Update(const UpdateEventArgs & e)
@@ -120,12 +121,10 @@ void CM2_Base_Instance::Accept(IVisitor* visitor)
 bool CM2_Base_Instance::Load()
 {
 	if (auto colliderComponent = GetComponentT<IColliderComponent>())
-	{
 		colliderComponent->SetBounds(GetM2().GetBounds());
-	}
 
 	if (GetM2().isAnimated())
-		m_AnimatorComponent = AddComponentT(MakeShared(CM2AnimatorComponent, *this));
+		m_AnimatorComponent->LoadAnimations();
 
 	if (GetM2().getSkeleton().hasBones())
 		m_SkeletonComponent = AddComponentT(MakeShared(CM2SkeletonComponent, *this));

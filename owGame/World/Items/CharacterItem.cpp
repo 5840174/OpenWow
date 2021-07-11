@@ -57,18 +57,17 @@ bool CCharacterItem::Load()
 
 bool CCharacterItem::Delete()
 {
-
 	return false;
 }
 
-void CCharacterItem::OnLoaded()
+void CCharacterItem::OnAfterLoad()
 {
 	if (false == IsExists())
 		return;
 
 	if (GetTemplate().InventoryType == (uint8)DBCItem_EInventoryItemType::CLOAK)
 		if (m_Models.size() != 1)
-			throw CException("ASdasdasd");
+			throw CException("Unexpected behaviour.");
 
 	m_OwnerCharacter.Refresh_SkinWithItemsImage();
 	m_OwnerCharacter.RefreshMeshIDs();
@@ -112,7 +111,7 @@ void CCharacterItem::InitializeItemModels()
 
 		auto attachmentPoint = ItemObjectComponents[static_cast<size_t>(GetTemplate().InventoryType)].AttachmentPoint[i];
 		auto itemModelInstance = m_OwnerCharacter.CreateSceneNode<CCharacterItemM2Instance>(itemModel, *this, attachmentPoint);
-		AddChildLoadable(itemModelInstance);
+		itemModelInstance->AddParentLoadable(std::dynamic_pointer_cast<ILoadable>(shared_from_this()));
 		m_BaseManager.GetManager<ILoader>()->AddToLoadQueue(itemModelInstance);
 
 		if (auto ownerCharacterAttachment = m_OwnerCharacter.GetM2().getMiscellaneous().getAttachment(attachmentPoint))

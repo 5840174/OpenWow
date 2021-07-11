@@ -256,31 +256,7 @@ void WoWUnit::Do_MonsterMove(CServerPacket& Bytes)
 void WoWUnit::OnValuesUpdated(const UpdateMask & Mask)
 {
 	if (Mask.GetBit(UNIT_FIELD_DISPLAYID))
-	{
-		uint32 diplayID = m_Values.GetUInt32Value(UNIT_FIELD_DISPLAYID);
-		Log::Error("DisplayId = %d", diplayID);
-		if (m_UnitModel != nullptr)
-		{
-			//Log::Warn("WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.");
-			return;
-		}
-
-		CWorldObjectCreator creator(GetScene().GetBaseManager());
-		m_UnitModel = creator.BuildCreatureFromDisplayInfo(GetScene().GetBaseManager().GetApplication().GetRenderDevice(), GetScene(), diplayID);
-
-		//const DBC_CreatureDisplayInfoRecord * creatureDisplayInfo = GetBaseManager().GetManager<CDBCStorage>()->DBC_CreatureDisplayInfo()[diplayID];
-		//if (creatureDisplayInfo == nullptr)
-		//	throw CException("Creature display info '%d' don't found.", displayInfo);
-
-		//const DBC_CreatureModelDataRecord* creatureModelDataRecord = GetBaseManager().GetManager<CDBCStorage>()->DBC_CreatureModelData()[creatureDisplayInfo->Get_Model()];
-		//if (creatureModelDataRecord == nullptr)
-		//	throw CException("Creature model data '%d' don't found.", creatureDisplayInfo->Get_Model());
-
-		//float scaleFromCreature = creatureDisplayInfo->Get_Scale();
-		//float scaleFromModel = creatureModelDataRecord->Get_Scale();
-		float scale = m_Values.GetFloatValue(OBJECT_FIELD_SCALE_X);
-		m_UnitModel->SetScale(glm::vec3(scale));
-	}
+		OnDisplayIDChanged(m_Values.GetUInt32Value(UNIT_FIELD_DISPLAYID));
 
 	if (Mask.GetBit(UNIT_VIRTUAL_ITEM_SLOT_ID + 0))
 	{
@@ -310,18 +286,9 @@ void WoWUnit::OnValuesUpdated(const UpdateMask & Mask)
 	{
 		uint32 flags = m_Values.GetUInt32Value(UNIT_FIELD_FLAGS);
 		if (flags & UNIT_FLAG_MOUNT)
-		{
-			auto mountDisplayID = m_Values.GetUInt32Value(UNIT_FIELD_MOUNTDISPLAYID);
-
-			CWorldObjectCreator creator(GetScene().GetBaseManager());
-			m_MountModel = creator.BuildCreatureFromDisplayInfo(GetScene().GetBaseManager().GetApplication().GetRenderDevice(), GetScene(), mountDisplayID);
-
-			Log::Error("MountDisplayId = %d", mountDisplayID);
-		}
+			OnMounted(m_Values.GetUInt32Value(UNIT_FIELD_MOUNTDISPLAYID));
 		else
-		{
-
-		}
+			OnDismounted();
 	}
 }
 
@@ -462,6 +429,9 @@ void WoWUnit::Destroy()
 {
 	if (m_UnitModel)
 		m_UnitModel->MakeMeOrphan();
+
+	if (m_MountModel)
+		m_UnitModel->MakeMeOrphan();
 }
 
 SCharacterItemTemplate WoWUnit::GetItemDisplayInfoIDByItemID(uint32 ItemID)
@@ -477,8 +447,40 @@ SCharacterItemTemplate WoWUnit::GetItemDisplayInfoIDByItemID(uint32 ItemID)
 }
 
 
+
+//
+// Protected
+//
+void WoWUnit::OnDisplayIDChanged(uint32 DisplayID)
+{
+	if (m_UnitModel != nullptr)
+		return;
+
+	CWorldObjectCreator creator(GetScene().GetBaseManager());
+	m_UnitModel = creator.BuildCreatureFromDisplayInfo(GetScene().GetBaseManager().GetApplication().GetRenderDevice(), GetScene(), DisplayID);
+
+	//const DBC_CreatureDisplayInfoRecord * creatureDisplayInfo = GetBaseManager().GetManager<CDBCStorage>()->DBC_CreatureDisplayInfo()[diplayID];
+	//if (creatureDisplayInfo == nullptr)
+	//	throw CException("Creature display info '%d' don't found.", displayInfo);
+
+	//const DBC_CreatureModelDataRecord* creatureModelDataRecord = GetBaseManager().GetManager<CDBCStorage>()->DBC_CreatureModelData()[creatureDisplayInfo->Get_Model()];
+	//if (creatureModelDataRecord == nullptr)
+	//	throw CException("Creature model data '%d' don't found.", creatureDisplayInfo->Get_Model());
+
+	//float scaleFromCreature = creatureDisplayInfo->Get_Scale();
+	//float scaleFromModel = creatureModelDataRecord->Get_Scale();
+	float scale = m_Values.GetFloatValue(OBJECT_FIELD_SCALE_X);
+	m_UnitModel->SetScale(glm::vec3(scale));
+
+	if (m_MountModel)
+		m_MountModel->AddChild(m_UnitModel);
+}
+
 void WoWUnit::OnMounted(uint32 MountDisplayID)
 {
+	if (m_MountModel != nullptr)
+		return;
+
 	CWorldObjectCreator creator(GetScene().GetBaseManager());
 	m_MountModel = creator.BuildCreatureFromDisplayInfo(GetScene().GetBaseManager().GetApplication().GetRenderDevice(), GetScene(), MountDisplayID);
 
@@ -496,17 +498,17 @@ void WoWUnit::OnMounted(uint32 MountDisplayID)
 
 void WoWUnit::OnDismounted()
 {
-	if (m_MountModel)
-	{
-		m_UnitModel->GetAnimatorComponent()->PlayAnimation(0, true);
-		m_UnitModel->Detach();
+	if (m_MountModel == nullptr)
+		return;
 
-		GetScene().GetRootSceneNode()->AddChild(m_UnitModel);
-		CommitPositionAndRotation();
+	m_UnitModel->GetAnimatorComponent()->PlayAnimation(0, true);
+	m_UnitModel->Detach();
 
-		m_MountModel->MakeMeOrphan();
-		m_MountModel.reset();
-	}
+	GetScene().GetRootSceneNode()->AddChild(m_UnitModel);
+	CommitPositionAndRotation();
+
+	m_MountModel->MakeMeOrphan();
+	m_MountModel.reset();
 }
 
 #endif

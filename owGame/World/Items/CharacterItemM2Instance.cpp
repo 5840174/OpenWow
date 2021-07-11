@@ -48,7 +48,7 @@ const CCharacterItem& CCharacterItemM2Instance::GetCharacterItem() const
 //
 // ILoadable
 //
-void CCharacterItemM2Instance::OnLoaded()
+void CCharacterItemM2Instance::OnAfterLoad()
 {
 	// Attach to parent (parent is Character)
 	//if (auto ownerCharacterAttachment = GetCharacterInstance().GetM2().getMiscellaneous().getAttachment(m_AttachmentPoint))
@@ -76,7 +76,7 @@ void CCharacterItemM2Instance::OnLoaded()
 
 			// M2 Instance
 			auto itemVisualEffectInstance = CreateSceneNode<CCharacterItemEffectM2Instance>(itemVisualEffectModel, m_CharacterItem);
-			AddChildLoadable(itemVisualEffectInstance);
+			itemVisualEffectInstance->AddParentLoadable(std::dynamic_pointer_cast<ILoadable>(shared_from_this()));
 			GetBaseManager().GetManager<ILoader>()->AddToLoadQueue(itemVisualEffectInstance);
 
 			auto itemModelAttachment = GetM2().getMiscellaneous().getAttachment((EM2_AttachmentPoint)itemAttachmentPoint);

@@ -16,7 +16,7 @@ public:
 	CWoWWorldObject(IScene& Scene, CWoWWorld& WoWWorld, CWoWGuid Guid);
 	virtual ~CWoWWorldObject();
 
-	virtual void Update(const UpdateEventArgs& e);
+	void Update(const UpdateEventArgs& e);
 
 	virtual void OnHiddenNodePositionChanged();
 

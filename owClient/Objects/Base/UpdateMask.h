@@ -32,6 +32,14 @@ public:
 	{
 		return (((uint8 *)mUpdateMask)[index >> 3] & (1 << (index & 0x7))) != 0;
 	}
+	inline void SetBit(uint32 index)
+	{
+		((uint8 *)mUpdateMask)[index >> 3] |= 1 << (index & 0x7);
+	}
+	inline void UnsetBit(uint32 index)
+	{
+		((uint8 *)mUpdateMask)[index >> 3] &= (0xff ^ (1 << (index & 0x7)));
+	}
 
 	inline uint32 GetBlockCount() const { return mBlocks; }
 	inline uint32 GetMaskLengthBytes() const { return mBlocks * 4; }

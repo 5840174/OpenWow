@@ -18,6 +18,11 @@ CWoWObjectValues::~CWoWObjectValues()
 		delete[] m_uint32Values;
 }
 
+uint16 CWoWObjectValues::GetValuesCount() const
+{
+	return m_valuesCount;
+}
+
 void CWoWObjectValues::SetValuesCount(uint16 ValuesCnt)
 {
 	m_valuesCount = ValuesCnt;

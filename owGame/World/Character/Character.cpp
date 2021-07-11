@@ -61,10 +61,13 @@ void CCharacter::Refresh_SkinImageFromTemplate()
 
 void CCharacter::Refresh_SkinWithItemsImage()
 {
+	if (GetState() != ILoadable::ELoadableState::Loaded)
+		throw CException("Unexpected behaviour.");
+
 	if (false == m_IsNPCBakedTexturePresent) // NCPBakedTexture already contains all items
 	{
 		if (m_BackedSkinImage == nullptr)
-			throw CException("Unable to refresh items.");
+			throw CException("CCharacter::Refresh_SkinWithItemsImage: BakedSkinImage is nullptr.");
 
 		auto skinImageWithItems = Character_SkinTextureBaker(GetBaseManager()).CreateCharacterSkinWithItemsImage(m_BackedSkinImage, this);
 		setSpecialTexture(SM2_Texture::Type::SKIN, GetBaseManager().GetManager<IznTexturesFactory>()->LoadTexture2D(skinImageWithItems));
@@ -152,19 +155,14 @@ void CCharacter::SetItem(uint8 InventorySlot, const SCharacterItemTemplate & Ite
 	if (InventorySlot >= INVENTORY_SLOT_BAG_END)
 		throw CException("CCharacter::SetItem: Incorrect inventory slot '%d'.", InventorySlot);
 
-	if (m_CharacterItems[InventorySlot] != nullptr)
-		GetBaseManager().GetManager<ILoader>()->AddToDeleteQueue(m_CharacterItems[InventorySlot]);
+	//if (m_CharacterItems[InventorySlot] != nullptr)
+	//	GetBaseManager().GetManager<ILoader>()->AddToDeleteQueue(m_CharacterItems[InventorySlot]);
 
 	auto characterItem = MakeShared(CCharacterItem, GetBaseManager(), GetRenderDevice(), std::dynamic_pointer_cast<CCharacter>(shared_from_this()));
 	Template().ItemsTemplates[InventorySlot] = ItemTemplate;
 	characterItem->Template() = ItemTemplate;
 	m_CharacterItems[InventorySlot] = characterItem;
-
-	if (GetState() == ILoadable::ELoadableState::Loaded)
-	{
-		AddChildLoadable(characterItem);
-		GetBaseManager().GetManager<ILoader>()->AddToLoadQueue(characterItem);
-	}
+	GetBaseManager().GetManager<ILoader>()->AddToLoadQueue(characterItem);
 }
 
 
@@ -224,7 +222,7 @@ void CCharacter::Initialize()
 //
 // ILoadable
 //
-void CCharacter::OnLoaded()
+void CCharacter::OnAfterLoad()
 {
 	if (GetM2().GetState() != ILoadable::ELoadableState::Loaded)
 		throw CException("Unexpected behaviour.");
@@ -233,16 +231,6 @@ void CCharacter::OnLoaded()
 	Refresh_CharacterItemsFromTemplate();
 
 	RefreshMeshIDs();
-
-	for (size_t inventorySlot = 0; inventorySlot < INVENTORY_SLOT_BAG_END; inventorySlot++)
-	{
-		const auto& characterItem = GetItem(inventorySlot);
-		if (characterItem && characterItem->GetState() < ILoadable::ELoadableState::Loaded && characterItem->IsExists())
-		{
-			AddChildLoadable(characterItem);
-			GetBaseManager().GetManager<ILoader>()->AddToLoadQueue(characterItem);
-		}
-	}
 }
 
 #endif

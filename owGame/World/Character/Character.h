@@ -38,7 +38,7 @@ public:
 	void Initialize() override;
 
 	// ILoadable
-	void OnLoaded() override;
+	void OnAfterLoad() override;
 
 private:
 	SCharacterTemplate			                     m_Template;

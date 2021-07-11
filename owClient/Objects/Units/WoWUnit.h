@@ -26,24 +26,25 @@ public:
 
 	void OnHiddenNodePositionChanged() override;
 
-	uint8 GetRace() const       { return m_Values.GetByteValue(UNIT_FIELD_BYTES_0, UNIT_BYTES_0_OFFSET_RACE); }
-	uint8 GetClass() const      { return m_Values.GetByteValue(UNIT_FIELD_BYTES_0, UNIT_BYTES_0_OFFSET_CLASS); }
-	uint8 GetGender() const     { return m_Values.GetByteValue(UNIT_FIELD_BYTES_0, UNIT_BYTES_0_OFFSET_GENDER); }
+	// UNIT_FIELD_BYTES_0
+	Race GetRace() const       { return (Race)m_Values.GetByteValue(UNIT_FIELD_BYTES_0, UNIT_BYTES_0_OFFSET_RACE); }
+	Class GetClass() const      { return (Class)m_Values.GetByteValue(UNIT_FIELD_BYTES_0, UNIT_BYTES_0_OFFSET_CLASS); }
+	Gender GetGender() const     { return (Gender)m_Values.GetByteValue(UNIT_FIELD_BYTES_0, UNIT_BYTES_0_OFFSET_GENDER); }
 
 	// Speed
-	float GetSpeed(UnitSpeedType MoveType) const { return m_Speed[MoveType]; }
-	void SetSpeed(UnitSpeedType MoveType, float Speed) { m_Speed[MoveType] = Speed; }
+	float GetSpeed(UnitSpeedType MoveType) const        { return m_Speed[MoveType]; }
+	void SetSpeed(UnitSpeedType MoveType, float Speed)  { m_Speed[MoveType] = Speed; }
 
 	// MovementFlags
-	uint32 GetMovementFlags() const { return m_MovementFlags; }
-	bool HasMovementFlag(uint32 flag) const { return (m_MovementFlags & flag) != 0; }
+	uint32 GetMovementFlags() const                     { return m_MovementFlags; }
+	bool HasMovementFlag(uint32 flag) const             { return (m_MovementFlags & flag) != 0; }
 
 	// MovementFlags2
-	uint16 GetExtraMovementFlags() const { return m_MovementFlagsExtra; }
-	bool HasExtraMovementFlag(uint16 flag) const { return (m_MovementFlagsExtra & flag) != 0; }
+	uint16 GetExtraMovementFlags() const                { return m_MovementFlagsExtra; }
+	bool HasExtraMovementFlag(uint16 flag) const        { return (m_MovementFlagsExtra & flag) != 0; }
 
 	// ISceneNode
-	void Update(const UpdateEventArgs& e) override;
+	void Update(const UpdateEventArgs& e);
 
 	void ReadMovementInfoPacket(CServerPacket& Bytes);
 
@@ -56,20 +57,21 @@ public:
 	SCharacterItemTemplate GetItemDisplayInfoIDByItemID(uint32 ItemID);
 
 protected:
-	void OnMounted(uint32 MountDisplayID);
-	void OnDismounted();
+	virtual void OnDisplayIDChanged(uint32 DisplayID);
+
+	virtual void OnMounted(uint32 MountDisplayID);
+	virtual void OnDismounted();
 
 protected:
+
+
 	uint32 m_MovementFlags;
 	uint16 m_MovementFlagsExtra;
 
-	// swimming/flying
-	float m_StrideOrPitch;
+	float m_StrideOrPitch; // swimming/flying
 
-	// falling
-	uint32 m_FallTime;
+	uint32 m_FallTime; // falling
 
-	// jumping
 	struct JumpInfo
 	{
 		void Reset()
@@ -79,10 +81,10 @@ protected:
 
 		float zspeed, sinAngle, cosAngle, xyspeed;
 
-	} m_Jump;
+	} m_Jump; // jumping
 
-	// spline
-	float m_SplineElevation;
+	
+	float m_SplineElevation; // spline
 
 
 	float m_Speed[9];

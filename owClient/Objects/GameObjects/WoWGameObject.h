@@ -44,7 +44,7 @@ public:
 	void OnTemplate(CWoWGuid::EntryType_t Entry, const std::shared_ptr<SGameObjectQueryResult>& QueryResult) override;
 
 	// ISceneNode
-	void Update(const UpdateEventArgs& e) override;
+	void Update(const UpdateEventArgs& e);
 
 public:
 	static std::shared_ptr<WoWGameObject> Create(CWoWWorld& WoWWorld, IScene& Scene, CWoWGuid Guid);

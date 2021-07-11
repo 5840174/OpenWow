@@ -21,32 +21,15 @@ WoWPlayer::~WoWPlayer()
 
 void WoWPlayer::OnValuesUpdated(const UpdateMask & Mask)
 {
-	if (Mask.GetBit(UNIT_FIELD_DISPLAYID))
-	{
-		uint32 displayID = m_Values.GetUInt32Value(UNIT_FIELD_DISPLAYID);
-
-		if (m_UnitModel != nullptr)
-		{
-			//Log::Warn("WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.");
-			return;
-		}
-
-		CWorldObjectCreator creator(GetScene().GetBaseManager());
-		m_UnitModel = creator.BuildEmptyCharacterFromDisplayInfo(GetScene().GetBaseManager().GetApplication().GetRenderDevice(), GetScene(), displayID);
-
-		if (m_MountModel)
-		{
-			m_MountModel->AddChild(m_UnitModel);
-		}
-	}
+	__super::OnValuesUpdated(Mask);
 
 	if (Mask.GetBit(UNIT_FIELD_BYTES_0))
 	{
 		if (auto characterModel = std::dynamic_pointer_cast<CCharacter>(m_UnitModel))
 		{
-			characterModel->Template().Race = (Race)GetRace();
-			characterModel->Template().Class = (Class)GetClass();
-			characterModel->Template().Gender = (Gender)GetGender();
+			characterModel->Template().Race = GetRace();
+			characterModel->Template().Class = GetClass();
+			characterModel->Template().Gender = GetGender();
 		}
 	}
 
@@ -84,33 +67,16 @@ void WoWPlayer::OnValuesUpdated(const UpdateMask & Mask)
 		{
 			if (auto characterModel = std::dynamic_pointer_cast<CCharacter>(m_UnitModel))
 			{
-				characterModel->SetItem((i - PLAYER_VISIBLE_ITEM_1_ENTRYID) / 2, GetItemDisplayInfoIDByItemID(m_Values.GetUInt32Value(i)));
+				uint8 inventorySlot = (i - PLAYER_VISIBLE_ITEM_1_ENTRYID) / 2;
+				if (inventorySlot >= EQUIPMENT_SLOT_END)
+					throw CException("Inventory slot out of bounds.");
+
+				uint32 displayID = m_Values.GetUInt32Value(i);
+				if (displayID != 0)
+					characterModel->SetItem(inventorySlot, GetItemDisplayInfoIDByItemID(displayID));
 			}
 		}
-	} 
-
-	if (auto characterModel = std::dynamic_pointer_cast<CCharacter>(m_UnitModel))
-	{
-		// Items
-		//characterModel->Refresh_CharacterItemsFromTemplate();
-
-		// Textures
-		//characterModel->Refresh_SkinImageFromTemplate();
-
-		// Geosets
-		//characterModel->RefreshMeshIDs();
 	}
-
-	if (Mask.GetBit(UNIT_FIELD_FLAGS))
-	{
-		uint32 flags = m_Values.GetUInt32Value(UNIT_FIELD_FLAGS);
-		if (flags & UNIT_FLAG_MOUNT)
-			OnMounted(m_Values.GetUInt32Value(UNIT_FIELD_MOUNTDISPLAYID));
-		else
-			OnDismounted();
-	}
-
-	//__super::OnValuesUpdated(Mask);
 }
 
 
@@ -126,6 +92,23 @@ std::shared_ptr<WoWPlayer> WoWPlayer::Create(CWoWWorld& WoWWorld, IScene& Scene,
 
 void WoWPlayer::Destroy()
 {}
+
+
+
+//
+// Protected
+//
+void WoWPlayer::OnDisplayIDChanged(uint32 DisplayID)
+{
+	if (m_UnitModel != nullptr)
+		return;
+
+	CWorldObjectCreator creator(GetScene().GetBaseManager());
+	m_UnitModel = creator.BuildEmptyCharacterFromDisplayInfo(GetScene().GetBaseManager().GetApplication().GetRenderDevice(), GetScene(), DisplayID);
+
+	if (m_MountModel)
+		m_MountModel->AddChild(m_UnitModel);
+}
 
 
 

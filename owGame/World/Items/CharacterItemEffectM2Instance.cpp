@@ -33,7 +33,7 @@ const CCharacterItem & CCharacterItemEffectM2Instance::GetCharacterItem() const
 //
 // ILoadable
 //
-void CCharacterItemEffectM2Instance::OnLoaded()
+void CCharacterItemEffectM2Instance::OnAfterLoad()
 {
 }
 

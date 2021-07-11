@@ -206,7 +206,7 @@ bool CWMO::Load()
 		for (const auto& gi : m_ChunkReader->OpenChunkT<SWMO_MOGI>("MOGI"))
 		{
 			auto wmoGroup = MakeShared(CWMOGroup, m_BaseManager, m_RenderDevice, *this, cntr++, gi);
-			wmoGroup->SetParentLoadable(shared_from_this());
+			wmoGroup->AddParentLoadable(shared_from_this());
 			m_BaseManager.GetManager<ILoader>()->AddToLoadQueue(wmoGroup);
 			m_Groups.push_back(wmoGroup);
 		}

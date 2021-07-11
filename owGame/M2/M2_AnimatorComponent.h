@@ -17,6 +17,8 @@ public:
 	CM2AnimatorComponent(const CM2_Base_Instance& OwnerNode);
 	virtual ~CM2AnimatorComponent();
 
+	void LoadAnimations();
+
 	void PlayAnimation(uint16 AnimationId, bool Loop);
 	void PrintList();
 
@@ -31,7 +33,10 @@ protected:
 
 private:
 	std::unordered_map<uint16, std::shared_ptr<CM2_Animation>>	m_Animations;
+
+	uint16                      m_CurrentAnimationID;
 	const CM2_Animation*		m_CurrentAnimation;
+
 	bool						m_IsLoop;
 	bool						m_IsStopped;
 

@@ -9,10 +9,24 @@
 
 CM2AnimatorComponent::CM2AnimatorComponent(const CM2_Base_Instance& OwnerNode)
 	: CSceneNodeComponentBase(OwnerNode)
+	
+	, m_CurrentAnimationID(0)
+	, m_CurrentAnimation(nullptr)
+	
 	, m_IsLoop(false)
 	, m_IsStopped(false)
+
 	, m_AnimTime(0.0)
 	, m_CurrentTime(0)
+{
+
+}
+
+CM2AnimatorComponent::~CM2AnimatorComponent()
+{
+}
+
+void CM2AnimatorComponent::LoadAnimations()
 {
 	const auto& sequences = GetM2OwnerNode().GetM2().getSkeleton().GetSequences();
 	for (uint16 j = 0; j < sequences.size(); j++)
@@ -29,32 +43,28 @@ CM2AnimatorComponent::CM2AnimatorComponent(const CM2_Base_Instance& OwnerNode)
 	}
 
 	_ASSERT(m_Animations.size() > 0);
-	PlayAnimation(0, true);
-}
-
-CM2AnimatorComponent::~CM2AnimatorComponent()
-{
-	//ERASE_MAP(m_Animations);
+	PlayAnimation(m_CurrentAnimationID, true);
 }
 
 void CM2AnimatorComponent::PlayAnimation(uint16 AnimationId, bool Loop)
 {
-	m_IsLoop = Loop;
-
 	const auto& animIt = m_Animations.find(AnimationId);
 	if (animIt != m_Animations.end())
 	{
+		m_CurrentAnimationID = AnimationId;
 		m_CurrentAnimation = animIt->second.get();
 	}
 	else
 	{
+		m_CurrentAnimationID = 0;
 		m_CurrentAnimation = m_Animations.begin()->second.get();
 		//Log::Error("CM2AnimatorComponent: Animation '%d' not found. Playing first animation '%s' ('%d').", AnimationId, m_CurrentAnimation->getAnimationName().c_str(), m_CurrentAnimation->getAnimID());
 	}
 
-	m_CurrentTime = m_CurrentAnimation->getStart();
+	m_IsLoop = Loop;
 	m_IsStopped = false;
 	m_AnimTime = 0.0;
+	m_CurrentTime = m_CurrentAnimation->getStart();
 }
 
 void CM2AnimatorComponent::PrintList()
@@ -67,6 +77,9 @@ void CM2AnimatorComponent::PrintList()
 
 void CM2AnimatorComponent::Update(const UpdateEventArgs & e)
 {
+	if (m_CurrentAnimation == nullptr)
+		return;
+
 	if (m_IsStopped)
 		return;
 
