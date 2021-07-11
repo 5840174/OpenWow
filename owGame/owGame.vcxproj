@@ -47,7 +47,7 @@
     <ClCompile Include="M2\M2.cpp" />
     <ClCompile Include="M2\M2_Animation.cpp" />
     <ClCompile Include="M2\M2_AnimationSet.cpp" />
-    <ClCompile Include="M2\M2_Animator.cpp" />
+    <ClCompile Include="M2\M2_AnimatorComponent.cpp" />
     <ClCompile Include="M2\M2_Base_Instance.cpp" />
     <ClCompile Include="M2\M2_CameraComponent.cpp" />
     <ClCompile Include="M2\M2_ColliderComponent.cpp" />
@@ -208,8 +208,6 @@
     <ClInclude Include="DBC\Tables\DBC_WorldSafeLocs.h" />
     <ClInclude Include="Formats\ImageBLP.h" />
     <ClInclude Include="Formats\MPQFilesStorage.h" />
-    <ClInclude Include="Interfaces\ILiquid.h" />
-    <ClInclude Include="Interfaces\M2Interfaces.h" />
     <ClInclude Include="Interfaces\Managers.h" />
     <ClInclude Include="Liquid\Liquid.h" />
     <ClInclude Include="Liquid\LiquidBaseInstance.h" />
@@ -220,7 +218,7 @@
     <ClInclude Include="M2\M2_AnimatedConverters.h" />
     <ClInclude Include="M2\M2_Animation.h" />
     <ClInclude Include="M2\M2_AnimationSet.h" />
-    <ClInclude Include="M2\M2_Animator.h" />
+    <ClInclude Include="M2\M2_AnimatorComponent.h" />
     <ClInclude Include="M2\M2_Base_Instance.h" />
     <ClInclude Include="M2\M2_CameraComponent.h" />
     <ClInclude Include="M2\M2_ColliderComponent.h" />

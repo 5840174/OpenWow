@@ -13,7 +13,7 @@ public:
 	CM2_Part_Camera(const CM2& M2Model, const std::shared_ptr<IByteBuffer>& File, const SM2_Camera& M2Camera);
 	virtual ~CM2_Part_Camera();
 
-	bool Calculate(const CM2_Base_Instance* M2Instance, uint32 globalTime, float AspectRatio, const glm::mat4& OriginMatrix, glm::vec3 * Position,  glm::vec3 * Direction, glm::mat4 * Projection, glm::mat4 * View) const;
+	bool Calculate(const CM2_Base_Instance& M2Instance, uint32 globalTime, float AspectRatio, const glm::mat4& OriginMatrix, glm::vec3 * Position,  glm::vec3 * Direction, glm::mat4 * Projection, glm::mat4 * View) const;
 
 private:
 	float m_DFov;

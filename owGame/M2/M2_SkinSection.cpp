@@ -122,7 +122,7 @@ CM2_SkinSection::~CM2_SkinSection()
 
 void CM2_SkinSection::UpdateGeometryProps(const RenderEventArgs& RenderEventArgs, const CM2_Base_Instance * M2Instance)
 {
-	M2Instance->getAnimator()->Update(RenderEventArgs.TotalTime, RenderEventArgs.DeltaTime);
+	//M2Instance->getAnimator()->Update(RenderEventArgs.TotalTime, RenderEventArgs.DeltaTime);
 
 	m_Properties->gIsAnimated = m_M2Model.getSkeleton().hasBones() && m_M2Model.isAnimated();
 	if (m_Properties->gIsAnimated)

@@ -17,10 +17,6 @@ CM2CameraComponent::CM2CameraComponent(const CM2_Base_Instance& OwnerNode, const
 	, m_Direction(glm::vec3(0.0f))
 {
 	m_Aspect = float(GetOwnerNode().GetScene().GetRenderWindow().GetWindowWidth()) / float(GetOwnerNode().GetScene().GetRenderWindow().GetWindowHeight());
-
-#ifndef ZENON_ENGINE_ONLY_RUNTIME
-	GetProperties()->SetName("M2CameraComponent");
-#endif
 }
 
 CM2CameraComponent::~CM2CameraComponent()
@@ -147,7 +143,7 @@ void CM2CameraComponent::Update(const UpdateEventArgs & e)
 //
 // Protected
 //
-const CM2_Base_Instance* CM2CameraComponent::GetM2OwnerNode() const
+const CM2_Base_Instance& CM2CameraComponent::GetM2OwnerNode() const
 {
-	return dynamic_cast<const CM2_Base_Instance*>(&GetOwnerNode());
+	return dynamic_cast<const CM2_Base_Instance&>(GetOwnerNode());
 }

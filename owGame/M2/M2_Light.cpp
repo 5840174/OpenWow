@@ -29,7 +29,7 @@ void CM2Light::Calculate(const CM2_Base_Instance& M2Instance, uint32 GlobalTime)
 		throw CException("CM2Light::Calculate: Unknown light type.");
 
 
-	if (const auto& animator = M2Instance.getAnimator())
+	if (const auto& animator = M2Instance.GetAnimatorComponent())
 	{
 		// Visibility
 		if (m_M2Light.visibility.IsUsesBySequence(animator->getSequenceIndex()))

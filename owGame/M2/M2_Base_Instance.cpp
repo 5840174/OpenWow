@@ -105,14 +105,11 @@ void CM2_Base_Instance::Update(const UpdateEventArgs & e)
 {
 	if (GetState() != ILoadable::ELoadableState::Loaded)
 		return;
-
-	if (m_Animator)
-		m_Animator->Update(e.TotalTime, e.DeltaTime);
 }
 
 void CM2_Base_Instance::Accept(IVisitor* visitor)
 {
-	CSceneNode::Accept(visitor);
+	__super::Accept(visitor);
 }
 
 
@@ -128,7 +125,7 @@ bool CM2_Base_Instance::Load()
 	}
 
 	if (GetM2().isAnimated())
-		m_Animator = MakeShared(CM2_Animator, GetBaseManager(), GetM2());
+		m_AnimatorComponent = AddComponentT(MakeShared(CM2AnimatorComponent, *this));
 
 	if (GetM2().getSkeleton().hasBones())
 		m_SkeletonComponent = AddComponentT(MakeShared(CM2SkeletonComponent, *this));
@@ -163,6 +160,8 @@ glm::mat4 CM2_Base_Instance::CalculateLocalTransform() const
 		if (auto parent = GetParent())
 		{
 			auto parentM2Instance = std::dynamic_pointer_cast<CM2_Base_Instance>(parent);
+			if (parentM2Instance == nullptr)
+				throw CException("CM2_Base_Instance::CalculateLocalTransform: Parent is nullptr.");
 			_ASSERT(parentM2Instance != nullptr);
 
 			uint16 boneIndex = parentM2Instance->GetM2().getMiscellaneous().getAttachment(m_AttachmentType)->GetBoneIndex();

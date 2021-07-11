@@ -3,22 +3,31 @@
 #include "M2_Types.h"
 #include "M2_Animation.h"
 
-class ZN_API CM2_Animator
+// FORWARD BEGIN
+class CM2;
+class CM2_Base_Instance;
+// FORWARD END
+
+class ZN_API CM2AnimatorComponent
+	: public CSceneNodeComponentBase
 {
 public:
-	CM2_Animator(const IBaseManager& BaseManager, const CM2& M2Model);
-	virtual ~CM2_Animator();
+	ZN_OBJECTCLASS(cSceneNodeComponentM2AnimatorComponent);
+
+	CM2AnimatorComponent(const CM2_Base_Instance& OwnerNode);
+	virtual ~CM2AnimatorComponent();
 
 	void PlayAnimation(uint16 AnimationId, bool Loop);
 	void PrintList();
-	void Update(double _time, double _dTime);
 
 	uint16 getSequenceIndex() const { return m_CurrentAnimation->getSequenceIndex(); }
 	uint32 getCurrentTime() { return m_CurrentTime; }
-	//uint32 getStart() const { return m_CurrentAnimation->getStart(); }
-	//uint32 getEnd() const { return m_CurrentAnimation->getEnd(); }
 
-	//void setOnEndFunction(Function* _onEnd);
+	// ISceneNodeComponent
+	void Update(const UpdateEventArgs& e) override;
+
+protected:
+	const CM2_Base_Instance& GetM2OwnerNode() const;
 
 private:
 	std::unordered_map<uint16, std::shared_ptr<CM2_Animation>>	m_Animations;
@@ -28,9 +37,6 @@ private:
 
 	//Function*					m_OnAnimationEnded;
 
-	double						animtime;
+	double						m_AnimTime;
 	uint32						m_CurrentTime;
-
-private:
-	const CM2& m_M2Model;
 };

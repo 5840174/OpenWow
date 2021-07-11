@@ -26,7 +26,7 @@ CM2_Part_Bone::~CM2_Part_Bone()
 glm::mat4 CM2_Part_Bone::calcMatrix(const CM2_Base_Instance& M2Instance, uint32 globalTime) const
 {
 	glm::mat4 m(1.0f);
-	if (const auto& animator = M2Instance.getAnimator())
+	if (const auto& animator = M2Instance.GetAnimatorComponent())
 	{
 		if (IsInterpolated(animator->getSequenceIndex()))
 		{
@@ -50,7 +50,7 @@ glm::mat4 CM2_Part_Bone::calcMatrix(const CM2_Base_Instance& M2Instance, uint32 
 
 glm::mat4 CM2_Part_Bone::calcRotationMatrix(const CM2_Base_Instance& M2Instance, uint32 globalTime) const
 {
-	if (const auto& animator = M2Instance.getAnimator())
+	if (const auto& animator = M2Instance.GetAnimatorComponent())
 	{
 		if (m_RotateAnimated.IsUsesBySequence(animator->getSequenceIndex()))
 			return glm::toMat4(m_RotateAnimated.GetValue(animator->getSequenceIndex(), animator->getCurrentTime(), m_M2Object.getSkeleton().getGlobalLoops(), globalTime));

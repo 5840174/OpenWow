@@ -56,6 +56,10 @@ public:
 	SCharacterItemTemplate GetItemDisplayInfoIDByItemID(uint32 ItemID);
 
 protected:
+	void OnMounted(uint32 MountDisplayID);
+	void OnDismounted();
+
+protected:
 	uint32 m_MovementFlags;
 	uint16 m_MovementFlagsExtra;
 
@@ -80,10 +84,14 @@ protected:
 	// spline
 	float m_SplineElevation;
 
+
 	float m_Speed[9];
 
 
+	std::shared_ptr<CCreature> m_UnitModel;
 	std::shared_ptr<CCreature> m_MountModel;
 };
+
+ZN_API extern float gravity;
 
 #endif

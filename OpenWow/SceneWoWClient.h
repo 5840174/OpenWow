@@ -30,6 +30,9 @@ protected:
 private:
 	std::shared_ptr<CM2_Base_Instance> m_MainMenu;
 	
+	std::shared_ptr<ISceneNode> m_DefaultLightNode;
+	std::shared_ptr<ISceneNode> m_DefaultCameraNode;
+
 	std::unique_ptr<CWoWClient> m_WowClient;
 	std::shared_ptr<IUIControlText> m_RendererStatisticText;
 };

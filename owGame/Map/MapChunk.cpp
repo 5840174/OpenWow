@@ -527,7 +527,7 @@ bool CMapChunk::Delete()
 		float fdx = -texanimxtab[dir], fdy = texanimytab[dir];
 
 		int animspd = (int)(200.0f * C_DetailSize);
-		float f = (((int)(_TimeManager->animtime * (spd / 15.0f))) % animspd) / (float)animspd;
+		float f = (((int)(_TimeManager->m_AnimTime * (spd / 15.0f))) % animspd) / (float)animspd;
 		glTranslatef(f * fdx, f * fdy, 0);
 	}
 

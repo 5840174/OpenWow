@@ -65,8 +65,7 @@ ZN_MAKE_OBJECTCLASS(cUIControlMinimap, 500);
 // 700 - 799 SceneNodeComponent custom
 //
 ZN_MAKE_OBJECTCLASS(cSceneNodeComponentM2SkeletonComponent, 700);
-ZN_MAKE_OBJECTCLASS(cSceneNodeComponentM2ParticlesComponent, 701);
-
+ZN_MAKE_OBJECTCLASS(cSceneNodeComponentM2AnimatorComponent, 702);
 
 
 struct ISceneNodeProvider
@@ -76,7 +75,6 @@ struct ISceneNodeProvider
 
 
 // Interfaces
-#include "Interfaces/ILiquid.h"
 #include "Interfaces/Managers.h"
 
 #include "DBC/DBC__Storage.h"

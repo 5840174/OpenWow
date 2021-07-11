@@ -39,7 +39,7 @@ glm::mat4 CM2_Part_TextureTransform::GetTransform(const CM2_Base_Instance* M2Ins
 {
 	glm::mat4 matrix(1.0f);
 	
-	if (const auto& animator = M2Instance->getAnimator())
+	if (const auto& animator = M2Instance->GetAnimatorComponent())
 	{
 		if (m_TranslateAnimated.IsUsesBySequence(animator->getSequenceIndex()))
 		{

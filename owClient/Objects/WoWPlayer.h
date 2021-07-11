@@ -55,6 +55,8 @@ private:
 public:
 	static std::shared_ptr<WoWPlayer> Create(CWoWWorld& WoWWorld, IScene& Scene, CWoWGuid Guid);
 	virtual void Destroy() override;
+
+
 };
 
 #endif

@@ -37,7 +37,7 @@ void WoWGameObject::OnValuesUpdated(const UpdateMask & Mask)
 	{
 		uint32 diplayID = m_Values.GetUInt32Value(GAMEOBJECT_DISPLAYID);
 
-		if (m_HiddenNode != nullptr)
+		if (m_GameObjectModel != nullptr)
 		{
 			//Log::Warn("WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.");
 			return;
@@ -46,7 +46,7 @@ void WoWGameObject::OnValuesUpdated(const UpdateMask & Mask)
 		try
 		{
 			CWorldObjectCreator creator(GetScene().GetBaseManager());
-			m_HiddenNode = creator.BuildGameObjectFromDisplayInfo(GetScene().GetBaseManager().GetApplication().GetRenderDevice(), GetScene(), diplayID);
+			m_GameObjectModel = creator.BuildGameObjectFromDisplayInfo(GetScene().GetBaseManager().GetApplication().GetRenderDevice(), GetScene(), diplayID);
 
 			//const DBC_CreatureDisplayInfoRecord * creatureDisplayInfo = GetBaseManager().GetManager<CDBCStorage>()->DBC_CreatureDisplayInfo()[diplayID];
 			//if (creatureDisplayInfo == nullptr)
@@ -59,7 +59,7 @@ void WoWGameObject::OnValuesUpdated(const UpdateMask & Mask)
 			//float scaleFromCreature = creatureDisplayInfo->Get_Scale();
 			//float scaleFromModel = creatureModelDataRecord->Get_Scale();
 			float scale = m_Values.GetFloatValue(OBJECT_FIELD_SCALE_X);
-			m_HiddenNode->SetScale(glm::vec3(scale));
+			m_GameObjectModel->SetScale(glm::vec3(scale));
 		
 
 		}
@@ -104,8 +104,8 @@ std::shared_ptr<WoWGameObject> WoWGameObject::Create(CWoWWorld& WoWWorld, IScene
 
 void WoWGameObject::Destroy()
 {
-	if (m_HiddenNode)
-		m_HiddenNode->MakeMeOrphan();
+	if (m_GameObjectModel)
+		m_GameObjectModel->MakeMeOrphan();
 }
 
 #endif

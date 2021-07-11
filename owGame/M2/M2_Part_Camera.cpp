@@ -26,9 +26,9 @@ CM2_Part_Camera::~CM2_Part_Camera()
 {
 }
 
-bool CM2_Part_Camera::Calculate(const CM2_Base_Instance * M2Instance, uint32 globalTime, float AspectRatio, const glm::mat4& OriginMatrix, glm::vec3 * Position, glm::vec3 * Direction, glm::mat4 * Projection, glm::mat4 * View) const
+bool CM2_Part_Camera::Calculate(const CM2_Base_Instance& M2Instance, uint32 globalTime, float AspectRatio, const glm::mat4& OriginMatrix, glm::vec3 * Position, glm::vec3 * Direction, glm::mat4 * Projection, glm::mat4 * View) const
 {
-	const auto& animator = M2Instance->getAnimator();
+	const auto& animator = M2Instance.GetAnimatorComponent();
 	if (animator == nullptr)
 		return false;
 

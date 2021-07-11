@@ -71,11 +71,11 @@ void CRendererWoW::InitializeForward(std::shared_ptr<IRenderTarget> OutputRender
 	Add3DPass(MakeShared(CRenderPass_MapChunkList, GetRenderDevice(), m_SceneListTypelessPass)->ConfigurePipeline(OutputRenderTarget));
 	Add3DPass(MakeShared(CRenderPass_WMOList, GetRenderDevice(), m_SceneListTypelessPass)->ConfigurePipeline(OutputRenderTarget));
 	
-	Add3DPass(MakeShared(CRenderPass_M2List, GetRenderDevice(), m_SceneListTypelessPass, ERenderPassM2DrawMode::All)->ConfigurePipeline(OutputRenderTarget));
+	//Add3DPass(MakeShared(CRenderPass_M2List, GetRenderDevice(), m_SceneListTypelessPass, ERenderPassM2DrawMode::All)->ConfigurePipeline(OutputRenderTarget));
 	//Add3DPass(MakeShared(CRenderPass_M2List, GetRenderDevice(), m_SceneListTypelessPass, ERenderPassM2DrawMode::Opaque)->ConfigurePipeline(OutputRenderTarget));
 	//Add3DPass(MakeShared(CRenderPass_M2List, GetRenderDevice(), m_SceneListTypelessPass, ERenderPassM2DrawMode::Transperent)->ConfigurePipeline(OutputRenderTarget));
 	
-	//Add3DPass(MakeShared(CRenderPass_M2InstancedList, GetRenderDevice(), m_SceneListTypelessPass, ERenderPassM2DrawMode::All)->ConfigurePipeline(OutputRenderTarget));
+	Add3DPass(MakeShared(CRenderPass_M2InstancedList, GetRenderDevice(), m_SceneListTypelessPass, ERenderPassM2DrawMode::All)->ConfigurePipeline(OutputRenderTarget));
 	//Add3DPass(MakeShared(CRenderPass_M2InstancedList, GetRenderDevice(), m_SceneListTypelessPass, ERenderPassM2DrawMode::Opaque)->ConfigurePipeline(OutputRenderTarget));
 	//Add3DPass(MakeShared(CRenderPass_M2InstancedList, GetRenderDevice(), m_SceneListTypelessPass, ERenderPassM2DrawMode::Transperent)->ConfigurePipeline(OutputRenderTarget));
 	
@@ -102,8 +102,8 @@ void CRendererWoW::InitializeForward(std::shared_ptr<IRenderTarget> OutputRender
 	AddUIPass(MakeShared(CUIFontPass, GetRenderDevice(), GetScene())->ConfigurePipeline(OutputRenderTarget));
 	//AddUIPass(MakeShared(CUIControlDebugBounds, GetRenderDevice(), GetScene())->ConfigurePipeline(OutputRenderTarget));
 
-	//std::shared_ptr<CUIConsolePass> consolePass = MakeShared(CUIConsolePass, m_RenderDevice);
-	//consolePass->Configure(OutputRenderTarget);
+	//auto consolePass = MakeShared(CUIConsolePass, GetRenderDevice());
+	//consolePass->ConfigurePipelines(OutputRenderTarget);
 	//AddUIPass(consolePass);
 }
 
@@ -209,7 +209,7 @@ std::shared_ptr<IRenderTarget> CRendererWoW::CreateGBuffer(std::shared_ptr<IRend
 		ITexture::Components::DepthStencil,
 		ITexture::Type::UnsignedNormalized,
 		RenderTarget->GetSamplesCount(),
-		0, 0, 0, 0, 24, 8);
+		0, 0, 0, 0, 32, 8);
 	auto m_DepthStencilTexture = GetRenderDevice().GetObjectsFactory().CreateTexture2D(RenderTarget->GetViewport().GetWidth(), RenderTarget->GetViewport().GetHeight(), 1, depthStencilTextureFormat);
 
 	auto rt = GetRenderDevice().GetObjectsFactory().CreateRenderTarget();

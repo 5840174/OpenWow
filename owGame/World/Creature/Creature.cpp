@@ -27,7 +27,7 @@ void CCreature::Initialize()
 	__super::Initialize();
 
 	GetColliderComponent()->SetDebugDrawColor(ColorRGBA(1.0f, 0.0f, 0.0f, 1.0f));
-	GetColliderComponent()->SetDebugDrawMode(true);
+	GetColliderComponent()->SetDebugDrawMode(false);
 }
 
 #endif

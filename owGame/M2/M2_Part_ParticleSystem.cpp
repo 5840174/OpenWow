@@ -66,8 +66,8 @@ void CM2_Part_ParticleSystem::update(const CM2_Base_Instance* M2Instance, const 
 	float deltaTime = float(e.DeltaTime) / 1000.0f * float(e.DeltaTimeMultiplier);
 	uint32 globalTime = static_cast<uint32>(e.TotalTime);
 
-	uint32 sequence = M2Instance->getAnimator()->getSequenceIndex();
-	uint32 sequenceTime = M2Instance->getAnimator()->getCurrentTime();
+	uint32 sequence = M2Instance->GetAnimatorComponent()->getSequenceIndex();
+	uint32 sequenceTime = M2Instance->GetAnimatorComponent()->getCurrentTime();
 
 	glm::vec3 gravity;
 	gravity = glm::vec3(0.0f, 0.0f, m_Gravity.GetValue(sequence, sequenceTime, m_M2Object.getSkeleton().getGlobalLoops(), globalTime));
@@ -161,8 +161,8 @@ void CM2_Part_ParticleSystem::CreateAndDeleteParticles(const CM2_Base_Instance *
 	double deltaTime = e.DeltaTime / 1000.0 * float(e.DeltaTimeMultiplier);
 	uint32 globalTime = static_cast<uint32>(e.TotalTime);
 	
-	uint32 sequence = M2Instance->getAnimator()->getSequenceIndex();
-	uint32 sequenceTime = M2Instance->getAnimator()->getCurrentTime();
+	uint32 sequence = M2Instance->GetAnimatorComponent()->getSequenceIndex();
+	uint32 sequenceTime = M2Instance->GetAnimatorComponent()->getCurrentTime();
 
 
 	float emissionRateValue = emissionRate.GetValue(sequence, sequenceTime, m_M2Object.getSkeleton().getGlobalLoops(), globalTime);

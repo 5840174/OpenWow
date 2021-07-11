@@ -2,10 +2,8 @@
 
 #include "M2.h"
 
-#include "../Interfaces/M2Interfaces.h"
-
 // Components
-#include "M2_Animator.h"
+#include "M2_AnimatorComponent.h"
 #include "M2_SkeletonComponent.h"
 #include "M2_ParticlesComponent.h"
 #include "M2_CameraComponent.h"
@@ -29,9 +27,9 @@ public:
 	std::shared_ptr<CM2CameraComponent> CreateCameraComponent(uint16 CameraDirectIndex);
 
 	// Color & Alpha
-	void                                setColor(glm::vec4 _color) { m_Color = _color; }
+	void                                setColor(glm::vec4 Color) { m_Color = Color; }
 	const glm::vec4&                    getColor() const { return m_Color; }
-	void                                setAlpha(float _alpha) { m_Alpha = _alpha; }
+	void                                setAlpha(float Alpha) { m_Alpha = Alpha; }
 	float                               getAlpha() const { return m_Alpha; }
 
 	// Mesh & textures provider
@@ -39,11 +37,11 @@ public:
 	void                                setSpecialTexture(SM2_Texture::Type _type, const std::shared_ptr<ITexture>& _texture);
 	const std::shared_ptr<ITexture>&    getSpecialTexture(SM2_Texture::Type _type) const;
 
-	// Animations
-	const std::shared_ptr<CM2_Animator>&           getAnimator() const { return m_Animator; }
+	// Components
+	const std::shared_ptr<CM2AnimatorComponent>& GetAnimatorComponent() const { return m_AnimatorComponent; }
 	const std::shared_ptr<CM2SkeletonComponent>  getSkeletonComponent() const { return m_SkeletonComponent; }
 #ifdef USE_M2_PARTICLES
-	const std::shared_ptr<CM2ParticlesComponent>   getParticleComponent() const { return m_ParticleComponent; }
+	const std::shared_ptr<CM2ParticlesComponent> getParticleComponent() const { return m_ParticleComponent; }
 #endif
 
 	// ISceneNode
@@ -61,7 +59,7 @@ protected:
 
 private:
 	// This M2Instance attached to parent
-	EM2_AttachmentPoint                   m_AttachmentType;
+	EM2_AttachmentPoint                 m_AttachmentType;
 
 	// Color & Alpha
 	glm::vec4                           m_Color;
@@ -71,7 +69,7 @@ private:
 	std::shared_ptr<ITexture>		    m_SpecialTextures[SM2_Texture::Type::COUNT];
 
 	// Animtion
-	std::shared_ptr<CM2_Animator>           m_Animator;
+	std::shared_ptr<CM2AnimatorComponent>           m_AnimatorComponent;
 	std::shared_ptr<CM2SkeletonComponent> m_SkeletonComponent;
 #ifdef USE_M2_PARTICLES
 	std::shared_ptr<CM2ParticlesComponent>m_ParticleComponent;

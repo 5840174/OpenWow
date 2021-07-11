@@ -25,19 +25,24 @@ void WoWPlayer::OnValuesUpdated(const UpdateMask & Mask)
 	{
 		uint32 displayID = m_Values.GetUInt32Value(UNIT_FIELD_DISPLAYID);
 
-		if (m_HiddenNode != nullptr)
+		if (m_UnitModel != nullptr)
 		{
 			//Log::Warn("WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.");
 			return;
 		}
 
 		CWorldObjectCreator creator(GetScene().GetBaseManager());
-		m_HiddenNode = creator.BuildEmptyCharacterFromDisplayInfo(GetScene().GetBaseManager().GetApplication().GetRenderDevice(), GetScene(), displayID);
+		m_UnitModel = creator.BuildEmptyCharacterFromDisplayInfo(GetScene().GetBaseManager().GetApplication().GetRenderDevice(), GetScene(), displayID);
+
+		if (m_MountModel)
+		{
+			m_MountModel->AddChild(m_UnitModel);
+		}
 	}
 
 	if (Mask.GetBit(UNIT_FIELD_BYTES_0))
 	{
-		if (auto characterModel = std::dynamic_pointer_cast<CCharacter>(m_HiddenNode))
+		if (auto characterModel = std::dynamic_pointer_cast<CCharacter>(m_UnitModel))
 		{
 			characterModel->Template().Race = (Race)GetRace();
 			characterModel->Template().Class = (Class)GetClass();
@@ -47,7 +52,7 @@ void WoWPlayer::OnValuesUpdated(const UpdateMask & Mask)
 
 	if (Mask.GetBit(PLAYER_BYTES))
 	{
-		if (auto characterModel = std::dynamic_pointer_cast<CCharacter>(m_HiddenNode))
+		if (auto characterModel = std::dynamic_pointer_cast<CCharacter>(m_UnitModel))
 		{
 			characterModel->Template().skin = GetSkinId();
 			characterModel->Template().face = GetFaceId();
@@ -58,7 +63,7 @@ void WoWPlayer::OnValuesUpdated(const UpdateMask & Mask)
 
 	if (Mask.GetBit(PLAYER_BYTES_2))
 	{
-		if (auto characterModel = std::dynamic_pointer_cast<CCharacter>(m_HiddenNode))
+		if (auto characterModel = std::dynamic_pointer_cast<CCharacter>(m_UnitModel))
 		{
 			characterModel->Template().facialStyle = GetFacialStyle();
 		}
@@ -66,8 +71,8 @@ void WoWPlayer::OnValuesUpdated(const UpdateMask & Mask)
 	
 	if (Mask.GetBit(PLAYER_BYTES_3))
 	{
-		auto characterModel = std::dynamic_pointer_cast<CCharacter>(m_HiddenNode);
-		if (auto characterModel = std::dynamic_pointer_cast<CCharacter>(m_HiddenNode))
+		auto characterModel = std::dynamic_pointer_cast<CCharacter>(m_UnitModel);
+		if (auto characterModel = std::dynamic_pointer_cast<CCharacter>(m_UnitModel))
 		{
 			characterModel->Template().Gender = (Gender)GetNativeGender();
 		}
@@ -77,14 +82,14 @@ void WoWPlayer::OnValuesUpdated(const UpdateMask & Mask)
 	{
 		if (Mask.GetBit(i))
 		{
-			if (auto characterModel = std::dynamic_pointer_cast<CCharacter>(m_HiddenNode))
+			if (auto characterModel = std::dynamic_pointer_cast<CCharacter>(m_UnitModel))
 			{
 				characterModel->SetItem((i - PLAYER_VISIBLE_ITEM_1_ENTRYID) / 2, GetItemDisplayInfoIDByItemID(m_Values.GetUInt32Value(i)));
 			}
 		}
 	} 
 
-	if (auto characterModel = std::dynamic_pointer_cast<CCharacter>(m_HiddenNode))
+	if (auto characterModel = std::dynamic_pointer_cast<CCharacter>(m_UnitModel))
 	{
 		// Items
 		//characterModel->Refresh_CharacterItemsFromTemplate();
@@ -100,19 +105,9 @@ void WoWPlayer::OnValuesUpdated(const UpdateMask & Mask)
 	{
 		uint32 flags = m_Values.GetUInt32Value(UNIT_FIELD_FLAGS);
 		if (flags & UNIT_FLAG_MOUNT)
-		{
-			auto mountDisplayID = m_Values.GetUInt32Value(UNIT_FIELD_MOUNTDISPLAYID);
-
-			CWorldObjectCreator creator(GetScene().GetBaseManager());
-			m_MountModel = creator.BuildCreatureFromDisplayInfo(GetScene().GetBaseManager().GetApplication().GetRenderDevice(), GetScene(), mountDisplayID);
-
-			//Log::Error("MountDisplayId = %d", mountDisplayID);
-		}
+			OnMounted(m_Values.GetUInt32Value(UNIT_FIELD_MOUNTDISPLAYID));
 		else
-		{
-			if (m_MountModel)
-				m_MountModel->MakeMeOrphan();
-		}
+			OnDismounted();
 	}
 
 	//__super::OnValuesUpdated(Mask);
@@ -131,5 +126,7 @@ std::shared_ptr<WoWPlayer> WoWPlayer::Create(CWoWWorld& WoWWorld, IScene& Scene,
 
 void WoWPlayer::Destroy()
 {}
+
+
 
 #endif

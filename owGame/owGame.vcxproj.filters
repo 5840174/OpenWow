@@ -40,9 +40,6 @@
     <Filter Include="M2">
       <UniqueIdentifier>{7bc7386a-273c-4b2d-ab6c-b6e6249d84b1}</UniqueIdentifier>
     </Filter>
-    <Filter Include="M2\Animations">
-      <UniqueIdentifier>{24d1f815-62cb-4320-a2ff-bc9199660f64}</UniqueIdentifier>
-    </Filter>
     <Filter Include="M2\Skins">
       <UniqueIdentifier>{eaa7b9b7-5402-4eff-81e6-638a3975d10d}</UniqueIdentifier>
     </Filter>
@@ -160,6 +157,15 @@
     <Filter Include="WMO\Components">
       <UniqueIdentifier>{6854c26f-2061-4488-bfc7-344ae4e5ffb2}</UniqueIdentifier>
     </Filter>
+    <Filter Include="M2\Components\Light">
+      <UniqueIdentifier>{324d7ec6-dbaa-4dfe-bed4-094be2d357ef}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="M2\Components\Skeleton">
+      <UniqueIdentifier>{cfd666d2-a211-4113-ae29-6b53f560b4d9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="M2\Components\Animations">
+      <UniqueIdentifier>{333c5508-7dbd-4a95-bf2e-5f327dc85316}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -224,9 +230,6 @@
     </ClCompile>
     <ClCompile Include="M2\M2_Part_Bone.cpp">
       <Filter>M2\Parts\Parts_Skeleton</Filter>
-    </ClCompile>
-    <ClCompile Include="M2\M2_Animation.cpp">
-      <Filter>M2\Animations</Filter>
     </ClCompile>
     <ClCompile Include="M2\M2_RibbonEmitters.cpp">
       <Filter>M2\Parts\Parts_Miscellaneous\Ribbons</Filter>
@@ -347,12 +350,6 @@
     </ClCompile>
     <ClCompile Include="Settings\WoWSettingsGroup.cpp">
       <Filter>Utils</Filter>
-    </ClCompile>
-    <ClCompile Include="M2\M2_AnimationSet.cpp">
-      <Filter>M2\Animations</Filter>
-    </ClCompile>
-    <ClCompile Include="M2\M2_Animator.cpp">
-      <Filter>M2\Instances</Filter>
     </ClCompile>
     <ClCompile Include="Map\MapTileLiquid.cpp">
       <Filter>Map\MapTile</Filter>
@@ -489,19 +486,7 @@
     <ClCompile Include="M2\M2_ColliderComponent.cpp">
       <Filter>M2\Components</Filter>
     </ClCompile>
-    <ClCompile Include="M2\M2_LightComponent.cpp">
-      <Filter>M2\Components</Filter>
-    </ClCompile>
     <ClCompile Include="M2\M2_ParticlesComponent.cpp">
-      <Filter>M2\Components</Filter>
-    </ClCompile>
-    <ClCompile Include="M2\M2_SkeletonBone.cpp">
-      <Filter>M2\Components</Filter>
-    </ClCompile>
-    <ClCompile Include="M2\M2_SkeletonComponent.cpp">
-      <Filter>M2\Components</Filter>
-    </ClCompile>
-    <ClCompile Include="M2\M2_Light.cpp">
       <Filter>M2\Components</Filter>
     </ClCompile>
     <ClCompile Include="WMO\WMO_LightComponent.cpp">
@@ -509,6 +494,27 @@
     </ClCompile>
     <ClCompile Include="WMO\WMO_Light.cpp">
       <Filter>WMO\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="M2\M2_LightComponent.cpp">
+      <Filter>M2\Components\Light</Filter>
+    </ClCompile>
+    <ClCompile Include="M2\M2_Light.cpp">
+      <Filter>M2\Components\Light</Filter>
+    </ClCompile>
+    <ClCompile Include="M2\M2_SkeletonBone.cpp">
+      <Filter>M2\Components\Skeleton</Filter>
+    </ClCompile>
+    <ClCompile Include="M2\M2_SkeletonComponent.cpp">
+      <Filter>M2\Components\Skeleton</Filter>
+    </ClCompile>
+    <ClCompile Include="M2\M2_Animation.cpp">
+      <Filter>M2\Components\Animations</Filter>
+    </ClCompile>
+    <ClCompile Include="M2\M2_AnimationSet.cpp">
+      <Filter>M2\Components\Animations</Filter>
+    </ClCompile>
+    <ClCompile Include="M2\M2_AnimatorComponent.cpp">
+      <Filter>M2\Components\Animations</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -620,9 +626,6 @@
     <ClInclude Include="Interfaces\Managers.h">
       <Filter>Interfaces</Filter>
     </ClInclude>
-    <ClInclude Include="Interfaces\ILiquid.h">
-      <Filter>Interfaces</Filter>
-    </ClInclude>
     <ClInclude Include="M2\M2.h">
       <Filter>M2</Filter>
     </ClInclude>
@@ -697,9 +700,6 @@
     </ClInclude>
     <ClInclude Include="M2\M2_Part_Bone.h">
       <Filter>M2\Parts\Parts_Skeleton</Filter>
-    </ClInclude>
-    <ClInclude Include="M2\M2_Animation.h">
-      <Filter>M2\Animations</Filter>
     </ClInclude>
     <ClInclude Include="M2\M2_RibbonEmitters.h">
       <Filter>M2\Parts\Parts_Miscellaneous\Ribbons</Filter>
@@ -866,17 +866,8 @@
     <ClInclude Include="DBC\Tables\DBC_GameObjectDisplayInfo.h">
       <Filter>DBC\Tables\GameObject</Filter>
     </ClInclude>
-    <ClInclude Include="M2\M2_AnimationSet.h">
-      <Filter>M2\Animations</Filter>
-    </ClInclude>
-    <ClInclude Include="M2\M2_Animator.h">
-      <Filter>M2\Instances</Filter>
-    </ClInclude>
     <ClInclude Include="Map\MapTileLiquid.h">
       <Filter>Map\MapTile</Filter>
-    </ClInclude>
-    <ClInclude Include="Interfaces\M2Interfaces.h">
-      <Filter>Interfaces</Filter>
     </ClInclude>
     <ClInclude Include="Renderer\RendererWoW.h">
       <Filter>Renderer</Filter>
@@ -1049,19 +1040,7 @@
     <ClInclude Include="M2\M2_ColliderComponent.h">
       <Filter>M2\Components</Filter>
     </ClInclude>
-    <ClInclude Include="M2\M2_LightComponent.h">
-      <Filter>M2\Components</Filter>
-    </ClInclude>
     <ClInclude Include="M2\M2_ParticlesComponent.h">
-      <Filter>M2\Components</Filter>
-    </ClInclude>
-    <ClInclude Include="M2\M2_SkeletonBone.h">
-      <Filter>M2\Components</Filter>
-    </ClInclude>
-    <ClInclude Include="M2\M2_SkeletonComponent.h">
-      <Filter>M2\Components</Filter>
-    </ClInclude>
-    <ClInclude Include="M2\M2_Light.h">
       <Filter>M2\Components</Filter>
     </ClInclude>
     <ClInclude Include="WMO\WMO_LightComponent.h">
@@ -1069,6 +1048,27 @@
     </ClInclude>
     <ClInclude Include="WMO\WMO_Light.h">
       <Filter>WMO\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="M2\M2_LightComponent.h">
+      <Filter>M2\Components\Light</Filter>
+    </ClInclude>
+    <ClInclude Include="M2\M2_Light.h">
+      <Filter>M2\Components\Light</Filter>
+    </ClInclude>
+    <ClInclude Include="M2\M2_SkeletonBone.h">
+      <Filter>M2\Components\Skeleton</Filter>
+    </ClInclude>
+    <ClInclude Include="M2\M2_SkeletonComponent.h">
+      <Filter>M2\Components\Skeleton</Filter>
+    </ClInclude>
+    <ClInclude Include="M2\M2_Animation.h">
+      <Filter>M2\Components\Animations</Filter>
+    </ClInclude>
+    <ClInclude Include="M2\M2_AnimationSet.h">
+      <Filter>M2\Components\Animations</Filter>
+    </ClInclude>
+    <ClInclude Include="M2\M2_AnimatorComponent.h">
+      <Filter>M2\Components\Animations</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

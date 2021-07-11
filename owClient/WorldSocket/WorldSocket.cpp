@@ -94,23 +94,22 @@ CWorldSocket::CWorldSocket(const std::string& Login, BigNumber Key)
 
 	AddHandler(SMSG_AUTH_CHALLENGE, std::bind(&CWorldSocket::On_SMSG_AUTH_CHALLENGE, this, std::placeholders::_1));
 	AddHandler(SMSG_AUTH_RESPONSE,  std::bind(&CWorldSocket::On_SMSG_AUTH_RESPONSE, this, std::placeholders::_1));
-	AddHandler(SMSG_WARDEN_DATA,    std::bind(&CWorldSocket::On_SMSG_WARDEN_DATA, this, std::placeholders::_1));
+	//AddHandler(SMSG_WARDEN_DATA,    std::bind(&CWorldSocket::On_SMSG_WARDEN_DATA, this, std::placeholders::_1));
 }
 
 CWorldSocket::~CWorldSocket()
 {
+	Disconnect();
+
 	m_UpdateThreadExiter.set_value();
-	_ASSERT(m_UpdateThread.joinable());
-	m_UpdateThread.join();
+	//while (false == m_UpdateThread.joinable());
+	//m_UpdateThread.join();
 }
 
 void CWorldSocket::Open(std::string Host, uint16 Port)
 {
 	if (false == Connect(Host, Port))
-	{
-		Log::Error("CWorldSocket: Unable to connect to '%s:%d'", Host.c_str(), Port);
-		return;
-	}
+		throw CException("CWorldSocket: Unable to connect to '%s:%d'", Host.c_str(), Port);
 
 	SetBlocking(true);
 }
@@ -122,13 +121,9 @@ void CWorldSocket::Update()
 		if (false == ProcessPacket(*packet))
 		{
 			if ((*packet).GetPacketOpcode() >= NUM_MSG_TYPES)
-			{
-				Log::Error("Opcode: ID '%d' (0x%X) is bigger then maximum opcode ID. Size: '%d'.", (*packet).GetPacketOpcode(), (*packet).GetPacketOpcode(), (*packet).GetPacketSize());
-			}
-			else
-			{
-				//Log::Info("Opcode: '%s' (0x%X). Size: '%d' not handled.", OpcodesNames[(*packet).GetPacketOpcode()], (*packet).GetPacketOpcode(), (*packet).GetPacketSize());
-			}
+				throw CException("Opcode: ID '%d' (0x%X) is bigger then maximum opcode ID. Size: '%d'.", (*packet).GetPacketOpcode(), (*packet).GetPacketOpcode(), (*packet).GetPacketSize());
+
+			//Log::Info("Opcode: '%s' (0x%X). Size: '%d' not handled.", OpcodesNames[(*packet).GetPacketOpcode()], (*packet).GetPacketOpcode(), (*packet).GetPacketSize());
 		}
 	}
 }
@@ -205,6 +200,8 @@ void CWorldSocket::UpdateFromThread(std::future<void> PromiseExiter)
 			Packet2(buffer, &m_CurrentPacket, m_PacketsQueue);
 		}
 	}
+
+	Log::Info("CWorldSocket::UpdateFromThread: Stopped");
 }
 
 

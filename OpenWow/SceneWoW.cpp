@@ -310,7 +310,7 @@ void CSceneWoW::OnWindowKeyReleased(KeyEventArgs & e)
 void CSceneWoW::InitializeRenderer()
 {
 	auto wowRenderer = MakeShared(CRendererWoW, GetBaseManager(), *this);
-	wowRenderer->InitializeDeffered(GetRenderWindow().GetRenderTarget());
+	wowRenderer->InitializeForward(GetRenderWindow().GetRenderTarget());
 	m_ForwardRenderer = wowRenderer;
 	m_DefferedRenderrer = wowRenderer;
 
@@ -340,8 +340,8 @@ void CSceneWoW::M2Test()
 			if (creature != nullptr)
 			{
 				creature->SetPosition(glm::vec3(i * 25.0f, 0.0f, j * 25.0f));
-				if (creature->getAnimator())
-					creature->getAnimator()->PlayAnimation(4, true);
+				if (creature->GetAnimatorComponent())
+					creature->GetAnimatorComponent()->PlayAnimation(4, true);
 			}
 		}
 	}

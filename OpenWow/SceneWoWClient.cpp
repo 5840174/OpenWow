@@ -50,33 +50,33 @@ void CSceneWoWClient::Initialize()
 
 	// Light
 	{
-		auto lightNode = CreateSceneNodeT<ISceneNode>();
-		lightNode->SetName("Light");
-		lightNode->SetLocalPosition(glm::vec3(-50.0f, 250.0f, -50.0f));
-		lightNode->SetLocalRotationDirection(glm::vec3(-0.5, -0.5f, -0.5f));
+		m_DefaultLightNode = CreateSceneNodeT<ISceneNode>();
+		m_DefaultLightNode->SetName("Light");
+		m_DefaultLightNode->SetLocalPosition(glm::vec3(-50.0f, 250.0f, -50.0f));
+		m_DefaultLightNode->SetLocalRotationDirection(glm::vec3(-0.5, -0.5f, -0.5f));
 		//lightNode->SetLocalRotationEuler(glm::vec3(45.0f, -45.0f, 0.0f));
 
-		auto lightComponent = GetBaseManager().GetManager<IObjectsFactory>()->GetClassFactoryCast<IComponentFactory>()->CreateComponentT<CLightComponent>(cSceneNodeLightComponent, *lightNode.get());
+		auto lightComponent = GetBaseManager().GetManager<IObjectsFactory>()->GetClassFactoryCast<IComponentFactory>()->CreateComponentT<CLightComponent>(cSceneNodeLightComponent, *m_DefaultLightNode.get());
 		lightComponent->SetLight(MakeShared(CLight, GetBaseManager()));
-		lightComponent->GetLight()->SetCastShadows(true);
+		lightComponent->GetLight()->SetCastShadows(false);
 		lightComponent->GetLight()->SetType(ELightType::Directional);
 		lightComponent->GetLight()->SetAmbientColor(ColorRGB(0.25f));
 		lightComponent->GetLight()->SetColor(ColorRGB(1.0f, 1.0f, 1.0f));
-		lightComponent->GetLight()->SetRange(1000.0f);
+		lightComponent->GetLight()->SetRange(1500.0f);
 		lightComponent->GetLight()->SetIntensity(1.0077f);
 		lightComponent->GetLight()->SetSpotlightAngle(30.0f);
 
-		lightNode->AddComponent(cSceneNodeLightComponent, lightComponent);
+		m_DefaultLightNode->AddComponent(cSceneNodeLightComponent, lightComponent);
 	}
 
 	// Camera
 	{
-		auto cameraNode = CreateSceneNodeT<ISceneNode>();
-		cameraNode->SetName("Camera");
-		cameraNode->AddComponentT(GetBaseManager().GetManager<IObjectsFactory>()->GetClassFactoryCast<IComponentFactory>()->CreateComponentT<ICameraComponent3D>(cSceneNodeCameraComponent, *cameraNode));
+		m_DefaultCameraNode = CreateSceneNodeT<ISceneNode>();
+		m_DefaultCameraNode->SetName("Camera");
+		m_DefaultCameraNode->AddComponentT(GetBaseManager().GetManager<IObjectsFactory>()->GetClassFactoryCast<IComponentFactory>()->CreateComponentT<ICameraComponent3D>(cSceneNodeCameraComponent, *m_DefaultCameraNode));
 
 		SetCameraController(MakeShared(CFreeCameraController));
-		GetCameraController()->SetCamera(cameraNode->GetComponentT<ICameraComponent3D>());
+		GetCameraController()->SetCamera(m_DefaultCameraNode->GetComponentT<ICameraComponent3D>());
 		GetCameraController()->GetCamera()->SetPerspectiveProjection(65.0f, static_cast<float>(GetRenderWindow().GetWindowWidth()) / static_cast<float>(GetRenderWindow().GetWindowHeight()), 0.5f, 2500.0f);
 		GetCameraController()->GetCamera()->SetPosition(glm::vec3(10.0f));
 		GetCameraController()->GetCamera()->SetYaw(225);
@@ -93,8 +93,9 @@ void CSceneWoWClient::Initialize()
 
 	//SetMainMenu();
 
-	m_WowClient = std::make_unique<CWoWClient>(*this, "localhost");
-	m_WowClient->Login("test2", "test2");
+
+	//m_WowClient = std::make_unique<CWoWClient>(*this, "localhost");
+	//m_WowClient->Login("test2", "test2");
 }
 
 void CSceneWoWClient::Finalize()
@@ -161,7 +162,7 @@ void CSceneWoWClient::OnWindowKeyReleased(KeyEventArgs & e)
 void CSceneWoWClient::InitializeRenderer()
 {
 	auto wowRenderer = MakeShared(CRendererWoW, GetBaseManager(), *this);
-	wowRenderer->InitializeDeffered(GetRenderWindow().GetRenderTarget());
+	wowRenderer->InitializeForward(GetRenderWindow().GetRenderTarget());
 	m_ForwardRenderer = wowRenderer;
 	m_DefferedRenderrer = wowRenderer;
 

@@ -50,7 +50,7 @@ public:
 	void Update(const UpdateEventArgs& e) override;
 
 protected:
-	const CM2_Base_Instance* GetM2OwnerNode() const;
+	const CM2_Base_Instance& GetM2OwnerNode() const;
 
 private:
 	std::shared_ptr<const CM2_Part_Camera>          m_M2Camera;

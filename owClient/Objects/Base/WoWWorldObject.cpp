@@ -12,18 +12,17 @@ CWoWWorldObject::CWoWWorldObject(IScene& Scene, CWoWWorld& WoWWorld, CWoWGuid Gu
 	: WoWObject(Guid)
 	, m_Scene(Scene)
 	, m_WoWWorld(WoWWorld)
-	, m_HiddenNodeDirty(false)
 	, m_BaseManager(Scene.GetBaseManager())
-{
-}
+
+	, m_IsTranslationDirty(false)
+{}
 
 CWoWWorldObject::~CWoWWorldObject()
-{
-}
+{}
 
 void CWoWWorldObject::Update(const UpdateEventArgs & e)
 {
-	if (m_HiddenNodeDirty && m_HiddenNode)
+	if (m_IsTranslationDirty)
 	{
 		//if (TransportID != 0)
 		//{
@@ -31,7 +30,7 @@ void CWoWWorldObject::Update(const UpdateEventArgs & e)
 		//	{
 				//m_HiddenNode->SetLocalPosition(/*lockedTransportObject->Position +*/ PositionTransportOffset);
 				//m_HiddenNode->SetLocalRotationEuler(glm::vec3(0.0f, /*lockedTransportObject->Orientation*/ + OrientationTransportOffset, 0.0f));
-				//m_HiddenNodeDirty = false;
+				//m_IsTranslationDirty = false;
 		//	}
 		//	else
 		//	{
@@ -41,11 +40,8 @@ void CWoWWorldObject::Update(const UpdateEventArgs & e)
 		//}
 		//else
 		{
-			
-			m_HiddenNode->SetLocalPosition(Position);
-			m_HiddenNode->SetLocalRotationEuler(glm::vec3(0.0f, Orientation, 0.0f));
 			OnHiddenNodePositionChanged();
-			m_HiddenNodeDirty = false;
+			m_IsTranslationDirty = false;
 		}
 	}
 }
@@ -55,7 +51,7 @@ void CWoWWorldObject::OnHiddenNodePositionChanged()
 
 void CWoWWorldObject::CommitPositionAndRotation()
 {
-	m_HiddenNodeDirty = true;
+	m_IsTranslationDirty = true;
 }
 
 #endif

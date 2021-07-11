@@ -8,6 +8,8 @@
 // Additional
 #include "../../World/World.h"
 
+float gravity = static_cast<float>(19.29110527038574);
+
 WoWUnit::WoWUnit(IScene& Scene, CWoWWorld& WoWWorld, CWoWGuid Guid)
 	: CWoWWorldObject(Scene, WoWWorld, Guid)
 {
@@ -257,14 +259,14 @@ void WoWUnit::OnValuesUpdated(const UpdateMask & Mask)
 	{
 		uint32 diplayID = m_Values.GetUInt32Value(UNIT_FIELD_DISPLAYID);
 		Log::Error("DisplayId = %d", diplayID);
-		if (m_HiddenNode != nullptr)
+		if (m_UnitModel != nullptr)
 		{
 			//Log::Warn("WoWUnit: UNIT_FIELD_DISPLAYID updated, but Node already exists.");
 			return;
 		}
 
 		CWorldObjectCreator creator(GetScene().GetBaseManager());
-		m_HiddenNode = creator.BuildCreatureFromDisplayInfo(GetScene().GetBaseManager().GetApplication().GetRenderDevice(), GetScene(), diplayID);
+		m_UnitModel = creator.BuildCreatureFromDisplayInfo(GetScene().GetBaseManager().GetApplication().GetRenderDevice(), GetScene(), diplayID);
 
 		//const DBC_CreatureDisplayInfoRecord * creatureDisplayInfo = GetBaseManager().GetManager<CDBCStorage>()->DBC_CreatureDisplayInfo()[diplayID];
 		//if (creatureDisplayInfo == nullptr)
@@ -277,14 +279,14 @@ void WoWUnit::OnValuesUpdated(const UpdateMask & Mask)
 		//float scaleFromCreature = creatureDisplayInfo->Get_Scale();
 		//float scaleFromModel = creatureModelDataRecord->Get_Scale();
 		float scale = m_Values.GetFloatValue(OBJECT_FIELD_SCALE_X);
-		m_HiddenNode->SetScale(glm::vec3(scale));
+		m_UnitModel->SetScale(glm::vec3(scale));
 	}
 
 	if (Mask.GetBit(UNIT_VIRTUAL_ITEM_SLOT_ID + 0))
 	{
 		uint32 mainHandDisplayID = m_Values.GetUInt32Value(UNIT_VIRTUAL_ITEM_SLOT_ID + 0);
 		if (mainHandDisplayID != 0)
-			if (auto hidderNodeAsCharacter = std::dynamic_pointer_cast<CCharacter>(m_HiddenNode))
+			if (auto hidderNodeAsCharacter = std::dynamic_pointer_cast<CCharacter>(m_UnitModel))
 				hidderNodeAsCharacter->SetItem(EQUIPMENT_SLOT_MAINHAND, GetItemDisplayInfoIDByItemID(mainHandDisplayID));
 	}
 
@@ -292,7 +294,7 @@ void WoWUnit::OnValuesUpdated(const UpdateMask & Mask)
 	{
 		uint32 offHandDisplayID = m_Values.GetUInt32Value(UNIT_VIRTUAL_ITEM_SLOT_ID + 1);
 		if (offHandDisplayID != 0)
-			if (auto hidderNodeAsCharacter = std::dynamic_pointer_cast<CCharacter>(m_HiddenNode))
+			if (auto hidderNodeAsCharacter = std::dynamic_pointer_cast<CCharacter>(m_UnitModel))
 				hidderNodeAsCharacter->SetItem(EQUIPMENT_SLOT_OFFHAND, GetItemDisplayInfoIDByItemID(offHandDisplayID));
 	}
 
@@ -300,7 +302,7 @@ void WoWUnit::OnValuesUpdated(const UpdateMask & Mask)
 	{
 		uint32 rangedDisplayID = m_Values.GetUInt32Value(UNIT_VIRTUAL_ITEM_SLOT_ID + 2);
 		if (rangedDisplayID != 0)
-			if (auto hidderNodeAsCharacter = std::dynamic_pointer_cast<CCharacter>(m_HiddenNode))
+			if (auto hidderNodeAsCharacter = std::dynamic_pointer_cast<CCharacter>(m_UnitModel))
 				hidderNodeAsCharacter->SetItem(EQUIPMENT_SLOT_RANGED, GetItemDisplayInfoIDByItemID(rangedDisplayID));
 	}
 
@@ -316,15 +318,31 @@ void WoWUnit::OnValuesUpdated(const UpdateMask & Mask)
 
 			Log::Error("MountDisplayId = %d", mountDisplayID);
 		}
+		else
+		{
+
+		}
 	}
 }
 
 void WoWUnit::OnHiddenNodePositionChanged()
 {
+	if (m_UnitModel)
+	{
+		m_UnitModel->SetLocalPosition(Position);
+		m_UnitModel->SetLocalRotationEuler(glm::vec3(0.0f, Orientation, 0.0f));
+	}
+
 	if (m_MountModel)
 	{
 		m_MountModel->SetLocalPosition(Position);
 		m_MountModel->SetLocalRotationEuler(glm::vec3(0.0f, Orientation, 0.0f));
+
+		if (m_UnitModel)
+		{
+			m_UnitModel->SetLocalPosition(glm::vec3(0.0f));
+			m_UnitModel->SetLocalRotationEuler(glm::vec3(0.0f, 0.0f, 0.0f));
+		}
 	}
 }
 
@@ -442,8 +460,8 @@ std::shared_ptr<WoWUnit> WoWUnit::Create(CWoWWorld& WoWWorld, IScene& Scene, CWo
 
 void WoWUnit::Destroy()
 {
-	if (m_HiddenNode)
-		m_HiddenNode->MakeMeOrphan();
+	if (m_UnitModel)
+		m_UnitModel->MakeMeOrphan();
 }
 
 SCharacterItemTemplate WoWUnit::GetItemDisplayInfoIDByItemID(uint32 ItemID)
@@ -456,6 +474,39 @@ SCharacterItemTemplate WoWUnit::GetItemDisplayInfoIDByItemID(uint32 ItemID)
 	}
 
 	return SCharacterItemTemplate(itemRecord->Get_DisplayInfoID(), itemRecord->Get_InventorySlot(), 0);
+}
+
+
+void WoWUnit::OnMounted(uint32 MountDisplayID)
+{
+	CWorldObjectCreator creator(GetScene().GetBaseManager());
+	m_MountModel = creator.BuildCreatureFromDisplayInfo(GetScene().GetBaseManager().GetApplication().GetRenderDevice(), GetScene(), MountDisplayID);
+
+	while (m_MountModel->GetState() != ILoadable::ELoadableState::Loaded);
+	while (m_UnitModel->GetState() != ILoadable::ELoadableState::Loaded);
+
+	if (m_UnitModel)
+	{
+		m_MountModel->AddChild(m_UnitModel);
+
+		m_UnitModel->GetAnimatorComponent()->PlayAnimation(91, true);
+		m_UnitModel->Attach(EM2_AttachmentPoint::MountMain);
+	}
+}
+
+void WoWUnit::OnDismounted()
+{
+	if (m_MountModel)
+	{
+		m_UnitModel->GetAnimatorComponent()->PlayAnimation(0, true);
+		m_UnitModel->Detach();
+
+		GetScene().GetRootSceneNode()->AddChild(m_UnitModel);
+		CommitPositionAndRotation();
+
+		m_MountModel->MakeMeOrphan();
+		m_MountModel.reset();
+	}
 }
 
 #endif
