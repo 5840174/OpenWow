@@ -2,6 +2,7 @@
 
 #include "M2_Types.h"
 #include "M2_Animation.h"
+#include "M2_Animations.h"
 
 // FORWARD BEGIN
 class CM2;
@@ -19,7 +20,7 @@ public:
 
 	void LoadAnimations();
 
-	void PlayAnimation(uint16 AnimationId, bool Loop);
+	void PlayAnimation(EAnimationID AnimationId, bool Loop);
 	void PrintList();
 
 	uint16 getSequenceIndex() const { return m_CurrentAnimation->getSequenceIndex(); }
@@ -34,7 +35,7 @@ protected:
 private:
 	std::unordered_map<uint16, std::shared_ptr<CM2_Animation>>	m_Animations;
 
-	uint16                      m_CurrentAnimationID;
+	EAnimationID                m_CurrentAnimationID;
 	const CM2_Animation*		m_CurrentAnimation;
 
 	bool						m_IsLoop;

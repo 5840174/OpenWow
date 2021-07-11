@@ -1070,6 +1070,9 @@
     <ClInclude Include="M2\M2_AnimatorComponent.h">
       <Filter>M2\Components\Animations</Filter>
     </ClInclude>
+    <ClInclude Include="M2\M2_Animations.h">
+      <Filter>M2\Components\Animations</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="WoWChunkReader.inl">

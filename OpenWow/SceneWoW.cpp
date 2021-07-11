@@ -341,7 +341,7 @@ void CSceneWoW::M2Test()
 			{
 				creature->SetPosition(glm::vec3(i * 25.0f, 0.0f, j * 25.0f));
 				if (creature->GetAnimatorComponent())
-					creature->GetAnimatorComponent()->PlayAnimation(4, true);
+					creature->GetAnimatorComponent()->PlayAnimation(EAnimationID::Stand, true);
 			}
 		}
 	}

@@ -7,7 +7,7 @@
 #include "M2_Animation.h"
 
 CM2_Animation::CM2_Animation(const CM2& M2Model, const SM2_Sequence& Sequence, std::string AnimationName, uint16 IndexIntoSeq)
-	: m_AnimID(Sequence.__animID)
+	: m_AnimID((EAnimationID)Sequence.__animID)
 	, m_AnimationName(AnimationName + "_" + std::to_string(IndexIntoSeq))
 	, m_SequenceIndex(IndexIntoSeq)
 #if WOW_CLIENT_VERSION <= WOW_BC_2_4_3

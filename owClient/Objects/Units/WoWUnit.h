@@ -76,18 +76,6 @@ protected:
 	float m_StrideOrPitch; // swimming/flying
 
 	uint32 m_FallTime; // falling
-
-	struct JumpInfo
-	{
-		void Reset()
-		{
-			zspeed = sinAngle = cosAngle = xyspeed = 0.0f;
-		}
-
-		float zspeed, sinAngle, cosAngle, xyspeed;
-
-	} m_Jump; // jumping
-
 	
 	float m_SplineElevation; // spline
 
@@ -97,13 +85,17 @@ protected:
 
 	std::shared_ptr<CCreature> m_UnitModel;
 	
+private: // Jump functional
+	bool m_Jump_IsJumpingNow;
+	float m_Jump_z_speed;
+	float m_Jump_sinAngle;
+	float m_Jump_cosAngle;
+	float m_Jump_xy_speed;
 
-private:
-
-	// Mount functional
+private: // Mount functional
 	bool m_Mount_IsMounted;
 	bool m_Mount_IsDirty;
-	std::shared_ptr<CCreature> m_Mount_Creature;
+	std::shared_ptr<CCreature> m_Mount_ModelInstance;
 };
 
 ZN_API extern float gravity;

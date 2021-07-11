@@ -1,6 +1,7 @@
 #pragma once
 
 #include "M2_Types.h"
+#include "M2_Animations.h"
 
 class CM2_Animation
 {
@@ -9,7 +10,7 @@ public:
 	virtual ~CM2_Animation();
 
 	// Table data
-	uint16					getAnimID()			const { return m_AnimID; }
+	EAnimationID			getAnimID()			const { return m_AnimID; }
 	std::string				getAnimationName()	const { return m_AnimationName; }
 
 	// Sequence
@@ -31,7 +32,7 @@ private:
 	const CM2_Animation& operator=(CM2_Animation&) = delete;
 
 private:
-	const uint16			m_AnimID;
+	const EAnimationID	    m_AnimID;
 	const std::string		m_AnimationName;
 
 	const uint16			m_SequenceIndex;

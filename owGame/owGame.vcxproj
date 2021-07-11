@@ -213,6 +213,7 @@
     <ClInclude Include="Liquid\LiquidBaseInstance.h" />
     <ClInclude Include="Liquid\LiquidModel.h" />
     <ClInclude Include="Liquid\LiquidMaterial.h" />
+    <ClInclude Include="M2\M2_Animations.h" />
     <ClInclude Include="M2\M2.h" />
     <ClInclude Include="M2\M2_Animated.h" />
     <ClInclude Include="M2\M2_AnimatedConverters.h" />

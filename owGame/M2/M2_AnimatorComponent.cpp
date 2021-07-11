@@ -10,7 +10,7 @@
 CM2AnimatorComponent::CM2AnimatorComponent(const CM2_Base_Instance& OwnerNode)
 	: CSceneNodeComponentBase(OwnerNode)
 	
-	, m_CurrentAnimationID(0)
+	, m_CurrentAnimationID(EAnimationID::Stand)
 	, m_CurrentAnimation(nullptr)
 	
 	, m_IsLoop(false)
@@ -46,9 +46,9 @@ void CM2AnimatorComponent::LoadAnimations()
 	PlayAnimation(m_CurrentAnimationID, true);
 }
 
-void CM2AnimatorComponent::PlayAnimation(uint16 AnimationId, bool Loop)
+void CM2AnimatorComponent::PlayAnimation(EAnimationID AnimationId, bool Loop)
 {
-	const auto& animIt = m_Animations.find(AnimationId);
+	const auto& animIt = m_Animations.find((uint16)AnimationId);
 	if (animIt != m_Animations.end())
 	{
 		m_CurrentAnimationID = AnimationId;
@@ -56,7 +56,7 @@ void CM2AnimatorComponent::PlayAnimation(uint16 AnimationId, bool Loop)
 	}
 	else
 	{
-		m_CurrentAnimationID = 0;
+		m_CurrentAnimationID = EAnimationID::Stand;
 		m_CurrentAnimation = m_Animations.begin()->second.get();
 		//Log::Error("CM2AnimatorComponent: Animation '%d' not found. Playing first animation '%s' ('%d').", AnimationId, m_CurrentAnimation->getAnimationName().c_str(), m_CurrentAnimation->getAnimID());
 	}

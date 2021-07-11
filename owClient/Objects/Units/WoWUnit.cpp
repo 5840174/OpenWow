@@ -24,7 +24,7 @@ WoWUnit::~WoWUnit()
 	if (auto model = m_UnitModel)
 		GetBaseManager().GetManager<ILoader>()->AddToDeleteQueue(model);
 
-	if (auto model = m_Mount_Creature)
+	if (auto model = m_Mount_ModelInstance)
 		GetBaseManager().GetManager<ILoader>()->AddToDeleteQueue(model);
 }
 
@@ -313,8 +313,8 @@ void WoWUnit::OnHiddenNodePositionChanged()
 
 	if (m_Mount_IsMounted)
 	{
-		m_Mount_Creature->SetLocalPosition(Position);
-		m_Mount_Creature->SetLocalRotationEuler(glm::vec3(0.0f, Orientation, 0.0f));
+		m_Mount_ModelInstance->SetLocalPosition(Position);
+		m_Mount_ModelInstance->SetLocalRotationEuler(glm::vec3(0.0f, Orientation, 0.0f));
 
 		if (m_UnitModel)
 		{
@@ -389,14 +389,14 @@ void WoWUnit::Update(const UpdateEventArgs & e)
 	{
 		if (m_Mount_IsMounted)
 		{
-			if (m_Mount_Creature && m_Mount_Creature->IsLoaded())
+			if (m_Mount_ModelInstance && m_Mount_ModelInstance->IsLoaded())
 			{
 				if (m_UnitModel && m_UnitModel->IsLoaded())
 				{
-					m_UnitModel->GetAnimatorComponent()->PlayAnimation(91, true);
+					m_UnitModel->GetAnimatorComponent()->PlayAnimation(EAnimationID::Mount, true);
 					m_UnitModel->Attach(EM2_AttachmentPoint::MountMain);
 
-					m_Mount_Creature->AddChild(m_UnitModel);
+					m_Mount_ModelInstance->AddChild(m_UnitModel);
 					CommitPositionAndRotation();
 
 					m_Mount_IsDirty = false;
@@ -407,7 +407,7 @@ void WoWUnit::Update(const UpdateEventArgs & e)
 		{
 			if (m_UnitModel && m_UnitModel->IsLoaded())
 			{
-				m_UnitModel->GetAnimatorComponent()->PlayAnimation(0, true);
+				m_UnitModel->GetAnimatorComponent()->PlayAnimation(EAnimationID::Stand, true);
 				m_UnitModel->Detach();
 
 				if (m_UnitModel->GetParent() != GetScene().GetRootSceneNode())
@@ -481,10 +481,10 @@ void WoWUnit::ReadMovementInfoPacket(CServerPacket & Bytes)
 
 	if (HasMovementFlag(MOVEMENTFLAG_FALLING))
 	{
-		Bytes >> float(m_Jump.zspeed);
-		Bytes >> float(m_Jump.sinAngle);
-		Bytes >> float(m_Jump.cosAngle);
-		Bytes >> float(m_Jump.xyspeed);
+		Bytes >> m_Jump_z_speed;
+		Bytes >> m_Jump_sinAngle;
+		Bytes >> m_Jump_cosAngle;
+		Bytes >> m_Jump_xy_speed;
 	}
 
 	if (HasMovementFlag(MOVEMENTFLAG_SPLINE_ELEVATION))
@@ -512,7 +512,7 @@ void WoWUnit::Destroy()
 		GetBaseManager().GetManager<ILoader>()->AddToDeleteQueue(model);
 	}
 
-	if (auto model = m_Mount_Creature)
+	if (auto model = m_Mount_ModelInstance)
 	{
 		model->MakeMeOrphan();
 		GetBaseManager().GetManager<ILoader>()->AddToDeleteQueue(model);
@@ -566,11 +566,11 @@ void WoWUnit::OnMounted(uint32 MountDisplayID)
 		return;
 
 	// Delete old mount model
-	if (m_Mount_Creature != nullptr)
-		GetBaseManager().GetManager<ILoader>()->AddToDeleteQueue(m_Mount_Creature);
+	if (m_Mount_ModelInstance != nullptr)
+		GetBaseManager().GetManager<ILoader>()->AddToDeleteQueue(m_Mount_ModelInstance);
 
 	CWorldObjectCreator creator(GetScene().GetBaseManager());
-	m_Mount_Creature = creator.BuildCreatureFromDisplayInfo(GetScene().GetBaseManager().GetApplication().GetRenderDevice(), GetScene(), MountDisplayID);
+	m_Mount_ModelInstance = creator.BuildCreatureFromDisplayInfo(GetScene().GetBaseManager().GetApplication().GetRenderDevice(), GetScene(), MountDisplayID);
 
 	m_Mount_IsMounted = true;
 	m_Mount_IsDirty = true;
@@ -581,11 +581,11 @@ void WoWUnit::OnDismounted()
 	if (false == m_Mount_IsMounted)
 		return;
 	
-	if (m_Mount_Creature != nullptr)
+	if (m_Mount_ModelInstance != nullptr)
 	{
-		m_Mount_Creature->MakeMeOrphan();
-		GetBaseManager().GetManager<ILoader>()->AddToDeleteQueue(m_Mount_Creature);
-		m_Mount_Creature = nullptr;
+		m_Mount_ModelInstance->MakeMeOrphan();
+		GetBaseManager().GetManager<ILoader>()->AddToDeleteQueue(m_Mount_ModelInstance);
+		m_Mount_ModelInstance = nullptr;
 	}
 
 	m_Mount_IsMounted = false;
