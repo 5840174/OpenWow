@@ -25,7 +25,7 @@ void WoWPlayer::OnValuesUpdated(const UpdateMask & Mask)
 
 	/*if (Mask.GetBit(UNIT_FIELD_BYTES_0))
 	{
-		if (auto characterModel = std::dynamic_pointer_cast<CCharacter>(m_UnitModel))
+		if (auto characterModel = std::dynamic_pointer_cast<CCharacter>(m_DisplayID_ModelInstance))
 		{
 			characterModel->Template().Race = GetRace();
 			characterModel->Template().Class = GetClass();
@@ -37,7 +37,7 @@ void WoWPlayer::OnValuesUpdated(const UpdateMask & Mask)
 
 	/*if (Mask.GetBit(PLAYER_BYTES))
 	{
-		if (auto characterModel = std::dynamic_pointer_cast<CCharacter>(m_UnitModel))
+		if (auto characterModel = std::dynamic_pointer_cast<CCharacter>(m_DisplayID_ModelInstance))
 		{
 			characterModel->Template().skin = GetSkinId();
 			characterModel->Template().face = GetFaceId();
@@ -50,7 +50,7 @@ void WoWPlayer::OnValuesUpdated(const UpdateMask & Mask)
 
 	if (Mask.GetBit(PLAYER_BYTES_2))
 	{
-		if (auto characterModel = std::dynamic_pointer_cast<CCharacter>(m_UnitModel))
+		if (auto characterModel = std::dynamic_pointer_cast<CCharacter>(m_DisplayID_ModelInstance))
 		{
 			characterModel->Template().facialStyle = GetFacialStyle();
 		}
@@ -60,8 +60,8 @@ void WoWPlayer::OnValuesUpdated(const UpdateMask & Mask)
 	
 	if (Mask.GetBit(PLAYER_BYTES_3))
 	{
-		auto characterModel = std::dynamic_pointer_cast<CCharacter>(m_UnitModel);
-		if (auto characterModel = std::dynamic_pointer_cast<CCharacter>(m_UnitModel))
+		auto characterModel = std::dynamic_pointer_cast<CCharacter>(m_DisplayID_ModelInstance);
+		if (auto characterModel = std::dynamic_pointer_cast<CCharacter>(m_DisplayID_ModelInstance))
 		{
 			characterModel->Template().Gender = (Gender)GetNativeGender();
 		}
@@ -73,7 +73,7 @@ void WoWPlayer::OnValuesUpdated(const UpdateMask & Mask)
 	{
 		if (Mask.GetBit(i))
 		{
-			if (auto characterModel = std::dynamic_pointer_cast<CCharacter>(m_UnitModel))
+			if (auto characterModel = std::dynamic_pointer_cast<CCharacter>(DisplayID_GetModelInstance()))
 			{
 				uint8 inventorySlot = (i - PLAYER_VISIBLE_ITEM_1_ENTRYID) / 2;
 				if (inventorySlot >= EQUIPMENT_SLOT_END)
@@ -144,7 +144,7 @@ void WoWPlayer::Destroy()
 //
 void WoWPlayer::OnDisplayIDChanged(uint32 DisplayID)
 {
-	if (m_UnitModel != nullptr)
+	if (DisplayID_GetModelInstance() != nullptr)
 		return;
 
 	if (false == m_Values.IsExists(UNIT_FIELD_NATIVEDISPLAYID))
@@ -162,21 +162,13 @@ void WoWPlayer::OnDisplayIDChanged(uint32 DisplayID)
 		characterTemplate.facialStyle = GetFacialStyle();
 
 		CWorldObjectCreator creator(GetScene().GetBaseManager());
-		m_UnitModel = creator.BuildCharacterFromTemplate(GetScene().GetBaseManager().GetApplication().GetRenderDevice(), GetScene(), characterTemplate);
+		DisplayID_SetModelInstance(creator.BuildCharacterFromTemplate(GetScene().GetBaseManager().GetApplication().GetRenderDevice(), GetScene(), characterTemplate));
 	}
 	else
 	{
 		CWorldObjectCreator creator(GetScene().GetBaseManager());
-		m_UnitModel = creator.BuildCreatureFromDisplayInfo(GetScene().GetBaseManager().GetApplication().GetRenderDevice(), GetScene(), DisplayID);
+		DisplayID_SetModelInstance(creator.BuildCreatureFromDisplayInfo(GetScene().GetBaseManager().GetApplication().GetRenderDevice(), GetScene(), DisplayID));
 	}
-
-	float scale = 1.0f;
-	if (m_Values.IsExists(OBJECT_FIELD_SCALE_X))
-		scale = m_Values.GetFloatValue(OBJECT_FIELD_SCALE_X);
-	m_UnitModel->SetScale(glm::vec3(scale));
-
-	//if (m_MountModel)
-	//	m_MountModel->AddChild(m_UnitModel);
 }
 
 

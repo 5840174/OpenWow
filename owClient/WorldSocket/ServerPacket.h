@@ -15,7 +15,6 @@ public:
 	bool    IsComplete() const;
 
 	uint32  ReadUInt32();
-	float   ReadFloat();
 	double  ReadDouble();
 	void    ReadPackedGuid(CWoWGuid * WoWGuid);
 

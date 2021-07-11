@@ -45,13 +45,6 @@ uint32 CServerPacket::ReadUInt32()
 	return value;
 }
 
-float CServerPacket::ReadFloat()
-{
-	float value = 0.0f;
-	readBytes(&value, sizeof(float));
-	return value;
-}
-
 double CServerPacket::ReadDouble()
 {
 	double value = 0.0;

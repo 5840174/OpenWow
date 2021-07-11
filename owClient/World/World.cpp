@@ -603,19 +603,69 @@ void CWoWWorld::On_MOVE_Opcode(CServerPacket & Buffer)
 		{
 			unit->ReadMovementInfoPacket(Buffer);
 
-			if (Buffer.GetPacketOpcode() == MSG_MOVE_SET_WALK_SPEED ||
-				Buffer.GetPacketOpcode() == MSG_MOVE_SET_RUN_SPEED ||
-				Buffer.GetPacketOpcode() == MSG_MOVE_SET_RUN_BACK_SPEED ||
-				Buffer.GetPacketOpcode() == MSG_MOVE_SET_SWIM_SPEED ||
-				Buffer.GetPacketOpcode() == MSG_MOVE_SET_SWIM_BACK_SPEED ||
-				Buffer.GetPacketOpcode() == MSG_MOVE_SET_TURN_RATE ||
-				Buffer.GetPacketOpcode() == MSG_MOVE_SET_FLIGHT_SPEED ||
-				Buffer.GetPacketOpcode() == MSG_MOVE_SET_FLIGHT_BACK_SPEED ||
-				Buffer.GetPacketOpcode() == MSG_MOVE_SET_PITCH_RATE)
+			if (Buffer.GetPacketOpcode() == MSG_MOVE_SET_WALK_SPEED)
 			{
 				float speed;
 				Buffer >> speed;
+				unit->SetSpeed(EUnitSpeedType::MOVE_WALK, speed);
 			}
+
+			if (Buffer.GetPacketOpcode() == MSG_MOVE_SET_RUN_SPEED)
+			{
+				float speed;
+				Buffer >> speed;
+				unit->SetSpeed(EUnitSpeedType::MOVE_RUN, speed);
+			}
+
+			if (Buffer.GetPacketOpcode() == MSG_MOVE_SET_RUN_BACK_SPEED)
+			{
+				float speed;
+				Buffer >> speed;
+				unit->SetSpeed(EUnitSpeedType::MOVE_RUN_BACK, speed);
+			}
+
+			if (Buffer.GetPacketOpcode() == MSG_MOVE_SET_SWIM_SPEED)
+			{
+				float speed;
+				Buffer >> speed;
+				unit->SetSpeed(EUnitSpeedType::MOVE_SWIM, speed);
+			}
+
+			if (Buffer.GetPacketOpcode() == MSG_MOVE_SET_SWIM_BACK_SPEED)
+			{
+				float speed;
+				Buffer >> speed;
+				unit->SetSpeed(EUnitSpeedType::MOVE_SWIM_BACK, speed);
+			}
+
+			if (Buffer.GetPacketOpcode() == MSG_MOVE_SET_TURN_RATE)
+			{
+				float speed;
+				Buffer >> speed;
+				unit->SetSpeed(EUnitSpeedType::MOVE_TURN_RATE, speed);
+			}
+
+			if (Buffer.GetPacketOpcode() == MSG_MOVE_SET_FLIGHT_SPEED)
+			{
+				float speed;
+				Buffer >> speed;
+				unit->SetSpeed(EUnitSpeedType::MOVE_FLIGHT, speed);
+			}
+
+			if (Buffer.GetPacketOpcode() == MSG_MOVE_SET_FLIGHT_BACK_SPEED)
+			{
+				float speed;
+				Buffer >> speed;
+				unit->SetSpeed(EUnitSpeedType::MOVE_FLIGHT_BACK, speed);
+			}
+
+			if (Buffer.GetPacketOpcode() == MSG_MOVE_SET_PITCH_RATE)
+			{
+				float speed;
+				Buffer >> speed;
+				unit->SetSpeed(EUnitSpeedType::MOVE_PITCH_RATE, speed);
+			}
+
 		}
 		else
 		{

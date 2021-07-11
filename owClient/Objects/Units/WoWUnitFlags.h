@@ -70,7 +70,7 @@ enum MovementFlags2 : uint32
 };
 
 // Speed
-enum UnitSpeedType
+enum EUnitSpeedType
 {
 	MOVE_WALK = 0,
 	MOVE_RUN = 1,

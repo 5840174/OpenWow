@@ -33,8 +33,8 @@ public:
 	uint8 GetPowerType() const;
 
 	// Speed
-	float GetSpeed(UnitSpeedType MoveType) const        { return m_Speed[MoveType]; }
-	void SetSpeed(UnitSpeedType MoveType, float Speed)  { m_Speed[MoveType] = Speed; }
+	float GetSpeed(EUnitSpeedType MoveType) const        { return m_Movement_Speed[MoveType]; }
+	void SetSpeed(EUnitSpeedType MoveType, float Speed) { m_Movement_Speed[MoveType] = Speed; }
 
 	// MovementFlags
 	uint32 GetMovementFlags() const                     { return m_MovementFlags; }
@@ -63,44 +63,49 @@ public:
 
 protected:
 	virtual void OnDisplayIDChanged(uint32 DisplayID);
+	std::shared_ptr<CCreature> DisplayID_GetModelInstance() const;
+	void DisplayID_SetModelInstance(std::shared_ptr<CCreature> ModelInstance);
 
 	virtual void OnMounted(uint32 MountDisplayID);
 	virtual void OnDismounted();
 
 protected:
-
-
 	uint32 m_MovementFlags;
 	uint16 m_MovementFlagsExtra;
-
 	float m_StrideOrPitch; // swimming/flying
-
 	uint32 m_FallTime; // falling
-	
 	float m_SplineElevation; // spline
 
 
-	float m_Speed[9];
+private:                        // DisplayID and visual
+	uint32                      m_DisplayID_ID;
+	std::shared_ptr<CCreature>  m_DisplayID_ModelInstance;
 
-
-	std::shared_ptr<CCreature> m_UnitModel;
+	bool                        m_DisplayID_Scale_IsDirty;
+	float                       m_DisplayID_Scale;
 	
-private: // Jump functional
-	bool m_Jump_IsJumpingNow;
-	float m_Jump_z_speed;
-	float m_Jump_sinAngle;
-	float m_Jump_cosAngle;
-	float m_Jump_xy_speed;
 
-	float m_Jump_y0;
-	float m_Jump_t;
-	glm::vec2 m_JumpXZ0;
-	bool  m_Jump_TopPointTop;
+private:                        // Movement functional
+	bool                        m_Movement_IsMoveNow;
+	float                       m_Movement_Speed[9];
 
-private: // Mount functional
-	bool m_Mount_IsMounted;
-	bool m_Mount_IsDirty;
-	std::shared_ptr<CCreature> m_Mount_ModelInstance;
+private:                        // Jump functional
+	bool                        m_Jump_IsJumpingNow;
+
+	float                       m_Jump_z_speed;
+	float                       m_Jump_sinAngle;
+	float                       m_Jump_cosAngle;
+	float                       m_Jump_xy_speed;
+
+	glm::vec2                   m_JumpXZ0;
+	float                       m_Jump_y0;
+	float                       m_Jump_t;
+
+
+private:                        // Mount functional
+	bool                        m_Mount_IsMounted;
+	bool                        m_Mount_IsDirty;
+	std::shared_ptr<CCreature>  m_Mount_ModelInstance;
 };
 
 ZN_API extern float gravity;
