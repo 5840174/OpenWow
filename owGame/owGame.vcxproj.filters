@@ -166,6 +166,12 @@
     <Filter Include="M2\Components\Animations">
       <UniqueIdentifier>{333c5508-7dbd-4a95-bf2e-5f327dc85316}</UniqueIdentifier>
     </Filter>
+    <Filter Include="WMO\Components\Light">
+      <UniqueIdentifier>{694ebccd-6146-4d8d-a9a4-862fcb86284a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="WMO\Components\Portals">
+      <UniqueIdentifier>{7c0ed1a2-0763-4f21-9097-29d6266ce0d9}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -235,9 +241,6 @@
       <Filter>M2\Parts\Parts_Miscellaneous\Ribbons</Filter>
     </ClCompile>
     <ClCompile Include="WMO\WMO.cpp">
-      <Filter>WMO</Filter>
-    </ClCompile>
-    <ClCompile Include="WMO\WMO_PortalsController.cpp">
       <Filter>WMO</Filter>
     </ClCompile>
     <ClCompile Include="WMO\WMO_Base_Instance.cpp">
@@ -344,9 +347,6 @@
     </ClCompile>
     <ClCompile Include="World\Character\Character_SkinTextureBaker.cpp">
       <Filter>World\Character\Helpers</Filter>
-    </ClCompile>
-    <ClCompile Include="WMO\WMO_Portal_Instance.cpp">
-      <Filter>WMO\Instances</Filter>
     </ClCompile>
     <ClCompile Include="Settings\WoWSettingsGroup.cpp">
       <Filter>Utils</Filter>
@@ -489,12 +489,6 @@
     <ClCompile Include="M2\M2_ParticlesComponent.cpp">
       <Filter>M2\Components</Filter>
     </ClCompile>
-    <ClCompile Include="WMO\WMO_LightComponent.cpp">
-      <Filter>WMO\Components</Filter>
-    </ClCompile>
-    <ClCompile Include="WMO\WMO_Light.cpp">
-      <Filter>WMO\Components</Filter>
-    </ClCompile>
     <ClCompile Include="M2\M2_LightComponent.cpp">
       <Filter>M2\Components\Light</Filter>
     </ClCompile>
@@ -515,6 +509,18 @@
     </ClCompile>
     <ClCompile Include="M2\M2_AnimatorComponent.cpp">
       <Filter>M2\Components\Animations</Filter>
+    </ClCompile>
+    <ClCompile Include="WMO\WMO_Light.cpp">
+      <Filter>WMO\Components\Light</Filter>
+    </ClCompile>
+    <ClCompile Include="WMO\WMO_LightComponent.cpp">
+      <Filter>WMO\Components\Light</Filter>
+    </ClCompile>
+    <ClCompile Include="WMO\WMO_Portal.cpp">
+      <Filter>WMO\Components\Portals</Filter>
+    </ClCompile>
+    <ClCompile Include="WMO\WMO_PortalsComponent.cpp">
+      <Filter>WMO\Components\Portals</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -710,9 +716,6 @@
     <ClInclude Include="WMO\WMO_Headers.h">
       <Filter>WMO</Filter>
     </ClInclude>
-    <ClInclude Include="WMO\WMO_PortalsController.h">
-      <Filter>WMO</Filter>
-    </ClInclude>
     <ClInclude Include="WMO\WMO_Base_Instance.h">
       <Filter>WMO\Instances</Filter>
     </ClInclude>
@@ -856,9 +859,6 @@
     </ClInclude>
     <ClInclude Include="DBC\Tables\DBC_Item.h">
       <Filter>DBC\Tables\Item</Filter>
-    </ClInclude>
-    <ClInclude Include="WMO\WMO_Portal_Instance.h">
-      <Filter>WMO\Instances</Filter>
     </ClInclude>
     <ClInclude Include="Settings\WoWSettingsGroup.h">
       <Filter>Utils</Filter>
@@ -1043,12 +1043,6 @@
     <ClInclude Include="M2\M2_ParticlesComponent.h">
       <Filter>M2\Components</Filter>
     </ClInclude>
-    <ClInclude Include="WMO\WMO_LightComponent.h">
-      <Filter>WMO\Components</Filter>
-    </ClInclude>
-    <ClInclude Include="WMO\WMO_Light.h">
-      <Filter>WMO\Components</Filter>
-    </ClInclude>
     <ClInclude Include="M2\M2_LightComponent.h">
       <Filter>M2\Components\Light</Filter>
     </ClInclude>
@@ -1072,6 +1066,18 @@
     </ClInclude>
     <ClInclude Include="M2\M2_Animations.h">
       <Filter>M2\Components\Animations</Filter>
+    </ClInclude>
+    <ClInclude Include="WMO\WMO_Light.h">
+      <Filter>WMO\Components\Light</Filter>
+    </ClInclude>
+    <ClInclude Include="WMO\WMO_LightComponent.h">
+      <Filter>WMO\Components\Light</Filter>
+    </ClInclude>
+    <ClInclude Include="WMO\WMO_Portal.h">
+      <Filter>WMO\Components\Portals</Filter>
+    </ClInclude>
+    <ClInclude Include="WMO\WMO_PortalsComponent.h">
+      <Filter>WMO\Components\Portals</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

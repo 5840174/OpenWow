@@ -22,7 +22,7 @@ CM2_Animation::CM2_Animation(const CM2& M2Model, const SM2_Sequence& Sequence, s
 		_ASSERT(Sequence.variationNext >= 0 && Sequence.variationNext < M2Model.getSkeleton().GetSequences().size());
 		const SM2_Sequence& variationNextSequence = M2Model.getSkeleton().GetSequences()[Sequence.variationNext];
 
-		_ASSERT(variationNextSequence.__animID == m_AnimID);
+		_ASSERT((EAnimationID)variationNextSequence.__animID == m_AnimID);
 		//_ASSERT(variationNextSequence.variationIndex == Sequence.variationNext);
 		m_Next = std::make_unique<CM2_Animation>(M2Model, variationNextSequence, AnimationName, Sequence.variationNext);
 	}

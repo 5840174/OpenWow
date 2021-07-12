@@ -21,13 +21,12 @@ CM2SkeletonComponent::~CM2SkeletonComponent()
 {
 }
 
-std::vector<glm::mat4> CM2SkeletonComponent::CreatePose(size_t BoneStartIndex, size_t BonesCount) const
+void CM2SkeletonComponent::CreatePose(size_t BoneStartIndex, size_t BonesCount, std::vector<glm::mat4> * Destination) const
 {
-	std::vector<glm::mat4> result;
-	result.reserve(BonesCount);
+	if ((*Destination).size() < BonesCount)
+		(*Destination).resize(BonesCount);
 	for (size_t i = BoneStartIndex; i < BoneStartIndex + BonesCount; i++)
-		result.push_back(m_Bones[GetM2OwnerNode().GetM2().getSkeleton().getBoneLookupIndex(i)]->GetMatrix());
-	return result;
+		(*Destination)[i - BoneStartIndex] = m_Bones[GetM2OwnerNode().GetM2().getSkeleton().getBoneLookupIndex(i)]->GetMatrix();
 }
 
 //

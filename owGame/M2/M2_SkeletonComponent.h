@@ -16,7 +16,7 @@ public:
 	CM2SkeletonComponent(const CM2_Base_Instance& OwnerNode);
 	virtual ~CM2SkeletonComponent();
 
-	std::vector<glm::mat4> CreatePose(size_t BoneStartIndex, size_t BonesCount) const;
+	void CreatePose(size_t BoneStartIndex, size_t BonesCount, std::vector<glm::mat4> * Destination) const;
 
 	// ISkeletonComponent3D
 	std::shared_ptr<CM2SkeletonBone> GetBone(size_t Index) const;

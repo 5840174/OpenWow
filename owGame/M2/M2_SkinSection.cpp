@@ -130,9 +130,9 @@ void CM2_SkinSection::UpdateGeometryProps(const RenderEventArgs& RenderEventArgs
 		m_Properties->gStartBoneIndex = m_SkinSectionProto.bonesStartIndex;
 		m_Properties->gBonesMaxInfluences = m_SkinSectionProto.boneInfluences;
 
-		m_BonesList = M2Instance->getSkeletonComponent()->CreatePose(m_SkinSectionProto.bonesStartIndex, m_SkinSectionProto.boneCount);
+		M2Instance->getSkeletonComponent()->CreatePose(m_SkinSectionProto.bonesStartIndex, m_SkinSectionProto.boneCount, &m_BonesList);
 		_ASSERT(m_BonesList.size() == m_SkinSectionProto.boneCount);
-		m_BonesBuffer->Set(m_BonesList);
+		m_BonesBuffer->Set(m_BonesList.data(), sizeof(glm::mat4), m_SkinSectionProto.boneCount);
 	}
 
 	m_PropertiesBuffer->Set(m_Properties, sizeof(ShaderM2GeometryProperties));

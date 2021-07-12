@@ -123,24 +123,28 @@ CM2_Skin_Batch::~CM2_Skin_Batch()
 
 void CM2_Skin_Batch::UpdateMaterialProps(const RenderEventArgs& RenderEventArgs, const CM2_Base_Instance* m2Instance)
 {
+	auto& materialData = MaterialDataWithoutMark();
+
 	// Shader
-	MaterialData().gShader = m_ShaderID;
+	materialData.gShader = m_ShaderID;
 
 	// Blend mode
-	MaterialData().gBlendMode = m_M2ModelMaterial->getBlendMode();
+	materialData.gBlendMode = m_M2ModelMaterial->getBlendMode();
 
 	// Model color
 	if (m_Color != nullptr)
-		MaterialData().gMaterialColorAndAlpha = m_Color->GetColorAndAlpha(m2Instance, static_cast<uint32>(RenderEventArgs.TotalTime));
+		materialData.gMaterialColorAndAlpha = m_Color->GetColorAndAlpha(m2Instance, static_cast<uint32>(RenderEventArgs.TotalTime));
 
 	// Texture alpha
 	if (m_TextureWeight != nullptr)
-		MaterialData().gTextureWeight = m_TextureWeight->GetWeight(m2Instance, static_cast<uint32>(RenderEventArgs.TotalTime));
+		materialData.gTextureWeight = m_TextureWeight->GetWeight(m2Instance, static_cast<uint32>(RenderEventArgs.TotalTime));
 
 	// Texture transform
-	MaterialData().gTextureAnimEnable = (m_TextureTransform != nullptr);
+	materialData.gTextureAnimEnable = (m_TextureTransform != nullptr);
 	if ((m_TextureTransform != nullptr))
-		MaterialData().gTextureAnimMatrix = m_TextureTransform->GetTransform(m2Instance, static_cast<uint32>(RenderEventArgs.TotalTime));
+		materialData.gTextureAnimMatrix = m_TextureTransform->GetTransform(m2Instance, static_cast<uint32>(RenderEventArgs.TotalTime));
+
+	MarkMaterialDataDirty();
 
 	// Textures
 	for (size_t i = 0; i < m_SkinBatchProto.textureCount; i++)

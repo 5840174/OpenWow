@@ -135,8 +135,8 @@
     <ClCompile Include="WMO\WMO_Part_Light.cpp" />
     <ClCompile Include="WMO\WMO_Part_Material.cpp" />
     <ClCompile Include="WMO\WMO_Part_Portal.cpp" />
-    <ClCompile Include="WMO\WMO_PortalsController.cpp" />
-    <ClCompile Include="WMO\WMO_Portal_Instance.cpp" />
+    <ClCompile Include="WMO\WMO_PortalsComponent.cpp" />
+    <ClCompile Include="WMO\WMO_Portal.cpp" />
     <ClCompile Include="World\Character\Character.cpp" />
     <ClCompile Include="World\Character\Character_SectionWrapper.cpp" />
     <ClCompile Include="World\Character\Character_SkinTextureBaker.cpp" />
@@ -313,8 +313,8 @@
     <ClInclude Include="WMO\WMO_Part_Light.h" />
     <ClInclude Include="WMO\WMO_Part_Material.h" />
     <ClInclude Include="WMO\WMO_Part_Portal.h" />
-    <ClInclude Include="WMO\WMO_PortalsController.h" />
-    <ClInclude Include="WMO\WMO_Portal_Instance.h" />
+    <ClInclude Include="WMO\WMO_PortalsComponent.h" />
+    <ClInclude Include="WMO\WMO_Portal.h" />
     <ClInclude Include="World\Character\Character.h" />
     <ClInclude Include="World\Character\Character_SectionWrapper.h" />
     <ClInclude Include="World\Character\Character_SkinTextureBaker.h" />

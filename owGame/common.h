@@ -16,7 +16,7 @@
 /**
   * Enable or disable WMO culling by portals
 */
-//#define USE_WMO_PORTALS_CULLING
+#define USE_WMO_PORTALS_CULLING
 
 /**
   * Enable or disable M2 models support
@@ -64,8 +64,10 @@ ZN_MAKE_OBJECTCLASS(cUIControlMinimap, 500);
 // SceneNode components
 // 700 - 799 SceneNodeComponent custom
 //
-ZN_MAKE_OBJECTCLASS(cSceneNodeComponentM2SkeletonComponent, 700);
-ZN_MAKE_OBJECTCLASS(cSceneNodeComponentM2AnimatorComponent, 702);
+ZN_MAKE_OBJECTCLASS(cSceneNodeComponentWMOPortalsComponent, 700);
+
+ZN_MAKE_OBJECTCLASS(cSceneNodeComponentM2SkeletonComponent, 710);
+ZN_MAKE_OBJECTCLASS(cSceneNodeComponentM2AnimatorComponent, 711);
 
 
 struct ISceneNodeProvider
