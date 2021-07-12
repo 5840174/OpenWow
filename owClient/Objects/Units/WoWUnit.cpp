@@ -13,12 +13,11 @@ float gravity = static_cast<float>(19.29110527038574);
 
 namespace
 {
-	glm::vec3 OrientationToDirection(float Orientation)
+	glm::vec2 OrientationToDirection(float Orientation)
 	{
-		glm::vec3 direction(0.0f);
-		direction.x = glm::cos(0.0f) * glm::cos(Orientation); // y
-		direction.y = glm::sin(Orientation);                               // z
-		direction.z = glm::sin(0.0f) * glm::cos(Orientation); // x
+		glm::vec2 direction(0.0f);
+		direction.x = glm::cos(glm::radians(Orientation));
+		direction.y = -glm::sin(glm::radians(Orientation));
 		direction = glm::normalize(direction);
 		return direction;
 	}
@@ -48,17 +47,17 @@ void WoWUnit::ProcessMovementPacket(CServerPacket & Bytes)
 {
 	ReadMovementInfoPacket(Bytes);
 
-	Bytes >> m_Movement_Speed[EUnitSpeedType::MOVE_WALK];
-	Bytes >> m_Movement_Speed[EUnitSpeedType::MOVE_RUN];
-	Bytes >> m_Movement_Speed[EUnitSpeedType::MOVE_RUN_BACK];
-	Bytes >> m_Movement_Speed[EUnitSpeedType::MOVE_SWIM];
-	Bytes >> m_Movement_Speed[EUnitSpeedType::MOVE_SWIM_BACK];
-	Bytes >> m_Movement_Speed[EUnitSpeedType::MOVE_FLIGHT];
-	Bytes >> m_Movement_Speed[EUnitSpeedType::MOVE_FLIGHT_BACK];
-	Bytes >> m_Movement_Speed[EUnitSpeedType::MOVE_TURN_RATE];
-	Bytes >> m_Movement_Speed[EUnitSpeedType::MOVE_PITCH_RATE];
+	Bytes >> m_Movement_Speed[EUnitSpeed::UNIT_SPEED_WALK];
+	Bytes >> m_Movement_Speed[EUnitSpeed::UNIT_SPEED_RUN];
+	Bytes >> m_Movement_Speed[EUnitSpeed::UNIT_SPEED_RUN_BACK];
+	Bytes >> m_Movement_Speed[EUnitSpeed::UNIT_SPEED_SWIM];
+	Bytes >> m_Movement_Speed[EUnitSpeed::UNIT_SPEED_SWIM_BACK];
+	Bytes >> m_Movement_Speed[EUnitSpeed::UNIT_SPEED_FLIGHT];
+	Bytes >> m_Movement_Speed[EUnitSpeed::UNIT_SPEED_FLIGHT_BACK];
+	Bytes >> m_Movement_Speed[EUnitSpeed::UNIT_SPEED_TURN_RATE];
+	Bytes >> m_Movement_Speed[EUnitSpeed::UNIT_SPEED_PITCH_RATE];
 
-	if (HasMovementFlag(MOVEMENTFLAG_SPLINE_ENABLED))
+	if (m_MovementInfo.HasMovementFlag(MOVEMENTFLAG_SPLINE_ENABLED))
 	{
 		auto path = MakeShared(CWoWPath);
 
@@ -421,63 +420,50 @@ void WoWUnit::Update(const UpdateEventArgs & e)
 	//
 	// Movement
 	//
-	if (HasMovementFlag(MOVEMENTFLAG_FORWARD))
+	if (m_MovementInfo.HasMovementFlag(MOVEMENTFLAG_LEFT))
 	{
-		float speed = GetSpeed(EUnitSpeedType::MOVE_RUN) / 60.0f * e.DeltaTimeMultiplier;
+		float speed = GetSpeed(EUnitSpeed::UNIT_SPEED_TURN_RATE) / 60.0f * e.DeltaTimeMultiplier;
 
+		Orientation += glm::degrees(speed);
+		CommitPositionAndRotation();
+	}
+	if (m_MovementInfo.HasMovementFlag(MOVEMENTFLAG_RIGHT))
+	{
+		float speed = GetSpeed(EUnitSpeed::UNIT_SPEED_TURN_RATE) / 60.0f * e.DeltaTimeMultiplier;
+
+		Orientation -= glm::degrees(speed);
+		CommitPositionAndRotation();
+	}
+	if (m_MovementInfo.HasMovementFlag(MOVEMENTFLAG_FORWARD))
+	{
+		float speed = GetSpeed(m_MovementInfo.HasMovementFlag(MOVEMENTFLAG_WALKING) ? EUnitSpeed::UNIT_SPEED_WALK : EUnitSpeed::UNIT_SPEED_RUN) / 60.0f * e.DeltaTimeMultiplier;
 		float forwardOrientation = Orientation;
 
-		glm::vec2 direction(0.0f);
-		direction.x = glm::cos(glm::radians(forwardOrientation));
-		direction.y = - glm::sin(glm::radians(forwardOrientation));
-		direction = glm::normalize(direction);
-
-		Position.xz += direction * speed;
+		Position.xz += OrientationToDirection(forwardOrientation) * speed;
 		CommitPositionAndRotation();
 	}
-
-	if (HasMovementFlag(MOVEMENTFLAG_BACKWARD))
+	if (m_MovementInfo.HasMovementFlag(MOVEMENTFLAG_BACKWARD))
 	{
-		float speed = GetSpeed(EUnitSpeedType::MOVE_RUN_BACK) / 60.0f * e.DeltaTimeMultiplier;
-
+		float speed = GetSpeed(EUnitSpeed::UNIT_SPEED_RUN_BACK) / 60.0f * e.DeltaTimeMultiplier;
 		float backwardOrientation = Orientation + glm::degrees(glm::pi<float>());
 
-		glm::vec2 direction(0.0f);
-		direction.x = glm::cos(glm::radians(backwardOrientation));
-		direction.y = -glm::sin(glm::radians(backwardOrientation));
-		direction = glm::normalize(direction);
-
-		Position.xz += direction * speed;
+		Position.xz += OrientationToDirection(backwardOrientation) * speed;
 		CommitPositionAndRotation();
 	}
-
-	if (HasMovementFlag(MOVEMENTFLAG_STRAFE_LEFT))
+	if (m_MovementInfo.HasMovementFlag(MOVEMENTFLAG_STRAFE_LEFT))
 	{
-		float speed = GetSpeed(EUnitSpeedType::MOVE_RUN) / 60.0f * e.DeltaTimeMultiplier;
-
+		float speed = GetSpeed(m_MovementInfo.HasMovementFlag(MOVEMENTFLAG_WALKING) ? EUnitSpeed::UNIT_SPEED_WALK : EUnitSpeed::UNIT_SPEED_RUN) / 60.0f * e.DeltaTimeMultiplier;
 		float leftOrientation = Orientation + glm::degrees(glm::half_pi<float>());
 
-		glm::vec2 direction(0.0f);
-		direction.x = glm::cos(glm::radians(leftOrientation));
-		direction.y = -glm::sin(glm::radians(leftOrientation));
-		direction = glm::normalize(direction);
-
-		Position.xz += direction * speed;
+		Position.xz += OrientationToDirection(leftOrientation) * speed;
 		CommitPositionAndRotation();
 	}
-
-	if (HasMovementFlag(MOVEMENTFLAG_STRAFE_RIGHT))
+	if (m_MovementInfo.HasMovementFlag(MOVEMENTFLAG_STRAFE_RIGHT))
 	{
-		float speed = GetSpeed(EUnitSpeedType::MOVE_RUN) / 60.0f * e.DeltaTimeMultiplier;
-
+		float speed = GetSpeed(m_MovementInfo.HasMovementFlag(MOVEMENTFLAG_WALKING) ? EUnitSpeed::UNIT_SPEED_WALK : EUnitSpeed::UNIT_SPEED_RUN) / 60.0f * e.DeltaTimeMultiplier;
 		float rightOrientation = Orientation - glm::degrees(glm::half_pi<float>());
 
-		glm::vec2 direction(0.0f);
-		direction.x = glm::cos(glm::radians(rightOrientation));
-		direction.y = -glm::sin(glm::radians(rightOrientation));
-		direction = glm::normalize(direction);
-
-		Position.xz += direction * speed;
+		Position.xz += OrientationToDirection(rightOrientation) * speed;
 		CommitPositionAndRotation();
 	}
 	
@@ -491,25 +477,24 @@ void WoWUnit::Update(const UpdateEventArgs & e)
 	{
 		float timeToSeconds = m_Jump_t / 1000.0f;
 
+		// XZ
+		{
+			glm::vec2 direction(0.0f);
+			direction.x = -m_MovementInfo.jump.cosAngle; // y
+			direction.y = -m_MovementInfo.jump.sinAngle; // x
+			direction = glm::normalize(direction);
+
+			glm::vec2 xz = m_JumpXZ0 + direction * (m_MovementInfo.jump.xyspeed * timeToSeconds);
+			Position.xz = xz;
+		}
+
 		// Y
 		{
-			float speedPerTick = (-1.0f) * m_Jump_z_speed;
+			float speedPerTick = (-1.0f) * m_MovementInfo.jump.zspeed;
 			float gravityPerTick = (-1.0f) * (gravity);
 
 			float y = m_Jump_y0 + (speedPerTick * timeToSeconds) + ((gravityPerTick * timeToSeconds * timeToSeconds) / 2.0f);
 			Position.y = y;
-		}
-
-		// XZ
-		if (m_Jump_xy_speed != 0.0f)
-		{
-			glm::vec2 direction(0.0f);
-			direction.x = - m_Jump_cosAngle; // y
-			direction.y = - m_Jump_sinAngle; // x
-			direction = glm::normalize(direction);
-
-			glm::vec2 xz = m_JumpXZ0 + direction * (m_Jump_xy_speed * timeToSeconds);
-			Position.xz = xz;
 		}
 
 		m_Jump_t += e.DeltaTime;
@@ -563,44 +548,30 @@ void WoWUnit::Update(const UpdateEventArgs & e)
 //
 void WoWUnit::ReadMovementInfoPacket(CServerPacket & Bytes)
 {
-	Bytes.read(&m_MovementFlags);
-	Bytes.read(&m_MovementFlagsExtra);
+	Bytes >> m_MovementInfo.flags;
+	Bytes >> m_MovementInfo.flags2;
 
-	uint32 gameTimeMS;
-	Bytes >> gameTimeMS;
+	Bytes >> m_MovementInfo.time;
+	Bytes >> m_MovementInfo.pos;
+	Bytes >> m_MovementInfo.orientation;
 
-	glm::vec3 gamePosition;
-	Bytes >> gamePosition;
-	Position = fromGameToReal(gamePosition);
-
-	float gameOrientation;
-	Bytes >> gameOrientation;
-	Orientation = glm::degrees(gameOrientation + glm::half_pi<float>());
-
-	if (HasMovementFlag(MOVEMENTFLAG_ONTRANSPORT))
+	if (m_MovementInfo.HasMovementFlag(MOVEMENTFLAG_ONTRANSPORT))
 	{
-		CWoWGuid transportGuid;
-		Bytes.ReadPackedGuid(&transportGuid);
-		TransportID = transportGuid;
+		Bytes.ReadPackedGuid(&m_MovementInfo.transport.guid);
 
-		glm::vec3 gamePositionTransportOffset;
-		Bytes >> gamePositionTransportOffset;
-		PositionTransportOffset = fromGameToReal(gamePositionTransportOffset);
+		Bytes >> m_MovementInfo.transport.pos;
+		m_MovementInfo.transport.pos = fromGameToReal(m_MovementInfo.transport.pos);
 
-		float gameOrientationTransportOffset;
-		Bytes >> gameOrientationTransportOffset;
-		OrientationTransportOffset = glm::degrees(gameOrientationTransportOffset + glm::half_pi<float>());
+		Bytes >> m_MovementInfo.transport.orientation;
+		m_MovementInfo.transport.orientation = glm::degrees(m_MovementInfo.transport.orientation + glm::half_pi<float>());
 
-		uint32 transportTime;
-		Bytes >> uint32(transportTime);
+		Bytes >> m_MovementInfo.transport.time;
 
-		int8 transportSeat;
-		Bytes >> int8(transportSeat);
+		Bytes >> m_MovementInfo.transport.seat;
 
-		if (HasExtraMovementFlag(MOVEMENTFLAG2_INTERPOLATED_MOVEMENT))
+		if (m_MovementInfo.HasExtraMovementFlag(MOVEMENTFLAG2_INTERPOLATED_MOVEMENT))
 		{
-			uint32 transportInterpolatedTime;
-			Bytes >> uint32(transportInterpolatedTime);
+			Bytes >> m_MovementInfo.transport.time2;
 		}
 	}
 	else
@@ -608,20 +579,20 @@ void WoWUnit::ReadMovementInfoPacket(CServerPacket & Bytes)
 		TransportID = CWoWGuid(0ull);
 	}
 
-	if ((HasMovementFlag(MOVEMENTFLAG_SWIMMING | MOVEMENTFLAG_FLYING)) || (HasExtraMovementFlag(MOVEMENTFLAG2_ALWAYS_ALLOW_PITCHING)))
+	if ((m_MovementInfo.HasMovementFlag(MOVEMENTFLAG_SWIMMING | MOVEMENTFLAG_FLYING)) || (m_MovementInfo.HasExtraMovementFlag(MOVEMENTFLAG2_ALWAYS_ALLOW_PITCHING)))
 	{
-		Bytes >> float(m_StrideOrPitch);
+		Bytes >> m_MovementInfo.pitch;
 	}
 
-	Bytes >> m_FallTime;
+	Bytes >> m_MovementInfo.fallTime;
 	//Log::Info("Flags '%d', '%d', Fall time = '%d'.", m_MovementFlags, m_MovementFlagsExtra, m_FallTime);
 
-	if (HasMovementFlag(MOVEMENTFLAG_FALLING))
+	if (m_MovementInfo.HasMovementFlag(MOVEMENTFLAG_FALLING))
 	{
-		Bytes >> m_Jump_z_speed;
-		Bytes >> m_Jump_sinAngle;
-		Bytes >> m_Jump_cosAngle;
-		Bytes >> m_Jump_xy_speed;
+		Bytes >> m_MovementInfo.jump.zspeed;
+		Bytes >> m_MovementInfo.jump.sinAngle;
+		Bytes >> m_MovementInfo.jump.cosAngle;
+		Bytes >> m_MovementInfo.jump.xyspeed;
 
 		if (false == m_Jump_IsJumpingNow)
 		{
@@ -638,7 +609,7 @@ void WoWUnit::ReadMovementInfoPacket(CServerPacket & Bytes)
 			}
 		}
 
-		m_Jump_t = m_FallTime;
+		m_Jump_t = m_MovementInfo.fallTime;
 
 		m_Jump_IsJumpingNow = true;
 	}
@@ -656,11 +627,13 @@ void WoWUnit::ReadMovementInfoPacket(CServerPacket & Bytes)
 		m_Jump_IsJumpingNow = false;
 	}
 
-	if (HasMovementFlag(MOVEMENTFLAG_SPLINE_ELEVATION))
+	if (m_MovementInfo.HasMovementFlag(MOVEMENTFLAG_SPLINE_ELEVATION))
 	{
-		Bytes >> float(m_SplineElevation);
+		Bytes >> m_MovementInfo.splineElevation;
 	}
 
+	Position = fromGameToReal(m_MovementInfo.pos);
+	Orientation = glm::degrees(m_MovementInfo.orientation + glm::half_pi<float>());
 	CommitPositionAndRotation();
 }
 
@@ -716,11 +689,9 @@ void WoWUnit::OnDisplayIDChanged(uint32 DisplayID)
 	//const DBC_CreatureDisplayInfoRecord * creatureDisplayInfo = GetBaseManager().GetManager<CDBCStorage>()->DBC_CreatureDisplayInfo()[diplayID];
 	//if (creatureDisplayInfo == nullptr)
 	//	throw CException("Creature display info '%d' don't found.", displayInfo);
-
 	//const DBC_CreatureModelDataRecord* creatureModelDataRecord = GetBaseManager().GetManager<CDBCStorage>()->DBC_CreatureModelData()[creatureDisplayInfo->Get_Model()];
 	//if (creatureModelDataRecord == nullptr)
 	//	throw CException("Creature model data '%d' don't found.", creatureDisplayInfo->Get_Model());
-
 	//float scaleFromCreature = creatureDisplayInfo->Get_Scale();
 	//float scaleFromModel = creatureModelDataRecord->Get_Scale();
 }

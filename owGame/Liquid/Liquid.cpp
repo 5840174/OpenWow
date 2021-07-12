@@ -63,7 +63,6 @@ void CLiquid::createLayers(const DBC_LiquidTypeRecord* LiquidTypeRecord, const s
 
 			layerDefinition.renderTiles.push_back(isNeedDraw);
 
-
 			if (LiquidTypeRecord->Get_Type() == DBC_LIQUIDTYPE_Type::water)
 			{
 				layerDefinition.depths.push_back(map[p].waterVert.depth);

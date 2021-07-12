@@ -68,7 +68,7 @@ void CWoWClient::Login(const std::string& Username, const std::string& Password)
 
 void CWoWClient::OnRealmsListObtained(const std::vector<SRealmInfo>& Realms, BigNumber Key)
 {
-	OnRealmSelected(Realms[9], Key);
+	OnRealmSelected(Realms[0], Key);
 }
 
 void CWoWClient::OnRealmSelected(const SRealmInfo& SelectedRealm, BigNumber Key)

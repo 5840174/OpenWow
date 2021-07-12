@@ -38,20 +38,6 @@ bool CServerPacket::IsComplete() const
 	return getSize() == static_cast<size_t>(GetPacketSize());
 }
 
-uint32 CServerPacket::ReadUInt32()
-{
-	uint32 value = 0;
-	readBytes(&value, sizeof(uint32));
-	return value;
-}
-
-double CServerPacket::ReadDouble()
-{
-	double value = 0.0;
-	readBytes(&value, sizeof(double));
-	return value;
-}
-
 void CServerPacket::ReadPackedGuid(CWoWGuid * WoWGuid)
 {
 	if (WoWGuid == nullptr)

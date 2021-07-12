@@ -35,6 +35,7 @@
     <ClInclude Include="Objects\Base\WoWWorldObject.h" />
     <ClInclude Include="Objects\GameObjects\WoWGameObject.h" />
     <ClInclude Include="Objects\GameObjects\WoWGameObjectMOTransport.h" />
+    <ClInclude Include="Objects\Helpers\MovementInfo.h" />
     <ClInclude Include="Objects\Helpers\Spline\MoveSplineFlag.h" />
     <ClInclude Include="Objects\Helpers\Spline\Path.h" />
     <ClInclude Include="Objects\Helpers\Spline\PathNode.h" />

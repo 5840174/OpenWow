@@ -4,6 +4,7 @@
 
 #include "../Base/WoWWorldObject.h"
 #include "WoWUnitFlags.h"
+#include "../Helpers/MovementInfo.h"
 #include "../Helpers/Spline/MoveSplineFlag.h"
 #include "../Helpers/Spline/Path.h"
 
@@ -33,21 +34,11 @@ public:
 	uint8 GetPowerType() const;
 
 	// Speed
-	float GetSpeed(EUnitSpeedType MoveType) const        { return m_Movement_Speed[MoveType]; }
-	void SetSpeed(EUnitSpeedType MoveType, float Speed) { m_Movement_Speed[MoveType] = Speed; }
-
-	// MovementFlags
-	uint32 GetMovementFlags() const                     { return m_MovementFlags; }
-	bool HasMovementFlag(uint32 flag) const             { return (m_MovementFlags & flag) != 0; }
-
-	// MovementFlags2
-	uint16 GetExtraMovementFlags() const                { return m_MovementFlagsExtra; }
-	bool HasExtraMovementFlag(uint16 flag) const        { return (m_MovementFlagsExtra & flag) != 0; }
+	float GetSpeed(EUnitSpeed MoveType) const        { return m_Movement_Speed[MoveType]; }
+	void SetSpeed(EUnitSpeed MoveType, float Speed)  { m_Movement_Speed[MoveType] = Speed; }
 
 	// ISceneNode
 	void Update(const UpdateEventArgs& e);
-
-
 
 	void ReadMovementInfoPacket(CServerPacket& Bytes);
 
@@ -69,14 +60,6 @@ protected:
 	virtual void OnMounted(uint32 MountDisplayID);
 	virtual void OnDismounted();
 
-protected:
-	uint32 m_MovementFlags;
-	uint16 m_MovementFlagsExtra;
-	float m_StrideOrPitch; // swimming/flying
-	uint32 m_FallTime; // falling
-	float m_SplineElevation; // spline
-
-
 private:                        // DisplayID and visual
 	uint32                      m_DisplayID_ID;
 	std::shared_ptr<CCreature>  m_DisplayID_ModelInstance;
@@ -87,15 +70,11 @@ private:                        // DisplayID and visual
 
 private:                        // Movement functional
 	bool                        m_Movement_IsMoveNow;
+	SMovementInfo               m_MovementInfo;
 	float                       m_Movement_Speed[9];
 
 private:                        // Jump functional
 	bool                        m_Jump_IsJumpingNow;
-
-	float                       m_Jump_z_speed;
-	float                       m_Jump_sinAngle;
-	float                       m_Jump_cosAngle;
-	float                       m_Jump_xy_speed;
 
 	glm::vec2                   m_JumpXZ0;
 	float                       m_Jump_y0;

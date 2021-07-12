@@ -20,14 +20,15 @@ struct SM2_Sequence
 #else
 	uint32_t duration;
 #endif
+
 	float movespeed;				// This is the speed the character moves with in this animation.
 
 	struct Flags
 	{
-		uint32 unk0 : 1;
-		uint32 unk1 : 1;
-		uint32 unk2 : 1;
-		uint32 unk3 : 1;
+		uint32 unk0x01 : 1;
+		uint32 unk0x02 : 1;
+		uint32 unk0x04 : 1;
+		uint32 unk0x08 : 1;
 		uint32 LowPrioritySeq : 1;
 		uint32 DataInM2 : 1; // If set, the animation data is in the .m2 file. If not set, the animation data is in an .anim file.
 		uint32 HasNext : 1; // (To find the animation data, the client skips these by following aliasNext until an animation without 0x40 is found.)

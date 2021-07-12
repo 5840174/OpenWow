@@ -607,63 +607,63 @@ void CWoWWorld::On_MOVE_Opcode(CServerPacket & Buffer)
 			{
 				float speed;
 				Buffer >> speed;
-				unit->SetSpeed(EUnitSpeedType::MOVE_WALK, speed);
+				unit->SetSpeed(EUnitSpeed::UNIT_SPEED_WALK, speed);
 			}
 
 			if (Buffer.GetPacketOpcode() == MSG_MOVE_SET_RUN_SPEED)
 			{
 				float speed;
 				Buffer >> speed;
-				unit->SetSpeed(EUnitSpeedType::MOVE_RUN, speed);
+				unit->SetSpeed(EUnitSpeed::UNIT_SPEED_RUN, speed);
 			}
 
 			if (Buffer.GetPacketOpcode() == MSG_MOVE_SET_RUN_BACK_SPEED)
 			{
 				float speed;
 				Buffer >> speed;
-				unit->SetSpeed(EUnitSpeedType::MOVE_RUN_BACK, speed);
+				unit->SetSpeed(EUnitSpeed::UNIT_SPEED_RUN_BACK, speed);
 			}
 
 			if (Buffer.GetPacketOpcode() == MSG_MOVE_SET_SWIM_SPEED)
 			{
 				float speed;
 				Buffer >> speed;
-				unit->SetSpeed(EUnitSpeedType::MOVE_SWIM, speed);
+				unit->SetSpeed(EUnitSpeed::UNIT_SPEED_SWIM, speed);
 			}
 
 			if (Buffer.GetPacketOpcode() == MSG_MOVE_SET_SWIM_BACK_SPEED)
 			{
 				float speed;
 				Buffer >> speed;
-				unit->SetSpeed(EUnitSpeedType::MOVE_SWIM_BACK, speed);
+				unit->SetSpeed(EUnitSpeed::UNIT_SPEED_SWIM_BACK, speed);
 			}
 
 			if (Buffer.GetPacketOpcode() == MSG_MOVE_SET_TURN_RATE)
 			{
 				float speed;
 				Buffer >> speed;
-				unit->SetSpeed(EUnitSpeedType::MOVE_TURN_RATE, speed);
+				unit->SetSpeed(EUnitSpeed::UNIT_SPEED_TURN_RATE, speed);
 			}
 
 			if (Buffer.GetPacketOpcode() == MSG_MOVE_SET_FLIGHT_SPEED)
 			{
 				float speed;
 				Buffer >> speed;
-				unit->SetSpeed(EUnitSpeedType::MOVE_FLIGHT, speed);
+				unit->SetSpeed(EUnitSpeed::UNIT_SPEED_FLIGHT, speed);
 			}
 
 			if (Buffer.GetPacketOpcode() == MSG_MOVE_SET_FLIGHT_BACK_SPEED)
 			{
 				float speed;
 				Buffer >> speed;
-				unit->SetSpeed(EUnitSpeedType::MOVE_FLIGHT_BACK, speed);
+				unit->SetSpeed(EUnitSpeed::UNIT_SPEED_FLIGHT_BACK, speed);
 			}
 
 			if (Buffer.GetPacketOpcode() == MSG_MOVE_SET_PITCH_RATE)
 			{
 				float speed;
 				Buffer >> speed;
-				unit->SetSpeed(EUnitSpeedType::MOVE_PITCH_RATE, speed);
+				unit->SetSpeed(EUnitSpeed::UNIT_SPEED_PITCH_RATE, speed);
 			}
 
 		}

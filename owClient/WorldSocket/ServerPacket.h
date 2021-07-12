@@ -14,8 +14,6 @@ public:
 	Opcodes GetPacketOpcode() const;
 	bool    IsComplete() const;
 
-	uint32  ReadUInt32();
-	double  ReadDouble();
 	void    ReadPackedGuid(CWoWGuid * WoWGuid);
 
 	// IByteBuffer
