@@ -1,44 +1,50 @@
 #include "stdafx.h"
 
 #ifdef USE_WMO_MODELS
+#ifdef USE_WMO_PORTALS_CULLING
 
 // Include
 #include "WMO.h"
 #include "WMO_Base_Instance.h"
 
 // General
-#include "WMO_PortalsController.h"
+#include "WMO_PortalsComponent.h"
 
 // Additional
 #include "WMO_Group_Instance.h"
 
-#ifdef USE_WMO_PORTALS_CULLING
-
-CWMO_PortalsController::CWMO_PortalsController()
+CWMO_PortalsComponent::CWMO_PortalsComponent(const CWMO_Base_Instance& OwnerNode)
+	: CSceneNodeComponentBase(OwnerNode)
 {}
 
-CWMO_PortalsController::~CWMO_PortalsController()
+CWMO_PortalsComponent::~CWMO_PortalsComponent()
 {}
 
-void CWMO_PortalsController::Update(const CWMO_Base_Instance* WMOBaseInstance, const ICameraComponent3D* _camera)
+
+
+//
+// ISceneNodeComponent
+//
+void CWMO_PortalsComponent::Update(const UpdateEventArgs& e)
 {
-	if (false == WMOBaseInstance->IsLoaded())
+	if (false == GetWMOOwnerNode().IsLoaded())
 		return;
 
 	// Reset all flags
-	for (const auto& groupPtr : WMOBaseInstance->getGroupInstances())
+	for (const auto& groupPtr : GetWMOOwnerNode().getGroupInstances())
 		if (auto group = groupPtr.lock())
 			group->Reset();
 
-	glm::vec3 cameraTranslate = _camera->GetPosition();
-	Frustum cameraFrustum = _camera->GetFrustum();
+	const ICameraComponent3D * camera = e.CameraForCulling;
+	glm::vec3 cameraTranslate = camera->GetPosition();
+	Frustum cameraFrustum = camera->GetFrustum();
 	bool insideIndoor = false;
 
-	BoundingBox wmoBaseInstanceBounds = WMOBaseInstance->GetComponentT<IColliderComponent>()->GetWorldBounds();
+	BoundingBox wmoBaseInstanceBounds = GetWMOOwnerNode().GetComponentT<IColliderComponent>()->GetWorldBounds();
 
 	if (wmoBaseInstanceBounds.isPointInside(cameraTranslate))
 	{
-		for (const auto& groupPtr : WMOBaseInstance->getGroupInstances())
+		for (const auto& groupPtr : GetWMOOwnerNode().getGroupInstances())
 		{
 			std::shared_ptr<IPortalRoom> portalRoom = groupPtr.lock();
 			if (portalRoom == nullptr)
@@ -72,11 +78,11 @@ void CWMO_PortalsController::Update(const CWMO_Base_Instance* WMOBaseInstance, c
 	// If we outside WMO, then get outdorr group
 	//if (false == insideIndoor)
 	{
-		for (const auto& groupPtr : WMOBaseInstance->getGroupInstances())
+		for (const auto& groupPtr : GetWMOOwnerNode().getGroupInstances())
 		{
 			if (auto group = groupPtr.lock())
 			{
-				if (group->IsOutdoor())
+				if (group->IsLoaded() && group->IsOutdoor())
 				{
 					Recur(group, cameraFrustum, cameraTranslate, cameraFrustum, true);
 				}
@@ -88,9 +94,19 @@ void CWMO_PortalsController::Update(const CWMO_Base_Instance* WMOBaseInstance, c
 
 
 //
+// Protected
+//
+const CWMO_Base_Instance& CWMO_PortalsComponent::GetWMOOwnerNode() const
+{
+	return dynamic_cast<const CWMO_Base_Instance&>(GetOwnerNode());
+}
+
+
+
+//
 // Private
 //
-bool CWMO_PortalsController::Recur(const std::shared_ptr<IPortalRoom>& Room, const Frustum& CameraFrustum, const glm::vec3& CameraPosition, const Frustum& PortalFrustum, bool _isFirstIteration)
+bool CWMO_PortalsComponent::Recur(const std::shared_ptr<IPortalRoom>& Room, const Frustum& CameraFrustum, const glm::vec3& CameraPosition, const Frustum& PortalFrustum, bool _isFirstIteration)
 {
 	if (Room->IsCalculated())
 		return false;

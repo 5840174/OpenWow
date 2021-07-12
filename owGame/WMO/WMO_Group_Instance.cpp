@@ -36,6 +36,10 @@ bool CWMO_Group_Instance::Load()
 
 	GetWMOGroup().CreateInsances(std::dynamic_pointer_cast<CWMO_Group_Instance>(shared_from_this()));
 
+#ifdef USE_WMO_PORTALS_CULLING
+	CreatePortals(std::dynamic_pointer_cast<CWMO_Base_Instance>(GetParent()));
+#endif
+
 	return true;
 }
 
@@ -159,6 +163,12 @@ const CWMOGroup& CWMO_Group_Instance::GetWMOGroup() const
 
 void CWMO_Group_Instance::CreatePortals(const std::shared_ptr<CWMO_Base_Instance>& BaseInstance)
 {
+	if (BaseInstance == nullptr)
+	{
+		Log::Error("CWMO_Group_Instance::CreatePortals: BaseInstance is nullptr.");
+		return;
+	}
+
 	for (const auto& p : GetWMOGroup().GetPortals())
 	{
 		std::shared_ptr<CWMO_Group_Instance> roomInnerInstance = nullptr;

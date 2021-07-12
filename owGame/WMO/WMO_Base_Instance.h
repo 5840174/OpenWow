@@ -8,6 +8,7 @@
 #include "WMO_Liquid_Instance.h"
 
 #include "WMO_LightComponent.h"
+#include "WMO_PortalsComponent.h"
 
 class ZN_API CWMO_Base_Instance 
 	: public CSceneNode
@@ -46,6 +47,7 @@ protected:
 	//GroupInstances  m_OutdoorGroupInstances;
 
 	std::shared_ptr<CWMOLightComponent> m_LightComponent;
+	std::shared_ptr<CWMO_PortalsComponent> m_PortalsComponent;
 
 private:
 	std::shared_ptr<CWMO> m_WMOObject;

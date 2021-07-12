@@ -3,7 +3,7 @@
 #ifdef USE_WMO_MODELS
 
 #include "WMOGroup.h"
-#include "WMO_Portal_Instance.h"
+#include "WMO_Portal.h"
 
 // FORWARD BEGIN
 class CWMO_Base_Instance;

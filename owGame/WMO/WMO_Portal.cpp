@@ -3,7 +3,7 @@
 #ifdef USE_WMO_MODELS
 
 // General
-#include "WMO_Portal_Instance.h"
+#include "WMO_Portal.h"
 
 CWMOPortalInstance::CWMOPortalInstance(const std::weak_ptr<IPortalRoom>& RoomInner, const std::weak_ptr<IPortalRoom>& RoomOuter, const std::vector<glm::vec3>& PortalVertices, const Plane& PortalPlane)
 	: m_RoomInner(RoomInner)

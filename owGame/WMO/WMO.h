@@ -15,8 +15,6 @@
 #include "WMO_Part_Material.h"
 #include "WMO_Part_Portal.h"
 
-#include "WMO_PortalsController.h"
-
 // FORWARD BEGIN
 class CWMO_Base_Instance;
 // FORWARD END
@@ -42,9 +40,6 @@ public:
 	std::string GetFilename() const { return m_FileName; }
 	BoundingBox	GetBounds() const { return m_Bounds; }
 	const SWMO_MOHD& GetHeader() const { return m_Header; }
-#ifdef USE_WMO_PORTALS_CULLING
-	const std::shared_ptr<CWMO_PortalsController>& GetPortalController() const { return m_PortalController; }
-#endif
 
 	std::string GetTextureName(size_t Offset) const { return std::string(m_TexturesNames.get() + Offset); }
 	const std::shared_ptr<WMO_Part_Material>& GetMaterial(size_t Index) const { return m_Materials.at(Index); }
@@ -64,18 +59,16 @@ private:
 	std::unique_ptr<char[]>												m_TexturesNames;		// MOTX chunk
 	std::vector<std::shared_ptr<WMO_Part_Material>>						m_Materials;			// MOMT chunk
 
+
 	//-- Groups --//
 	std::unique_ptr<char[]>												m_GroupNames;		    // MOGN chunk
 	std::vector<std::shared_ptr<CWMOGroup>>                            m_Groups;				// MOGI chunk
 
+
 	//-- Skybox --//
 	std::shared_ptr<CM2>                                                m_Skybox;
 
-	//-- Portals --//
-#ifdef USE_WMO_PORTALS_CULLING
-	std::shared_ptr<CWMO_PortalsController>                             m_PortalController;
-#endif
-	
+
 	//-- Visible block
 	std::vector<glm::vec3>                                              m_VisibleBlockVertices;	// MOVV chunk
 	std::vector<SWMO_MOVB>                                              m_VisibleBlockList;		// MOVB chunk

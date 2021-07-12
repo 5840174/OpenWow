@@ -69,13 +69,6 @@ void CWMO_Base_Instance::Update(const UpdateEventArgs& e)
 {
 	if (GetState() != ILoadable::ELoadableState::Loaded)
 		return;
-
-#ifdef USE_WMO_PORTALS_CULLING
-	if (auto portalsController = GetWMO().GetPortalController())
-	{
-		portalsController->Update(this, e.CameraForCulling);
-	}
-#endif
 }
 
 void CWMO_Base_Instance::Accept(IVisitor* visitor)
@@ -98,6 +91,7 @@ bool CWMO_Base_Instance::Load()
 	GetWMO().CreateInsances(std::dynamic_pointer_cast<CWMO_Base_Instance>(shared_from_this()));
 
 	//m_LightComponent = AddComponentT(MakeShared(CWMOLightComponent, *this));
+	m_PortalsComponent = AddComponentT(MakeShared(CWMO_PortalsComponent, *this));
 
 	return true;
 }

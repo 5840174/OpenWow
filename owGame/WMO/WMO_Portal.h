@@ -1,6 +1,7 @@
 #pragma once
 
 #ifdef USE_WMO_MODELS
+#ifdef USE_WMO_PORTALS_CULLING
 
 class CWMOPortalInstance
 	: public IPortal
@@ -27,4 +28,5 @@ private:
 	Plane				       m_Plane;
 };
 
+#endif
 #endif

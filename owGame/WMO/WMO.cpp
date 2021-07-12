@@ -56,22 +56,6 @@ void CWMO::CreateInsances(const std::shared_ptr<CWMO_Base_Instance>& Parent) con
 
 		m_BaseManager.GetManager<ILoader>()->AddToLoadQueue(groupInstance);
 	}
-
-#ifdef USE_WMO_PORTALS_CULLING
-	for (const auto& groupPtr : Parent->getGroupInstances())
-	{
-		if (auto group = groupPtr.lock())
-		{
-			group->CreatePortals(Parent);
-		}
-		else _ASSERT(false);
-	}
-#endif
-
-	for (auto& it : m_Lights)
-	{
-		//Parent->AddLight(it);
-	}
 }
 
 
@@ -232,11 +216,12 @@ bool CWMO::Load()
 		}
 	}
 
+	/*
 	// Create portal controller
 	if (portals.size() > 0)
 	{
 #ifdef USE_WMO_PORTALS_CULLING
-		m_PortalController = MakeShared(CWMO_PortalsController);
+		m_PortalController = MakeShared(CWMO_PortalsComponent);
 
 		for (const auto& it : portalsReferences)
 		{
@@ -244,7 +229,7 @@ bool CWMO::Load()
 			_ASSERT(it.groupIndex < m_Groups.size());
 }
 #endif
-	}
+	}*/
 
 	return true;
 }
