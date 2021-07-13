@@ -115,9 +115,6 @@
     <Filter Include="Renderer">
       <UniqueIdentifier>{1e13051f-c332-4b25-bbab-9946eb8efde1}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Renderer\Passes">
-      <UniqueIdentifier>{02270be1-6396-493a-9359-4596ada55281}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Map\MapChunk">
       <UniqueIdentifier>{456352ef-c2dc-4daf-bb4f-644ab7b067ee}</UniqueIdentifier>
     </Filter>
@@ -365,30 +362,6 @@
     </ClCompile>
     <ClCompile Include="Map\MapChunk.cpp">
       <Filter>Map\MapChunk</Filter>
-    </ClCompile>
-    <ClCompile Include="Renderer\RenderPass_Liquid.cpp">
-      <Filter>Renderer\Passes</Filter>
-    </ClCompile>
-    <ClCompile Include="Renderer\RenderPass_M2.cpp">
-      <Filter>Renderer\Passes</Filter>
-    </ClCompile>
-    <ClCompile Include="Renderer\RenderPass_M2Instanced.cpp">
-      <Filter>Renderer\Passes</Filter>
-    </ClCompile>
-    <ClCompile Include="Renderer\RenderPass_MapChunk.cpp">
-      <Filter>Renderer\Passes</Filter>
-    </ClCompile>
-    <ClCompile Include="Renderer\RenderPass_MapTile.cpp">
-      <Filter>Renderer\Passes</Filter>
-    </ClCompile>
-    <ClCompile Include="Renderer\RenderPass_Sky.cpp">
-      <Filter>Renderer\Passes</Filter>
-    </ClCompile>
-    <ClCompile Include="Renderer\RenderPass_WDL.cpp">
-      <Filter>Renderer\Passes</Filter>
-    </ClCompile>
-    <ClCompile Include="Renderer\RenderPass_WMO.cpp">
-      <Filter>Renderer\Passes</Filter>
     </ClCompile>
     <ClCompile Include="Map\MapWDLTileModel.cpp">
       <Filter>Map\MapWDL</Filter>
@@ -880,30 +853,6 @@
     </ClInclude>
     <ClInclude Include="Map\MapChunk.h">
       <Filter>Map\MapChunk</Filter>
-    </ClInclude>
-    <ClInclude Include="Renderer\RenderPass_Liquid.h">
-      <Filter>Renderer\Passes</Filter>
-    </ClInclude>
-    <ClInclude Include="Renderer\RenderPass_M2.h">
-      <Filter>Renderer\Passes</Filter>
-    </ClInclude>
-    <ClInclude Include="Renderer\RenderPass_M2Instanced.h">
-      <Filter>Renderer\Passes</Filter>
-    </ClInclude>
-    <ClInclude Include="Renderer\RenderPass_MapChunk.h">
-      <Filter>Renderer\Passes</Filter>
-    </ClInclude>
-    <ClInclude Include="Renderer\RenderPass_MapTile.h">
-      <Filter>Renderer\Passes</Filter>
-    </ClInclude>
-    <ClInclude Include="Renderer\RenderPass_Sky.h">
-      <Filter>Renderer\Passes</Filter>
-    </ClInclude>
-    <ClInclude Include="Renderer\RenderPass_WDL.h">
-      <Filter>Renderer\Passes</Filter>
-    </ClInclude>
-    <ClInclude Include="Renderer\RenderPass_WMO.h">
-      <Filter>Renderer\Passes</Filter>
     </ClInclude>
     <ClInclude Include="Map\MapWDLTileModel.h">
       <Filter>Map\MapWDL</Filter>

@@ -1,7 +1,28 @@
 #pragma once
 
 #include "RenderPassPipelinedProcessTypelessList.h"
-#include "RenderPass_M2.h"
+
+#include "M2/M2_Base_Instance.h"
+
+namespace
+{
+	struct __declspec(novtable, align(16)) ZN_API M2PerObject
+	{
+		M2PerObject(const glm::mat4& Model, const glm::vec4& Color)
+			: Model(Model)
+			, Color(Color)
+		{}
+		glm::mat4 Model;
+		glm::vec4 Color;
+	};
+}
+
+enum class ZN_API ERenderPassM2DrawMode
+{
+	Opaque,
+	Transperent,
+	All
+};
 
 class ZN_API CRenderPass_M2List
 	: public CRenderPassPipelinedProcessTypelessList

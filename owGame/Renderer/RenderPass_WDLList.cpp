@@ -7,16 +7,63 @@
 #include "Map/MapWDLTileModel.h"
 #include "Map/Map.h"
 
+__declspec(align(16)) struct SColorProperties
+{
+	SColorProperties()
+		: DiffuseColor(1.0f, 1.0f, 1.0f, 1.0f)
+	{}
+
+	ColorRGBA DiffuseColor;
+	//-------------------------- ( 16 bytes )
+};
+
 CRenderPass_WDLList::CRenderPass_WDLList(IRenderDevice& RenderDevice, const std::shared_ptr<IRenderPassCreateTypelessList>& CreateTypelessList)
 	: CRenderPassPipelinedProcessTypelessList(RenderDevice, CreateTypelessList)
 {
 	SetPassName("MapWDLList");
 
-	m_WoWSettings = GetBaseManager().GetManager<ISettings>()->GetGroup("WoWSettings");
+	m_ColorConstantBuffer = GetRenderDevice().GetObjectsFactory().CreateConstantBuffer(nullptr, sizeof(SColorProperties));
 }
 
 CRenderPass_WDLList::~CRenderPass_WDLList()
 {}
+
+
+
+//
+// IRenderPass
+//
+void CRenderPass_WDLList::Render(RenderEventArgs & e)
+{
+	SColorProperties color;
+	if (m_SkyManager != nullptr)
+	{
+		color.DiffuseColor = ColorRGBA(m_SkyManager->GetColor(ESkyColors::SKY_COLOR_RIVER_LIGHT), 1.0f);
+	}
+	else
+	{
+		m_SkyManager = GetBaseManager().GetManager<CSkyManager>();
+	}
+
+
+	if (m_ColorConstantBuffer != nullptr)
+	{
+		m_ColorConstantBuffer->Set(color);
+	}
+
+	if (m_ShaderColorParameter && m_ColorConstantBuffer)
+	{
+		m_ShaderColorParameter->SetConstantBuffer(m_ColorConstantBuffer);
+		m_ShaderColorParameter->Bind();
+	}
+
+	__super::Render(e);
+
+	if (m_ShaderColorParameter)
+	{
+		m_ShaderColorParameter->Unbind();
+	}
+}
 
 
 
@@ -41,6 +88,9 @@ std::shared_ptr<IRenderPassPipelined> CRenderPass_WDLList::ConfigurePipeline(std
 	GetPipeline().SetRenderTarget(RenderTarget);
 	GetPipeline().SetShader(vertexShader);
 	GetPipeline().SetShader(pixelShader);
+
+	m_ShaderColorParameter = pixelShader->GetShaderParameterByName("Color");
+	_ASSERT(m_ShaderColorParameter != nullptr);
 
 	return shared_from_this();
 }

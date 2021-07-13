@@ -54,7 +54,7 @@ private:
 	std::shared_ptr<IGeometry> CreateGeometryByDefinition(const SLiquidLayerDefinition& LiquidLayerDefinition);
 
 private:
-	const CSkyManager* m_SkyManager;
+
 	std::shared_ptr<CLiquidMaterial> m_Material;
 	DBC_LIQUIDTYPE_Type m_LiquidType;
 

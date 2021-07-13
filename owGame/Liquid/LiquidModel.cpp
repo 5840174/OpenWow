@@ -9,9 +9,8 @@
 CLiquidModel::CLiquidModel(IRenderDevice& RenderDevice)
 	: ModelProxie(RenderDevice.GetObjectsFactory().CreateModel())
 	, m_RenderDevice(RenderDevice)
-	, m_SkyManager(nullptr)
 {
-	m_SkyManager = m_RenderDevice.GetBaseManager().GetManager<CSkyManager>();
+	
 	m_Material = MakeShared(CLiquidMaterial, m_RenderDevice);
 }
 
@@ -41,35 +40,6 @@ std::shared_ptr<IMaterial> CLiquidModel::GetMaterial() const
 bool CLiquidModel::Render(const ShaderMap& Shaders) const
 {
 	m_Material->Update();
-
-	if (m_SkyManager != nullptr)
-	{
-		if (m_LiquidType == DBC_LIQUIDTYPE_Type::water)
-		{
-			m_Material->SetColorLight(m_SkyManager->GetColor(ESkyColors::SKY_COLOR_RIVER_LIGHT));
-			m_Material->SetColorDark(m_SkyManager->GetColor(ESkyColors::SKY_COLOR_RIVER_DARK));
-			m_Material->SetShallowAlpha(m_SkyManager->GetWaterAlpha(ESkyWaterAlpha::SKY_WATER_SHALLOW));
-			m_Material->SetDeepAlpha(m_SkyManager->GetWaterAlpha(ESkyWaterAlpha::SKY_WATER_DEEP));
-		}
-		else if (m_LiquidType == DBC_LIQUIDTYPE_Type::ocean)
-		{
-			m_Material->SetColorLight(m_SkyManager->GetColor(ESkyColors::SKY_COLOR_OCEAN_LIGHT));
-			m_Material->SetColorDark(m_SkyManager->GetColor(ESkyColors::SKY_COLOR_OCEAN_DARK));
-			m_Material->SetShallowAlpha(m_SkyManager->GetWaterAlpha(ESkyWaterAlpha::SKY_OCEAN_SHALLOW));
-			m_Material->SetDeepAlpha(m_SkyManager->GetWaterAlpha(ESkyWaterAlpha::SKY_OCEAN_DEEP));
-		}
-		else
-		{
-			// not needed for slime and magma
-		}
-	}
-	else
-	{
-		m_Material->SetColorLight(ColorRGB(0.0f, 0.0f, 1.0f));
-		m_Material->SetColorDark(ColorRGB(0.0f, 0.0f, 1.0f));
-		m_Material->SetShallowAlpha(1.0f);
-		m_Material->SetDeepAlpha(1.0f);
-	}
 
 	return ModelProxie::Render(Shaders);
 }

@@ -2,7 +2,7 @@
 
 
 // Uniforms
-cbuffer Material : register(b2)
+cbuffer Color : register(b4)
 {
     float4 DiffuseColor;
 };

@@ -14,7 +14,4 @@ public:
 
     // IVisitor
     EVisitResult Visit(const std::shared_ptr < ISceneNode>& node) override final;
-
-private:
-	std::shared_ptr<IPropertiesGroup> m_WoWSettings;
 };

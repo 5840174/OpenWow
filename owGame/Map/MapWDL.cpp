@@ -105,7 +105,6 @@ void CMapWDL::CreateInsances(const std::shared_ptr<ISceneNode>& Parent) const
 
 	// Load low-resolution WMOs
 #ifdef USE_WMO_MODELS
-	Log::Green("CMapWDL: Low WMOs count [%d].", m_LowResolutionWMOsPlacementInfo.size());
 	for (const auto& it : m_LowResolutionWMOsPlacementInfo)
 	{
 		/*if (std::shared_ptr<CWMO> wmo = m_Map.GetBaseManager().GetManager<IWoWObjectsCreator>()->LoadWMO(m_Map.GetBaseManager().GetApplication().GetRenderDevice(), m_LowResolutionWMOsNames[it.nameIndex], true))
@@ -125,8 +124,8 @@ void CMapWDL::CreateInsances(const std::shared_ptr<ISceneNode>& Parent) const
 
 void CMapWDL::UpdateCamera(const ICameraComponent3D * camera)
 {
-	if (m_LowResilutionTileMaterial)
-		m_LowResilutionTileMaterial->SetDiffuseColor(ColorRGBA(m_Map.GetBaseManager().GetManager<CSkyManager>()->GetColor(ESkyColors::SKY_COLOR_FOG), 1.0f));
+	//if (m_LowResilutionTileMaterial)
+	//	m_LowResilutionTileMaterial->SetDiffuseColor(ColorRGBA(m_Map.GetBaseManager().GetManager<CSkyManager>()->GetColor(ESkyColors::SKY_COLOR_FOG), 1.0f));
 }
 
 void CMapWDL::Load()

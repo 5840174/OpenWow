@@ -10,8 +10,6 @@ CRenderPass_SkyList::CRenderPass_SkyList(IRenderDevice& RenderDevice, const std:
 	: CRenderPassPipelinedProcessTypelessList(RenderDevice, CreateTypelessList)
 {
 	SetPassName("SkyList");
-
-	m_WoWSettings = GetBaseManager().GetManager<ISettings>()->GetGroup("WoWSettings");
 }
 
 CRenderPass_SkyList::~CRenderPass_SkyList()

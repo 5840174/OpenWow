@@ -6,15 +6,6 @@
 // Additional
 #include "RenderPassCreateTypelessList.h"
 
-#include "RenderPass_Liquid.h"
-#include "RenderPass_M2.h"
-#include "RenderPass_M2Instanced.h"
-#include "RenderPass_MapChunk.h"
-#include "RenderPass_MapTile.h"
-#include "RenderPass_Sky.h"
-#include "RenderPass_WDL.h"
-#include "RenderPass_WMO.h"
-
 #include "RenderPass_Update.h"
 #include "RenderPass_LiquidList.h"
 #include "RenderPass_M2List.h"

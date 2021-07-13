@@ -16,26 +16,6 @@ CLiquidMaterial::~CLiquidMaterial()
 //
 // CLiquidMaterial
 //
-void CLiquidMaterial::SetShallowAlpha(float value)
-{
-	MaterialData().gShallowAlpha = value;
-}
-
-void CLiquidMaterial::SetDeepAlpha(float value)
-{
-	MaterialData().gDeepAlpha = value;
-}
-
-void CLiquidMaterial::SetColorLight(ColorRGB value)
-{
-	MaterialData().gColorLight = value;
-}
-
-void CLiquidMaterial::SetColorDark(ColorRGB value)
-{
-	MaterialData().gColorDark = value;
-}
-
 void CLiquidMaterial::InitializeTextures(const DBC_LiquidTypeRecord* LiquidTypeRecord)
 {
 	DBC_LIQUIDTYPE_Type liquidType = LiquidTypeRecord->Get_Type();

@@ -5,22 +5,12 @@ namespace
 	__declspec(align(16)) struct SLiquidMaterialProperties
 	{
 		SLiquidMaterialProperties()
-			: gColorLight(1.0f, 1.0f, 1.0f)
-			, gColorDark(1.0f, 1.0f, 1.0f)
-			, gShallowAlpha(1.0f)
-			, gDeepAlpha(1.0f)
-			, gLiquidType(0)
+			: gLiquidType(0)
 		{}
-
-		ColorRGB gColorLight;
-		float gShallowAlpha;
-
-		ColorRGB gColorDark;
-		float gDeepAlpha;
 
 		uint32 gLiquidType;
 		glm::vec3 __padding;
-		//-------------------------- ( 48 bytes )
+		//-------------------------- ( 16 bytes )
 	};
 }
 
@@ -32,11 +22,6 @@ public:
 	virtual ~CLiquidMaterial();
 
 	// CLiquidMaterial
-	void SetShallowAlpha(float value);
-	void SetDeepAlpha(float value);
-	void SetColorLight(ColorRGB value);
-	void SetColorDark(ColorRGB value);
-
 	void InitializeTextures(const DBC_LiquidTypeRecord* LiquidTypeRecord);
 	void Update();
 
