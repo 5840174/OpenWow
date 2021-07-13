@@ -45,10 +45,7 @@ void CMapWMOInstance::Initialize()
 	SetLocalPosition(m_PlacementInfo.position);
 	SetLocalRotationEuler(m_PlacementInfo.rotation);
 
-	if (auto colliderComponent = GetComponentT<IColliderComponent>())
-	{
-		colliderComponent->SetCullDistance(GetBaseManager().GetManager<ISettings>()->GetGroup("WoWSettings")->GetPropertyT<float>("MapTileWMORenderDistance")->Get());
-	}
+	SetCullDistance(GetBaseManager().GetManager<ISettings>()->GetGroup("WoWSettings")->GetPropertyT<float>("MapTileWMORenderDistance")->Get());
 }
 
 void CMapWMOInstance::Accept(IVisitor* visitor)
@@ -82,7 +79,7 @@ bool CMapWMOInstance::Load()
 	{
 		if (auto parentAsMapTile = std::dynamic_pointer_cast<CMapTile>(parent))
 		{
-			parentAsMapTile->ExtendMapTileBounds(GetComponentT<IColliderComponent>()->GetWorldBounds());
+			parentAsMapTile->ExtendMapTileBounds(GetWorldBounds());
 		}
 	}
 	

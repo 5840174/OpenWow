@@ -115,10 +115,14 @@ std::shared_ptr<IRenderPassPipelined> CRenderPass_M2InstancedList::ConfigurePipe
 EVisitResult CRenderPass_M2InstancedList::Visit(const std::shared_ptr<ISceneNode>& SceneNode)
 {
 	m_CurrentM2Instance = nullptr;
+
 	if (auto m2Instance = std::dynamic_pointer_cast<CM2_Base_Instance>(SceneNode))
 	{
-		m_CurrentM2Instance = m2Instance.get();
-		return EVisitResult::AllowVisitContent;
+		if (m2Instance->IsInstansingEnabled())
+		{
+			m_CurrentM2Instance = m2Instance.get();
+			return EVisitResult::AllowVisitContent;
+		}
 	}
 
 	return EVisitResult::Block;

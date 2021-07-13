@@ -61,9 +61,8 @@ void CRenderPassCreateTypelessList::Render(RenderEventArgs & e)
 //
 EVisitResult CRenderPassCreateTypelessList::Visit(const std::shared_ptr<ISceneNode>& SceneNode)
 {
-	if (auto colliderComponent = SceneNode->GetComponentT<IColliderComponent>())
-		if (colliderComponent->IsCulled(GetRenderEventArgs().CameraForCulling))
-			return EVisitResult::Block;
+	if (SceneNode->IsCulled(GetRenderEventArgs().CameraForCulling))
+		return EVisitResult::Block;
 
 	m_NodesList.push_back(SNodeElement(SceneNode));
 	return EVisitResult::AllowAll;

@@ -29,10 +29,7 @@ CWMO_Group_Instance::~CWMO_Group_Instance()
 //
 bool CWMO_Group_Instance::Load()
 {
-	if (auto colliderComponent = GetComponentT<IColliderComponent>())
-	{
-		colliderComponent->SetBounds(GetWMOGroup().GetBoundingBox());
-	}
+	SetBounds(GetWMOGroup().GetBoundingBox());
 
 	GetWMOGroup().CreateInsances(std::dynamic_pointer_cast<CWMO_Group_Instance>(shared_from_this()));
 
@@ -95,7 +92,7 @@ void CWMO_Group_Instance::Reset()
 
 BoundingBox CWMO_Group_Instance::GetBoundingBox() const
 {
-	return GetComponentT<IColliderComponent>()->GetWorldBounds();
+	return GetWorldBounds();
 }
 
 bool CWMO_Group_Instance::IsPointInside(const glm::vec3 & CameraPosition) const
@@ -161,6 +158,8 @@ const CWMOGroup& CWMO_Group_Instance::GetWMOGroup() const
 	return m_WMOGroup;
 }
 
+
+#ifdef USE_WMO_PORTALS_CULLING
 void CWMO_Group_Instance::CreatePortals(const std::shared_ptr<CWMO_Base_Instance>& BaseInstance)
 {
 	if (BaseInstance == nullptr)
@@ -204,7 +203,7 @@ void CWMO_Group_Instance::CreatePortals(const std::shared_ptr<CWMO_Base_Instance
 		AddPortal(MakeShared(CWMOPortalInstance, roomInnerInstance, roomOuterInstance, portalsVertices, plane));
 	}
 }
-
+#endif
 
 
 //
@@ -214,12 +213,9 @@ void CWMO_Group_Instance::Initialize()
 {
 	__super::Initialize();
 
-	if (auto colliderComponent = GetComponentT<IColliderComponent>())
-	{
-		colliderComponent->SetCullStrategy(IColliderComponent::ECullStrategy::ByFrustrum);
-		colliderComponent->SetDebugDrawMode(false);
-		colliderComponent->SetDebugDrawColor(ColorRGBA(0.8f, 0.6f, 0.2f, 0.8f));
-	}
+	SetCullStrategy(ECullStrategy::ByFrustrum);
+	SetDebugDrawMode(false);
+	SetDebugDrawColor(ColorRGBA(0.8f, 0.6f, 0.2f, 0.8f));
 }
 
 void CWMO_Group_Instance::Accept(IVisitor* visitor)

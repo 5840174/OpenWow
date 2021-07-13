@@ -33,9 +33,6 @@ void CMapWDL::CreateInsances(const std::shared_ptr<ISceneNode>& Parent) const
 	if (f == nullptr)
 		throw CException("World[%s]: WDL: Error opening.", fileName.c_str());
 
-	// Material
-	m_LowResilutionTileMaterial = MakeShared(CMapWDLTileMaterial, m_Map.GetBaseManager().GetApplication().GetRenderDevice());
-
 	// Heightmap
 	glm::vec3 lowres[17][17];
 	glm::vec3 lowsub[16][16];
@@ -95,7 +92,7 @@ void CMapWDL::CreateInsances(const std::shared_ptr<ISceneNode>& Parent) const
 				geometry->SetVertexBuffer(vertices);
 
 				auto model = MakeShared(CMapWDLTileModel, m_Map.GetBaseManager().GetApplication().GetRenderDevice(), m_Map, i, j);
-				model->AddConnection(m_LowResilutionTileMaterial, geometry);
+				model->AddConnection(nullptr, geometry);
 
 				Parent->GetComponentT<IModelComponent>()->AddModel(model);
 			}
@@ -120,12 +117,6 @@ void CMapWDL::CreateInsances(const std::shared_ptr<ISceneNode>& Parent) const
 		}*/
 	}
 #endif
-}
-
-void CMapWDL::UpdateCamera(const ICameraComponent3D * camera)
-{
-	//if (m_LowResilutionTileMaterial)
-	//	m_LowResilutionTileMaterial->SetDiffuseColor(ColorRGBA(m_Map.GetBaseManager().GetManager<CSkyManager>()->GetColor(ESkyColors::SKY_COLOR_FOG), 1.0f));
 }
 
 void CMapWDL::Load()
@@ -179,8 +170,6 @@ void CMapWDL::Load()
 	std::shared_ptr<CImageBase> mimimapImage = MakeShared(CImageBase, "", 512, 512, 32, false);
 
 	// Heightmap
-	glm::vec3 lowres[17][17];
-
 	for (uint8 j = 0; j < C_TilesInMap; j++)
 	{
 		for (uint8 i = 0; i < C_TilesInMap; i++)

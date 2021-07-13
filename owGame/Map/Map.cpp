@@ -186,9 +186,6 @@ void CMap::Update(const UpdateEventArgs& e)
 			loading = false;
 		}
 	}
-
-	if (m_WDL)
-		m_WDL->UpdateCamera(camera);
 }
 
 void CMap::EnterMap(glm::vec3 CameraPosition)

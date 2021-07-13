@@ -25,11 +25,21 @@ CWMO_Doodad_Instance::~CWMO_Doodad_Instance()
 
 
 //
+// CM2_Base_Instance
+//
+bool CWMO_Doodad_Instance::IsInstansingEnabled() const
+{
+	return true;
+}
+
+
+
+//
 // IPortalRoomObject
 //
 BoundingBox CWMO_Doodad_Instance::GetBoundingBox() const
 {
-	return GetComponentT<IColliderComponent>()->GetWorldBounds();
+	return GetWorldBounds();
 }
 
 
@@ -45,10 +55,7 @@ void CWMO_Doodad_Instance::Initialize()
 	SetLocalRotationQuaternion(glm::quat(m_Placement.orientation.w, -m_Placement.orientation.z, m_Placement.orientation.x, m_Placement.orientation.y));
 	SetLocalScale(glm::vec3(m_Placement.scale, -m_Placement.scale, -m_Placement.scale));
 
-	if (auto colliderComponent = GetComponentT<IColliderComponent>())
-	{
-		colliderComponent->SetCullDistance(GetBaseManager().GetManager<ISettings>()->GetGroup("WoWSettings")->GetPropertyT<float>("MapTileWMODoodadsRenderDisance")->Get());
-	}
+	SetCullDistance(GetBaseManager().GetManager<ISettings>()->GetGroup("WoWSettings")->GetPropertyT<float>("MapTileWMODoodadsRenderDisance")->Get());
 }
 
 void CWMO_Doodad_Instance::Accept(IVisitor* visitor)

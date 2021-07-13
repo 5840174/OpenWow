@@ -16,6 +16,8 @@
 ~Loading shader 'shaders_D3D/WMO.hlsl':'PS_main'.
 ~Loading shader 'shaders_D3D/M2.hlsl':'VS_main'.
 ~Loading shader 'shaders_D3D/M2.hlsl':'PS_main'.
+~Loading shader 'shaders_D3D/M2.hlsl':'VS_main'.
+~Loading shader 'shaders_D3D/M2.hlsl':'PS_main'.
 ~Loading shader 'shaders_D3D/M2.hlsl':'VS_main_Inst'.
 ~Loading shader 'shaders_D3D/M2.hlsl':'PS_main'.
 ~Loading shader 'shaders_D3D/Liquid.hlsl':'VS_main'.
@@ -24,31 +26,6 @@
 ~Loading shader 'UI/UIControlCommon.hlsl':'PS_main'.
 ~Loading shader 'UI/UI_Font.hlsl':'VS_main'.
 ~Loading shader 'UI/UI_Font.hlsl':'PS_main'.
-^CAuthSocket::OnConnected.
-^CAuthSocket::On_AUTH_LOGON_PROOF: Successfully logined.
-^CAuthSocket::On_REALM_LIST: Count '12'.
-^RealmType: '1', IsLocked: '0', Flag: '0x0', Name: 'WoW Circle 3.3.5a Fun', Address '51.77.57.14:12373', Population: '0,000000', CharacterCount: '0'
-^RealmType: '1', IsLocked: '0', Flag: '0x0', Name: 'WoW Circle 3.3.5a Fun Prx 1', Address '185.71.65.222:77909', Population: '0,000000', CharacterCount: '0'
-^RealmType: '1', IsLocked: '0', Flag: '0x0', Name: 'WoW Circle 3.3.5a Fun Prx 2', Address '5.252.35.3:77909', Population: '0,000000', CharacterCount: '0'
-^RealmType: '0', IsLocked: '0', Flag: '0x0', Name: 'WoW Circle 3.3.5a x1', Address '54.37.128.19:8131', Population: '0,000000', CharacterCount: '0'
-^RealmType: '0', IsLocked: '0', Flag: '0x0', Name: 'WoW Circle 3.3.5a x1 Prx 1', Address '185.71.65.111:8131', Population: '0,000000', CharacterCount: '0'
-^RealmType: '0', IsLocked: '0', Flag: '0x0', Name: 'WoW Circle 3.3.5a x1 Prx 2', Address '5.252.35.81:8131', Population: '0,000000', CharacterCount: '0'
-^RealmType: '1', IsLocked: '0', Flag: '0x0', Name: 'WoW Circle 3.3.5a x100', Address '54.37.128.20:8130', Population: '0,000000', CharacterCount: '0'
-^RealmType: '1', IsLocked: '0', Flag: '0x0', Name: 'WoW Circle 3.3.5a x100 Prx 1', Address '185.71.65.222:73666', Population: '0,000000', CharacterCount: '0'
-^RealmType: '1', IsLocked: '0', Flag: '0x0', Name: 'WoW Circle 3.3.5a x100 Prx 2', Address '5.252.35.3:73666', Population: '0,000000', CharacterCount: '0'
-^RealmType: '1', IsLocked: '0', Flag: '0x0', Name: 'WoW Circle 3.3.5a x5', Address '54.37.128.20:8129', Population: '0,000000', CharacterCount: '0'
-^RealmType: '1', IsLocked: '0', Flag: '0x0', Name: 'WoW Circle 3.3.5a x5 Prx 1', Address '185.71.65.222:73665', Population: '0,000000', CharacterCount: '0'
-^RealmType: '1', IsLocked: '0', Flag: '0x0', Name: 'WoW Circle 3.3.5a x5 Prx 2', Address '5.252.35.3:73665', Population: '0,000000', CharacterCount: '0'
-^CWoWClient::OnRealmListSelected: Realm name 'WoW Circle 3.3.5a x5'.
-@CAuthSocket::OnDisconnected.
-^CWorldSocket::OnConnected.
-^CWorldSocket::On_SMSG_AUTH_RESPONSE: Response is OK!
- CWoWClientCharactedSelection::On_SMSG_CHAR_ENUM:: Characters count '1'.
- CWoWClientCharactedSelection::On_SMSG_CHAR_ENUM:: Character [0] name 'Yielt'.
-^CWoWClient::OnCharacterSelected: Character name 'Yielt'.
- CTransportAnimationStorage::Initialize: Loaded records for '82' transport entries.
-~Loading shader '3D/Debug.hlsl':'VS_main'.
-~Loading shader '3D/Debug.hlsl':'PS_main'.
 ~Sky: [752] is global sky.
  Map[Northrend]: Id = '571'. Preloading...
  Map[Northrend]: InstanceType = '0'.
@@ -60,43 +37,50 @@
  Map[Northrend]: HordeDescr = ''.
  Map[Northrend]: CorpseMapID = '0'.
  Map[Northrend]: Id [571]. Loading...
-^CMapWDL: Low WMOs count [4].
 ~MapWDT: Global WMO exists [false].
-^MOTD: Welcome to World of Warcraft Server - WoW Circle
 !CImageBLP: Unable to load PLP file 'TCB_CrystalSong_B.blp'.
 !File 'TILESET\Terrain Cube Maps\TCB_CrystalSong_B_s.blp' not exists.
- []: |cFF00a550На этой неделе доступен Наксрамас на героической сложности!|r
- []: |cff6600ff[Рейтинговое поле боя]:|r Око Бури -- [80-80] начинается!|r
- []: В ЦЛК 25 Об ласт слот Ршам/Адк гс 5.8+ Анр не трин+оск+бое
- []: КОЖЭВНИК ПМ! ЕСТЬ ЗАКАЗ! 
-@Characted deleted.
-@Characted deleted.
- [Гризельда Хандерленд]: Добро пожаловать. Могу я помочь тебе в поисках?
-@Characted deleted.
- []: В ЦЛК 25 Об ласт слот Ршам/Адк гс 5.8+ Анр не трин+оск+бое
- []: В цлк 25 нид танк пал ) хилл хпал дц ршам рдрул ) дд фвар крог кот рпал адк ) рдд лок шп фмаг хант от гс 5,7 к 1А не триня 
 !CImageBLP: Unable to load PLP file 'TCB_CrystalSong_B.blp'.
 !File 'TILESET\Terrain Cube Maps\TCB_CrystalSong_B_s.blp' not exists.
- []: ну что
- []: В ЦЛК 25 Об ласт слот Ршам/Адк гс 5.8+ Анр не трин+оск+бое
- []: ракулеты 
-!Can't remove child node '' from nullptr parent.
-@Characted deleted.
- []: кто не очкует
- []: В ЦЛК 25 Об ласт слот Ршам/Адк гс 5.8+ Анр не трин+оск+бое
- []: {череп}{крест}В ОС 25 надо хилы и дд/рдд (сумка анролл){череп}{крест}
-!Can't remove child node '' from nullptr parent.
-@Characted deleted.
- []: {череп}{крест}В ОС 25 надо хилы и дд/рдд (сумка анролл){череп}{крест}
+!CImageBLP: Unable to load PLP file 'TCB_CrystalSong_B.blp'.
+!CImageBLP: Unable to load PLP file 'TCB_CrystalSong_B.blp'.
+!File 'TILESET\Terrain Cube Maps\TCB_CrystalSong_B_s.blp' not exists.
+!File 'TILESET\Terrain Cube Maps\TCB_CrystalSong_B_s.blp' not exists.
 !CImageBLP: Unable to load PLP file 'tgatest.blp'.
 !File 'TILESET\Generic\tgatest_s.blp' not exists.
 !CImageBLP: Unable to load PLP file 'tgatest.blp'.
 !File 'TILESET\Generic\tgatest_s.blp' not exists.
+!CImageBLP: Unable to load PLP file 'tgatest.blp'.
+!File 'TILESET\Generic\tgatest_s.blp' not exists.
+!File 'Tileset\Generic\WaterBlue_s.blp' not exists.
+!CImageBLP: Unable to load PLP file 'TCB_CrystalSong_A.blp'.
+!File 'TILESET\Terrain Cube Maps\TCB_CrystalSong_A_s.blp' not exists.
+!CImageBLP: Unable to load PLP file 'TCB_CrystalSong_A.blp'.
+!File 'TILESET\Terrain Cube Maps\TCB_CrystalSong_A_s.blp' not exists.
+!CImageBLP: Unable to load PLP file 'TCB_CrystalSong_A.blp'.
+!File 'TILESET\Terrain Cube Maps\TCB_CrystalSong_A_s.blp' not exists.
+!CImageBLP: Unable to load PLP file 'TCB_CrystalSong_A.blp'.
+!File 'TILESET\Terrain Cube Maps\TCB_CrystalSong_A_s.blp' not exists.
+!CImageBLP: Unable to load PLP file 'tgatest.blp'.
+!File 'TILESET\Generic\tgatest_s.blp' not exists.
+!File 'Tileset\Generic\WaterBlue_s.blp' not exists.
+!CImageBLP: Unable to load PLP file 'TCB_CrystalSong_A.blp'.
+!File 'TILESET\Terrain Cube Maps\TCB_CrystalSong_A_s.blp' not exists.
+!CImageBLP: Unable to load PLP file 'tgatest.blp'.
+!File 'TILESET\Generic\tgatest_s.blp' not exists.
+!CImageBLP: Unable to load PLP file 'tgatest.blp'.
+!File 'TILESET\Generic\tgatest_s.blp' not exists.
+!CImageBLP: Unable to load PLP file 'tgatest.blp'.
+!File 'TILESET\Generic\tgatest_s.blp' not exists.
 !CImageBLP: Unable to load PLP file 'TCB_CrystalSong_B.blp'.
 !File 'TILESET\Terrain Cube Maps\TCB_CrystalSong_B_s.blp' not exists.
-@Characted deleted.
-@Characted deleted.
-@Characted deleted.
-!Can't remove child node '' from nullptr parent.
-@Characted deleted.
-@Characted deleted.
+!CImageBLP: Unable to load PLP file 'TCB_CrystalSong_B.blp'.
+!File 'TILESET\Terrain Cube Maps\TCB_CrystalSong_B_s.blp' not exists.
+!CImageBLP: Unable to load PLP file 'TCB_CrystalSong_B.blp'.
+!File 'TILESET\Terrain Cube Maps\TCB_CrystalSong_B_s.blp' not exists.
+!CImageBLP: Unable to load PLP file 'TCB_CrystalSong_B.blp'.
+!File 'TILESET\Terrain Cube Maps\TCB_CrystalSong_B_s.blp' not exists.
+!CImageBLP: Unable to load PLP file 'tgatest.blp'.
+!File 'TILESET\Generic\tgatest_s.blp' not exists.
+!CImageBLP: Unable to load PLP file 'tgatest.blp'.
+!File 'TILESET\Generic\tgatest_s.blp' not exists.

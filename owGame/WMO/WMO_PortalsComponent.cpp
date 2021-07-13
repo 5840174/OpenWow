@@ -40,7 +40,7 @@ void CWMO_PortalsComponent::Update(const UpdateEventArgs& e)
 	Frustum cameraFrustum = camera->GetFrustum();
 	bool insideIndoor = false;
 
-	BoundingBox wmoBaseInstanceBounds = GetWMOOwnerNode().GetComponentT<IColliderComponent>()->GetWorldBounds();
+	BoundingBox wmoBaseInstanceBounds = GetWMOOwnerNode().GetWorldBounds();
 
 	if (wmoBaseInstanceBounds.isPointInside(cameraTranslate))
 	{

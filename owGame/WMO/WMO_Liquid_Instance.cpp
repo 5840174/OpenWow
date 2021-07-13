@@ -20,7 +20,7 @@ CWMO_Liquid_Instance::~CWMO_Liquid_Instance()
 //
 BoundingBox CWMO_Liquid_Instance::GetBoundingBox() const
 {
-	return GetComponentT<IColliderComponent>()->GetWorldBounds();
+	return GetWorldBounds();
 }
 
 void CWMO_Liquid_Instance::SetVisibilityState(bool _visibility)

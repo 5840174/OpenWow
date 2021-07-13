@@ -77,6 +77,12 @@ const std::shared_ptr<ITexture>& CM2_Base_Instance::getSpecialTexture(SM2_Textur
 	return m_SpecialTextures[_type];
 }
 
+bool CM2_Base_Instance::IsInstansingEnabled() const
+{
+	return false;
+}
+
+
 
 
 //
@@ -86,19 +92,15 @@ void CM2_Base_Instance::Initialize()
 {
 	__super::Initialize();
 
-	if (auto colliderComponent = GetComponentT<IColliderComponent>())
-	{
-		colliderComponent->SetCullStrategy(IColliderComponent::ECullStrategy::ByFrustrumAndDistance2D);
-		colliderComponent->SetCullDistance(GetBaseManager().GetManager<ISettings>()->GetGroup("WoWSettings")->GetPropertyT<float>("M2BaseRenderDistance")->Get());
-		colliderComponent->SetDebugDrawMode(false);
-		colliderComponent->SetDebugDrawColor(ColorRGBA(0.9f, 0.2f, 0.2f, 0.8f));
-	}
+	SetCullStrategy(ECullStrategy::ByFrustrumAndDistance2D);
+	SetCullDistance(GetBaseManager().GetManager<ISettings>()->GetGroup("WoWSettings")->GetPropertyT<float>("M2BaseRenderDistance")->Get());
+	SetDebugDrawMode(false);
+	SetDebugDrawColor(ColorRGBA(0.9f, 0.2f, 0.2f, 0.8f));
 }
 
 void CM2_Base_Instance::RegisterComponents()
 {
 	AddComponentT(GetBaseManager().GetManager<IObjectsFactory>()->GetClassFactoryCast<IComponentFactory>()->CreateComponentT<IModelComponent>(cSceneNodeModelsComponent, *this));
-	m_ColliderComponent = AddComponentT(MakeShared(CM2_ColliderComponent, *this));
 	m_AnimatorComponent = AddComponentT(MakeShared(CM2AnimatorComponent, *this));
 }
 
@@ -120,8 +122,7 @@ void CM2_Base_Instance::Accept(IVisitor* visitor)
 //
 bool CM2_Base_Instance::Load()
 {
-	if (auto colliderComponent = GetComponentT<IColliderComponent>())
-		colliderComponent->SetBounds(GetM2().GetBounds());
+	SetBounds(GetM2().GetBounds());
 
 	if (GetM2().isAnimated())
 		m_AnimatorComponent->LoadAnimations();

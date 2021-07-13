@@ -23,6 +23,16 @@ CMapM2Instance::~CMapM2Instance()
 
 
 //
+// CM2_Base_Instance
+//
+bool CMapM2Instance::IsInstansingEnabled() const
+{
+	return true;
+}
+
+
+
+//
 // ISceneNode
 //
 void CMapM2Instance::Initialize()
@@ -33,10 +43,7 @@ void CMapM2Instance::Initialize()
 	SetLocalRotationEuler(m_PlacementInfo.rotation);
 	SetLocalScale(glm::vec3(static_cast<float>(m_PlacementInfo.scale) / 1024.0f));
 
-	if (auto colliderComponent = GetComponentT<IColliderComponent>())
-	{
-		colliderComponent->SetCullDistance(GetBaseManager().GetManager<ISettings>()->GetGroup("WoWSettings")->GetPropertyT<float>("MapTileM2RenderDistance")->Get());
-	}
+	SetCullDistance(GetBaseManager().GetManager<ISettings>()->GetGroup("WoWSettings")->GetPropertyT<float>("MapTileM2RenderDistance")->Get());
 }
 
 void CMapM2Instance::Accept(IVisitor* visitor)
@@ -70,7 +77,7 @@ bool CMapM2Instance::Load()
 	{
 		if (auto parentAsMapTile = std::dynamic_pointer_cast<CMapTile>(parent))
 		{
-			parentAsMapTile->ExtendMapTileBounds(GetComponentT<IColliderComponent>()->GetWorldBounds());
+			parentAsMapTile->ExtendMapTileBounds(GetWorldBounds());
 		}
 	}
 	return true;

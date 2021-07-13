@@ -16,7 +16,7 @@
 /**
   * Enable or disable WMO culling by portals
 */
-#define USE_WMO_PORTALS_CULLING
+//#define USE_WMO_PORTALS_CULLING
 
 /**
   * Enable or disable M2 models support

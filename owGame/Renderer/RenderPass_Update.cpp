@@ -24,6 +24,7 @@ EVisitResult CRenderPass_Update::Visit(const std::shared_ptr<ISceneNode>& SceneN
 		for (const auto& componentsIt : SceneNode3D->GetComponents())
 			if (componentsIt.second)
 				componentsIt.second->Update(GetRenderEventArgs());
+
 		const_cast<ISceneNode*>(SceneNode3D.get())->Update(GetRenderEventArgs());
 	}
 

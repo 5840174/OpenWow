@@ -59,6 +59,7 @@ EVisitResult CRenderPass_WMOPortalDebug::Visit(const std::shared_ptr<ISceneNode>
 		{
 			for (const auto& portal : portalRoom->GetPortals())
 			{
+#ifdef USE_WMO_PORTALS_CULLING
 				if (auto portalCast = std::dynamic_pointer_cast<CWMOPortalInstance>(portal))
 				{
 					auto pointsXYZ = portalCast->GetVertices();
@@ -80,6 +81,7 @@ EVisitResult CRenderPass_WMOPortalDebug::Visit(const std::shared_ptr<ISceneNode>
 					m_WaypointGeometry->Render(GetPipeline().GetVertexShaderPtr());
 					m_MaterialDebug->Unbind(GetPipeline().GetPixelShaderPtr());
 				}
+#endif
 			}
 		}
 	}

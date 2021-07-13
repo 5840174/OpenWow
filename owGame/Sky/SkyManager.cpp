@@ -62,8 +62,7 @@ bool CSkyManager::Load(uint32 MapID)
 		m_MapSkies.back()->m_IsGlobalSky = true;
 	}
 
-	if (auto colliderComponent = GetComponentT<IColliderComponent>())
-		colliderComponent->SetCullStrategy(IColliderComponent::ECullStrategy::None);
+	SetCullStrategy(ECullStrategy::None);
 
 	CreateSkyColorsBuffer();
 

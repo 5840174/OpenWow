@@ -1,5 +1,7 @@
 #include "stdafx.h"
 
+#if 0
+
 // Include
 #include "M2_Base_Instance.h"
 
@@ -32,3 +34,5 @@ void CM2_ColliderComponent::UpdateBounds()
     //GetComponentT<IColliderComponent>()->SetBounds(bbox);
 	__super::UpdateBounds();
 }
+
+#endif

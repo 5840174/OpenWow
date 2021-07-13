@@ -1,5 +1,7 @@
 #pragma once
 
+#if 0
+
 // FORWARD BEGIN
 class CM2_Base_Instance;
 // FORWARD END
@@ -19,3 +21,5 @@ protected:
     // CColliderComponent
     virtual void UpdateBounds() override;
 };
+
+#endif

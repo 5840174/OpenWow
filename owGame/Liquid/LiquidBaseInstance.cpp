@@ -21,10 +21,7 @@ void CLiquidBaseInstance::Initialize()
 {
 	__super::Initialize();
 
-	if (auto colliderComponent = GetComponentT<IColliderComponent>())
-	{
-		colliderComponent->SetCullStrategy(IColliderComponent::ECullStrategy::ByFrustrum);
-		colliderComponent->SetDebugDrawMode(false);
-		colliderComponent->SetDebugDrawColor(ColorRGBA(0.3f, 0.3f, 0.8f, 0.8f));
-	}
+	SetCullStrategy(ECullStrategy::ByFrustrum);
+	SetDebugDrawMode(false);
+	SetDebugDrawColor(ColorRGBA(0.3f, 0.3f, 0.8f, 0.8f));
 }

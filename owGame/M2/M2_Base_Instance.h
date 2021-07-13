@@ -44,6 +44,8 @@ public:
 	const std::shared_ptr<CM2ParticlesComponent> getParticleComponent() const { return m_ParticleComponent; }
 #endif
 
+	virtual bool                        IsInstansingEnabled() const;
+
 	// ISceneNode
 	void								Initialize() override;
 	virtual void                        RegisterComponents() override;

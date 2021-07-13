@@ -12,6 +12,9 @@ public:
 	CMapM2Instance(IScene& Scene, const std::shared_ptr<CM2>& M2Object, const SMapTile_MDDF& MDDF);
 	virtual ~CMapM2Instance();
 
+	// CM2_Base_Instance
+	bool IsInstansingEnabled() const override;
+
 	// ISceneNode
 	void Initialize() override;
 	void Accept(IVisitor* visitor) override;

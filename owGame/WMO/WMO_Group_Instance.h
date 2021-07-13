@@ -49,8 +49,10 @@ public:
 
 	// CWMO_Group_Instance
 	const CWMOGroup& GetWMOGroup() const;
+#ifdef USE_WMO_PORTALS_CULLING
 	void CreatePortals(const std::shared_ptr<CWMO_Base_Instance>& BaseInstance);
-    
+#endif
+
 	// ISceneNode
 	void Initialize() override;
 	void Accept(IVisitor* visitor) override;

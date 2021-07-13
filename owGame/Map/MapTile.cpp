@@ -60,7 +60,7 @@ std::shared_ptr<SMapTile_MTEX> CMapTile::GetTextureInfo(size_t Index) const
 
 void CMapTile::ExtendMapTileBounds(const BoundingBox & OtherBBox)
 {
-	GetComponentT<IColliderComponent>()->ExtendBounds(OtherBBox);
+	ExtendBounds(OtherBBox);
 }
 
 
@@ -76,20 +76,17 @@ void CMapTile::Initialize()
 	//SetLocalPosition(glm::vec3(m_IndexX * C_TileSize, 0.0f, m_IndexZ * C_TileSize));
 
 	// Collider
-	if (auto colliderComponent = GetComponentT<IColliderComponent>())
-	{
-		BoundingBox bbox
-		(
-			glm::vec3((getIndexX() * C_TileSize),              Math::MaxFloat, (getIndexZ() * C_TileSize)),
-			glm::vec3((getIndexX() * C_TileSize) + C_TileSize, Math::MinFloat, (getIndexZ() * C_TileSize) + C_TileSize)
-		);
+	BoundingBox bbox
+	(
+		glm::vec3((getIndexX() * C_TileSize),              Math::MaxFloat, (getIndexZ() * C_TileSize)),
+		glm::vec3((getIndexX() * C_TileSize) + C_TileSize, Math::MinFloat, (getIndexZ() * C_TileSize) + C_TileSize)
+	);
 
-		colliderComponent->SetBounds(bbox);
-		colliderComponent->SetCullStrategy(IColliderComponent::ECullStrategy::ByFrustrumAndDistance2D);
-		colliderComponent->SetCullDistance(GetBaseManager().GetManager<ISettings>()->GetGroup("WoWSettings")->GetPropertyT<float>("MapChunkRenderDistance")->Get());
-		colliderComponent->SetDebugDrawMode(false);
-		colliderComponent->SetDebugDrawColor(ColorRGBA(0.5f, 0.8f, 0.2f, 0.8f));
-	}
+	SetBounds(bbox);
+	SetCullStrategy(ECullStrategy::ByFrustrumAndDistance2D);
+	SetCullDistance(GetBaseManager().GetManager<ISettings>()->GetGroup("WoWSettings")->GetPropertyT<float>("MapChunkRenderDistance")->Get());
+	SetDebugDrawMode(false);
+	SetDebugDrawColor(ColorRGBA(0.5f, 0.8f, 0.2f, 0.8f));
 }
 
 
@@ -162,15 +159,12 @@ bool CMapTile::Load()
 						liquidInstance->SetLocalPosition(glm::vec3((getIndexX() * C_TileSize) + (j * C_ChunkSize), 0.0f, (getIndexZ() * C_TileSize) + (i * C_ChunkSize)));
 
 						// Collider
-						if (auto liquidColliderComponent = liquidInstance->GetComponentT<IColliderComponent>())
-						{
-							liquidColliderComponent->SetBounds(BoundingBox(
-								glm::vec3(0.0f,        liquidObject.getMinHeight() - 1.0f, 0.0f),
-								glm::vec3(C_ChunkSize, liquidObject.getMaxHeight() + 1.0f, C_ChunkSize)
-							));
+						liquidInstance->SetBounds(BoundingBox(
+							glm::vec3(0.0f,        liquidObject.getMinHeight() - 1.0f, 0.0f),
+							glm::vec3(C_ChunkSize, liquidObject.getMaxHeight() + 1.0f, C_ChunkSize)
+						));
 
-							ExtendMapTileBounds(liquidColliderComponent->GetWorldBounds());
-						}
+						ExtendMapTileBounds(liquidInstance->GetWorldBounds());
 					}
 					abuf += sizeof(MH2O_Header);
 				}

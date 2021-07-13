@@ -1,6 +1,7 @@
 #include "stdafx.h"
 
 #ifdef USE_WMO_MODELS
+#ifdef USE_WMO_PORTALS_CULLING
 
 // General
 #include "WMO_Portal.h"
@@ -85,4 +86,5 @@ std::shared_ptr<IPortalRoom> CWMOPortalInstance::GetRoomObject(glm::vec3 CameraP
 	return IsPositive(CameraPosition) ? m_RoomInner.lock() : m_RoomOuter.lock();
 }
 
+#endif
 #endif

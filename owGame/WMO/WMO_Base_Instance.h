@@ -47,7 +47,9 @@ protected:
 	//GroupInstances  m_OutdoorGroupInstances;
 
 	std::shared_ptr<CWMOLightComponent> m_LightComponent;
+#ifdef USE_WMO_PORTALS_CULLING
 	std::shared_ptr<CWMO_PortalsComponent> m_PortalsComponent;
+#endif
 
 private:
 	std::shared_ptr<CWMO> m_WMOObject;

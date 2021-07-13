@@ -19,6 +19,7 @@ __declspec(align(16)) struct SColorProperties
 
 CRenderPass_WDLList::CRenderPass_WDLList(IRenderDevice& RenderDevice, const std::shared_ptr<IRenderPassCreateTypelessList>& CreateTypelessList)
 	: CRenderPassPipelinedProcessTypelessList(RenderDevice, CreateTypelessList)
+	, m_SkyManager(nullptr)
 {
 	SetPassName("MapWDLList");
 

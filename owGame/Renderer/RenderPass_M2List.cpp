@@ -152,18 +152,21 @@ EVisitResult CRenderPass_M2List::Visit(const std::shared_ptr<ISceneNode>& SceneN
 {
 	if (auto m2Instance = std::dynamic_pointer_cast<CM2_Base_Instance>(SceneNode3D))
 	{
-		m_CurrentM2Model = m2Instance.get();
-
-		M2PerObject perObject(m2Instance->GetWorldTransfom(), m2Instance->getColor());
-		m_M2PerObjectConstantBuffer->Set(perObject);
-
-		if (m_ShaderM2PerObjectParameter && m_M2PerObjectConstantBuffer != nullptr)
+		if (false == m2Instance->IsInstansingEnabled())
 		{
-			m_ShaderM2PerObjectParameter->SetConstantBuffer(m_M2PerObjectConstantBuffer);
-			m_ShaderM2PerObjectParameter->Bind();
-		}
+			m_CurrentM2Model = m2Instance.get();
 
-		return EVisitResult::AllowVisitContent;
+			M2PerObject perObject(m2Instance->GetWorldTransfom(), m2Instance->getColor());
+			m_M2PerObjectConstantBuffer->Set(perObject);
+
+			if (m_ShaderM2PerObjectParameter && m_M2PerObjectConstantBuffer != nullptr)
+			{
+				m_ShaderM2PerObjectParameter->SetConstantBuffer(m_M2PerObjectConstantBuffer);
+				m_ShaderM2PerObjectParameter->Bind();
+			}
+
+			return EVisitResult::AllowVisitContent;
+		}
 	}
 
 	return EVisitResult::Block;

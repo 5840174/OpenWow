@@ -366,9 +366,6 @@
     <ClCompile Include="Map\MapWDLTileModel.cpp">
       <Filter>Map\MapWDL</Filter>
     </ClCompile>
-    <ClCompile Include="Map\MapWDLTileMaterial.cpp">
-      <Filter>Map\MapWDL</Filter>
-    </ClCompile>
     <ClCompile Include="Interfaces\Managers.cpp">
       <Filter>Interfaces</Filter>
     </ClCompile>
@@ -855,9 +852,6 @@
       <Filter>Map\MapChunk</Filter>
     </ClInclude>
     <ClInclude Include="Map\MapWDLTileModel.h">
-      <Filter>Map\MapWDL</Filter>
-    </ClInclude>
-    <ClInclude Include="Map\MapWDLTileMaterial.h">
       <Filter>Map\MapWDL</Filter>
     </ClInclude>
     <ClInclude Include="Renderer\RenderPass_MapChunkList.h">
