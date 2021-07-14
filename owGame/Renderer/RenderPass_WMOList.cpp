@@ -65,11 +65,8 @@ std::shared_ptr<IRenderPassPipelined> CRenderPass_WMOList::ConfigurePipeline(std
 //
 EVisitResult CRenderPass_WMOList::Visit(const std::shared_ptr<ISceneNode>& SceneNode)
 {
-	//if (std::dynamic_pointer_cast<CWMO_Base_Instance>(SceneNode))
-	//{
-	//	return __super::Visit(SceneNode);
-	//}
 	m_CurrentWMOGroupInstance = nullptr;
+
 	if (auto wmoGroupInstance = std::dynamic_pointer_cast<CWMO_Group_Instance>(SceneNode))
 	{
 		m_CurrentWMOGroupInstance = wmoGroupInstance.get();
@@ -82,6 +79,7 @@ EVisitResult CRenderPass_WMOList::Visit(const std::shared_ptr<ISceneNode>& Scene
 EVisitResult CRenderPass_WMOList::Visit(const std::shared_ptr<IModel>& Model)
 {
 	m_CurrentWMOBatch = nullptr;
+
 	if (auto wmoBatch = std::dynamic_pointer_cast<WMO_Group_Part_Batch>(Model))
 	{
 		m_CurrentWMOBatch = wmoBatch.get();
@@ -103,9 +101,9 @@ EVisitResult CRenderPass_WMOList::Visit(const std::shared_ptr<IGeometry>& Geomet
 
 	EVisitResult visitResult = __super::Visit(Geometry, Material, GeometryDrawArgs);
 
-	wmoMaterial->GetBlendState()->Unbind();
 	wmoMaterial->GetRasterizerState()->Unbind();
-
+	wmoMaterial->GetBlendState()->Unbind();
+	
 	return visitResult;
 }
 

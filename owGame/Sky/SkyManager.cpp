@@ -27,6 +27,8 @@ namespace
 CSkyManager::CSkyManager(IScene& Scene)
 	: CSceneNode(Scene)
 {
+	dynamic_cast<IObjectPrivate*>(this)->SetGUID(Guid(ObjectTypes::otSceneNode, cSceneNodeSkyInstance, 1u));
+
 	m_Time.Set(11, 45);
 
 	LoadDayNightPhases();

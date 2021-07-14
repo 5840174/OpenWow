@@ -44,7 +44,7 @@ public:
 protected:
 	ERenderPassM2DrawMode m_DrawMode;
 
-	const CM2_Base_Instance* m_CurrentM2Model;
+	const CM2_Base_Instance* m_CurrentM2Instance;
 
 	std::shared_ptr<IConstantBuffer> m_M2PerObjectConstantBuffer;
 	IShaderParameter* m_ShaderM2PerObjectParameter;

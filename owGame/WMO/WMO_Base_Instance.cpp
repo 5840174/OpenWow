@@ -10,6 +10,8 @@ CWMO_Base_Instance::CWMO_Base_Instance(IScene& Scene, const std::shared_ptr<CWMO
 	, CLoadableObject(WMOObject)
 	, m_WMOObject(WMOObject)
 {
+	dynamic_cast<IObjectPrivate*>(this)->SetGUID(Guid(ObjectTypes::otSceneNode, cSceneNodeWMOBaseInstance, 1u));
+
 	SetUpdateEnabled(false);
 }
 

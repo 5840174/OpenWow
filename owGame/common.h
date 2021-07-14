@@ -52,7 +52,10 @@ ZN_MAKE_OBJECTCLASS(cWowSkyManagerCustom, 52);
 // 3D
 // 300 - 399 SceneNode custom
 //
-//ZN_MAKE_OBJECTCLASS(cSceneNodeRTSTower, 200);
+ZN_MAKE_OBJECTCLASS(cSceneNodeSkyInstance, 300);
+ZN_MAKE_OBJECTCLASS(cSceneNodeM2BaseInstance, 301);
+ZN_MAKE_OBJECTCLASS(cSceneNodeWMOBaseInstance, 302);
+
 
 //
 // UIControl

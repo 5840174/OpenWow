@@ -15,7 +15,7 @@
 
 CRenderPass_M2List::CRenderPass_M2List(IRenderDevice& RenderDevice, const std::shared_ptr<IRenderPassCreateTypelessList>& CreateTypelessList, ERenderPassM2DrawMode DrawMode)
 	: CRenderPassPipelinedProcessTypelessList(RenderDevice, CreateTypelessList)
-	, m_CurrentM2Model(nullptr)
+	, m_CurrentM2Instance(nullptr)
 	, m_DrawMode(DrawMode)
 {
 	SetPassName("M2List " + std::string((DrawMode == ERenderPassM2DrawMode::Opaque) ? "Opaque" : (DrawMode == ERenderPassM2DrawMode::Transperent) ? "Transperent" : "All"));
@@ -150,11 +150,13 @@ std::shared_ptr<IRenderPassPipelined> CRenderPass_M2List::ConfigurePipeline(std:
 //
 EVisitResult CRenderPass_M2List::Visit(const std::shared_ptr<ISceneNode>& SceneNode3D)
 {
+	m_CurrentM2Instance = nullptr;
+
 	if (auto m2Instance = std::dynamic_pointer_cast<CM2_Base_Instance>(SceneNode3D))
 	{
 		if (false == m2Instance->IsInstansingEnabled())
 		{
-			m_CurrentM2Model = m2Instance.get();
+			m_CurrentM2Instance = m2Instance.get();
 
 			M2PerObject perObject(m2Instance->GetWorldTransfom(), m2Instance->getColor());
 			m_M2PerObjectConstantBuffer->Set(perObject);
@@ -176,7 +178,7 @@ EVisitResult CRenderPass_M2List::Visit(const std::shared_ptr<IModel>& Model)
 {
 	if (auto m2Skin = std::dynamic_pointer_cast<CM2_Skin>(Model))
 	{
-		DoRenderM2Model(m_CurrentM2Model, m2Skin.get());
+		DoRenderM2Model(m_CurrentM2Instance, m2Skin.get());
 		return EVisitResult::AllowAll;
 	}
 

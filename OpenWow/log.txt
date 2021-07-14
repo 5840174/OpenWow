@@ -22,6 +22,9 @@
 ~Loading shader 'shaders_D3D/M2.hlsl':'PS_main'.
 ~Loading shader 'shaders_D3D/Liquid.hlsl':'VS_main'.
 ~Loading shader 'shaders_D3D/Liquid.hlsl':'PS_main'.
+~Loading shader 'shaders_D3D/M2Particle.hlsl':'VS_main'.
+~Loading shader 'shaders_D3D/M2Particle.hlsl':'GS_Billboard'.
+~Loading shader 'shaders_D3D/M2Particle.hlsl':'PS_main'.
 ~Loading shader 'UI/UIControlCommon.hlsl':'VS_main'.
 ~Loading shader 'UI/UIControlCommon.hlsl':'PS_main'.
 ~Loading shader 'UI/UI_Font.hlsl':'VS_main'.
@@ -42,19 +45,9 @@
 !File 'TILESET\Terrain Cube Maps\TCB_CrystalSong_B_s.blp' not exists.
 !CImageBLP: Unable to load PLP file 'TCB_CrystalSong_B.blp'.
 !File 'TILESET\Terrain Cube Maps\TCB_CrystalSong_B_s.blp' not exists.
-!CImageBLP: Unable to load PLP file 'TCB_CrystalSong_B.blp'.
-!CImageBLP: Unable to load PLP file 'TCB_CrystalSong_B.blp'.
-!File 'TILESET\Terrain Cube Maps\TCB_CrystalSong_B_s.blp' not exists.
-!File 'TILESET\Terrain Cube Maps\TCB_CrystalSong_B_s.blp' not exists.
-!CImageBLP: Unable to load PLP file 'tgatest.blp'.
-!File 'TILESET\Generic\tgatest_s.blp' not exists.
-!CImageBLP: Unable to load PLP file 'tgatest.blp'.
-!File 'TILESET\Generic\tgatest_s.blp' not exists.
 !CImageBLP: Unable to load PLP file 'tgatest.blp'.
 !File 'TILESET\Generic\tgatest_s.blp' not exists.
 !File 'Tileset\Generic\WaterBlue_s.blp' not exists.
-!CImageBLP: Unable to load PLP file 'TCB_CrystalSong_A.blp'.
-!File 'TILESET\Terrain Cube Maps\TCB_CrystalSong_A_s.blp' not exists.
 !CImageBLP: Unable to load PLP file 'TCB_CrystalSong_A.blp'.
 !File 'TILESET\Terrain Cube Maps\TCB_CrystalSong_A_s.blp' not exists.
 !CImageBLP: Unable to load PLP file 'TCB_CrystalSong_A.blp'.
@@ -66,21 +59,3 @@
 !File 'Tileset\Generic\WaterBlue_s.blp' not exists.
 !CImageBLP: Unable to load PLP file 'TCB_CrystalSong_A.blp'.
 !File 'TILESET\Terrain Cube Maps\TCB_CrystalSong_A_s.blp' not exists.
-!CImageBLP: Unable to load PLP file 'tgatest.blp'.
-!File 'TILESET\Generic\tgatest_s.blp' not exists.
-!CImageBLP: Unable to load PLP file 'tgatest.blp'.
-!File 'TILESET\Generic\tgatest_s.blp' not exists.
-!CImageBLP: Unable to load PLP file 'tgatest.blp'.
-!File 'TILESET\Generic\tgatest_s.blp' not exists.
-!CImageBLP: Unable to load PLP file 'TCB_CrystalSong_B.blp'.
-!File 'TILESET\Terrain Cube Maps\TCB_CrystalSong_B_s.blp' not exists.
-!CImageBLP: Unable to load PLP file 'TCB_CrystalSong_B.blp'.
-!File 'TILESET\Terrain Cube Maps\TCB_CrystalSong_B_s.blp' not exists.
-!CImageBLP: Unable to load PLP file 'TCB_CrystalSong_B.blp'.
-!File 'TILESET\Terrain Cube Maps\TCB_CrystalSong_B_s.blp' not exists.
-!CImageBLP: Unable to load PLP file 'TCB_CrystalSong_B.blp'.
-!File 'TILESET\Terrain Cube Maps\TCB_CrystalSong_B_s.blp' not exists.
-!CImageBLP: Unable to load PLP file 'tgatest.blp'.
-!File 'TILESET\Generic\tgatest_s.blp' not exists.
-!CImageBLP: Unable to load PLP file 'tgatest.blp'.
-!File 'TILESET\Generic\tgatest_s.blp' not exists.
