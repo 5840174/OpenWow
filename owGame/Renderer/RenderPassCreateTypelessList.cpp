@@ -61,11 +61,17 @@ void CRenderPassCreateTypelessList::Render(RenderEventArgs & e)
 //
 EVisitResult CRenderPassCreateTypelessList::Visit(const std::shared_ptr<ISceneNode>& SceneNode)
 {
+	if (false == SceneNode->IsEnabled())
+		return EVisitResult::Block;
+
+	if (false == SceneNode->IsLoaded())
+		return EVisitResult::Block;
+
 	if (SceneNode->IsCulled(GetRenderEventArgs().CameraForCulling))
 		return EVisitResult::Block;
 
 	m_NodesList.push_back(SNodeElement(SceneNode));
-	return EVisitResult::AllowAll;
+	return EVisitResult::AllowVisitChilds;
 }
 
 EVisitResult CRenderPassCreateTypelessList::Visit(const std::shared_ptr<IModel>& Model)
@@ -80,7 +86,7 @@ EVisitResult CRenderPassCreateTypelessList::Visit(const std::shared_ptr<IGeometr
 
 EVisitResult CRenderPassCreateTypelessList::Visit(const std::shared_ptr<ILight>& light)
 {
-	_ASSERT(!m_NodesList.empty());
+	_ASSERT(false == m_NodesList.empty());
 	const auto& lastNodeElement = m_NodesList.back();
 	m_LightList.push_back(SLightElement(lastNodeElement.SceneNode, light));
 	return EVisitResult::AllowVisitChilds;

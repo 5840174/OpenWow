@@ -28,7 +28,7 @@ public:
 	CWMO_Group_Instance(IScene& Scene, const std::shared_ptr<CWMOGroup>& WMOGroupObject);
 	virtual ~CWMO_Group_Instance();
 
-	// CLoadableObject
+	// ILoadable
 	bool Load() override;
 	bool Delete() override;
 

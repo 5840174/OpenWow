@@ -118,10 +118,6 @@ bool CMapChunk::Load()
 			int8 z;
 		};
 
-		/*int24 normals_INT24[C_MapBufferSize];
-		memset(normals_INT24, 0x00, sizeof(int24) * C_MapBufferSize);
-		int24* t_normals_INT24 = normals_INT24;*/
-
 		glm::vec3 tempNormals[C_MapBufferSize];
 		glm::vec3* ttn = tempNormals;
 
@@ -137,8 +133,6 @@ bool CMapChunk::Load()
 			}
 		}
 
-		//normalsBuffer = _Render->r.createVertexBuffer(C_MapBufferSize * sizeof(vec3), tempNormals, false);
-		//normalsBuffer = _Render->r.createVertexBuffer(C_MapBufferSize * sizeof(int24), normals_INT24, false);
 		normalsBuffer = GetRenderDevice().GetObjectsFactory().CreateVertexBuffer(tempNormals, C_MapBufferSize);
 	}
 
@@ -441,7 +435,8 @@ bool CMapChunk::Load()
 	for (uint32 i = 0; i < m_Header.nLayers; i++)
 	{
 		mapChunkMaterial->SetTexture(i + 0, m_MapTile.GetTextureInfo(mcly[i].textureIndex)->diffuseTexture);
-		//mat->SetTexture(i + 5, m_MapTile.m_Textures.at(mcly[i].textureIndex)->specularTexture);
+		if (false == mcly->flags.use_cube_map_reflection)
+			mapChunkMaterial->SetTexture(i + 5, m_MapTile.GetTextureInfo(mcly[i].textureIndex)->specularTexture);
 	}
 
 	std::shared_ptr<ITexture> blendRBGShadowATexture = GetRenderDevice().GetObjectsFactory().CreateEmptyTexture();

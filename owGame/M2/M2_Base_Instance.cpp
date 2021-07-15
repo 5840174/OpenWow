@@ -14,6 +14,7 @@ CM2_Base_Instance::CM2_Base_Instance(IScene& Scene, const std::shared_ptr<CM2>& 
 	, m_Color(glm::vec4(1.0f, 1.0f, 1.0f, 1.0f))
 	, m_Alpha(1.0f)
 {
+
 	dynamic_cast<IObjectPrivate*>(this)->SetGUID(Guid(ObjectTypes::otSceneNode, cSceneNodeM2BaseInstance, 1u));
 
 	SetUpdateEnabled(false);
@@ -21,7 +22,7 @@ CM2_Base_Instance::CM2_Base_Instance(IScene& Scene, const std::shared_ptr<CM2>& 
 
 CM2_Base_Instance::~CM2_Base_Instance()
 {
-	GetBaseManager().GetManager<ILoader>()->AddToDeleteQueue(m_M2);
+	//GetBaseManager().GetManager<ILoader>()->AddToDeleteQueue(m_M2);
 }
 
 

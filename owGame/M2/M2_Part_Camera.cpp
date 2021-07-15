@@ -34,13 +34,13 @@ bool CM2_Part_Camera::Calculate(const CM2_Base_Instance& M2Instance, uint32 glob
 
 	glm::vec3 position = m_PositionBase;
 	if (m_Positions.IsUsesBySequence(animator->getSequenceIndex()))
-		position += m_Positions.GetValue(animator->getSequenceIndex(), animator->getCurrentTime() * 16, m_M2Object.getSkeleton().getGlobalLoops(), globalTime, true);
+		position += m_Positions.GetValue(animator->getSequenceIndex(), animator->getCurrentTime(), m_M2Object.getSkeleton().getGlobalLoops(), globalTime, true);
 	position = OriginMatrix * glm::vec4(position, 1.0f);
 	*Position = position;
 
 	glm::vec3 target = m_TargetBase;
 	if (m_Targets.IsUsesBySequence(animator->getSequenceIndex()))
-		target += m_Targets.GetValue(animator->getSequenceIndex(), animator->getCurrentTime() * 16, m_M2Object.getSkeleton().getGlobalLoops(), globalTime, true);
+		target += m_Targets.GetValue(animator->getSequenceIndex(), animator->getCurrentTime(), m_M2Object.getSkeleton().getGlobalLoops(), globalTime, true);
 	target = OriginMatrix * glm::vec4(target, 1.0f);
 
 	const glm::vec3 direction = glm::normalize(target - position);

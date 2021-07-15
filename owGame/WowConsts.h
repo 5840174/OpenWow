@@ -7,7 +7,7 @@ const uint32 C_TilesInMap = 64u;
 const uint32 C_RenderedTiles = 1u;
 const uint32 C_TilesCacheSize = ((C_RenderedTiles + 1u) * (C_RenderedTiles + 1u));
 #else
-const uint32 C_RenderedTiles = 3u;
+const uint32 C_RenderedTiles = 5u;
 const uint32 C_TilesCacheSize = ((C_RenderedTiles + 1u) * (C_RenderedTiles + 1u));
 #endif
 

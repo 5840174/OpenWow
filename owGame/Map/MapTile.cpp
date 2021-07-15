@@ -20,7 +20,7 @@ CMapTile::CMapTile(IScene& Scene, CMap& MapParent, uint32 IndexX, uint32 IndexZ)
 
 CMapTile::~CMapTile()
 {
-	//Log::Warn("CMapTile::~CMapTile: Tile [%d, %d] unloaded.", m_IndexX, m_IndexZ);
+	Log::Warn("CMapTile::~CMapTile: Tile [%d, %d] unloaded.", m_IndexX, m_IndexZ);
 }
 
 CMap& CMapTile::GetMap() const

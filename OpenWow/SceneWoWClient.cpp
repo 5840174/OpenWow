@@ -77,7 +77,7 @@ void CSceneWoWClient::Initialize()
 
 		SetCameraController(MakeShared(CFreeCameraController));
 		GetCameraController()->SetCamera(m_DefaultCameraNode->GetComponentT<ICameraComponent3D>());
-		GetCameraController()->GetCamera()->SetPerspectiveProjection(65.0f, static_cast<float>(GetRenderWindow().GetWindowWidth()) / static_cast<float>(GetRenderWindow().GetWindowHeight()), 0.5f, 2500.0f);
+		GetCameraController()->GetCamera()->SetPerspectiveProjection(65.0f, static_cast<float>(GetRenderWindow().GetWindowWidth()) / static_cast<float>(GetRenderWindow().GetWindowHeight()), 1.0f, 2500.0f);
 		GetCameraController()->GetCamera()->SetPosition(glm::vec3(10.0f));
 		GetCameraController()->GetCamera()->SetYaw(225);
 		GetCameraController()->GetCamera()->SetPitch(-45);

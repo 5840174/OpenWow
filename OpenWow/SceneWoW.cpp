@@ -15,8 +15,8 @@ CSceneWoW::~CSceneWoW()
 
 void CSceneWoW::SetMainMenu()
 {
-	auto m2Model = GetBaseManager().GetManager<IWoWObjectsCreator>()->LoadM2(GetRenderDevice(), "Cameras\\FlyByDeathKnight.m2");
-	//auto m2Model = GetBaseManager().GetManager<IWoWObjectsCreator>()->LoadM2(GetRenderDevice(), "Cameras\\FlyByHuman.m2");
+	//auto m2Model = GetBaseManager().GetManager<IWoWObjectsCreator>()->LoadM2(GetRenderDevice(), "Cameras\\FlyByDeathKnight.m2");
+	auto m2Model = GetBaseManager().GetManager<IWoWObjectsCreator>()->LoadM2(GetRenderDevice(), "Cameras\\FlyByHuman.m2");
 
 	m_WoWCameraNode = GetRootSceneNode()->CreateSceneNode<CM2_Base_Instance>(m2Model);
 	GetBaseManager().GetManager<ILoader>()->AddToLoadQueue(m_WoWCameraNode);
@@ -27,12 +27,12 @@ void CSceneWoW::SetMainMenu()
 	auto m2CameraComponent = m_WoWCameraNode->CreateCameraComponent(0);
 
 	// Human
-	//glm::vec3 origin = glm::vec3(-8945.51953125f, -118.786003112793f, 82.9306030273438f);
-	//float originAngle = 0.191985994577408f;
+	glm::vec3 origin = glm::vec3(-8945.51953125f, -118.786003112793f, 82.9306030273438f);
+	float originAngle = 0.191985994577408f;
 
 	// Death knight
-	glm::vec3 origin = glm::vec3(2301.88989257813f, -5346.31982421875f, 88.9572982788086f);
-	float originAngle = 2.16421008110046;
+	//glm::vec3 origin = glm::vec3(2301.88989257813f, -5346.31982421875f, 88.9572982788086f);
+	//float originAngle = 2.16421008110046;
 	m2CameraComponent->SetOrigin(origin, originAngle);
 
 	GetCameraController()->SetCamera(m2CameraComponent);
@@ -79,7 +79,7 @@ void CSceneWoW::Initialize()
 
 		SetCameraController(MakeShared(CFreeCameraController));
 		GetCameraController()->SetCamera(m_DefaultCameraNode->GetComponentT<ICameraComponent3D>());
-		GetCameraController()->GetCamera()->SetPerspectiveProjection(65.0f, static_cast<float>(GetRenderWindow().GetWindowWidth()) / static_cast<float>(GetRenderWindow().GetWindowHeight()), 0.5f, 2500.0f);
+		GetCameraController()->GetCamera()->SetPerspectiveProjection(65.0f, static_cast<float>(GetRenderWindow().GetWindowWidth()) / static_cast<float>(GetRenderWindow().GetWindowHeight()), 1.0f, 1500.0f);
 		GetCameraController()->GetCamera()->SetPosition(glm::vec3(10.0f));
 		GetCameraController()->GetCamera()->SetYaw(225);
 		GetCameraController()->GetCamera()->SetPitch(-45);
@@ -94,7 +94,7 @@ void CSceneWoW::Initialize()
 	m_RendererStatisticText = CreateUIControlTCast<IUIControlText>();
 	m_RendererStatisticText->SetLocalPosition(glm::vec2(5.0f, 200.0f));
 	m_RendererStatisticText->SetText("");
-
+	m_RendererStatisticText->SetColor(ColorRGBA(0.2, 1.0f, 0.1f, 1.0f));
 
 	GetBaseManager().GetManager<IWoWObjectsCreator>()->InitEGxBlend(GetRenderDevice());
 
@@ -216,6 +216,7 @@ void CSceneWoW::Initialize()
 
 	GetCameraController()->GetCamera()->SetYaw(-90.0f);
 	GetCameraController()->GetCamera()->SetPitch(75.0f);
+
 	//SetMainMenu();
 }
 

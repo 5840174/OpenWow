@@ -72,7 +72,8 @@ void CRenderPass_LiquidList::Render(RenderEventArgs & e)
 	}
 	else
 	{
-		m_SkyManager = GetBaseManager().GetManager<CSkyManager>();
+		if (GetBaseManager().IsManagerExists<CSkyManager>())
+			m_SkyManager = GetBaseManager().GetManager<CSkyManager>();
 	}
 
 	if (m_LiquidColorsConstantBuffer != nullptr)
