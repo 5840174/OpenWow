@@ -17,7 +17,6 @@ CWMO_Group_Instance::CWMO_Group_Instance(IScene& Scene, const std::shared_ptr<CW
 	, m_Calculated(false)
 	, m_WMOGroup(*WMOGroupObject)
 {}
-}
 
 CWMO_Group_Instance::~CWMO_Group_Instance()
 {}

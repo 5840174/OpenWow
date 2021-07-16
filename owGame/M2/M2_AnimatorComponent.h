@@ -9,6 +9,14 @@ class CM2;
 class CM2_Base_Instance;
 // FORWARD END
 
+ZN_INTERFACE ZN_API IM2AnimationEventsListener
+{
+	virtual ~IM2AnimationEventsListener() {}
+
+	virtual void OnAnimationEnded(EAnimationID AniamtionID) = 0;
+};
+
+
 class ZN_API CM2AnimatorComponent
 	: public CSceneNodeComponentBase
 {
@@ -21,8 +29,10 @@ public:
 	void LoadAnimations();
 
 	void PlayAnimation(EAnimationID AnimationId, bool Loop);
+	void SetAnimationEventListener(std::shared_ptr<IM2AnimationEventsListener> M2AnimationEventListener);
 	void PrintList();
 
+	EAnimationID GetCurrentAnimationID() const { return m_CurrentAnimationID; }
 	uint16 getSequenceIndex() const { return m_CurrentAnimation->getSequenceIndex(); }
 	uint32 getCurrentTime() { return m_CurrentTime; }
 
@@ -41,7 +51,7 @@ private:
 	bool						m_IsLoop;
 	bool						m_IsStopped;
 
-	//Function*					m_OnAnimationEnded;
+	std::weak_ptr<IM2AnimationEventsListener> m_M2AnimationEventListener;
 
 	double						m_AnimTime;
 	uint32						m_CurrentTime;

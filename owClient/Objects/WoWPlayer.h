@@ -5,7 +5,7 @@
 #include "Units/WoWUnit.h"
 
 // FORWARD BEGIN
-class CWoWWorld;
+class CowServerWorld;
 // FORWARD END
 
 namespace
@@ -35,12 +35,12 @@ enum EPlayerBytes3Offsets
 };
 }
 
-class ZN_API WoWPlayer
-	: public WoWUnit
+class ZN_API CowServerPlayer
+	: public CowServerUnit
 {
 public:
-	WoWPlayer(IScene& Scene, CWoWWorld& WoWWorld, CWoWGuid Guid);
-	virtual ~WoWPlayer();
+	CowServerPlayer(IScene& Scene, CowServerWorld& WoWWorld, CowGuid Guid);
+	virtual ~CowServerPlayer();
 
 	virtual void OnValuesUpdated(const UpdateMask & Mask) override;
 
@@ -53,11 +53,14 @@ private:
 	uint8 GetNativeGender() const;
 
 public:
-	static std::shared_ptr<WoWPlayer> Create(CWoWWorld& WoWWorld, IScene& Scene, CWoWGuid Guid);
+	static std::shared_ptr<CowServerPlayer> Create(CowServerWorld& WoWWorld, IScene& Scene, CowGuid Guid);
 	virtual void Destroy() override;
 
 protected:
-	virtual void OnDisplayIDChanged(uint32 DisplayID);
+	virtual void                OnDisplayIDChanged(uint32 DisplayID);
+
+protected:                      // Movement functional
+	virtual void                Movement_HandlePlayerMovement(const UpdateEventArgs& e) override;
 };
 
 #endif

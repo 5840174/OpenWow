@@ -1,6 +1,6 @@
 #pragma once
 
-class CTransportAnimationStorage
+class CowClient_DBCTransport
 {
 public:
 	struct STransportAnimation
@@ -10,8 +10,8 @@ public:
 	};
 
 public:
-	CTransportAnimationStorage(IBaseManager& BaseManager);
-	virtual ~CTransportAnimationStorage();
+	CowClient_DBCTransport(IBaseManager& BaseManager);
+	virtual ~CowClient_DBCTransport();
 
 	void Initialize();
 	const std::vector<STransportAnimation>& GetTransportAnimations(uint32 Entry) const;

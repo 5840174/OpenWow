@@ -11,11 +11,11 @@
 #include "../Client/TaxiStorage.h"
 #include "../Client/TransportAnimationStorage.h"
 
-class ZN_API CWoWWorld
+class ZN_API CowServerWorld
 {
 public:
-	CWoWWorld(IScene& Scene, const std::shared_ptr<CWorldSocket>& Socket);
-	virtual ~CWoWWorld();
+	CowServerWorld(IScene& Scene, const std::shared_ptr<CWorldSocket>& Socket);
+	virtual ~CowServerWorld();
 
 	void EnterWorld(const SCharacterTemplate& SelectedCharacter);
 	void Update(const UpdateEventArgs& e);
@@ -48,7 +48,7 @@ public:
 
 	void On_MOVE_UnitSpeedOpcode(CServerPacket& Buffer);
 
-	// CWoWWorld
+	// CowServerWorld
 	void AddHandler(Opcodes Opcode, std::function<void(CServerPacket&)> Handler);
 	bool ProcessPacket(CServerPacket& ServerPacket);
 	void SendPacket(CClientPacket& Packet);
@@ -57,9 +57,9 @@ public:
 
 	CWorldObjects& GetWorldObjects() { return m_WorldObjects; }
 	CWorldObjectUpdater& GetWorldObjectUpdater() { return m_WorldObjectUpdater; }
-	CClientCache& GetClientCache() { return m_ClientCache; }
-	const CTaxiStorage& GetTaxiStorage() const { return m_TaxiStorage; }
-	const CTransportAnimationStorage& GetTransportAnimationStorage() const { return m_TransportAnimationStorage; }
+	CowClient_ServerQueryCache& GetClientCache() { return m_ClientCache; }
+	const CowClient_DBCTaxi& GetTaxiStorage() const { return m_TaxiStorage; }
+	const CowClient_DBCTransport& GetTransportAnimationStorage() const { return m_TransportAnimationStorage; }
 
 private: // Game objects and entities
 	std::shared_ptr<CSkyManager> m_SkyManager;
@@ -72,9 +72,9 @@ private:
 
 	CWorldObjects m_WorldObjects;
 	CWorldObjectUpdater m_WorldObjectUpdater;
-	CClientCache m_ClientCache;
-	CTaxiStorage m_TaxiStorage;
-	CTransportAnimationStorage m_TransportAnimationStorage;
+	CowClient_ServerQueryCache m_ClientCache;
+	CowClient_DBCTaxi m_TaxiStorage;
+	CowClient_DBCTransport m_TransportAnimationStorage;
 };
 
 #endif

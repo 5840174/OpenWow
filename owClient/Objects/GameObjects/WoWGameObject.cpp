@@ -6,32 +6,32 @@
 #include "WoWGameObject.h"
 
 // Additional
-#include "../../World/World.h"
+#include "../../World/ServerWorld.h"
 
-WoWGameObject::WoWGameObject(IScene& Scene, CWoWWorld& WoWWorld, CWoWGuid Guid)
-	: CWoWWorldObject(Scene, WoWWorld, Guid)
+CowServerGameObject::CowServerGameObject(IScene& Scene, CowServerWorld& WoWWorld, CowGuid Guid)
+	: CowServerWorldObject(Scene, WoWWorld, Guid)
 {
 	//m_ObjectType |= TYPEMASK_GAMEOBJECT;
 	m_Values.SetValuesCount(GAMEOBJECT_END);
 }
 
-WoWGameObject::~WoWGameObject()
+CowServerGameObject::~CowServerGameObject()
 {
 }
 
-void WoWGameObject::OnValueUpdated(uint16 index)
+void CowServerGameObject::OnValueUpdated(uint16 index)
 {
 	if (index == OBJECT_FIELD_ENTRY)
 	{
-		CWoWGuid::EntryType_t objectEntryID = m_Values.GetUInt32Value(index);
+		CowGuid::EntryType_t objectEntryID = m_Values.GetUInt32Value(index);
 		if (m_GameObjectTemplate == nullptr)
 		{
-			GetWoWWorld().GetClientCache().SendGameObjectQueryResponce(objectEntryID, GetWoWGUID(), std::dynamic_pointer_cast<WoWGameObject>(shared_from_this()));
+			GetWoWWorld().GetClientCache().SendGameObjectQueryResponce(objectEntryID, GetWoWGUID(), std::dynamic_pointer_cast<CowServerGameObject>(shared_from_this()));
 		}
 	}
 }
 
-void WoWGameObject::OnValuesUpdated(const UpdateMask & Mask)
+void CowServerGameObject::OnValuesUpdated(const UpdateMask & Mask)
 {
 	if (Mask.GetBit(GAMEOBJECT_DISPLAYID))
 	{
@@ -44,7 +44,7 @@ void WoWGameObject::OnValuesUpdated(const UpdateMask & Mask)
 //
 // IClientCacheGameobjectResponseListener
 //
-void WoWGameObject::OnTemplate(CWoWGuid::EntryType_t Entry, const std::shared_ptr<SGameObjectQueryResult>& QueryResult)
+void CowServerGameObject::OnTemplate(CowGuid::EntryType_t Entry, const std::shared_ptr<SGameObjectQueryResult>& QueryResult)
 {
 	m_GameObjectTemplate = QueryResult;
 }
@@ -54,7 +54,7 @@ void WoWGameObject::OnTemplate(CWoWGuid::EntryType_t Entry, const std::shared_pt
 //
 // ISceneNode
 //
-void WoWGameObject::Update(const UpdateEventArgs & e)
+void CowServerGameObject::Update(const UpdateEventArgs & e)
 {
 	__super::Update(e);
 }
@@ -65,13 +65,13 @@ void WoWGameObject::Update(const UpdateEventArgs & e)
 //
 // Protected
 //
-std::shared_ptr<WoWGameObject> WoWGameObject::Create(CWoWWorld& WoWWorld, IScene& Scene, CWoWGuid Guid)
+std::shared_ptr<CowServerGameObject> CowServerGameObject::Create(CowServerWorld& WoWWorld, IScene& Scene, CowGuid Guid)
 {
-	std::shared_ptr<WoWGameObject> thisObj = MakeShared(WoWGameObject, Scene, WoWWorld, Guid);
+	std::shared_ptr<CowServerGameObject> thisObj = MakeShared(CowServerGameObject, Scene, WoWWorld, Guid);
 	return thisObj;
 }
 
-void WoWGameObject::Destroy()
+void CowServerGameObject::Destroy()
 {
 	if (m_GameObjectModel)
 		m_GameObjectModel->MakeMeOrphan();
@@ -82,7 +82,7 @@ void WoWGameObject::Destroy()
 //
 // Protected
 //
-void WoWGameObject::OnDisplayIDChanged(uint32 DisplayID)
+void CowServerGameObject::OnDisplayIDChanged(uint32 DisplayID)
 {
 	if (m_GameObjectModel != nullptr)
 		return;
@@ -111,7 +111,7 @@ void WoWGameObject::OnDisplayIDChanged(uint32 DisplayID)
 	//}
 	//catch (const CException& e)
 	//{
-	//	Log::Error("WoWGameObject::AfterCreate: Exception '%s'.", e.MessageCStr());
+	//	Log::Error("CowServerGameObject::AfterCreate: Exception '%s'.", e.MessageCStr());
 	//}
 }
 

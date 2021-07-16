@@ -1,13 +1,13 @@
 #pragma once
 
 // FORWARD BEGIN
-class CWoWWorld;
+class CowServerWorld;
 // FORWARD END
 
 class CWorldObjectUpdater
 {
 public:
-	CWorldObjectUpdater(CWoWWorld& WoWWorld, IScene& Scene);
+	CWorldObjectUpdater(CowServerWorld& WoWWorld, IScene& Scene);
 	virtual ~CWorldObjectUpdater();
 
 	void On_SMSG_COMPRESSED_UPDATE_OBJECT(CServerPacket & Buffer);
@@ -17,6 +17,6 @@ private:
 	void ProcessUpdatePacket(CServerPacket& Packet);
 
 private:
-	CWoWWorld& m_WoWWorld;
+	CowServerWorld& m_ServerWorld;
 	IScene& m_Scene;
 };

@@ -17,14 +17,14 @@
     TYPEMASK_SEER           = TYPEMASK_PLAYER | TYPEMASK_UNIT | TYPEMASK_DYNAMICOBJECT
 };*/
 
-class ZN_API WoWObject
-	: public std::enable_shared_from_this<WoWObject>
+class ZN_API CowServerObject
+	: public std::enable_shared_from_this<CowServerObject>
 {
 public:
-	WoWObject(CWoWGuid Guid);
-	virtual ~WoWObject();
+	CowServerObject(CowGuid Guid);
+	virtual ~CowServerObject();
 
-	CWoWGuid GetWoWGUID() const { return m_GUID; }
+	CowGuid GetWoWGUID() const { return m_GUID; }
 	//uint16 GetObjectType() const { return m_ObjectType; }
 	//bool IsWoWType(uint16 mask) const { return (mask & m_ObjectType) != 0; }
 
@@ -39,8 +39,8 @@ public: // Creation & Deletion
 
 
 protected:
-	CWoWGuid m_GUID;
-	CWoWObjectValues m_Values;
+	CowGuid m_GUID;
+	CowServerObjectValues m_Values;
 	//uint16 m_ObjectType;
 };
 

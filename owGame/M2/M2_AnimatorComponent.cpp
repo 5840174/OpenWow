@@ -10,7 +10,7 @@
 CM2AnimatorComponent::CM2AnimatorComponent(const CM2_Base_Instance& OwnerNode)
 	: CSceneNodeComponentBase(OwnerNode)
 	
-	, m_CurrentAnimationID(EAnimationID::Stand)
+	, m_CurrentAnimationID(EAnimationID::Walk)
 	, m_CurrentAnimation(nullptr)
 	
 	, m_IsLoop(false)
@@ -48,6 +48,9 @@ void CM2AnimatorComponent::LoadAnimations()
 
 void CM2AnimatorComponent::PlayAnimation(EAnimationID AnimationId, bool Loop)
 {
+	if (Loop && m_CurrentAnimationID == AnimationId && m_CurrentAnimation && m_CurrentAnimation->getAnimID() == AnimationId)
+		return;
+
 	const auto& animIt = m_Animations.find((uint16)AnimationId);
 	if (animIt != m_Animations.end())
 	{
@@ -67,6 +70,11 @@ void CM2AnimatorComponent::PlayAnimation(EAnimationID AnimationId, bool Loop)
 	m_CurrentTime = m_CurrentAnimation->getStart();
 }
 
+void CM2AnimatorComponent::SetAnimationEventListener(std::shared_ptr<IM2AnimationEventsListener> M2AnimationEventListener)
+{
+	m_M2AnimationEventListener = M2AnimationEventListener;
+}
+
 void CM2AnimatorComponent::PrintList()
 {
 	for (auto& it : m_Animations)
@@ -84,28 +92,38 @@ void CM2AnimatorComponent::Update(const UpdateEventArgs & e)
 		return;
 
 	m_AnimTime += e.DeltaTime;
-	m_CurrentTime = static_cast<uint32>(m_CurrentAnimation->getStart() + m_AnimTime);
+	m_CurrentTime = m_CurrentAnimation->getStart() + static_cast<uint32>(m_AnimTime);
 
 	// Animation don't ended
 	if (m_CurrentTime < m_CurrentAnimation->getEnd())
-		return;
-
-	// Ended!
-	if (m_CurrentAnimation->hasNextVatianton())
 	{
-		m_CurrentAnimation = m_CurrentAnimation->getNextVariation();
-		m_CurrentTime = m_CurrentAnimation->getStart();
-		m_IsStopped = false;
-		m_AnimTime = 0;
 		return;
 	}
 
-	m_CurrentTime = m_CurrentAnimation->getEnd() - 1;
-	m_IsStopped = true;
+	if (auto animationEventListener = m_M2AnimationEventListener.lock())
+		animationEventListener->OnAnimationEnded(m_CurrentAnimationID);
+
+	// Ended!
+	//if (m_CurrentAnimation->hasNextVatianton())
+	//{
+	//	m_CurrentAnimation = m_CurrentAnimation->getNextVariation();
+	//	m_CurrentTime = m_CurrentAnimation->getStart();
+	//	m_IsStopped = false;
+	//	m_AnimTime = 0.0;
+	//	return;
+	//}
 
 	if (m_IsLoop)
 	{
-		PlayAnimation(m_CurrentAnimation->getAnimID(), true);
+		m_IsStopped = false;
+		m_AnimTime = 0.0;
+		m_CurrentTime = m_CurrentAnimation->getStart();
+	}
+	else
+	{
+		m_IsStopped = true;
+		m_AnimTime = 0.0;
+		m_CurrentTime = m_CurrentAnimation->getEnd() - 1;
 	}
 }
 

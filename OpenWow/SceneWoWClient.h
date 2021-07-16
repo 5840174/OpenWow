@@ -33,6 +33,6 @@ private:
 	std::shared_ptr<ISceneNode> m_DefaultLightNode;
 	std::shared_ptr<ISceneNode> m_DefaultCameraNode;
 
-	std::unique_ptr<CWoWClient> m_WowClient;
+	std::unique_ptr<CowClient> m_WowClient;
 	std::shared_ptr<IUIControlText> m_RendererStatisticText;
 };

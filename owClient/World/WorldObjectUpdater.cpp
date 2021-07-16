@@ -4,7 +4,7 @@
 #include "WorldObjectUpdater.h"
 
 // Additional
-#include "World.h"
+#include "ServerWorld.h"
 
 // Additional (zlib)
 #include "zlib/source/zlib.h"
@@ -25,12 +25,12 @@ namespace
 }
 
 
-CWorldObjectUpdater::CWorldObjectUpdater(CWoWWorld& WoWWorld, IScene & Scene)
+CWorldObjectUpdater::CWorldObjectUpdater(CowServerWorld& WoWWorld, IScene & Scene)
 	: m_Scene(Scene)
-	, m_WoWWorld(WoWWorld)
+	, m_ServerWorld(WoWWorld)
 {
-	m_WoWWorld.AddHandler(SMSG_COMPRESSED_UPDATE_OBJECT, std::bind(&CWorldObjectUpdater::On_SMSG_COMPRESSED_UPDATE_OBJECT, this, std::placeholders::_1));
-	m_WoWWorld.AddHandler(SMSG_UPDATE_OBJECT, std::bind(&CWorldObjectUpdater::On_SMSG_UPDATE_OBJECT, this, std::placeholders::_1));
+	m_ServerWorld.AddHandler(SMSG_COMPRESSED_UPDATE_OBJECT, std::bind(&CWorldObjectUpdater::On_SMSG_COMPRESSED_UPDATE_OBJECT, this, std::placeholders::_1));
+	m_ServerWorld.AddHandler(SMSG_UPDATE_OBJECT, std::bind(&CWorldObjectUpdater::On_SMSG_UPDATE_OBJECT, this, std::placeholders::_1));
 }
 
 CWorldObjectUpdater::~CWorldObjectUpdater()
@@ -71,25 +71,25 @@ void CWorldObjectUpdater::On_SMSG_UPDATE_OBJECT(CServerPacket& Buffer)
 //
 void CWorldObjectUpdater::ProcessUpdatePacket(CServerPacket& Bytes)
 {
-	uint32 BlocksCount;
-	Bytes >> BlocksCount;
+	uint32 blocksCount;
+	Bytes >> blocksCount;
 
-	for (uint32 i = 0u; i < BlocksCount; i++)
+	for (uint32 i = 0u; i < blocksCount; i++)
 	{
 		OBJECT_UPDATE_TYPE updateType;
-		Bytes.read(&updateType);
+		Bytes >> updateType;
 
 		switch (updateType)
 		{
 			case OBJECT_UPDATE_TYPE::UPDATETYPE_VALUES:
 			{
-				CWoWGuid guid;
+				CowGuid guid;
 				Bytes.ReadPackedGuid(&guid);
 
-				if (false == m_WoWWorld.GetWorldObjects().IsWoWObjectExists(guid))
+				if (false == m_ServerWorld.GetWorldObjects().IsExists(guid))
 					throw CException("Object not exists");
 
-				auto object = m_WoWWorld.GetWorldObjects().GetWoWObject(guid);
+				auto object = m_ServerWorld.GetWorldObjects().Get(guid);
 				object->Do_UPDATETYPE_VALUES(Bytes);
 			}
 			break;
@@ -97,13 +97,13 @@ void CWorldObjectUpdater::ProcessUpdatePacket(CServerPacket& Bytes)
 
 			case OBJECT_UPDATE_TYPE::UPDATETYPE_MOVEMENT:
 			{
-				CWoWGuid guid;
+				CowGuid guid;
 				Bytes.ReadPackedGuid(&guid);
 
-				if (false == m_WoWWorld.GetWorldObjects().IsWoWObjectExists(guid))
+				if (false == m_ServerWorld.GetWorldObjects().IsExists(guid))
 					throw CException("Object not exists");
 
-				auto object = m_WoWWorld.GetWorldObjects().GetWoWObject(guid);
+				auto object = m_ServerWorld.GetWorldObjects().Get(guid);
 				object->Do_UPDATETYPE_MOVEMENT(Bytes);
 			}
 			break;
@@ -112,13 +112,13 @@ void CWorldObjectUpdater::ProcessUpdatePacket(CServerPacket& Bytes)
 			case OBJECT_UPDATE_TYPE::UPDATETYPE_CREATE_OBJECT:
 			case OBJECT_UPDATE_TYPE::UPDATETYPE_CREATE_OBJECT2: // isNewObject
 			{
-				CWoWGuid guid;
+				CowGuid guid;
 				Bytes.ReadPackedGuid(&guid);
 
 				EWoWObjectTypeID typeID; // Different from GUID TypeID for Container TODO
 				Bytes >> typeID;
 
-				auto object = m_WoWWorld.GetWorldObjects().CreateWoWObject(guid, typeID);
+				auto object = m_ServerWorld.GetWorldObjects().Create(guid, typeID);
 
 				object->Do_UPDATETYPE_MOVEMENT(Bytes);
 				object->Do_UPDATETYPE_VALUES(Bytes);
@@ -131,26 +131,29 @@ void CWorldObjectUpdater::ProcessUpdatePacket(CServerPacket& Bytes)
 				uint32 outOfRangeGUIDsCount;
 				Bytes >> outOfRangeGUIDsCount;
 
-				std::vector<CWoWGuid> outOfRangeGUIDs;
+				std::vector<CowGuid> outOfRangeGUIDs;
 				outOfRangeGUIDs.resize(outOfRangeGUIDsCount);
 
 				for (uint32 i = 0; i < outOfRangeGUIDsCount; i++)
 					Bytes.ReadPackedGuid(&outOfRangeGUIDs[i]);
 
-				auto& worldObjects = m_WoWWorld.GetWorldObjects();
+				auto& worldObjects = m_ServerWorld.GetWorldObjects();
 				for (const auto& outOfRangeGUID : outOfRangeGUIDs)
 				{
-					if (false == m_WoWWorld.GetWorldObjects().IsWoWObjectExists(outOfRangeGUID))
-						throw CException("Object not exists");
+					if (false == m_ServerWorld.GetWorldObjects().IsExists(outOfRangeGUID))
+						throw CException("Object doesn't exists.");
 
-					if (auto object = worldObjects.GetWoWObject(outOfRangeGUID))
+					if (auto object = worldObjects.Get(outOfRangeGUID))
 					{
 						object->Destroy();
-						worldObjects.EraseWoWObject(object);
+						worldObjects.Delete(object);
 					}
 				}
 			}
 			break;
+
+			case OBJECT_UPDATE_TYPE::UPDATETYPE_NEAR_OBJECTS:
+				throw CException("Not implemented.");
 
 
 			default:

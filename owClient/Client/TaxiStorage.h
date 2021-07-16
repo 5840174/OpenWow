@@ -1,6 +1,6 @@
 #pragma once
 
-class CTaxiStorage
+class CowClient_DBCTaxi
 {
 public:
 	struct STaxiPathNode
@@ -11,8 +11,8 @@ public:
 	};
 
 public:
-	CTaxiStorage(IBaseManager& BaseManager);
-	virtual ~CTaxiStorage();
+	CowClient_DBCTaxi(IBaseManager& BaseManager);
+	virtual ~CowClient_DBCTaxi();
 
 	void Initialize();
 	const std::vector<STaxiPathNode>& GetPathNodes(uint32 PathID) const;

@@ -6,25 +6,15 @@
 #include "WoWUnit.h"
 
 // Additional
-#include "../../World/World.h"
+#include "../../World/ServerWorld.h"
 
 
 float gravity = static_cast<float>(19.29110527038574);
 
-namespace
-{
-	glm::vec2 OrientationToDirection(float Orientation)
-	{
-		glm::vec2 direction(0.0f);
-		direction.x = glm::cos(glm::radians(Orientation));
-		direction.y = -glm::sin(glm::radians(Orientation));
-		direction = glm::normalize(direction);
-		return direction;
-	}
-}
 
-WoWUnit::WoWUnit(IScene& Scene, CWoWWorld& WoWWorld, CWoWGuid Guid)
-	: CWoWWorldObject(Scene, WoWWorld, Guid)
+
+CowServerUnit::CowServerUnit(IScene& Scene, CowServerWorld& WoWWorld, CowGuid Guid)
+	: CowServerWorldObject(Scene, WoWWorld, Guid)
 	
 	, m_DisplayID_ID(0)
 	, m_DisplayID_Scale_IsDirty(false)
@@ -38,12 +28,12 @@ WoWUnit::WoWUnit(IScene& Scene, CWoWWorld& WoWWorld, CWoWGuid Guid)
 	m_Values.SetValuesCount(UNIT_END);
 }
 
-WoWUnit::~WoWUnit()
+CowServerUnit::~CowServerUnit()
 {
 	//Destroy();
 }
 
-void WoWUnit::ProcessMovementPacket(CServerPacket & Bytes)
+void CowServerUnit::ProcessMovementPacket(CServerPacket & Bytes)
 {
 	ReadMovementInfoPacket(Bytes);
 
@@ -132,7 +122,7 @@ void WoWUnit::ProcessMovementPacket(CServerPacket & Bytes)
 	CommitPositionAndRotation();
 }
 
-void WoWUnit::Do_MonsterMove(CServerPacket& Bytes)
+void CowServerUnit::Do_MonsterMove(CServerPacket& Bytes)
 {
 	glm::vec3 firstSplinePointGame;
 	Bytes >> firstSplinePointGame;
@@ -275,7 +265,7 @@ void WoWUnit::Do_MonsterMove(CServerPacket& Bytes)
 	CommitPositionAndRotation();
 }
 
-void WoWUnit::OnValuesUpdated(const UpdateMask & Mask)
+void CowServerUnit::OnValuesUpdated(const UpdateMask & Mask)
 {
 	if (Mask.GetBit(OBJECT_FIELD_SCALE_X))
 	{
@@ -326,7 +316,7 @@ void WoWUnit::OnValuesUpdated(const UpdateMask & Mask)
 	}
 }
 
-void WoWUnit::OnHiddenNodePositionChanged()
+void CowServerUnit::OnHiddenNodePositionChanged()
 {
 	if (m_DisplayID_ModelInstance)
 	{
@@ -348,28 +338,28 @@ void WoWUnit::OnHiddenNodePositionChanged()
 }
 
 
-Race WoWUnit::GetRace() const 
+Race CowServerUnit::GetRace() const 
 { 
 	if (false == m_Values.IsExists(UNIT_FIELD_BYTES_0))
 		throw CException("Value don't exists.");
 	return (Race)m_Values.GetByteValue(UNIT_FIELD_BYTES_0, UNIT_BYTES_0_OFFSET_RACE); 
 }
 
-Class WoWUnit::GetClass() const 
+Class CowServerUnit::GetClass() const 
 { 
 	if (false == m_Values.IsExists(UNIT_FIELD_BYTES_0))
 		throw CException("Value don't exists.");
 	return (Class)m_Values.GetByteValue(UNIT_FIELD_BYTES_0, UNIT_BYTES_0_OFFSET_CLASS); 
 }
 
-Gender WoWUnit::GetGender() const 
+Gender CowServerUnit::GetGender() const 
 { 
 	if (false == m_Values.IsExists(UNIT_FIELD_BYTES_0))
 		throw CException("Value don't exists.");
 	return (Gender)m_Values.GetByteValue(UNIT_FIELD_BYTES_0, UNIT_BYTES_0_OFFSET_GENDER); 
 }
 
-uint8 WoWUnit::GetPowerType() const
+uint8 CowServerUnit::GetPowerType() const
 {
 	if (false == m_Values.IsExists(UNIT_FIELD_BYTES_0))
 		throw CException("Value don't exists.");
@@ -378,30 +368,33 @@ uint8 WoWUnit::GetPowerType() const
 
 
 
+void CowServerUnit::OnAnimationEnded(EAnimationID AniamtionID)
+{
+	/*if (m_Jump_IsJumpingNow)
+	{
+ 		if (AniamtionID == EAnimationID::JumpStart)
+		{
+			if (m_Mount_ModelInstance && m_Mount_ModelInstance->IsLoaded())
+			{
+				m_Mount_ModelInstance->GetAnimatorComponent()->PlayAnimation(EAnimationID::JumpEnd, false);
+			}
+			else if (m_DisplayID_ModelInstance && m_DisplayID_ModelInstance->IsLoaded())
+			{
+				m_DisplayID_ModelInstance->GetAnimatorComponent()->PlayAnimation(EAnimationID::JumpEnd, false);
+			}
+		}
+
+		return;
+	}*/
+}
+
 //
 // ISceneNode
 //
-void WoWUnit::Update(const UpdateEventArgs & e)
+void CowServerUnit::Update(const UpdateEventArgs & e)
 {
 	__super::Update(e);
 
-	if (m_WoWPath)
-	{
-		m_WoWPath->AddCurrTime(e.DeltaTime);
-
-		glm::vec3 NextPoint = m_WoWPath->GetPositionByCurrTime();
-		if (glm::distance(NextPoint, Position) > 0.01f)
-		{
-			glm::vec3 test = m_WoWPath->GetNextNodePosition();
-
-			glm::vec3 directionVec = glm::normalize(glm::vec3(test.x, 0.0f, test.z) - glm::vec3(Position.x, 0.0f, Position.z));
-			float yaw = atan2(directionVec.x, directionVec.z);
-
-			Position = NextPoint;
-			Orientation = glm::degrees(yaw - glm::half_pi<float>());
-			CommitPositionAndRotation();
-		}
-	}
 
 
 	//
@@ -417,56 +410,11 @@ void WoWUnit::Update(const UpdateEventArgs & e)
 	}
 
 
+
 	//
 	// Movement
 	//
-	if (m_MovementInfo.HasMovementFlag(MOVEMENTFLAG_LEFT))
-	{
-		float speed = GetSpeed(EUnitSpeed::UNIT_SPEED_TURN_RATE) / 60.0f * e.DeltaTimeMultiplier;
-
-		Orientation += glm::degrees(speed);
-		CommitPositionAndRotation();
-	}
-	if (m_MovementInfo.HasMovementFlag(MOVEMENTFLAG_RIGHT))
-	{
-		float speed = GetSpeed(EUnitSpeed::UNIT_SPEED_TURN_RATE) / 60.0f * e.DeltaTimeMultiplier;
-
-		Orientation -= glm::degrees(speed);
-		CommitPositionAndRotation();
-	}
-	if (m_MovementInfo.HasMovementFlag(MOVEMENTFLAG_FORWARD))
-	{
-		float speed = GetSpeed(m_MovementInfo.HasMovementFlag(MOVEMENTFLAG_WALKING) ? EUnitSpeed::UNIT_SPEED_WALK : EUnitSpeed::UNIT_SPEED_RUN) / 60.0f * e.DeltaTimeMultiplier;
-		float forwardOrientation = Orientation;
-
-		Position.xz += OrientationToDirection(forwardOrientation) * speed;
-		CommitPositionAndRotation();
-	}
-	if (m_MovementInfo.HasMovementFlag(MOVEMENTFLAG_BACKWARD))
-	{
-		float speed = GetSpeed(EUnitSpeed::UNIT_SPEED_RUN_BACK) / 60.0f * e.DeltaTimeMultiplier;
-		float backwardOrientation = Orientation + glm::degrees(glm::pi<float>());
-
-		Position.xz += OrientationToDirection(backwardOrientation) * speed;
-		CommitPositionAndRotation();
-	}
-	if (m_MovementInfo.HasMovementFlag(MOVEMENTFLAG_STRAFE_LEFT))
-	{
-		float speed = GetSpeed(m_MovementInfo.HasMovementFlag(MOVEMENTFLAG_WALKING) ? EUnitSpeed::UNIT_SPEED_WALK : EUnitSpeed::UNIT_SPEED_RUN) / 60.0f * e.DeltaTimeMultiplier;
-		float leftOrientation = Orientation + glm::degrees(glm::half_pi<float>());
-
-		Position.xz += OrientationToDirection(leftOrientation) * speed;
-		CommitPositionAndRotation();
-	}
-	if (m_MovementInfo.HasMovementFlag(MOVEMENTFLAG_STRAFE_RIGHT))
-	{
-		float speed = GetSpeed(m_MovementInfo.HasMovementFlag(MOVEMENTFLAG_WALKING) ? EUnitSpeed::UNIT_SPEED_WALK : EUnitSpeed::UNIT_SPEED_RUN) / 60.0f * e.DeltaTimeMultiplier;
-		float rightOrientation = Orientation - glm::degrees(glm::half_pi<float>());
-
-		Position.xz += OrientationToDirection(rightOrientation) * speed;
-		CommitPositionAndRotation();
-	}
-	
+	Movement_HandlePlayerMovement(e);
 
 
 
@@ -539,6 +487,7 @@ void WoWUnit::Update(const UpdateEventArgs & e)
 			}
 		}
 	}
+
 }
 
 
@@ -546,7 +495,7 @@ void WoWUnit::Update(const UpdateEventArgs & e)
 //
 // Protected
 //
-void WoWUnit::ReadMovementInfoPacket(CServerPacket & Bytes)
+void CowServerUnit::ReadMovementInfoPacket(CServerPacket & Bytes)
 {
 	Bytes >> m_MovementInfo.flags;
 	Bytes >> m_MovementInfo.flags2;
@@ -576,7 +525,7 @@ void WoWUnit::ReadMovementInfoPacket(CServerPacket & Bytes)
 	}
 	else
 	{
-		TransportID = CWoWGuid(0ull);
+		TransportID = CowGuid(0ull);
 	}
 
 	if ((m_MovementInfo.HasMovementFlag(MOVEMENTFLAG_SWIMMING | MOVEMENTFLAG_FLYING)) || (m_MovementInfo.HasExtraMovementFlag(MOVEMENTFLAG2_ALWAYS_ALLOW_PITCHING)))
@@ -615,14 +564,14 @@ void WoWUnit::ReadMovementInfoPacket(CServerPacket & Bytes)
 	}
 	else
 	{
-		if (m_Mount_ModelInstance && m_Mount_ModelInstance->IsLoaded())
+		/*if (m_Mount_ModelInstance && m_Mount_ModelInstance->IsLoaded())
 		{
 			m_Mount_ModelInstance->GetAnimatorComponent()->PlayAnimation(EAnimationID::Stand, false);
 		}
 		else if (m_DisplayID_ModelInstance && m_DisplayID_ModelInstance->IsLoaded())
 		{
 			m_DisplayID_ModelInstance->GetAnimatorComponent()->PlayAnimation(EAnimationID::Stand, false);
-		}
+		}*/
 
 		m_Jump_IsJumpingNow = false;
 	}
@@ -639,14 +588,14 @@ void WoWUnit::ReadMovementInfoPacket(CServerPacket & Bytes)
 
 
 
-std::shared_ptr<WoWUnit> WoWUnit::Create(CWoWWorld& WoWWorld, IScene& Scene, CWoWGuid Guid)
+std::shared_ptr<CowServerUnit> CowServerUnit::Create(CowServerWorld& WoWWorld, IScene& Scene, CowGuid Guid)
 {
-	std::shared_ptr<WoWUnit> thisObj = MakeShared(WoWUnit, Scene, WoWWorld, Guid);
-	//Log::Error("WoWUnit created. ID  = %d. HIGH = %d, ENTRY = %d, COUNTER = %d", Guid.GetRawValue(), Guid.GetHigh(), Guid.GetEntry(), Guid.GetCounter());
+	std::shared_ptr<CowServerUnit> thisObj = MakeShared(CowServerUnit, Scene, WoWWorld, Guid);
+	//Log::Error("CowServerUnit created. ID  = %d. HIGH = %d, ENTRY = %d, COUNTER = %d", Guid.GetRawValue(), Guid.GetHigh(), Guid.GetEntry(), Guid.GetCounter());
 	return thisObj;
 }
 
-void WoWUnit::Destroy()
+void CowServerUnit::Destroy()
 {
 	if (auto model = m_DisplayID_ModelInstance)
 	{
@@ -661,12 +610,12 @@ void WoWUnit::Destroy()
 	}
 }
 
-SCharacterItemTemplate WoWUnit::GetItemDisplayInfoIDByItemID(uint32 ItemID, uint32 EnchantID)
+SCharacterItemTemplate CowServerUnit::GetItemDisplayInfoIDByItemID(uint32 ItemID, uint32 EnchantID)
 {
 	auto itemRecord = GetBaseManager().GetManager<CDBCStorage>()->DBC_Item()[ItemID];
 	if (itemRecord == nullptr)
 	{
-		Log::Warn("WoWUnit::GetItemDisplayInfoIDByItemID: Item don't contains id '%d'.", ItemID);
+		Log::Warn("CowServerUnit::GetItemDisplayInfoIDByItemID: Item don't contains id '%d'.", ItemID);
 		return SCharacterItemTemplate();
 	}
 
@@ -678,13 +627,13 @@ SCharacterItemTemplate WoWUnit::GetItemDisplayInfoIDByItemID(uint32 ItemID, uint
 //
 // Protected
 //
-void WoWUnit::OnDisplayIDChanged(uint32 DisplayID)
+void CowServerUnit::OnDisplayIDChanged(uint32 DisplayID)
 {
 	if (m_DisplayID_ModelInstance != nullptr)
 		return;
 
 	CWorldObjectCreator creator(GetScene().GetBaseManager());
-	m_DisplayID_ModelInstance = creator.BuildCreatureFromDisplayInfo(GetScene().GetBaseManager().GetApplication().GetRenderDevice(), GetScene(), DisplayID);
+	DisplayID_SetModelInstance(creator.BuildCreatureFromDisplayInfo(GetScene().GetBaseManager().GetApplication().GetRenderDevice(), GetScene(), DisplayID));
 
 	//const DBC_CreatureDisplayInfoRecord * creatureDisplayInfo = GetBaseManager().GetManager<CDBCStorage>()->DBC_CreatureDisplayInfo()[diplayID];
 	//if (creatureDisplayInfo == nullptr)
@@ -696,17 +645,62 @@ void WoWUnit::OnDisplayIDChanged(uint32 DisplayID)
 	//float scaleFromModel = creatureModelDataRecord->Get_Scale();
 }
 
-std::shared_ptr<CCreature> WoWUnit::DisplayID_GetModelInstance() const
+std::shared_ptr<CCreature> CowServerUnit::DisplayID_GetModelInstance() const
 {
 	return m_DisplayID_ModelInstance;
 }
 
-void WoWUnit::DisplayID_SetModelInstance(std::shared_ptr<CCreature> ModelInstance)
+void CowServerUnit::DisplayID_SetModelInstance(std::shared_ptr<CCreature> ModelInstance)
 {
 	m_DisplayID_ModelInstance = ModelInstance;
+	m_DisplayID_ModelInstance->GetComponentT<CM2AnimatorComponent>()->SetAnimationEventListener(std::dynamic_pointer_cast<IM2AnimationEventsListener>(shared_from_this()));
 }
 
-void WoWUnit::OnMounted(uint32 MountDisplayID)
+void CowServerUnit::Movement_HandlePlayerMovement(const UpdateEventArgs& e)
+{
+	if (m_WoWPath == nullptr)
+		return;
+
+	m_WoWPath->AddCurrTime(e.DeltaTime);
+
+	glm::vec3 NextPoint = m_WoWPath->GetPositionByCurrTime();
+	if (glm::distance(NextPoint, Position) > 0.01f)
+	{
+		glm::vec3 test = m_WoWPath->GetNextNodePosition();
+
+		glm::vec3 directionVec = glm::normalize(glm::vec3(test.x, 0.0f, test.z) - glm::vec3(Position.x, 0.0f, Position.z));
+		float yaw = atan2(directionVec.x, directionVec.z);
+
+		Position = NextPoint;
+		Orientation = glm::degrees(yaw - glm::half_pi<float>());
+		CommitPositionAndRotation();
+
+		if (m_DisplayID_ModelInstance && m_DisplayID_ModelInstance->IsLoaded())
+		{
+			if (auto animatorComponent = m_DisplayID_ModelInstance->GetAnimatorComponent())
+			{
+				animatorComponent->PlayAnimation(EAnimationID::Walk, true);
+			}
+		}
+	}
+	else
+	{
+		if (m_DisplayID_ModelInstance && m_DisplayID_ModelInstance->IsLoaded())
+		{
+			if (auto animatorComponent = m_DisplayID_ModelInstance->GetAnimatorComponent())
+			{
+				animatorComponent->PlayAnimation(EAnimationID::Stand, true);
+			}
+		}
+	}
+}
+
+const SMovementInfo& CowServerUnit::Movement_GetMovementInfo() const
+{
+	return m_MovementInfo;
+}
+
+void CowServerUnit::OnMounted(uint32 MountDisplayID)
 {
 	if (m_Mount_IsMounted)
 		return;
@@ -717,12 +711,13 @@ void WoWUnit::OnMounted(uint32 MountDisplayID)
 
 	CWorldObjectCreator creator(GetScene().GetBaseManager());
 	m_Mount_ModelInstance = creator.BuildCreatureFromDisplayInfo(GetScene().GetBaseManager().GetApplication().GetRenderDevice(), GetScene(), MountDisplayID);
+	m_Mount_ModelInstance->GetComponentT<CM2AnimatorComponent>()->SetAnimationEventListener(std::dynamic_pointer_cast<IM2AnimationEventsListener>(shared_from_this()));
 
 	m_Mount_IsMounted = true;
 	m_Mount_IsDirty = true;
 }
 
-void WoWUnit::OnDismounted()
+void CowServerUnit::OnDismounted()
 {
 	if (false == m_Mount_IsMounted)
 		return;

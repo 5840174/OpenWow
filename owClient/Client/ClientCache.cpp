@@ -4,10 +4,10 @@
 #include "ClientCache.h"
 
 // Additional
-#include "World/World.h"
+#include "World/ServerWorld.h"
 
-CClientCache::CClientCache(CWoWWorld & world)
-	: m_World(world)
+CowClient_ServerQueryCache::CowClient_ServerQueryCache(CowServerWorld & world)
+	: m_ServerWorld(world)
 {
 	//SMSG_NAME_QUERY_RESPONSE
 	//SMSG_PET_NAME_QUERY_RESPONSE
@@ -16,17 +16,17 @@ CClientCache::CClientCache(CWoWWorld & world)
 	//SMSG_ITEM_QUERY_MULTIPLE_RESPONSE
 	//SMSG_PAGE_TEXT_QUERY_RESPONSE
 	//SMSG_QUEST_QUERY_RESPONSE
-	m_World.AddHandler(SMSG_GAMEOBJECT_QUERY_RESPONSE, std::bind(&CClientCache::On_SMSG_GAMEOBJECT_QUERY_RESPONSE, this, std::placeholders::_1));
-	m_World.AddHandler(SMSG_CREATURE_QUERY_RESPONSE, std::bind(&CClientCache::On_SMSG_CREATURE_QUERY_RESPONSE, this, std::placeholders::_1));
+	m_ServerWorld.AddHandler(SMSG_GAMEOBJECT_QUERY_RESPONSE, std::bind(&CowClient_ServerQueryCache::On_SMSG_GAMEOBJECT_QUERY_RESPONSE, this, std::placeholders::_1));
+	m_ServerWorld.AddHandler(SMSG_CREATURE_QUERY_RESPONSE, std::bind(&CowClient_ServerQueryCache::On_SMSG_CREATURE_QUERY_RESPONSE, this, std::placeholders::_1));
 }
 
-void CClientCache::SendGameObjectQueryResponce(CWoWGuid::EntryType_t Entry, CWoWGuid Guid, const std::shared_ptr<IClientCacheGameobjectResponseListener>& Callback)
+void CowClient_ServerQueryCache::SendGameObjectQueryResponce(CowGuid::EntryType_t Entry, CowGuid Guid, const std::shared_ptr<IClientCacheGameobjectResponseListener>& Callback)
 {
 	if (Entry == 0)
-		throw CException("CClientCache::SendGameObjectQueryResponce: Entry is 0.");
+		throw CException("CowClient_ServerQueryCache::SendGameObjectQueryResponce: Entry is 0.");
 
 	if (Guid.GetTypeId() != EWoWObjectTypeID::TYPEID_GAMEOBJECT)
-		throw CException("CClientCache::SendGameObjectQueryResponce: TypeID must be GameObject. %s - '%d'.", Guid.GetTypeName(), Guid.GetTypeId());
+		throw CException("CowClient_ServerQueryCache::SendGameObjectQueryResponce: TypeID must be GameObject. %s - '%d'.", Guid.GetTypeName(), Guid.GetTypeId());
 
 	const auto& cacheGameObjectsIt = m_CacheGameObjects.find(Entry);
 	if (cacheGameObjectsIt != m_CacheGameObjects.end())
@@ -53,19 +53,19 @@ void CClientCache::SendGameObjectQueryResponce(CWoWGuid::EntryType_t Entry, CWoW
 	CClientPacket queryInfo(CMSG_GAMEOBJECT_QUERY);
 	queryInfo << Entry;
 	queryInfo << Guid;
-	m_World.SendPacket(queryInfo);
+	m_ServerWorld.SendPacket(queryInfo);
 
 	// Add to cache, to prevent next requests
 	m_CacheGameObjects[Entry] = nullptr;
 }
 
-void CClientCache::SendCreatureQueryResponce(CWoWGuid::EntryType_t Entry, CWoWGuid Guid, const std::shared_ptr<IClientCacheCreatureResponseListener>& Callback)
+void CowClient_ServerQueryCache::SendCreatureQueryResponce(CowGuid::EntryType_t Entry, CowGuid Guid, const std::shared_ptr<IClientCacheCreatureResponseListener>& Callback)
 {
 	if (Entry == 0)
-		throw CException("CClientCache::SendCreatureQueryResponce: Entry is 0.");
+		throw CException("CowClient_ServerQueryCache::SendCreatureQueryResponce: Entry is 0.");
 
 	if (Guid.GetTypeId() != EWoWObjectTypeID::TYPEID_UNIT)
-		throw CException("CClientCache::SendCreatureQueryResponce: TypeID must be Creature. %s - '%d'.", Guid.GetTypeName(), Guid.GetTypeId());
+		throw CException("CowClient_ServerQueryCache::SendCreatureQueryResponce: TypeID must be Creature. %s - '%d'.", Guid.GetTypeName(), Guid.GetTypeId());
 
 	const auto& cacheCreatureIt = m_CacheCreatures.find(Entry);
 	if (cacheCreatureIt != m_CacheCreatures.end())
@@ -92,13 +92,13 @@ void CClientCache::SendCreatureQueryResponce(CWoWGuid::EntryType_t Entry, CWoWGu
 	CClientPacket queryInfo(CMSG_CREATURE_QUERY);
 	queryInfo << Entry;
 	queryInfo << Guid;
-	m_World.SendPacket(queryInfo);
+	m_ServerWorld.SendPacket(queryInfo);
 
 	// Add to cache, to prevent next requests
 	m_CacheCreatures[Entry] = nullptr;
 }
 
-bool CClientCache::On_SMSG_GAMEOBJECT_QUERY_RESPONSE(CServerPacket& Bytes)
+bool CowClient_ServerQueryCache::On_SMSG_GAMEOBJECT_QUERY_RESPONSE(CServerPacket& Bytes)
 {
 	uint32 entryIDWIthFlag;
 	Bytes >> entryIDWIthFlag;
@@ -106,7 +106,7 @@ bool CClientCache::On_SMSG_GAMEOBJECT_QUERY_RESPONSE(CServerPacket& Bytes)
 
 	if (entryIDWIthFlag & 0x80000000)
 	{
-		Log::Warn("CClientCache: On_SMSG_GAMEOBJECT_QUERY_RESPONSE is not allowed.");
+		Log::Warn("CowClient_ServerQueryCache: On_SMSG_GAMEOBJECT_QUERY_RESPONSE is not allowed.");
 		return false;
 	}
 
@@ -128,7 +128,7 @@ bool CClientCache::On_SMSG_GAMEOBJECT_QUERY_RESPONSE(CServerPacket& Bytes)
 	return true;
 }
 
-bool CClientCache::On_SMSG_CREATURE_QUERY_RESPONSE(CServerPacket& Bytes)
+bool CowClient_ServerQueryCache::On_SMSG_CREATURE_QUERY_RESPONSE(CServerPacket& Bytes)
 {
 	uint32 entryIDWIthFlag;
 	Bytes >> entryIDWIthFlag;
@@ -136,7 +136,7 @@ bool CClientCache::On_SMSG_CREATURE_QUERY_RESPONSE(CServerPacket& Bytes)
 
 	if (entryIDWIthFlag & 0x80000000)
 	{
-		Log::Warn("CClientCache: On_SMSG_CREATURE_QUERY_RESPONSE is not allowed.");
+		Log::Warn("CowClient_ServerQueryCache: On_SMSG_CREATURE_QUERY_RESPONSE is not allowed.");
 		return false;
 	}
 

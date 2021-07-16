@@ -7,19 +7,19 @@
 
 #include "../RealmSelection/RealmInfo.h"
 #include "../CharacterSelection/CharacterSelection.h"
-#include "../World/World.h"
+#include "../World/ServerWorld.h"
 
-class ZN_API CWoWClient 
-	: public std::enable_shared_from_this<CWoWClient>
+class ZN_API CowClient 
+	: public std::enable_shared_from_this<CowClient>
 {
 public:
-	CWoWClient(IScene& Scene, const std::string& AuthServerHost, uint16 AuthServerPort = 3724);
-	virtual ~CWoWClient();
+	CowClient(IScene& Scene, const std::string& AuthServerHost, uint16 AuthServerPort = 3724);
+	virtual ~CowClient();
 
 	void Update(const UpdateEventArgs& e);
 	void UpdateFromThread(std::future<void> PromiseExiter);
 
-    // CWoWClient
+    // CowClient
 	void Login(const std::string& Username, const std::string& Password);
 
 	void OnRealmsListObtained(const std::vector<SRealmInfo>& Realms, BigNumber Key);
@@ -41,8 +41,8 @@ private:
 	std::shared_ptr<CWorldSocket>                 m_WorldSocket;
 
 	IScene&                                       m_Scene;
-	std::unique_ptr<CWoWClientCharactedSelection> m_CharacterSelection;
-	std::unique_ptr<CWoWWorld>                    m_World;
+	std::unique_ptr<CowClient_CharacterSelection> m_CharacterSelection;
+	std::unique_ptr<CowServerWorld>               m_ServerWorld;
 };
 
 #endif

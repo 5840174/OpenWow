@@ -4,12 +4,12 @@
 #include "RenderPass_Path.h"
 
 // Additional
-#include "World/World.h"
+#include "World/ServerWorld.h"
 #include "Objects/GameObjects/WoWGameObjectMOTransport.h"
 
-CRenderPass_Path::CRenderPass_Path(IRenderDevice& RenderDevice, CWoWWorld& WoWWorld)
+CRenderPass_Path::CRenderPass_Path(IRenderDevice& RenderDevice, CowServerWorld& WoWWorld)
 	: RenderPassPipelined(RenderDevice)
-	, m_WoWWorld(WoWWorld)
+	, m_ServerWorld(WoWWorld)
 {
 	m_PerObjectConstantBuffer = GetRenderDevice().GetObjectsFactory().CreateConstantBuffer(PerObject());
 }
@@ -24,7 +24,7 @@ CRenderPass_Path::~CRenderPass_Path()
 //
 void CRenderPass_Path::Render(RenderEventArgs & e)
 {
-	m_WoWWorld.Accept(this);
+	m_ServerWorld.Accept(this);
 }
 
 
@@ -58,11 +58,11 @@ std::shared_ptr<IRenderPassPipelined> CRenderPass_Path::ConfigurePipeline(std::s
 	return shared_from_this();
 }
 
-EVisitResult CRenderPass_Path::VisitWoW(const std::shared_ptr<CWoWWorldObject>& WoWWorldObject)
+EVisitResult CRenderPass_Path::VisitWoW(const std::shared_ptr<CowServerWorldObject>& WoWWorldObject)
 {
 	std::vector<glm::vec3> pointsXYZ;
 
-	if (auto woWGameObjectMOTransport = std::dynamic_pointer_cast<WoWGameObjectMOTransport>(WoWWorldObject))
+	if (auto woWGameObjectMOTransport = std::dynamic_pointer_cast<CowServerGameObject_MOTransport>(WoWWorldObject))
 	{
 		const auto& wowPath = woWGameObjectMOTransport->GetWoWPath();
 		if (wowPath == nullptr)
@@ -85,7 +85,7 @@ EVisitResult CRenderPass_Path::VisitWoW(const std::shared_ptr<CWoWWorldObject>& 
 		});
 	}
 
-	if (auto woWUnit = std::dynamic_pointer_cast<WoWUnit>(WoWWorldObject))
+	if (auto woWUnit = std::dynamic_pointer_cast<CowServerUnit>(WoWWorldObject))
 	{
 		const auto& wowPath = woWUnit->m_WoWPath;
 		if (wowPath == nullptr)

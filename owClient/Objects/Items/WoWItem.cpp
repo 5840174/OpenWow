@@ -5,20 +5,20 @@
 // General
 #include "WoWItem.h"
 
-WoWItem::WoWItem(CWoWGuid Guid)
-	: WoWObject(Guid)
+CowServerItem::CowServerItem(CowGuid Guid)
+	: CowServerObject(Guid)
 {
 	//m_ObjectType |= TYPEMASK_ITEM;
 	m_Values.SetValuesCount(ITEM_END);
 }
 
-WoWItem::~WoWItem()
+CowServerItem::~CowServerItem()
 {
 }
 
-std::shared_ptr<WoWItem> WoWItem::Create(IScene& Scene, CWoWGuid Guid)
+std::shared_ptr<CowServerItem> CowServerItem::Create(IScene& Scene, CowGuid Guid)
 {
-	std::shared_ptr<WoWItem> thisObj = MakeShared(WoWItem, Guid);
+	std::shared_ptr<CowServerItem> thisObj = MakeShared(CowServerItem, Guid);
 	return thisObj;
 }
 

@@ -1,14 +1,14 @@
 #pragma once
 
 // FORWARD BEGIN
-class CWoWClient;
+class CowClient;
 // FORWARD END
 
-class CWoWClientCharactedSelection
+class CowClient_CharacterSelection
 {
 public:
-	CWoWClientCharactedSelection(CWoWClient& WoWClient, IScene& Scene);
-	virtual ~CWoWClientCharactedSelection();
+	CowClient_CharacterSelection(CowClient& WoWClient, IScene& Scene);
+	virtual ~CowClient_CharacterSelection();
 
 	void On_SMSG_CHAR_ENUM(CServerPacket& Bytes);
 
@@ -16,7 +16,7 @@ public:
 	bool ProcessPacket(CServerPacket& Bytes);
 
 private:
-	CWoWClient& m_WoWClient;
+	CowClient& m_WoWClient;
 	IScene& m_Scene;
 	std::unordered_map<Opcodes, std::function<void(CServerPacket&)>> m_Handlers;
 };

@@ -6,22 +6,22 @@
 #include "WoWCorpse.h"
 
 // Additional
-#include "../World/World.h"
+#include "../World/ServerWorld.h"
 
-WoWCorpse::WoWCorpse(IScene& Scene, CWoWWorld& WoWWorld, CWoWGuid Guid)
-	: CWoWWorldObject(Scene, WoWWorld, Guid)
+CowServerCorpse::CowServerCorpse(IScene& Scene, CowServerWorld& WoWWorld, CowGuid Guid)
+	: CowServerWorldObject(Scene, WoWWorld, Guid)
 {
 	//m_ObjectType |= TYPEMASK_CORPSE;
 	m_Values.SetValuesCount(CORPSE_END);
 }
 
-WoWCorpse::~WoWCorpse()
+CowServerCorpse::~CowServerCorpse()
 {
 }
 
-std::shared_ptr<WoWCorpse> WoWCorpse::Create(CWoWWorld& WoWWorld, IScene& Scene, CWoWGuid Guid)
+std::shared_ptr<CowServerCorpse> CowServerCorpse::Create(CowServerWorld& WoWWorld, IScene& Scene, CowGuid Guid)
 {
-	std::shared_ptr<WoWCorpse> thisObj = MakeShared(WoWCorpse, Scene, WoWWorld, Guid);
+	std::shared_ptr<CowServerCorpse> thisObj = MakeShared(CowServerCorpse, Scene, WoWWorld, Guid);
 	return thisObj;
 }
 

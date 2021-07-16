@@ -4,15 +4,15 @@
 
 #include "../Base/WoWObject.h"
 
-class ZN_API WoWItem
-	: public WoWObject
+class ZN_API CowServerItem
+	: public CowServerObject
 {
 public:
-	WoWItem(CWoWGuid Guid);
-	virtual ~WoWItem();
+	CowServerItem(CowGuid Guid);
+	virtual ~CowServerItem();
 
 public:
-	static std::shared_ptr<WoWItem> Create(IScene& Scene, CWoWGuid Guid);
+	static std::shared_ptr<CowServerItem> Create(IScene& Scene, CowGuid Guid);
 
 private:
 

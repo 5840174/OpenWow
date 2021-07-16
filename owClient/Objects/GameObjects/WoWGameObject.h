@@ -29,25 +29,25 @@ enum ZN_API GameObjectDynamicLowFlags
 };
 
 
-class ZN_API WoWGameObject
-	: public CWoWWorldObject
+class ZN_API CowServerGameObject
+	: public CowServerWorldObject
 	, public IClientCacheGameobjectResponseListener
 {
 public:
-	WoWGameObject(IScene& Scene, CWoWWorld& WoWWorld, CWoWGuid Guid);
-	virtual ~WoWGameObject();
+	CowServerGameObject(IScene& Scene, CowServerWorld& WoWWorld, CowGuid Guid);
+	virtual ~CowServerGameObject();
 
 	virtual void OnValueUpdated(uint16 index) override;
 	virtual void OnValuesUpdated(const UpdateMask & Mask) override;
 
 	// IClientCacheGameobjectResponseListener
-	void OnTemplate(CWoWGuid::EntryType_t Entry, const std::shared_ptr<SGameObjectQueryResult>& QueryResult) override;
+	void OnTemplate(CowGuid::EntryType_t Entry, const std::shared_ptr<SGameObjectQueryResult>& QueryResult) override;
 
 	// ISceneNode
 	void Update(const UpdateEventArgs& e);
 
 public:
-	static std::shared_ptr<WoWGameObject> Create(CWoWWorld& WoWWorld, IScene& Scene, CWoWGuid Guid);
+	static std::shared_ptr<CowServerGameObject> Create(CowServerWorld& WoWWorld, IScene& Scene, CowGuid Guid);
 	virtual void Destroy() override;
 
 protected:

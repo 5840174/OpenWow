@@ -60,9 +60,6 @@
     <ClInclude Include="RealmSelection\RealmInfo.h">
       <Filter>RealmSelection</Filter>
     </ClInclude>
-    <ClInclude Include="World\World.h">
-      <Filter>World</Filter>
-    </ClInclude>
     <ClInclude Include="World\WorldObjects.h">
       <Filter>World</Filter>
     </ClInclude>
@@ -213,11 +210,11 @@
     <ClInclude Include="Objects\Helpers\MovementInfo.h">
       <Filter>Objects\Helpers</Filter>
     </ClInclude>
+    <ClInclude Include="World\ServerWorld.h">
+      <Filter>World</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="World\World.cpp">
-      <Filter>World</Filter>
-    </ClCompile>
     <ClCompile Include="World\WorldObjects.cpp">
       <Filter>World</Filter>
     </ClCompile>
@@ -328,6 +325,9 @@
     </ClCompile>
     <ClCompile Include="Objects\Units\WoWUnit.cpp">
       <Filter>Objects\Units</Filter>
+    </ClCompile>
+    <ClCompile Include="World\ServerWorld.cpp">
+      <Filter>World</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

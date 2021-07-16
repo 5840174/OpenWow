@@ -4,14 +4,14 @@
 #include "WoWObjectValuesList.h"
 
 // FORWARD BEGIN
-class WoWObject;
+class CowServerObject;
 // FORWARD END
 
-class CWoWObjectValues
+class CowServerObjectValues
 {
 public:
-	CWoWObjectValues(WoWObject& OwnerWoWObject);
-	virtual ~CWoWObjectValues();
+	CowServerObjectValues(CowServerObject& OwnerWoWObject);
+	virtual ~CowServerObjectValues();
 
 	uint16 GetValuesCount() const;
 	void SetValuesCount(uint16 ValuesCnt);
@@ -26,7 +26,7 @@ public:
 	uint8 GetByteValue(uint16 index, uint8 offset) const;
 	int16 GetInt16Value(uint16 index, uint8 offset) const;
 	uint16 GetUInt16Value(uint16 index, uint8 offset) const;
-	CWoWGuid GetGuidValue(uint16 index) const;
+	CowGuid GetGuidValue(uint16 index) const;
 
 protected:
 	void PrintIndexError(uint32 index) const;
@@ -40,5 +40,5 @@ private:
 	};
 	uint16 m_valuesCount;
 	UpdateMask m_CurrentMask;
-	WoWObject& m_OwnerWoWObject;
+	CowServerObject& m_OwnerWoWObject;
 };

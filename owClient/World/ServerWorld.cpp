@@ -3,7 +3,7 @@
 #ifdef ENABLE_WOW_CLIENT
 
 // General
-#include "World.h"
+#include "ServerWorld.h"
 
 // Additional
 #include "Renderer/RenderPass_Path.h"
@@ -70,7 +70,7 @@ namespace
 
 
 
-CWoWWorld::CWoWWorld(IScene& Scene, const std::shared_ptr<CWorldSocket>& Socket)
+CowServerWorld::CowServerWorld(IScene& Scene, const std::shared_ptr<CWorldSocket>& Socket)
 	: m_Scene(Scene)
 	, m_Socket(Socket)
 	, m_WorldObjects(*this, m_Scene)
@@ -88,56 +88,56 @@ CWoWWorld::CWoWWorld(IScene& Scene, const std::shared_ptr<CWorldSocket>& Socket)
 	m_TransportAnimationStorage.Initialize();
 
 	// Handlers
-	AddHandler(SMSG_LOGIN_VERIFY_WORLD, std::bind(&CWoWWorld::S_SMSG_LOGIN_VERIFY_WORLD, this, std::placeholders::_1));
+	AddHandler(SMSG_LOGIN_VERIFY_WORLD, std::bind(&CowServerWorld::S_SMSG_LOGIN_VERIFY_WORLD, this, std::placeholders::_1));
 
-	AddHandler(SMSG_MOTD, std::bind(&CWoWWorld::On_SMSG_MOTD, this, std::placeholders::_1));
-	AddHandler(SMSG_NOTIFICATION, std::bind(&CWoWWorld::On_SMSG_NOTIFICATION, this, std::placeholders::_1));
+	AddHandler(SMSG_MOTD, std::bind(&CowServerWorld::On_SMSG_MOTD, this, std::placeholders::_1));
+	AddHandler(SMSG_NOTIFICATION, std::bind(&CowServerWorld::On_SMSG_NOTIFICATION, this, std::placeholders::_1));
 	
-	AddHandler(SMSG_SPELL_GO, std::bind(&CWoWWorld::On_SMSG_SPELL_GO, this, std::placeholders::_1));
+	AddHandler(SMSG_SPELL_GO, std::bind(&CowServerWorld::On_SMSG_SPELL_GO, this, std::placeholders::_1));
 
-	AddHandler(SMSG_POWER_UPDATE, std::bind(&CWoWWorld::On_SMSG_POWER_UPDATE, this, std::placeholders::_1));
-	AddHandler(SMSG_AURA_UPDATE, std::bind(&CWoWWorld::On_SMSG_AURA_UPDATE, this, std::placeholders::_1));
-	AddHandler(SMSG_AURA_UPDATE_ALL, std::bind(&CWoWWorld::On_SMSG_AURA_UPDATE_ALL, this, std::placeholders::_1));
-	AddHandler(SMSG_UPDATE_WORLD_STATE, std::bind(&CWoWWorld::On_SMSG_UPDATE_WORLD_STATE, this, std::placeholders::_1));
+	AddHandler(SMSG_POWER_UPDATE, std::bind(&CowServerWorld::On_SMSG_POWER_UPDATE, this, std::placeholders::_1));
+	AddHandler(SMSG_AURA_UPDATE, std::bind(&CowServerWorld::On_SMSG_AURA_UPDATE, this, std::placeholders::_1));
+	AddHandler(SMSG_AURA_UPDATE_ALL, std::bind(&CowServerWorld::On_SMSG_AURA_UPDATE_ALL, this, std::placeholders::_1));
+	AddHandler(SMSG_UPDATE_WORLD_STATE, std::bind(&CowServerWorld::On_SMSG_UPDATE_WORLD_STATE, this, std::placeholders::_1));
 	
-	AddHandler(SMSG_TIME_SYNC_REQ, std::bind(&CWoWWorld::On_SMSG_TIME_SYNC_REQ, this, std::placeholders::_1));
+	AddHandler(SMSG_TIME_SYNC_REQ, std::bind(&CowServerWorld::On_SMSG_TIME_SYNC_REQ, this, std::placeholders::_1));
 	
-	AddHandler(SMSG_MONSTER_MOVE, std::bind(&CWoWWorld::S_SMSG_MONSTER_MOVE, this, std::placeholders::_1, false));
-	AddHandler(SMSG_MONSTER_MOVE_TRANSPORT, std::bind(&CWoWWorld::S_SMSG_MONSTER_MOVE, this, std::placeholders::_1, true));
+	AddHandler(SMSG_MONSTER_MOVE, std::bind(&CowServerWorld::S_SMSG_MONSTER_MOVE, this, std::placeholders::_1, false));
+	AddHandler(SMSG_MONSTER_MOVE_TRANSPORT, std::bind(&CowServerWorld::S_SMSG_MONSTER_MOVE, this, std::placeholders::_1, true));
 
-	AddHandler(SMSG_DESTROY_OBJECT, std::bind(&CWoWWorld::S_SMSG_DESTROY_OBJECT, this, std::placeholders::_1));
+	AddHandler(SMSG_DESTROY_OBJECT, std::bind(&CowServerWorld::S_SMSG_DESTROY_OBJECT, this, std::placeholders::_1));
 
-	AddHandler(SMSG_EMOTE, std::bind(&CWoWWorld::On_SMSG_EMOTE, this, std::placeholders::_1));
-	AddHandler(SMSG_MESSAGECHAT, std::bind(&CWoWWorld::On_SMSG_MESSAGECHAT, this, std::placeholders::_1, false));
-	AddHandler(SMSG_GM_MESSAGECHAT, std::bind(&CWoWWorld::On_SMSG_MESSAGECHAT, this, std::placeholders::_1, true));
+	AddHandler(SMSG_EMOTE, std::bind(&CowServerWorld::On_SMSG_EMOTE, this, std::placeholders::_1));
+	AddHandler(SMSG_MESSAGECHAT, std::bind(&CowServerWorld::On_SMSG_MESSAGECHAT, this, std::placeholders::_1, false));
+	AddHandler(SMSG_GM_MESSAGECHAT, std::bind(&CowServerWorld::On_SMSG_MESSAGECHAT, this, std::placeholders::_1, true));
 
 	// MSG_MOVE
 	{
 		for (const auto& movementOpcode : msgMoveOpcodes)
-			AddHandler(movementOpcode, std::bind(&CWoWWorld::On_MOVE_Opcode, this, std::placeholders::_1));
+			AddHandler(movementOpcode, std::bind(&CowServerWorld::On_MOVE_Opcode, this, std::placeholders::_1));
 
-		AddHandler(MSG_MOVE_TIME_SKIPPED, std::bind(&CWoWWorld::On_MSG_MOVE_TIME_SKIPPED, this, std::placeholders::_1));
+		AddHandler(MSG_MOVE_TIME_SKIPPED, std::bind(&CowServerWorld::On_MSG_MOVE_TIME_SKIPPED, this, std::placeholders::_1));
 	}
 
 	// SMSG_SPLINE
 	for (const auto& smsgSplineOpcode : msgUnitsMoveOpcodes)
-		AddHandler(smsgSplineOpcode, std::bind(&CWoWWorld::On_MOVE_UnitSpeedOpcode, this, std::placeholders::_1));
+		AddHandler(smsgSplineOpcode, std::bind(&CowServerWorld::On_MOVE_UnitSpeedOpcode, this, std::placeholders::_1));
 
 	m_Scene.GetRenderer()->Add3DPass(MakeShared(CRenderPass_Path, m_Scene.GetBaseManager().GetApplication().GetRenderDevice(), *this)->ConfigurePipeline(m_Scene.GetRenderWindow().GetRenderTarget()));
 }
 
-CWoWWorld::~CWoWWorld()
+CowServerWorld::~CowServerWorld()
 {
 }
 
-void CWoWWorld::EnterWorld(const SCharacterTemplate& SelectedCharacter)
+void CowServerWorld::EnterWorld(const SCharacterTemplate& SelectedCharacter)
 {
 	CClientPacket p(CMSG_PLAYER_LOGIN);
 	p << SelectedCharacter.GUID;
 	SendPacket(p);
 }
 
-void CWoWWorld::Update(const UpdateEventArgs & e)
+void CowServerWorld::Update(const UpdateEventArgs & e)
 {
 	m_WorldObjects.Update(e);
 
@@ -148,7 +148,7 @@ void CWoWWorld::Update(const UpdateEventArgs & e)
 		m_SkyManager->Update(e);
 }
 
-void CWoWWorld::Accept(IWoWVisitor * WoWVisitor)
+void CowServerWorld::Accept(IWoWVisitor * WoWVisitor)
 {
 	m_WorldObjects.Accept(WoWVisitor);
 }
@@ -157,7 +157,7 @@ void CWoWWorld::Accept(IWoWVisitor * WoWVisitor)
 
 
 
-void CWoWWorld::S_SMSG_LOGIN_VERIFY_WORLD(CServerPacket& Buffer)
+void CowServerWorld::S_SMSG_LOGIN_VERIFY_WORLD(CServerPacket& Buffer)
 {
 	uint32 mapID;
 	Buffer >> mapID;
@@ -186,7 +186,7 @@ void CWoWWorld::S_SMSG_LOGIN_VERIFY_WORLD(CServerPacket& Buffer)
 	m_Scene.GetCameraController()->GetCamera()->SetPitch(0.0f);
 }
 
-void CWoWWorld::On_SMSG_MOTD(CServerPacket & Buffer)
+void CowServerWorld::On_SMSG_MOTD(CServerPacket & Buffer)
 {
 	uint32 motdCount;
 	Buffer >> motdCount;
@@ -199,7 +199,7 @@ void CWoWWorld::On_SMSG_MOTD(CServerPacket & Buffer)
 	}
 }
 
-void CWoWWorld::On_SMSG_NOTIFICATION(CServerPacket & Buffer)
+void CowServerWorld::On_SMSG_NOTIFICATION(CServerPacket & Buffer)
 {
 	std::string notification;
 	Buffer.readString(&notification);
@@ -210,8 +210,8 @@ namespace
 {
 	struct SpellCastData
 	{
-		/*CWoWGuid CasterGUID;
-		CWoWGuid CasterUnit;
+		/*CowGuid CasterGUID;
+		CowGuid CasterUnit;
 		uint8 CastID = 0;
 		uint32 SpellID = 0;
 		uint32 CastFlags = 0;
@@ -227,7 +227,7 @@ namespace
 	};
 }
 
-void CWoWWorld::On_SMSG_SPELL_GO(CServerPacket & Buffer)
+void CowServerWorld::On_SMSG_SPELL_GO(CServerPacket & Buffer)
 {
 	Buffer.seekRelative(Buffer.getSize() - Buffer.getPos());
 }
@@ -248,9 +248,9 @@ namespace
 	};
 }
 
-void CWoWWorld::On_SMSG_POWER_UPDATE(CServerPacket & Buffer)
+void CowServerWorld::On_SMSG_POWER_UPDATE(CServerPacket & Buffer)
 {
-	CWoWGuid packedGUID;
+	CowGuid packedGUID;
 	Buffer.ReadPackedGuid(&packedGUID);
 
 	uint8 power;
@@ -260,17 +260,17 @@ void CWoWWorld::On_SMSG_POWER_UPDATE(CServerPacket & Buffer)
 	Buffer >> value;
 }
 
-void CWoWWorld::On_SMSG_AURA_UPDATE(CServerPacket & Buffer)
+void CowServerWorld::On_SMSG_AURA_UPDATE(CServerPacket & Buffer)
 {
-	CWoWGuid packedGUIDTarget;
+	CowGuid packedGUIDTarget;
 	Buffer.ReadPackedGuid(&packedGUIDTarget);
 
 	Do_AuraUpdate(Buffer);
 }
 
-void CWoWWorld::On_SMSG_AURA_UPDATE_ALL(CServerPacket & Buffer)
+void CowServerWorld::On_SMSG_AURA_UPDATE_ALL(CServerPacket & Buffer)
 {
-	CWoWGuid packedGUIDTarget;
+	CowGuid packedGUIDTarget;
 	Buffer.ReadPackedGuid(&packedGUIDTarget);
 
 	while (false == Buffer.isEof())
@@ -279,7 +279,7 @@ void CWoWWorld::On_SMSG_AURA_UPDATE_ALL(CServerPacket & Buffer)
 	}
 }
 
-void CWoWWorld::Do_AuraUpdate(CServerPacket & Buffer)
+void CowServerWorld::Do_AuraUpdate(CServerPacket & Buffer)
 {
 	uint8 auraSlot;
 	Buffer >> auraSlot;
@@ -301,7 +301,7 @@ void CWoWWorld::Do_AuraUpdate(CServerPacket & Buffer)
 
 	if (false == (auraFlags & AFLAG_CASTER))
 	{
-		CWoWGuid packedGUIDCaster;
+		CowGuid packedGUIDCaster;
 		Buffer.ReadPackedGuid(&packedGUIDCaster);
 	}
 
@@ -313,15 +313,15 @@ void CWoWWorld::Do_AuraUpdate(CServerPacket & Buffer)
 	}
 }
 
-void CWoWWorld::On_SMSG_UPDATE_WORLD_STATE(CServerPacket & Buffer)
+void CowServerWorld::On_SMSG_UPDATE_WORLD_STATE(CServerPacket & Buffer)
 {
 	int32 variable, value;
 	Buffer >> variable;
 	Buffer >> value;
-	//Log::Info("CWoWWorld::On_SMSG_UPDATE_WORLD_STATE: World state updated. Variable '%d' = '%d'", variable, value);
+	//Log::Info("CowServerWorld::On_SMSG_UPDATE_WORLD_STATE: World state updated. Variable '%d' = '%d'", variable, value);
 }
 
-void CWoWWorld::On_SMSG_TIME_SYNC_REQ(CServerPacket & Buffer)
+void CowServerWorld::On_SMSG_TIME_SYNC_REQ(CServerPacket & Buffer)
 {
 	uint32 timeSyncNextCounter;
 	Buffer >> timeSyncNextCounter;
@@ -329,14 +329,14 @@ void CWoWWorld::On_SMSG_TIME_SYNC_REQ(CServerPacket & Buffer)
 	//Log::Info("On_SMSG_TIME_SYNC_REQ: timeSyncNextCounter = '%d'.", timeSyncNextCounter);
 }
 
-void CWoWWorld::S_SMSG_MONSTER_MOVE(CServerPacket & Buffer, bool Transport)
+void CowServerWorld::S_SMSG_MONSTER_MOVE(CServerPacket & Buffer, bool Transport)
 {
-	CWoWGuid packedGUID;
+	CowGuid packedGUID;
 	Buffer.ReadPackedGuid(&packedGUID);
 
 	if (Transport)
 	{
-		CWoWGuid transportPackedGUID;
+		CowGuid transportPackedGUID;
 		Buffer.ReadPackedGuid(&transportPackedGUID);
 
 		uint8 transportSeat;
@@ -346,28 +346,28 @@ void CWoWWorld::S_SMSG_MONSTER_MOVE(CServerPacket & Buffer, bool Transport)
 	Buffer.seekRelative(1);
 
 	if (packedGUID.GetTypeId() != EWoWObjectTypeID::TYPEID_UNIT && packedGUID.GetTypeId() != EWoWObjectTypeID::TYPEID_PLAYER)
-		throw CException("CWoWWorld::S_SMSG_MONSTER_MOVE: Movement packet accept only TYPEID_UNIT. TypeID: '%s'.", packedGUID.GetTypeName());
+		throw CException("CowServerWorld::S_SMSG_MONSTER_MOVE: Movement packet accept only TYPEID_UNIT. TypeID: '%s'.", packedGUID.GetTypeName());
 
-	if (auto object = m_WorldObjects.GetWoWObject(packedGUID))
+	if (auto object = m_WorldObjects.Get(packedGUID))
 	{
-		auto objectAsUnit = std::dynamic_pointer_cast<WoWUnit>(object);
+		auto objectAsUnit = std::dynamic_pointer_cast<CowServerUnit>(object);
 		objectAsUnit->Do_MonsterMove(Buffer);
 	}
 }
 
-void CWoWWorld::S_SMSG_DESTROY_OBJECT(CServerPacket & Buffer)
+void CowServerWorld::S_SMSG_DESTROY_OBJECT(CServerPacket & Buffer)
 {
 	uint64 guid;
 	Buffer >> guid;
-	CWoWGuid objectGuid(guid);
+	CowGuid objectGuid(guid);
 
 	uint8 isOnDeath;
 	Buffer >> isOnDeath;
 
-	if (auto object = m_WorldObjects.GetWoWObject(objectGuid))
+	if (auto object = m_WorldObjects.Get(objectGuid))
 	{
 		object->Destroy();
-		m_WorldObjects.EraseWoWObject(object);
+		m_WorldObjects.Delete(object);
 	}
 }
 
@@ -459,7 +459,7 @@ namespace
 	#define LANGUAGES_COUNT   19
 }
 
-void CWoWWorld::On_SMSG_EMOTE(CServerPacket & Buffer)
+void CowServerWorld::On_SMSG_EMOTE(CServerPacket & Buffer)
 {
 	uint32 emote;
 	Buffer >> emote;
@@ -467,7 +467,7 @@ void CWoWWorld::On_SMSG_EMOTE(CServerPacket & Buffer)
 	Buffer >> guid;
 }
 
-void CWoWWorld::On_SMSG_MESSAGECHAT(CServerPacket & Buffer, bool IsGMMessage)
+void CowServerWorld::On_SMSG_MESSAGECHAT(CServerPacket & Buffer, bool IsGMMessage)
 {
 	ChatMsg chatType;
 	Buffer >> chatType;
@@ -501,7 +501,7 @@ void CWoWWorld::On_SMSG_MESSAGECHAT(CServerPacket & Buffer, bool IsGMMessage)
 
 			uint64 receiverGUID;
 			Buffer >> receiverGUID;
-			CWoWGuid receiverWoWGuid(receiverGUID);
+			CowGuid receiverWoWGuid(receiverGUID);
 
 			if (receiverWoWGuid && !receiverWoWGuid.IsPlayer() && !receiverWoWGuid.IsPet())
 			{
@@ -522,7 +522,7 @@ void CWoWWorld::On_SMSG_MESSAGECHAT(CServerPacket & Buffer, bool IsGMMessage)
 
 			uint64 receiverGUID;
 			Buffer >> receiverGUID;
-			CWoWGuid receiverWoWGuid(receiverGUID);
+			CowGuid receiverWoWGuid(receiverGUID);
 		}
 		break;
 		case CHAT_MSG_BG_SYSTEM_NEUTRAL:
@@ -531,7 +531,7 @@ void CWoWWorld::On_SMSG_MESSAGECHAT(CServerPacket & Buffer, bool IsGMMessage)
 		{
 			uint64 receiverGUID;
 			Buffer >> receiverGUID;
-			CWoWGuid receiverWoWGuid(receiverGUID);
+			CowGuid receiverWoWGuid(receiverGUID);
 
 			if (receiverWoWGuid && false == receiverWoWGuid.IsPlayer() && false == receiverWoWGuid.IsPet())
 			{
@@ -547,7 +547,7 @@ void CWoWWorld::On_SMSG_MESSAGECHAT(CServerPacket & Buffer, bool IsGMMessage)
 		{
 			uint64 receiverGUID;
 			Buffer >> receiverGUID;
-			CWoWGuid receiverWoWGuid(receiverGUID);
+			CowGuid receiverWoWGuid(receiverGUID);
 		}
 		break;
 		default:
@@ -569,7 +569,7 @@ void CWoWWorld::On_SMSG_MESSAGECHAT(CServerPacket & Buffer, bool IsGMMessage)
 
 			uint64 receiverGUID;
 			Buffer >> receiverGUID;
-			CWoWGuid receiverWoWGuid(receiverGUID);
+			CowGuid receiverWoWGuid(receiverGUID);
 		}
 		break;
 	}
@@ -590,16 +590,18 @@ void CWoWWorld::On_SMSG_MESSAGECHAT(CServerPacket & Buffer, bool IsGMMessage)
 	}
 
 	Log::Print("[%s]: %s", senderNameResult.c_str(), message.c_str());
+
+	Buffer.seek(Buffer.getSize());
 }
 
-void CWoWWorld::On_MOVE_Opcode(CServerPacket & Buffer)
+void CowServerWorld::On_MOVE_Opcode(CServerPacket & Buffer)
 {
-	CWoWGuid guid;
+	CowGuid guid;
 	Buffer.ReadPackedGuid(&guid);
 
-	if (auto object = m_WorldObjects.GetWoWObject(guid))
+	if (auto object = m_WorldObjects.Get(guid))
 	{
-		if (auto unit = std::dynamic_pointer_cast<WoWUnit>(object))
+		if (auto unit = std::dynamic_pointer_cast<CowServerUnit>(object))
 		{
 			unit->ReadMovementInfoPacket(Buffer);
 
@@ -679,18 +681,18 @@ void CWoWWorld::On_MOVE_Opcode(CServerPacket & Buffer)
 	}
 }
 
-void CWoWWorld::On_MSG_MOVE_TIME_SKIPPED(CServerPacket & Buffer)
+void CowServerWorld::On_MSG_MOVE_TIME_SKIPPED(CServerPacket & Buffer)
 {
-	CWoWGuid guid;
+	CowGuid guid;
 	Buffer.ReadPackedGuid(&guid);
 
 	uint32 timeSkipped;
 	Buffer >> timeSkipped;
 }
 
-void CWoWWorld::On_MOVE_UnitSpeedOpcode(CServerPacket& Buffer)
+void CowServerWorld::On_MOVE_UnitSpeedOpcode(CServerPacket& Buffer)
 {
-	CWoWGuid packedGuid;
+	CowGuid packedGuid;
 	Buffer.ReadPackedGuid(&packedGuid);
 
 	float speed;
@@ -700,15 +702,15 @@ void CWoWWorld::On_MOVE_UnitSpeedOpcode(CServerPacket& Buffer)
 
 
 //
-// CWoWWorld
+// CowServerWorld
 //
-void CWoWWorld::AddHandler(Opcodes Opcode, std::function<void(CServerPacket&)> Handler)
+void CowServerWorld::AddHandler(Opcodes Opcode, std::function<void(CServerPacket&)> Handler)
 {
 	_ASSERT(Handler != nullptr);
 	m_Handlers.insert(std::make_pair(Opcode, Handler));
 }
 
-bool CWoWWorld::ProcessPacket(CServerPacket& ServerPacket)
+bool CowServerWorld::ProcessPacket(CServerPacket& ServerPacket)
 {
 	const auto& handler = m_Handlers.find(ServerPacket.GetPacketOpcode());
 	if (handler != m_Handlers.end())
@@ -717,7 +719,7 @@ bool CWoWWorld::ProcessPacket(CServerPacket& ServerPacket)
 		(handler->second).operator()(ServerPacket);
 
 		if (ServerPacket.getPos() != ServerPacket.getSize())
-			throw CException("CWoWWorld::ProcessPacket: Packet '%d' is not fully readed. %d of %d.", ServerPacket.GetPacketOpcode(), ServerPacket.getPos(), ServerPacket.getSize());
+			throw CException("CowServerWorld::ProcessPacket: Packet '%d' is not fully readed. %d of %d.", ServerPacket.GetPacketOpcode(), ServerPacket.getPos(), ServerPacket.getSize());
 
 		return true;
 	}
@@ -725,13 +727,13 @@ bool CWoWWorld::ProcessPacket(CServerPacket& ServerPacket)
 	return false;
 }
 
-void CWoWWorld::SendPacket(CClientPacket & Bytes)
+void CowServerWorld::SendPacket(CClientPacket & Bytes)
 {
 	if (auto lockedSocket = m_Socket.lock())
 		lockedSocket->SendPacket(Bytes);
 }
 
-std::shared_ptr<CMap> CWoWWorld::GetMap() const
+std::shared_ptr<CMap> CowServerWorld::GetMap() const
 {
 	return m_Map;
 }

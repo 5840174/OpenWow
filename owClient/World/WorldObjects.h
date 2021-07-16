@@ -13,43 +13,55 @@
 #include "../Renderer/RenderPass_Path.h"
 
 // FORWARD BEGIN
-class CWoWWorld;
+class CowServerWorld;
 // FORWARD END
 
 class CWorldObjects
 {
 public:
-	CWorldObjects(CWoWWorld& WoWWorld, IScene& Scene);
+	CWorldObjects(CowServerWorld& WoWWorld, IScene& Scene);
 	virtual ~CWorldObjects();
 
 	void Update(const UpdateEventArgs& e);
 	void Accept(IWoWVisitor * WoWVisitor);
 
-	std::shared_ptr<WoWObject> CreateWoWObject(CWoWGuid ObjectGUID, EWoWObjectTypeID TypeID);
-	std::shared_ptr<WoWObject> GetWoWObject(CWoWGuid ObjectGUID);
-	bool IsWoWObjectExists(CWoWGuid ObjectGUID);
-	void EraseWoWObject(const std::shared_ptr<WoWObject>& WoWObject);
+	std::shared_ptr<CowServerObject> Create(CowGuid ObjectGUID, EWoWObjectTypeID TypeID);
+	std::shared_ptr<CowServerObject> Get(CowGuid ObjectGUID);
+	bool                       IsExists(CowGuid ObjectGUID);
+	void                       Delete(const std::shared_ptr<CowServerObject>& WoWObject);
 
-
+	template <typename T>
+	std::shared_ptr<T> GetT(CowGuid ObjectGUID)
+	{
+		if (auto object = Get(ObjectGUID))
+		{
+			if (auto objectAsT = std::dynamic_pointer_cast<T>(object))
+			{
+				return objectAsT;
+			}
+			else
+				throw CException("Unknown cast.");
+		}
+		return nullptr; // Not found
+	}
 
 private:
-	CWoWWorld& m_WoWWorld;
+	CowServerWorld& m_ServerWorld;
 	IScene& m_Scene;
-	//std::map<CWoWGuid, std::shared_ptr<WoWObject>>         m_WoWObjects;
 
-	std::map<CWoWGuid, std::shared_ptr<WoWItem>>           m_WoWItems;
+	std::map<CowGuid, std::shared_ptr<CowServerItem>>                  m_ItemsAndContainers;
 
-	std::map<CWoWGuid, std::shared_ptr<WoWUnit>>           m_WoWUnits;
-	std::map<CWoWGuid, std::shared_ptr<WoWUnit>>           m_WoWUnitsPet;
-	std::map<CWoWGuid, std::shared_ptr<WoWUnit>>           m_WoWUnitsVehicle;
+	std::map<CowGuid, std::shared_ptr<CowServerUnit>>                  m_Units;
+	std::map<CowGuid, std::shared_ptr<CowServerUnit>>                  m_Units_Pet;
+	std::map<CowGuid, std::shared_ptr<CowServerUnit>>                  m_Units_Vehicle;
 
-	std::map<CWoWGuid, std::shared_ptr<WoWPlayer>>         m_WoWPlayers;
+	std::map<CowGuid, std::shared_ptr<CowServerPlayer>>                m_Players;
 
-	std::map<CWoWGuid, std::shared_ptr<WoWGameObject>>     m_WoWGameObjects;
-	std::map<CWoWGuid, std::shared_ptr<WoWGameObject>>     m_WoWGameObjectsTransport;
-	std::map<CWoWGuid, std::shared_ptr<WoWGameObjectMOTransport>> m_WoWGameObjectsMOTransport;
+	std::map<CowGuid, std::shared_ptr<CowServerGameObject>>            m_GameObjects;
+	std::map<CowGuid, std::shared_ptr<CowServerGameObject>>            m_GameObjects_Transport;
+	std::map<CowGuid, std::shared_ptr<CowServerGameObject_MOTransport>> m_GameObjects_MOTransport;
 
-	std::map<CWoWGuid, std::shared_ptr<WoWDynamicObject>>  m_WoWDynamicObjects;
+	std::map<CowGuid, std::shared_ptr<CowServerDynamicObject>>         m_DynamicObjects;
 
-	std::map<CWoWGuid, std::shared_ptr<WoWCorpse>>         m_WoWCorpses;
+	std::map<CowGuid, std::shared_ptr<CowServerCorpse>>                m_Corpses;
 };

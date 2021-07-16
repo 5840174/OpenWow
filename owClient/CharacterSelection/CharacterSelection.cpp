@@ -6,22 +6,22 @@
 // Additional
 #include "Client/Client.h"
 
-CWoWClientCharactedSelection::CWoWClientCharactedSelection(CWoWClient& WoWClient, IScene & Scene)
+CowClient_CharacterSelection::CowClient_CharacterSelection(CowClient& WoWClient, IScene & Scene)
 	: m_WoWClient(WoWClient)
 	, m_Scene(Scene)
 {
-	AddHandler(SMSG_CHAR_ENUM, std::bind(&CWoWClientCharactedSelection::On_SMSG_CHAR_ENUM, this, std::placeholders::_1));
+	AddHandler(SMSG_CHAR_ENUM, std::bind(&CowClient_CharacterSelection::On_SMSG_CHAR_ENUM, this, std::placeholders::_1));
 }
 
-CWoWClientCharactedSelection::~CWoWClientCharactedSelection()
+CowClient_CharacterSelection::~CowClient_CharacterSelection()
 {}
 
-void CWoWClientCharactedSelection::On_SMSG_CHAR_ENUM(CServerPacket & Bytes)
+void CowClient_CharacterSelection::On_SMSG_CHAR_ENUM(CServerPacket & Bytes)
 {
 	uint8 charCnt;
 	Bytes >> charCnt;
 
-	Log::Print("CWoWClientCharactedSelection::On_SMSG_CHAR_ENUM:: Characters count '%d'.", charCnt);
+	Log::Print("CowClient_CharacterSelection::On_SMSG_CHAR_ENUM:: Characters count '%d'.", charCnt);
 
 	std::vector<SCharacterTemplate> characters;
 	for (uint8 i = 0; i < charCnt; i++)
@@ -29,7 +29,7 @@ void CWoWClientCharactedSelection::On_SMSG_CHAR_ENUM(CServerPacket & Bytes)
 		SCharacterTemplate character(Bytes);
 		characters.push_back(character);
 
-		Log::Print("CWoWClientCharactedSelection::On_SMSG_CHAR_ENUM:: Character [%d] name '%s'.", i, character.Name.c_str());
+		Log::Print("CowClient_CharacterSelection::On_SMSG_CHAR_ENUM:: Character [%d] name '%s'.", i, character.Name.c_str());
 	}
 
 	if (characters.empty())
@@ -38,13 +38,13 @@ void CWoWClientCharactedSelection::On_SMSG_CHAR_ENUM(CServerPacket & Bytes)
 	m_WoWClient.OnCharactersListObtained(characters);
 }
 
-void CWoWClientCharactedSelection::AddHandler(Opcodes Opcode, std::function<void(CServerPacket&)> Handler)
+void CowClient_CharacterSelection::AddHandler(Opcodes Opcode, std::function<void(CServerPacket&)> Handler)
 {
 	_ASSERT(Handler != nullptr);
 	m_Handlers.insert(std::make_pair(Opcode, Handler));
 }
 
-bool CWoWClientCharactedSelection::ProcessPacket(CServerPacket& ServerPacket)
+bool CowClient_CharacterSelection::ProcessPacket(CServerPacket& ServerPacket)
 {
 	const auto& handler = m_Handlers.find(ServerPacket.GetPacketOpcode());
 	if (handler != m_Handlers.end())
@@ -53,7 +53,7 @@ bool CWoWClientCharactedSelection::ProcessPacket(CServerPacket& ServerPacket)
 		handler->second.operator()(ServerPacket);
 
 		if (ServerPacket.getPos() != ServerPacket.getSize())
-			throw CException("CWoWClientCharactedSelection::ProcessPacket: Packet '%d' is not fully readed. %d of %d.", ServerPacket.GetPacketOpcode(), ServerPacket.getPos(), ServerPacket.getSize());
+			throw CException("CowClient_CharacterSelection::ProcessPacket: Packet '%d' is not fully readed. %d of %d.", ServerPacket.GetPacketOpcode(), ServerPacket.getPos(), ServerPacket.getSize());
 
 		return true;
 	}

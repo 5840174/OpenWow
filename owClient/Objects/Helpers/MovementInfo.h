@@ -72,7 +72,7 @@ enum MovementFlags2 : uint32
 struct SMovementInfo
 {
 	// common
-	CWoWGuid guid;
+	CowGuid guid;
 	uint32 flags;
 	uint16 flags2;
 	glm::vec3 pos;
@@ -92,7 +92,7 @@ struct SMovementInfo
 			time2 = 0;
 		}
 
-		CWoWGuid guid;
+		CowGuid guid;
 		glm::vec3 pos;
 		float orientation;
 		uint32 time;

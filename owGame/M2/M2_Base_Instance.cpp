@@ -163,16 +163,18 @@ glm::mat4 CM2_Base_Instance::CalculateLocalTransform() const
 		if (auto parent = GetParent())
 		{
 			auto parentM2Instance = std::dynamic_pointer_cast<CM2_Base_Instance>(parent);
-			if (parentM2Instance == nullptr)
-				throw CException("CM2_Base_Instance::CalculateLocalTransform: Parent is nullptr.");
-			_ASSERT(parentM2Instance != nullptr);
+			if (parentM2Instance != nullptr)
+			{
+				//throw CException("CM2_Base_Instance::CalculateLocalTransform: Parent is nullptr.");
+				//_ASSERT(parentM2Instance != nullptr);
 
-			uint16 boneIndex = parentM2Instance->GetM2().getMiscellaneous().getAttachment(m_AttachmentType)->GetBoneIndex();
+				uint16 boneIndex = parentM2Instance->GetM2().getMiscellaneous().getAttachment(m_AttachmentType)->GetBoneIndex();
 
-			const auto& bone = parentM2Instance->getSkeletonComponent()->GetBone(boneIndex);
-			glm::mat4 relMatrix = glm::translate(bone->GetPivotPoint());
+				const auto& bone = parentM2Instance->getSkeletonComponent()->GetBone(boneIndex);
+				glm::mat4 relMatrix = glm::translate(bone->GetPivotPoint());
 
-			return bone->GetMatrix() * relMatrix;
+				return bone->GetMatrix() * relMatrix;
+			}
 		}
 
 		return __super::CalculateLocalTransform();

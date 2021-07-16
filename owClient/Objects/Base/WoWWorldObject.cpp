@@ -6,21 +6,21 @@
 #include "WoWWorldObject.h"
 
 // Additional
-#include "../../World/World.h"
+#include "../../World/ServerWorld.h"
 
-CWoWWorldObject::CWoWWorldObject(IScene& Scene, CWoWWorld& WoWWorld, CWoWGuid Guid)
-	: WoWObject(Guid)
+CowServerWorldObject::CowServerWorldObject(IScene& Scene, CowServerWorld& WoWWorld, CowGuid Guid)
+	: CowServerObject(Guid)
 	, m_Scene(Scene)
-	, m_WoWWorld(WoWWorld)
+	, m_ServerWorld(WoWWorld)
 	, m_BaseManager(Scene.GetBaseManager())
 
 	, m_IsTranslationDirty(false)
 {}
 
-CWoWWorldObject::~CWoWWorldObject()
+CowServerWorldObject::~CowServerWorldObject()
 {}
 
-void CWoWWorldObject::Update(const UpdateEventArgs & e)
+void CowServerWorldObject::Update(const UpdateEventArgs & e)
 {
 	if (m_IsTranslationDirty)
 	{
@@ -34,8 +34,8 @@ void CWoWWorldObject::Update(const UpdateEventArgs & e)
 		//	}
 		//	else
 		//	{
-		//		auto transportNode = GetWoWWorld().GetWorldObjects().GetWoWObject(TransportID);
-		//		TransportObject = std::dynamic_pointer_cast<WoWGameObjectMOTransport>(transportNode);
+		//		auto transportNode = GetWoWWorld().GetWorldObjects().Get(TransportID);
+		//		TransportObject = std::dynamic_pointer_cast<CowServerGameObject_MOTransport>(transportNode);
 		//	}
 		//}
 		//else
@@ -46,10 +46,10 @@ void CWoWWorldObject::Update(const UpdateEventArgs & e)
 	}
 }
 
-void CWoWWorldObject::OnHiddenNodePositionChanged()
+void CowServerWorldObject::OnHiddenNodePositionChanged()
 {}
 
-void CWoWWorldObject::CommitPositionAndRotation()
+void CowServerWorldObject::CommitPositionAndRotation()
 {
 	m_IsTranslationDirty = true;
 }

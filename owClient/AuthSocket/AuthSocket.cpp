@@ -52,7 +52,7 @@ namespace
 	};
 }
 
-CAuthSocket::CAuthSocket(CWoWClient& WoWClient, const std::string& Login, const std::string& Password)
+CAuthSocket::CAuthSocket(CowClient& WoWClient, const std::string& Login, const std::string& Password)
     : m_WoWClient(WoWClient)
 	, m_Login(Login)
 {

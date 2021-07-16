@@ -469,7 +469,7 @@ ZN_INTERFACE ZN_API IClientCacheGameobjectResponseListener
 {
 	virtual ~IClientCacheGameobjectResponseListener() {}
 
-	virtual void OnTemplate(CWoWGuid::EntryType_t Entry, const std::shared_ptr<SGameObjectQueryResult>& QueryResult) = 0;
+	virtual void OnTemplate(CowGuid::EntryType_t Entry, const std::shared_ptr<SGameObjectQueryResult>& QueryResult) = 0;
 };
 
 
@@ -651,5 +651,5 @@ ZN_INTERFACE ZN_API IClientCacheCreatureResponseListener
 {
 	virtual ~IClientCacheCreatureResponseListener() {}
 
-	virtual void OnTemplate(CWoWGuid::EntryType_t Entry, const std::shared_ptr<SCreatureQueryResult>& QueryResult) = 0;
+	virtual void OnTemplate(CowGuid::EntryType_t Entry, const std::shared_ptr<SCreatureQueryResult>& QueryResult) = 0;
 };

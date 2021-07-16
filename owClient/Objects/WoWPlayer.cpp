@@ -6,20 +6,32 @@
 #include "WoWPlayer.h"
 
 // Additional
-#include "../World/World.h"
+#include "../World/ServerWorld.h"
 
-WoWPlayer::WoWPlayer(IScene& Scene, CWoWWorld& WoWWorld, CWoWGuid Guid)
-	: WoWUnit(Scene, WoWWorld, Guid)
+namespace
+{
+	glm::vec2 OrientationToDirection(float Orientation)
+	{
+		glm::vec2 direction(0.0f);
+		direction.x = glm::cos(glm::radians(Orientation));
+		direction.y = -glm::sin(glm::radians(Orientation));
+		direction = glm::normalize(direction);
+		return direction;
+	}
+}
+
+CowServerPlayer::CowServerPlayer(IScene& Scene, CowServerWorld& WoWWorld, CowGuid Guid)
+	: CowServerUnit(Scene, WoWWorld, Guid)
 {
 	//m_ObjectType |= TYPEMASK_PLAYER;
 	m_Values.SetValuesCount(PLAYER_END);
 }
 
-WoWPlayer::~WoWPlayer()
+CowServerPlayer::~CowServerPlayer()
 {
 }
 
-void WoWPlayer::OnValuesUpdated(const UpdateMask & Mask)
+void CowServerPlayer::OnValuesUpdated(const UpdateMask & Mask)
 {
 	__super::OnValuesUpdated(Mask);
 
@@ -92,32 +104,32 @@ void WoWPlayer::OnValuesUpdated(const UpdateMask & Mask)
 }
 
 
-uint8 WoWPlayer::GetSkinId() const 
+uint8 CowServerPlayer::GetSkinId() const 
 {
 	return m_Values.GetByteValue(PLAYER_BYTES, EPlayerBytes1Offsets::PLAYER_BYTES_OFFSET_SKIN_ID);
 }
 
-uint8 WoWPlayer::GetFaceId() const 
+uint8 CowServerPlayer::GetFaceId() const 
 { 
 	return m_Values.GetByteValue(PLAYER_BYTES, EPlayerBytes1Offsets::PLAYER_BYTES_OFFSET_FACE_ID);
 }
 
-uint8 WoWPlayer::GetHairStyleId() const 
+uint8 CowServerPlayer::GetHairStyleId() const 
 { 
 	return m_Values.GetByteValue(PLAYER_BYTES, EPlayerBytes1Offsets::PLAYER_BYTES_OFFSET_HAIR_STYLE_ID);
 }
 
-uint8 WoWPlayer::GetHairColorId() const 
+uint8 CowServerPlayer::GetHairColorId() const 
 { 
 	return m_Values.GetByteValue(PLAYER_BYTES, EPlayerBytes1Offsets::PLAYER_BYTES_OFFSET_HAIR_COLOR_ID);
 }
 
-uint8 WoWPlayer::GetFacialStyle() const 
+uint8 CowServerPlayer::GetFacialStyle() const 
 { 
 	return m_Values.GetByteValue(PLAYER_BYTES_2, EPlayerBytes2Offsets::PLAYER_BYTES_2_OFFSET_FACIAL_STYLE);
 }
 
-uint8 WoWPlayer::GetNativeGender() const 
+uint8 CowServerPlayer::GetNativeGender() const 
 { 
 	return m_Values.GetByteValue(PLAYER_BYTES_3, EPlayerBytes3Offsets::PLAYER_BYTES_3_OFFSET_GENDER);
 }
@@ -126,13 +138,13 @@ uint8 WoWPlayer::GetNativeGender() const
 //
 // Protected
 //
-std::shared_ptr<WoWPlayer> WoWPlayer::Create(CWoWWorld& WoWWorld, IScene& Scene, CWoWGuid Guid)
+std::shared_ptr<CowServerPlayer> CowServerPlayer::Create(CowServerWorld& WoWWorld, IScene& Scene, CowGuid Guid)
 {
-	std::shared_ptr<WoWPlayer> thisObj = MakeShared(WoWPlayer, Scene, WoWWorld, Guid);
+	std::shared_ptr<CowServerPlayer> thisObj = MakeShared(CowServerPlayer, Scene, WoWWorld, Guid);
 	return thisObj;
 }
 
-void WoWPlayer::Destroy()
+void CowServerPlayer::Destroy()
 {
 	__super::Destroy();
 }
@@ -142,7 +154,7 @@ void WoWPlayer::Destroy()
 //
 // Protected
 //
-void WoWPlayer::OnDisplayIDChanged(uint32 DisplayID)
+void CowServerPlayer::OnDisplayIDChanged(uint32 DisplayID)
 {
 	if (DisplayID_GetModelInstance() != nullptr)
 		return;
@@ -168,6 +180,56 @@ void WoWPlayer::OnDisplayIDChanged(uint32 DisplayID)
 	{
 		CWorldObjectCreator creator(GetScene().GetBaseManager());
 		DisplayID_SetModelInstance(creator.BuildCreatureFromDisplayInfo(GetScene().GetBaseManager().GetApplication().GetRenderDevice(), GetScene(), DisplayID));
+	}
+}
+
+void CowServerPlayer::Movement_HandlePlayerMovement(const UpdateEventArgs& e)
+{
+	if (Movement_GetMovementInfo().HasMovementFlag(MOVEMENTFLAG_LEFT))
+	{
+		float speed = GetSpeed(EUnitSpeed::UNIT_SPEED_TURN_RATE) / 60.0f * e.DeltaTimeMultiplier;
+
+		Orientation += glm::degrees(speed);
+		CommitPositionAndRotation();
+	}
+	if (Movement_GetMovementInfo().HasMovementFlag(MOVEMENTFLAG_RIGHT))
+	{
+		float speed = GetSpeed(EUnitSpeed::UNIT_SPEED_TURN_RATE) / 60.0f * e.DeltaTimeMultiplier;
+
+		Orientation -= glm::degrees(speed);
+		CommitPositionAndRotation();
+	}
+	if (Movement_GetMovementInfo().HasMovementFlag(MOVEMENTFLAG_FORWARD))
+	{
+		float speed = GetSpeed(Movement_GetMovementInfo().HasMovementFlag(MOVEMENTFLAG_WALKING) ? EUnitSpeed::UNIT_SPEED_WALK : EUnitSpeed::UNIT_SPEED_RUN) / 60.0f * e.DeltaTimeMultiplier;
+		float forwardOrientation = Orientation;
+
+		Position.xz += OrientationToDirection(forwardOrientation) * speed;
+		CommitPositionAndRotation();
+	}
+	if (Movement_GetMovementInfo().HasMovementFlag(MOVEMENTFLAG_BACKWARD))
+	{
+		float speed = GetSpeed(EUnitSpeed::UNIT_SPEED_RUN_BACK) / 60.0f * e.DeltaTimeMultiplier;
+		float backwardOrientation = Orientation + glm::degrees(glm::pi<float>());
+
+		Position.xz += OrientationToDirection(backwardOrientation) * speed;
+		CommitPositionAndRotation();
+	}
+	if (Movement_GetMovementInfo().HasMovementFlag(MOVEMENTFLAG_STRAFE_LEFT))
+	{
+		float speed = GetSpeed(Movement_GetMovementInfo().HasMovementFlag(MOVEMENTFLAG_WALKING) ? EUnitSpeed::UNIT_SPEED_WALK : EUnitSpeed::UNIT_SPEED_RUN) / 60.0f * e.DeltaTimeMultiplier;
+		float leftOrientation = Orientation + glm::degrees(glm::half_pi<float>());
+
+		Position.xz += OrientationToDirection(leftOrientation) * speed;
+		CommitPositionAndRotation();
+	}
+	if (Movement_GetMovementInfo().HasMovementFlag(MOVEMENTFLAG_STRAFE_RIGHT))
+	{
+		float speed = GetSpeed(Movement_GetMovementInfo().HasMovementFlag(MOVEMENTFLAG_WALKING) ? EUnitSpeed::UNIT_SPEED_WALK : EUnitSpeed::UNIT_SPEED_RUN) / 60.0f * e.DeltaTimeMultiplier;
+		float rightOrientation = Orientation - glm::degrees(glm::half_pi<float>());
+
+		Position.xz += OrientationToDirection(rightOrientation) * speed;
+		CommitPositionAndRotation();
 	}
 }
 

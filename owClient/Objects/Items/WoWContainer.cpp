@@ -5,14 +5,14 @@
 // General
 #include "WoWContainer.h"
 
-CWoWContainer::CWoWContainer(CWoWGuid Guid)
-	: WoWItem(Guid)
+CowServerContainer::CowServerContainer(CowGuid Guid)
+	: CowServerItem(Guid)
 {
 	//m_ObjectType |= TYPEMASK_CONTAINER;
 	m_Values.SetValuesCount(CONTAINER_END);
 }
 
-CWoWContainer::~CWoWContainer()
+CowServerContainer::~CowServerContainer()
 {
 }
 
@@ -21,9 +21,9 @@ CWoWContainer::~CWoWContainer()
 //
 // Public
 //
-std::shared_ptr<CWoWContainer> CWoWContainer::Create(IScene& Scene, CWoWGuid Guid)
+std::shared_ptr<CowServerContainer> CowServerContainer::Create(IScene& Scene, CowGuid Guid)
 {
-	std::shared_ptr<CWoWContainer> thisObj = MakeShared(CWoWContainer, Guid);
+	std::shared_ptr<CowServerContainer> thisObj = MakeShared(CowServerContainer, Guid);
 	return thisObj;
 }
 

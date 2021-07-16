@@ -29,7 +29,7 @@ namespace
 }
 
 
-WoWObject::WoWObject(CWoWGuid Guid)
+CowServerObject::CowServerObject(CowGuid Guid)
 	: m_GUID(Guid)
 	, m_Values(*this)
 	//, m_ObjectType(0)
@@ -38,12 +38,12 @@ WoWObject::WoWObject(CWoWGuid Guid)
 	m_Values.SetValuesCount(OBJECT_END);
 }
 
-WoWObject::~WoWObject()
+CowServerObject::~CowServerObject()
 {}
 
-void WoWObject::Do_UPDATETYPE_MOVEMENT(CServerPacket& Bytes)
+void CowServerObject::Do_UPDATETYPE_MOVEMENT(CServerPacket& Bytes)
 {
-	CWoWWorldObject* object = dynamic_cast<CWoWWorldObject*>(this);;
+	CowServerWorldObject* object = dynamic_cast<CowServerWorldObject*>(this);;
 
 	OBJECT_UPDATE_FLAGS updateFlags;
 	Bytes >> updateFlags;
@@ -52,73 +52,67 @@ void WoWObject::Do_UPDATETYPE_MOVEMENT(CServerPacket& Bytes)
 	{
 		if (GetWoWGUID().GetTypeId() == EWoWObjectTypeID::TYPEID_UNIT || GetWoWGUID().GetTypeId() == EWoWObjectTypeID::TYPEID_PLAYER)
 		{
-			WoWUnit* unit = dynamic_cast<WoWUnit*>(this);
+			CowServerUnit* unit = dynamic_cast<CowServerUnit*>(this);
 			unit->ProcessMovementPacket(Bytes);
 		}
 	}
-	else
+	else if (updateFlags & UPDATEFLAG_POSITION)
 	{
-		if (updateFlags & UPDATEFLAG_POSITION)
+		CowGuid transportGuid;
+		Bytes.ReadPackedGuid(&transportGuid);
+		if (object)
+			object->TransportID = transportGuid;
+
+		glm::vec3 gamePosition;
+		Bytes >> gamePosition;
+		if (object)
+			object->Position = fromGameToReal(gamePosition);
+
+		if (transportGuid != 0)
 		{
-			CWoWGuid transportGuid;
-			Bytes.ReadPackedGuid(&transportGuid);
+			glm::vec3 gamePositionTransportOffset;
+			Bytes >> gamePositionTransportOffset;
 			if (object)
-				object->TransportID = transportGuid;
-
-			glm::vec3 gamePosition;
-			Bytes >> gamePosition;
-			if (object)
-				object->Position = fromGameToReal(gamePosition);
-
-			if (transportGuid != 0)
-			{
-				glm::vec3 gamePositionTransportOffset;
-				Bytes >> gamePositionTransportOffset;
-				if (object)
-					object->PositionTransportOffset = fromGameToReal(gamePositionTransportOffset);
-				//Log::Error("WoWObject::Do_UPDATETYPE_MOVEMENT: transportGuid != 0.");
-			}
-			else
-			{
-				glm::vec3 gamePosition2;
-				Bytes >> gamePosition2;
-				if (object)
-					object->Position = fromGameToReal(gamePosition2);
-			}
-
-			float gameOrientation;
-			Bytes >> gameOrientation;
-			if (object)
-				object->Orientation = glm::degrees(gameOrientation + glm::half_pi<float>());
-
-			if (GetWoWGUID().GetHigh() == EWoWObjectHighGuid::Corpse)
-			{
-				float gameOrientation2;
-				Bytes >> gameOrientation2;
-				if (object)
-					object->Orientation = glm::degrees(gameOrientation2 + glm::half_pi<float>());
-			}
-			else
-			{
-				Bytes.seekRelative(4); // 0
-			}
+				object->PositionTransportOffset = fromGameToReal(gamePositionTransportOffset);
+			//Log::Error("CowServerObject::Do_UPDATETYPE_MOVEMENT: transportGuid != 0.");
 		}
 		else
 		{
-			if (updateFlags & UPDATEFLAG_STATIONARY_POSITION)
-			{
-				glm::vec3 gamePosition3;
-				Bytes >> gamePosition3;
-				//Log::Print("UPDATEFLAG_STATIONARY_POSITION: %f %f %f", gamePosition3.x, gamePosition3.y, gamePosition3.z);
-				if (object)
-					object->Position = fromGameToReal(gamePosition3);
-
-				float gameOrientation;
-				Bytes >> gameOrientation;
-				if (object)
-					object->Orientation = glm::degrees(gameOrientation + glm::half_pi<float>());
-			}
+			glm::vec3 gamePosition2;
+			Bytes >> gamePosition2;
+			if (object)
+				object->Position = fromGameToReal(gamePosition2);
 		}
+
+		float gameOrientation;
+		Bytes >> gameOrientation;
+		if (object)
+			object->Orientation = glm::degrees(gameOrientation + glm::half_pi<float>());
+
+		if (GetWoWGUID().GetHigh() == EWoWObjectHighGuid::Corpse)
+		{
+			float gameOrientation2;
+			Bytes >> gameOrientation2;
+			if (object)
+				object->Orientation = glm::degrees(gameOrientation2 + glm::half_pi<float>());
+		}
+		else
+		{
+			Bytes.seekRelative(4); // 0
+		}
+	}
+	else if (updateFlags & UPDATEFLAG_STATIONARY_POSITION)
+	{
+		glm::vec3 gamePosition;
+		Bytes >> gamePosition;
+		//Log::Print("UPDATEFLAG_STATIONARY_POSITION: %f %f %f", gamePosition3.x, gamePosition3.y, gamePosition3.z);
+		if (object)
+			object->Position = fromGameToReal(gamePosition);
+
+		float gameOrientation;
+		Bytes >> gameOrientation;
+		if (object)
+			object->Orientation = glm::degrees(gameOrientation + glm::half_pi<float>());
 	}
 
 	// 0x8
@@ -130,24 +124,24 @@ void WoWObject::Do_UPDATETYPE_MOVEMENT(CServerPacket& Bytes)
 	// 0x10
 	if (updateFlags & UPDATEFLAG_LOWGUID)
 	{
-		CWoWGuid::CounterType_t newCounter;
+		CowGuid::CounterType_t newCounter;
 		Bytes.read(&newCounter);
 
 		if (GetWoWGUID().GetCounter() != newCounter)
-			throw CException("WoWObject New counter '%s' isn't equal old counter '%d'.", newCounter, GetWoWGUID().GetCounter());
+			throw CException("CowServerObject New counter '%s' isn't equal old counter '%d'.", newCounter, GetWoWGUID().GetCounter());
 	}
 
 	// 0x4
 	if (updateFlags & UPDATEFLAG_HAS_TARGET)
 	{
-		CWoWGuid victimGuid;
+		CowGuid victimGuid;
 		Bytes.ReadPackedGuid(&victimGuid); // MAYBE 0
 	}
 
 	// 0x2
 	if (updateFlags & UPDATEFLAG_TRANSPORT)
 	{
-		WoWGameObject* gameObject = dynamic_cast<WoWGameObject*>(this);
+		CowServerGameObject* gameObject = dynamic_cast<CowServerGameObject*>(this);
 		if (gameObject)
 		{
 			uint32 pathProgress;
@@ -180,21 +174,39 @@ void WoWObject::Do_UPDATETYPE_MOVEMENT(CServerPacket& Bytes)
 
 		int64 packedRotation;
 		Bytes >> packedRotation;
+
+		static const int32_t PACK_X  = 1 << 21;
+		static const int32_t PACK_YZ = 1 << 20;
+
+		static const int32_t PACK_X_MASK  = (PACK_X  << 1) - 1;
+		static const int32_t PACK_YZ_MASK = (PACK_YZ << 1) - 1;
+
+		int32_t unpackedX = (packedRotation >> 42) & PACK_X_MASK;
+		int32_t unpackedY = (packedRotation >> 21) & PACK_YZ_MASK;
+		int32_t unpackedZ = (packedRotation >> 0) & PACK_YZ_MASK;
+
+		float upackedX2 = float(unpackedX) / float(PACK_X);
+		if (upackedX2 > 1.0f) upackedX2 -= 2.0f;
+		float upackedY2 = float(unpackedY) / float(PACK_YZ);
+		if (upackedY2 > 1.0f) upackedY2 -= 2.0f;
+		float upackedZ2 = float(unpackedZ) / float(PACK_YZ);
+		if (upackedZ2 > 1.0f) upackedZ2 -= 2.0f;
+
 	}
 
 	if (object)
 		object->CommitPositionAndRotation();
 }
 
-void WoWObject::Do_UPDATETYPE_VALUES(CServerPacket& Bytes)
+void CowServerObject::Do_UPDATETYPE_VALUES(CServerPacket& Bytes)
 {
 	m_Values.Do_UPDATETYPE_VALUES(Bytes);
 }
 
-void WoWObject::OnValueUpdated(uint16 index)
+void CowServerObject::OnValueUpdated(uint16 index)
 {}
 
-void WoWObject::OnValuesUpdated(const UpdateMask & Mask)
+void CowServerObject::OnValuesUpdated(const UpdateMask & Mask)
 {}
 
 
@@ -202,7 +214,7 @@ void WoWObject::OnValuesUpdated(const UpdateMask & Mask)
 //
 // Protected
 //
-void WoWObject::Destroy()
+void CowServerObject::Destroy()
 {}
 
 

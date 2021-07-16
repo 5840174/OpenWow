@@ -5,16 +5,16 @@
 #include "WoWObject.h"
 
 // FORWARD BEGIN
-class CWoWWorld;
-class WoWGameObjectMOTransport;
+class CowServerWorld;
+class CowServerGameObject_MOTransport;
 // FORWARD END
 
-class ZN_API CWoWWorldObject
-	: public WoWObject
+class ZN_API CowServerWorldObject
+	: public CowServerObject
 {
 public:
-	CWoWWorldObject(IScene& Scene, CWoWWorld& WoWWorld, CWoWGuid Guid);
-	virtual ~CWoWWorldObject();
+	CowServerWorldObject(IScene& Scene, CowServerWorld& WoWWorld, CowGuid Guid);
+	virtual ~CowServerWorldObject();
 
 	void Update(const UpdateEventArgs& e);
 
@@ -28,13 +28,13 @@ public:
 	void CommitPositionAndRotation();
 
 	// Transport
-	std::weak_ptr<WoWGameObjectMOTransport> TransportObject;
-	CWoWGuid TransportID;
+	std::weak_ptr<CowServerGameObject_MOTransport> TransportObject;
+	CowGuid TransportID;
 	glm::vec3 PositionTransportOffset;
 	float OrientationTransportOffset;
 
 	IScene& GetScene() const { return m_Scene; }
-	CWoWWorld& GetWoWWorld() const { return m_WoWWorld; }
+	CowServerWorld& GetWoWWorld() const { return m_ServerWorld; }
 	const IBaseManager& GetBaseManager() const { return m_BaseManager; }
 
 protected:
@@ -42,7 +42,7 @@ protected:
 
 private:
 	IScene& m_Scene;
-	CWoWWorld& m_WoWWorld;
+	CowServerWorld& m_ServerWorld;
 	const IBaseManager& m_BaseManager;
 };
 

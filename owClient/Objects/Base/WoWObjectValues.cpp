@@ -6,34 +6,34 @@
 // Additional
 #include "WoWObject.h"
 
-CWoWObjectValues::CWoWObjectValues(WoWObject & OwnerWoWObject)
+CowServerObjectValues::CowServerObjectValues(CowServerObject & OwnerWoWObject)
 	: m_OwnerWoWObject(OwnerWoWObject)
 	, m_uint32Values(nullptr)
 	
 {}
 
-CWoWObjectValues::~CWoWObjectValues()
+CowServerObjectValues::~CowServerObjectValues()
 {
 	if (m_uint32Values != nullptr)
 		delete[] m_uint32Values;
 }
 
-uint16 CWoWObjectValues::GetValuesCount() const
+uint16 CowServerObjectValues::GetValuesCount() const
 {
 	return m_valuesCount;
 }
 
-void CWoWObjectValues::SetValuesCount(uint16 ValuesCnt)
+void CowServerObjectValues::SetValuesCount(uint16 ValuesCnt)
 {
 	m_valuesCount = ValuesCnt;
 }
 
-bool CWoWObjectValues::IsExists(uint16 index) const
+bool CowServerObjectValues::IsExists(uint16 index) const
 {
 	return m_CurrentMask.GetBit(index);
 }
 
-void CWoWObjectValues::Do_UPDATETYPE_VALUES(CByteBuffer & Bytes)
+void CowServerObjectValues::Do_UPDATETYPE_VALUES(CByteBuffer & Bytes)
 {
 	uint8 blocksCnt;
 	Bytes >> blocksCnt; // each block has 32 value
@@ -66,58 +66,58 @@ void CWoWObjectValues::Do_UPDATETYPE_VALUES(CByteBuffer & Bytes)
 }
 
 
-int32 CWoWObjectValues::GetInt32Value(uint16 index) const
+int32 CowServerObjectValues::GetInt32Value(uint16 index) const
 {
 	PrintIndexError(index);
 	return m_int32Values[index];
 }
 
-uint32 CWoWObjectValues::GetUInt32Value(uint16 index) const
+uint32 CowServerObjectValues::GetUInt32Value(uint16 index) const
 {
 	PrintIndexError(index);
 	return m_uint32Values[index];
 }
 
-uint64 CWoWObjectValues::GetUInt64Value(uint16 index) const
+uint64 CowServerObjectValues::GetUInt64Value(uint16 index) const
 {
 	PrintIndexError(index);
 	return *((uint64*)&(m_uint32Values[index]));
 }
 
-float CWoWObjectValues::GetFloatValue(uint16 index) const
+float CowServerObjectValues::GetFloatValue(uint16 index) const
 {
 	PrintIndexError(index);
 	return m_floatValues[index];
 }
 
-uint8 CWoWObjectValues::GetByteValue(uint16 index, uint8 offset) const
+uint8 CowServerObjectValues::GetByteValue(uint16 index, uint8 offset) const
 {
 	PrintIndexError(index);
 	if (offset >= 4)
-		throw CException("CWoWObjectValues::GetByteValue: Offset out of bounds. %d of %d.", offset, 4);
+		throw CException("CowServerObjectValues::GetByteValue: Offset out of bounds. %d of %d.", offset, 4);
 	return *(((uint8*)&m_uint32Values[index]) + offset);
 }
 
-int16 CWoWObjectValues::GetInt16Value(uint16 index, uint8 offset) const
+int16 CowServerObjectValues::GetInt16Value(uint16 index, uint8 offset) const
 {
 	PrintIndexError(index);
 	if (offset >= 2)
-		throw CException("CWoWObjectValues::GetInt16Value: Offset out of bounds. %d of %d.", offset, 2);
+		throw CException("CowServerObjectValues::GetInt16Value: Offset out of bounds. %d of %d.", offset, 2);
 	return *(((int16*)&m_uint32Values[index]) + offset);
 }
 
-uint16 CWoWObjectValues::GetUInt16Value(uint16 index, uint8 offset) const
+uint16 CowServerObjectValues::GetUInt16Value(uint16 index, uint8 offset) const
 {
 	PrintIndexError(index);
 	if (offset >= 2)
-		throw CException("CWoWObjectValues::GetUInt16Value: Offset out of bounds. %d of %d.", offset, 2);
+		throw CException("CowServerObjectValues::GetUInt16Value: Offset out of bounds. %d of %d.", offset, 2);
 	return *(((uint16*)&m_uint32Values[index]) + offset);
 }
 
-CWoWGuid CWoWObjectValues::GetGuidValue(uint16 index) const
+CowGuid CowServerObjectValues::GetGuidValue(uint16 index) const
 {
 	PrintIndexError(index);
-	return *((CWoWGuid*)&(m_uint32Values[index]));
+	return *((CowGuid*)&(m_uint32Values[index]));
 }
 
 
@@ -125,11 +125,11 @@ CWoWGuid CWoWObjectValues::GetGuidValue(uint16 index) const
 //
 // Protected
 //
-void CWoWObjectValues::PrintIndexError(uint32 index) const
+void CowServerObjectValues::PrintIndexError(uint32 index) const
 {
 	if (index >= m_valuesCount)
-		throw CException("CWoWObjectValues: Value index is out of bounds. %d of %d.", index, m_valuesCount);
+		throw CException("CowServerObjectValues: Value index is out of bounds. %d of %d.", index, m_valuesCount);
 
 	if (false == m_CurrentMask.GetBit(index))
-		throw CException("CWoWObjectValues: Value with index '%d' is not setted.", index);
+		throw CException("CowServerObjectValues: Value with index '%d' is not setted.", index);
 }

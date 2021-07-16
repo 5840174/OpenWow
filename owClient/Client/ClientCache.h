@@ -5,28 +5,28 @@
 #include "ClientCacheTemplates.h"
 
 // FORWARD BEGIN
-class CWoWWorld;
+class CowServerWorld;
 // FORWARD END
 
-class CClientCache
+class CowClient_ServerQueryCache
 {
 public:
-	CClientCache(CWoWWorld& world);
+	CowClient_ServerQueryCache(CowServerWorld& world);
 
-	void SendGameObjectQueryResponce(CWoWGuid::EntryType_t Entry, CWoWGuid Guid, const std::shared_ptr<IClientCacheGameobjectResponseListener>& Callback);
-	void SendCreatureQueryResponce  (CWoWGuid::EntryType_t Entry, CWoWGuid Guid, const std::shared_ptr<IClientCacheCreatureResponseListener>& Callback);
+	void SendGameObjectQueryResponce(CowGuid::EntryType_t Entry, CowGuid Guid, const std::shared_ptr<IClientCacheGameobjectResponseListener>& Callback);
+	void SendCreatureQueryResponce  (CowGuid::EntryType_t Entry, CowGuid Guid, const std::shared_ptr<IClientCacheCreatureResponseListener>& Callback);
 
 	bool On_SMSG_GAMEOBJECT_QUERY_RESPONSE(CServerPacket& Bytes);
 	bool On_SMSG_CREATURE_QUERY_RESPONSE(CServerPacket& Bytes);
 
 private:
-	std::map<CWoWGuid::EntryType_t, std::shared_ptr<SGameObjectQueryResult>>                            m_CacheGameObjects;
-	std::map<CWoWGuid::EntryType_t, std::vector<std::weak_ptr<IClientCacheGameobjectResponseListener>>> m_GameObjectCallbacks;
+	std::map<CowGuid::EntryType_t, std::shared_ptr<SGameObjectQueryResult>>                            m_CacheGameObjects;
+	std::map<CowGuid::EntryType_t, std::vector<std::weak_ptr<IClientCacheGameobjectResponseListener>>> m_GameObjectCallbacks;
 
-	std::map<CWoWGuid::EntryType_t, std::shared_ptr<SCreatureQueryResult>>                              m_CacheCreatures;
-	std::map<CWoWGuid::EntryType_t, std::vector<std::weak_ptr<IClientCacheCreatureResponseListener>>>   m_CreatureCallbacks;
+	std::map<CowGuid::EntryType_t, std::shared_ptr<SCreatureQueryResult>>                              m_CacheCreatures;
+	std::map<CowGuid::EntryType_t, std::vector<std::weak_ptr<IClientCacheCreatureResponseListener>>>   m_CreatureCallbacks;
 
-	CWoWWorld& m_World;
+	CowServerWorld& m_ServerWorld;
 };
 
 #endif

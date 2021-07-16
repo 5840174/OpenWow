@@ -353,5 +353,8 @@ void CSceneWoW::GoToCoord(const IUIControl* Node, const glm::vec2& Point)
 	Log::Green("Coord %f %f", Point.x, Point.y);
 	glm::vec2 conv = (Point) * (C_TileSize * 128.0f / 512.0f);
 
+	//GetBaseManager().GetManager<ILoader>()->ClearLoadQueue();
+	//m_WoWMap->ClearCache();
+
 	GetCameraController()->GetCamera()->SetPosition(glm::vec3(conv.x, GetCameraController()->GetCamera()->GetPosition().y, conv.y));
 }

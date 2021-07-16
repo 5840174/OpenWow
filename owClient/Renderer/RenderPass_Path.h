@@ -3,14 +3,14 @@
 #include "../Objects/Base/WoWWorldObject.h"
 
 // FORWARD BEGIN
-class CWoWWorldObject;
+class CowServerWorldObject;
 // FORWARD END
 
 ZN_INTERFACE ZN_API IWoWVisitor
 {
 	virtual ~IWoWVisitor() {}
 
-	virtual EVisitResult VisitWoW(const std::shared_ptr<CWoWWorldObject>& WoWWorldObject) = 0;
+	virtual EVisitResult VisitWoW(const std::shared_ptr<CowServerWorldObject>& WoWWorldObject) = 0;
 };
 
 class CRenderPass_Path
@@ -18,7 +18,7 @@ class CRenderPass_Path
 	, public IWoWVisitor
 {
 public:
-	CRenderPass_Path(IRenderDevice& RenderDevice, CWoWWorld& WoWWorld);
+	CRenderPass_Path(IRenderDevice& RenderDevice, CowServerWorld& WoWWorld);
 	virtual ~CRenderPass_Path();
 
 	// IRenderPass
@@ -28,7 +28,7 @@ public:
 	std::shared_ptr<IRenderPassPipelined> ConfigurePipeline(std::shared_ptr<IRenderTarget> RenderTarget) override final;
 
 	// IVisitor
-	EVisitResult VisitWoW(const std::shared_ptr<CWoWWorldObject>& WoWWorldObject) override final;
+	EVisitResult VisitWoW(const std::shared_ptr<CowServerWorldObject>& WoWWorldObject) override final;
 
 	// Protected
 	void BindPerObjectData(const PerObject& PerObject);
@@ -44,5 +44,5 @@ protected:
 	std::shared_ptr<IStructuredBuffer> m_InstancesBuffer;
 	size_t							   m_InstancesCnt;
 
-	CWoWWorld& m_WoWWorld;
+	CowServerWorld& m_ServerWorld;
 };

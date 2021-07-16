@@ -5,20 +5,20 @@
 // General
 #include "WoWDynamicObject.h"
 
-WoWDynamicObject::WoWDynamicObject(CWoWGuid Guid)
-	: WoWObject(Guid)
+CowServerDynamicObject::CowServerDynamicObject(CowGuid Guid)
+	: CowServerObject(Guid)
 {
 	//m_ObjectType |= TYPEMASK_DYNAMICOBJECT;
 	m_Values.SetValuesCount(DYNAMICOBJECT_END);
 }
 
-WoWDynamicObject::~WoWDynamicObject()
+CowServerDynamicObject::~CowServerDynamicObject()
 {
 }
 
-std::shared_ptr<WoWDynamicObject> WoWDynamicObject::Create(IScene& Scene, CWoWGuid Guid)
+std::shared_ptr<CowServerDynamicObject> CowServerDynamicObject::Create(IScene& Scene, CowGuid Guid)
 {
-	std::shared_ptr<WoWDynamicObject> thisObj = MakeShared(WoWDynamicObject, Guid);
+	std::shared_ptr<CowServerDynamicObject> thisObj = MakeShared(CowServerDynamicObject, Guid);
 	return thisObj;
 }
 

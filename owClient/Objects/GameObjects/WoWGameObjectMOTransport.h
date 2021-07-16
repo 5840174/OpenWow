@@ -6,15 +6,15 @@
 #include "../Helpers/Spline/Path.h"
 
 // FORWARD BEGIN
-class CWoWWorld;
+class CowServerWorld;
 // FORWARD END
 
-class ZN_API WoWGameObjectMOTransport
-	: public WoWGameObject
+class ZN_API CowServerGameObject_MOTransport
+	: public CowServerGameObject
 {
 public:
-	WoWGameObjectMOTransport(IScene& Scene, CWoWWorld& WoWWorld, CWoWGuid Guid);
-	virtual ~WoWGameObjectMOTransport();
+	CowServerGameObject_MOTransport(IScene& Scene, CowServerWorld& WoWWorld, CowGuid Guid);
+	virtual ~CowServerGameObject_MOTransport();
 
 	std::shared_ptr<CWoWPath> GetWoWPath() const { return m_WoWPath; }
 	uint32 GetPathID() const;
@@ -22,13 +22,13 @@ public:
 	virtual void OnValueUpdated(uint16 index) override;
 
 	// IClientCacheGameobjectResponseListener
-	void OnTemplate(CWoWGuid::EntryType_t Entry, const std::shared_ptr<SGameObjectQueryResult>& QueryResult) override;
+	void OnTemplate(CowGuid::EntryType_t Entry, const std::shared_ptr<SGameObjectQueryResult>& QueryResult) override;
 
 	// ISceneNode
 	void Update(const UpdateEventArgs& e);
 
 public:
-	static std::shared_ptr<WoWGameObjectMOTransport> Create(CWoWWorld& WoWWorld, IScene& Scene, CWoWGuid Guid);
+	static std::shared_ptr<CowServerGameObject_MOTransport> Create(CowServerWorld& WoWWorld, IScene& Scene, CowGuid Guid);
 	virtual void Destroy() override;
 
 private:

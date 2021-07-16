@@ -38,7 +38,7 @@ bool CServerPacket::IsComplete() const
 	return getSize() == static_cast<size_t>(GetPacketSize());
 }
 
-void CServerPacket::ReadPackedGuid(CWoWGuid * WoWGuid)
+void CServerPacket::ReadPackedGuid(CowGuid * WoWGuid)
 {
 	if (WoWGuid == nullptr)
 		throw CException("CServerPacket::ReadPackedGuid: WoWGuid is nullptr.");
@@ -50,7 +50,7 @@ void CServerPacket::ReadPackedGuid(CWoWGuid * WoWGuid)
 	uint64 wowPackedGuidAsUint64 = 0;
 	ReadPackedGuid(mask, &wowPackedGuidAsUint64);
 
-	*WoWGuid = CWoWGuid(wowPackedGuidAsUint64);
+	*WoWGuid = CowGuid(wowPackedGuidAsUint64);
 }
 
 

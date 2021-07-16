@@ -7,9 +7,9 @@
 #include <sstream>
 #include <iomanip>
 
-CWoWGuid const CWoWGuid::Empty = CWoWGuid();
+CowGuid const CowGuid::Empty = CowGuid();
 
-char const* CWoWGuid::GetTypeName(EWoWObjectHighGuid high)
+char const* CowGuid::GetTypeName(EWoWObjectHighGuid high)
 {
 	switch (high)
 	{
@@ -30,7 +30,7 @@ char const* CWoWGuid::GetTypeName(EWoWObjectHighGuid high)
 	}
 }
 
-std::string CWoWGuid::ToString() const
+std::string CowGuid::ToString() const
 {
 	std::ostringstream str;
 	str << "GUID Full: 0x" << std::hex << std::setw(16) << std::setfill('0') << _guid << std::dec;
@@ -42,24 +42,24 @@ std::string CWoWGuid::ToString() const
 	return str.str();
 }
 
-CWoWGuid CWoWGuid::Global(EWoWObjectHighGuid type, CounterType_t counter)
+CowGuid CowGuid::Global(EWoWObjectHighGuid type, CounterType_t counter)
 {
-	return CWoWGuid(type, counter);
+	return CowGuid(type, counter);
 }
 
-CWoWGuid CWoWGuid::MapSpecific(EWoWObjectHighGuid type, uint32 entry, CounterType_t counter)
+CowGuid CowGuid::MapSpecific(EWoWObjectHighGuid type, uint32 entry, CounterType_t counter)
 {
-	return CWoWGuid(type, entry, counter);
+	return CowGuid(type, entry, counter);
 }
 
 
-CByteBuffer& operator<<(CByteBuffer& buf, const CWoWGuid& guid)
+CByteBuffer& operator<<(CByteBuffer& buf, const CowGuid& guid)
 {
 	buf << uint64(guid.GetRawValue());
 	return buf;
 }
 
-CByteBuffer& operator>>(CByteBuffer& buf, CWoWGuid& guid)
+CByteBuffer& operator>>(CByteBuffer& buf, CowGuid& guid)
 {
 	uint64 value;
 	buf.readBytes(&value, sizeof(uint64));

@@ -8,7 +8,7 @@
 #include "../Warden/Warden.h"
 
 // FORWARD BEGIN
-class CWoWClient;
+class CowClient;
 // FORWARD END
 
 class CWorldSocket

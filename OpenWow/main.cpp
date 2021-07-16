@@ -26,7 +26,7 @@ void main_internal(int argumentCount, char* arguments[])
 			auto renderWindow = renderDevice.GetObjectsFactory().CreateRenderWindow(std::move(nativeWindow), true);
 			app.AddRenderWindow(renderWindow);
 
-			auto scene = MakeShared(CSceneWoW, app.GetBaseManager(), *renderWindow);
+			auto scene = MakeShared(CSceneWoWClient, app.GetBaseManager(), *renderWindow);
 			renderWindow->SetRenderWindowEventListener(scene);
 			renderWindow->SetNativeWindowEventListener(scene);
 			scene->Initialize();

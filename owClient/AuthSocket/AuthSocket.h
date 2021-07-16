@@ -8,14 +8,14 @@
 #include "Cryptography/BigNumber.h"
 
 // FORWARD BEGIN
-class CWoWClient;
+class CowClient;
 // FORWARD END
 
 class CAuthSocket
 	: public CTCPSocket
 {
 public:
-	CAuthSocket(CWoWClient& WoWClient, const std::string& Login, const std::string& Password);
+	CAuthSocket(CowClient& WoWClient, const std::string& Login, const std::string& Password);
 	virtual ~CAuthSocket();
 
 	void Open(std::string Host, uint16 Port);
@@ -40,7 +40,7 @@ private:
 	SHA1Hash  MServer;
 
 private:
-	CWoWClient& m_WoWClient;
+	CowClient& m_WoWClient;
 	std::string m_Login;
 	SHA1Hash    m_LoginPasswordHash;
 };

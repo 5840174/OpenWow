@@ -4,25 +4,25 @@
 #include "WoWGameObjectMOTransport.h"
 
 // Additional
-#include "../../World/World.h"
+#include "../../World/ServerWorld.h"
 
 #include "Client/TaxiStorage.h"
 
-WoWGameObjectMOTransport::WoWGameObjectMOTransport(IScene & Scene, CWoWWorld & WoWWorld, CWoWGuid Guid)
-	: WoWGameObject(Scene, WoWWorld, Guid)
+CowServerGameObject_MOTransport::CowServerGameObject_MOTransport(IScene & Scene, CowServerWorld & WoWWorld, CowGuid Guid)
+	: CowServerGameObject(Scene, WoWWorld, Guid)
 	, m_PathID(0)
 	, m_PathProgress(0.0f)
 {}
 
-WoWGameObjectMOTransport::~WoWGameObjectMOTransport()
+CowServerGameObject_MOTransport::~CowServerGameObject_MOTransport()
 {}
 
-uint32 WoWGameObjectMOTransport::GetPathID() const
+uint32 CowServerGameObject_MOTransport::GetPathID() const
 {
 	return m_PathID;
 }
 
-void WoWGameObjectMOTransport::OnValueUpdated(uint16 index)
+void CowServerGameObject_MOTransport::OnValueUpdated(uint16 index)
 {
 	__super::OnValueUpdated(index);
 
@@ -41,7 +41,7 @@ void WoWGameObjectMOTransport::OnValueUpdated(uint16 index)
 	}
 }
 
-void WoWGameObjectMOTransport::OnTemplate(CWoWGuid::EntryType_t Entry, const std::shared_ptr<SGameObjectQueryResult>& QueryResult)
+void CowServerGameObject_MOTransport::OnTemplate(CowGuid::EntryType_t Entry, const std::shared_ptr<SGameObjectQueryResult>& QueryResult)
 {
 	__super::OnTemplate(Entry, QueryResult);
 
@@ -71,7 +71,7 @@ void WoWGameObjectMOTransport::OnTemplate(CWoWGuid::EntryType_t Entry, const std
 //
 // ISceneNode
 //
-void WoWGameObjectMOTransport::Update(const UpdateEventArgs & e)
+void CowServerGameObject_MOTransport::Update(const UpdateEventArgs & e)
 {
 	__super::Update(e);
 
@@ -101,7 +101,7 @@ void WoWGameObjectMOTransport::Update(const UpdateEventArgs & e)
 
 	GameobjectTypes type = GameobjectTypes(GetByteValue(GAMEOBJECT_BYTES_1, 1));
 	if (type != GameobjectTypes::GAMEOBJECT_TYPE_MO_TRANSPORT)
-		throw CException("WoWGameObjectMOTransport::Update: Object type must be GAMEOBJECT_TYPE_MO_TRANSPORT.");
+		throw CException("CowServerGameObject_MOTransport::Update: Object type must be GAMEOBJECT_TYPE_MO_TRANSPORT.");
 
 	if (m_GameObjectTemplate == nullptr)
 		return;
@@ -141,14 +141,14 @@ void WoWGameObjectMOTransport::Update(const UpdateEventArgs & e)
 	//Log::Print("GAMEOBJECT_DYNAMIC: %s - (uint %d) (float %f) Nodes %d", m_GameObjectTemplate->Name.c_str(), pathProgress, pathProgressFloat, taxiNodes.size());
 }
 
-std::shared_ptr<WoWGameObjectMOTransport> WoWGameObjectMOTransport::Create(CWoWWorld & WoWWorld, IScene & Scene, CWoWGuid Guid)
+std::shared_ptr<CowServerGameObject_MOTransport> CowServerGameObject_MOTransport::Create(CowServerWorld & WoWWorld, IScene & Scene, CowGuid Guid)
 {
-	std::shared_ptr<WoWGameObjectMOTransport> thisObj = MakeShared(WoWGameObjectMOTransport, Scene, WoWWorld, Guid);
-	//Log::Green("---Create WoWGameObjectMOTransport with Type '%s', Entry '%d', Counter '%d'", Guid.GetTypeName(), Guid.GetEntry(), Guid.GetCounter());
+	std::shared_ptr<CowServerGameObject_MOTransport> thisObj = MakeShared(CowServerGameObject_MOTransport, Scene, WoWWorld, Guid);
+	//Log::Green("---Create CowServerGameObject_MOTransport with Type '%s', Entry '%d', Counter '%d'", Guid.GetTypeName(), Guid.GetEntry(), Guid.GetCounter());
 	return thisObj;
 }
 
-void WoWGameObjectMOTransport::Destroy()
+void CowServerGameObject_MOTransport::Destroy()
 {
 	__super::Destroy();
 }

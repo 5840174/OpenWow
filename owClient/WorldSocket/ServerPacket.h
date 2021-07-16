@@ -14,7 +14,7 @@ public:
 	Opcodes GetPacketOpcode() const;
 	bool    IsComplete() const;
 
-	void    ReadPackedGuid(CWoWGuid * WoWGuid);
+	void    ReadPackedGuid(CowGuid * WoWGuid);
 
 	// IByteBuffer
 	bool readBytes(void* Destination, size_t Size) override;

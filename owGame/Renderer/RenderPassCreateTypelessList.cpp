@@ -64,8 +64,9 @@ EVisitResult CRenderPassCreateTypelessList::Visit(const std::shared_ptr<ISceneNo
 	if (false == SceneNode->IsEnabled())
 		return EVisitResult::Block;
 
-	if (false == SceneNode->IsLoaded())
-		return EVisitResult::Block;
+	if (auto loadable = std::dynamic_pointer_cast<ILoadable>(SceneNode))
+		if (false == loadable->IsLoaded())
+			return EVisitResult::Block;
 
 	if (SceneNode->IsCulled(GetRenderEventArgs().CameraForCulling))
 		return EVisitResult::Block;

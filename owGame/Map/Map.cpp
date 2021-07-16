@@ -279,13 +279,15 @@ std::shared_ptr<CMapTile> CMap::LoadTile(int32 x, int32 z)
 
 void CMap::ClearCache()
 {
-	for (uint32 i = 0; i < C_TilesCacheSize; i++)
-	{
-		if (m_MapTilesCache[i] != nullptr && false == IsTileInCurrent(*m_MapTilesCache[i]))
-		{
-			m_MapTilesCache[i] = 0;
-		}
-	}
+	//for (uint32 i = 0; i < C_TilesCacheSize; i++)
+	//{
+	//	if (m_MapTilesCache[i] != nullptr)
+	//	{
+	//		RemoveChild(m_MapTilesCache[i]);
+	//		GetBaseManager().GetManager<ILoader>()->AddToDeleteQueue(m_MapTilesCache[i]);
+	//		m_MapTilesCache[i].reset();
+	//	}
+	//}
 }
 
 uint32 CMap::GetAreaID(glm::vec3 CameraPosition)
