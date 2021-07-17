@@ -10,7 +10,6 @@ CM2::CM2(IBaseManager& BaseManager, IRenderDevice& RenderDevice, const std::stri
 	// Loops and sequences
 	, m_IsAnimated(false)
 
-	// Vertices
 	, m_BaseManager(BaseManager)
 	, m_RenderDevice(RenderDevice)
 {
@@ -23,22 +22,24 @@ CM2::CM2(IBaseManager& BaseManager, IRenderDevice& RenderDevice, const std::stri
 	}
 
 	// 2. Try open file and initialize internal paths
-	m_F = BaseManager.GetManager<IFilesManager>()->Open(m_FileName);
-	if (m_F == nullptr)
+	auto modelFile = BaseManager.GetManager<IFilesManager>()->Open(m_FileName);
+	if (modelFile == nullptr)
 		throw CException("M2: Model file not found '" + m_FileName + "'.");
 
-	m_FilePath = m_F->Path();
+	m_FilePath = modelFile->Path();
 	m_FileNameWithoutExt = m_FileName.substr(0, m_FileName.length() - 3);
 
+	m_Bytes = modelFile;
+
 	// 3. Read header and important data
-	m_F->read(&m_Header);
+	m_Bytes->read(&m_Header);
 
 	//_ASSERT(std::strcmp(m_Header.magic, "MD20") == 0);
 	//_ASSERT(m_Header.version >= 256 && m_Header.version <= 257);
 	//_ASSERT(m_Header.version >= 260 && m_Header.version <= 263);
 	
 	if (m_Header.name.size > 0)
-		m_UniqueName = std::string((const char*)(m_F->getData() + m_Header.name.offset));
+		m_UniqueName = std::string((const char*)(m_Bytes->getData() + m_Header.name.offset));
 
 	m_Bounds = m_Header.bounding_box.Convert();
 }
@@ -47,42 +48,52 @@ CM2::~CM2()
 {
 }
 
+
+
+//
+// ISceneNodeProvider
+//
 void CM2::CreateInsances(const std::shared_ptr<ISceneNode>& Parent) const
 {
-	for (auto& it : m_Skins)
+	for (const auto& it : m_Skins)
 	{
 		Parent->GetComponentT<IModelComponent>()->AddModel(it);
 		break;
 	}
 }
 
+
+
+//
+// ILoadable
+//
 bool CM2::Load()
 {
 	// Skeleton
 	m_Skeleton = std::make_unique<CM2_Comp_Skeleton>(*this);
-	m_Skeleton->Load(m_Header, m_F);
+	m_Skeleton->Load(m_Header, m_Bytes);
 
 	// Colors, textures and etc...
 	m_Materials = std::make_unique<CM2_Comp_Materials>(*this);
-	m_Materials->Load(m_Header, m_F);
+	m_Materials->Load(m_Header, m_Bytes);
 
 	// Lights, cameras, attachments
 	m_Miscellaneous = std::make_unique<CM2_Comp_Miscellaneous>(*this);
-	m_Miscellaneous->Load(m_Header, m_F);
+	m_Miscellaneous->Load(m_Header, m_Bytes);
 
 	// Skins
 	if (m_Header.vertices.size > 0)
 	{
 		// Vertices
 		std::vector<SM2_Vertex>	m2Vertexes;
-		const SM2_Vertex* Vertexes = (const SM2_Vertex*)(m_F->getData() + m_Header.vertices.offset);
-		for (uint32 i = 0; i < m_Header.vertices.size; i++)
-			m2Vertexes.push_back(Vertexes[i]);
 
+		const SM2_Vertex* vertexes = (const SM2_Vertex*)(m_Bytes->getData() + m_Header.vertices.offset);
 		for (uint32 i = 0; i < m_Header.vertices.size; i++)
 		{
-			m2Vertexes[i].pos = Fix_XZmY(m2Vertexes[i].pos);
-			m2Vertexes[i].normal = Fix_XZmY(m2Vertexes[i].normal);
+			SM2_Vertex vertex = vertexes[i];
+			vertex.pos = Fix_XZmY(vertex.pos);
+			vertex.normal = Fix_XZmY(vertex.normal);
+			m2Vertexes.push_back(vertex);
 		}
 
 #if WOW_CLIENT_VERSION <= WOW_BC_2_4_3
@@ -97,13 +108,13 @@ bool CM2::Load()
 		}
 #else
 		_ASSERT(m_Header.num_skin_profiles > 0);
+
 		for (uint32 i = 0; i < m_Header.num_skin_profiles; i++)
 		{
 			char buf[256];
 			sprintf_s(buf, "%s%02d.skin", m_FileNameWithoutExt.c_str(), i);
 
 			std::shared_ptr<IFile> skinFile = GetBaseManager().GetManager<IFilesManager>()->Open(buf);
-
 
 			const SM2_SkinProfile* m2Skin = (const SM2_SkinProfile*)skinFile->getData();
 
@@ -174,7 +185,7 @@ bool CM2::Load()
 
 	m_IsAnimated = getSkeleton().isAnimBones() || getSkeleton().isBillboard() || getMaterials().IsAnimTextures() || getMiscellaneous().IsAnimated() || true;
 	_ASSERT(m_F.use_count() == 1);
-	m_F.reset();
+	m_Bytes.reset();
 
 	return true;
 }

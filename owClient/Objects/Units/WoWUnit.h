@@ -65,9 +65,14 @@ protected:                      // Movement functional
 	virtual void                Movement_HandlePlayerMovement(const UpdateEventArgs& e);
 	virtual const SMovementInfo&Movement_GetMovementInfo() const;
 
+protected:                      // Animation functional
+	virtual void                Animation_Play(EAnimationID Animation, bool IsLoop);
+	virtual EAnimationID        Animation_GetCurrentAnimation() const;
+	virtual void                Animation_Update();
+
 protected:                      // Mount functional
-	virtual void                OnMounted(uint32 MountDisplayID);
-	virtual void                OnDismounted();
+	virtual void                Mount_OnMounted(uint32 MountDisplayID);
+	virtual void                Mount_OnDismounted();
 
 
 private:                        // DisplayID functional
@@ -87,7 +92,6 @@ private:                        // Jump functional
 	bool                        m_Jump_IsJumpingNow;
 	glm::vec2                   m_JumpXZ0;
 	float                       m_Jump_y0;
-	float                       m_Jump_t;
 
 
 private:                        // Mount functional

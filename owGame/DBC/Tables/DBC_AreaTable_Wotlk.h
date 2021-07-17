@@ -57,7 +57,7 @@ __DBC_REF_ID(DBC_Map,				MapID,			        2);
 __DBC_REF_ID(DBC_AreaTable,			ParentArea,			    3);
 
 __DBC_TVALUE(uint32,				AreaBits,				4);
-__DBC_TVALUE(uint32,				Flags,					5);
+__DBC_TVALUE(EAreaFlags,			Flags,					5);
 
 //__DBC_TVALUE(iRefID, SoundProviderPrefferences, 6);
 //__DBC_TVALUE(iRefID, Underwater_SoundProviderPrefferences, 7);
@@ -69,6 +69,7 @@ __DBC_TVALUE(int32,					ExplorationLevel,		11);
 __DBC_LOCSTR(						AreaName,				12); // 12-28
 
 __DBC_TVALUE(uint32,				FactionGroupMask,		29);
+
 __DBC_REF_ID(DBC_LiquidType,		LiquidTypeIDWater,		30); // [0]: Water, [1]: Ocean, [2]: Magma, [3]: Slime
 __DBC_REF_ID(DBC_LiquidType,        LiquidTypeIDOcean,      31);
 __DBC_REF_ID(DBC_LiquidType,        LiquidTypeIDMagma,      32);

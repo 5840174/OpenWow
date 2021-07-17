@@ -10,7 +10,7 @@ class CM2_Base_Instance;
 struct ZN_API CM2_Part_TextureWeight
 {
 public:
-	CM2_Part_TextureWeight(const CM2& M2Object, const std::shared_ptr<IFile>& File, const SM2_TextureWeight& M2TextureWeight);
+	CM2_Part_TextureWeight(const CM2& M2Object, const std::shared_ptr<IByteBuffer>& File, const SM2_TextureWeight& M2TextureWeight);
 	virtual ~CM2_Part_TextureWeight();
 
 	float GetWeight(const CM2_Base_Instance* M2Instance, uint32 GlobalTime) const;

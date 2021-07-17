@@ -51,7 +51,7 @@ struct SM2ParticleTileCoords
 class CM2_Part_ParticleSystem
 {
 public:
-	CM2_Part_ParticleSystem(const CM2& M2Object, const std::shared_ptr<IFile>& File, const SM2_Particle& M2Particle);
+	CM2_Part_ParticleSystem(const CM2& M2Object, const std::shared_ptr<IByteBuffer>& File, const SM2_Particle& M2Particle);
 	virtual ~CM2_Part_ParticleSystem();
 
 	void update(const CM2_Base_Instance* M2Instance, const UpdateEventArgs& e, float* rem, SGPUM2Particle* Particles) const;

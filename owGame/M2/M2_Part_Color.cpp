@@ -7,7 +7,7 @@
 // General
 #include "M2_Part_Color.h"
 
-CM2_Part_Color::CM2_Part_Color(const CM2& M2Object, const std::shared_ptr<IFile>& File, const SM2_Color& M2Color)
+CM2_Part_Color::CM2_Part_Color(const CM2& M2Object, const std::shared_ptr<IByteBuffer>& File, const SM2_Color& M2Color)
 	: m_M2Object(M2Object)
 {
 	m_ColorAnimated.Initialize(M2Color.color, File, M2Object.getSkeleton().GetAnimFiles());

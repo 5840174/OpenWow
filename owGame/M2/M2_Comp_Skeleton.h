@@ -16,7 +16,7 @@ public:
 	CM2_Comp_Skeleton(const CM2& M2Object);
 	virtual ~CM2_Comp_Skeleton();
 
-	void Load(const SM2_Header& M2Header, const std::shared_ptr<IFile>& File);
+	void Load(const SM2_Header& M2Header, const std::shared_ptr<IByteBuffer>& File);
 
 	const bool hasBones() const { return m_HasBones; }
 	const bool isAnimBones() const { return m_IsAnimBones; }

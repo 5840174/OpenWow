@@ -20,6 +20,8 @@ CowServerUnit::CowServerUnit(IScene& Scene, CowServerWorld& WoWWorld, CowGuid Gu
 	, m_DisplayID_Scale_IsDirty(false)
 	, m_DisplayID_Scale(1.0f)
 	
+	, m_Movement_IsMoveNow(false)
+
 	, m_Jump_IsJumpingNow(false)
 	, m_Mount_IsMounted(false)
 	, m_Mount_IsDirty(false)
@@ -307,11 +309,11 @@ void CowServerUnit::OnValuesUpdated(const UpdateMask & Mask)
 		uint32 mountDisplayID = m_Values.GetUInt32Value(UNIT_FIELD_MOUNTDISPLAYID);
 		if (mountDisplayID != 0)
 		{
-			OnMounted(mountDisplayID);
+			Mount_OnMounted(mountDisplayID);
 		}
 		else
 		{
-			OnDismounted();
+			Mount_OnDismounted();
 		}
 	}
 }
@@ -370,22 +372,7 @@ uint8 CowServerUnit::GetPowerType() const
 
 void CowServerUnit::OnAnimationEnded(EAnimationID AniamtionID)
 {
-	/*if (m_Jump_IsJumpingNow)
-	{
- 		if (AniamtionID == EAnimationID::JumpStart)
-		{
-			if (m_Mount_ModelInstance && m_Mount_ModelInstance->IsLoaded())
-			{
-				m_Mount_ModelInstance->GetAnimatorComponent()->PlayAnimation(EAnimationID::JumpEnd, false);
-			}
-			else if (m_DisplayID_ModelInstance && m_DisplayID_ModelInstance->IsLoaded())
-			{
-				m_DisplayID_ModelInstance->GetAnimatorComponent()->PlayAnimation(EAnimationID::JumpEnd, false);
-			}
-		}
 
-		return;
-	}*/
 }
 
 //
@@ -419,11 +406,18 @@ void CowServerUnit::Update(const UpdateEventArgs & e)
 
 
 	//
+	// Animation
+	//
+	Animation_Update();
+
+
+
+	//
 	// Jump
 	//
 	if (m_Jump_IsJumpingNow)
 	{
-		float timeToSeconds = m_Jump_t / 1000.0f;
+		float timeToSeconds = m_MovementInfo.fallTime / 1000.0f;
 
 		// XZ
 		{
@@ -445,7 +439,7 @@ void CowServerUnit::Update(const UpdateEventArgs & e)
 			Position.y = y;
 		}
 
-		m_Jump_t += e.DeltaTime;
+		m_MovementInfo.fallTime += e.DeltaTime;
 
 		CommitPositionAndRotation();
 	}
@@ -547,32 +541,12 @@ void CowServerUnit::ReadMovementInfoPacket(CServerPacket & Bytes)
 		{
 			m_JumpXZ0 = glm::vec2(Position.x, Position.z);
 			m_Jump_y0 = Position.y;		
-			
-			if (m_Mount_ModelInstance && m_Mount_ModelInstance->IsLoaded())
-			{
-				m_Mount_ModelInstance->GetAnimatorComponent()->PlayAnimation(EAnimationID::JumpStart, false);
-			}
-			else if (m_DisplayID_ModelInstance && m_DisplayID_ModelInstance->IsLoaded())
-			{
-				m_DisplayID_ModelInstance->GetAnimatorComponent()->PlayAnimation(EAnimationID::JumpStart, false);
-			}
 		}
-
-		m_Jump_t = m_MovementInfo.fallTime;
 
 		m_Jump_IsJumpingNow = true;
 	}
 	else
 	{
-		/*if (m_Mount_ModelInstance && m_Mount_ModelInstance->IsLoaded())
-		{
-			m_Mount_ModelInstance->GetAnimatorComponent()->PlayAnimation(EAnimationID::Stand, false);
-		}
-		else if (m_DisplayID_ModelInstance && m_DisplayID_ModelInstance->IsLoaded())
-		{
-			m_DisplayID_ModelInstance->GetAnimatorComponent()->PlayAnimation(EAnimationID::Stand, false);
-		}*/
-
 		m_Jump_IsJumpingNow = false;
 	}
 
@@ -627,6 +601,12 @@ SCharacterItemTemplate CowServerUnit::GetItemDisplayInfoIDByItemID(uint32 ItemID
 //
 // Protected
 //
+
+
+
+//
+// DisplayID functional
+//
 void CowServerUnit::OnDisplayIDChanged(uint32 DisplayID)
 {
 	if (m_DisplayID_ModelInstance != nullptr)
@@ -656,6 +636,11 @@ void CowServerUnit::DisplayID_SetModelInstance(std::shared_ptr<CCreature> ModelI
 	m_DisplayID_ModelInstance->GetComponentT<CM2AnimatorComponent>()->SetAnimationEventListener(std::dynamic_pointer_cast<IM2AnimationEventsListener>(shared_from_this()));
 }
 
+
+
+//
+// Movement functional
+//
 void CowServerUnit::Movement_HandlePlayerMovement(const UpdateEventArgs& e)
 {
 	if (m_WoWPath == nullptr)
@@ -675,23 +660,11 @@ void CowServerUnit::Movement_HandlePlayerMovement(const UpdateEventArgs& e)
 		Orientation = glm::degrees(yaw - glm::half_pi<float>());
 		CommitPositionAndRotation();
 
-		if (m_DisplayID_ModelInstance && m_DisplayID_ModelInstance->IsLoaded())
-		{
-			if (auto animatorComponent = m_DisplayID_ModelInstance->GetAnimatorComponent())
-			{
-				animatorComponent->PlayAnimation(EAnimationID::Walk, true);
-			}
-		}
+		m_Movement_IsMoveNow = true;
 	}
 	else
 	{
-		if (m_DisplayID_ModelInstance && m_DisplayID_ModelInstance->IsLoaded())
-		{
-			if (auto animatorComponent = m_DisplayID_ModelInstance->GetAnimatorComponent())
-			{
-				animatorComponent->PlayAnimation(EAnimationID::Stand, true);
-			}
-		}
+		m_Movement_IsMoveNow = false;
 	}
 }
 
@@ -700,7 +673,71 @@ const SMovementInfo& CowServerUnit::Movement_GetMovementInfo() const
 	return m_MovementInfo;
 }
 
-void CowServerUnit::OnMounted(uint32 MountDisplayID)
+
+
+//
+// Animation functional
+//
+void CowServerUnit::Animation_Play(EAnimationID Animation, bool IsLoop)
+{
+	if (m_Mount_ModelInstance && m_Mount_ModelInstance->IsLoaded())
+	{
+		m_Mount_ModelInstance->GetAnimatorComponent()->PlayAnimation(Animation, IsLoop);
+	}
+	else if (m_DisplayID_ModelInstance && m_DisplayID_ModelInstance->IsLoaded())
+	{
+		m_DisplayID_ModelInstance->GetAnimatorComponent()->PlayAnimation(Animation, IsLoop);
+	}
+}
+
+EAnimationID CowServerUnit::Animation_GetCurrentAnimation() const
+{
+	if (m_Mount_IsMounted)
+	{
+		if (m_Mount_ModelInstance && m_Mount_ModelInstance->IsLoaded())
+		{
+			return m_Mount_ModelInstance->GetAnimatorComponent()->GetCurrentAnimationID();
+		}
+		else if (m_DisplayID_ModelInstance && m_DisplayID_ModelInstance->IsLoaded())
+		{
+			return 	m_DisplayID_ModelInstance->GetAnimatorComponent()->GetCurrentAnimationID();
+		}
+	}
+	else
+	{
+		if (m_DisplayID_ModelInstance && m_DisplayID_ModelInstance->IsLoaded())
+		{
+			return 	m_DisplayID_ModelInstance->GetAnimatorComponent()->GetCurrentAnimationID();
+		}
+	}
+
+	return EAnimationID::Stand;
+}
+
+void CowServerUnit::Animation_Update()
+{
+	if (m_Movement_IsMoveNow)
+	{
+		Animation_Play(EAnimationID::Walk, true);
+		return;
+	}
+
+	if (m_Jump_IsJumpingNow)
+	{
+		if (Animation_GetCurrentAnimation() != EAnimationID::JumpStart)
+			Animation_Play(EAnimationID::JumpStart, false);
+		return;
+	}
+
+	Animation_Play(EAnimationID::Stand, true);
+}
+
+
+
+//
+// Mount functional
+//
+void CowServerUnit::Mount_OnMounted(uint32 MountDisplayID)
 {
 	if (m_Mount_IsMounted)
 		return;
@@ -717,7 +754,7 @@ void CowServerUnit::OnMounted(uint32 MountDisplayID)
 	m_Mount_IsDirty = true;
 }
 
-void CowServerUnit::OnDismounted()
+void CowServerUnit::Mount_OnDismounted()
 {
 	if (false == m_Mount_IsMounted)
 		return;

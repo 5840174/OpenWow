@@ -93,8 +93,6 @@ void CSceneWoWClient::Initialize()
 
 	//SetMainMenu();
 
-	//m_WowClient = std::make_unique<CowClient>(*this, "logon.wowcircle.com");
-	//m_WowClient->Login("greatejudaxor", "38522137asd");
 
 	m_WowClient = std::make_unique<CowClient>(*this, "localhost");
 	m_WowClient->Login("test2", "test2");

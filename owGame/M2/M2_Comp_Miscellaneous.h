@@ -21,7 +21,7 @@ public:
 	CM2_Comp_Miscellaneous(const CM2& M2Object);
 	virtual ~CM2_Comp_Miscellaneous();
 
-	void Load(const SM2_Header& M2Header, const std::shared_ptr<IFile>& File);
+	void Load(const SM2_Header& M2Header, const std::shared_ptr<IByteBuffer>& File);
 
 	bool IsAnimated() const { return m_HasMisc; }
 

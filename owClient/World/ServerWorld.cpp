@@ -286,7 +286,6 @@ void CowServerWorld::Do_AuraUpdate(CServerPacket & Buffer)
 
 	uint32 auraID;
 	Buffer >> auraID;
-
 	if (auraID == 0)
 		return; // Aura remove
 

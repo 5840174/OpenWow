@@ -191,7 +191,7 @@ void CWorldSocket::UpdateFromThread(std::future<void> PromiseExiter)
 
 			// DEBUG
 			//_ASSERT(cmd < Opcodes::NUM_MSG_TYPES);
-			//Log::Green("CWorldSocket: Command '%s' (0x%X) size=%d", OpcodesNames[cmd], cmd, size);
+			Log::Green("CWorldSocket: Command '%s' (0x%X) size=%d", OpcodesNames[cmd], cmd, size);
 
 			// Seek to data
 			buffer.seekRelative(sizeBytes /*Size*/ + sizeof(uint16) /*Opcode*/);

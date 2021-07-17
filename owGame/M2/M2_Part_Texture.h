@@ -9,7 +9,7 @@ class CM2_Base_Instance;
 class ZN_API CM2_Part_Texture
 {
 public:
-	CM2_Part_Texture(IBaseManager& BaseManager, IRenderDevice& RenderDevice, const CM2& M2Object, const std::shared_ptr<IFile>& File, const SM2_Texture& M2Texture);
+	CM2_Part_Texture(const IBaseManager& BaseManager, IRenderDevice& RenderDevice, const CM2& M2Object, const std::shared_ptr<IByteBuffer>& File, const SM2_Texture& M2Texture);
 	virtual ~CM2_Part_Texture();
 
 	ISamplerState::WrapMode GetTextureWrapX() const { return (m_WrapX ? ISamplerState::WrapMode::Clamp : ISamplerState::WrapMode::Repeat); }

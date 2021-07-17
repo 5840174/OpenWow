@@ -72,7 +72,7 @@ EVisitResult CRenderPassCreateTypelessList::Visit(const std::shared_ptr<ISceneNo
 		return EVisitResult::Block;
 
 	m_NodesList.push_back(SNodeElement(SceneNode));
-	return EVisitResult::AllowVisitChilds;
+	return EVisitResult::AllowAll;
 }
 
 EVisitResult CRenderPassCreateTypelessList::Visit(const std::shared_ptr<IModel>& Model)

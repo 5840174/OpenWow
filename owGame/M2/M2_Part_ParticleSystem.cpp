@@ -7,7 +7,7 @@
 // General
 #include "M2_Part_ParticleSystem.h"
 
-CM2_Part_ParticleSystem::CM2_Part_ParticleSystem(const CM2& M2Object, const std::shared_ptr<IFile>& File, const SM2_Particle& M2Particle)
+CM2_Part_ParticleSystem::CM2_Part_ParticleSystem(const CM2& M2Object, const std::shared_ptr<IByteBuffer>& File, const SM2_Particle& M2Particle)
 	: m_M2Object(M2Object)
 	, m_M2Particle(M2Particle)
 {

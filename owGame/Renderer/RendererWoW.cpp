@@ -132,14 +132,13 @@ void CRendererWoW::InitializeDeffered(std::shared_ptr<IRenderTarget> OutputRende
 	Add3DPass(MakeShared(CRenderPass_MapChunkList, GetRenderDevice(), m_SceneListTypelessPass)->ConfigurePipeline(gbufferRenderTarget));
 	Add3DPass(MakeShared(CRenderPass_WMOList, GetRenderDevice(), m_SceneListTypelessPass)->ConfigurePipeline(gbufferRenderTarget));
 
-	//Add3DPass(MakeShared(CRenderPass_M2List, GetRenderDevice(), m_SceneListTypelessPass, ERenderPassM2DrawMode::All)->ConfigurePipeline(gbufferRenderTarget));
+	Add3DPass(MakeShared(CRenderPass_M2List, GetRenderDevice(), m_SceneListTypelessPass, ERenderPassM2DrawMode::All)->ConfigurePipeline(gbufferRenderTarget));
 	//Add3DPass(MakeShared(CRenderPass_M2List, GetRenderDevice(), m_SceneListTypelessPass, ERenderPassM2DrawMode::Opaque)->ConfigurePipeline(gbufferRenderTarget));
 	//Add3DPass(MakeShared(CRenderPass_M2List, GetRenderDevice(), m_SceneListTypelessPass, ERenderPassM2DrawMode::Transperent)->ConfigurePipeline(gbufferRenderTarget));
 
-	//Add3DPass(MakeShared(CRenderPass_M2InstancedList, GetRenderDevice(), m_SceneListTypelessPass, ERenderPassM2DrawMode::All)->ConfigurePipeline(gbufferRenderTarget));
-	Add3DPass(MakeShared(CRenderPass_M2InstancedList, GetRenderDevice(), m_SceneListTypelessPass, ERenderPassM2DrawMode::Opaque)->ConfigurePipeline(gbufferRenderTarget));
+	Add3DPass(MakeShared(CRenderPass_M2InstancedList, GetRenderDevice(), m_SceneListTypelessPass, ERenderPassM2DrawMode::All)->ConfigurePipeline(gbufferRenderTarget));
+	///Add3DPass(MakeShared(CRenderPass_M2InstancedList, GetRenderDevice(), m_SceneListTypelessPass, ERenderPassM2DrawMode::Opaque)->ConfigurePipeline(gbufferRenderTarget));
 	//Add3DPass(MakeShared(CRenderPass_M2InstancedList, GetRenderDevice(), m_SceneListTypelessPass, ERenderPassM2DrawMode::Transperent)->ConfigurePipeline(gbufferRenderTarget));
-
 
 
 
@@ -164,13 +163,14 @@ void CRendererWoW::InitializeDeffered(std::shared_ptr<IRenderTarget> OutputRende
 	Add3DPass(MakeShared(CRenderPass_M2InstancedList, GetRenderDevice(), m_SceneListTypelessPass, ERenderPassM2DrawMode::Transperent)->ConfigurePipeline(outputRenderTargetWithCustomDepth));
 
 
+	Add3DPass(MakeShared(CRenderPass_M2ParticlesList, GetRenderDevice(), m_SceneListTypelessPass)->ConfigurePipeline(outputRenderTargetWithCustomDepth));
 
 	//
 	// DEBUG
 	//
 	//Add3DPass(MakeShared(CDebugPass, m_RenderDevice, m_Scene)->ConfigurePipeline(OutputRenderTarget));
 	//Add3DPass(MakeShared(CDrawBonesPass, m_Scene)->ConfigurePipeline(OutputRenderTarget));
-	Add3DPass(MakeShared(CDrawBoundingBoxPass, GetRenderDevice(), GetScene())->ConfigurePipeline(OutputRenderTarget));
+	//Add3DPass(MakeShared(CDrawBoundingBoxPass, GetRenderDevice(), GetScene())->ConfigurePipeline(OutputRenderTarget));
 	//Add3DPass(MakeShared(CRenderPass_WMOPortalDebug, GetScene())->ConfigurePipeline(outputRenderTargetWithCustomDepth));
 
 

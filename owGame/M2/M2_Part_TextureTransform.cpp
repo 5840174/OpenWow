@@ -23,7 +23,7 @@ glm::quat Fix_XZmYW2(const glm::quat& _quat)
 	return glm::quat(_quat.x, _quat.y, _quat.z, _quat.w);
 }
 
-CM2_Part_TextureTransform::CM2_Part_TextureTransform(const CM2& M2Object, const std::shared_ptr<IFile>& File, const SM2_TextureTransform& M2TextureTransform)
+CM2_Part_TextureTransform::CM2_Part_TextureTransform(const CM2& M2Object, const std::shared_ptr<IByteBuffer>& File, const SM2_TextureTransform& M2TextureTransform)
 	: m_M2Object(M2Object)
 {
 	m_TranslateAnimated.Initialize(M2TextureTransform.translation, File, M2Object.getSkeleton().GetAnimFiles(), Fix_XZY2);

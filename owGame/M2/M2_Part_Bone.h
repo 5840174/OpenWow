@@ -84,7 +84,7 @@ const char* const M2_GameBoneTypeNames[] =
 class ZN_API CM2_Part_Bone
 {
 public:
-	CM2_Part_Bone(const CM2& M2Object, const std::shared_ptr<IFile>& File, const SM2_Bone& M2Bone);
+	CM2_Part_Bone(const CM2& M2Object, const std::shared_ptr<IByteBuffer>& File, const SM2_Bone& M2Bone);
 	virtual ~CM2_Part_Bone();
 
 	glm::mat4 calcMatrix(const CM2_Base_Instance& M2Instance, uint32 globalTime) const;

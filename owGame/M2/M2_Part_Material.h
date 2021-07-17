@@ -5,7 +5,7 @@
 class ZN_API CM2_Part_Material
 {
 public:
-	CM2_Part_Material(IBaseManager& BaseManager, IRenderDevice& RenderDevice, const CM2& M2Object, const SM2_Material& M2Material);
+	CM2_Part_Material(const IBaseManager& BaseManager, IRenderDevice& RenderDevice, const CM2& M2Object, const SM2_Material& M2Material);
 	virtual ~CM2_Part_Material();
 
 	uint32 getBlendMode() const { return m_M2BlendMode; }

@@ -16,7 +16,7 @@ CM2_Comp_Miscellaneous::~CM2_Comp_Miscellaneous()
 {
 }
 
-void CM2_Comp_Miscellaneous::Load(const SM2_Header& M2Header, const std::shared_ptr<IFile>& File)
+void CM2_Comp_Miscellaneous::Load(const SM2_Header& M2Header, const std::shared_ptr<IByteBuffer>& File)
 {
 	// Attachments
 	if (M2Header.attachments.size > 0)

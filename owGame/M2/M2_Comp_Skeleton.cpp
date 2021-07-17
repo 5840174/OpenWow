@@ -18,7 +18,7 @@ CM2_Comp_Skeleton::~CM2_Comp_Skeleton()
 {
 }
 
-void CM2_Comp_Skeleton::Load(const SM2_Header& M2Header, const std::shared_ptr<IFile>& File)
+void CM2_Comp_Skeleton::Load(const SM2_Header& M2Header, const std::shared_ptr<IByteBuffer>& File)
 {
 	if (M2Header.global_loops.size > 0)
 	{
@@ -42,7 +42,8 @@ void CM2_Comp_Skeleton::Load(const SM2_Header& M2Header, const std::shared_ptr<I
 			else
 			{
 				char buf[MAX_PATH];
-				sprintf_s(buf, "%s%04d-%02d.anim", m_M2Object.m_FileNameWithoutExt.c_str(), Sequences[i].__animID, Sequences[i].variationIndex);
+				sprintf_s(buf, "%s%04d-%02d.anim", m_M2Object.getFilenameWithoutExt().c_str(), Sequences[i].__animID, Sequences[i].variationIndex);
+
 				if (m_M2Object.GetBaseManager().GetManager<IFilesManager>()->IsFileExists(buf))
 					animFiles.push_back(m_M2Object.GetBaseManager().GetManager<IFilesManager>()->Open(buf));
 				else

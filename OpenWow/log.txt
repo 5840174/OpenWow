@@ -26,42 +26,127 @@
 ~Loading shader 'UI/UIControlCommon.hlsl':'PS_main'.
 ~Loading shader 'UI/UI_Font.hlsl':'VS_main'.
 ~Loading shader 'UI/UI_Font.hlsl':'PS_main'.
-^CAuthSocket::OnConnected.
-^CAuthSocket::On_AUTH_LOGON_PROOF: Successfully logined.
-^CAuthSocket::On_REALM_LIST: Count '1'.
-^RealmType: '0', IsLocked: '0', Flag: '0x0', Name: 'Trinity', Address '127.0.0.1:8085', Population: '0,000000', CharacterCount: '1'
-^CWoWClient::OnRealmListSelected: Realm name 'Trinity'.
-@CAuthSocket::OnDisconnected.
-^CWorldSocket::OnConnected.
-^CWorldSocket::On_SMSG_AUTH_RESPONSE: Response is OK!
- CWoWClientCharactedSelection::On_SMSG_CHAR_ENUM:: Characters count '1'.
- CWoWClientCharactedSelection::On_SMSG_CHAR_ENUM:: Character [0] name 'Dktest'.
-^CWoWClient::OnCharacterSelected: Character name 'Dktest'.
- CTransportAnimationStorage::Initialize: Loaded records for '82' transport entries.
-~Loading shader '3D/Debug.hlsl':'VS_main'.
-~Loading shader '3D/Debug.hlsl':'PS_main'.
-~Sky: [1] is global sky.
- Map[Azeroth]: Id = '0'. Preloading...
- Map[Azeroth]: InstanceType = '0'.
- Map[Azeroth]: MapType = '0'.
- Map[Azeroth]: IsBattleGround = '0'.
- Map[Azeroth]: Name = 'Восточные королевства'.
- Map[Azeroth]: AreaTableID = '0'.
- Map[Azeroth]: AllianceDescr = ''.
- Map[Azeroth]: HordeDescr = ''.
- Map[Azeroth]: CorpseMapID = '-1'.
- Map[Azeroth]: Id [0]. Loading...
+~Sky: [752] is global sky.
+ Map[Northrend]: Id = '571'. Preloading...
+ Map[Northrend]: InstanceType = '0'.
+ Map[Northrend]: MapType = '29'.
+ Map[Northrend]: IsBattleGround = '0'.
+ Map[Northrend]: Name = 'Нордскол'.
+ Map[Northrend]: AreaTableID = '0'.
+ Map[Northrend]: AllianceDescr = ''.
+ Map[Northrend]: HordeDescr = ''.
+ Map[Northrend]: CorpseMapID = '0'.
+ Map[Northrend]: Id [571]. Loading...
 ~MapWDT: Global WMO exists [false].
-^MOTD: Welcome to a Trinity Core server.
-^NOTIFICATION: GM mode is ON
-!Can't remove child node 'Object#1' from nullptr parent.
- [Мифи "Поддай газу"]: Только что прилетел дирижабль, который отправится в Лагерь Возмездия! Все на борт! Мы летим к Ревущему фьорду!
-@CCharacter deleted.
-@CCharacter deleted.
-@CCharacter deleted.
-@CCharacter deleted.
-@CCharacter deleted.
-@CCharacter deleted.
-@CCharacter deleted.
-@CCharacter deleted.
- [Гин Денбург]: Дирижабль до Гром'гола прибыл! Все, кому в Тернистую долину – садитесь!
+!CImageBLP: Unable to load PLP file 'TCB_CrystalSong_B.blp'.
+!File 'TILESET\Terrain Cube Maps\TCB_CrystalSong_B_s.blp' not exists.
+!CImageBLP: Unable to load PLP file 'TCB_CrystalSong_B.blp'.
+!File 'TILESET\Terrain Cube Maps\TCB_CrystalSong_B_s.blp' not exists.
+!CImageBLP: Unable to load PLP file 'tgatest.blp'.
+!File 'TILESET\Generic\tgatest_s.blp' not exists.
+!CImageBLP: Unable to load PLP file 'tgatest.blp'.
+!File 'TILESET\Generic\tgatest_s.blp' not exists.
+!CImageBLP: Unable to load PLP file 'TCB_CrystalSong_B.blp'.
+!CImageBLP: Unable to load PLP file 'TCB_CrystalSong_B.blp'.
+!File 'TILESET\Terrain Cube Maps\TCB_CrystalSong_B_s.blp' not exists.
+!File 'TILESET\Terrain Cube Maps\TCB_CrystalSong_B_s.blp' not exists.
+!CImageBLP: Unable to load PLP file 'tgatest.blp'.
+!File 'TILESET\Generic\tgatest_s.blp' not exists.
+!CImageBLP: Unable to load PLP file 'tgatest.blp'.
+!File 'Tileset\Generic\WaterBlue_s.blp' not exists.
+!File 'TILESET\Generic\tgatest_s.blp' not exists.
+!CImageBLP: Unable to load PLP file 'TCB_CrystalSong_A.blp'.
+!File 'TILESET\Terrain Cube Maps\TCB_CrystalSong_A_s.blp' not exists.
+!CImageBLP: Unable to load PLP file 'TCB_CrystalSong_A.blp'.
+!File 'TILESET\Terrain Cube Maps\TCB_CrystalSong_A_s.blp' not exists.
+@CMapTile::~CMapTile: Tile [32, 23] unloaded.
+@CMapTile::~CMapTile: Tile [31, 23] unloaded.
+@CMapTile::~CMapTile: Tile [32, 22] unloaded.
+@CMapTile::~CMapTile: Tile [28, 23] unloaded.
+!CImageBLP: Unable to load PLP file 'TCB_CrystalSong_A.blp'.
+!File 'TILESET\Terrain Cube Maps\TCB_CrystalSong_A_s.blp' not exists.
+@CMapTile::~CMapTile: Tile [27, 21] unloaded.
+@CMapTile::~CMapTile: Tile [30, 23] unloaded.
+@CMapTile::~CMapTile: Tile [31, 22] unloaded.
+!CImageBLP: Unable to load PLP file 'TCB_CrystalSong_A.blp'.
+!File 'TILESET\Terrain Cube Maps\TCB_CrystalSong_A_s.blp' not exists.
+@CMapTile::~CMapTile: Tile [32, 21] unloaded.
+@CMapTile::~CMapTile: Tile [28, 22] unloaded.
+@CMapTile::~CMapTile: Tile [31, 16] unloaded.
+@CMapTile::~CMapTile: Tile [32, 17] unloaded.
+!CImageBLP: Unable to load PLP file 'TCB_SkyBlue_A.blp'.
+@CMapTile::~CMapTile: Tile [30, 16] unloaded.
+!File 'TILESET\Terrain Cube Maps\TCB_SkyBlue_A_s.blp' not exists.
+!CImageBLP: Unable to load PLP file 'TCB_CrystalSong_B.blp'.
+!CImageBLP: Unable to load PLP file 'TCB_CrystalSong_B.blp'.
+!File 'TILESET\Terrain Cube Maps\TCB_CrystalSong_B_s.blp' not exists.
+!File 'TILESET\Terrain Cube Maps\TCB_CrystalSong_B_s.blp' not exists.
+@CMapTile::~CMapTile: Tile [27, 16] unloaded.
+@CMapTile::~CMapTile: Tile [28, 16] unloaded.
+@CMapTile::~CMapTile: Tile [27, 17] unloaded.
+@CMapTile::~CMapTile: Tile [29, 16] unloaded.
+@CMapTile::~CMapTile: Tile [27, 18] unloaded.
+@CMapTile::~CMapTile: Tile [28, 17] unloaded.
+@CMapTile::~CMapTile: Tile [27, 19] unloaded.
+@CMapTile::~CMapTile: Tile [28, 19] unloaded.
+!CImageBLP: Unable to load PLP file 'tgatest.blp'.
+!CImageBLP: Unable to load PLP file 'TCB_CrystalSong_B.blp'.
+!File 'TILESET\Generic\tgatest_s.blp' not exists.
+!File 'TILESET\Terrain Cube Maps\TCB_CrystalSong_B_s.blp' not exists.
+@CMapTile::~CMapTile: Tile [27, 22] unloaded.
+!CImageBLP: Unable to load PLP file 'tgatest.blp'.
+!File 'TILESET\Generic\tgatest_s.blp' not exists.
+!CImageBLP: Unable to load PLP file 'TCB_CrystalSong_B.blp'.
+!File 'TILESET\Terrain Cube Maps\TCB_CrystalSong_B_s.blp' not exists.
+@CMapTile::~CMapTile: Tile [28, 23] unloaded.
+@CMapTile::~CMapTile: Tile [28, 18] unloaded.
+@CMapTile::~CMapTile: Tile [29, 17] unloaded.
+@CMapTile::~CMapTile: Tile [33, 19] unloaded.
+@CMapTile::~CMapTile: Tile [33, 23] unloaded.
+@CMapTile::~CMapTile: Tile [33, 22] unloaded.
+@WndProc: WM_CLOSE.
+@WndProc: WM_DESTROY.
+~Scene destroyed.
+@CMapTile::~CMapTile: Tile [28, 21] unloaded.
+@CMapTile::~CMapTile: Tile [28, 20] unloaded.
+@CMapTile::~CMapTile: Tile [29, 19] unloaded.
+@CMapTile::~CMapTile: Tile [29, 20] unloaded.
+@CMapTile::~CMapTile: Tile [29, 21] unloaded.
+@CMapTile::~CMapTile: Tile [29, 22] unloaded.
+@CMapTile::~CMapTile: Tile [30, 19] unloaded.
+@CMapTile::~CMapTile: Tile [29, 23] unloaded.
+@CMapTile::~CMapTile: Tile [30, 20] unloaded.
+@CMapTile::~CMapTile: Tile [31, 19] unloaded.
+@CMapTile::~CMapTile: Tile [30, 22] unloaded.
+@CMapTile::~CMapTile: Tile [30, 21] unloaded.
+@CMapTile::~CMapTile: Tile [31, 21] unloaded.
+@CMapTile::~CMapTile: Tile [31, 20] unloaded.
+@CMapTile::~CMapTile: Tile [32, 19] unloaded.
+@CMapTile::~CMapTile: Tile [32, 20] unloaded.
+@CMapTile::~CMapTile: Tile [29, 18] unloaded.
+@CMapTile::~CMapTile: Tile [30, 18] unloaded.
+@CMapTile::~CMapTile: Tile [32, 18] unloaded.
+@CMapTile::~CMapTile: Tile [31, 18] unloaded.
+@CMapTile::~CMapTile: Tile [30, 17] unloaded.
+@CMapTile::~CMapTile: Tile [31, 17] unloaded.
+@CMapTile::~CMapTile: Tile [27, 20] unloaded.
+@CMapTile::~CMapTile: Tile [27, 21] unloaded.
+@CMapTile::~CMapTile: Tile [28, 22] unloaded.
+@CMapTile::~CMapTile: Tile [31, 22] unloaded.
+@CMapTile::~CMapTile: Tile [32, 21] unloaded.
+@CMapTile::~CMapTile: Tile [32, 22] unloaded.
+@CMapTile::~CMapTile: Tile [30, 23] unloaded.
+@CMapTile::~CMapTile: Tile [31, 23] unloaded.
+@CMapTile::~CMapTile: Tile [32, 23] unloaded.
+@CMapTile::~CMapTile: Tile [33, 20] unloaded.
+@CMapTile::~CMapTile: Tile [33, 21] unloaded.
+@CMapTile::~CMapTile: Tile [28, 19] unloaded.
+@CMapTile::~CMapTile: Tile [28, 23] unloaded.
+@CMapTile::~CMapTile: Tile [28, 18] unloaded.
+~~RenderWindowBase
+@SaveToLocalFile: File 'D:\OpenWow\OpenWow//settings.xml' already exists and will be removed.
+^LoaderThread: Stopped.
+^LoaderThread: Stopped.
+^LoaderThread: Stopped.
+^LoaderThread: Stopped.
+^DeleterThread: Stopped.

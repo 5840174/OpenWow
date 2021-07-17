@@ -10,7 +10,7 @@
 CM2AnimatorComponent::CM2AnimatorComponent(const CM2_Base_Instance& OwnerNode)
 	: CSceneNodeComponentBase(OwnerNode)
 	
-	, m_CurrentAnimationID(EAnimationID::Walk)
+	, m_CurrentAnimationID(EAnimationID::Stand)
 	, m_CurrentAnimation(nullptr)
 	
 	, m_IsLoop(false)

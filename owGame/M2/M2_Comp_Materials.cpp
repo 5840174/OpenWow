@@ -15,7 +15,7 @@ CM2_Comp_Materials::~CM2_Comp_Materials()
 {}
 
 
-void CM2_Comp_Materials::Load(const SM2_Header& M2Header, const std::shared_ptr<IFile>& File)
+void CM2_Comp_Materials::Load(const SM2_Header& M2Header, const std::shared_ptr<IByteBuffer>& File)
 {
 	// 1 Colors
 	if (M2Header.colors.size > 0)

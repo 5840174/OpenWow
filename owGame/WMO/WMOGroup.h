@@ -63,11 +63,9 @@ private:
 	std::vector<uint16>						m_DoodadsPlacementIndexes;
 
 	//-- Collision --//
-	// MOBN chunk
-	// MOBR chunk
-	std::vector<uint16>                     collisionIndexes;
-	std::shared_ptr<IBuffer>                 VB_Collision;
-	std::vector<std::shared_ptr<CWMOGroup_Part_CollisionNode>>	m_CollisionNodes;
+	std::vector<std::shared_ptr<CWMOGroup_Part_CollisionNode>>	m_CollisionNodes; // MOBN chunk
+	std::vector<uint16>                       collisionIndexes; // MOBR chunk
+
 
 	//-- Liquid --//
 	std::shared_ptr<CWMOGroup_Part_Liquid>            m_WMOLiqiud;

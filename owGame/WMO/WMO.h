@@ -62,7 +62,7 @@ private:
 
 	//-- Groups --//
 	std::unique_ptr<char[]>												m_GroupNames;		    // MOGN chunk
-	std::vector<std::shared_ptr<CWMOGroup>>                            m_Groups;				// MOGI chunk
+	std::vector<std::shared_ptr<CWMOGroup>>                             m_Groups;				// MOGI chunk
 
 
 	//-- Skybox --//
@@ -92,12 +92,12 @@ private:
 	// MCVP chunk (optional)	
 
 private:
-	IBaseManager& m_BaseManager;
-	IRenderDevice& m_RenderDevice;
-	const std::string m_FileName;
-	std::unique_ptr<WoWChunkReader> m_ChunkReader;
-	SWMO_MOHD m_Header;
-	BoundingBox m_Bounds;
+	IBaseManager&                                                       m_BaseManager;
+	IRenderDevice&                                                      m_RenderDevice;
+	const std::string                                                   m_FileName;
+	std::unique_ptr<WoWChunkReader>                                     m_ChunkReader;
+	SWMO_MOHD                                                           m_Header;
+	BoundingBox                                                         m_Bounds;
 };
 
 #endif
