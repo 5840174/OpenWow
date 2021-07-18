@@ -110,7 +110,7 @@ public:
 	int32                               getGameBoneID() const { return m_M2Bone.key_bone_id; }
 	int16                               getParentBoneID() const { return m_M2Bone.parent_bone; }
 	uint16                              getSubmeshID() const { return m_M2Bone.submesh_id; }
-	glm::vec3                           getPivot() const { return Fix_XZmY(m_M2Bone.pivot); }
+	glm::vec3                           getPivot() const { return Fix_From_XZmY_To_XYZ(m_M2Bone.pivot); }
 
 private:
 	M2_Animated<glm::vec3>              m_TranslateAnimated;

@@ -29,6 +29,7 @@ public:
 	virtual ~CWMOGroup();
 
 	// CWMOGroup
+	const CWMO& GetWMO() const { return m_WMO; }
 	const SWMOGroup_MOGP& GetHeader() const;
 	const uint32 GetGroupIndex() const;
 	const BoundingBox& GetBoundingBox() const;

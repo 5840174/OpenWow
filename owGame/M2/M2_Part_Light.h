@@ -14,7 +14,7 @@ public:
 	virtual ~CM2_Part_Light();
 
 	int16                   GetAttachBone() const { return m_M2Light.bone; }
-	glm::vec3               GetPosition() const { return Fix_XZmY(m_M2Light.position); }
+	glm::vec3               GetPosition() const { return Fix_From_XZmY_To_XYZ(m_M2Light.position); }
 
 	const SM2_Light&        GetProto() const { return m_M2Light; }
 

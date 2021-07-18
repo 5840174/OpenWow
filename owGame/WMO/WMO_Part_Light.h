@@ -9,7 +9,7 @@ class WMO_Part_Light
 public:
 	WMO_Part_Light(const SWMO_MOLT& WMOLightProto);
 
-	glm::vec3               GetPosition() const { return Fix_XZmY(m_WMOLightProto.pos); }
+	glm::vec3               GetPosition() const { return Fix_From_XZmY_To_XYZ(m_WMOLightProto.pos); }
 	const SWMO_MOLT&        GetProto() const { return m_WMOLightProto; }
 
 private:

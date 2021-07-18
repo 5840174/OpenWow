@@ -5,8 +5,6 @@
 
 namespace
 {
-	const float cEpsilon = 0.01f;
-
 	uint32 to_wmo_liquid(const SWMOGroup_MOGP& Header, int x)
 	{
 		DBC_LIQUIDTYPE_Type basic = (DBC_LIQUIDTYPE_Type)(x & 3);
@@ -25,26 +23,7 @@ namespace
 		throw CException("Unexpected behaviour");
 	}
 
-	void MergeBox(glm::vec3(&result)[2], float  *box1, float  *box2)
-	{
-		result[0][0] = box1[0];
-		result[0][1] = box1[1];
-		result[0][2] = box1[2];
 
-		result[1][0] = box2[0];
-		result[1][1] = box2[1];
-		result[1][2] = box2[2];
-	}
-
-	void AjustDelta(glm::vec3(&src)[2], float *dst, float coef)
-	{
-		float d1 = (src[1][0] - src[0][0]) * coef;// delta x
-		float d2 = (src[1][1] - src[0][1]) * coef;// delta y
-		float d3 = (src[1][2] - src[0][2]) * coef;// delta z
-		dst[1] = d1 + src[0][1];
-		dst[0] = d2 + src[0][0];
-		dst[2] = d3 + src[0][2];
-	}
 }
 
 /*void AttenTransVerts(WMO* mapObj, CWMOGroup* mapObjGroup)
@@ -276,99 +255,83 @@ void WMOGroupFixColors_2(const SWMO_MOHD& WMOHeader, const SWMOGroup_MOGP& WMOGr
 	}
 }
 
-void TraverseBsp(int iNode, glm::vec3(&pEyes)[2], glm::vec3(&pBox)[2], void *(pAction)(SWMOGroup_MOBN*, void*), void* param)
+
+namespace
 {
-	glm::vec3 newEyes[2];
-	glm::vec3 ajusted;
-	SWMOGroup_MOBN *pNode = nullptr; // &m_tNode[iNode];
+	const float cEpsilon = 0.001f;
 
-	if (pNode == nullptr)
-		return;
-
-	if (pNode->flags & SWMOGroup_MOBN::Flags::Flag_Leaf)
+	glm::vec3 AjustDelta(BoundingBox src, float coef)
 	{
-		if (pAction == nullptr)
-		{
-			//RenderGeometry(GetEngine3DInstance(), pNode);
-			return;
-		}
-		else
-		{
-			pAction(pNode, param);
-		}
+		const glm::vec3 d = (src.getMax() - src.getMin()) * coef;
+		return d + src.getMin();
 	}
+}
 
-	int plane = pNode->flags & SWMOGroup_MOBN::Flags::Flag_AxisMask;
+void TraverseBsp(const std::vector<std::shared_ptr<CWMOGroup_Part_CollisionNode>>& CollisionNodes, int16 CollisionNodeIndex, BoundingBox Eyes, BoundingBox Box, void *(pAction)(std::shared_ptr<CWMOGroup_Part_CollisionNode>, void*), void* param)
+{
+	if (CollisionNodeIndex == -1 || CollisionNodeIndex >= CollisionNodes.size())
+		return; // Skip. Out of bounds.
 
-	float eyesmin_boxmin = pEyes[0][plane] - pBox[0][plane];
-	float boxmax_eyesmax = pBox[1][plane] - pEyes[1][plane];
-
-	if (false == ((-cEpsilon < eyesmin_boxmin) | (-cEpsilon == eyesmin_boxmin)) && false == ((pEyes[1][plane] - pBox[0][plane]) >= -cEpsilon) &&
-		false == ((cEpsilon < boxmax_eyesmax) | (cEpsilon == boxmax_eyesmax)) && false == ((pBox[1][plane] - pEyes[0][plane]) >= cEpsilon)
-		)
+	const auto collisionNode = CollisionNodes.at(CollisionNodeIndex);
+	if (collisionNode == nullptr)
 		return;
+	const auto collisitonNodeProto = collisionNode->GetProto();
 
-	glm::vec3 tBox1[2];
-	memmove(tBox1, pBox, sizeof(pBox));
-	tBox1[0][plane] = pNode->planeDist;
-
-	glm::vec3 tBox2[2];
-	memmove(tBox2, pBox, sizeof(pBox));
-	tBox2[1][plane] = pNode->planeDist;
-
-	float eyes_min_fdist = (pEyes[0][plane]) - pNode->planeDist;
-	float eyes_max_fdist = (pEyes[1][plane]) - pNode->planeDist;
-
-	if (((eyes_min_fdist >= -cEpsilon) && (eyes_min_fdist <= cEpsilon)) || ((eyes_max_fdist >= -cEpsilon) && (eyes_max_fdist <= cEpsilon)))
+	if (collisitonNodeProto.flags & SWMOGroup_MOBN::Flags::Flag_Leaf)
 	{
-		if (pNode->posChild != -1)
-			TraverseBsp(pNode->posChild, pEyes, tBox1, pAction, param);
-		if (pNode->negChild != -1)
-			TraverseBsp(pNode->negChild, pEyes, tBox2, pAction, param);
+		pAction(collisionNode, param);
 		return;
 	}
 
-	if (eyes_min_fdist > cEpsilon && eyes_max_fdist < cEpsilon)
-	{
-		if (pNode->posChild != -1)
-			TraverseBsp(pNode->posChild, pEyes, tBox1, pAction, param);
-		return;
-	}
+	const uint16 axis = collisitonNodeProto.flags & SWMOGroup_MOBN::Flags::Flag_AxisMask;
+	const float distance = collisitonNodeProto.planeDist;
+	const int16 negChild = collisitonNodeProto.negChild;
+	const int16 posChild = collisitonNodeProto.posChild;
 
-	if (eyes_min_fdist < -cEpsilon && eyes_max_fdist < -cEpsilon)
+	if ((-cEpsilon <= (Eyes.getMin()[axis] - Box.getMin()[axis])) || (Eyes.getMax()[axis] - Box.getMin()[axis]) >= -cEpsilon)
 	{
-		if (pNode->negChild != -1)
-			TraverseBsp(pNode->negChild, pEyes, tBox2, pAction, param);
-		return;
-	}
+		if ((cEpsilon <= (Box.getMax()[axis] - Eyes.getMax()[axis])) || ((Box.getMax()[axis] - Eyes.getMin()[axis]) >= cEpsilon))
+		{
+			glm::vec3 boxPositiveMin = Box.getMin();
+			boxPositiveMin[axis] = distance;
+			const BoundingBox boxPositive(boxPositiveMin, Box.getMax());
 
-	float eyesmin_div_deltadist = (float)(eyes_min_fdist / (eyes_min_fdist - eyes_max_fdist));
-	AjustDelta(pEyes, (float*)&ajusted.x, eyesmin_div_deltadist);
+			glm::vec3 boxNegativeMax = Box.getMax();
+			boxNegativeMax[axis] = distance;
+			const BoundingBox boxNegative(Box.getMin(), boxNegativeMax);
 
-	if (eyes_min_fdist <= 0.0)
-	{
-		if (pNode->negChild != -1)
-		{
-			MergeBox(newEyes, &pEyes[0][0], (float*)&ajusted.x);
-			TraverseBsp(pNode->negChild, newEyes, tBox2, pAction, param);
-		}
-		if (pNode->posChild != -1)
-		{
-			MergeBox(newEyes, (float*)&ajusted.x, &pEyes[1][0]);
-			TraverseBsp(pNode->posChild, newEyes, tBox1, pAction, param);
-		}
-	}
-	else
-	{
-		if (pNode->posChild != (short)-1)
-		{
-			MergeBox(newEyes, &pEyes[0][0], (float*)&ajusted.x);
-			TraverseBsp(pNode->posChild, newEyes, tBox1, pAction, param);
-		}
-		if (pNode->negChild != (short)-1)
-		{
-			MergeBox(newEyes, (float*)&ajusted.x, &pEyes[1][0]);
-			TraverseBsp(pNode->negChild, newEyes, tBox2, pAction, param);
+			float eyes_min_fdist = Eyes.getMin()[axis] - distance;
+			float eyes_max_fdist = Eyes.getMax()[axis] - distance;
+
+			if (((eyes_min_fdist >= -cEpsilon) && (eyes_min_fdist <= cEpsilon)) || ((eyes_max_fdist >= -cEpsilon) && (eyes_max_fdist <= cEpsilon)))
+			{
+				TraverseBsp(CollisionNodes, negChild, Eyes, boxNegative, pAction, param);
+				TraverseBsp(CollisionNodes, posChild, Eyes, boxPositive, pAction, param);
+			}
+			else if (eyes_min_fdist < -cEpsilon && eyes_max_fdist < -cEpsilon)
+			{
+				TraverseBsp(CollisionNodes, negChild, Eyes, boxNegative, pAction, param);
+			}
+			else if (eyes_min_fdist > cEpsilon && eyes_max_fdist > cEpsilon)
+			{
+				TraverseBsp(CollisionNodes, posChild, Eyes, boxPositive, pAction, param);
+			}
+			else
+			{
+				float eyesmin_div_deltadist = (eyes_min_fdist / (eyes_min_fdist - eyes_max_fdist));
+				glm::vec3 ajusted = AjustDelta(Eyes, eyesmin_div_deltadist);
+
+				if (eyes_min_fdist <= 0.0f)
+				{
+					TraverseBsp(CollisionNodes, negChild, BoundingBox(Eyes.getMin(), ajusted), boxNegative, pAction, param);
+					TraverseBsp(CollisionNodes, posChild, BoundingBox(ajusted, Eyes.getMax()), boxPositive, pAction, param);
+				}
+				else
+				{
+					TraverseBsp(CollisionNodes, negChild, BoundingBox(ajusted, Eyes.getMax()), boxNegative, pAction, param);
+					TraverseBsp(CollisionNodes, posChild, BoundingBox(Eyes.getMin(), ajusted), boxPositive, pAction, param);
+				}
+			}
 		}
 	}
 }

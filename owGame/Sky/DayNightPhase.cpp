@@ -29,7 +29,7 @@ SDayNightPhase::SDayNightPhase(std::shared_ptr<IFile> f)
     f->readBytes(&dayDir.y, 4);
     f->seekRelative(4);
     f->readBytes(&dayDir.z, 4);
-	dayDir = Fix_XZmY(dayDir);
+	dayDir = Fix_From_XZmY_To_XYZ(dayDir);
     
     //
     f->seekRelative(4);
@@ -46,7 +46,7 @@ SDayNightPhase::SDayNightPhase(std::shared_ptr<IFile> f)
     f->readBytes(&nightDir.y, 4);
     f->seekRelative(4);
     f->readBytes(&nightDir.z, 4);
-	nightDir = Fix_XZmY(nightDir);
+	nightDir = Fix_From_XZmY_To_XYZ(nightDir);
 
     //
     f->seekRelative(4);

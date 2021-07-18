@@ -109,7 +109,7 @@ bool CWMO::Load()
 	std::vector<glm::vec3> portalVertices;
 	for (const auto& pv : m_ChunkReader->OpenChunkT<glm::vec3>("MOPV"))
 	{
-		portalVertices.push_back(Fix_XZmY(pv));
+		portalVertices.push_back(Fix_From_XZmY_To_XYZ(pv));
 	}
 
 	// Portal defs
@@ -133,7 +133,7 @@ bool CWMO::Load()
 	// Visible vertices
 	for (const auto& vv : m_ChunkReader->OpenChunkT<glm::vec3>("MOVV"))
 	{
-		m_VisibleBlockVertices.push_back(Fix_XZmY(vv));
+		m_VisibleBlockVertices.push_back(Fix_From_XZmY_To_XYZ(vv));
 	}
 
 	// Visible blocks

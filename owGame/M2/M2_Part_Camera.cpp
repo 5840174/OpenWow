@@ -14,11 +14,11 @@ CM2_Part_Camera::CM2_Part_Camera(const CM2& M2Object, const std::shared_ptr<IByt
 	m_FarClip = M2Camera.far_clip;
 	m_NearClip = M2Camera.near_clip;
 	
-	m_PositionBase = Fix_XZmY(M2Camera.position_base);
-	m_TargetBase   = Fix_XZmY(M2Camera.target_position_base);
+	m_PositionBase = Fix_From_XZmY_To_XYZ(M2Camera.position_base);
+	m_TargetBase   = Fix_From_XZmY_To_XYZ(M2Camera.target_position_base);
 
-	m_Positions.Initialize(M2Camera.positions, ByteBuffer, M2Object.getSkeleton().GetAnimFiles(), Fix_XZmY);
-	m_Targets.Initialize(M2Camera.target_position, ByteBuffer, M2Object.getSkeleton().GetAnimFiles(), Fix_XZmY);
+	m_Positions.Initialize(M2Camera.positions, ByteBuffer, M2Object.getSkeleton().GetAnimFiles(), Fix_From_XZmY_To_XYZ);
+	m_Targets.Initialize(M2Camera.target_position, ByteBuffer, M2Object.getSkeleton().GetAnimFiles(), Fix_From_XZmY_To_XYZ);
 	m_Rolls.Initialize(M2Camera.roll, ByteBuffer, M2Object.getSkeleton().GetAnimFiles());
 }
 

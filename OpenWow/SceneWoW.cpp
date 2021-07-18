@@ -49,6 +49,18 @@ void CSceneWoW::Initialize()
 {
 	__super::Initialize();
 
+	//glm::vec3 a = glm::vec3(1, 2, 3);
+	//a = Fix_From_XZmY_To_XYZ(a);
+	//a = Fix_From_XYZ_to_XZmY(a);
+	//Log::Print("%f %f %f", a.x, a.y, a.z);
+
+
+	BoundingBox bb(glm::vec3(-1.0f, -2.0f, -3.0f), glm::vec3(4.0f, 5.0f, 6.0f));
+	bb = Fix_From_XZmY_To_XYZ(bb);
+	bb = Fix_From_XYZ_to_XZmY(bb);
+	Log::Print("%f %f %f", bb.getMin().x, bb.getMin().y, bb.getMin().z);
+	Log::Print("%f %f %f", bb.getMax().x, bb.getMax().y, bb.getMax().z);
+
 	// Light
 	{
 		m_DefaultLightNode = CreateSceneNodeT<ISceneNode>();
@@ -134,7 +146,7 @@ void CSceneWoW::Initialize()
 	//const float y = 0; //571 nortrend
 	//const uint32 mapID = 609;
 
-	if (true)
+	if (false)
 	{
 		m_WoWSkyManager->Load(mapID);
 		
@@ -152,13 +164,13 @@ void CSceneWoW::Initialize()
 
 		//GetCameraController()->GetCamera()->SetPosition(glm::vec3(14300, 150, 20500));
 	}
-	else if (false)
+	else if (true)
 	{
 		m_WoWSkyManager->Load(0);
 
 		// WORLD\\WMO\\KALIMDOR\\OGRIMMAR\\OGRIMMAR.WMO
-
-		auto wmoModel = GetBaseManager().GetManager<IWoWObjectsCreator>()->LoadWMO(GetRenderDevice(), "WORLD\\WMO\\NORTHREND\\DALARAN\\ND_DALARAN.WMO");
+		auto wmoModel = GetBaseManager().GetManager<IWoWObjectsCreator>()->LoadWMO(GetRenderDevice(), "WORLD\\WMO\\KALIMDOR\\OGRIMMAR\\OGRIMMAR.WMO");
+		//auto wmoModel = GetBaseManager().GetManager<IWoWObjectsCreator>()->LoadWMO(GetRenderDevice(), "WORLD\\WMO\\NORTHREND\\DALARAN\\ND_DALARAN.WMO");
 		
 		auto wmoInstance = GetRootSceneNode()->CreateSceneNode<CWMO_Base_Instance>(wmoModel);
 		GetBaseManager().GetManager<ILoader>()->AddToLoadQueue(wmoInstance);

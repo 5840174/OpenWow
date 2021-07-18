@@ -11,6 +11,7 @@
 CWMOGroup_Part_CollisionNode::CWMOGroup_Part_CollisionNode(IRenderDevice& RenderDevice, const CWMOGroup& WMOGroup, const SWMOGroup_MOBN& Proto, const std::vector<glm::vec3>& VerticesArray, const std::vector<uint16>& CollisionIndicesArray)
 	: m_Proto(Proto)
 {
+	TEMP_RenderDisable = false;
 
 
 	if (m_Proto.nFaces == 0)
@@ -35,7 +36,13 @@ CWMOGroup_Part_CollisionNode::CWMOGroup_Part_CollisionNode(IRenderDevice& Render
 	//	}
 	//}
 
-	if ((m_Proto.flags & SWMOGroup_MOBN::Flag_Leaf))
+	if (m_Proto.flags != 4)
+		Log::Print("Flags '%d'", m_Proto.flags);
+
+	auto posFlags = m_Proto.flags & SWMOGroup_MOBN::Flag_AxisMask;
+	
+	
+	//if (posFlags == 2)
 	{
 		auto collisitonVertexBuffer = RenderDevice.GetObjectsFactory().CreateVertexBuffer(collisionVerticesArray);
 
@@ -46,6 +53,11 @@ CWMOGroup_Part_CollisionNode::CWMOGroup_Part_CollisionNode(IRenderDevice& Render
 
 CWMOGroup_Part_CollisionNode::~CWMOGroup_Part_CollisionNode()
 {
+}
+
+const SWMOGroup_MOBN & CWMOGroup_Part_CollisionNode::GetProto() const
+{
+	return m_Proto;
 }
 
 const std::shared_ptr<IGeometry>& CWMOGroup_Part_CollisionNode::GetCollisionGeometry() const

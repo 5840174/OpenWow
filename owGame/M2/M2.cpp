@@ -92,8 +92,8 @@ bool CM2::Load()
 		for (uint32 i = 0; i < m_Header.vertices.size; i++)
 		{
 			SM2_Vertex vertex = vertexes[i];
-			vertex.pos = Fix_XZmY(vertex.pos);
-			vertex.normal = Fix_XZmY(vertex.normal);
+			vertex.pos = Fix_From_XZmY_To_XYZ(vertex.pos);
+			vertex.normal = Fix_From_XZmY_To_XYZ(vertex.normal);
 			m2Vertexes.push_back(vertex);
 		}
 
@@ -146,7 +146,7 @@ bool CM2::Load()
 		std::vector<glm::vec3> collisionVerticesArray;
 		const glm::vec3* collisionVertices = (const glm::vec3*)(m_Bytes->getData() + m_Header.collisionVertices.offset);
 		for (uint32 i = 0; i < m_Header.collisionVertices.size; i++)
-			collisionVerticesArray.push_back(Fix_XZmY(collisionVertices[i]));
+			collisionVerticesArray.push_back(Fix_From_XZmY_To_XYZ(collisionVertices[i]));
 
 		collisonVertexBuffer = m_RenderDevice.GetObjectsFactory().CreateVertexBuffer(collisionVerticesArray);
 	}

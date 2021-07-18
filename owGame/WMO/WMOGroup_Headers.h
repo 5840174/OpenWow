@@ -79,8 +79,8 @@ struct SWMOGroup_MOBN
 	enum Flags
 	{
 		Flag_XAxis    = 0x00,
-		Flag_YAxis    = 0x01,
-		Flag_ZAxis    = 0x02,
+		Flag_ZAxis    = 0x01,
+		Flag_mYAxis   = 0x02,
 		Flag_AxisMask = 0x03,
 
 		Flag_Leaf     = 0x04,

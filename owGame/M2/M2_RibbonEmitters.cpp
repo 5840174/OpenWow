@@ -25,7 +25,7 @@ CM2_Part_RibbonEmitters::CM2_Part_RibbonEmitters(const CM2& M2Object, const std:
 {
 	_ASSERT_EXPR(false, L"TODO!");
 	// TODOm_Bone = m_M2Object.getSkeleton().GetBones()[M2RibbonEmitter.boneIndex];
-	posValue = pos = Fix_XZmY(M2RibbonEmitter.position);
+	posValue = pos = Fix_From_XZmY_To_XYZ(M2RibbonEmitter.position);
 
 	m_Color.Initialize(M2RibbonEmitter.colorTrack, File, M2Object.getSkeleton().GetAnimFiles());
 	m_Alpha.Initialize(M2RibbonEmitter.alphaTrack, File, M2Object.getSkeleton().GetAnimFiles());

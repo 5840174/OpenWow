@@ -17,7 +17,7 @@ CWMO_Part_Portal::CWMO_Part_Portal(const std::vector<glm::vec3>& PortalVertices,
 	m_Vertices.assign(PortalVertices.data() + _proto.startVertex, PortalVertices.data() + _proto.startVertex + _proto.count);
 	_ASSERT(m_Vertices.size() == _proto.count);
 
-	m_Plane.normal = Fix_XZmY(_proto.plane.normal);
+	m_Plane.normal = Fix_From_XZmY_To_XYZ(_proto.plane.normal);
 	m_Plane.dist = _proto.plane.distance;
 }
 

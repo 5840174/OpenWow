@@ -16,7 +16,7 @@ CM2_Part_Attachment::CM2_Part_Attachment(const CM2& M2Object, const std::shared_
 	m_BoneIndex = M2Attachment.bone;
 	_ASSERT(m_BoneIndex != UINT16_MAX);
 
-	m_Position = Fix_XZmY(M2Attachment.position);
+	m_Position = Fix_From_XZmY_To_XYZ(M2Attachment.position);
 	m_IsAnimateAttached.Initialize(M2Attachment.animate_attached, ByteBuffer, M2Object.getSkeleton().GetAnimFiles());
 }
 

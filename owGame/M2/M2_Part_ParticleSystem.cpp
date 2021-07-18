@@ -11,7 +11,7 @@ CM2_Part_ParticleSystem::CM2_Part_ParticleSystem(const CM2& M2Object, const std:
 	: m_M2Object(M2Object)
 	, m_M2Particle(M2Particle)
 {
-	m_Position = Fix_XZmY(M2Particle.Position);
+	m_Position = Fix_From_XZmY_To_XYZ(M2Particle.Position);
 	m_Texture = m_M2Object.getMaterials().GetTextureDirect(M2Particle.texture)->GetTexture();
 	
 	emissionSpeed.Initialize(M2Particle.emissionSpeed, File, M2Object.getSkeleton().GetAnimFiles());

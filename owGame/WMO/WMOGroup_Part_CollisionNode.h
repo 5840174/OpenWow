@@ -14,7 +14,10 @@ public:
 	CWMOGroup_Part_CollisionNode(IRenderDevice& RenderDevice, const CWMOGroup& WMOGroup, const SWMOGroup_MOBN& Proto, const std::vector<glm::vec3>& VerticesArray, const std::vector<uint16>& CollisionIndicesArray);
 	virtual ~CWMOGroup_Part_CollisionNode();
 
+	const SWMOGroup_MOBN& GetProto() const;
 	const std::shared_ptr<IGeometry>& GetCollisionGeometry() const;
+
+	bool TEMP_RenderDisable;
 
 private:
 	std::shared_ptr<IGeometry> m_CollisionGeom;

@@ -11,7 +11,7 @@ CM2_Part_Bone::CM2_Part_Bone(const CM2& M2Object, const std::shared_ptr<IByteBuf
 	: m_M2Object(M2Object)
 	, m_M2Bone(M2Bone)
 {
-	m_TranslateAnimated.Initialize(M2Bone.translation, File, M2Object.getSkeleton().GetAnimFiles(), Fix_XZmY);
+	m_TranslateAnimated.Initialize(M2Bone.translation, File, M2Object.getSkeleton().GetAnimFiles(), Fix_From_XZmY_To_XYZ);
 	m_RotateAnimated.Initialize(M2Bone.rotation, File, M2Object.getSkeleton().GetAnimFiles(), Fix_XZmYW);
 	m_ScaleAnimated.Initialize(M2Bone.scale, File, M2Object.getSkeleton().GetAnimFiles(), Fix_XZY);
 

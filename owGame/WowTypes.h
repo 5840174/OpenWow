@@ -2,20 +2,44 @@
 
 #include "WowConsts.h"
 
-static inline glm::vec3 Fix_XZY(const glm::vec3& _vec)
+static inline glm::vec3 Fix_XZY(const glm::vec3& Vec)
 {
-	return glm::vec3(_vec.x, _vec.z, _vec.y);
+	return glm::vec3(Vec.x, Vec.z, Vec.y);
 }
 
-static inline glm::vec3 Fix_XZmY(const glm::vec3& _vec)
+static inline glm::vec3 Fix_From_XZmY_To_XYZ(const glm::vec3& Vec)
 {
-	return glm::vec3(_vec.x, _vec.z, -_vec.y);
+	return glm::vec3(Vec.x,           Vec.z, (-1.0f) * Vec.y);
+}
+
+static inline glm::vec3 Fix_From_XYZ_to_XZmY(const glm::vec3& Vec)
+{
+	return glm::vec3(Vec.x, (-1.0f) * Vec.z,           Vec.y);
 }
 
 static inline glm::quat Fix_XZmYW(const glm::quat& _quat)
 {
 	return glm::quat(_quat.w, _quat.x, _quat.z, -_quat.y);
 }
+
+
+inline inline BoundingBox Fix_From_XZmY_To_XYZ(BoundingBox BBOX)
+{
+	glm::vec3 boundsMin = Fix_From_XZmY_To_XYZ(BBOX.getMin());
+	glm::vec3 boundsMax = Fix_From_XZmY_To_XYZ(BBOX.getMax());
+	std::swap(boundsMin.z, boundsMax.z);
+	return BoundingBox(boundsMin, boundsMax);
+}
+
+static inline BoundingBox Fix_From_XYZ_to_XZmY(BoundingBox BBOX)
+{
+	glm::vec3 boundsMin = Fix_From_XYZ_to_XZmY(BBOX.getMin());
+	glm::vec3 boundsMax = Fix_From_XYZ_to_XZmY(BBOX.getMax());
+	std::swap(boundsMin.y, boundsMax.y);
+	return BoundingBox(boundsMin, boundsMax);
+}
+
+
 
 static inline glm::vec3 fromRealToGame(const glm::vec3& p)
 {
@@ -104,8 +128,8 @@ struct CAaBox
 
 	inline BoundingBox Convert() const
 	{
-		glm::vec3 boundsMin = Fix_XZmY(min);
-		glm::vec3 boundsMax = Fix_XZmY(max);
+		glm::vec3 boundsMin = Fix_From_XZmY_To_XYZ(min);
+		glm::vec3 boundsMax = Fix_From_XZmY_To_XYZ(max);
 		std::swap(boundsMin.z, boundsMax.z);
 		return BoundingBox(boundsMin, boundsMax);
 	}

@@ -136,7 +136,7 @@ void CWMOGroup::CreateInsances(const std::shared_ptr<CWMO_Group_Instance>& Paren
 		m_WMOLiqiud->CreateInsances(liquidInstance);
 
 		// Transform
-		glm::vec3 realPos = Fix_XZmY(m_WMOLiqiud->GetHeader().pos);
+		glm::vec3 realPos = Fix_From_XZmY_To_XYZ(m_WMOLiqiud->GetHeader().pos);
 		liquidInstance->SetPosition(glm::vec3(realPos.x, 0, realPos.z));
 
 		// Collider
@@ -216,7 +216,7 @@ bool CWMOGroup::Load()
 	
 		verticesArray.resize(vertexesCount);
 		for (uint32 i = 0; i < vertexesCount; i++)
-			verticesArray[i] = Fix_XZmY(vertexes[i]);
+			verticesArray[i] = Fix_From_XZmY_To_XYZ(vertexes[i]);
 
 		// Buffer
 		verticesBuffer = m_RenderDevice.GetObjectsFactory().CreateVertexBuffer(verticesArray);
@@ -233,7 +233,7 @@ bool CWMOGroup::Load()
 		std::vector<glm::vec3> normalsArray;
 		normalsArray.resize(normalsCount);
 		for (uint32 i = 0; i < normalsCount; i++)
-			normalsArray[i] = Fix_XZmY(normals[i]);
+			normalsArray[i] = Fix_From_XZmY_To_XYZ(normals[i]);
 
 		// Buffer
 		geometry->AddVertexBuffer(BufferBinding("NORMAL", 0), m_RenderDevice.GetObjectsFactory().CreateVertexBuffer(normals, normalsCount));

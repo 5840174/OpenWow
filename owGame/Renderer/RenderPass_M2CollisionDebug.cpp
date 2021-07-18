@@ -9,6 +9,8 @@
 #include "M2/M2_Base_Instance.h"
 #include "WMO/WMO_Base_Instance.h"
 
+#include "WMO/WMOHelper.h"
+
 CRenderPass_M2CollisionDebug::CRenderPass_M2CollisionDebug(IScene& Scene)
 	: Base3DPass(Scene)
 {
@@ -35,7 +37,7 @@ std::shared_ptr<IRenderPassPipelined> CRenderPass_M2CollisionDebug::ConfigurePip
 	auto pixelShader = GetRenderDevice().GetObjectsFactory().LoadShader(EShaderType::PixelShader, "3D/Debug.hlsl", "PS_main");
 	
 	// PIPELINES
-	//GetPipeline().GetDepthStencilState()->SetDepthMode(disableDepthWrites);
+	GetPipeline().GetDepthStencilState()->SetDepthMode(disableDepthWrites);
 	//GetPipeline().GetRasterizerState()->SetCullMode(IRasterizerState::CullMode::None);
 	GetPipeline().GetRasterizerState()->SetFillMode(IRasterizerState::FillMode::Wireframe, IRasterizerState::FillMode::Wireframe);
 	GetPipeline().SetRenderTarget(RenderTarget);
@@ -44,6 +46,33 @@ std::shared_ptr<IRenderPassPipelined> CRenderPass_M2CollisionDebug::ConfigurePip
 
 	return shared_from_this();
 }
+
+
+
+namespace
+{
+
+
+
+
+void* TestAction(std::shared_ptr<CWMOGroup_Part_CollisionNode> CollisionNode, void * Param)
+{
+	CRenderPass_M2CollisionDebug* collDebug = (CRenderPass_M2CollisionDebug*)Param;
+
+	if (auto collisionGeom = CollisionNode->GetCollisionGeometry())
+	{
+
+		collDebug->GetMaterial()->SetDiffuseColor(ColorRGBA(1.0f, 0.0f, 1.0f, 1.0f));
+		collDebug->GetMaterial()->Bind(collDebug->GetPipeline().GetPixelShaderPtr());
+		collisionGeom->Render(collDebug->GetPipeline().GetVertexShaderPtr());
+		collDebug->GetMaterial()->Unbind(collDebug->GetPipeline().GetPixelShaderPtr());
+	}
+
+
+	return nullptr;
+}
+}
+
 
 
 
@@ -77,12 +106,16 @@ EVisitResult CRenderPass_M2CollisionDebug::Visit(const std::shared_ptr<ISceneNod
 			m_MaterialDebug->Unbind(GetPipeline().GetPixelShaderPtr());
 		}
 	}*/
-	if (auto wmoGroupInstance = std::dynamic_pointer_cast<CWMO_Group_Instance>(SceneNode))
+	/*if (auto wmoGroupInstance = std::dynamic_pointer_cast<CWMO_Group_Instance>(SceneNode))
 	{
-		BindPerObjectData(PerObject(SceneNode->GetWorldTransfom()));
+		BindPerObjectData(PerObject());
+		//BindPerObjectData(PerObject(SceneNode->GetWorldTransfom()));
 
 		for (const auto& collisionNode : wmoGroupInstance->GetWMOGroup().GetCollisionNodes())
 		{
+			if (collisionNode->TEMP_RenderDisable)
+				continue;
+
 			if (auto collisionGeom = collisionNode->GetCollisionGeometry())
 			{
 
@@ -92,7 +125,27 @@ EVisitResult CRenderPass_M2CollisionDebug::Visit(const std::shared_ptr<ISceneNod
 				m_MaterialDebug->Unbind(GetPipeline().GetPixelShaderPtr());
 			}
 		}
+	}*/
+
+
+	if (auto wmoGroupInstance = std::dynamic_pointer_cast<CWMO_Group_Instance>(SceneNode))
+	{
+		BindPerObjectData(PerObject());
+
+		BoundingBox camBBox;
+		camBBox.setMin(GetRenderEventArgs().Camera->GetPosition() - glm::vec3(1.0f, 10.0f, 1.0f));
+		camBBox.setMax(GetRenderEventArgs().Camera->GetPosition() + glm::vec3(1.0f, 2.0f, 1.0f));
+
+		glm::vec3 bbox[2];
+		bbox[0] = glm::vec3(-1.f);
+		bbox[1] = glm::vec3(1.0f, 10.f, 1.0f);
+
+		for (const auto& it : wmoGroupInstance->GetWMOGroup().GetCollisionNodes())
+			it->TEMP_RenderDisable = true;
+
+		TraverseBsp(wmoGroupInstance->GetWMOGroup().GetCollisionNodes(), 0, Fix_From_XYZ_to_XZmY(camBBox), Fix_From_XYZ_to_XZmY(wmoGroupInstance->GetWMOGroup().GetBoundingBox()), TestAction, this);
 	}
+
 
 	return EVisitResult::AllowVisitChilds;
 }

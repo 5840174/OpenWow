@@ -10,6 +10,9 @@
 // General
 #include "WMO_Group_Instance.h"
 
+// Additional
+#include "WMOHelper.h"
+
 CWMO_Group_Instance::CWMO_Group_Instance(IScene& Scene, const std::shared_ptr<CWMOGroup>& WMOGroupObject)
 	: CSceneNode(Scene)
 	, CLoadableObject(WMOGroupObject)
