@@ -412,8 +412,7 @@ IBlendState::BlendMode CWorldObjectCreator::GetEGxBlendMode(uint32 Index)
 
 	case 11: // ConstantAlpha
 		//(true, GL_CONSTANT_ALPHA, GL_ONE_MINUS_CONSTANT_ALPHA, GL_CONSTANT_ALPHA, GL_ONE_MINUS_CONSTANT_ALPHA);
-		_ASSERT_EXPR(false, "Constant alpha EGxBlend doesn't support");
-		break;
+		throw CException("Constant alpha (11) EGxBlend doesn't support");
 
 	case 12: // Screen
 		return IBlendState::BlendMode(true, false,

@@ -315,7 +315,7 @@ public:
 					case Interpolations::Hermite:
 						return interpolateHermite<T>(r, pData.at(pos), pData.at(pos + 1), m_ValuesHermiteIn[SequenceIndex].at(pos), m_ValuesHermiteOut[SequenceIndex].at(pos));
 					default:
-						_ASSERT_EXPR(false, "M2_Animated: Unknown interpolation type.");
+						throw CException("M2Animated: Unknown interpolation type. (%d).", m_Type);
 				}
 			}
 			else
@@ -323,7 +323,7 @@ public:
 				return interpolateLinear<T>(r, pData.at(pos), pData.at(pos + 1));
 			}
 		}
-		else if (! pData.empty())
+		else if (false == pData.empty())
 		{
 			return pData.at(0);
 		}

@@ -492,6 +492,12 @@
     <ClCompile Include="WMO\WMO_PortalsComponent.cpp">
       <Filter>WMO\Components\Portals</Filter>
     </ClCompile>
+    <ClCompile Include="Renderer\RenderPass_M2CollisionDebug.cpp">
+      <Filter>Renderer\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="WMO\WMOHelper.cpp">
+      <Filter>WMO</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="common.h">
@@ -941,9 +947,6 @@
     <ClInclude Include="WMO\WMOGroup.h">
       <Filter>WMO\Groups</Filter>
     </ClInclude>
-    <ClInclude Include="WMO\WMO_Fixes.h">
-      <Filter>WMO</Filter>
-    </ClInclude>
     <ClInclude Include="Renderer\RenderPassPipelinedProcessTypelessList.h">
       <Filter>Renderer</Filter>
     </ClInclude>
@@ -1021,6 +1024,12 @@
     </ClInclude>
     <ClInclude Include="WMO\WMO_PortalsComponent.h">
       <Filter>WMO\Components\Portals</Filter>
+    </ClInclude>
+    <ClInclude Include="Renderer\RenderPass_M2CollisionDebug.h">
+      <Filter>Renderer\Debug</Filter>
+    </ClInclude>
+    <ClInclude Include="WMO\WMOHelper.h">
+      <Filter>WMO</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

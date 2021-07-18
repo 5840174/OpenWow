@@ -132,7 +132,8 @@ void CMapWDL::Load()
 	{
 		uint32 version;
 		buffer->readBytes(&version, 4);
-		_ASSERT_EXPR(version == 18, "Version mismatch != 18");
+		if (version != 18)
+			throw CException("WMO version mistatch. %d != 18.", version);
 	}
 
 	if (auto buffer = reader.OpenChunk("MWMO")) // Filenames for WMO that appear in the low resolution map. Zero terminated strings.

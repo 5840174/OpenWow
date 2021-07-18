@@ -11,16 +11,16 @@ class CWMOGroup;
 class CWMOGroup_Part_CollisionNode
 {
 public:
-	CWMOGroup_Part_CollisionNode(const CWMOGroup& WMOGroup, const SWMOGroup_MOBN& _proto);
+	CWMOGroup_Part_CollisionNode(IRenderDevice& RenderDevice, const CWMOGroup& WMOGroup, const SWMOGroup_MOBN& Proto, const std::vector<glm::vec3>& VerticesArray, const std::vector<uint16>& CollisionIndicesArray);
 	virtual ~CWMOGroup_Part_CollisionNode();
 
-	void Render(const glm::mat4& _worldMatrix);
+	const std::shared_ptr<IGeometry>& GetCollisionGeometry() const;
+
+private:
+	std::shared_ptr<IGeometry> m_CollisionGeom;
 
 private:
 	const SWMOGroup_MOBN m_Proto;
-
-	std::shared_ptr<IModel> m_GEOM_Collision;
-	glm::vec4 color;
 };
 
 #endif

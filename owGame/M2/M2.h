@@ -34,6 +34,8 @@ public:
 
 	const bool                                      isAnimated() const { return m_IsAnimated; }
 
+	const std::shared_ptr<IGeometry>&               GetCollisionGeometry() const { return m_CollisionGeom; }
+
 	const IBaseManager&                             GetBaseManager() const { return m_BaseManager; }
 	IRenderDevice&                                  GetRenderDevice() const { return m_RenderDevice; }
 
@@ -65,11 +67,7 @@ private:
 
 	std::vector<std::shared_ptr<CM2_Skin>>          m_Skins;
 
-private:
-	// Buffers and geom
-	std::shared_ptr<IModel>				            m_CollisionGeom;
-	uint32								            m_CollisionIndCnt;
-	uint32								            m_CollisionVetCnt;
+	std::shared_ptr<IGeometry>				        m_CollisionGeom;
 
 private:
 	IBaseManager&                                   m_BaseManager;

@@ -15,7 +15,7 @@
 #include "WMO_Doodad_Instance.h"
 #include "WMO_Liquid_Instance.h"
 
-#include "WMO_Fixes.h"
+#include "WMOHelper.h"
 
 CWMOGroup::CWMOGroup(IBaseManager& BaseManager, IRenderDevice& RenderDevice, const CWMO& WMO, const uint32 GroupIndex, const SWMO_MOGI& GroupProto)
 	: m_BaseManager(BaseManager)
@@ -24,18 +24,18 @@ CWMOGroup::CWMOGroup(IBaseManager& BaseManager, IRenderDevice& RenderDevice, con
 	, m_GroupIndex(GroupIndex)
 {
 	if (GroupProto.nameoffset != -1)
-		m_GroupName = std::string(m_WMO.GetGroupName(GroupProto.nameoffset));
+		m_GroupName = m_WMO.GetGroupName(GroupProto.nameoffset);
 	else
 		m_GroupName = m_WMO.GetFilename() + "_Group" + std::to_string(GroupIndex);
 
 	m_Bounds = GroupProto.bounding_box.Convert();
 
-	char temp[MAX_PATH];
-	strcpy_s(temp, m_WMO.GetFilename().c_str());
-	temp[m_WMO.GetFilename().length() - 4] = 0;
+	char wmoFilenameWithoutExtension[MAX_PATH];
+	strcpy_s(wmoFilenameWithoutExtension, m_WMO.GetFilename().c_str());
+	wmoFilenameWithoutExtension[m_WMO.GetFilename().length() - 4] = '\0';
 
 	char groupFilename[MAX_PATH];
-	sprintf_s(groupFilename, "%s_%03d.wmo", temp, m_GroupIndex);
+	sprintf_s(groupFilename, "%s_%03d.wmo", wmoFilenameWithoutExtension, m_GroupIndex);
 
 	std::unique_ptr<WoWChunkReader> chunkReader = std::make_unique<WoWChunkReader>(m_BaseManager, groupFilename);
 
@@ -104,6 +104,16 @@ const std::vector<CWMO_Part_Portal>& CWMOGroup::GetPortals() const
 	return m_Portals;
 }
 
+const std::shared_ptr<IGeometry>& CWMOGroup::GetCollisionGeometry() const
+{
+	return m_CollisionGeom;
+}
+
+const std::vector<std::shared_ptr<CWMOGroup_Part_CollisionNode>>& CWMOGroup::GetCollisionNodes() const
+{
+	return m_CollisionNodes;
+}
+
 
 
 //
@@ -157,7 +167,7 @@ void CWMOGroup::CreateInsances(const std::shared_ptr<CWMO_Group_Instance>& Paren
 		const SWMO_MODD& placement = m_WMO.GetDoodadPlacement(doodadPlacementIndex);
 
 		std::string doodadFileName = m_WMO.GetDoodadFileName(placement.flags.nameIndex);
-		if (std::shared_ptr<CM2> m2 = m_BaseManager.GetManager<IWoWObjectsCreator>()->LoadM2(m_RenderDevice, doodadFileName))
+		if (auto m2 = m_BaseManager.GetManager<IWoWObjectsCreator>()->LoadM2(m_RenderDevice, doodadFileName))
 		{
 			auto inst = Parent->CreateSceneNode<CWMO_Doodad_Instance>(m2, doodadPlacementIndex, placement);
 
@@ -172,118 +182,58 @@ void CWMOGroup::CreateInsances(const std::shared_ptr<CWMO_Group_Instance>& Paren
 #endif
 }
 
-uint32 to_wmo_liquid(const SWMOGroup_MOGP& Header, int x)
-{
-	DBC_LIQUIDTYPE_Type basic = (DBC_LIQUIDTYPE_Type)(x & 3);
-	switch (basic)
-	{
-		case DBC_LIQUIDTYPE_Type::water:
-			return (Header.flags.IS_NOT_WATER_BUT_OCEAN) ? 14 : 13;
-		case DBC_LIQUIDTYPE_Type::ocean:
-			return 14;
-		case DBC_LIQUIDTYPE_Type::magma:
-			return 19;
-		case DBC_LIQUIDTYPE_Type::slime:
-			return 20;
-	}
-
-	throw CException("Unexpected behaviour");
-}
-
-const DBC_LiquidTypeRecord* ResolveLiquidType(const CDBCStorage* DBCStorage, const SWMO_MOHD& WMOHeader, const SWMOGroup_MOGP& WMOGroupHeader)
-{
-	uint32 liquid_type = UINT32_MAX;
-
-	if (WMOHeader.flags.use_liquid_type_dbc_id != 0)
-	{
-		if (WMOGroupHeader.liquidType < 21)
-		{
-			liquid_type = to_wmo_liquid(WMOGroupHeader, WMOGroupHeader.liquidType - 1);
-		}
-		else
-		{
-			liquid_type = WMOGroupHeader.liquidType;
-		}
-	}
-	else
-	{
-		if (WMOGroupHeader.liquidType == 15 /*Liquid green lava*/)
-		{
-			//return nullptr;
-			liquid_type = 1;  // use to_wmo_liquid(SMOLTile->liquid) ? It seems to work alright.
-		}
-		else
-		{
-			if (WMOGroupHeader.liquidType < 20)
-			{
-				liquid_type = to_wmo_liquid(WMOGroupHeader, WMOGroupHeader.liquidType);
-			}
-			else
-			{
-				liquid_type = WMOGroupHeader.liquidType + 1;
-			}
-		}
-	}
-
-	return DBCStorage->DBC_LiquidType()[liquid_type];
-}
-
-
-
-
 bool CWMOGroup::Load()
 {
-	// Buffer
-	uint16* dataFromMOVI = nullptr;
-	glm::vec3 * dataFromMOVT = nullptr;
-
-	// CollisionTEMP
-	uint32 collisionCount = 0;
-	SWMOGroup_MOBN* collisions = nullptr;
-
 	std::shared_ptr<IGeometry> geometry = m_RenderDevice.GetObjectsFactory().CreateGeometry();
 
 	// Material info for triangles
-	for (const auto& materialsInfo : m_ChunkReader->OpenChunkT<SWMOGroup_MOPY>("MOPY")) // Material info for triangles
+	for (const auto& materialsInfo : m_ChunkReader->OpenChunkT<SWMOGroup_MOPY>("MOPY"))
 	{
 		m_MaterialsInfo.push_back(materialsInfo);
 	}
 
 
 	// Indices
+	std::vector<uint16> indicesArray;
 	if (auto buffer = m_ChunkReader->OpenChunk("MOVI"))
 	{
-		// Buffer
-		geometry->SetIndexBuffer(m_RenderDevice.GetObjectsFactory().CreateIndexBuffer((const uint16*)buffer->getData(), buffer->getSize() / sizeof(uint16)));
+		const uint32 indexesCount = buffer->getSize() / sizeof(uint16);
+		const uint16* indexes = (const uint16*)buffer->getData();
+
+		indicesArray.assign(indexes, indexes + indexesCount);
+
+		geometry->SetIndexBuffer(m_RenderDevice.GetObjectsFactory().CreateIndexBuffer(indicesArray));
 	}
 
 
-	// Vertices chunk.
+	// Vertices
+	std::shared_ptr<IBuffer> verticesBuffer = nullptr;
+	std::vector<glm::vec3> verticesArray;
 	if (auto buffer = m_ChunkReader->OpenChunk("MOVT"))
 	{
-		uint32 vertexesCount = buffer->getSize() / sizeof(glm::vec3);
-		glm::vec3* vertexes = (glm::vec3*)buffer->getData();
-
-		// Convert
+		const uint32 vertexesCount = buffer->getSize() / sizeof(glm::vec3);
+		const glm::vec3* vertexes = (const glm::vec3*)buffer->getData();
+	
+		verticesArray.resize(vertexesCount);
 		for (uint32 i = 0; i < vertexesCount; i++)
-			vertexes[i] = Fix_XZmY(vertexes[i]);
+			verticesArray[i] = Fix_XZmY(vertexes[i]);
 
 		// Buffer
-		geometry->AddVertexBuffer(BufferBinding("POSITION", 0), m_RenderDevice.GetObjectsFactory().CreateVertexBuffer(vertexes, vertexesCount));
-
-		dataFromMOVT = vertexes;
+		verticesBuffer = m_RenderDevice.GetObjectsFactory().CreateVertexBuffer(verticesArray);
+		geometry->AddVertexBuffer(BufferBinding("POSITION", 0), verticesBuffer);
 	}
 
 
 	// Normals
 	if (auto buffer = m_ChunkReader->OpenChunk("MONR"))
 	{
-		uint32 normalsCount = buffer->getSize() / sizeof(glm::vec3);
-		glm::vec3* normals = (glm::vec3*)buffer->getDataFromCurrent();
+		const uint32 normalsCount = buffer->getSize() / sizeof(glm::vec3);
+		const glm::vec3* normals = (const glm::vec3*)buffer->getDataFromCurrent();
 
-		// Convert
+		std::vector<glm::vec3> normalsArray;
+		normalsArray.resize(normalsCount);
 		for (uint32 i = 0; i < normalsCount; i++)
-			normals[i] = Fix_XZmY(normals[i]);
+			normalsArray[i] = Fix_XZmY(normals[i]);
 
 		// Buffer
 		geometry->AddVertexBuffer(BufferBinding("NORMAL", 0), m_RenderDevice.GetObjectsFactory().CreateVertexBuffer(normals, normalsCount));
@@ -331,34 +281,39 @@ bool CWMOGroup::Load()
 		m_DoodadsPlacementIndexes.assign(doodadsIndexes, doodadsIndexes + doodadsIndexesCount);
 	}
 
-
-	for (const auto& collision : m_ChunkReader->OpenChunkT<SWMOGroup_MOBN>("MOBN"))
-	{
-		std::shared_ptr<CWMOGroup_Part_CollisionNode> collisionNode = MakeShared(CWMOGroup_Part_CollisionNode, *this, collision);
-		m_CollisionNodes.push_back(collisionNode);
-	}
-
-
+	// Collision indices
+	std::vector<uint16> collisionIndicesArray;
 	if (auto buffer = m_ChunkReader->OpenChunk("MOBR"))
 	{
-		uint32 indexesCnt = buffer->getSize() / sizeof(uint16);
-		uint16* indices = (uint16*)buffer->getDataFromCurrent();
+		uint32 collisionIndicesCnt = buffer->getSize() / sizeof(uint16);
+		uint16* collisionIndices = (uint16*)buffer->getDataFromCurrent();
 
-		// Buffer
-		//geometry->SetIndexBuffer(m_RenderDevice.GetObjectsFactory().CreateIndexBuffer((const uint16*)buffer->getData(), buffer->getSize() / sizeof(uint16)));
+		collisionIndicesArray.resize(collisionIndicesCnt * 3);
+		for (uint32 i = 0; i < collisionIndicesCnt; i++)
+			for (uint8 j = 0; j < 3; j++)
+				collisionIndicesArray[(i * 3) + j] = indicesArray[(3 * collisionIndices[i]) + j];
 
-		/*collisionIndexes.reserve(indexesCnt * 3);
-		for (uint32 i = 0; i < indexesCnt; i++)
-		{
-			collisionIndexes[i * 3 + 0] = dataFromMOVI[3 * indices[i] + 0];
-			collisionIndexes[i * 3 + 1] = dataFromMOVI[3 * indices[i] + 1];
-			collisionIndexes[i * 3 + 2] = dataFromMOVI[3 * indices[i] + 2];
-		}*/
+		// Collision index buffer
+		auto collisitonIndexBuffer = m_RenderDevice.GetObjectsFactory().CreateIndexBuffer(collisionIndicesArray);
+
+		m_CollisionGeom = m_RenderDevice.GetObjectsFactory().CreateGeometry();
+		m_CollisionGeom->SetVertexBuffer(verticesBuffer);
+		m_CollisionGeom->SetIndexBuffer(collisitonIndexBuffer);
+	}
+
+	// CollisionNodes
+	for (const auto& collision : m_ChunkReader->OpenChunkT<SWMOGroup_MOBN>("MOBN"))
+	{
+		auto collisionNode = MakeShared(CWMOGroup_Part_CollisionNode, m_RenderDevice, *this, collision, verticesArray, collisionIndicesArray);
+		m_CollisionNodes.push_back(collisionNode);
 	}
 
 
 	// Vertex colors
 	auto mocvChunks = m_ChunkReader->OpenChunks("MOCV");
+	//if (mocvChunks.size() > 1)
+	//	throw CException("MOCV count more then 1!");
+
 	for (size_t i = 0; i < mocvChunks.size(); i++)
 	{
 		_ASSERT(m_GroupHeader.flags.HAS_MOCV);
@@ -404,7 +359,7 @@ bool CWMOGroup::Load()
 			liquidHeader.materialID
 		);*/
 
-		m_WMOLiqiud = MakeShared(CWMOGroup_Part_Liquid, m_RenderDevice, m_WMO, *this, buffer, liquidHeader, ResolveLiquidType(m_BaseManager.GetManager<CDBCStorage>(), m_WMO.GetHeader(), m_GroupHeader));
+		m_WMOLiqiud = MakeShared(CWMOGroup_Part_Liquid, m_RenderDevice, m_WMO, *this, buffer, liquidHeader, WMOGroupResolveLiquidType(m_BaseManager.GetManager<CDBCStorage>(), m_WMO.GetHeader(), m_GroupHeader));
 	}
 
 	/*Log::Info("WMO '%s': Batch count '%d'. Trans: '%d' (%d - %d). Int: '%d' (%d - %d). Ext: '%d' (%d - %d).",

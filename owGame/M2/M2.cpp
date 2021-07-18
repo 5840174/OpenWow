@@ -81,6 +81,7 @@ bool CM2::Load()
 	m_Miscellaneous = std::make_unique<CM2_Comp_Miscellaneous>(*this);
 	m_Miscellaneous->Load(m_Header, m_Bytes);
 
+
 	// Skins
 	if (m_Header.vertices.size > 0)
 	{
@@ -134,48 +135,38 @@ bool CM2::Load()
 #endif
 	}
 
-#if 0
+
+#if 1
 	// Collisions
-	std::shared_ptr<IBuffer> collisonVB = nullptr;
-	std::shared_ptr<IBuffer> collisonIB = nullptr;
+	std::shared_ptr<IBuffer> collisonVertexBuffer = nullptr;
+	std::shared_ptr<IBuffer> collisonIndexBuffer = nullptr;
+
 	if (m_Header.collisionVertices.size > 0)
 	{
-		std::vector<vec3> collisionVertices;
-		vec3* CollisionVertices = (vec3*)(m_F->getData() + m_Header.collisionVertices.offset);
+		std::vector<glm::vec3> collisionVerticesArray;
+		const glm::vec3* collisionVertices = (const glm::vec3*)(m_Bytes->getData() + m_Header.collisionVertices.offset);
 		for (uint32 i = 0; i < m_Header.collisionVertices.size; i++)
-		{
-			collisionVertices.push_back(CollisionVertices[i]);
-		}
+			collisionVerticesArray.push_back(Fix_XZmY(collisionVertices[i]));
 
-		for (uint32 i = 0; i < m_Header.collisionVertices.size; i++)
-		{
-			collisionVertices[i] = Fix_XZmY(collisionVertices[i]);
-		}
-
-		collisonVB = m_RenderDevice.GetObjectsFactory().CreateVertexBuffer(collisionVertices);
+		collisonVertexBuffer = m_RenderDevice.GetObjectsFactory().CreateVertexBuffer(collisionVerticesArray);
 	}
 
 	if (m_Header.collisionTriangles.size > 0)
 	{
-		std::vector<uint16> collisionTriangles;
-		uint16* CollisionTriangles = (uint16*)(m_F->getData() + m_Header.collisionTriangles.offset);
+		std::vector<uint16> collisionTrianglesArray;
+		const uint16* collisionTriangles = (const uint16*)(m_Bytes->getData() + m_Header.collisionTriangles.offset);
 		for (uint32 i = 0; i < m_Header.collisionTriangles.size; i++)
-		{
-			collisionTriangles.push_back(CollisionTriangles[i]);
-		}
+			collisionTrianglesArray.push_back(collisionTriangles[i]);
 
-		collisonIB = m_RenderDevice.GetObjectsFactory().CreateIndexBuffer(collisionTriangles);
+		collisonIndexBuffer = m_RenderDevice.GetObjectsFactory().CreateIndexBuffer(collisionTrianglesArray);
 	}
 
-	if (collisonVB != nullptr && collisonIB != nullptr)
+	if (collisonVertexBuffer != nullptr && collisonIndexBuffer != nullptr)
 	{
-		m_CollisionVetCnt = m_Header.collisionVertices.size;
-		m_CollisionIndCnt = m_Header.collisionTriangles.size;
-
-		//m_M2->m_CollisionGeom = _Render->r.beginCreatingGeometry(PRIM_TRILIST, _Render->getRenderStorage()->__layout_GxVBF_P);
-		//m_M2->m_CollisionGeom->setGeomVertexParams(collisonVB, R_DataType::T_FLOAT, 0, sizeof(vec3)); // pos 0-2
-		//m_M2->m_CollisionGeom->setGeomIndexParams(collisonIB, R_IndexFormat::IDXFMT_16);
-		//m_M2->m_CollisionGeom->finishCreatingGeometry();
+		auto collisionGeometry = GetRenderDevice().GetObjectsFactory().CreateGeometry();
+		collisionGeometry->SetVertexBuffer(collisonVertexBuffer);
+		collisionGeometry->SetIndexBuffer(collisonIndexBuffer);
+		m_CollisionGeom = collisionGeometry;
 	}
 	else
 	{
@@ -184,7 +175,7 @@ bool CM2::Load()
 #endif
 
 	m_IsAnimated = getSkeleton().isAnimBones() || getSkeleton().isBillboard() || getMaterials().IsAnimTextures() || getMiscellaneous().IsAnimated() || true;
-	_ASSERT(m_F.use_count() == 1);
+	_ASSERT(m_Bytes.use_count() == 1);
 	m_Bytes.reset();
 
 	return true;

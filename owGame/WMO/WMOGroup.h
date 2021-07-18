@@ -37,6 +37,9 @@ public:
 	void AddPortal(const CWMO_Part_Portal& WMOPartPortal);
 	const std::vector<CWMO_Part_Portal>& GetPortals() const;
 
+	const std::shared_ptr<IGeometry>& GetCollisionGeometry() const;
+	const std::vector<std::shared_ptr<CWMOGroup_Part_CollisionNode>>& GetCollisionNodes() const;
+
 	// ISceneNodeProvider
 	void CreateInsances(const std::shared_ptr<CWMO_Group_Instance>& Parent) const;
 
@@ -64,7 +67,7 @@ private:
 
 	//-- Collision --//
 	std::vector<std::shared_ptr<CWMOGroup_Part_CollisionNode>>	m_CollisionNodes; // MOBN chunk
-	std::vector<uint16>                       collisionIndexes; // MOBR chunk
+	std::shared_ptr<IGeometry>				        m_CollisionGeom;
 
 
 	//-- Liquid --//

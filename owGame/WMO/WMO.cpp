@@ -70,39 +70,36 @@ bool CWMO::Load()
 	{
 		m_TexturesNames = std::unique_ptr<char[]>(new char[buffer->getSize() + 1]);
 		buffer->readBytes(m_TexturesNames.get(), buffer->getSize());
-		m_TexturesNames[buffer->getSize()] = 0x00;
+		m_TexturesNames[buffer->getSize()] = '\0';
 	}
 
 	// Materials
-	size_t cntr = 0;
+	for (const auto& mat : m_ChunkReader->OpenChunkT<SWMO_MOMT>("MOMT"))
 	{
-		for (const auto& mat : m_ChunkReader->OpenChunkT<SWMO_MOMT>("MOMT"))
-		{
-			auto material = MakeShared(WMO_Part_Material, m_RenderDevice, *this, mat);
-			material->SetName(m_FileName + "_Material_" + std::to_string(cntr++));
-			m_Materials.push_back(material);
-		}
-		_ASSERT(m_Materials.size() == m_Header.nTextures);
-		//Log::Info("WMO: Materials count = '%d'", m_Materials.size());
+		auto material = MakeShared(WMO_Part_Material, m_RenderDevice, *this, mat);
+		m_Materials.push_back(material);
 	}
+
+	if (m_Materials.size() != m_Header.nTextures)
+		throw CException("WMO::Load: Materials count '%d' isn't equal textures count '%d'.", m_Materials.size(), m_Header.nTextures);
+
 
 	// Group names
 	if (auto buffer = m_ChunkReader->OpenChunk("MOGN"))
 	{
 		m_GroupNames = std::unique_ptr<char[]>(new char[buffer->getSize() + 1]);
 		buffer->readBytes(m_GroupNames.get(), buffer->getSize());
-		m_GroupNames[buffer->getSize()] = 0x00;
+		m_GroupNames[buffer->getSize()] = '\0';
 	}
 
 	// Skybox
-	
 	if (auto buffer = m_ChunkReader->OpenChunk("MOSB"))
 	{
 		if (buffer->getSize() > 4)
 		{
 			std::unique_ptr<char[]> skyboxFilename = std::unique_ptr<char[]>(new char[buffer->getSize() + 1]);
 			buffer->readBytes(skyboxFilename.get(), buffer->getSize());
-			skyboxFilename[buffer->getSize()] = 0x00;
+			skyboxFilename[buffer->getSize()] = '\0';
 
 			Log::Error("WMO[%s]: Skybox [%s]", m_FileName.c_str(), skyboxFilename.get());
 		}
@@ -110,11 +107,9 @@ bool CWMO::Load()
 
 	// Portal vertices
 	std::vector<glm::vec3> portalVertices;
+	for (const auto& pv : m_ChunkReader->OpenChunkT<glm::vec3>("MOPV"))
 	{
-		for (const auto& pv : m_ChunkReader->OpenChunkT<glm::vec3>("MOPV"))
-		{
-			portalVertices.push_back(Fix_XZmY(pv));
-		}
+		portalVertices.push_back(Fix_XZmY(pv));
 	}
 
 	// Portal defs
@@ -126,16 +121,15 @@ bool CWMO::Load()
 
 	// Portal references
 	std::vector<SWMO_MOPR> portalsReferences;
+	for (const auto& pr : m_ChunkReader->OpenChunkT<SWMO_MOPR>("MOPR"))
 	{
-		for (const auto& pr : m_ChunkReader->OpenChunkT<SWMO_MOPR>("MOPR"))
-		{
-			_ASSERT(pr.portalIndex >= 0 && pr.portalIndex < portals.size());
-			auto& portal = portals[pr.portalIndex];
-			portal.setGroup(pr.groupIndex, pr.side);
-			portalsReferences.push_back(pr);
-		}
+		_ASSERT(pr.portalIndex >= 0 && pr.portalIndex < portals.size());
+		auto& portal = portals[pr.portalIndex];
+		portal.setGroup(pr.groupIndex, pr.side);
+		portalsReferences.push_back(pr);
 	}
 
+#if 0
 	// Visible vertices
 	for (const auto& vv : m_ChunkReader->OpenChunkT<glm::vec3>("MOVV"))
 	{
@@ -147,6 +141,7 @@ bool CWMO::Load()
 	{
 		m_VisibleBlockList.push_back(vb);
 	}
+#endif
 
 	// Lights
 	for (const auto& lt : m_ChunkReader->OpenChunkT<SWMO_MOLT>("MOLT"))
@@ -159,7 +154,6 @@ bool CWMO::Load()
 	{
 		m_DoodadsSetInfos.push_back(ds);
 	}
-	//Log::Info("WMO: Doodads count = '%d'", m_DoodadsSetInfos.size());
 
 	// Doodads filenames
 	if (auto buffer = m_ChunkReader->OpenChunk("MODN"))

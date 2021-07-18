@@ -14,8 +14,6 @@ CRenderPass_WMOPortalDebug::CRenderPass_WMOPortalDebug(IScene& Scene)
 	: Base3DPass(Scene)
 {
 	SetPassName("WMOPortalDebug");
-
-	m_WoWSettings = GetBaseManager().GetManager<ISettings>()->GetGroup("WoWSettings");
 }
 
 CRenderPass_WMOPortalDebug::~CRenderPass_WMOPortalDebug()
@@ -91,10 +89,6 @@ EVisitResult CRenderPass_WMOPortalDebug::Visit(const std::shared_ptr<ISceneNode>
 
 EVisitResult CRenderPass_WMOPortalDebug::Visit(const std::shared_ptr<IGeometry>& Geometry, const std::shared_ptr<IMaterial>& Material, SGeometryDrawArgs GeometryDrawArgs)
 {
-	auto wmoMaterial = std::dynamic_pointer_cast<WMO_Part_Material>(Material);
-	wmoMaterial->GetBlendState()->Bind();
-	wmoMaterial->GetRasterizerState()->Bind();
-
 	return EVisitResult::Block;
 }
 

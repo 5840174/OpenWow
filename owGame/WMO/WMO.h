@@ -68,11 +68,11 @@ private:
 	//-- Skybox --//
 	std::shared_ptr<CM2>                                                m_Skybox;
 
-
+#if 0
 	//-- Visible block
 	std::vector<glm::vec3>                                              m_VisibleBlockVertices;	// MOVV chunk
 	std::vector<SWMO_MOVB>                                              m_VisibleBlockList;		// MOVB chunk
-
+#endif
 
 	// -- Lights --//
 	std::vector<std::shared_ptr<WMO_Part_Light>>                        m_Lights;				// MOLT chunk

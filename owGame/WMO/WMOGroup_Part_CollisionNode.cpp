@@ -8,48 +8,49 @@
 // General
 #include "WMOGroup_Part_CollisionNode.h"
 
-CWMOGroup_Part_CollisionNode::CWMOGroup_Part_CollisionNode(const CWMOGroup& WMOGroup, const SWMOGroup_MOBN& _proto) :
-	m_Proto(_proto)
+CWMOGroup_Part_CollisionNode::CWMOGroup_Part_CollisionNode(IRenderDevice& RenderDevice, const CWMOGroup& WMOGroup, const SWMOGroup_MOBN& Proto, const std::vector<glm::vec3>& VerticesArray, const std::vector<uint16>& CollisionIndicesArray)
+	: m_Proto(Proto)
 {
-	std::vector<glm::vec3> collisionVertices;
-	collisionVertices.reserve(m_Proto.nFaces * 3);
-	/*for (uint32 i = m_Proto.faceStart; i < m_Proto.faceStart + m_Proto.nFaces; i++)
+
+
+	if (m_Proto.nFaces == 0)
+		return;
+
+	std::vector<glm::vec3> collisionVerticesArray;
+	collisionVerticesArray.reserve(m_Proto.nFaces * 3);
+	for (uint32 i = m_Proto.faceStart; i < m_Proto.faceStart + m_Proto.nFaces; i++)
 	{
-		collisionVertices.push_back(_parentGroup->dataFromMOVT[_parentGroup->collisionIndexes[3 * i + 0]]);
-		collisionVertices.push_back(_parentGroup->dataFromMOVT[_parentGroup->collisionIndexes[3 * i + 1]]);
-		collisionVertices.push_back(_parentGroup->dataFromMOVT[_parentGroup->collisionIndexes[3 * i + 2]]);
-	}*/
+		collisionVerticesArray.push_back(VerticesArray[CollisionIndicesArray[3 * i + 0]]);
+		collisionVerticesArray.push_back(VerticesArray[CollisionIndicesArray[3 * i + 1]]);
+		collisionVerticesArray.push_back(VerticesArray[CollisionIndicesArray[3 * i + 2]]);
+	}
+	//for (uint32 i = m_Proto.faceStart; i < m_Proto.faceStart + m_Proto.nFaces; i++)
+	//{
+	//	for (uint8 j = 0; j < 3; j++)
+	//	{
+	//		const size_t index = ((i - m_Proto.faceStart) * 3) + j;
+	//		const size_t index2 = ((i - m_Proto.faceStart) * 3) + j + m_Proto.faceStart;
+	//
+	//		collisionVerticesArray[index] = VerticesArray[CollisionIndicesArray[index2]];
+	//	}
+	//}
 
-	/*std::shared_ptr<IBuffer> vb = _Render->r.createVertexBuffer(collisionVertices.size() * sizeof(vec3), collisionVertices.data(), false);
+	if ((m_Proto.flags & SWMOGroup_MOBN::Flag_Leaf))
+	{
+		auto collisitonVertexBuffer = RenderDevice.GetObjectsFactory().CreateVertexBuffer(collisionVerticesArray);
 
-	m_GEOM_Collision = _Render->r.beginCreatingGeometry(PRIM_TRILIST, _Render->getRenderStorage()->__layout_GxVBF_P);
-	m_GEOM_Collision->setGeomVertexParams(vb, R_DataType::T_FLOAT, 0, sizeof(vec3));
-	m_GEOM_Collision->finishCreatingGeometry();*/
-
-	color = glm::vec4(0.0f, 1.0f, 0.0f, 1.0f);
+		m_CollisionGeom = RenderDevice.GetObjectsFactory().CreateGeometry();
+		m_CollisionGeom->SetVertexBuffer(collisitonVertexBuffer);
+	}
 }
 
 CWMOGroup_Part_CollisionNode::~CWMOGroup_Part_CollisionNode()
 {
 }
 
-void CWMOGroup_Part_CollisionNode::Render(const glm::mat4& _worldMatrix)
+const std::shared_ptr<IGeometry>& CWMOGroup_Part_CollisionNode::GetCollisionGeometry() const
 {
-	//_Render->r.setFillMode(R_FillMode::RS_FILL_WIREFRAME);
-	/*_Render->r.setCullMode(R_CullMode::RS_CULL_NONE);
-
-	_Render->getTechniquesMgr()->Debug_Pass->Bind();
-	{
-		_Render->getTechniquesMgr()->Debug_Pass->setWorld(_worldMatrix);
-		_Render->getTechniquesMgr()->Debug_Pass->SetColor4(color);
-
-		_Render->r.setGeometry(m_GEOM_Collision);
-		_Render->r.draw(0, m_Proto.nFaces);
-	}
-	_Render->getTechniquesMgr()->Debug_Pass->Unbind();
-
-	_Render->r.setFillMode(R_FillMode::RS_FILL_SOLID);
-	_Render->r.setCullMode(R_CullMode::RS_CULL_NONE);*/
+	return m_CollisionGeom;
 }
 
 #endif

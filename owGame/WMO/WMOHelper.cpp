@@ -1,11 +1,51 @@
-#pragma once
+#include "stdafx.h"
 
-#ifdef USE_WMO_MODELS
+// General
+#include "WMOHelper.h"
 
-#include "WMO.h"
-#include "WMOGroup.h"
+namespace
+{
+	const float cEpsilon = 0.01f;
 
+	uint32 to_wmo_liquid(const SWMOGroup_MOGP& Header, int x)
+	{
+		DBC_LIQUIDTYPE_Type basic = (DBC_LIQUIDTYPE_Type)(x & 3);
+		switch (basic)
+		{
+			case DBC_LIQUIDTYPE_Type::water:
+				return (Header.flags.IS_NOT_WATER_BUT_OCEAN) ? 14 : 13;
+			case DBC_LIQUIDTYPE_Type::ocean:
+				return 14;
+			case DBC_LIQUIDTYPE_Type::magma:
+				return 19;
+			case DBC_LIQUIDTYPE_Type::slime:
+				return 20;
+		}
 
+		throw CException("Unexpected behaviour");
+	}
+
+	void MergeBox(glm::vec3(&result)[2], float  *box1, float  *box2)
+	{
+		result[0][0] = box1[0];
+		result[0][1] = box1[1];
+		result[0][2] = box1[2];
+
+		result[1][0] = box2[0];
+		result[1][1] = box2[1];
+		result[1][2] = box2[2];
+	}
+
+	void AjustDelta(glm::vec3(&src)[2], float *dst, float coef)
+	{
+		float d1 = (src[1][0] - src[0][0]) * coef;// delta x
+		float d2 = (src[1][1] - src[0][1]) * coef;// delta y
+		float d3 = (src[1][2] - src[0][2]) * coef;// delta z
+		dst[1] = d1 + src[0][1];
+		dst[0] = d2 + src[0][0];
+		dst[2] = d3 + src[0][2];
+	}
+}
 
 /*void AttenTransVerts(WMO* mapObj, CWMOGroup* mapObjGroup)
 {
@@ -94,7 +134,46 @@
 	}
 }*/
 
-// Fix MOCV for 3.3.5a
+
+const DBC_LiquidTypeRecord* WMOGroupResolveLiquidType(const CDBCStorage* DBCStorage, const SWMO_MOHD& WMOHeader, const SWMOGroup_MOGP& WMOGroupHeader)
+{
+	uint32 liquid_type = UINT32_MAX;
+
+	if (WMOHeader.flags.use_liquid_type_dbc_id != 0)
+	{
+		if (WMOGroupHeader.liquidType < 21)
+		{
+			liquid_type = to_wmo_liquid(WMOGroupHeader, WMOGroupHeader.liquidType - 1);
+		}
+		else
+		{
+			liquid_type = WMOGroupHeader.liquidType;
+		}
+	}
+	else
+	{
+		if (WMOGroupHeader.liquidType == 15 /*Liquid green lava*/)
+		{
+			//return nullptr;
+			liquid_type = 1;  // use to_wmo_liquid(SMOLTile->liquid) ? It seems to work alright.
+		}
+		else
+		{
+			if (WMOGroupHeader.liquidType < 20)
+			{
+				liquid_type = to_wmo_liquid(WMOGroupHeader, WMOGroupHeader.liquidType);
+			}
+			else
+			{
+				liquid_type = WMOGroupHeader.liquidType + 1;
+			}
+		}
+	}
+
+	return DBCStorage->DBC_LiquidType()[liquid_type];
+}
+
+
 void WMOGroupFixColors(const SWMOGroup_MOGP& WMOGroupHeader, CBgra* mocv, uint32 mocv_count, const SWMOGroup_MOBA* WMOGroupBatchDefinitions)
 {
 	int32_t intBatchStart = 0;
@@ -131,31 +210,30 @@ void WMOGroupFixColors(const SWMOGroup_MOGP& WMOGroupHeader, CBgra* mocv, uint32
 }
 
 
-/*
-void CWMOGroup::FixColors(CBgra* mocv, uint32 mocv_count, const SWMOGroup_MOBA* moba)
+void WMOGroupFixColors_2(const SWMO_MOHD& WMOHeader, const SWMOGroup_MOGP& WMOGroupHeader, CBgra* mocv, uint32 mocv_count, const SWMOGroup_MOBA* moba)
 {
 	uint32 begin_second_fixup = 0;
-	if (m_GroupHeader.transBatchCount)
+	if (WMOGroupHeader.transBatchCount)
 	{
-		begin_second_fixup = moba[(uint16)m_GroupHeader.transBatchCount].vertexStart + 1;
+		begin_second_fixup = moba[(uint16)WMOGroupHeader.transBatchCount].vertexStart + 1;
 	}
 
-	if (m_WMO.GetHeader().flags.lighten_interiors)
+	if (WMOHeader.flags.lighten_interiors)
 	{
 		for (uint32 i = begin_second_fixup; i < mocv_count; ++i)
 		{
-			mocv[i].a = m_GroupHeader.flags.IS_OUTDOOR ? 255 : 0;
+			mocv[i].a = WMOGroupHeader.flags.IS_OUTDOOR ? 255 : 0;
 		}
 	}
 	else
 	{
 		uint8 r = 0, g = 0, b = 0;
 
-		if (m_WMO.GetHeader().flags.skip_base_color == 0)
+		if (WMOHeader.flags.skip_base_color == 0)
 		{
-			r = m_WMO.GetHeader().ambColor.r;
-			g = m_WMO.GetHeader().ambColor.g;
-			b = m_WMO.GetHeader().ambColor.b;
+			r = WMOHeader.ambColor.r;
+			g = WMOHeader.ambColor.g;
+			b = WMOHeader.ambColor.b;
 		}
 
 		for (uint32 mocv_index = 0; mocv_index < begin_second_fixup; ++mocv_index)
@@ -193,32 +271,9 @@ void CWMOGroup::FixColors(CBgra* mocv, uint32 mocv_count, const SWMOGroup_MOBA* 
 			int32 v33 = (mocv[i].a * mocv[i].r) / 64 + mocv[i].r - r;
 			mocv[i].r = std::min(255, std::max(v33 / 2, 0));
 
-			mocv[i].a = m_GroupHeader.flags.IS_OUTDOOR ? 0xFF : 0x00;
+			mocv[i].a = WMOGroupHeader.flags.IS_OUTDOOR ? 0xFF : 0x00;
 		}
 	}
-}*/
-
-#define epsilon 0.01F
-
-void MergeBox(glm::vec3(&result)[2], float  *box1, float  *box2)
-{
-	result[0][0] = box1[0];
-	result[0][1] = box1[1];
-	result[0][2] = box1[2];
-
-	result[1][0] = box2[0];
-	result[1][1] = box2[1];
-	result[1][2] = box2[2];
-}
-
-void AjustDelta(glm::vec3(&src)[2], float *dst, float coef)
-{
-	float d1 = (src[1][0] - src[0][0]) * coef;// delta x
-	float d2 = (src[1][1] - src[0][1]) * coef;// delta y
-	float d3 = (src[1][2] - src[0][2]) * coef;// delta z
-	dst[1] = d1 + src[0][1];
-	dst[0] = d2 + src[0][0];
-	dst[2] = d3 + src[0][2];
 }
 
 void TraverseBsp(int iNode, glm::vec3(&pEyes)[2], glm::vec3(&pBox)[2], void *(pAction)(SWMOGroup_MOBN*, void*), void* param)
@@ -248,8 +303,8 @@ void TraverseBsp(int iNode, glm::vec3(&pEyes)[2], glm::vec3(&pBox)[2], void *(pA
 	float eyesmin_boxmin = pEyes[0][plane] - pBox[0][plane];
 	float boxmax_eyesmax = pBox[1][plane] - pEyes[1][plane];
 
-	if (false == ((-epsilon < eyesmin_boxmin) | (-epsilon == eyesmin_boxmin)) && false == ((pEyes[1][plane] - pBox[0][plane]) >= -epsilon) &&
-		false == ((epsilon < boxmax_eyesmax) | (epsilon == boxmax_eyesmax)) && false == ((pBox[1][plane] - pEyes[0][plane]) >= epsilon)
+	if (false == ((-cEpsilon < eyesmin_boxmin) | (-cEpsilon == eyesmin_boxmin)) && false == ((pEyes[1][plane] - pBox[0][plane]) >= -cEpsilon) &&
+		false == ((cEpsilon < boxmax_eyesmax) | (cEpsilon == boxmax_eyesmax)) && false == ((pBox[1][plane] - pEyes[0][plane]) >= cEpsilon)
 		)
 		return;
 
@@ -264,7 +319,7 @@ void TraverseBsp(int iNode, glm::vec3(&pEyes)[2], glm::vec3(&pBox)[2], void *(pA
 	float eyes_min_fdist = (pEyes[0][plane]) - pNode->planeDist;
 	float eyes_max_fdist = (pEyes[1][plane]) - pNode->planeDist;
 
-	if (((eyes_min_fdist >= -epsilon) && (eyes_min_fdist <= epsilon)) || ((eyes_max_fdist >= -epsilon) && (eyes_max_fdist <= epsilon)))
+	if (((eyes_min_fdist >= -cEpsilon) && (eyes_min_fdist <= cEpsilon)) || ((eyes_max_fdist >= -cEpsilon) && (eyes_max_fdist <= cEpsilon)))
 	{
 		if (pNode->posChild != -1)
 			TraverseBsp(pNode->posChild, pEyes, tBox1, pAction, param);
@@ -273,14 +328,14 @@ void TraverseBsp(int iNode, glm::vec3(&pEyes)[2], glm::vec3(&pBox)[2], void *(pA
 		return;
 	}
 
-	if (eyes_min_fdist > epsilon && eyes_max_fdist < epsilon)
+	if (eyes_min_fdist > cEpsilon && eyes_max_fdist < cEpsilon)
 	{
 		if (pNode->posChild != -1)
 			TraverseBsp(pNode->posChild, pEyes, tBox1, pAction, param);
 		return;
 	}
 
-	if (eyes_min_fdist < -epsilon && eyes_max_fdist < -epsilon)
+	if (eyes_min_fdist < -cEpsilon && eyes_max_fdist < -cEpsilon)
 	{
 		if (pNode->negChild != -1)
 			TraverseBsp(pNode->negChild, pEyes, tBox2, pAction, param);
@@ -317,5 +372,3 @@ void TraverseBsp(int iNode, glm::vec3(&pEyes)[2], glm::vec3(&pBox)[2], void *(pA
 		}
 	}
 }
-
-#endif
