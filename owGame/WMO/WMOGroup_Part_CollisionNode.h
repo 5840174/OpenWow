@@ -17,8 +17,6 @@ public:
 	const SWMOGroup_MOBN& GetProto() const;
 	const std::shared_ptr<IGeometry>& GetCollisionGeometry() const;
 
-	bool TEMP_RenderDisable;
-
 private:
 	std::shared_ptr<IGeometry> m_CollisionGeom;
 

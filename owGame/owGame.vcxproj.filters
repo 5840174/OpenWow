@@ -1031,6 +1031,9 @@
     <ClInclude Include="WMO\WMOHelper.h">
       <Filter>WMO</Filter>
     </ClInclude>
+    <ClInclude Include="Map\MapHelpers.h">
+      <Filter>Map</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="WoWChunkReader.inl">

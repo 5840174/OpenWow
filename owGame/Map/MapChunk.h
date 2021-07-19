@@ -17,6 +17,7 @@ public:
 
 	// CMapChunk
 	uint32 GetAreaID() const;
+	glm::vec3 GetTerrainHeight(glm::vec2 PosXZ) const;
 	void ExtendMapChunkBounds(const BoundingBox& OtherBBox);
 
 	// ISceneNode
@@ -25,6 +26,9 @@ public:
 	// ILoadable
 	bool Load() override;
 	bool Delete() override;
+
+private:
+	glm::vec3 m_Vertices[C_MapBufferSize];
 
 private:
 	CMapTile&                       m_MapTile;

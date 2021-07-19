@@ -9,7 +9,10 @@
 #include "Formats/ImageBLP.h"
 #include "World/WorldObjectsCreator.h"
 
+
+IznPlugin* gPlugin = nullptr;
 extern CLog* gLogInstance;
+
 
 class ZN_API COpenWoWGamePlguin
 	: public IznPlugin
@@ -70,11 +73,10 @@ private:
 
 
 
-IznPlugin* plugin = nullptr;
-extern "C" __declspec(dllexport) IznPlugin* WINAPI GetPlugin(IBaseManager& BaseManager)
-{
-	if (plugin == nullptr)
-		plugin = new COpenWoWGamePlguin(BaseManager);
 
-	return plugin;
+IznPlugin* WINAPI GetPlugin(IBaseManager& BaseManager)
+{
+	if (gPlugin == nullptr)
+		gPlugin = new COpenWoWGamePlguin(BaseManager);
+	return gPlugin;
 }

@@ -20,8 +20,9 @@ public:
 	void                                            EnterMap(int32 x, int32 z);
 	std::shared_ptr<CMapTile>                       LoadTile(int32 x, int32 z);
 	void                                            ClearCache();
-	uint32                                          GetAreaID(glm::vec3 CameraPosition);
-
+	const CMapChunk*                                GetMapChunk(glm::vec3 Position);
+	uint32                                          GetAreaID(glm::vec3 Position);
+	glm::vec3                                       GetTerrainHeight(glm::vec3 Position);
 
 	// ISceneNode
 	void                                            Update(const UpdateEventArgs& e) override;
@@ -50,8 +51,8 @@ public: // Getters
 
 
 public: // shared
-	std::vector<uint16>                             GenarateHighMapArray(uint16 _holes = 0) const;
-	std::vector<uint16>                             GenarateDefaultMapArray(uint16 _holes = 0) const;
+	std::vector<uint16>                             GenarateHighMapArray(uint16 Holes = 0) const;
+	std::vector<uint16>                             GenarateDefaultMapArray(uint16 Holes = 0) const;
 	std::shared_ptr<IBuffer>                        GetBufferTextureCoordDetailAndAlpha() const;
 
 private:
@@ -72,6 +73,8 @@ private: // shared
 	std::vector<uint16>                             m_HighMapStrip;
 	std::vector<uint16>                             m_DefaultMapStrip;
 	std::shared_ptr<IBuffer>                        m_BufferTextureCoordDetailAndAlpha;
+	uint16                                          m_OuterArray[9][9];
+	uint16                                          m_InnerArray[8][8];
 
 	// Minimap
 	CMinimapProvider*		                        mProvider;

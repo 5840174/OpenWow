@@ -1,14 +1,9 @@
 #include "stdafx.h"
 
-#ifdef USE_WMO_MODELS
-
 // General
 #include "RenderPass_M2CollisionDebug.h"
 
 // Additional
-#include "M2/M2_Base_Instance.h"
-#include "WMO/WMO_Base_Instance.h"
-
 #include "WMO/WMOHelper.h"
 
 CRenderPass_M2CollisionDebug::CRenderPass_M2CollisionDebug(IScene& Scene)
@@ -37,42 +32,16 @@ std::shared_ptr<IRenderPassPipelined> CRenderPass_M2CollisionDebug::ConfigurePip
 	auto pixelShader = GetRenderDevice().GetObjectsFactory().LoadShader(EShaderType::PixelShader, "3D/Debug.hlsl", "PS_main");
 	
 	// PIPELINES
+	GetPipeline().GetBlendState()->SetBlendMode(alphaBlending);
 	GetPipeline().GetDepthStencilState()->SetDepthMode(disableDepthWrites);
 	//GetPipeline().GetRasterizerState()->SetCullMode(IRasterizerState::CullMode::None);
-	GetPipeline().GetRasterizerState()->SetFillMode(IRasterizerState::FillMode::Wireframe, IRasterizerState::FillMode::Wireframe);
+	//GetPipeline().GetRasterizerState()->SetFillMode(IRasterizerState::FillMode::Wireframe, IRasterizerState::FillMode::Wireframe);
 	GetPipeline().SetRenderTarget(RenderTarget);
 	GetPipeline().SetShader(vertexShader);
 	GetPipeline().SetShader(pixelShader);
 
 	return shared_from_this();
 }
-
-
-
-namespace
-{
-
-
-
-
-void* TestAction(std::shared_ptr<CWMOGroup_Part_CollisionNode> CollisionNode, void * Param)
-{
-	CRenderPass_M2CollisionDebug* collDebug = (CRenderPass_M2CollisionDebug*)Param;
-
-	if (auto collisionGeom = CollisionNode->GetCollisionGeometry())
-	{
-
-		collDebug->GetMaterial()->SetDiffuseColor(ColorRGBA(1.0f, 0.0f, 1.0f, 1.0f));
-		collDebug->GetMaterial()->Bind(collDebug->GetPipeline().GetPixelShaderPtr());
-		collisionGeom->Render(collDebug->GetPipeline().GetVertexShaderPtr());
-		collDebug->GetMaterial()->Unbind(collDebug->GetPipeline().GetPixelShaderPtr());
-	}
-
-
-	return nullptr;
-}
-}
-
 
 
 
@@ -113,12 +82,8 @@ EVisitResult CRenderPass_M2CollisionDebug::Visit(const std::shared_ptr<ISceneNod
 
 		for (const auto& collisionNode : wmoGroupInstance->GetWMOGroup().GetCollisionNodes())
 		{
-			if (collisionNode->TEMP_RenderDisable)
-				continue;
-
 			if (auto collisionGeom = collisionNode->GetCollisionGeometry())
 			{
-
 				m_MaterialDebug->SetDiffuseColor(ColorRGBA(1.0f, 0.0f, 1.0f, 1.0f));
 				m_MaterialDebug->Bind(GetPipeline().GetPixelShaderPtr());
 				collisionGeom->Render(GetPipeline().GetVertexShaderPtr());
@@ -130,20 +95,25 @@ EVisitResult CRenderPass_M2CollisionDebug::Visit(const std::shared_ptr<ISceneNod
 
 	if (auto wmoGroupInstance = std::dynamic_pointer_cast<CWMO_Group_Instance>(SceneNode))
 	{
-		BindPerObjectData(PerObject());
+		BindPerObjectData(PerObject(SceneNode->GetWorldTransfom()));
+
+		glm::vec3 cameraPosition = GetRenderEventArgs().Camera->GetPosition();
+		cameraPosition = glm::inverse(SceneNode->GetWorldTransfom()) * glm::vec4(cameraPosition, 1.0f);
 
 		BoundingBox camBBox;
-		camBBox.setMin(GetRenderEventArgs().Camera->GetPosition() - glm::vec3(1.0f, 10.0f, 1.0f));
-		camBBox.setMax(GetRenderEventArgs().Camera->GetPosition() + glm::vec3(1.0f, 2.0f, 1.0f));
+		camBBox.setMin(cameraPosition - glm::vec3(1.0f, 10.0f, 1.0f));
+		camBBox.setMax(cameraPosition + glm::vec3(1.0f, 2.0f, 1.0f));
 
-		glm::vec3 bbox[2];
-		bbox[0] = glm::vec3(-1.f);
-		bbox[1] = glm::vec3(1.0f, 10.f, 1.0f);
+		//for (const auto& it : wmoGroupInstance->GetWMOGroup().GetCollisionNodes())
+		//	it->TEMP_RenderDisable = true;
 
-		for (const auto& it : wmoGroupInstance->GetWMOGroup().GetCollisionNodes())
-			it->TEMP_RenderDisable = true;
-
-		TraverseBsp(wmoGroupInstance->GetWMOGroup().GetCollisionNodes(), 0, Fix_From_XYZ_to_XZmY(camBBox), Fix_From_XYZ_to_XZmY(wmoGroupInstance->GetWMOGroup().GetBoundingBox()), TestAction, this);
+		TraverseBsp(
+			wmoGroupInstance->GetWMOGroup().GetCollisionNodes(), 
+			0, 
+			Fix_From_XYZ_to_XZmY(camBBox), 
+			Fix_From_XYZ_to_XZmY(wmoGroupInstance->GetWMOGroup().GetBoundingBox()), 
+			std::bind(&CRenderPass_M2CollisionDebug::WMOGroupCollisionAction, this, std::placeholders::_1)
+		);
 	}
 
 
@@ -155,4 +125,18 @@ EVisitResult CRenderPass_M2CollisionDebug::Visit(const std::shared_ptr<IGeometry
 	return EVisitResult::Block;
 }
 
-#endif
+
+
+//
+// Protected
+//
+void CRenderPass_M2CollisionDebug::WMOGroupCollisionAction(std::shared_ptr<CWMOGroup_Part_CollisionNode> CollisionNode)
+{
+	if (auto collisionGeom = CollisionNode->GetCollisionGeometry())
+	{
+		GetMaterial()->SetDiffuseColor(ColorRGBA(1.0f, 0.0f, 1.0f, 0.3f));
+		GetMaterial()->Bind(GetPipeline().GetPixelShaderPtr());
+		collisionGeom->Render(GetPipeline().GetVertexShaderPtr());
+		GetMaterial()->Unbind(GetPipeline().GetPixelShaderPtr());
+	}
+}

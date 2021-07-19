@@ -8,6 +8,7 @@
 #include "MapChunk.h"
 
 // Additional
+#include "MapHelpers.h"
 #include "MapChunkLiquid.h"
 #include "MapChunkMaterial.h"
 #include "Liquid/LiquidBaseInstance.h"
@@ -21,6 +22,17 @@ namespace
 		const float fF = static_cast<float>(f) / 255.0f;
 		const float resultF = (aF  * (1.0f - fF)) + (bF * fF);
 		return static_cast<uint8>(glm::round(resultF * 255.0f));
+	}
+
+	float barryCentric(glm::vec3 p1, glm::vec3 p2, glm::vec3 p3, glm::vec2 pos)
+	{
+		float det = (p2.z - p3.z) * (p1.x - p3.x) + (p3.x - p2.x) * (p1.z - p3.z);
+
+		float l1 = ((p2.z - p3.z) * (pos.x - p3.x) + (p3.x - p2.x) * (pos.y - p3.z)) / det;
+		float l2 = ((p3.z - p1.z) * (pos.x - p3.x) + (p1.x - p3.x) * (pos.y - p3.z)) / det;
+		float l3 = 1.0f - l1 - l2;
+
+		return (l1 * p1.y) + (l2 * p2.y) + (l3 * p3.y);
 	}
 }
 
@@ -45,6 +57,51 @@ CMapChunk::~CMapChunk()
 uint32 CMapChunk::GetAreaID() const
 {
     return m_Header.areaid;
+}
+
+glm::vec3 CMapChunk::GetTerrainHeight(glm::vec2 PosXZ) const
+{
+	// Index of Unit
+	int16 indexX = glm::round(PosXZ.x / float(C_UnitSize) - 0.5f);
+	int16 indexZ = glm::round(PosXZ.y / float(C_UnitSize) - 0.5f);
+	if (indexX > 8 || indexZ > 8) throw CException("Incorrect coords.");
+
+	float modX = glm::mod(PosXZ.x, C_UnitSize);
+	float modZ = glm::mod(PosXZ.y, C_UnitSize);
+	if (modX > C_UnitSize || modZ > C_UnitSize)
+		throw CException("Incorrect coords.");
+
+	uint16 indexIntoArray0 = GetOuterMapChunkArrayIndex(indexZ,     indexX    );
+	uint16 indexIntoArray1 = GetOuterMapChunkArrayIndex(indexZ + 1, indexX    );
+	uint16 indexIntoArray2 = GetOuterMapChunkArrayIndex(indexZ,     indexX + 1);
+	uint16 indexIntoArray3 = GetOuterMapChunkArrayIndex(indexZ + 1, indexX + 1);
+
+	if (modZ <= (C_UnitSize - modX))
+	{
+		float height = barryCentric(
+			glm::vec3(0.0f,       m_Vertices[indexIntoArray0].y, 0.0f      ),
+			glm::vec3(C_UnitSize, m_Vertices[indexIntoArray1].y, 0.0f      ),
+			glm::vec3(0.0f,       m_Vertices[indexIntoArray2].y, C_UnitSize),
+			glm::vec2(modZ, modX)
+		);
+
+		return glm::vec3(PosXZ.x, height, PosXZ.y);
+
+		//return (m_Vertices[indexIntoArray0] + m_Vertices[indexIntoArray1] + m_Vertices[indexIntoArray2]) / 3.0f;
+	}
+	else
+	{
+		float height = barryCentric(
+			glm::vec3(0.0f,       m_Vertices[indexIntoArray2].y, C_UnitSize),
+			glm::vec3(C_UnitSize, m_Vertices[indexIntoArray1].y, 0.0f      ),
+			glm::vec3(C_UnitSize, m_Vertices[indexIntoArray3].y, C_UnitSize),
+			glm::vec2(modZ, modX)
+		);
+
+		return glm::vec3(PosXZ.x, height, PosXZ.y);
+
+		//return (m_Vertices[indexIntoArray2] + m_Vertices[indexIntoArray1] + m_Vertices[indexIntoArray3]) / 3.0f;
+	}
 }
 
 void CMapChunk::ExtendMapChunkBounds(const BoundingBox & OtherBBox)
@@ -81,7 +138,7 @@ void CMapChunk::Initialize()
 	SetCullStrategy(ECullStrategy::ByFrustrumAndDistance2D);
 	SetCullDistance(GetBaseManager().GetManager<ISettings>()->GetGroup("WoWSettings")->GetPropertyT<float>("MapChunkRenderDistance")->Get());
 	SetBounds(bbox);
-	SetDebugDrawMode(false);
+	SetDebugDrawMode(true);
 	SetDebugDrawColor(ColorRGBA(0.3f, 1.0f, 0.2f, 0.8f));
 }
 
@@ -128,7 +185,7 @@ bool CMapChunk::Load()
 				int24 nor;
 				m_Bytes->readBytes(&nor, sizeof(int24));
 
-				*ttn++ = glm::vec3(-(float)nor.y / 127.0f, (float)nor.z / 127.0f, -(float)nor.x / 127.0f);
+				*ttn++ = glm::vec3((-1.0f) * (float)nor.y / 127.0f, (float)nor.z / 127.0f, (-1.0f) * (float)nor.x / 127.0f);
 				//*t_normals_INT24++ = nor;
 			}
 		}
@@ -139,11 +196,7 @@ bool CMapChunk::Load()
 	// Heights
 	m_Bytes->seek(startPos + m_Header.ofsHeight);
 	{
-		float heights[C_MapBufferSize];
-		float* t_heights = heights;
-
-		glm::vec3 tempVertexes[C_MapBufferSize];
-		glm::vec3* ttv = tempVertexes;
+		glm::vec3* ttv = m_Vertices;
 
 		float minHeight = Math::MaxFloat;
 		float maxHeight = Math::MinFloat;
@@ -162,11 +215,11 @@ bool CMapChunk::Load()
 					xpos += C_UnitSize * 0.5f;
 				}
 
-				glm::vec3 v(- m_Header.xpos + C_ZeroPoint + xpos, m_Header.ypos + h, - m_Header.zpos + C_ZeroPoint + zpos);
+				glm::vec3 v((-1.0f) * m_Header.xpos + C_ZeroPoint + xpos, m_Header.ypos + h, (-1.0f) * m_Header.zpos + C_ZeroPoint + zpos);
 				*ttv++ = v;
 
-				minHeight = std::min(m_Header.ypos + h, minHeight);
-				maxHeight = std::max(m_Header.ypos + h, maxHeight);
+				minHeight = std::min(v.y, minHeight);
+				maxHeight = std::max(v.y, maxHeight);
 			}
 		}
 
@@ -185,7 +238,7 @@ bool CMapChunk::Load()
 			SetBounds(bbox);
 		}
 
-		verticesBuffer = GetRenderDevice().GetObjectsFactory().CreateVertexBuffer(tempVertexes, C_MapBufferSize);
+		verticesBuffer = GetRenderDevice().GetObjectsFactory().CreateVertexBuffer(m_Vertices, C_MapBufferSize);
 	}
 
 	_ASSERT(m_MapTile.GetState() == ILoadable::ELoadableState::Loaded);
@@ -439,7 +492,7 @@ bool CMapChunk::Load()
 			mapChunkMaterial->SetTexture(i + 5, m_MapTile.GetTextureInfo(mcly[i].textureIndex)->specularTexture);
 	}
 
-	std::shared_ptr<ITexture> blendRBGShadowATexture = GetRenderDevice().GetObjectsFactory().CreateEmptyTexture();
+	auto blendRBGShadowATexture = GetRenderDevice().GetObjectsFactory().CreateEmptyTexture();
 	blendRBGShadowATexture->LoadTexture2DFromImage(blendBuff);
 
 	mapChunkMaterial->SetTexture(4, blendRBGShadowATexture);
@@ -451,7 +504,7 @@ bool CMapChunk::Load()
 	mapChunkMaterial->SetIsNortrend(m_Map.IsNortrend());
 
 	// Geom High
-	{ 
+	/*{ 
 		const std::vector<uint16>& mapArrayHigh = m_Map.GenarateHighMapArray(m_Header.holes);
 		std::shared_ptr<IBuffer> indexBufferHigh = GetRenderDevice().GetObjectsFactory().CreateIndexBuffer(mapArrayHigh);
 
@@ -468,15 +521,14 @@ bool CMapChunk::Load()
 		mapChunkModel->AddConnection(mapChunkMaterial, defaultGeometry);
 
 		GetComponentT<IModelComponent>()->SetModel(mapChunkModel);
-	}
+	}*/
 
 	// Geom Default
-	/*{
+	{
 		const std::vector<uint16>& mapArrayDefault = m_Map.GenarateDefaultMapArray(m_Header.holes);
 		std::shared_ptr<IBuffer> indexBufferDefault = GetRenderDevice().GetObjectsFactory().CreateIndexBuffer(mapArrayDefault);
 
-		std::shared_ptr<IGeometry> defaultGeometry = GetRenderDevice().GetObjectsFactory().CreateGeometry();
-
+		auto defaultGeometry = GetRenderDevice().GetObjectsFactory().CreateGeometry();
 		defaultGeometry->AddVertexBuffer(BufferBinding("POSITION", 0), verticesBuffer);
 		defaultGeometry->AddVertexBuffer(BufferBinding("NORMAL", 0), normalsBuffer);
 		defaultGeometry->AddVertexBuffer(BufferBinding("TEXCOORD", 0), m_Map.GetBufferTextureCoordDetailAndAlpha());
@@ -489,7 +541,7 @@ bool CMapChunk::Load()
 		mapChunkModel->AddConnection(mapChunkMaterial, defaultGeometry);
 
 		GetComponentT<IModelComponent>()->SetModel(mapChunkModel);
-	}*/
+	}
 
 	return true;
 }

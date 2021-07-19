@@ -346,6 +346,7 @@ bool CMapTile::Load()
 		m_Chunks.push_back(chunk.get());
 	}
 
+#if 0
 
 	//-- WMOs --------------------------------------------------------------------------
 #ifdef USE_WMO_MODELS
@@ -382,6 +383,8 @@ bool CMapTile::Load()
 		}
 	}
 	//---------------------------------------------------------------------------------
+#endif
+
 #endif
 
 	//Log::Green("MapTile[%d, %d, %s]: Loaded!", m_IndexX, m_IndexZ, mapTileFilename.c_str());

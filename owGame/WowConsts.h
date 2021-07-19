@@ -7,7 +7,7 @@ const uint32 C_TilesInMap = 64u;
 const uint32 C_RenderedTiles = 1u;
 const uint32 C_TilesCacheSize = ((C_RenderedTiles + 1u) * (C_RenderedTiles + 1u));
 #else
-const uint32 C_RenderedTiles = 5u;
+const uint32 C_RenderedTiles = 3u;
 const uint32 C_TilesCacheSize = ((C_RenderedTiles + 1u) * (C_RenderedTiles + 1u));
 #endif
 
@@ -23,6 +23,7 @@ const int32 C_MapBufferSize = 9 * 9 + 8 * 8;
 
 // World
 const float C_DetailSize = 8.0f;
+const float C_AlphaSize = 1.0f;
 
 // M2 models
 const uint8	cM2Model_TexturesMaxCount = 128;

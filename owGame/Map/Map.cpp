@@ -3,37 +3,8 @@
 // General
 #include "Map.h"
 
-namespace
-{
-	bool IsHole(uint16 holes, uint16 i, uint16 j)
-	{
-		const uint16 holetab_h[4] = { 0x1111, 0x2222, 0x4444, 0x8888 };
-		const uint16 holetab_v[4] = { 0x000F, 0x00F0, 0x0F00, 0xF000 };
-		return (holes & holetab_h[i] & holetab_v[j]) != 0;
-	}
-
-	bool IsBadTileIndex(int i, int j)
-	{
-		if (i < 0)
-			return true;
-
-		if (j < 0)
-			return true;
-
-		if (i >= C_TilesInMap)
-			return true;
-
-		if (j >= C_TilesInMap)
-			return true;
-
-		return false;
-	}
-
-	bool IsGoodTileIndex(int i, int j)
-	{
-		return (false == IsBadTileIndex(i, j));
-	}
-}
+// Additional
+#include "MapHelpers.h"
 
 CMap::CMap(IScene& Scene)
 	: CSceneNode(Scene)
@@ -42,6 +13,14 @@ CMap::CMap(IScene& Scene)
 	m_IsOnInvalidTile = false;
 
 	{
+		for (uint16 i = 0; i < 9; i++)
+			for (uint16 j = 0; j < 9; j++)
+				m_OuterArray[i][j] = GetOuterMapChunkArrayIndex(i, j);
+
+		for (uint16 i = 0; i < 8; i++)
+			for (uint16 j = 0; j < 8; j++)
+				m_InnerArray[i][j] = GetInnerMapChunkArrayIndex(i, j);
+
 		m_HighMapStrip = GenarateHighMapArray();
 		m_DefaultMapStrip = GenarateDefaultMapArray();
 
@@ -66,13 +45,13 @@ CMap::CMap(IScene& Scene)
 
 		// init texture coordinates for alpha map:
 		glm::vec4* atc = detailAndAlphaTextureCoord;
-		const float alpha_half = 0.5f * 1.0f / 8.0f;
+		const float alpha_half = 0.5f * C_AlphaSize / 8.0f;
 		for (int j = 0; j < 17; j++)
 		{
 			for (int i = 0; i < ((j % 2) ? 8 : 9); i++)
 			{
-				float tx = 1.0f / 8.0f * i;
-				float ty = 1.0f / 8.0f * j * 0.5f;
+				float tx = C_AlphaSize / 8.0f * i;
+				float ty = C_AlphaSize / 8.0f * j * 0.5f;
 				if (j % 2)
 				{
 					tx += alpha_half;
@@ -290,40 +269,55 @@ void CMap::ClearCache()
 	//}
 }
 
-uint32 CMap::GetAreaID(glm::vec3 CameraPosition)
+const CMapChunk * CMap::GetMapChunk(glm::vec3 Position)
 {
 	if (false == m_WDT->IsMapTileExists())
-		return UINT32_MAX;
+		return nullptr;
 
-	int32 tileX = (int)(CameraPosition.x / C_TileSize);
-	int32 tileZ = (int)(CameraPosition.z / C_TileSize);
+	int32 tileX = (int)(Position.x / C_TileSize);
+	int32 tileZ = (int)(Position.z / C_TileSize);
 
-	int32 chunkX = (int)(glm::mod(CameraPosition.x, C_TileSize) / C_ChunkSize);
-	int32 chunkZ = (int)(glm::mod(CameraPosition.z, C_TileSize) / C_ChunkSize);
-
-	if ((tileX < m_CurrentTileX - static_cast<int32>(C_RenderedTiles / 2)) ||
-		(tileX > m_CurrentTileX + static_cast<int32>(C_RenderedTiles / 2)) ||
-		(tileZ < m_CurrentTileZ - static_cast<int32>(C_RenderedTiles / 2)) ||
-		(tileZ > m_CurrentTileZ + static_cast<int32>(C_RenderedTiles / 2)))
+	if ((tileX < m_CurrentTileX - static_cast<int32>(C_RenderedTiles / 2u)) ||
+		(tileX > m_CurrentTileX + static_cast<int32>(C_RenderedTiles / 2u)) ||
+		(tileZ < m_CurrentTileZ - static_cast<int32>(C_RenderedTiles / 2u)) ||
+		(tileZ > m_CurrentTileZ + static_cast<int32>(C_RenderedTiles / 2u)))
 	{
-		return UINT32_MAX;
+		return nullptr;
 	}
 
-	int32 indexX = tileZ - m_CurrentTileZ + static_cast<int32>(C_RenderedTiles / 2);
-	int32 indexY = tileX - m_CurrentTileX + static_cast<int32>(C_RenderedTiles / 2);
-	auto curTile = m_MapTilesCurrent[indexX][indexY];
+	int32 indexX = tileX - m_CurrentTileX + static_cast<int32>(C_RenderedTiles / 2u);
+	int32 indexZ = tileZ - m_CurrentTileZ + static_cast<int32>(C_RenderedTiles / 2u);
+	auto curTile = m_MapTilesCurrent[indexZ][indexX];
 	if (curTile == nullptr)
-	{
-		return UINT32_MAX;
-	}
+		return nullptr;
 
-	const CMapChunk* curChunk = curTile->getChunk(chunkX, chunkZ);
+	if (false == curTile->IsLoaded())
+		return nullptr;
+
+	int32 chunkX = (int)(glm::mod(Position.x, C_TileSize) / C_ChunkSize);
+	int32 chunkZ = (int)(glm::mod(Position.z, C_TileSize) / C_ChunkSize);
+
+	return curTile->getChunk(chunkZ, chunkX);
+}
+
+uint32 CMap::GetAreaID(glm::vec3 Position)
+{
+	const CMapChunk* curChunk = GetMapChunk(Position);
 	if (curChunk == nullptr)
-	{
 		return UINT32_MAX;
-	}
-
 	return curChunk->GetAreaID();
+}
+
+glm::vec3 CMap::GetTerrainHeight(glm::vec3 Position)
+{
+	const CMapChunk* curChunk = GetMapChunk(Position);
+	if (curChunk == nullptr)
+		return glm::vec3(Math::MaxFloat);
+
+	float posInChunkX = glm::mod(glm::mod(Position.x, C_TileSize), C_ChunkSize);
+	float posInChunkZ = glm::mod(glm::mod(Position.z, C_TileSize), C_ChunkSize);
+
+	return curChunk->GetTerrainHeight(glm::vec2(posInChunkX, posInChunkZ));
 }
 
 
@@ -382,83 +376,60 @@ bool CMap::IsTileInCurrent(const CMapTile& _mapTile)
 //
 // Public (MapShared)
 //
-std::vector<uint16> CMap::GenarateHighMapArray(uint16 _holes) const
+std::vector<uint16> CMap::GenarateHighMapArray(uint16 Holes) const
 {
-	if (_holes == 0 && false == m_HighMapStrip.empty())
-	{
+	if (Holes == 0 && false == m_HighMapStrip.empty())
 		return m_HighMapStrip;
-	}
-
-	int16 outerArray[9][9];
-	for (uint16 i = 0; i < 9; i++)
-		for (uint16 j = 0; j < 9; j++)
-			outerArray[i][j] = (i * 17) + j;
-
-	int16 innerArray[8][8];
-	for (uint16 i = 0; i < 8; i++)
-		for (uint16 j = 0; j < 8; j++)
-			innerArray[i][j] = 9 + (i * 17) + j;
 
 	std::vector<uint16> myIndexes;
 	for (uint16 i = 0; i < 8; i++)
 	{
 		for (uint16 j = 0; j < 8; j++)
 		{
-			if (IsHole(_holes, j / 2, i / 2))
-			{
+			if (IsHole(Holes, j / 2, i / 2))
 				continue;
-			}
 
-			myIndexes.push_back(outerArray[i][j]);
-			myIndexes.push_back(innerArray[i][j]);
-			myIndexes.push_back(outerArray[i][j + 1]);
+			myIndexes.push_back(m_OuterArray[i][j]);
+			myIndexes.push_back(m_InnerArray[i][j]);
+			myIndexes.push_back(m_OuterArray[i][j + 1]);
 
-			myIndexes.push_back(outerArray[i][j + 1]);
-			myIndexes.push_back(innerArray[i][j]);
-			myIndexes.push_back(outerArray[i + 1][j + 1]);
+			myIndexes.push_back(m_OuterArray[i][j + 1]);
+			myIndexes.push_back(m_InnerArray[i][j]);
+			myIndexes.push_back(m_OuterArray[i + 1][j + 1]);
 
-			myIndexes.push_back(outerArray[i + 1][j + 1]);
-			myIndexes.push_back(innerArray[i][j]);
-			myIndexes.push_back(outerArray[i + 1][j]);
+			myIndexes.push_back(m_OuterArray[i + 1][j + 1]);
+			myIndexes.push_back(m_InnerArray[i][j]);
+			myIndexes.push_back(m_OuterArray[i + 1][j]);
 
-			myIndexes.push_back(outerArray[i + 1][j]);
-			myIndexes.push_back(innerArray[i][j]);
-			myIndexes.push_back(outerArray[i][j]);
+			myIndexes.push_back(m_OuterArray[i + 1][j]);
+			myIndexes.push_back(m_InnerArray[i][j]);
+			myIndexes.push_back(m_OuterArray[i][j]);
 		}
 	}
 
 	return myIndexes;
 }
 
-std::vector<uint16> CMap::GenarateDefaultMapArray(uint16 _holes) const
+std::vector<uint16> CMap::GenarateDefaultMapArray(uint16 Holes) const
 {
-	if (_holes == 0 && false == m_DefaultMapStrip.empty())
-	{
+	if (Holes == 0 && false == m_DefaultMapStrip.empty())
 		return m_DefaultMapStrip;
-	}
-
-	int16 outerArray[9][9];
-	for (uint16 i = 0; i < 9; i++)
-		for (uint16 j = 0; j < 9; j++)
-			outerArray[i][j] = (i * 17) + j;
 
 	std::vector<uint16> myIndexes;
 	for (uint16 i = 0; i < 8; i += 1)
 	{
 		for (uint16 j = 0; j < 8; j += 1)
 		{
-			if (IsHole(_holes, j / 2, i / 2))
-			{
+			if (IsHole(Holes, j / 2, i / 2))
 				continue;
-			}
 
-			myIndexes.push_back(outerArray[i][j]);
-			myIndexes.push_back(outerArray[i + 1][j]);
-			myIndexes.push_back(outerArray[i][j + 1]);
+			myIndexes.push_back(m_OuterArray[i][j]);
+			myIndexes.push_back(m_OuterArray[i + 1][j]);
+			myIndexes.push_back(m_OuterArray[i][j + 1]);
 
-			myIndexes.push_back(outerArray[i][j + 1]);
-			myIndexes.push_back(outerArray[i + 1][j]);
-			myIndexes.push_back(outerArray[i + 1][j + 1]);
+			myIndexes.push_back(m_OuterArray[i][j + 1]);
+			myIndexes.push_back(m_OuterArray[i + 1][j]);
+			myIndexes.push_back(m_OuterArray[i + 1][j + 1]);
 		}
 	}
 

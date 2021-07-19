@@ -1,10 +1,10 @@
 ^Log created
-^Plugin 'D:\OpenWow\bin_x64\Release\znRenderDX11.dll' loaded.
-^Plugin 'D:\OpenWow\bin_x64\Release\znRenderDX11.dll' successfully added.
-^Plugin 'D:\OpenWow\bin_x64\Release\owGame.dll' loaded.
-^Plugin 'D:\OpenWow\bin_x64\Release\owGame.dll' successfully added.
-^Plugin 'D:\OpenWow\bin_x64\Release\owClient.dll' loaded.
-^Plugin 'D:\OpenWow\bin_x64\Release\owClient.dll' successfully added.
+^Plugin 'D:\OpenWow\bin_x64\Debug\znRenderDX11.dll' loaded.
+^Plugin 'D:\OpenWow\bin_x64\Debug\znRenderDX11.dll' successfully added.
+^Plugin 'D:\OpenWow\bin_x64\Debug\owGame.dll' loaded.
+^Plugin 'D:\OpenWow\bin_x64\Debug\owGame.dll' successfully added.
+^Plugin 'D:\OpenWow\bin_x64\Debug\owClient.dll' loaded.
+^Plugin 'D:\OpenWow\bin_x64\Debug\owClient.dll' successfully added.
 ~FontsManager: Font 'Fonts\consola.ttf' loaded. Size [14].
 ~Loading shader 'shaders_D3D/Sky.hlsl':'VS_main'.
 ~Loading shader 'shaders_D3D/Sky.hlsl':'PS_main'.
@@ -24,6 +24,10 @@
 ~Loading shader 'shaders_D3D/Liquid.hlsl':'PS_main'.
 ~Loading shader '3D/Debug.hlsl':'VS_main'.
 ~Loading shader '3D/Debug.hlsl':'PS_main'.
+~Loading shader '3D/BondingBox.hlsl':'VS_main_Inst'.
+~Loading shader '3D/BondingBox.hlsl':'PS_main'.
+~Loading shader '3D/Debug.hlsl':'VS_main'.
+~Loading shader '3D/Debug.hlsl':'PS_main'.
 ~Loading shader 'UI/UIControlCommon.hlsl':'VS_main'.
 ~Loading shader 'UI/UIControlCommon.hlsl':'PS_main'.
 ~Loading shader 'UI/UI_Font.hlsl':'VS_main'.
@@ -31,3 +35,14 @@
  -1,000000 -2,000000 -3,000000
  4,000000 5,000000 6,000000
 ~Sky: [1] is global sky.
+ Map[Azeroth]: Id = '0'. Preloading...
+ Map[Azeroth]: InstanceType = '0'.
+ Map[Azeroth]: MapType = '0'.
+ Map[Azeroth]: IsBattleGround = '0'.
+ Map[Azeroth]: Name = 'Восточные королевства'.
+ Map[Azeroth]: AreaTableID = '0'.
+ Map[Azeroth]: AllianceDescr = ''.
+ Map[Azeroth]: HordeDescr = ''.
+ Map[Azeroth]: CorpseMapID = '-1'.
+ Map[Azeroth]: Id [0]. Loading...
+~MapWDT: Global WMO exists [false].

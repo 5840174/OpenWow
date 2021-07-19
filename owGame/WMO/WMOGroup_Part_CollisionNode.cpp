@@ -11,11 +11,11 @@
 CWMOGroup_Part_CollisionNode::CWMOGroup_Part_CollisionNode(IRenderDevice& RenderDevice, const CWMOGroup& WMOGroup, const SWMOGroup_MOBN& Proto, const std::vector<glm::vec3>& VerticesArray, const std::vector<uint16>& CollisionIndicesArray)
 	: m_Proto(Proto)
 {
-	TEMP_RenderDisable = false;
-
+	if ((Proto.flags & SWMOGroup_MOBN::Flags::Flag_Leaf) == 0)
+		return;
 
 	if (m_Proto.nFaces == 0)
-		return;
+		throw CException("Unexpected behaviour.");
 
 	std::vector<glm::vec3> collisionVerticesArray;
 	collisionVerticesArray.reserve(m_Proto.nFaces * 3);
@@ -41,14 +41,10 @@ CWMOGroup_Part_CollisionNode::CWMOGroup_Part_CollisionNode(IRenderDevice& Render
 
 	auto posFlags = m_Proto.flags & SWMOGroup_MOBN::Flag_AxisMask;
 	
-	
-	//if (posFlags == 2)
-	{
-		auto collisitonVertexBuffer = RenderDevice.GetObjectsFactory().CreateVertexBuffer(collisionVerticesArray);
+	auto collisitonVertexBuffer = RenderDevice.GetObjectsFactory().CreateVertexBuffer(collisionVerticesArray);
 
-		m_CollisionGeom = RenderDevice.GetObjectsFactory().CreateGeometry();
-		m_CollisionGeom->SetVertexBuffer(collisitonVertexBuffer);
-	}
+	m_CollisionGeom = RenderDevice.GetObjectsFactory().CreateGeometry();
+	m_CollisionGeom->SetVertexBuffer(collisitonVertexBuffer);
 }
 
 CWMOGroup_Part_CollisionNode::~CWMOGroup_Part_CollisionNode()

@@ -267,7 +267,7 @@ namespace
 	}
 }
 
-void TraverseBsp(const std::vector<std::shared_ptr<CWMOGroup_Part_CollisionNode>>& CollisionNodes, int16 CollisionNodeIndex, BoundingBox Eyes, BoundingBox Box, void *(pAction)(std::shared_ptr<CWMOGroup_Part_CollisionNode>, void*), void* param)
+void TraverseBsp(const std::vector<std::shared_ptr<CWMOGroup_Part_CollisionNode>>& CollisionNodes, int16 CollisionNodeIndex, BoundingBox Eyes, BoundingBox Box, std::function<void(std::shared_ptr<CWMOGroup_Part_CollisionNode>)> Action)
 {
 	if (CollisionNodeIndex == -1 || CollisionNodeIndex >= CollisionNodes.size())
 		return; // Skip. Out of bounds.
@@ -279,7 +279,7 @@ void TraverseBsp(const std::vector<std::shared_ptr<CWMOGroup_Part_CollisionNode>
 
 	if (collisitonNodeProto.flags & SWMOGroup_MOBN::Flags::Flag_Leaf)
 	{
-		pAction(collisionNode, param);
+		Action(collisionNode);
 		return;
 	}
 
@@ -305,16 +305,16 @@ void TraverseBsp(const std::vector<std::shared_ptr<CWMOGroup_Part_CollisionNode>
 
 			if (((eyes_min_fdist >= -cEpsilon) && (eyes_min_fdist <= cEpsilon)) || ((eyes_max_fdist >= -cEpsilon) && (eyes_max_fdist <= cEpsilon)))
 			{
-				TraverseBsp(CollisionNodes, negChild, Eyes, boxNegative, pAction, param);
-				TraverseBsp(CollisionNodes, posChild, Eyes, boxPositive, pAction, param);
+				TraverseBsp(CollisionNodes, negChild, Eyes, boxNegative, Action);
+				TraverseBsp(CollisionNodes, posChild, Eyes, boxPositive, Action);
 			}
 			else if (eyes_min_fdist < -cEpsilon && eyes_max_fdist < -cEpsilon)
 			{
-				TraverseBsp(CollisionNodes, negChild, Eyes, boxNegative, pAction, param);
+				TraverseBsp(CollisionNodes, negChild, Eyes, boxNegative, Action);
 			}
 			else if (eyes_min_fdist > cEpsilon && eyes_max_fdist > cEpsilon)
 			{
-				TraverseBsp(CollisionNodes, posChild, Eyes, boxPositive, pAction, param);
+				TraverseBsp(CollisionNodes, posChild, Eyes, boxPositive, Action);
 			}
 			else
 			{
@@ -323,13 +323,13 @@ void TraverseBsp(const std::vector<std::shared_ptr<CWMOGroup_Part_CollisionNode>
 
 				if (eyes_min_fdist <= 0.0f)
 				{
-					TraverseBsp(CollisionNodes, negChild, BoundingBox(Eyes.getMin(), ajusted), boxNegative, pAction, param);
-					TraverseBsp(CollisionNodes, posChild, BoundingBox(ajusted, Eyes.getMax()), boxPositive, pAction, param);
+					TraverseBsp(CollisionNodes, negChild, BoundingBox(Eyes.getMin(), ajusted), boxNegative, Action);
+					TraverseBsp(CollisionNodes, posChild, BoundingBox(ajusted, Eyes.getMax()), boxPositive, Action);
 				}
 				else
 				{
-					TraverseBsp(CollisionNodes, negChild, BoundingBox(ajusted, Eyes.getMax()), boxNegative, pAction, param);
-					TraverseBsp(CollisionNodes, posChild, BoundingBox(Eyes.getMin(), ajusted), boxPositive, pAction, param);
+					TraverseBsp(CollisionNodes, negChild, BoundingBox(ajusted, Eyes.getMax()), boxNegative, Action);
+					TraverseBsp(CollisionNodes, posChild, BoundingBox(Eyes.getMin(), ajusted), boxPositive, Action);
 				}
 			}
 		}

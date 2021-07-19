@@ -97,6 +97,19 @@ void CSceneWoW::Initialize()
 		GetCameraController()->GetCamera()->SetPitch(-45);
 	}
 
+
+	m_DebugBall = CreateSceneNodeT<ISceneNode>();
+	auto geom = GetRenderDevice().GetPrimitivesFactory().CreateSphere(1.0f);
+	auto mat = MakeShared(MaterialDebug, GetRenderDevice());
+	mat->SetDiffuseColor(ColorRGBA(0.0f, 1.0f, 0.0f, 1.0f));
+	auto model = GetRenderDevice().GetObjectsFactory().CreateModel();
+	model->AddConnection(mat, geom);
+	m_DebugBall->GetComponentT<IModelComponent>()->SetModel(model);
+
+
+	m_DebugBall2 = CreateSceneNodeT<ISceneNode>();
+	m_DebugBall2->GetComponentT<IModelComponent>()->SetModel(model);
+
 	const float cMinimapOffset = 10.0f;
 	minimap = GetRootUIControl()->CreateUIControl<CUIControlMinimap>();
 	minimap->SetPosition(glm::vec2(GetRenderWindow().GetWindowWidth() - minimap->GetSize().x - cMinimapOffset, cMinimapOffset));
@@ -116,9 +129,9 @@ void CSceneWoW::Initialize()
 
 	m_WoWMap = GetRootSceneNode()->CreateSceneNode<CMap>();
 
-	//const float x = 31; //0 fire
-	//const float y = 28; //0 fire
-	//const uint32 mapID = 0;
+	const float x = 31; //0 fire
+	const float y = 28; //0 fire
+	const uint32 mapID = 0;
 
 	//const float x = 40; //1 barrens
 	//const float y = 30; //1 barrens
@@ -128,9 +141,9 @@ void CSceneWoW::Initialize()
 	//const float y = 32; //530 outland
 	//const uint32 mapID = 530;
 
-	const float x = 30; //571 nortrend
-	const float y = 21; //571 nortrend
-	const uint32 mapID = 571;
+	//const float x = 30; //571 nortrend
+	//const float y = 21; //571 nortrend
+	//const uint32 mapID = 571;
 
 	//const float x = 32; //571 44
 	//const float y = 32; //571 44
@@ -146,7 +159,7 @@ void CSceneWoW::Initialize()
 	//const float y = 0; //571 nortrend
 	//const uint32 mapID = 609;
 
-	if (false)
+	if (true)
 	{
 		m_WoWSkyManager->Load(mapID);
 		
@@ -243,6 +256,22 @@ void CSceneWoW::OnUpdate(UpdateEventArgs & e)
 	CMapM2Instance::reset();
 
 	__super::OnUpdate(e);
+
+	if (m_DebugBall)
+	{
+		auto pos = e.Camera->GetPosition();
+		if (m_WoWMap)
+			pos.y = m_WoWMap->GetTerrainHeight(pos).y;
+		m_DebugBall->SetLocalPosition(pos);
+
+
+
+		{
+			//auto pos2 = e.Camera->GetPosition();
+			//pos2.y -= 5.0f;
+			//m_DebugBall2->SetLocalPosition(pos2);
+		}
+	}
 
 	m_WoWSkyManager->Update(e);
 

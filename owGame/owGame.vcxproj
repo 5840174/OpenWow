@@ -251,6 +251,7 @@
     <ClInclude Include="Map\MapChunk.h" />
     <ClInclude Include="Map\MapChunkMaterial.h" />
     <ClInclude Include="Map\MapChunkLiquid.h" />
+    <ClInclude Include="Map\MapHelpers.h" />
     <ClInclude Include="Map\MapTile.h" />
     <ClInclude Include="Map\MapTileLiquid.h" />
     <ClInclude Include="Map\MapWDL.h" />
@@ -369,7 +370,7 @@
     <ClCompile>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PreprocessorDefinitions>_DEBUG;_WINDOWS;_USRDLL;OW_ENGINE_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>..\..\ZenonEngine\shared;..\..\ZenonEngine\Externals;..\shared;..\Externals;..\Externals\OpenSSL\include;..\owGame\;..\owGame\DBC\;..\owGame\Client\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\..\ZenonEngine\shared;..\..\ZenonEngine\Externals;..\shared;..\Externals;..\Externals\OpenSSL\include;..\$(ProjectName)\;..\$(ProjectName)\DBC\;..\$(ProjectName)\Client\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <TreatSpecificWarningsAsErrors>4172</TreatSpecificWarningsAsErrors>
       <SupportJustMyCode>false</SupportJustMyCode>
       <WarningLevel>Level3</WarningLevel>
@@ -386,7 +387,7 @@
       <WarningLevel>Level3</WarningLevel>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PreprocessorDefinitions>NDEBUG;_WINDOWS;_USRDLL;OW_ENGINE_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>..\..\ZenonEngine\shared;..\..\ZenonEngine\Externals;..\shared;..\Externals;..\Externals\OpenSSL\include;..\owGame\;..\owGame\DBC\;..\owGame\Client\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\..\ZenonEngine\shared;..\..\ZenonEngine\Externals;..\shared;..\Externals;..\Externals\OpenSSL\include;..\$(ProjectName)\;..\$(ProjectName)\DBC\;..\$(ProjectName)\Client\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <TreatSpecificWarningsAsErrors>4172</TreatSpecificWarningsAsErrors>
       <DisableSpecificWarnings>4251;4250;4715</DisableSpecificWarnings>
     </ClCompile>

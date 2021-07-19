@@ -36,3 +36,4 @@
 // Renderer
 #include "../owGame/Renderer/RendererWoW.h"
 
+extern "C" __declspec(dllexport) IznPlugin* __stdcall GetPlugin(IBaseManager& BaseManager);
