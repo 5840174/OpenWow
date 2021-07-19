@@ -308,16 +308,16 @@ uint32 CMap::GetAreaID(glm::vec3 Position)
 	return curChunk->GetAreaID();
 }
 
-glm::vec3 CMap::GetTerrainHeight(glm::vec3 Position)
+float CMap::GetTerrainHeight(glm::vec3 Position)
 {
 	const CMapChunk* curChunk = GetMapChunk(Position);
 	if (curChunk == nullptr)
-		return glm::vec3(Math::MaxFloat);
+		return Math::MaxFloat;
 
 	float posInChunkX = glm::mod(glm::mod(Position.x, C_TileSize), C_ChunkSize);
 	float posInChunkZ = glm::mod(glm::mod(Position.z, C_TileSize), C_ChunkSize);
 
-	return curChunk->GetTerrainHeight(glm::vec2(posInChunkX, posInChunkZ));
+	return curChunk->GetTerrainHeight(glm::vec3(posInChunkX, Position.y, posInChunkZ));
 }
 
 

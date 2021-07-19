@@ -320,6 +320,18 @@ void CowServerUnit::OnValuesUpdated(const UpdateMask & Mask)
 
 void CowServerUnit::OnHiddenNodePositionChanged()
 {
+	if (auto map = GetWoWWorld().GetMap())
+	{
+		float height = map->GetTerrainHeight(Position);
+		if (height != Math::MaxFloat)
+		{
+			if (glm::abs(height - Position.y) < 1.0f)
+			{
+				Position.y = height;
+			}
+		}
+	}
+
 	if (m_DisplayID_ModelInstance)
 	{
 		m_DisplayID_ModelInstance->SetLocalPosition(Position);

@@ -22,7 +22,7 @@ public:
 	void                                            ClearCache();
 	const CMapChunk*                                GetMapChunk(glm::vec3 Position);
 	uint32                                          GetAreaID(glm::vec3 Position);
-	glm::vec3                                       GetTerrainHeight(glm::vec3 Position);
+	float                                           GetTerrainHeight(glm::vec3 Position);
 
 	// ISceneNode
 	void                                            Update(const UpdateEventArgs& e) override;

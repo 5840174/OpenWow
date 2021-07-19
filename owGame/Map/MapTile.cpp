@@ -85,7 +85,7 @@ void CMapTile::Initialize()
 	SetBounds(bbox);
 	SetCullStrategy(ECullStrategy::ByFrustrumAndDistance2D);
 	SetCullDistance(GetBaseManager().GetManager<ISettings>()->GetGroup("WoWSettings")->GetPropertyT<float>("MapChunkRenderDistance")->Get());
-	SetDebugDrawMode(false);
+	SetDebugDrawMode(true);
 	SetDebugDrawColor(ColorRGBA(0.5f, 0.8f, 0.2f, 0.8f));
 }
 

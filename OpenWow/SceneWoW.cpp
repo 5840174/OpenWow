@@ -99,16 +99,13 @@ void CSceneWoW::Initialize()
 
 
 	m_DebugBall = CreateSceneNodeT<ISceneNode>();
-	auto geom = GetRenderDevice().GetPrimitivesFactory().CreateSphere(1.0f);
+	auto geom = GetRenderDevice().GetPrimitivesFactory().CreateSphere(5.0f);
 	auto mat = MakeShared(MaterialDebug, GetRenderDevice());
 	mat->SetDiffuseColor(ColorRGBA(0.0f, 1.0f, 0.0f, 1.0f));
 	auto model = GetRenderDevice().GetObjectsFactory().CreateModel();
 	model->AddConnection(mat, geom);
 	m_DebugBall->GetComponentT<IModelComponent>()->SetModel(model);
 
-
-	m_DebugBall2 = CreateSceneNodeT<ISceneNode>();
-	m_DebugBall2->GetComponentT<IModelComponent>()->SetModel(model);
 
 	const float cMinimapOffset = 10.0f;
 	minimap = GetRootUIControl()->CreateUIControl<CUIControlMinimap>();
@@ -261,16 +258,8 @@ void CSceneWoW::OnUpdate(UpdateEventArgs & e)
 	{
 		auto pos = e.Camera->GetPosition();
 		if (m_WoWMap)
-			pos.y = m_WoWMap->GetTerrainHeight(pos).y;
+			pos.y = m_WoWMap->GetTerrainHeight(pos);
 		m_DebugBall->SetLocalPosition(pos);
-
-
-
-		{
-			//auto pos2 = e.Camera->GetPosition();
-			//pos2.y -= 5.0f;
-			//m_DebugBall2->SetLocalPosition(pos2);
-		}
 	}
 
 	m_WoWSkyManager->Update(e);

@@ -24,7 +24,7 @@ namespace
 		return static_cast<uint8>(glm::round(resultF * 255.0f));
 	}
 
-	float barryCentric(glm::vec3 p1, glm::vec3 p2, glm::vec3 p3, glm::vec2 pos)
+	float CalculateBarryCentic(const glm::vec3& p1, const glm::vec3& p2, const glm::vec3& p3, const glm::vec2& pos)
 	{
 		float det = (p2.z - p3.z) * (p1.x - p3.x) + (p3.x - p2.x) * (p1.z - p3.z);
 
@@ -59,48 +59,41 @@ uint32 CMapChunk::GetAreaID() const
     return m_Header.areaid;
 }
 
-glm::vec3 CMapChunk::GetTerrainHeight(glm::vec2 PosXZ) const
+float CMapChunk::GetTerrainHeight(glm::vec3 Position) const
 {
 	// Index of Unit
-	int16 indexX = glm::round(PosXZ.x / float(C_UnitSize) - 0.5f);
-	int16 indexZ = glm::round(PosXZ.y / float(C_UnitSize) - 0.5f);
-	if (indexX > 8 || indexZ > 8) throw CException("Incorrect coords.");
+	int16 indexX = glm::round(Position.x / float(C_UnitSize) - 0.5f);
+	if (indexX < 0) indexX = 0;
+	int16 indexZ = glm::round(Position.z / float(C_UnitSize) - 0.5f);
+	if (indexZ < 0) indexZ = 0;
 
-	float modX = glm::mod(PosXZ.x, C_UnitSize);
-	float modZ = glm::mod(PosXZ.y, C_UnitSize);
-	if (modX > C_UnitSize || modZ > C_UnitSize)
-		throw CException("Incorrect coords.");
+	if (IsHole(m_Header.holes, indexX / 2, indexZ / 2))
+		return Math::MaxFloat;
 
-	uint16 indexIntoArray0 = GetOuterMapChunkArrayIndex(indexZ,     indexX    );
-	uint16 indexIntoArray1 = GetOuterMapChunkArrayIndex(indexZ + 1, indexX    );
-	uint16 indexIntoArray2 = GetOuterMapChunkArrayIndex(indexZ,     indexX + 1);
-	uint16 indexIntoArray3 = GetOuterMapChunkArrayIndex(indexZ + 1, indexX + 1);
+	const uint16 indexIntoArray0 = GetOuterMapChunkArrayIndex(indexZ,     indexX    );
+	const uint16 indexIntoArray1 = GetOuterMapChunkArrayIndex(indexZ + 1, indexX    );
+	const uint16 indexIntoArray2 = GetOuterMapChunkArrayIndex(indexZ,     indexX + 1);
+	const uint16 indexIntoArray3 = GetOuterMapChunkArrayIndex(indexZ + 1, indexX + 1);
 
-	if (modZ <= (C_UnitSize - modX))
+	const float modX = glm::mod(Position.x, C_UnitSize);
+	const float modZ = glm::mod(Position.z, C_UnitSize);
+	if (modZ < (C_UnitSize - modX))
 	{
-		float height = barryCentric(
-			glm::vec3(0.0f,       m_Vertices[indexIntoArray0].y, 0.0f      ),
-			glm::vec3(C_UnitSize, m_Vertices[indexIntoArray1].y, 0.0f      ),
-			glm::vec3(0.0f,       m_Vertices[indexIntoArray2].y, C_UnitSize),
+		return CalculateBarryCentic(
+			glm::vec3(0.0f,       m_Heights[indexIntoArray0], 0.0f      ),
+			glm::vec3(C_UnitSize, m_Heights[indexIntoArray1], 0.0f      ),
+			glm::vec3(0.0f,       m_Heights[indexIntoArray2], C_UnitSize),
 			glm::vec2(modZ, modX)
 		);
-
-		return glm::vec3(PosXZ.x, height, PosXZ.y);
-
-		//return (m_Vertices[indexIntoArray0] + m_Vertices[indexIntoArray1] + m_Vertices[indexIntoArray2]) / 3.0f;
 	}
 	else
 	{
-		float height = barryCentric(
-			glm::vec3(0.0f,       m_Vertices[indexIntoArray2].y, C_UnitSize),
-			glm::vec3(C_UnitSize, m_Vertices[indexIntoArray1].y, 0.0f      ),
-			glm::vec3(C_UnitSize, m_Vertices[indexIntoArray3].y, C_UnitSize),
+		return CalculateBarryCentic(
+			glm::vec3(0.0f,       m_Heights[indexIntoArray2], C_UnitSize),
+			glm::vec3(C_UnitSize, m_Heights[indexIntoArray1], 0.0f      ),
+			glm::vec3(C_UnitSize, m_Heights[indexIntoArray3], C_UnitSize),
 			glm::vec2(modZ, modX)
 		);
-
-		return glm::vec3(PosXZ.x, height, PosXZ.y);
-
-		//return (m_Vertices[indexIntoArray2] + m_Vertices[indexIntoArray1] + m_Vertices[indexIntoArray3]) / 3.0f;
 	}
 }
 
@@ -196,7 +189,8 @@ bool CMapChunk::Load()
 	// Heights
 	m_Bytes->seek(startPos + m_Header.ofsHeight);
 	{
-		glm::vec3* ttv = m_Vertices;
+		glm::vec3 vertices[C_MapBufferSize];
+		glm::vec3* ttv = vertices;
 
 		float minHeight = Math::MaxFloat;
 		float maxHeight = Math::MinFloat;
@@ -205,23 +199,28 @@ bool CMapChunk::Load()
 		{
 			for (uint32 i = 0; i < ((j % 2) ? 8 : 9); i++)
 			{
-				float h;
-				m_Bytes->readBytes(&h, sizeof(float));
+				float height;
+				m_Bytes->read(&height);
 
 				float xpos = i * C_UnitSize;
 				float zpos = j * 0.5f * C_UnitSize;
 				if (j % 2)
-				{
 					xpos += C_UnitSize * 0.5f;
-				}
 
-				glm::vec3 v((-1.0f) * m_Header.xpos + C_ZeroPoint + xpos, m_Header.ypos + h, (-1.0f) * m_Header.zpos + C_ZeroPoint + zpos);
+				glm::vec3 v(
+					(-1.0f) * m_Header.xpos + C_ZeroPoint + xpos, 
+					          m_Header.ypos + height,
+					(-1.0f) * m_Header.zpos + C_ZeroPoint + zpos
+				);
 				*ttv++ = v;
 
 				minHeight = std::min(v.y, minHeight);
 				maxHeight = std::max(v.y, maxHeight);
 			}
 		}
+
+		for (uint32 i = 0; i < C_MapBufferSize; i++)
+			m_Heights[i] = vertices[i].y;
 
 		// Update bounds
 		{
@@ -238,7 +237,7 @@ bool CMapChunk::Load()
 			SetBounds(bbox);
 		}
 
-		verticesBuffer = GetRenderDevice().GetObjectsFactory().CreateVertexBuffer(m_Vertices, C_MapBufferSize);
+		verticesBuffer = GetRenderDevice().GetObjectsFactory().CreateVertexBuffer(vertices, C_MapBufferSize);
 	}
 
 	_ASSERT(m_MapTile.GetState() == ILoadable::ELoadableState::Loaded);

@@ -49,5 +49,4 @@ private:
 	std::shared_ptr<CM2_Base_Instance> m_WoWCameraNode;
 
 	std::shared_ptr<ISceneNode> m_DebugBall;
-	std::shared_ptr<ISceneNode> m_DebugBall2;
 };
