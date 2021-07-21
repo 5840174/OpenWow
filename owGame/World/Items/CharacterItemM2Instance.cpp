@@ -28,12 +28,12 @@ CCharacterItemM2Instance::~CCharacterItemM2Instance()
 //
 const CCharacterItem& CCharacterItemM2Instance::GetCharacterItem() const 
 { 
-	if (auto loadable = dynamic_cast<const ILoadable*>(&m_CharacterItem))
-	{
-		auto state = loadable->GetState();
-		if (state != ILoadable::ELoadableState::Loaded)
-			throw CException("CCharacterItemM2Instance::GetCharacterItem: CharacterItem isn't loaded. State = '%d'.", state);
-	}
+	//if (auto loadable = dynamic_cast<const ILoadable*>(&m_CharacterItem))
+	//{
+	//	auto state = loadable->GetState();
+	//	if (state != ILoadable::ELoadableState::Loaded)
+	//		throw CException("CCharacterItemM2Instance::GetCharacterItem: CharacterItem isn't loaded. State = '%d'.", state);
+	//}
 
 	return m_CharacterItem; 
 }

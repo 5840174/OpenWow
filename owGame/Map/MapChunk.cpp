@@ -131,7 +131,7 @@ void CMapChunk::Initialize()
 	SetCullStrategy(ECullStrategy::ByFrustrumAndDistance2D);
 	SetCullDistance(GetBaseManager().GetManager<ISettings>()->GetGroup("WoWSettings")->GetPropertyT<float>("MapChunkRenderDistance")->Get());
 	SetBounds(bbox);
-	SetDebugDrawMode(true);
+	SetDebugDrawMode(false);
 	SetDebugDrawColor(ColorRGBA(0.3f, 1.0f, 0.2f, 0.8f));
 }
 

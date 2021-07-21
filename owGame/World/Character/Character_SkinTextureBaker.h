@@ -17,7 +17,7 @@ private:
 public:
 	Character_SkinTextureBaker(const IBaseManager& BaseManager);
 
-	std::shared_ptr<IImage> CreateCharacterSkinImage(const SCharacterTemplate& CharacterTemlate) const;
+	std::shared_ptr<IImage> CreateCharacterSkinImage(const SCharacterVisualTemplate& CharacterTemlate) const;
 	std::shared_ptr<IImage> CreateCharacterSkinWithItemsImage(std::shared_ptr<IImage> CharacterSkinImage, const CCharacter* Character) const;
 
 private:

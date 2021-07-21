@@ -3,7 +3,8 @@
 #ifdef ENABLE_WOW_CLIENT
 
 #include "../Base/WoWWorldObject.h"
-#include "../../Client/ClientCacheTemplates.h"
+#include "../../Client/WDB/WDBCreatureCache.h"
+#include "../../Client/WDB/WDBGameObjectCache.h"
 
 enum ZN_API GameObjectFlags
 {

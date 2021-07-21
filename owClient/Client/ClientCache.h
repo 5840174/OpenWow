@@ -2,7 +2,8 @@
 
 #ifdef ENABLE_WOW_CLIENT
 
-#include "ClientCacheTemplates.h"
+#include "WDB/WDBCreatureCache.h"
+#include "WDB/WDBGameObjectCache.h"
 
 // FORWARD BEGIN
 class CowServerWorld;
@@ -12,18 +13,20 @@ class CowClient_ServerQueryCache
 {
 public:
 	CowClient_ServerQueryCache(CowServerWorld& world);
+	virtual ~CowClient_ServerQueryCache();
 
-	void SendGameObjectQueryResponce(CowGuid::EntryType_t Entry, CowGuid Guid, const std::shared_ptr<IClientCacheGameobjectResponseListener>& Callback);
-	void SendCreatureQueryResponce  (CowGuid::EntryType_t Entry, CowGuid Guid, const std::shared_ptr<IClientCacheCreatureResponseListener>& Callback);
+	void RequestGameObjectTemplate(CowGuid::EntryType_t Entry, CowGuid Guid, const std::shared_ptr<IClientCacheGameobjectResponseListener>& Callback);
+	void RequestCreatureTemplate  (CowGuid::EntryType_t Entry, CowGuid Guid, const std::shared_ptr<IClientCacheCreatureResponseListener>& Callback);
 
+protected:
 	bool On_SMSG_GAMEOBJECT_QUERY_RESPONSE(CServerPacket& Bytes);
 	bool On_SMSG_CREATURE_QUERY_RESPONSE(CServerPacket& Bytes);
 
 private:
-	std::map<CowGuid::EntryType_t, std::shared_ptr<SGameObjectQueryResult>>                            m_CacheGameObjects;
+	std::unique_ptr<CowWDBGameObjectCache>                                                             m_GameObjectsCache;
 	std::map<CowGuid::EntryType_t, std::vector<std::weak_ptr<IClientCacheGameobjectResponseListener>>> m_GameObjectCallbacks;
 
-	std::map<CowGuid::EntryType_t, std::shared_ptr<SCreatureQueryResult>>                              m_CacheCreatures;
+	std::unique_ptr<CowWDBCreatureCache>                                                               m_CreaturesCache;
 	std::map<CowGuid::EntryType_t, std::vector<std::weak_ptr<IClientCacheCreatureResponseListener>>>   m_CreatureCallbacks;
 
 	CowServerWorld& m_ServerWorld;

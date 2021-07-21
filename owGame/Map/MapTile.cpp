@@ -346,7 +346,7 @@ bool CMapTile::Load()
 		m_Chunks.push_back(chunk.get());
 	}
 
-#if 0
+#if 1
 
 	//-- WMOs --------------------------------------------------------------------------
 #ifdef USE_WMO_MODELS

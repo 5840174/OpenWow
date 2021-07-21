@@ -20,6 +20,7 @@ public:
 	void                                            EnterMap(int32 x, int32 z);
 	std::shared_ptr<CMapTile>                       LoadTile(int32 x, int32 z);
 	void                                            ClearCache();
+	const CMapTile*                                 GetMapTile(glm::vec3 Position);
 	const CMapChunk*                                GetMapChunk(glm::vec3 Position);
 	uint32                                          GetAreaID(glm::vec3 Position);
 	float                                           GetTerrainHeight(glm::vec3 Position);

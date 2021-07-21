@@ -28,11 +28,12 @@ namespace
 
 
 
-CCharacterItem::CCharacterItem(const IBaseManager& BaseManager, IRenderDevice& RenderDevice, const std::shared_ptr<CCharacter>& OwnerCharacter)
+CCharacterItem::CCharacterItem(const IBaseManager& BaseManager, IRenderDevice& RenderDevice, const std::shared_ptr<CCharacter>& OwnerCharacter, const SCharacterItemTemplate& CharacterItemTemplate)
 	: CLoadableObject(OwnerCharacter)
 	, m_BaseManager(BaseManager)
 	, m_RenderDevice(RenderDevice)
 	, m_OwnerCharacter(*OwnerCharacter)
+	, m_Template(CharacterItemTemplate)
 {}
 
 CCharacterItem::~CCharacterItem()

@@ -53,11 +53,17 @@ public:
 	bool ProcessPacket(CServerPacket& ServerPacket);
 	void SendPacket(CClientPacket& Packet);
 
+	const IBaseManager& GetBaseManager() const { return m_Scene.GetBaseManager(); }
+
 	std::shared_ptr<CMap> GetMap() const;
 
 	CWorldObjects& GetWorldObjects() { return m_WorldObjects; }
 	CWorldObjectUpdater& GetWorldObjectUpdater() { return m_WorldObjectUpdater; }
+
+	// WDB Cache
 	CowClient_ServerQueryCache& GetClientCache() { return m_ClientCache; }
+
+	// DBC Cache
 	const CowClient_DBCTaxi& GetTaxiStorage() const { return m_TaxiStorage; }
 	const CowClient_DBCTransport& GetTransportAnimationStorage() const { return m_TransportAnimationStorage; }
 

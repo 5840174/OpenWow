@@ -269,35 +269,35 @@ void CMap::ClearCache()
 	//}
 }
 
-const CMapChunk * CMap::GetMapChunk(glm::vec3 Position)
+const CMapTile * CMap::GetMapTile(glm::vec3 Position)
 {
 	if (false == m_WDT->IsMapTileExists())
 		return nullptr;
 
 	int32 tileX = (int)(Position.x / C_TileSize);
 	int32 tileZ = (int)(Position.z / C_TileSize);
-
-	if ((tileX < m_CurrentTileX - static_cast<int32>(C_RenderedTiles / 2u)) ||
-		(tileX > m_CurrentTileX + static_cast<int32>(C_RenderedTiles / 2u)) ||
-		(tileZ < m_CurrentTileZ - static_cast<int32>(C_RenderedTiles / 2u)) ||
-		(tileZ > m_CurrentTileZ + static_cast<int32>(C_RenderedTiles / 2u)))
+	for (uint16 x = 0; x < C_RenderedTiles; x++)
 	{
-		return nullptr;
+		for (uint16 z = 0; z < C_RenderedTiles; z++)
+		{
+			const auto& curTile = m_MapTilesCurrent[x][z];
+			if ((curTile->getIndexX() == tileX) && (curTile->getIndexZ() == tileZ))
+				return curTile.get();
+		}
 	}
 
-	int32 indexX = tileX - m_CurrentTileX + static_cast<int32>(C_RenderedTiles / 2u);
-	int32 indexZ = tileZ - m_CurrentTileZ + static_cast<int32>(C_RenderedTiles / 2u);
-	auto curTile = m_MapTilesCurrent[indexZ][indexX];
-	if (curTile == nullptr)
-		return nullptr;
+	return nullptr;
+}
 
-	if (false == curTile->IsLoaded())
+const CMapChunk * CMap::GetMapChunk(glm::vec3 Position)
+{
+	auto mapTile = GetMapTile(Position);
+	if (mapTile == nullptr || false == mapTile->IsLoaded())
 		return nullptr;
 
 	int32 chunkX = (int)(glm::mod(Position.x, C_TileSize) / C_ChunkSize);
 	int32 chunkZ = (int)(glm::mod(Position.z, C_TileSize) / C_ChunkSize);
-
-	return curTile->getChunk(chunkZ, chunkX);
+	return mapTile->getChunk(chunkZ, chunkX);
 }
 
 uint32 CMap::GetAreaID(glm::vec3 Position)

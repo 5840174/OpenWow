@@ -25,9 +25,6 @@
     <Filter Include="Renderer">
       <UniqueIdentifier>{745dc5d0-e4bc-4c45-8f51-0e38b5a6b824}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Client\DBCCache">
-      <UniqueIdentifier>{f6ddb1e1-65b6-4a45-8f39-f68c0fac1c9e}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Warden">
       <UniqueIdentifier>{eae392f7-ea40-40d2-b4cc-613852a03605}</UniqueIdentifier>
     </Filter>
@@ -54,6 +51,12 @@
     </Filter>
     <Filter Include="RealmSelection">
       <UniqueIdentifier>{627d0987-c930-4bfd-bc62-c8748dfa4a3b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Client\DBCStorage">
+      <UniqueIdentifier>{f6ddb1e1-65b6-4a45-8f39-f68c0fac1c9e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Client\WDBCache">
+      <UniqueIdentifier>{fb9962b9-c3f0-4575-8dd2-4113e99c9e34}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -85,9 +88,6 @@
       <Filter>Client</Filter>
     </ClInclude>
     <ClInclude Include="Client\ClientCache.h">
-      <Filter>Client</Filter>
-    </ClInclude>
-    <ClInclude Include="Client\ClientCacheTemplates.h">
       <Filter>Client</Filter>
     </ClInclude>
     <ClInclude Include="CharacterSelection\CharacterSelection.h">
@@ -130,10 +130,10 @@
       <Filter>Renderer</Filter>
     </ClInclude>
     <ClInclude Include="Client\TransportAnimationStorage.h">
-      <Filter>Client\DBCCache</Filter>
+      <Filter>Client\DBCStorage</Filter>
     </ClInclude>
     <ClInclude Include="Client\TaxiStorage.h">
-      <Filter>Client\DBCCache</Filter>
+      <Filter>Client\DBCStorage</Filter>
     </ClInclude>
     <ClInclude Include="World\WoWGUID.h">
       <Filter>World</Filter>
@@ -213,6 +213,15 @@
     <ClInclude Include="World\ServerWorld.h">
       <Filter>World</Filter>
     </ClInclude>
+    <ClInclude Include="Client\WDB\WDBCreatureCache.h">
+      <Filter>Client\WDBCache</Filter>
+    </ClInclude>
+    <ClInclude Include="Client\WDB\WDBFile.h">
+      <Filter>Client\WDBCache</Filter>
+    </ClInclude>
+    <ClInclude Include="Client\WDB\WDBGameObjectCache.h">
+      <Filter>Client\WDBCache</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="World\WorldObjects.cpp">
@@ -267,10 +276,10 @@
       <Filter>Renderer</Filter>
     </ClCompile>
     <ClCompile Include="Client\TransportAnimationStorage.cpp">
-      <Filter>Client\DBCCache</Filter>
+      <Filter>Client\DBCStorage</Filter>
     </ClCompile>
     <ClCompile Include="Client\TaxiStorage.cpp">
-      <Filter>Client\DBCCache</Filter>
+      <Filter>Client\DBCStorage</Filter>
     </ClCompile>
     <ClCompile Include="owClient.cpp">
       <Filter>Common</Filter>
@@ -328,6 +337,15 @@
     </ClCompile>
     <ClCompile Include="World\ServerWorld.cpp">
       <Filter>World</Filter>
+    </ClCompile>
+    <ClCompile Include="Client\WDB\WDBCreatureCache.cpp">
+      <Filter>Client\WDBCache</Filter>
+    </ClCompile>
+    <ClCompile Include="Client\WDB\WDBFile.cpp">
+      <Filter>Client\WDBCache</Filter>
+    </ClCompile>
+    <ClCompile Include="Client\WDB\WDBGameObjectCache.cpp">
+      <Filter>Client\WDBCache</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

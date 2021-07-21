@@ -23,6 +23,10 @@ public:
 	bool Initialize() override
 	{
 		gLogInstance = dynamic_cast<CLog*>(m_BaseManager.GetManager<ILog>());
+
+		m_BaseManager.GetManager<IFilesManager>()->AddStorage(EFilesStorageType::GAMEDATA, MakeShared(CLocalFilesStorage, "C:\\Games\\World of Warcraft 3.3.5a\\Cache\\WDB\\ruRU\\"));
+		m_BaseManager.GetManager<IFilesManager>()->AddStorage(EFilesStorageType::USERDATA, MakeShared(CLocalFilesStorage, "D:\\OpenWow_userdata\\"));
+
 		return true;
 	}
 	void Finalize() override

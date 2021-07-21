@@ -27,7 +27,7 @@ void CCreature::Initialize()
 	__super::Initialize();
 
 	SetDebugDrawColor(ColorRGBA(1.0f, 0.0f, 0.0f, 1.0f));
-	SetDebugDrawMode(false);
+	SetDebugDrawMode(true);
 }
 
 #endif

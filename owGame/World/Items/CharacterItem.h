@@ -31,10 +31,9 @@ class CCharacterItem
 	, public std::enable_shared_from_this<CCharacterItem>
 {
 public:
-	CCharacterItem(const IBaseManager& BaseManager, IRenderDevice& RenderDevice, const std::shared_ptr<CCharacter>& OwnerCharacter);
+	CCharacterItem(const IBaseManager& BaseManager, IRenderDevice& RenderDevice, const std::shared_ptr<CCharacter>& OwnerCharacter, const SCharacterItemTemplate& CharacterItemTemplate);
 	virtual ~CCharacterItem();
 	
-	SCharacterItemTemplate&              Template()                                             { return m_Template; }
 	const SCharacterItemTemplate&        GetTemplate()                                    const { return m_Template; }
 	bool                                 IsExists()                                       const { return GetTemplate().DisplayId != 0 && GetTemplate().InventoryType != (uint8)DBCItem_EInventoryItemType::NON_EQUIP; }
 

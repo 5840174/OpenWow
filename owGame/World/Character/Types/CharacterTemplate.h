@@ -105,22 +105,40 @@ enum CharacterCustomizeFlags : uint32
 
 #pragma pack(push, 1)
 
+struct ZN_API SCharacterVisualTemplate
+{
+	SCharacterVisualTemplate()
+		: Race(Race::Human)
+		, Gender(Gender::Male)
+
+		, skin(0)
+		, face(0)
+		, hairStyle(0)
+		, hairColor(0)
+		, facialStyle(0)
+	{}
+
+	// Race
+	Race					    Race;
+	Gender				        Gender;
+
+	// Style
+	uint8						skin;
+	uint8						face;
+	uint8						hairStyle;
+	uint8						hairColor;
+	uint8						facialStyle;
+};
+
 struct ZN_API SCharacterTemplate
+	: public SCharacterVisualTemplate
 {
 	SCharacterTemplate()
 		// System
 		: GUID(0)
 		, Name("DefaultName")
 		// Race
-		, Race(Race::Human)
 		, Class(Class::Warrior)
-		, Gender(Gender::Male)
-		// Style
-		, skin(0)
-		, face(0)
-		, hairStyle(0)
-		, hairColor(0)
-		, facialStyle(0)
 		// Level
 		, Level(255)
 		// Location
@@ -243,16 +261,8 @@ struct ZN_API SCharacterTemplate
 	// System
 	uint64						GUID;
 	std::string					Name;
-	// Race
-	Race					    Race;
+	// Class
 	Class					    Class;
-	Gender				        Gender;
-	// Style
-	uint8						skin;
-	uint8						face;
-	uint8						hairStyle;
-	uint8						hairColor;
-	uint8						facialStyle;
 	// Level
 	uint8						Level;
 	// Location

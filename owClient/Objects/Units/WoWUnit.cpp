@@ -320,27 +320,28 @@ void CowServerUnit::OnValuesUpdated(const UpdateMask & Mask)
 
 void CowServerUnit::OnHiddenNodePositionChanged()
 {
+	glm::vec3 clientPosition = Position;
 	if (auto map = GetWoWWorld().GetMap())
 	{
 		float height = map->GetTerrainHeight(Position);
 		if (height != Math::MaxFloat)
 		{
-			if (glm::abs(height - Position.y) < 1.0f)
+			if (glm::abs(height) - abs(Position.y) < 1.0f)
 			{
-				Position.y = height;
+				clientPosition.y = height;
 			}
 		}
 	}
 
 	if (m_DisplayID_ModelInstance)
 	{
-		m_DisplayID_ModelInstance->SetLocalPosition(Position);
+		m_DisplayID_ModelInstance->SetLocalPosition(clientPosition);
 		m_DisplayID_ModelInstance->SetLocalRotationEuler(glm::vec3(0.0f, Orientation, 0.0f));
 	}
 
 	if (m_Mount_IsMounted)
 	{
-		m_Mount_ModelInstance->SetLocalPosition(Position);
+		m_Mount_ModelInstance->SetLocalPosition(clientPosition);
 		m_Mount_ModelInstance->SetLocalRotationEuler(glm::vec3(0.0f, Orientation, 0.0f));
 
 		if (m_DisplayID_ModelInstance)
@@ -728,6 +729,17 @@ EAnimationID CowServerUnit::Animation_GetCurrentAnimation() const
 
 void CowServerUnit::Animation_Update()
 {
+	/*if (m_Values.IsExists(UNIT_BYTES_1_OFFSET_STAND_STATE))
+	{
+		auto value = m_Values.GetInt32Value(UNIT_BYTES_1_OFFSET_STAND_STATE);
+		if ((value & UNIT_STAND_STATE_DEAD) != 0)
+		{
+			if (Animation_GetCurrentAnimation() != EAnimationID::Death)
+				Animation_Play(EAnimationID::Death, false);
+			return;
+		}
+	}*/
+
 	if (m_Movement_IsMoveNow)
 	{
 		Animation_Play(EAnimationID::Walk, true);

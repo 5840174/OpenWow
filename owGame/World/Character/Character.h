@@ -12,12 +12,11 @@ class ZN_API CCharacter
 	: public CCreature
 {
 public:
-    CCharacter(IScene& Scene, const std::shared_ptr<CM2>& M2Object);
+    CCharacter(IScene& Scene, const std::shared_ptr<CM2>& M2Object, const SCharacterVisualTemplate& CharacterVisualTemplate);
     virtual ~CCharacter();
 
 	// CCharacter
-    SCharacterTemplate& Template() { return m_Template; }
-	const SCharacterTemplate& GetTemplate() const { return m_Template; }
+	const SCharacterVisualTemplate& GetTemplate() const { return m_CharacterVisualTemplate; }
 
 	void SetNPCBakedImage(std::shared_ptr<IImage> BakedNPCImage);
 
@@ -41,7 +40,7 @@ public:
 	void OnAfterLoad() override;
 
 private:
-	SCharacterTemplate			                     m_Template;
+	SCharacterVisualTemplate			             m_CharacterVisualTemplate;
 	std::shared_ptr<CCharacterItem>                  m_CharacterItems[INVENTORY_SLOT_BAG_END];
 	uint32                                           m_MeshID[(size_t)EM2GeosetType::Count];
 

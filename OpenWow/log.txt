@@ -1,10 +1,11 @@
 ^Log created
-^Plugin 'D:\OpenWow\bin_x64\Debug\znRenderDX11.dll' loaded.
-^Plugin 'D:\OpenWow\bin_x64\Debug\znRenderDX11.dll' successfully added.
-^Plugin 'D:\OpenWow\bin_x64\Debug\owGame.dll' loaded.
-^Plugin 'D:\OpenWow\bin_x64\Debug\owGame.dll' successfully added.
-^Plugin 'D:\OpenWow\bin_x64\Debug\owClient.dll' loaded.
-^Plugin 'D:\OpenWow\bin_x64\Debug\owClient.dll' successfully added.
+^Plugin 'D:\OpenWow\bin_x64\Release\znRenderDX11.dll' loaded.
+^Plugin 'D:\OpenWow\bin_x64\Release\znRenderDX11.dll' successfully added.
+^Plugin 'D:\OpenWow\bin_x64\Release\owGame.dll' loaded.
+^Plugin 'D:\OpenWow\bin_x64\Release\owGame.dll' successfully added.
+^Plugin 'D:\OpenWow\bin_x64\Release\owClient.dll' loaded.
+^Plugin 'D:\OpenWow\bin_x64\Release\owClient.dll' successfully added.
+@Unable to register second USERDATA storage. Previous USERDATA will be replaced.
 ~FontsManager: Font 'Fonts\consola.ttf' loaded. Size [14].
 ~Loading shader 'shaders_D3D/Sky.hlsl':'VS_main'.
 ~Loading shader 'shaders_D3D/Sky.hlsl':'PS_main'.
@@ -32,8 +33,333 @@
 ~Loading shader 'UI/UIControlCommon.hlsl':'PS_main'.
 ~Loading shader 'UI/UI_Font.hlsl':'VS_main'.
 ~Loading shader 'UI/UI_Font.hlsl':'PS_main'.
- -1,000000 -2,000000 -3,000000
- 4,000000 5,000000 6,000000
+^CAuthSocket::OnConnected.
+~Creature 'Непобедимый' loaded from cache.
+~Creature 'Большая сумеречница' loaded from cache.
+~Creature 'Дряхлый пес Тьмы' loaded from cache.
+~Creature 'Страж смерти Терренс' loaded from cache.
+~Creature 'Крыса' loaded from cache.
+~Creature 'Страж смерти Морт' loaded from cache.
+~Creature 'Руперт Бош' loaded from cache.
+~Creature 'Сиделка Нила' loaded from cache.
+~Creature 'Остил де Мон' loaded from cache.
+~Creature 'Растлин Майм' loaded from cache.
+~Creature 'Агерон Каргал' loaded from cache.
+~Creature 'Колман Фартинг' loaded from cache.
+~Creature 'Иветта Фартинг' loaded from cache.
+~Creature 'Гретхен Дедмар' loaded from cache.
+~Creature 'Темный священник Берил' loaded from cache.
+~Creature 'Кейн Песнь Пламени' loaded from cache.
+~Creature 'Джина Ланг' loaded from cache.
+~Creature 'Вильям Сальден' loaded from cache.
+~Creature 'Черный конь-скелет' loaded from cache.
+~Creature 'Коричневый боевой конь-скелет' loaded from cache.
+~Creature 'Курица' loaded from cache.
+~Creature 'Миссис Винтерс' loaded from cache.
+~Creature 'Оливье Дворр' loaded from cache.
+~Creature 'Эйб Винтерс' loaded from cache.
+~Creature 'Вельма Варнам' loaded from cache.
+~Creature 'Томас Арленто' loaded from cache.
+~Creature 'Дорин Белтис' loaded from cache.
+~Creature 'Лиловый боевой конь-скелет' loaded from cache.
+~Creature 'Красный конь-скелет' loaded from cache.
+~Creature 'Синий конь-скелет' loaded from cache.
+~Creature 'Гнедой конь-скелет' loaded from cache.
+~Creature 'Страж смерти Моррис' loaded from cache.
+~Creature 'Морганус' loaded from cache.
+~Creature 'Элиза Каллен' loaded from cache.
+~Creature 'Захария Пост' loaded from cache.
+~Creature 'Эбигейл Шиль' loaded from cache.
+~Creature 'Аптекарь Юхан' loaded from cache.
+~Creature 'Каролай Аниса' loaded from cache.
+~Creature 'Зеленый боевой конь-скелет' loaded from cache.
+~Creature 'Пленный горный пехотинец' loaded from cache.
+~Creature 'Пленный ревнитель Алого ордена' loaded from cache.
+~Creature 'Мировой судья Севрен' loaded from cache.
+~Creature 'Ванс Мрачнейший' loaded from cache.
+~Creature 'Селина Уэстман' loaded from cache.
+~Creature 'Клэр Вилловер' loaded from cache.
+~Creature 'Страж смерти Ройанна' loaded from cache.
+~Creature 'Страж смерти Гевин' loaded from cache.
+~Creature 'Марион Зов' loaded from cache.
+~Creature 'Трактирщица Ренни' loaded from cache.
+~Creature 'Страж смерти Сирус' loaded from cache.
+~Creature 'Джейми Нор' loaded from cache.
+~Creature 'Страж смерти Буржес' loaded from cache.
+~Creature 'Палач Зуганд' loaded from cache.
+~Creature 'Фаруза' loaded from cache.
+~Creature 'Хамлин Аткинс' loaded from cache.
+~Creature 'Страж смерти Бартоломью' loaded from cache.
+~Creature 'Страж смерти Лундмарк' loaded from cache.
+~Creature 'Сахван Кровавая Тень' loaded from cache.
+~Creature 'Страж смерти Лоренс' loaded from cache.
+~Creature 'Младший аптекарь Холланд' loaded from cache.
+~Creature 'Страж смерти Диллинжер' loaded from cache.
+~Creature 'Страж смерти Кел' loaded from cache.
+~Creature 'Костолом из картеля' loaded from cache.
+~Creature 'Страж смерти - гвардеец' loaded from cache.
+~Creature 'Кролик' loaded from cache.
+~Creature 'Проклятый пес тьмы' loaded from cache.
+~Creature 'Запота' loaded from cache.
+~Creature 'Техник Винторез' loaded from cache.
+~Creature 'Страж смерти Хикс' loaded from cache.
+~Creature 'Техник Коловорот' loaded from cache.
+~Creature 'Небесный капитан Криолет' loaded from cache.
+~Creature 'Страж смерти Барт' loaded from cache.
+~Creature 'Техник Рулекрут' loaded from cache.
+~Creature 'Панель управления дирижаблем' loaded from cache.
+~Creature 'Штурман Чистонеббс' loaded from cache.
+~Creature 'Страж смерти Лоусон' loaded from cache.
+~Creature 'Страж смерти Фаулз' loaded from cache.
+~Creature 'Вкусоматик IV' loaded from cache.
+~Creature 'Торг-о-трон делюкс' loaded from cache.
+~Creature 'Невидимый охотник (шкала x0.5)' loaded from cache.
+~Creature 'Старший офицер Медношайб' loaded from cache.
+~Creature 'Небесный капитан Пниоблако' loaded from cache.
+~Creature 'Техник Зажигаер' loaded from cache.
+~Creature 'Гнолл из стаи Гнилошкуров' loaded from cache.
+~Creature 'Техник Полуоська' loaded from cache.
+~Creature 'Дозорный Умжен' loaded from cache.
+~Creature 'Небесный капитан Крепитросс' loaded from cache.
+~Creature 'Старший офицер Реброфланец' loaded from cache.
+~Creature 'Штурман Шлюз' loaded from cache.
+~Creature 'Техник Труборез' loaded from cache.
+~Creature 'Дозорный Ду'уна' loaded from cache.
+~Creature 'Техник Яркошпунт' loaded from cache.
+~Creature 'Техник Тяпляпер' loaded from cache.
+~Creature 'Техник Ржавомолот' loaded from cache.
+~Creature 'Невидимый охотник' loaded from cache.
+~Creature 'Гин Денбург' loaded from cache.
+~Creature 'Мифи "Поддай газу"' loaded from cache.
+~Creature 'Гниющий мертвец' loaded from cache.
+~Creature 'Разложившийся труп' loaded from cache.
+~Creature 'Грабитель могил из стаи Гнилошкуров' loaded from cache.
+~Creature 'Толстяк' loaded from cache.
+~Creature 'Страж смерти Абрахам' loaded from cache.
+~Creature 'Боуэн Брисбойс' loaded from cache.
+~Creature 'Констанция Брибуа' loaded from cache.
+~Creature 'Ронин' loaded from cache.
+ CowWDBCreatureCache:: Creature cache size = '105'.
+^CAuthSocket::On_AUTH_LOGON_PROOF: Successfully logined.
+^CAuthSocket::On_REALM_LIST: Count '1'.
+^RealmType: '0', IsLocked: '0', Flag: '0x0', Name: 'Trinity', Address '127.0.0.1:8085', Population: '0,000000', CharacterCount: '1'
+^CowClient::OnRealmListSelected: Realm name 'Trinity'.
+@CAuthSocket::OnDisconnected.
+^CWorldSocket::OnConnected.
+^CWorldSocket::On_SMSG_AUTH_RESPONSE: Response is OK!
+ CowClient_CharacterSelection::On_SMSG_CHAR_ENUM:: Characters count '1'.
+ CowClient_CharacterSelection::On_SMSG_CHAR_ENUM:: Character [0] name 'Dktest'.
+^CowClient::OnCharacterSelected: Character name 'Dktest'.
+~GameObject 'Безмятежный берег' loaded from cache.
+~GameObject 'Корабль "Леди Мели"' loaded from cache.
+~GameObject 'Дирижабль (Лиловая Принцесса)' loaded from cache.
+~GameObject 'Дирижабль' loaded from cache.
+~GameObject 'Корабль, ледокол (Северное копье)' loaded from cache.
+~GameObject 'Корабль, ледокол (Гордость Штормграда)' loaded from cache.
+~GameObject 'Приветливый очаг' loaded from cache.
+~GameObject 'Костер' loaded from cache.
+~GameObject 'Деревянный стул' loaded from cache.
+~GameObject 'Деревянный стул' loaded from cache.
+~GameObject 'Приветливый очаг' loaded from cache.
+~GameObject 'Приветливый очаг' loaded from cache.
+~GameObject 'Деревянный стул' loaded from cache.
+~GameObject 'Стул с высокой спинкой' loaded from cache.
+~GameObject 'Деревянный стул' loaded from cache.
+~GameObject 'Стул с высокой спинкой' loaded from cache.
+~GameObject 'Деревянный стул' loaded from cache.
+~GameObject 'Деревянный стул' loaded from cache.
+~GameObject 'Приветливый очаг' loaded from cache.
+~GameObject 'Деревянный стул' loaded from cache.
+~GameObject 'Серебряный бор' loaded from cache.
+~GameObject 'Похоронный Звон' loaded from cache.
+~GameObject 'Mailbox' loaded from cache.
+~GameObject 'Мельницы Агамондов' loaded from cache.
+~GameObject 'Подгород' loaded from cache.
+~GameObject 'Наковальня' loaded from cache.
+~GameObject 'Наковальня' loaded from cache.
+~GameObject 'Наковальня' loaded from cache.
+~GameObject 'Наковальня' loaded from cache.
+~GameObject 'Горн' loaded from cache.
+~GameObject 'Приветливый очаг' loaded from cache.
+~GameObject 'Приветливый очаг' loaded from cache.
+~GameObject 'Мироцвет' loaded from cache.
+~GameObject 'Мракоцвет' loaded from cache.
+~GameObject 'Ящик со съестными припасами' loaded from cache.
+~GameObject 'Эгвин и Драконья Охота' loaded from cache.
+~GameObject 'Стул с высокой спинкой' loaded from cache.
+~GameObject 'Деревянный стул' loaded from cache.
+~GameObject 'Деревянный стул' loaded from cache.
+~GameObject 'Деревянный стул' loaded from cache.
+~GameObject 'Деревянный стул' loaded from cache.
+~GameObject 'Приветливый очаг' loaded from cache.
+~GameObject 'Приветливый очаг' loaded from cache.
+~GameObject 'Деревянный стул' loaded from cache.
+~GameObject 'Деревянный стул' loaded from cache.
+~GameObject 'Деревянный стул' loaded from cache.
+~GameObject 'Деревянный стул' loaded from cache.
+~GameObject 'Создание Драконов' loaded from cache.
+~GameObject 'Деревянный стул' loaded from cache.
+~GameObject 'Деревянный стул' loaded from cache.
+~GameObject 'Деревянный стул' loaded from cache.
+~GameObject 'Деревянный стул' loaded from cache.
+~GameObject 'Деревянный стул' loaded from cache.
+~GameObject 'Деревянный стул' loaded from cache.
+~GameObject 'Деревянный стул' loaded from cache.
+~GameObject 'Деревянный стул' loaded from cache.
+~GameObject 'Деревянный стул' loaded from cache.
+~GameObject 'Деревянный стул' loaded from cache.
+~GameObject 'Деревянный стул' loaded from cache.
+~GameObject 'Деревянный стул' loaded from cache.
+~GameObject 'Деревянный стул' loaded from cache.
+~GameObject 'Деревянный стул' loaded from cache.
+~GameObject 'Деревянный стул' loaded from cache.
+~GameObject 'Деревянный стул' loaded from cache.
+~GameObject 'Деревянный стул' loaded from cache.
+~GameObject 'Деревянный стул' loaded from cache.
+~GameObject 'Деревянный стул' loaded from cache.
+~GameObject 'Деревянный стул' loaded from cache.
+~GameObject 'Деревянный стул' loaded from cache.
+~GameObject 'Деревянный стул' loaded from cache.
+~GameObject 'Wanted!' loaded from cache.
+~GameObject 'Двери' loaded from cache.
+~GameObject 'Инициатор мавзолея' loaded from cache.
+~GameObject 'Печать Мавзолея' loaded from cache.
+~GameObject 'Дирижабль Оргриммара' loaded from cache.
+~GameObject 'Дирижабль Лагеря Возмездия' loaded from cache.
+~GameObject 'Дирижабль Орды ("Поцелуй небес")' loaded from cache.
+~GameObject 'Корабль ("Девичий каприз")' loaded from cache.
+~GameObject 'Дирижабль' loaded from cache.
+~GameObject 'Дирижабль Гром'гола' loaded from cache.
+~GameObject 'Чумные земли' loaded from cache.
+~GameObject 'Серебряный бор' loaded from cache.
+~GameObject 'Брилл' loaded from cache.
+~GameObject 'Похоронный Звон' loaded from cache.
+~GameObject 'Монастырь' loaded from cache.
+~GameObject 'Подгород' loaded from cache.
+~GameObject 'Горн' loaded from cache.
+~GameObject 'Наковальня' loaded from cache.
+~GameObject 'Посадочная площадка дирижабля' loaded from cache.
+~GameObject 'Чумные земли' loaded from cache.
+~GameObject 'Брилл' loaded from cache.
+~GameObject 'Подгород' loaded from cache.
+~GameObject 'Серебряный бор' loaded from cache.
+~GameObject 'Колокол Орды' loaded from cache.
+~GameObject 'Медная жила' loaded from cache.
+~GameObject 'Подгород' loaded from cache.
+~GameObject 'Похоронный Звон' loaded from cache.
+~GameObject 'Мельницы Агамондов' loaded from cache.
+~GameObject 'Брилл' loaded from cache.
+~GameObject 'Сребролист' loaded from cache.
+ CowWDBGameObjectCache:: GameObject cache size = '100'.
+~Creature 'Непобедимый' loaded from cache.
+~Creature 'Большая сумеречница' loaded from cache.
+~Creature 'Дряхлый пес Тьмы' loaded from cache.
+~Creature 'Страж смерти Терренс' loaded from cache.
+~Creature 'Крыса' loaded from cache.
+~Creature 'Страж смерти Морт' loaded from cache.
+~Creature 'Руперт Бош' loaded from cache.
+~Creature 'Сиделка Нила' loaded from cache.
+~Creature 'Остил де Мон' loaded from cache.
+~Creature 'Растлин Майм' loaded from cache.
+~Creature 'Агерон Каргал' loaded from cache.
+~Creature 'Колман Фартинг' loaded from cache.
+~Creature 'Иветта Фартинг' loaded from cache.
+~Creature 'Гретхен Дедмар' loaded from cache.
+~Creature 'Темный священник Берил' loaded from cache.
+~Creature 'Кейн Песнь Пламени' loaded from cache.
+~Creature 'Джина Ланг' loaded from cache.
+~Creature 'Вильям Сальден' loaded from cache.
+~Creature 'Черный конь-скелет' loaded from cache.
+~Creature 'Коричневый боевой конь-скелет' loaded from cache.
+~Creature 'Курица' loaded from cache.
+~Creature 'Миссис Винтерс' loaded from cache.
+~Creature 'Оливье Дворр' loaded from cache.
+~Creature 'Эйб Винтерс' loaded from cache.
+~Creature 'Вельма Варнам' loaded from cache.
+~Creature 'Томас Арленто' loaded from cache.
+~Creature 'Дорин Белтис' loaded from cache.
+~Creature 'Лиловый боевой конь-скелет' loaded from cache.
+~Creature 'Красный конь-скелет' loaded from cache.
+~Creature 'Синий конь-скелет' loaded from cache.
+~Creature 'Гнедой конь-скелет' loaded from cache.
+~Creature 'Страж смерти Моррис' loaded from cache.
+~Creature 'Морганус' loaded from cache.
+~Creature 'Элиза Каллен' loaded from cache.
+~Creature 'Захария Пост' loaded from cache.
+~Creature 'Эбигейл Шиль' loaded from cache.
+~Creature 'Аптекарь Юхан' loaded from cache.
+~Creature 'Каролай Аниса' loaded from cache.
+~Creature 'Зеленый боевой конь-скелет' loaded from cache.
+~Creature 'Пленный горный пехотинец' loaded from cache.
+~Creature 'Пленный ревнитель Алого ордена' loaded from cache.
+~Creature 'Мировой судья Севрен' loaded from cache.
+~Creature 'Ванс Мрачнейший' loaded from cache.
+~Creature 'Селина Уэстман' loaded from cache.
+~Creature 'Клэр Вилловер' loaded from cache.
+~Creature 'Страж смерти Ройанна' loaded from cache.
+~Creature 'Страж смерти Гевин' loaded from cache.
+~Creature 'Марион Зов' loaded from cache.
+~Creature 'Трактирщица Ренни' loaded from cache.
+~Creature 'Страж смерти Сирус' loaded from cache.
+~Creature 'Джейми Нор' loaded from cache.
+~Creature 'Страж смерти Буржес' loaded from cache.
+~Creature 'Палач Зуганд' loaded from cache.
+~Creature 'Фаруза' loaded from cache.
+~Creature 'Хамлин Аткинс' loaded from cache.
+~Creature 'Страж смерти Бартоломью' loaded from cache.
+~Creature 'Страж смерти Лундмарк' loaded from cache.
+~Creature 'Сахван Кровавая Тень' loaded from cache.
+~Creature 'Страж смерти Лоренс' loaded from cache.
+~Creature 'Младший аптекарь Холланд' loaded from cache.
+~Creature 'Страж смерти Диллинжер' loaded from cache.
+~Creature 'Страж смерти Кел' loaded from cache.
+~Creature 'Костолом из картеля' loaded from cache.
+~Creature 'Страж смерти - гвардеец' loaded from cache.
+~Creature 'Кролик' loaded from cache.
+~Creature 'Проклятый пес тьмы' loaded from cache.
+~Creature 'Запота' loaded from cache.
+~Creature 'Техник Винторез' loaded from cache.
+~Creature 'Страж смерти Хикс' loaded from cache.
+~Creature 'Техник Коловорот' loaded from cache.
+~Creature 'Небесный капитан Криолет' loaded from cache.
+~Creature 'Страж смерти Барт' loaded from cache.
+~Creature 'Техник Рулекрут' loaded from cache.
+~Creature 'Панель управления дирижаблем' loaded from cache.
+~Creature 'Штурман Чистонеббс' loaded from cache.
+~Creature 'Страж смерти Лоусон' loaded from cache.
+~Creature 'Страж смерти Фаулз' loaded from cache.
+~Creature 'Вкусоматик IV' loaded from cache.
+~Creature 'Торг-о-трон делюкс' loaded from cache.
+~Creature 'Невидимый охотник (шкала x0.5)' loaded from cache.
+~Creature 'Старший офицер Медношайб' loaded from cache.
+~Creature 'Небесный капитан Пниоблако' loaded from cache.
+~Creature 'Техник Зажигаер' loaded from cache.
+~Creature 'Гнолл из стаи Гнилошкуров' loaded from cache.
+~Creature 'Техник Полуоська' loaded from cache.
+~Creature 'Дозорный Умжен' loaded from cache.
+~Creature 'Небесный капитан Крепитросс' loaded from cache.
+~Creature 'Старший офицер Реброфланец' loaded from cache.
+~Creature 'Штурман Шлюз' loaded from cache.
+~Creature 'Техник Труборез' loaded from cache.
+~Creature 'Дозорный Ду'уна' loaded from cache.
+~Creature 'Техник Яркошпунт' loaded from cache.
+~Creature 'Техник Тяпляпер' loaded from cache.
+~Creature 'Техник Ржавомолот' loaded from cache.
+~Creature 'Невидимый охотник' loaded from cache.
+~Creature 'Гин Денбург' loaded from cache.
+~Creature 'Мифи "Поддай газу"' loaded from cache.
+~Creature 'Гниющий мертвец' loaded from cache.
+~Creature 'Разложившийся труп' loaded from cache.
+~Creature 'Грабитель могил из стаи Гнилошкуров' loaded from cache.
+~Creature 'Толстяк' loaded from cache.
+~Creature 'Страж смерти Абрахам' loaded from cache.
+~Creature 'Боуэн Брисбойс' loaded from cache.
+~Creature 'Констанция Брибуа' loaded from cache.
+~Creature 'Ронин' loaded from cache.
+ CowWDBCreatureCache:: Creature cache size = '105'.
+ CowClient_DBCTransport::Initialize: Loaded records for '82' transport entries.
+~Loading shader '3D/Debug.hlsl':'VS_main'.
+~Loading shader '3D/Debug.hlsl':'PS_main'.
 ~Sky: [1] is global sky.
  Map[Azeroth]: Id = '0'. Preloading...
  Map[Azeroth]: InstanceType = '0'.
@@ -46,3 +372,5 @@
  Map[Azeroth]: CorpseMapID = '-1'.
  Map[Azeroth]: Id [0]. Loading...
 ~MapWDT: Global WMO exists [false].
+^MOTD: Welcome to a Trinity Core server.
+^NOTIFICATION: GM mode is ON

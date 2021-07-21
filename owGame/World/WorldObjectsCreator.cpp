@@ -31,7 +31,6 @@ std::shared_ptr<CCreature> CWorldObjectCreator::BuildCreatureFromDisplayInfo(IRe
 		return nullptr;
 
 	std::shared_ptr<CCreature> newCreature = ((Parent != nullptr) ? Parent : Scene.GetRootSceneNode())->CreateSceneNode<CCreature>(m2Model);
-	m_BaseManager.GetManager<ILoader>()->AddToLoadQueue(newCreature);
 	newCreature->setAlpha(static_cast<float>(rec->Get_Opacity()) / 255.0f);
 	newCreature->SetScale(glm::vec3(rec->Get_Scale()));
 
@@ -47,21 +46,20 @@ std::shared_ptr<CCreature> CWorldObjectCreator::BuildCreatureFromDisplayInfo(IRe
 			newCreature->setSpecialTexture(SM2_Texture::Type::MONSTER_3, m_BaseManager.GetManager<IznTexturesFactory>()->LoadTexture2D(m2Model->getFilePath() + rec->Get_Texture3() + ".blp"));
 	}
 
+	m_BaseManager.GetManager<ILoader>()->AddToLoadQueue(newCreature);
+
 	return newCreature;
 }
 
-std::shared_ptr<CCharacter> CWorldObjectCreator::BuildCharacterFromTemplate(IRenderDevice& RenderDevice, IScene& Scene, const SCharacterTemplate& b, const std::shared_ptr<ISceneNode>& Parent)
+std::shared_ptr<CCharacter> CWorldObjectCreator::BuildCharacterFromTemplate(IRenderDevice& RenderDevice, IScene& Scene, const SCharacterVisualTemplate& CharacterVisualTemplate, const std::shared_ptr<ISceneNode>& Parent)
 {
 	// 1. Load model
-	auto characterM2Model = CreateCharacterModel(RenderDevice, b);
+	auto characterM2Model = CreateCharacterModel(RenderDevice, CharacterVisualTemplate);
 	if (characterM2Model == nullptr)
 		return nullptr;
 
-	std::shared_ptr<CCharacter> characterM2Instance = ((Parent != nullptr) ? Parent : Scene.GetRootSceneNode())->CreateSceneNode<CCharacter>(characterM2Model);
+	std::shared_ptr<CCharacter> characterM2Instance = ((Parent != nullptr) ? Parent : Scene.GetRootSceneNode())->CreateSceneNode<CCharacter>(characterM2Model, CharacterVisualTemplate);
 	m_BaseManager.GetManager<ILoader>()->AddToLoadQueue(characterM2Instance);
-
-	// 2. Template
-	characterM2Instance->Template() = b;
 
 	return characterM2Instance;
 }
@@ -82,18 +80,17 @@ std::shared_ptr<CCharacter> CWorldObjectCreator::BuildCharacterFromDisplayInfo(I
 	if (characterM2Model == nullptr)
 		return nullptr;
 
-	std::shared_ptr<CCharacter> characterM2Instance = ((Parent != nullptr) ? Parent : Scene.GetRootSceneNode())->CreateSceneNode<CCharacter>(characterM2Model);
-	m_BaseManager.GetManager<ILoader>()->AddToLoadQueue(characterM2Instance);
+	SCharacterVisualTemplate characterVisualTemplate;
+	characterVisualTemplate.Race = static_cast<Race>(m_DBCs->DBC_ChrRaces()[humanoidRecExtra->Get_Race()]->Get_ID());
+	characterVisualTemplate.Gender = static_cast<Gender>(humanoidRecExtra->Get_Gender());
+	characterVisualTemplate.skin = humanoidRecExtra->Get_SkinID();
+	characterVisualTemplate.face = humanoidRecExtra->Get_FaceID();
+	characterVisualTemplate.hairStyle = humanoidRecExtra->Get_HairStyleID();
+	characterVisualTemplate.hairColor = humanoidRecExtra->Get_HairColorID();
+	characterVisualTemplate.facialStyle = humanoidRecExtra->Get_FacialHairID();
 
-	// 2.1 Visual params
-	characterM2Instance->Template().Race        = static_cast<Race>(m_DBCs->DBC_ChrRaces()[humanoidRecExtra->Get_Race()]->Get_ID());
-	characterM2Instance->Template().Gender      = static_cast<Gender>(humanoidRecExtra->Get_Gender());
-	characterM2Instance->Template().skin        = humanoidRecExtra->Get_SkinID();
-	characterM2Instance->Template().face        = humanoidRecExtra->Get_FaceID();
-	characterM2Instance->Template().hairStyle   = humanoidRecExtra->Get_HairStyleID();
-	characterM2Instance->Template().hairColor   = humanoidRecExtra->Get_HairColorID();
-	characterM2Instance->Template().facialStyle = humanoidRecExtra->Get_FacialHairID();
-
+	std::shared_ptr<CCharacter> characterM2Instance = ((Parent != nullptr) ? Parent : Scene.GetRootSceneNode())->CreateSceneNode<CCharacter>(characterM2Model, characterVisualTemplate);
+	
 	// 2.2 Items
 	characterM2Instance->SetItem(EQUIPMENT_SLOT_HEAD, SCharacterItemTemplate(humanoidRecExtra->Get_Helm(), DBCItem_EInventoryItemType::HEAD, 0));
 	characterM2Instance->SetItem(EQUIPMENT_SLOT_SHOULDERS, SCharacterItemTemplate(humanoidRecExtra->Get_Shoulder(), DBCItem_EInventoryItemType::SHOULDERS, 0));
@@ -109,22 +106,8 @@ std::shared_ptr<CCharacter> CWorldObjectCreator::BuildCharacterFromDisplayInfo(I
 
 	characterM2Instance->SetNPCBakedImage(m_BaseManager.GetManager<IImagesFactory>()->CreateImage("Textures\\BakedNpcTextures\\" + humanoidRecExtra->Get_BakedSkin()));
 
-	return characterM2Instance;
-}
+	m_BaseManager.GetManager<ILoader>()->AddToLoadQueue(characterM2Instance);
 
-std::shared_ptr<CCharacter> CWorldObjectCreator::BuildEmptyCharacterFromDisplayInfo(IRenderDevice & RenderDevice, IScene & Scene, uint32 _id, const std::shared_ptr<ISceneNode>& Parent)
-{
-	const DBC_CreatureDisplayInfoRecord* rec = m_DBCs->DBC_CreatureDisplayInfo()[_id];
-	if (rec == nullptr)
-		throw CException("CWorldObjectCreator::BuildCharacterFromDisplayInfo: CreatureDisplayInfo don't contains id '%d'.", _id);
-
-	// 1. Load model
-	auto characterM2Model = CreateCreatureModel(RenderDevice, rec);
-	if (characterM2Model == nullptr)
-		return nullptr;
-
-	std::shared_ptr<CCharacter> characterM2Instance = ((Parent != nullptr) ? Parent : Scene.GetRootSceneNode())->CreateSceneNode<CCharacter>(characterM2Model);
-	//m_BaseManager.GetManager<ILoader>()->AddToLoadQueue(characterM2Instance);
 	return characterM2Instance;
 }
 
@@ -310,10 +293,10 @@ std::shared_ptr<CM2> CWorldObjectCreator::CreateCreatureModel(IRenderDevice& Ren
 	return LoadM2(RenderDevice, modelName);
 }
 
-std::shared_ptr<CM2> CWorldObjectCreator::CreateCharacterModel(IRenderDevice& RenderDevice, const SCharacterTemplate& CharacterTemplate)
+std::shared_ptr<CM2> CWorldObjectCreator::CreateCharacterModel(IRenderDevice& RenderDevice, const SCharacterVisualTemplate& CharacterVisualTemplate)
 {
-	std::string modelClientFileString = m_DBCs->DBC_ChrRaces()[(size_t)CharacterTemplate.Race]->Get_ClientFileString();
-	std::string modelGender = (CharacterTemplate.Gender == Gender::Male) ? "Male" : "Female";
+	std::string modelClientFileString = m_DBCs->DBC_ChrRaces()[(size_t)CharacterVisualTemplate.Race]->Get_ClientFileString();
+	std::string modelGender = (CharacterVisualTemplate.Gender == Gender::Male) ? "Male" : "Female";
 	std::string fullModelName = "Character\\" + modelClientFileString + "\\" + modelGender + "\\" + modelClientFileString + modelGender + ".M2";
 
 	return LoadM2(RenderDevice, fullModelName);

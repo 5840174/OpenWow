@@ -39,7 +39,7 @@ Character_SkinTextureBaker::Character_SkinTextureBaker(const IBaseManager& BaseM
 	}
 }
 
-std::shared_ptr<IImage> Character_SkinTextureBaker::CreateCharacterSkinImage(const SCharacterTemplate& CharacterTemlate) const
+std::shared_ptr<IImage> Character_SkinTextureBaker::CreateCharacterSkinImage(const SCharacterVisualTemplate& CharacterTemlate) const
 {
 	std::unique_ptr<SRGBColor[]> pixels = std::unique_ptr<SRGBColor[]>(new SRGBColor[cSkinTextureWidth * cSkinTextureHeight]);
 	std::memset(pixels.get(), 0x00, sizeof(SRGBColor) * cSkinTextureWidth * cSkinTextureHeight);

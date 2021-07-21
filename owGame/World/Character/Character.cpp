@@ -9,8 +9,9 @@
 #include "Character_SectionWrapper.h"
 #include "Character_SkinTextureBaker.h"
 
-CCharacter::CCharacter(IScene& Scene, const std::shared_ptr<CM2>& M2Object)
+CCharacter::CCharacter(IScene& Scene, const std::shared_ptr<CM2>& M2Object, const SCharacterVisualTemplate& CharacterVisualTemplate)
 	: CCreature(Scene, M2Object)
+	, m_CharacterVisualTemplate(CharacterVisualTemplate)
 	, m_IsNPCBakedTexturePresent(false)
 {
 	for (uint32 i = 0; i < (size_t)EM2GeosetType::Count; i++)
@@ -38,8 +39,8 @@ void CCharacter::SetNPCBakedImage(std::shared_ptr<IImage> BakedNPCImage)
 
 void CCharacter::Refresh_CharacterItemsFromTemplate()
 {
-	for (uint32 inventorySlot = 0; inventorySlot < INVENTORY_SLOT_BAG_END; inventorySlot++)
-		SetItem(inventorySlot, m_Template.ItemsTemplates[inventorySlot]);
+	//for (uint32 inventorySlot = 0; inventorySlot < INVENTORY_SLOT_BAG_END; inventorySlot++)
+	//	SetItem(inventorySlot, m_CharacterVisualTemplate.ItemsTemplates[inventorySlot]);
 }
 
 void CCharacter::Refresh_SkinImageFromTemplate()
@@ -102,7 +103,7 @@ void CCharacter::RefreshMeshIDs()
 		if (characterItem == nullptr || false == characterItem->IsLoaded() || false == characterItem->IsExists())
 			continue;
 
-		if (inventorySlot == EQUIPMENT_SLOT_HEAD)
+		/*if (inventorySlot == EQUIPMENT_SLOT_HEAD)
 		{
 			if (m_Template.IsHasCharacterFlag(CHARACTER_FLAG_HIDE_HELM))
 			{
@@ -125,7 +126,7 @@ void CCharacter::RefreshMeshIDs()
 			{
 
 			}
-		}
+		}*/
 
 		for (const auto& geoset : characterItem->GetGeosets())
 		{
@@ -150,7 +151,7 @@ std::shared_ptr<CCharacterItem> CCharacter::GetItem(uint8 InventorySlot) const
 	return m_CharacterItems[InventorySlot];
 }
 
-void CCharacter::SetItem(uint8 InventorySlot, const SCharacterItemTemplate & ItemTemplate)
+void CCharacter::SetItem(uint8 InventorySlot, const SCharacterItemTemplate& ItemTemplate)
 {
 	if (InventorySlot >= INVENTORY_SLOT_BAG_END)
 		throw CException("CCharacter::SetItem: Incorrect inventory slot '%d'.", InventorySlot);
@@ -158,10 +159,8 @@ void CCharacter::SetItem(uint8 InventorySlot, const SCharacterItemTemplate & Ite
 	//if (m_CharacterItems[InventorySlot] != nullptr)
 	//	GetBaseManager().GetManager<ILoader>()->AddToDeleteQueue(m_CharacterItems[InventorySlot]);
 
-	auto characterItem = MakeShared(CCharacterItem, GetBaseManager(), GetRenderDevice(), std::dynamic_pointer_cast<CCharacter>(shared_from_this()));
+	auto characterItem = MakeShared(CCharacterItem, GetBaseManager(), GetRenderDevice(), std::dynamic_pointer_cast<CCharacter>(shared_from_this()), ItemTemplate);
 	AddChildLoadable(characterItem);
-	Template().ItemsTemplates[InventorySlot] = ItemTemplate;
-	characterItem->Template() = ItemTemplate;
 	m_CharacterItems[InventorySlot] = characterItem;
 	GetBaseManager().GetManager<ILoader>()->AddToLoadQueue(characterItem);
 }
