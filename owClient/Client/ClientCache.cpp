@@ -56,7 +56,7 @@ void CowClient_ServerQueryCache::RequestGameObjectTemplate(CowGuid::EntryType_t 
 		m_ServerWorld.SendPacket(queryInfo);
 
 		// Add to cache, to prevent next requests
-		m_GameObjectsCache->Add(nullptr);
+		m_GameObjectsCache->Add(Entry, nullptr);
 	}
 }
 
@@ -91,7 +91,7 @@ void CowClient_ServerQueryCache::RequestCreatureTemplate(CowGuid::EntryType_t En
 		m_ServerWorld.SendPacket(queryInfo);
 
 		// Add to cache, to prevent next requests
-		m_CreaturesCache->Add(nullptr);
+		m_CreaturesCache->Add(Entry, nullptr);
 	}
 }
 
@@ -126,7 +126,7 @@ void CowClient_ServerQueryCache::RequestItemTemplate(CowGuid::EntryType_t Entry,
 		m_ServerWorld.SendPacket(queryInfo);
 
 		// Add to cache, to prevent next requests
-		m_ItemsCache->Add(nullptr);
+		m_ItemsCache->Add(Entry, nullptr);
 	}
 }
 
@@ -139,16 +139,17 @@ bool CowClient_ServerQueryCache::On_SMSG_GAMEOBJECT_QUERY_RESPONSE(CServerPacket
 {
 	uint32 entryIDWIthFlag;
 	Bytes >> entryIDWIthFlag;
-	uint32 entryIDWIthoutFlag = entryIDWIthFlag & ~(0x80000000);
 	if (entryIDWIthFlag & 0x80000000)
 	{
 		Log::Warn("CowClient_ServerQueryCache: On_SMSG_GAMEOBJECT_QUERY_RESPONSE is not allowed.");
 		return false;
 	}
 
-	std::shared_ptr<SGameObjectQueryResult> gameObjectQueryResult = MakeShared(SGameObjectQueryResult, entryIDWIthoutFlag);
+	uint32 entryIDWIthoutFlag = entryIDWIthFlag & ~(0x80000000);
+
+	auto gameObjectQueryResult = MakeShared(SGameObjectQueryResult, entryIDWIthoutFlag);
 	gameObjectQueryResult->Load(Bytes);
-	m_GameObjectsCache->Add(gameObjectQueryResult);
+	m_GameObjectsCache->Add(entryIDWIthoutFlag, gameObjectQueryResult);
 
 	// Callback
 	const auto& gameObjectCallbacksIt = m_GameObjectCallbacks.find(entryIDWIthoutFlag);
@@ -167,16 +168,17 @@ bool CowClient_ServerQueryCache::On_SMSG_CREATURE_QUERY_RESPONSE(CServerPacket& 
 {
 	uint32 entryIDWIthFlag;
 	Bytes >> entryIDWIthFlag;
-	uint32 entryIDWIthoutFlag = entryIDWIthFlag & ~(0x80000000);
 	if (entryIDWIthFlag & 0x80000000)
 	{
 		Log::Warn("CowClient_ServerQueryCache: On_SMSG_CREATURE_QUERY_RESPONSE is not allowed.");
 		return false;
 	}
 
-	std::shared_ptr<SCreatureQueryResult> creatureQueryResult = MakeShared(SCreatureQueryResult, entryIDWIthoutFlag);
+	uint32 entryIDWIthoutFlag = entryIDWIthFlag & ~(0x80000000);
+
+	auto creatureQueryResult = MakeShared(SCreatureQueryResult, entryIDWIthoutFlag);
 	creatureQueryResult->Load(Bytes);
-	m_CreaturesCache->Add(creatureQueryResult);
+	m_CreaturesCache->Add(entryIDWIthoutFlag, creatureQueryResult);
 
 	// Callback
 	const auto& creatureCallbacksIt = m_CreatureCallbacks.find(entryIDWIthoutFlag);
@@ -195,16 +197,17 @@ bool CowClient_ServerQueryCache::On_SMSG_ITEM_QUERY_SINGLE_RESPONSE(CServerPacke
 {
 	uint32 entryIDWIthFlag;
 	Bytes >> entryIDWIthFlag;
-	uint32 entryIDWIthoutFlag = entryIDWIthFlag & ~(0x80000000);
 	if (entryIDWIthFlag & 0x80000000)
 	{
 		Log::Warn("CowClient_ServerQueryCache: On_SMSG_ITEM_QUERY_SINGLE_RESPONSE is not allowed.");
 		return false;
 	}
 
-	std::shared_ptr<SItemQueryResult> itemQueryResult = MakeShared(SItemQueryResult, entryIDWIthoutFlag);
+	uint32 entryIDWIthoutFlag = entryIDWIthFlag & ~(0x80000000);
+
+	auto itemQueryResult = MakeShared(SItemQueryResult, entryIDWIthoutFlag);
 	itemQueryResult->Load(Bytes);
-	m_ItemsCache->Add(itemQueryResult);
+	m_ItemsCache->Add(entryIDWIthoutFlag, itemQueryResult);
 
 	// Callback
 	const auto& itemCallbacksIt = m_ItemsCallbacks.find(entryIDWIthoutFlag);

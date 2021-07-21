@@ -513,7 +513,7 @@ public:
 	virtual ~CowWDBGameObjectCache();
 
 	bool Get(CowGuid::EntryType_t Entry, std::shared_ptr<SGameObjectQueryResult> * QueryResult) const;
-	void Add(std::shared_ptr<SGameObjectQueryResult> QueryResult);
+	void Add(CowGuid::EntryType_t Entry, std::shared_ptr<SGameObjectQueryResult> QueryResult);
 
 protected:
 	void CreateCacheBuffer(IByteBuffer * ByteBuffer) const override;

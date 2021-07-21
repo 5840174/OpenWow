@@ -49,11 +49,11 @@ bool CowWDBGameObjectCache::Get(CowGuid::EntryType_t Entry, std::shared_ptr<SGam
 	return true;
 }
 
-void CowWDBGameObjectCache::Add(std::shared_ptr<SGameObjectQueryResult> QueryResult)
+void CowWDBGameObjectCache::Add(CowGuid::EntryType_t Entry, std::shared_ptr<SGameObjectQueryResult> QueryResult)
 {
-	auto& it = m_Cache.find(QueryResult->entryID);
+	auto& it = m_Cache.find(Entry);
 	if (it == m_Cache.end())
-		m_Cache.insert(std::make_pair(QueryResult->entryID, QueryResult));
+		m_Cache.insert(std::make_pair(Entry, QueryResult));
 	else
 		it->second = QueryResult;
 }

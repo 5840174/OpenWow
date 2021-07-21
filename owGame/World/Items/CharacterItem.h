@@ -12,13 +12,13 @@
 class CCharacter;
 // FORWARD END
 
-struct ObjectComponent
+struct SModelComponent
 {
 	std::shared_ptr<CCharacterItemM2Instance> ItemM2Instance;
 	std::shared_ptr<IImage>                   ItemSelfTexture;
 };
 
-struct GeosetComponent
+struct SGeosetComponent
 {
 	EM2GeosetType mesh;
 	uint32        value;
@@ -35,11 +35,13 @@ public:
 	virtual ~CCharacterItem();
 	
 	const SCharacterItemTemplate&        GetTemplate()                                    const { return m_Template; }
-	bool                                 IsExists()                                       const { return GetTemplate().DisplayId != 0 && GetTemplate().InventoryType != (uint8)DBCItem_EInventoryItemType::NON_EQUIP; }
+	bool                                 IsExists()                                       const { return (GetTemplate().DisplayId != 0) && (GetTemplate().InventoryType != (uint8)DBCItem_EInventoryItemType::NON_EQUIP); }
 
-	const std::vector<ObjectComponent>&  GetModels()                                      const { return m_Models; }
-	const std::vector<GeosetComponent>&  GetGeosets()                                     const { return m_Geosets; }
+	const std::vector<SModelComponent>&  GetModels()                                      const { return m_Models; }
+	const std::vector<SGeosetComponent>& GetGeosets()                                     const { return m_Geosets; }
 	const std::shared_ptr<IImage>&       GetSkinComponentImage(DBC_CharComponent_Sections SkinComponent) const { return m_SkinComponentImages[static_cast<size_t>(SkinComponent)]; }
+
+	bool                                 IsNeedHideHelmetGeoset(EM2GeosetType M2GeosetType) const;
 
 	// ILoadable
 	bool Load() override;
@@ -51,14 +53,17 @@ private:
 	void InitializeItemGeosets();
 	void InitializeItemSkinImages();
 
-	std::shared_ptr<CM2>	LoadItemM2Model            (DBCItem_EInventoryItemType ObjectType, std::string _modelName);
-	std::shared_ptr<IImage> LoadItemImage              (DBCItem_EInventoryItemType ObjectType, std::string _textureName);
-	std::shared_ptr<IImage> LoadItemSkinComponentImage (DBC_CharComponent_Sections SkinComponent, std::string _textureName);
+	std::shared_ptr<CM2>	LoadItemM2Model            (DBCItem_EInventoryItemType ObjectType, std::string ModelFileName);
+	std::shared_ptr<IImage> LoadItemImage              (DBCItem_EInventoryItemType ObjectType, std::string TextureFileName);
+	std::shared_ptr<IImage> LoadItemSkinComponentImage (DBC_CharComponent_Sections SkinComponent, std::string TextureFileName);
 
 private:
-	SCharacterItemTemplate	      m_Template;
-	std::vector<ObjectComponent>  m_Models;
-	std::vector<GeosetComponent>  m_Geosets;
+	SCharacterItemTemplate	         m_Template;
+	const DBC_ItemDisplayInfoRecord* m_ItemDisplayInfoRecord;
+	const DBC_HelmetGeosetVisDataRecord * m_HelmetGeosetVisDataRecord;
+
+	std::vector<SModelComponent> m_Models;
+	std::vector<SGeosetComponent>  m_Geosets;
 	std::shared_ptr<IImage>       m_SkinComponentImages[static_cast<size_t>(DBC_CharComponent_Sections::ITEMS_COUNT)];
 	
 private: 

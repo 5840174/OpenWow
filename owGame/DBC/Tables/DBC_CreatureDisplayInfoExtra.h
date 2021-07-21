@@ -28,7 +28,9 @@ __DBC_REF_ID(DBC_ItemDisplayInfo,        Tabard,            18);
 __DBC_STRING(                            BakedSkin,         19);
 #elif WOW_CLIENT_VERSION >= WOW_BC_2_4_3
 __DBC_REF_ID(DBC_ItemDisplayInfo,        Cape,              19);
+
 __DBC_TVALUE(uint32,                     CanEquip,          20);
+
 __DBC_STRING(                            BakedSkin,         21);
 #endif
 

@@ -14,11 +14,6 @@ CCharacter::CCharacter(IScene& Scene, const std::shared_ptr<CM2>& M2Object, cons
 	, m_CharacterVisualTemplate(CharacterVisualTemplate)
 	, m_IsNPCBakedTexturePresent(false)
 {
-	for (uint32 i = 0; i < (size_t)EM2GeosetType::Count; i++)
-		m_MeshID[i] = 1;
-
-	setMeshEnabled(EM2GeosetType::Ears07, (uint32)EarsStyles::Enabled);
-	setMeshEnabled(EM2GeosetType::Eyeglows17, (uint32)EyeglowsStyles::Racial);
 }
 
 CCharacter::~CCharacter()
@@ -35,12 +30,6 @@ void CCharacter::SetNPCBakedImage(std::shared_ptr<IImage> BakedNPCImage)
 {
 	m_IsNPCBakedTexturePresent = true;
 	m_BackedSkinImage = BakedNPCImage;
-}
-
-void CCharacter::Refresh_CharacterItemsFromTemplate()
-{
-	//for (uint32 inventorySlot = 0; inventorySlot < INVENTORY_SLOT_BAG_END; inventorySlot++)
-	//	SetItem(inventorySlot, m_CharacterVisualTemplate.ItemsTemplates[inventorySlot]);
 }
 
 void CCharacter::Refresh_SkinImageFromTemplate()
@@ -74,64 +63,61 @@ void CCharacter::Refresh_SkinWithItemsImage()
 		setSpecialTexture(SM2_Texture::Type::SKIN, GetBaseManager().GetManager<IznTexturesFactory>()->LoadTexture2D(skinImageWithItems));
 	}
 
-	// Cloak is special texture
-	const auto& cloakVisualItem = GetItem(EQUIPMENT_SLOT_BACK);
-	if (cloakVisualItem != nullptr && cloakVisualItem->IsLoaded() && cloakVisualItem->IsExists())
+	// Special case for Cloack. Cloack isn't separate item model and clock texture is part of character.
+	const auto& cloakItem = GetItem(EQUIPMENT_SLOT_BACK);
+	if (cloakItem != nullptr && cloakItem->IsLoaded() && cloakItem->IsExists())
 	{
-		if (cloakVisualItem->GetModels().size() != 1)
+		if (cloakItem->GetModels().size() != 1)
 			throw CException("Character::Refresh_AddItemsToSkinTexture: Cape must contains one object component.");
-		auto cloackImage = cloakVisualItem->GetModels()[0].ItemSelfTexture;
+
+		auto cloackImage = cloakItem->GetModels()[0].ItemSelfTexture;
 		setSpecialTexture(SM2_Texture::Type::OBJECT_SKIN, GetBaseManager().GetManager<IznTexturesFactory>()->LoadTexture2D(cloackImage));
 	}
 }
 
 void CCharacter::RefreshMeshIDs()
 {
-	// From template
+	// Refresh all geosets to default value
+	for (uint32 i = 0; i < (size_t)EM2GeosetType::Count; i++)
+		m_MeshID[i] = 1;
+
+	// Initialize geosets from character template
 	Character_SectionWrapper sectionWrapper(GetBaseManager());
 	setMeshEnabled(EM2GeosetType::SkinAndHair, sectionWrapper.getHairShowScalp(GetTemplate()) ? static_cast<uint32>(SkinAndHairStyles::ShowScalp) : sectionWrapper.getHairGeoset(GetTemplate()));
 	setMeshEnabled(EM2GeosetType::Facial01,    sectionWrapper.getFacial01Geoset(GetTemplate()));
 	setMeshEnabled(EM2GeosetType::Facial02,    sectionWrapper.getFacial02Geoset(GetTemplate()));
 	setMeshEnabled(EM2GeosetType::Facial03,    sectionWrapper.getFacial03Geoset(GetTemplate()));
+	setMeshEnabled(EM2GeosetType::Ears07,      (uint32)EarsStyles::Enabled);
 	setMeshEnabled(EM2GeosetType::Unk16,       sectionWrapper.getFacial16Geoset(GetTemplate()));
 	setMeshEnabled(EM2GeosetType::Eyeglows17,  sectionWrapper.getFacial17Geoset(GetTemplate()));
 
-	// From items
+	// Change geoset from items
 	for (size_t inventorySlot = 0; inventorySlot < INVENTORY_SLOT_BAG_END; inventorySlot++)
 	{
-		const auto& characterItem = GetItem(inventorySlot);
-		if (characterItem == nullptr || false == characterItem->IsLoaded() || false == characterItem->IsExists())
-			continue;
+		const auto& item = GetItem(inventorySlot);
+		if (item != nullptr && item->IsLoaded() && item->IsExists())
+			for (const auto& geoset : item->GetGeosets())
+				setMeshEnabled(geoset.mesh, geoset.getMeshID());
+	}
 
-		/*if (inventorySlot == EQUIPMENT_SLOT_HEAD)
-		{
-			if (m_Template.IsHasCharacterFlag(CHARACTER_FLAG_HIDE_HELM))
-			{
-				setMeshEnabled(EM2GeosetType::Ears07, (uint32)EarsStyles::Enabled);
-				continue;
-			}
-			else
-			{
-				setMeshEnabled(EM2GeosetType::Ears07, (uint32)EarsStyles::None);
-			}
-		}
-		else if (inventorySlot == EQUIPMENT_SLOT_BACK)
-		{
-			if (m_Template.IsHasCharacterFlag(CHARACTER_FLAG_HIDE_CLOAK))
-			{
-				setMeshEnabled(EM2GeosetType::Cloak15, 1);
-				continue;
-			}
-			else
-			{
+	// Special case for Helmet. Hide some geosets on character head.
+	const auto& helmetItem = GetItem(EQUIPMENT_SLOT_HEAD);
+	if (helmetItem != nullptr && helmetItem->IsLoaded() && helmetItem->IsExists())
+	{
+		if (helmetItem->IsNeedHideHelmetGeoset(EM2GeosetType::SkinAndHair))
+			setMeshEnabled(EM2GeosetType::SkinAndHair, 1);
 
-			}
-		}*/
+		if (helmetItem->IsNeedHideHelmetGeoset(EM2GeosetType::Facial01))
+			setMeshEnabled(EM2GeosetType::Facial01, 1);
 
-		for (const auto& geoset : characterItem->GetGeosets())
-		{
-			setMeshEnabled(geoset.mesh, geoset.getMeshID());
-		}
+		if (helmetItem->IsNeedHideHelmetGeoset(EM2GeosetType::Facial02))
+			setMeshEnabled(EM2GeosetType::Facial02, 1);
+
+		if (helmetItem->IsNeedHideHelmetGeoset(EM2GeosetType::Facial03))
+			setMeshEnabled(EM2GeosetType::Facial03, 1);
+
+		if (helmetItem->IsNeedHideHelmetGeoset(EM2GeosetType::Ears07))
+			setMeshEnabled(EM2GeosetType::Ears07, (uint32)EarsStyles::None);
 	}
 }
 
@@ -145,9 +131,6 @@ std::shared_ptr<CCharacterItem> CCharacter::GetItem(uint8 InventorySlot) const
 	if (InventorySlot >= INVENTORY_SLOT_BAG_END)
 		throw CException("CCharacter::GetItem: Incorrect inventory slot '%d'.", InventorySlot);
 
-	//if (m_CharacterItems[InventorySlot] && m_CharacterItems[InventorySlot]->GetState() != ILoadable::ELoadableState::Loaded)
-	//	throw CException("Item isn't exists.");
-
 	return m_CharacterItems[InventorySlot];
 }
 
@@ -158,6 +141,19 @@ void CCharacter::SetItem(uint8 InventorySlot, const SCharacterItemTemplate& Item
 
 	//if (m_CharacterItems[InventorySlot] != nullptr)
 	//	GetBaseManager().GetManager<ILoader>()->AddToDeleteQueue(m_CharacterItems[InventorySlot]);
+
+	// If item exists, then remove it from character
+	auto itemInSlot = m_CharacterItems[InventorySlot];
+	if (itemInSlot != nullptr && itemInSlot->IsExists())
+	{
+		for (const auto& itemObjectsIt : itemInSlot->GetModels())
+		{
+			if (itemObjectsIt.ItemM2Instance != nullptr)
+			{
+				const_cast<CCharacter*>(this)->RemoveChild(itemObjectsIt.ItemM2Instance);
+			}
+		}
+	}
 
 	auto characterItem = MakeShared(CCharacterItem, GetBaseManager(), GetRenderDevice(), std::dynamic_pointer_cast<CCharacter>(shared_from_this()), ItemTemplate);
 	AddChildLoadable(characterItem);
@@ -219,6 +215,17 @@ void CCharacter::Initialize()
 
 
 
+bool CCharacter::Load()
+{
+	if (false == __super::Load())
+		return false;
+
+	Refresh_SkinImageFromTemplate();
+	RefreshMeshIDs();
+
+	return true;
+}
+
 //
 // ILoadable
 //
@@ -227,10 +234,9 @@ void CCharacter::OnAfterLoad()
 	if (GetM2().GetState() != ILoadable::ELoadableState::Loaded)
 		throw CException("Unexpected behaviour.");
 
-	Refresh_SkinImageFromTemplate();
-	Refresh_CharacterItemsFromTemplate();
-
-	RefreshMeshIDs();
+	//Refresh_SkinImageFromTemplate();
+	//RefreshMeshIDs();
+	//RefreshMeshIDs();
 }
 
 #endif

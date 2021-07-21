@@ -40,7 +40,7 @@ enum class SkinAndHairStyles : uint8
 enum class EarsStyles : uint8
 {
 	None = 1,
-	Enabled
+	Enabled = 2
 };
 
 //17**

@@ -406,7 +406,7 @@ public:
 	virtual ~CowWDBItemCache();
 
 	bool Get(CowGuid::EntryType_t Entry, std::shared_ptr<SItemQueryResult> * QueryResult) const;
-	void Add(std::shared_ptr<SItemQueryResult> QueryResult);
+	void Add(CowGuid::EntryType_t Entry, std::shared_ptr<SItemQueryResult> QueryResult);
 
 protected:
 	void CreateCacheBuffer(IByteBuffer * ByteBuffer) const override;

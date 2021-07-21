@@ -2,7 +2,6 @@
 
 #include "DBC/DBC__File.h"
 
-
 enum class EAreaFlags : uint32
 {
 	HasBreathParticles = 0x00000001,           // snow (only Dun Morogh, Naxxramas, Razorfen Downs and Winterspring)

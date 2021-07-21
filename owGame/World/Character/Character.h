@@ -20,7 +20,6 @@ public:
 
 	void SetNPCBakedImage(std::shared_ptr<IImage> BakedNPCImage);
 
-	void Refresh_CharacterItemsFromTemplate();
 	void Refresh_SkinImageFromTemplate();
 	void Refresh_SkinWithItemsImage();
 	void RefreshMeshIDs();
@@ -37,6 +36,7 @@ public:
 	void Initialize() override;
 
 	// ILoadable
+	bool Load() override;
 	void OnAfterLoad() override;
 
 private:

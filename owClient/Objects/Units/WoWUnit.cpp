@@ -326,7 +326,7 @@ void CowServerUnit::OnHiddenNodePositionChanged()
 		float height = map->GetTerrainHeight(Position);
 		if (height != Math::MaxFloat)
 		{
-			if (glm::abs(height) - abs(Position.y) < 1.0f)
+			if (glm::abs(glm::abs(height) - glm::abs(Position.y)) < 1.0f)
 			{
 				clientPosition.y = height;
 			}

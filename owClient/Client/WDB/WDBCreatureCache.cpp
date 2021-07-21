@@ -50,11 +50,11 @@ bool CowWDBCreatureCache::Get(CowGuid::EntryType_t Entry, std::shared_ptr<SCreat
 	return true;
 }
 
-void CowWDBCreatureCache::Add(std::shared_ptr<SCreatureQueryResult> QueryResult)
+void CowWDBCreatureCache::Add(CowGuid::EntryType_t Entry, std::shared_ptr<SCreatureQueryResult> QueryResult)
 {
-	auto& it = m_Cache.find(QueryResult->entry);
+	auto& it = m_Cache.find(Entry);
 	if (it == m_Cache.end())
-		m_Cache.insert(std::make_pair(QueryResult->entry, QueryResult));
+		m_Cache.insert(std::make_pair(Entry, QueryResult));
 	else
 		it->second = QueryResult;
 }

@@ -15,5 +15,3 @@
 
 #include <znPlatformWindows.h>
 #pragma comment(lib, "znPlatformWindows.lib")
-
-#include <windows.h>

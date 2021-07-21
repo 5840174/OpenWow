@@ -241,7 +241,7 @@ public:
 	virtual ~CowWDBCreatureCache();
 
 	bool Get(CowGuid::EntryType_t Entry, std::shared_ptr<SCreatureQueryResult> * QueryResult) const;
-	void Add(std::shared_ptr<SCreatureQueryResult> QueryResult);
+	void Add(CowGuid::EntryType_t Entry, std::shared_ptr<SCreatureQueryResult> QueryResult);
 
 protected:
 	void CreateCacheBuffer(IByteBuffer * ByteBuffer) const override;
