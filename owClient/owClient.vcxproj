@@ -29,6 +29,7 @@
     <ClInclude Include="Client\WDB\WDBCreatureCache.h" />
     <ClInclude Include="Client\WDB\WDBFile.h" />
     <ClInclude Include="Client\WDB\WDBGameObjectCache.h" />
+    <ClInclude Include="Client\WDB\WDBItemCache.h" />
     <ClInclude Include="common.h" />
     <ClInclude Include="Objects\Base\UpdateMask.h" />
     <ClInclude Include="Objects\Base\WoWObject.h" />
@@ -83,6 +84,7 @@
     <ClCompile Include="Client\WDB\WDBCreatureCache.cpp" />
     <ClCompile Include="Client\WDB\WDBFile.cpp" />
     <ClCompile Include="Client\WDB\WDBGameObjectCache.cpp" />
+    <ClCompile Include="Client\WDB\WDBItemCache.cpp" />
     <ClCompile Include="Objects\Base\WoWObject.cpp" />
     <ClCompile Include="Objects\Base\WoWObjectValues.cpp" />
     <ClCompile Include="Objects\Base\WoWWorldObject.cpp" />

@@ -222,6 +222,9 @@
     <ClInclude Include="Client\WDB\WDBGameObjectCache.h">
       <Filter>Client\WDBCache</Filter>
     </ClInclude>
+    <ClInclude Include="Client\WDB\WDBItemCache.h">
+      <Filter>Client\WDBCache</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="World\WorldObjects.cpp">
@@ -345,6 +348,9 @@
       <Filter>Client\WDBCache</Filter>
     </ClCompile>
     <ClCompile Include="Client\WDB\WDBGameObjectCache.cpp">
+      <Filter>Client\WDBCache</Filter>
+    </ClCompile>
+    <ClCompile Include="Client\WDB\WDBItemCache.cpp">
       <Filter>Client\WDBCache</Filter>
     </ClCompile>
   </ItemGroup>

@@ -4,7 +4,7 @@
 #include "WDBGameObjectCache.h"
 
 CowWDBGameObjectCache::CowWDBGameObjectCache(IFilesManager * FilesManager)
-	: CowWDBFile(FilesManager, "GameObjectCache.wdb")
+	: CowWDBFile(FilesManager, "gameobjectcache.wdb")
 {
 	auto file = LoadFile();
 	if (file == nullptr)

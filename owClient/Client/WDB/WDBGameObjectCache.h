@@ -493,6 +493,7 @@ struct ZN_API SGameObjectQueryResult
 	}
 };
 
+
 ZN_INTERFACE ZN_API IClientCacheGameobjectResponseListener
 {
 	virtual ~IClientCacheGameobjectResponseListener() {}

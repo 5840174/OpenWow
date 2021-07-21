@@ -11,12 +11,11 @@ CowClient_ServerQueryCache::CowClient_ServerQueryCache(CowServerWorld& world)
 {
 	m_GameObjectsCache = std::make_unique<CowWDBGameObjectCache>(world.GetBaseManager().GetManager<IFilesManager>());
 	m_CreaturesCache = std::make_unique<CowWDBCreatureCache>(world.GetBaseManager().GetManager<IFilesManager>());
+	m_ItemsCache = std::make_unique<CowWDBItemCache>(world.GetBaseManager().GetManager<IFilesManager>());
 
 	//SMSG_NAME_QUERY_RESPONSE
 	//SMSG_PET_NAME_QUERY_RESPONSE
 	//SMSG_GUILD_QUERY_RESPONSE
-	//SMSG_ITEM_QUERY_SINGLE_RESPONSE
-	//SMSG_ITEM_QUERY_MULTIPLE_RESPONSE
 	//SMSG_PAGE_TEXT_QUERY_RESPONSE
 	//SMSG_QUEST_QUERY_RESPONSE
 	m_ServerWorld.AddHandler(SMSG_GAMEOBJECT_QUERY_RESPONSE, std::bind(&CowClient_ServerQueryCache::On_SMSG_GAMEOBJECT_QUERY_RESPONSE, this, std::placeholders::_1));
@@ -29,10 +28,10 @@ CowClient_ServerQueryCache::~CowClient_ServerQueryCache()
 void CowClient_ServerQueryCache::RequestGameObjectTemplate(CowGuid::EntryType_t Entry, CowGuid Guid, const std::shared_ptr<IClientCacheGameobjectResponseListener>& Callback)
 {
 	if (Entry == 0)
-		throw CException("CowClient_ServerQueryCache::SendGameObjectQueryResponce: Entry is 0.");
+		throw CException("CowClient_ServerQueryCache::RequestGameObjectTemplate: Entry is 0.");
 
 	if (Guid.GetTypeId() != EWoWObjectTypeID::TYPEID_GAMEOBJECT)
-		throw CException("CowClient_ServerQueryCache::SendGameObjectQueryResponce: TypeID must be GameObject. %s - '%d'.", Guid.GetTypeName(), Guid.GetTypeId());
+		throw CException("CowClient_ServerQueryCache::RequestGameObjectTemplate: TypeID must be GameObject. %s - '%d'.", Guid.GetTypeName(), Guid.GetTypeId());
 
 	std::shared_ptr<SGameObjectQueryResult> queryResult;
 	if (m_GameObjectsCache->Get(Entry, &queryResult))
@@ -64,10 +63,10 @@ void CowClient_ServerQueryCache::RequestGameObjectTemplate(CowGuid::EntryType_t 
 void CowClient_ServerQueryCache::RequestCreatureTemplate(CowGuid::EntryType_t Entry, CowGuid Guid, const std::shared_ptr<IClientCacheCreatureResponseListener>& Callback)
 {
 	if (Entry == 0)
-		throw CException("CowClient_ServerQueryCache::SendCreatureQueryResponce: Entry is 0.");
+		throw CException("CowClient_ServerQueryCache::RequestCreatureTemplate: Entry is 0.");
 
 	if (Guid.GetTypeId() != EWoWObjectTypeID::TYPEID_UNIT)
-		throw CException("CowClient_ServerQueryCache::SendCreatureQueryResponce: TypeID must be Creature. %s - '%d'.", Guid.GetTypeName(), Guid.GetTypeId());
+		throw CException("CowClient_ServerQueryCache::RequestCreatureTemplate: TypeID must be Creature. %s - '%d'.", Guid.GetTypeName(), Guid.GetTypeId());
 
 	std::shared_ptr<SCreatureQueryResult> queryResult;
 	if (m_CreaturesCache->Get(Entry, &queryResult))
@@ -96,8 +95,46 @@ void CowClient_ServerQueryCache::RequestCreatureTemplate(CowGuid::EntryType_t En
 	}
 }
 
+void CowClient_ServerQueryCache::RequestItemTemplate(CowGuid::EntryType_t Entry, CowGuid Guid, const std::shared_ptr<IClientCacheItemResponseListener>& Callback)
+{
+	if (Entry == 0)
+		throw CException("CowClient_ServerQueryCache::RequestItemTemplate: Entry is 0.");
+
+	if (Guid.GetTypeId() != EWoWObjectTypeID::TYPEID_ITEM && Guid.GetTypeId() != EWoWObjectTypeID::TYPEID_CONTAINER)
+		throw CException("CowClient_ServerQueryCache::RequestItemTemplate: TypeID must be Item or Container. %s - '%d'.", Guid.GetTypeName(), Guid.GetTypeId());
+
+	std::shared_ptr<SItemQueryResult> queryResult;
+	if (m_ItemsCache->Get(Entry, &queryResult))
+	{
+		if (queryResult != nullptr)
+		{
+			if (Callback != nullptr)
+				Callback->OnTemplate(Entry, queryResult);
+		}
+		else
+		{
+			m_ItemsCallbacks[Entry].push_back(Callback);
+		}
+	}
+	else
+	{
+		m_ItemsCallbacks[Entry].push_back(Callback);
+
+		CClientPacket queryInfo(CMSG_ITEM_QUERY_SINGLE);
+		queryInfo << Entry;
+		queryInfo << Guid;
+		m_ServerWorld.SendPacket(queryInfo);
+
+		// Add to cache, to prevent next requests
+		m_ItemsCache->Add(nullptr);
+	}
+}
 
 
+
+//
+// Protected
+//
 bool CowClient_ServerQueryCache::On_SMSG_GAMEOBJECT_QUERY_RESPONSE(CServerPacket& Bytes)
 {
 	uint32 entryIDWIthFlag;
@@ -149,6 +186,34 @@ bool CowClient_ServerQueryCache::On_SMSG_CREATURE_QUERY_RESPONSE(CServerPacket& 
 			if (auto lockedCallback = callbackIt.lock())
 				lockedCallback->OnTemplate(entryIDWIthoutFlag, creatureQueryResult);
 		m_CreatureCallbacks.erase(creatureCallbacksIt);
+	}
+
+	return true;
+}
+
+bool CowClient_ServerQueryCache::On_SMSG_ITEM_QUERY_SINGLE_RESPONSE(CServerPacket & Bytes)
+{
+	uint32 entryIDWIthFlag;
+	Bytes >> entryIDWIthFlag;
+	uint32 entryIDWIthoutFlag = entryIDWIthFlag & ~(0x80000000);
+	if (entryIDWIthFlag & 0x80000000)
+	{
+		Log::Warn("CowClient_ServerQueryCache: On_SMSG_ITEM_QUERY_SINGLE_RESPONSE is not allowed.");
+		return false;
+	}
+
+	std::shared_ptr<SItemQueryResult> itemQueryResult = MakeShared(SItemQueryResult, entryIDWIthoutFlag);
+	itemQueryResult->Load(Bytes);
+	m_ItemsCache->Add(itemQueryResult);
+
+	// Callback
+	const auto& itemCallbacksIt = m_ItemsCallbacks.find(entryIDWIthoutFlag);
+	if (itemCallbacksIt != m_ItemsCallbacks.end())
+	{
+		for (const auto& callbackIt : itemCallbacksIt->second)
+			if (auto lockedCallback = callbackIt.lock())
+				lockedCallback->OnTemplate(entryIDWIthoutFlag, itemQueryResult);
+		m_ItemsCallbacks.erase(itemCallbacksIt);
 	}
 
 	return true;

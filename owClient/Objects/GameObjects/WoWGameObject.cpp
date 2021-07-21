@@ -26,7 +26,7 @@ void CowServerGameObject::OnValueUpdated(uint16 index)
 		CowGuid::EntryType_t objectEntryID = m_Values.GetUInt32Value(index);
 		if (m_GameObjectTemplate == nullptr)
 		{
-			GetWoWWorld().GetClientCache().SendGameObjectQueryResponce(objectEntryID, GetWoWGUID(), std::dynamic_pointer_cast<CowServerGameObject>(shared_from_this()));
+			GetWoWWorld().GetClientCache().RequestGameObjectTemplate(objectEntryID, GetWoWGUID(), std::dynamic_pointer_cast<CowServerGameObject>(shared_from_this()));
 		}
 	}
 }
