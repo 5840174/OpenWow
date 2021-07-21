@@ -126,11 +126,3 @@ std::string ByteArrayToHexStr(uint8 const* bytes, uint32 arrayLen, bool reverse 
 
 	return ss.str();
 }
-
-std::string CalculateSHA1Hash(std::string const& content)
-{
-    unsigned char digest[SHA_DIGEST_LENGTH];
-    SHA1((unsigned char*)content.c_str(), content.length(), (unsigned char*)&digest);
-
-    return ByteArrayToHexStr(digest, SHA_DIGEST_LENGTH);
-}

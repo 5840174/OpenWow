@@ -71,8 +71,7 @@ void CMapWMOInstance::Accept(IVisitor* visitor)
 //
 bool CMapWMOInstance::Load()
 {
-	bool loadResult = __super::Load();
-	if (false == loadResult)
+	if (false == __super::Load())
 		return false;
 
 	if (auto parent = GetParent())

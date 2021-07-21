@@ -4,7 +4,7 @@
 #include "AuthCrypt.h"
 
  // Additional
-#include "Cryptography/HMACSHA1.h"
+#include "HMACSHA1.h"
 
 #if WOW_CLIENT_VERSION < WOW_WOTLK_3_3_5
 

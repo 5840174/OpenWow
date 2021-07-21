@@ -1,7 +1,7 @@
 #pragma once
 
-#include "Cryptography/BigNumber.h"
-#include "Cryptography/ARC4.h"
+#include "BigNumber.h"
+#include "ARC4.h"
 
 #if WOW_CLIENT_VERSION < WOW_WOTLK_3_3_5
 class AuthCrypt

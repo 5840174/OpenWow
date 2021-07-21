@@ -370,6 +370,8 @@ void CWorldSocket::On_SMSG_AUTH_RESPONSE(CServerPacket& Buffer)
 
 	Log::Green("CWorldSocket::On_SMSG_AUTH_RESPONSE: Response is OK!");
 
+	// SEND
+
 	CClientPacket p(CMSG_CHAR_ENUM);
 	SendPacket(p);
 }
@@ -414,7 +416,7 @@ void CWorldSocket::CreateAddonsBuffer(CByteBuffer& AddonsBuffer)
 	AddonsBuffer.seek(0);
 
     uLongf destLen = addonsBuffer.getSize();
-    if (compress(AddonsBuffer.getDataFromCurrentEx() + sizeof(uint32), &destLen, addonsBuffer.getData(), addonsBuffer.getSize()) != Z_OK)
+    if (::compress(AddonsBuffer.getDataFromCurrentEx() + sizeof(uint32), &destLen, addonsBuffer.getData(), addonsBuffer.getSize()) != Z_OK)
 		throw CException("CWorldSocket::CreateAddonsBuffer: Unable to compress addons buffer.");
 
     //                  addonsRealSize + compressedSize

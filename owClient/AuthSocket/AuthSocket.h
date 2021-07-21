@@ -23,12 +23,12 @@ public:
 
 	void OnConnected() override;
 	void OnDisconnected() override;
-	void SendData(const IByteBuffer& _bb);
+	void SendData(const IByteBuffer& Buffer);
 
 private: // Handlers
-	bool On_AUTH_LOGON_CHALLENGE(CByteBuffer& _buff);
-	bool On_AUTH_LOGON_PROOF(CByteBuffer& _buff);
-	bool On_REALM_LIST(CByteBuffer& _buff);
+	bool On_AUTH_LOGON_CHALLENGE(CByteBuffer& Buffer);
+	bool On_AUTH_LOGON_PROOF(CByteBuffer& Buffer);
+	bool On_REALM_LIST(CByteBuffer& Buffer);
 
 	void AddHandler(EAuthCmd AuthCmd, std::function<bool(CByteBuffer&)> Handler);
 	void ProcessHandler(EAuthCmd AuthCmd, CByteBuffer& _buffer);

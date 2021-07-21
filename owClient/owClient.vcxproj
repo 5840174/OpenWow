@@ -13,9 +13,9 @@
   <ItemGroup>
     <ClInclude Include="..\shared\owClient.h" />
     <ClInclude Include="AuthSocket\AuthCodes.h" />
-    <ClInclude Include="AuthSocket\AuthCrypt.h" />
     <ClInclude Include="AuthSocket\AuthSocket.h" />
     <ClInclude Include="AuthSocket\Cryptography\ARC4.h" />
+    <ClInclude Include="AuthSocket\Cryptography\AuthCrypt.h" />
     <ClInclude Include="AuthSocket\Cryptography\BigNumber.h" />
     <ClInclude Include="AuthSocket\Cryptography\HMACSHA1.h" />
     <ClInclude Include="AuthSocket\Cryptography\OpenSSLCrypto.h" />
@@ -68,9 +68,9 @@
     <ClInclude Include="World\WorldObjectUpdater.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="AuthSocket\AuthCrypt.cpp" />
     <ClCompile Include="AuthSocket\AuthSocket.cpp" />
     <ClCompile Include="AuthSocket\Cryptography\ARC4.cpp" />
+    <ClCompile Include="AuthSocket\Cryptography\AuthCrypt.cpp" />
     <ClCompile Include="AuthSocket\Cryptography\BigNumber.cpp" />
     <ClCompile Include="AuthSocket\Cryptography\HMACSHA1.cpp" />
     <ClCompile Include="AuthSocket\Cryptography\OpenSSLCrypto.cpp" />

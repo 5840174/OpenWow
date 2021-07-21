@@ -69,7 +69,7 @@ CCharacterItem::~CCharacterItem()
 bool CCharacterItem::IsNeedHideHelmetGeoset(EM2GeosetType M2GeosetType) const
 {
 	if (m_HelmetGeosetVisDataRecord == nullptr)
-		return true;
+		return false;
 
 	uint32 flags = 0;
 	switch (M2GeosetType)
@@ -95,7 +95,7 @@ bool CCharacterItem::IsNeedHideHelmetGeoset(EM2GeosetType M2GeosetType) const
 		break;
 
 		default:
-			return true;
+			return false;
 	}
 
 	return (flags & (1 << (uint8)m_OwnerCharacter.GetTemplate().Race)) != 0;

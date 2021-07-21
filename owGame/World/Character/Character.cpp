@@ -59,7 +59,7 @@ void CCharacter::Refresh_SkinWithItemsImage()
 		if (m_BackedSkinImage == nullptr)
 			throw CException("CCharacter::Refresh_SkinWithItemsImage: BakedSkinImage is nullptr.");
 
-		auto skinImageWithItems = Character_SkinTextureBaker(GetBaseManager()).CreateCharacterSkinWithItemsImage(m_BackedSkinImage, this);
+		auto skinImageWithItems = Character_SkinTextureBaker(GetBaseManager()).AddItemsTexturesToCharacterSkinImage(m_BackedSkinImage, this);
 		setSpecialTexture(SM2_Texture::Type::SKIN, GetBaseManager().GetManager<IznTexturesFactory>()->LoadTexture2D(skinImageWithItems));
 	}
 

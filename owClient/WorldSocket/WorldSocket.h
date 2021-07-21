@@ -2,7 +2,7 @@
 
 #ifdef ENABLE_WOW_CLIENT
 
-#include "../AuthSocket/AuthCrypt.h"
+#include "../AuthSocket/Cryptography/AuthCrypt.h"
 #include "PacketsQueue.h"
 
 #include "../Warden/Warden.h"

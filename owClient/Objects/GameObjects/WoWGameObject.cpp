@@ -39,6 +39,15 @@ void CowServerGameObject::OnValuesUpdated(const UpdateMask & Mask)
 	}
 }
 
+void CowServerGameObject::OnHiddenNodePositionChanged()
+{
+	if (m_GameObjectModel)
+	{
+		m_GameObjectModel->SetLocalPosition(Position);
+		m_GameObjectModel->SetLocalRotationEuler(glm::vec3(0.0f, Orientation, 0.0f));
+	}
+}
+
 
 
 //

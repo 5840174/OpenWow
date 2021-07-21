@@ -38,11 +38,6 @@ const CCharacterItem& CCharacterItemM2Instance::GetCharacterItem() const
 	return m_CharacterItem; 
 }
 
-//void CCharacterItemM2Instance::AddVisualEffect(std::shared_ptr<CM2_Base_Instance> _visualEffect)
-//{
-//	m_VisualEffects.push_back(_visualEffect);
-//}
-
 
 
 //
@@ -50,10 +45,6 @@ const CCharacterItem& CCharacterItemM2Instance::GetCharacterItem() const
 //
 void CCharacterItemM2Instance::OnAfterLoad()
 {
-	// Attach to parent (parent is Character)
-	//if (auto ownerCharacterAttachment = GetCharacterInstance().GetM2().getMiscellaneous().getAttachment(m_AttachmentPoint))
-	//	Attach(ownerCharacterAttachment->GetAttachmentType());
-
 	// Item enchants
 	const DBC_ItemVisualsRecord* itemVisualsRecord = GetBaseManager().GetManager<CDBCStorage>()->DBC_ItemVisuals()[GetCharacterItem().GetTemplate().EnchantAuraID];
 	if (itemVisualsRecord != nullptr)
@@ -79,17 +70,12 @@ void CCharacterItemM2Instance::OnAfterLoad()
 			itemVisualEffectInstance->AddParentLoadable(std::dynamic_pointer_cast<ILoadable>(shared_from_this()));
 			GetBaseManager().GetManager<ILoader>()->AddToLoadQueue(itemVisualEffectInstance);
 
+			// If item contains attachment, then attach to item's attachment point, else to item same position
 			if (GetM2().getMiscellaneous().isAttachmentExists((EM2_AttachmentPoint)itemAttachmentPoint))
 			{
 				auto itemModelAttachment = GetM2().getMiscellaneous().getAttachment((EM2_AttachmentPoint)itemAttachmentPoint);
 				itemVisualEffectInstance->Attach(itemModelAttachment->GetAttachmentType()); // Attach visual effect to itemInstace attachment
 			}
-			//else
-			//{
-			//	itemVisualEffectInstance->Attach(ownerCharacterAttachmentPoint); // Or attach visual effect to same attachment as item
-			//}
-
-			//AddVisualEffect(itemVisualEffectInstance);
 		}
 	}
 }

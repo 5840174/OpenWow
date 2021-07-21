@@ -284,7 +284,7 @@ std::shared_ptr<IBlendState> CWorldObjectCreator::GetEGxBlend(uint32 Index) cons
 
 std::shared_ptr<CM2> CWorldObjectCreator::CreateCreatureModel(IRenderDevice& RenderDevice, const DBC_CreatureDisplayInfoRecord* CreatureDisplayInfo)
 {
-	uint32 creatureModelDataID = CreatureDisplayInfo->Get_Model();
+	uint32 creatureModelDataID = CreatureDisplayInfo->Get_CreatureModelDataID();
 	const DBC_CreatureModelDataRecord* creatureModelDataRecord = m_DBCs->DBC_CreatureModelData()[creatureModelDataID];
 	if (creatureModelDataRecord == nullptr)
 		throw CException("CWorldObjectCreator::CreateCreatureModel: CreatureModelData don't contains id '%d'.", creatureModelDataID);

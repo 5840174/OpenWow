@@ -111,9 +111,6 @@
     <ClInclude Include="AuthSocket\AuthCodes.h">
       <Filter>AuthSocket</Filter>
     </ClInclude>
-    <ClInclude Include="AuthSocket\AuthCrypt.h">
-      <Filter>AuthSocket</Filter>
-    </ClInclude>
     <ClInclude Include="AuthSocket\AuthSocket.h">
       <Filter>AuthSocket</Filter>
     </ClInclude>
@@ -225,6 +222,9 @@
     <ClInclude Include="Client\WDB\WDBItemCache.h">
       <Filter>Client\WDBCache</Filter>
     </ClInclude>
+    <ClInclude Include="AuthSocket\Cryptography\AuthCrypt.h">
+      <Filter>AuthSocket\Cryptography</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="World\WorldObjects.cpp">
@@ -265,9 +265,6 @@
     </ClCompile>
     <ClCompile Include="AuthSocket\Cryptography\SHA1.cpp">
       <Filter>AuthSocket\Cryptography</Filter>
-    </ClCompile>
-    <ClCompile Include="AuthSocket\AuthCrypt.cpp">
-      <Filter>AuthSocket</Filter>
     </ClCompile>
     <ClCompile Include="AuthSocket\AuthSocket.cpp">
       <Filter>AuthSocket</Filter>
@@ -352,6 +349,9 @@
     </ClCompile>
     <ClCompile Include="Client\WDB\WDBItemCache.cpp">
       <Filter>Client\WDBCache</Filter>
+    </ClCompile>
+    <ClCompile Include="AuthSocket\Cryptography\AuthCrypt.cpp">
+      <Filter>AuthSocket\Cryptography</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

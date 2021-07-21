@@ -69,8 +69,7 @@ void CMapM2Instance::Accept(IVisitor* visitor)
 //
 bool CMapM2Instance::Load()
 {
-	bool loadResult = __super::Load();
-	if (false == loadResult)
+	if (false == __super::Load())
 		return false;
 
 	if (auto parent = GetParent())

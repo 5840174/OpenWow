@@ -35,15 +35,18 @@ enum class EAreaFlags : uint32
 	CONTESTED_AREA = 0x00040000,           // On PvP servers these areas are considered contested, even though the zone it is contained in is a Horde/Alliance territory.
 	UNK6 = 0x00080000,           // Valgarde and Acherus: The Ebon Hold
 
+
 	LOWLEVEL = 0x00100000,           // used for some starting areas with area_level <=15
 	TOWN = 0x00200000,           // small towns with Inn
 	UNK7 = 0x00400000,           // Warsong Hold, Acherus: The Ebon Hold, New Agamand Inn, Vengeance Landing Inn
 	UNK8 = 0x00800000,           // Westguard Inn, Acherus: The Ebon Hold, Valgarde
 
+
 	use_combat_world_state = 0x01000000,           // Wintergrasp and it's subzones
 	INSIDE = 0x02000000,           // unknown
 	OUTSIDE = 0x04000000,           // unknown
 	CanHearthAndResurrectFromArea = 0x08000000,           // Wintergrasp and it's subzones
+
 
 	CANNOT_FLY = 0x20000000,            // not allowed to fly, only used in Dalaran areas (zone 4395)
 	use_parent_for_world_defense_visibility_check = 0x40000000,

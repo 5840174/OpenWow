@@ -41,6 +41,8 @@ public:
 	virtual void OnValueUpdated(uint16 index) override;
 	virtual void OnValuesUpdated(const UpdateMask & Mask) override;
 
+	void OnHiddenNodePositionChanged() override;
+
 	// IClientCacheGameobjectResponseListener
 	void OnTemplate(CowGuid::EntryType_t Entry, const std::shared_ptr<SGameObjectQueryResult>& QueryResult) override;
 

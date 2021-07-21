@@ -18,7 +18,6 @@ public:
 
 	// CCharacterItemM2Instance
 	const CCharacterItem& GetCharacterItem() const;
-	//void AddVisualEffect(std::shared_ptr<CM2_Base_Instance> _visualEffect);
 
 	// ILoadable
 	void OnAfterLoad() override;

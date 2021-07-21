@@ -33,6 +33,3 @@ private:
 	SHA_CTX mC;
 	uint8 mDigest[SHA_DIGEST_LENGTH];
 };
-
-/// Returns the SHA1 hash of the given content as hex std::string.
-std::string CalculateSHA1Hash(std::string const& content);

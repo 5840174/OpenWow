@@ -18,7 +18,7 @@ public:
 	Character_SkinTextureBaker(const IBaseManager& BaseManager);
 
 	std::shared_ptr<IImage> CreateCharacterSkinImage(const SCharacterVisualTemplate& CharacterTemlate) const;
-	std::shared_ptr<IImage> CreateCharacterSkinWithItemsImage(std::shared_ptr<IImage> CharacterSkinImage, const CCharacter* Character) const;
+	std::shared_ptr<IImage> AddItemsTexturesToCharacterSkinImage(std::shared_ptr<IImage> CharacterSkinImage, const CCharacter* Character) const;
 
 private:
 	void FillWithSkin(const std::unique_ptr<SRGBColor[]>& Pixels, std::shared_ptr<IImage> SkinImage, bool NeedInvertY) const;

@@ -115,9 +115,9 @@ void CAuthSocket::OnDisconnected()
 	Log::Warn("CAuthSocket::OnDisconnected.");
 }
 
-void CAuthSocket::SendData(const IByteBuffer& _bb)
+void CAuthSocket::SendData(const IByteBuffer& Buffer)
 {
-	Send(_bb.getData(), _bb.getSize());
+	Send(Buffer.getData(), Buffer.getSize());
 }
 
 
@@ -302,15 +302,15 @@ bool CAuthSocket::On_AUTH_LOGON_CHALLENGE(CByteBuffer& Buffer)
     //Log::Info("MC=%s", MClient.toString().c_str());
 #pragma endregion
 
+	// Expected proof for server
+	MServer.Initialize();
+	MServer.UpdateBigNumbers(&A, nullptr);
+	MServer.UpdateData(MClient.GetDigest(), SHA_DIGEST_LENGTH);
+	MServer.UpdateBigNumbers(&Key, nullptr);
+	MServer.Finalize();
+
 	// Send proof
 	SendData(SAuthProof(A.AsByteArray(32).get(), MClient.GetDigest()));
-
-    // Expected proof for server
-    MServer.Initialize();
-    MServer.UpdateBigNumbers(&A, nullptr);
-    MServer.UpdateData(MClient.GetDigest(), SHA_DIGEST_LENGTH);
-    MServer.UpdateBigNumbers(&Key, nullptr);
-    MServer.Finalize();
 
     return true;
 }
@@ -343,10 +343,10 @@ bool CAuthSocket::On_AUTH_LOGON_PROOF(CByteBuffer& Buffer)
 
     // TODO: refactor realms
 
-    CByteBuffer bb2;
-    bb2 << (uint8)REALM_LIST;
-    bb2 << (uint32)0;
-    SendData(bb2);
+    CByteBuffer bytes;
+	bytes << (uint8)REALM_LIST;
+	bytes << (uint32)0;
+    SendData(bytes);
 
     return true;
 }
