@@ -49,7 +49,7 @@ namespace
 		switch (Opcode)
 		{
 			case WARDEN_CMSG_MODULE_MISSING: return "MODULE_MISSING";
-			case WARDEN_CMSG_MODULE_OK: return "MODULE_MISSING";
+			case WARDEN_CMSG_MODULE_OK: return "MODULE_OK";
 			case WARDEN_CMSG_CHEAT_CHECKS_RESULT: return "CHEAT_CHECKS_RESULT";
 			case WARDEN_CMSG_MEM_CHECKS_RESULT: return "MEM_CHECKS_RESULT";
 			case WARDEN_CMSG_HASH_RESULT: return "HASH_RESULT";
@@ -223,7 +223,7 @@ void CWarden::On_WARDEN_SMSG_MODULE_USE(CServerPacket & Buffer)
 	// SEND
 
 	CByteBuffer bytes;
-	SendWardenPacket(WARDEN_CMSG_MODULE_MISSING, bytes);
+	SendWardenPacket(WARDEN_CMSG_MODULE_OK/*MISSING*/, bytes);
 }
 
 void CWarden::On_WARDEN_SMSG_MODULE_CACHE(CServerPacket & Buffer)

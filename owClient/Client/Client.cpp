@@ -68,7 +68,7 @@ void CowClient::Login(const std::string& Username, const std::string& Password)
 
 void CowClient::OnRealmsListObtained(const std::vector<SRealmInfo>& Realms, BigNumber Key)
 {
-	OnRealmSelected(Realms[9], Key);
+	OnRealmSelected(Realms[0], Key);
 }
 
 void CowClient::OnRealmSelected(const SRealmInfo& SelectedRealm, BigNumber Key)

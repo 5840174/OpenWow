@@ -116,7 +116,14 @@ void CSceneWoW::Initialize()
 	m_RendererStatisticText = CreateUIControlTCast<IUIControlText>();
 	m_RendererStatisticText->SetLocalPosition(glm::vec2(5.0f, 200.0f));
 	m_RendererStatisticText->SetText("");
-	m_RendererStatisticText->SetColor(ColorRGBA(0.2, 1.0f, 0.1f, 1.0f));
+	m_RendererStatisticText->SetColor(ColorRGBA(0.2f, 1.0f, 0.1f, 1.0f));
+
+
+	m_AreaName = CreateUIControlTCast<IUIControlText>();
+	m_AreaName->SetLocalPosition(glm::vec2(200.0f, 5.0f));
+	m_AreaName->SetText("");
+	m_AreaName->SetColor(ColorRGBA(0.2f, 1.0f, 0.1f, 1.0f));
+
 
 	GetBaseManager().GetManager<IWoWObjectsCreator>()->InitEGxBlend(GetRenderDevice());
 
@@ -156,7 +163,7 @@ void CSceneWoW::Initialize()
 	//const float y = 0; //571 nortrend
 	//const uint32 mapID = 609;
 
-	if (true)
+	if (false)
 	{
 		m_WoWSkyManager->Load(mapID);
 		
@@ -254,12 +261,17 @@ void CSceneWoW::OnUpdate(UpdateEventArgs & e)
 
 	__super::OnUpdate(e);
 
-	if (m_DebugBall)
+	if (m_WoWMap)
 	{
-		auto pos = e.Camera->GetPosition();
-		if (m_WoWMap)
-			pos.y = m_WoWMap->GetTerrainHeight(pos);
-		m_DebugBall->SetLocalPosition(pos);
+		//m_AreaName->SetText();
+	
+		if (m_DebugBall)
+		{
+			auto pos = e.Camera->GetPosition();
+			if (m_WoWMap)
+				pos.y = m_WoWMap->GetTerrainHeight(pos);
+			m_DebugBall->SetLocalPosition(pos);
+		}
 	}
 
 	m_WoWSkyManager->Update(e);

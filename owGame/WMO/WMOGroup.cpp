@@ -172,7 +172,7 @@ void CWMOGroup::CreateInsances(const std::shared_ptr<CWMO_Group_Instance>& Paren
 			auto inst = Parent->CreateSceneNode<CWMO_Doodad_Instance>(m2, doodadPlacementIndex, placement);
 
 			if (false == m_GroupHeader.flags.DO_NOT_USE_LIGHTING_DIFFUSE && !m_GroupHeader.flags.IS_OUTDOOR)
-				inst->setColor(placement.getColor());
+				inst->SetColor(placement.getColor());
 
 			m_BaseManager.GetManager<ILoader>()->AddToLoadQueue(inst);
 			Parent->AddRoomObject(inst);

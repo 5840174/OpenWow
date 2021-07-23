@@ -29,9 +29,9 @@ public:
 	void SetItem(uint8 InventorySlot, const SCharacterItemTemplate& ItemTemplate);
 
 	// Geosets
-	virtual void setMeshEnabled(EM2GeosetType M2GeosetType, uint32 _value);
-	virtual bool isMeshEnabled(uint32 _index) const override;
-
+	virtual bool IsMeshEnabled(uint32 _index) const override;
+	virtual void SetMeshEnabled(EM2GeosetType M2GeosetType, uint32 _value);
+	
 	// ISceneNode
 	void Initialize() override;
 

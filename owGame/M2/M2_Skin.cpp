@@ -22,13 +22,15 @@ CM2_Skin::~CM2_Skin()
 {
 }
 
-void CM2_Skin::Load(const SM2_Header& M2Header, const std::shared_ptr<IFile>& File, const std::vector<SM2_Vertex>& Vertices)
+void CM2_Skin::Load(const std::shared_ptr<IFile>& File, const std::vector<SM2_Vertex>& Vertices)
 {
 	// Skin data
-	const uint16*				t_verticesIndexes = (const uint16*)(File->getData() + m_M2SkinProfile.vertices.offset);
-	const uint16*				t_indexesIndexes = (const uint16*)(File->getData() + m_M2SkinProfile.indices.offset);
-	const SM2_SkinBones*		t_bonesIndexes = (const SM2_SkinBones*)(File->getData() + m_M2SkinProfile.bones.offset);
-	const SM2_SkinSection*	t_sections = (const SM2_SkinSection*)(File->getData() + m_M2SkinProfile.submeshes.offset);
+	const uint16*			t_verticesIndexes   = (const uint16*)         (File->getData() + m_M2SkinProfile.vertices.offset);
+	const uint16*			t_indexesIndexes    = (const uint16*)         (File->getData() + m_M2SkinProfile.indices.offset);
+	const SM2_SkinBones*	t_bonesIndexes      = (const SM2_SkinBones*)  (File->getData() + m_M2SkinProfile.bones.offset);
+	const SM2_SkinSection*	t_sections          = (const SM2_SkinSection*)(File->getData() + m_M2SkinProfile.submeshes.offset);
+	const uint32	        t_bonesMax          = m_M2SkinProfile.boneCountMax;
+	const SM2_SkinBatch*    t_skinBatchesProtos = (const SM2_SkinBatch*)  (File->getData() + m_M2SkinProfile.batches.offset);
 
 	_ASSERT(m_M2SkinProfile.vertices.size == m_M2SkinProfile.bones.size);
 
@@ -73,21 +75,14 @@ void CM2_Skin::Load(const SM2_Header& M2Header, const std::shared_ptr<IFile>& Fi
 		m_Sections.push_back(MakeShared(CM2_SkinSection, m_RenderDevice, m_M2Model, sectionIndex, sectionProto, vertexes, indexes));
 	}
 
-	//--
-
-	uint32	t_bonesMax = m_M2SkinProfile.boneCountMax;
-	//_ASSERT(t_bonesMax == 256);
-	//Log::Warn("t_bonesMax = %d", t_bonesMax);
-
-
 	// BATCHES
-	const SM2_SkinBatch* skinBatchesProtos = (const SM2_SkinBatch*)(File->getData() + m_M2SkinProfile.batches.offset);
+	
 	for (uint32 i = 0; i < m_M2SkinProfile.batches.size; i++)
 	{
-		std::shared_ptr<CM2_Skin_Batch> skinBatchObject = MakeShared(CM2_Skin_Batch, m_BaseManager, m_RenderDevice, m_M2Model, skinBatchesProtos[i]);
+		auto skinBatchObject = MakeShared(CM2_Skin_Batch, m_BaseManager, m_RenderDevice, m_M2Model, t_skinBatchesProtos[i]);
 		m_Batches.push_back(skinBatchObject);
 
-		m_GeometryMaterials[skinBatchesProtos[i].skinSectionIndex].push_back(skinBatchObject);
+		m_GeometryMaterials[t_skinBatchesProtos[i].skinSectionIndex].push_back(skinBatchObject);
 	}
 
 	for (auto& it : m_GeometryMaterials)
@@ -98,17 +93,17 @@ void CM2_Skin::Load(const SM2_Header& M2Header, const std::shared_ptr<IFile>& Fi
 		});
 	}
 
-
 	//std::sort(m_TTT.begin(), m_TTT.end(), [](const std::pair<std::shared_ptr<CM2_SkinSection>, std::vector<std::shared_ptr<CM2_Skin_Batch>>>& left, const std::pair<std::shared_ptr<CM2_SkinSection>, std::vector<std::shared_ptr<CM2_Skin_Batch>>>& right) -> bool
 	//{
 	//	return left.first->getIndex() < right.first->getIndex();
 	//});
-
-
-	//if (m_TTT.size() > 1)
-	//	Log::Error("SORTED!");
 }
 
+
+
+//
+// IModel
+//
 void CM2_Skin::Accept(IVisitor * visitor)
 {
 	__super::Accept(visitor);

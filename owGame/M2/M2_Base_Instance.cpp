@@ -64,22 +64,22 @@ std::shared_ptr<CM2CameraComponent> CM2_Base_Instance::CreateCameraComponent(uin
 }
 
 // Mesh & textures provider
-bool CM2_Base_Instance::isMeshEnabled(uint32 _index) const
+bool CM2_Base_Instance::IsMeshEnabled(uint32 _index) const
 {
 	return true;
 }
-void CM2_Base_Instance::setSpecialTexture(SM2_Texture::Type _type, const std::shared_ptr<ITexture>& _texture)
-{
-	//_ASSERT(_texture != nullptr);
-	m_SpecialTextures[_type] = _texture;
-}
-const std::shared_ptr<ITexture>& CM2_Base_Instance::getSpecialTexture(SM2_Texture::Type _type) const
+
+const std::shared_ptr<ITexture>& CM2_Base_Instance::GetSpecialTexture(SM2_Texture::Type _type) const
 {
 	if (_type >= SM2_Texture::Type::COUNT)
 		throw CException("CM2_Base_Instance::getSpecialTexture: Out of bounds.");
 	return m_SpecialTextures[_type];
 }
-
+void CM2_Base_Instance::SetSpecialTexture(SM2_Texture::Type _type, const std::shared_ptr<ITexture>& _texture)
+{
+	//_ASSERT(_texture != nullptr);
+	m_SpecialTextures[_type] = _texture;
+}
 bool CM2_Base_Instance::IsInstansingEnabled() const
 {
 	return false;

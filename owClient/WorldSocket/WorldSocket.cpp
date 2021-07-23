@@ -94,7 +94,8 @@ CWorldSocket::CWorldSocket(const std::string& Login, BigNumber Key)
 
 	AddHandler(SMSG_AUTH_CHALLENGE, std::bind(&CWorldSocket::On_SMSG_AUTH_CHALLENGE, this, std::placeholders::_1));
 	AddHandler(SMSG_AUTH_RESPONSE,  std::bind(&CWorldSocket::On_SMSG_AUTH_RESPONSE, this, std::placeholders::_1));
-	//AddHandler(SMSG_WARDEN_DATA,    std::bind(&CWorldSocket::On_SMSG_WARDEN_DATA, this, std::placeholders::_1));
+
+	AddHandler(SMSG_WARDEN_DATA,    std::bind(&CWorldSocket::On_SMSG_WARDEN_DATA, this, std::placeholders::_1));
 }
 
 CWorldSocket::~CWorldSocket()

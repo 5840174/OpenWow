@@ -47,7 +47,7 @@ void CRenderPass_M2InstancedList::Render(RenderEventArgs & e)
 		instances.reserve(m2BaseInstances.size());
 
 		std::for_each(m2BaseInstances.begin(), m2BaseInstances.end(), [&instances](const CM2_Base_Instance* sceneNode) {
-			instances.push_back(M2PerObject(sceneNode->GetWorldTransfom(), sceneNode->getColor())); 
+			instances.push_back(M2PerObject(sceneNode->GetWorldTransfom(), sceneNode->GetColor())); 
 		});
 
 		if (instances.size() > m_InstancesBuffer->GetElementCount())

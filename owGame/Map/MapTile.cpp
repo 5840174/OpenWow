@@ -15,12 +15,12 @@ CMapTile::CMapTile(IScene& Scene, CMap& MapParent, uint32 IndexX, uint32 IndexZ)
 	, m_IndexX(IndexX)
 	, m_IndexZ(IndexZ)
 {
-	SetName("MapTile[" + std::to_string(getIndexX()) + "," + std::to_string(getIndexZ()) + "]");
+	SetName("MapTile[" + std::to_string(GetTileIndexX()) + "," + std::to_string(GetTileIndexZ()) + "]");
 }
 
 CMapTile::~CMapTile()
 {
-	Log::Warn("CMapTile::~CMapTile: Tile [%d, %d] unloaded.", m_IndexX, m_IndexZ);
+	//Log::Warn("CMapTile::~CMapTile: Tile [%d, %d] unloaded.", m_IndexX, m_IndexZ);
 }
 
 CMap& CMapTile::GetMap() const
@@ -28,27 +28,22 @@ CMap& CMapTile::GetMap() const
 	return m_MapParent;
 }
 
-int CMapTile::getIndexX() const
+int CMapTile::GetTileIndexX() const
 {
 	return m_IndexX;
 }
 
-int CMapTile::getIndexZ() const
+int CMapTile::GetTileIndexZ() const
 {
 	return m_IndexZ;
 }
 
-const CMapChunk* CMapTile::getChunk(int32 x, int32 z) const
+const CMapChunk* CMapTile::GetMapChunk(int32 x, int32 z) const
 {
     if (x < 0 || x >= C_ChunksInTile || z < 0 || z >= C_ChunksInTile)
         return nullptr;
 
     return m_Chunks[x * C_ChunksInTile + z];
-}
-
-bool CMapTile::IsNortrend() const
-{
-	return m_Header.flags.IsNortrend;
 }
 
 std::shared_ptr<SMapTile_MTEX> CMapTile::GetTextureInfo(size_t Index) const
@@ -78,8 +73,8 @@ void CMapTile::Initialize()
 	// Collider
 	BoundingBox bbox
 	(
-		glm::vec3((getIndexX() * C_TileSize),              Math::MaxFloat, (getIndexZ() * C_TileSize)),
-		glm::vec3((getIndexX() * C_TileSize) + C_TileSize, Math::MinFloat, (getIndexZ() * C_TileSize) + C_TileSize)
+		glm::vec3((GetTileIndexX() * C_TileSize),              Math::MaxFloat, (GetTileIndexZ() * C_TileSize)),
+		glm::vec3((GetTileIndexX() * C_TileSize) + C_TileSize, Math::MinFloat, (GetTileIndexZ() * C_TileSize) + C_TileSize)
 	);
 
 	SetBounds(bbox);
@@ -156,7 +151,7 @@ bool CMapTile::Load()
 						liquidObject.CreateInsances(liquidInstance);
 
 						// Transform
-						liquidInstance->SetLocalPosition(glm::vec3((getIndexX() * C_TileSize) + (j * C_ChunkSize), 0.0f, (getIndexZ() * C_TileSize) + (i * C_ChunkSize)));
+						liquidInstance->SetLocalPosition(glm::vec3((GetTileIndexX() * C_TileSize) + (j * C_ChunkSize), 0.0f, (GetTileIndexZ() * C_TileSize) + (i * C_ChunkSize)));
 
 						// Collider
 						liquidInstance->SetBounds(BoundingBox(
@@ -229,9 +224,6 @@ bool CMapTile::Load()
 				m_Textures.push_back(textureInfo);
 
 			}
-
-			m_ArrayTexture = GetRenderDevice().GetObjectsFactory().CreateEmptyTexture();
-			//m_ArrayTexture->LoadTexture2DArrayFromBytes();
 		}
 	}
 

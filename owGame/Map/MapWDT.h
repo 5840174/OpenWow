@@ -28,6 +28,7 @@ struct WDT_MPHD
 	uint32 unused[6];
 };
 
+
 struct WDT_MAIN
 {
 	struct Flags
@@ -38,6 +39,7 @@ struct WDT_MAIN
 	} flags;
 	uint32_t asyncId;
 };
+
 
 class CMapWDT 
 	: public ISceneNodeProvider
@@ -70,7 +72,7 @@ private:
 	// Global WMO
 	std::string							m_GlobalWMOName;
 #ifdef USE_WMO_MODELS
-	SMapTile_MODF							m_GlobalWMOPlacementInfo;
+	SMapTile_MODF						m_GlobalWMOPlacementInfo;
 	std::shared_ptr<CMapWMOInstance>	m_GlobalWMO;
 #endif
 };

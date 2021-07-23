@@ -48,7 +48,7 @@ void CowServerGameObject_MOTransport::OnTemplate(CowGuid::EntryType_t Entry, con
 	m_TransportName = QueryResult->Name;
 	m_PathID = QueryResult->moTransport.taxiPathId;
 
-	const auto& taxiNodes = GetWoWWorld().GetTaxiStorage().GetPathNodes(m_PathID);
+	const auto& taxiNodes = GetWoWWorld().GetClientCache().GetTaxiStorage().GetPathNodes(m_PathID);
 
 	if (m_WoWPath == nullptr)
 		m_WoWPath = MakeShared(CWoWPath);

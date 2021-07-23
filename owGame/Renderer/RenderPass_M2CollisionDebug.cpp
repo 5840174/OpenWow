@@ -33,7 +33,7 @@ std::shared_ptr<IRenderPassPipelined> CRenderPass_M2CollisionDebug::ConfigurePip
 	
 	// PIPELINES
 	GetPipeline().GetBlendState()->SetBlendMode(alphaBlending);
-	//GetPipeline().GetDepthStencilState()->SetDepthMode(disableDepthWrites);
+	GetPipeline().GetDepthStencilState()->SetDepthMode(disableDepthWrites);
 	//GetPipeline().GetRasterizerState()->SetCullMode(IRasterizerState::CullMode::None);
 	//GetPipeline().GetRasterizerState()->SetFillMode(IRasterizerState::FillMode::Wireframe, IRasterizerState::FillMode::Wireframe);
 	GetPipeline().SetRenderTarget(RenderTarget);

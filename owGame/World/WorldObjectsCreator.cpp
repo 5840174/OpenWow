@@ -31,19 +31,19 @@ std::shared_ptr<CCreature> CWorldObjectCreator::BuildCreatureFromDisplayInfo(IRe
 		return nullptr;
 
 	std::shared_ptr<CCreature> newCreature = ((Parent != nullptr) ? Parent : Scene.GetRootSceneNode())->CreateSceneNode<CCreature>(m2Model);
-	newCreature->setAlpha(static_cast<float>(rec->Get_Opacity()) / 255.0f);
+	newCreature->SetAlpha(static_cast<float>(rec->Get_Opacity()) / 255.0f);
 	newCreature->SetScale(glm::vec3(rec->Get_Scale()));
 
 	// 2. Creature textures
 	{
 		if (rec->Get_Texture1().length() != 0)
-			newCreature->setSpecialTexture(SM2_Texture::Type::MONSTER_1, m_BaseManager.GetManager<IznTexturesFactory>()->LoadTexture2D(m2Model->getFilePath() + rec->Get_Texture1() + ".blp"));
+			newCreature->SetSpecialTexture(SM2_Texture::Type::MONSTER_1, m_BaseManager.GetManager<IznTexturesFactory>()->LoadTexture2D(m2Model->getFilePath() + rec->Get_Texture1() + ".blp"));
 
 		if (rec->Get_Texture2().length() != 0)
-			newCreature->setSpecialTexture(SM2_Texture::Type::MONSTER_2, m_BaseManager.GetManager<IznTexturesFactory>()->LoadTexture2D(m2Model->getFilePath() + rec->Get_Texture2() + ".blp"));
+			newCreature->SetSpecialTexture(SM2_Texture::Type::MONSTER_2, m_BaseManager.GetManager<IznTexturesFactory>()->LoadTexture2D(m2Model->getFilePath() + rec->Get_Texture2() + ".blp"));
 
 		if (rec->Get_Texture3().length() != 0)
-			newCreature->setSpecialTexture(SM2_Texture::Type::MONSTER_3, m_BaseManager.GetManager<IznTexturesFactory>()->LoadTexture2D(m2Model->getFilePath() + rec->Get_Texture3() + ".blp"));
+			newCreature->SetSpecialTexture(SM2_Texture::Type::MONSTER_3, m_BaseManager.GetManager<IznTexturesFactory>()->LoadTexture2D(m2Model->getFilePath() + rec->Get_Texture3() + ".blp"));
 	}
 
 	m_BaseManager.GetManager<ILoader>()->AddToLoadQueue(newCreature);

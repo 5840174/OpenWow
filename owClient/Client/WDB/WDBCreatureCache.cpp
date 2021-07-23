@@ -29,7 +29,7 @@ CowWDBCreatureCache::CowWDBCreatureCache(IFilesManager * FilesManager)
 		if (entrySize != creatureQueryResult->GetSize())
 			throw CException("Incorrect query size.");
 
-		Log::Info("Creature '%s' loaded from cache.", creatureQueryResult->Name.c_str());
+		//Log::Info("Creature '%s' loaded from cache.", creatureQueryResult->Name.c_str());
 
 		m_Cache.insert(std::make_pair(entry, creatureQueryResult));
 	}

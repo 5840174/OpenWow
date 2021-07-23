@@ -18,7 +18,7 @@ CCharacter::CCharacter(IScene& Scene, const std::shared_ptr<CM2>& M2Object, cons
 
 CCharacter::~CCharacter()
 {
-	Log::Warn("CCharacter deleted.");
+	//Log::Warn("CCharacter deleted.");
 }
 
 
@@ -44,9 +44,9 @@ void CCharacter::Refresh_SkinImageFromTemplate()
 
 	Character_SectionWrapper sectionWrapper(GetBaseManager());
 
-	setSpecialTexture(SM2_Texture::Type::SKIN,       GetBaseManager().GetManager<IznTexturesFactory>()->LoadTexture2D(m_BackedSkinImage));
-	setSpecialTexture(SM2_Texture::Type::SKIN_EXTRA, GetBaseManager().GetManager<IznTexturesFactory>()->LoadTexture2D(sectionWrapper.getSkinExtraTexture(GetTemplate())));
-	setSpecialTexture(SM2_Texture::Type::CHAR_HAIR,  GetBaseManager().GetManager<IznTexturesFactory>()->LoadTexture2D(sectionWrapper.getHairTexture(GetTemplate())));
+	SetSpecialTexture(SM2_Texture::Type::SKIN,       GetBaseManager().GetManager<IznTexturesFactory>()->LoadTexture2D(m_BackedSkinImage));
+	SetSpecialTexture(SM2_Texture::Type::SKIN_EXTRA, GetBaseManager().GetManager<IznTexturesFactory>()->LoadTexture2D(sectionWrapper.getSkinExtraTexture(GetTemplate())));
+	SetSpecialTexture(SM2_Texture::Type::CHAR_HAIR,  GetBaseManager().GetManager<IznTexturesFactory>()->LoadTexture2D(sectionWrapper.getHairTexture(GetTemplate())));
 }
 
 void CCharacter::Refresh_SkinWithItemsImage()
@@ -60,7 +60,7 @@ void CCharacter::Refresh_SkinWithItemsImage()
 			throw CException("CCharacter::Refresh_SkinWithItemsImage: BakedSkinImage is nullptr.");
 
 		auto skinImageWithItems = Character_SkinTextureBaker(GetBaseManager()).AddItemsTexturesToCharacterSkinImage(m_BackedSkinImage, this);
-		setSpecialTexture(SM2_Texture::Type::SKIN, GetBaseManager().GetManager<IznTexturesFactory>()->LoadTexture2D(skinImageWithItems));
+		SetSpecialTexture(SM2_Texture::Type::SKIN, GetBaseManager().GetManager<IznTexturesFactory>()->LoadTexture2D(skinImageWithItems));
 	}
 
 	// Special case for Cloack. Cloack isn't separate item model and clock texture is part of character.
@@ -71,7 +71,7 @@ void CCharacter::Refresh_SkinWithItemsImage()
 			throw CException("Character::Refresh_AddItemsToSkinTexture: Cape must contains one object component.");
 
 		auto cloackImage = cloakItem->GetModels()[0].ItemSelfTexture;
-		setSpecialTexture(SM2_Texture::Type::OBJECT_SKIN, GetBaseManager().GetManager<IznTexturesFactory>()->LoadTexture2D(cloackImage));
+		SetSpecialTexture(SM2_Texture::Type::OBJECT_SKIN, GetBaseManager().GetManager<IznTexturesFactory>()->LoadTexture2D(cloackImage));
 	}
 }
 
@@ -83,13 +83,13 @@ void CCharacter::RefreshMeshIDs()
 
 	// Initialize geosets from character template
 	Character_SectionWrapper sectionWrapper(GetBaseManager());
-	setMeshEnabled(EM2GeosetType::SkinAndHair, sectionWrapper.getHairShowScalp(GetTemplate()) ? static_cast<uint32>(SkinAndHairStyles::ShowScalp) : sectionWrapper.getHairGeoset(GetTemplate()));
-	setMeshEnabled(EM2GeosetType::Facial01,    sectionWrapper.getFacial01Geoset(GetTemplate()));
-	setMeshEnabled(EM2GeosetType::Facial02,    sectionWrapper.getFacial02Geoset(GetTemplate()));
-	setMeshEnabled(EM2GeosetType::Facial03,    sectionWrapper.getFacial03Geoset(GetTemplate()));
-	setMeshEnabled(EM2GeosetType::Ears07,      (uint32)EarsStyles::Enabled);
-	setMeshEnabled(EM2GeosetType::Unk16,       sectionWrapper.getFacial16Geoset(GetTemplate()));
-	setMeshEnabled(EM2GeosetType::Eyeglows17,  sectionWrapper.getFacial17Geoset(GetTemplate()));
+	SetMeshEnabled(EM2GeosetType::SkinAndHair, sectionWrapper.getHairShowScalp(GetTemplate()) ? static_cast<uint32>(SkinAndHairStyles::ShowScalp) : sectionWrapper.getHairGeoset(GetTemplate()));
+	SetMeshEnabled(EM2GeosetType::Facial01,    sectionWrapper.getFacial01Geoset(GetTemplate()));
+	SetMeshEnabled(EM2GeosetType::Facial02,    sectionWrapper.getFacial02Geoset(GetTemplate()));
+	SetMeshEnabled(EM2GeosetType::Facial03,    sectionWrapper.getFacial03Geoset(GetTemplate()));
+	SetMeshEnabled(EM2GeosetType::Ears07,      (uint32)EarsStyles::Enabled);
+	SetMeshEnabled(EM2GeosetType::Unk16,       sectionWrapper.getFacial16Geoset(GetTemplate()));
+	SetMeshEnabled(EM2GeosetType::Eyeglows17,  sectionWrapper.getFacial17Geoset(GetTemplate()));
 
 	// Change geoset from items
 	for (size_t inventorySlot = 0; inventorySlot < INVENTORY_SLOT_BAG_END; inventorySlot++)
@@ -97,7 +97,7 @@ void CCharacter::RefreshMeshIDs()
 		const auto& item = GetItem(inventorySlot);
 		if (item != nullptr && item->IsLoaded() && item->IsExists())
 			for (const auto& geoset : item->GetGeosets())
-				setMeshEnabled(geoset.mesh, geoset.getMeshID());
+				SetMeshEnabled(geoset.mesh, geoset.getMeshID());
 	}
 
 	// Special case for Helmet. Hide some geosets on character head.
@@ -105,19 +105,19 @@ void CCharacter::RefreshMeshIDs()
 	if (helmetItem != nullptr && helmetItem->IsLoaded() && helmetItem->IsExists())
 	{
 		if (helmetItem->IsNeedHideHelmetGeoset(EM2GeosetType::SkinAndHair))
-			setMeshEnabled(EM2GeosetType::SkinAndHair, 1);
+			SetMeshEnabled(EM2GeosetType::SkinAndHair, 1);
 
 		if (helmetItem->IsNeedHideHelmetGeoset(EM2GeosetType::Facial01))
-			setMeshEnabled(EM2GeosetType::Facial01, 1);
+			SetMeshEnabled(EM2GeosetType::Facial01, 1);
 
 		if (helmetItem->IsNeedHideHelmetGeoset(EM2GeosetType::Facial02))
-			setMeshEnabled(EM2GeosetType::Facial02, 1);
+			SetMeshEnabled(EM2GeosetType::Facial02, 1);
 
 		if (helmetItem->IsNeedHideHelmetGeoset(EM2GeosetType::Facial03))
-			setMeshEnabled(EM2GeosetType::Facial03, 1);
+			SetMeshEnabled(EM2GeosetType::Facial03, 1);
 
 		if (helmetItem->IsNeedHideHelmetGeoset(EM2GeosetType::Ears07))
-			setMeshEnabled(EM2GeosetType::Ears07, (uint32)EarsStyles::None);
+			SetMeshEnabled(EM2GeosetType::Ears07, (uint32)EarsStyles::None);
 	}
 }
 
@@ -166,18 +166,7 @@ void CCharacter::SetItem(uint8 InventorySlot, const SCharacterItemTemplate& Item
 //
 // Geosets
 //
-void CCharacter::setMeshEnabled(EM2GeosetType M2GeosetType, uint32 _value)
-{
-	if (M2GeosetType >= EM2GeosetType::Count)
-		throw CException("Character::setMeshEnabled: GeosetType '%d' out of bounds.", (uint32)M2GeosetType);
-
-	if (_value == UINT32_MAX)
-		return;
-
-	m_MeshID[(size_t)M2GeosetType] = _value;
-}
-
-bool CCharacter::isMeshEnabled(uint32 _index) const
+bool CCharacter::IsMeshEnabled(uint32 _index) const
 {
 	uint32 div100 = _index / 100;
 	uint32 mod100 = _index % 100;
@@ -198,6 +187,16 @@ bool CCharacter::isMeshEnabled(uint32 _index) const
 	}
 
 	return false;
+}
+void CCharacter::SetMeshEnabled(EM2GeosetType M2GeosetType, uint32 _value)
+{
+	if (M2GeosetType >= EM2GeosetType::Count)
+		throw CException("Character::SetMeshEnabled: GeosetType '%d' out of bounds.", (uint32)M2GeosetType);
+
+	if (_value == UINT32_MAX)
+		return;
+
+	m_MeshID[(size_t)M2GeosetType] = _value;
 }
 
 

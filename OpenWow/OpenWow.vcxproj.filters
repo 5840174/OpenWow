@@ -5,9 +5,12 @@
       <Filter>Common</Filter>
     </ClInclude>
     <ClInclude Include="SceneWoW.h" />
-    <ClInclude Include="SceneWoWClient.h" />
     <ClInclude Include="UIControls\UIControlMinimap.h">
       <Filter>UIControls</Filter>
+    </ClInclude>
+    <ClInclude Include="SceneWoWClient.h" />
+    <ClInclude Include="Collision\CollisionUtils.h">
+      <Filter>Collision</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -20,6 +23,9 @@
     <ClCompile Include="UIControls\UIControlMinimap.cpp">
       <Filter>UIControls</Filter>
     </ClCompile>
+    <ClCompile Include="Collision\CollisionUtils.cpp">
+      <Filter>Collision</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Common">
@@ -27,6 +33,9 @@
     </Filter>
     <Filter Include="UIControls">
       <UniqueIdentifier>{7e8c8b0c-5c6b-4a1f-9e50-6c78e9ecdaeb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Collision">
+      <UniqueIdentifier>{7b1da542-aabb-4ce5-90d8-cc185843d755}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

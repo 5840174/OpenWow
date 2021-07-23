@@ -19,15 +19,17 @@ public:
 	void                                            EnterMap(glm::vec3 CameraPosition);
 	void                                            EnterMap(int32 x, int32 z);
 	std::shared_ptr<CMapTile>                       LoadTile(int32 x, int32 z);
+
 	void                                            ClearCache();
-	const CMapTile*                                 GetMapTile(glm::vec3 Position);
-	const CMapChunk*                                GetMapChunk(glm::vec3 Position);
-	uint32                                          GetAreaID(glm::vec3 Position);
+
+	const CMapTile*                                 GetMapTileByPosition(glm::vec3 Position);
+	const CMapChunk*                                GetMapChunkByPosition(glm::vec3 Position);
+	uint32                                          GetAreaIDByPosition(glm::vec3 Position);
+	const DBC_AreaTableRecord*                      GetAreaByPosition(glm::vec3 Position);
 	float                                           GetTerrainHeight(glm::vec3 Position);
 
 	// ISceneNode
 	void                                            Update(const UpdateEventArgs& e) override;
-
 
 public: // Getters
 	uint32                                          GetMapID() const;
@@ -35,21 +37,16 @@ public: // Getters
 
 	bool                                            IsNortrend() const;
 	bool                                            isUncompressedAlpha() const { return m_WDT->IsMapTileUse8BitAlphaMCAL(); }
-	bool                                            isTileBased() const { return m_WDT->IsMapTileExists(); }
 #ifdef USE_WMO_MODELS
 	std::shared_ptr<CMapWMOInstance>                getGlobalInstance() const { return m_WDT->GetGlobalWMOInstance(); }
 #endif
 	int                                             GetCurrentX() const { return m_CurrentTileX; }
 	int                                             GetCurrentZ() const { return m_CurrentTileZ; }
 
-	void                                            SetOutOfBounds(bool _value) { m_IsOnInvalidTile = _value; }
-	bool                                            IsOutOfBounds() const { return m_IsOnInvalidTile; }
-
-	std::shared_ptr<ITexture>                       getMinimap() const { return m_WDL->getMinimap(); }
-
-	bool                                            getTileIsCurrent(int x, int z) const;
+	bool                                            IsTileCurrent(int32 x, int32 z) const;
 	bool                                            IsTileInCurrent(const CMapTile& _mapTile);
 
+	std::shared_ptr<ITexture>                       getMinimap() const { return m_WDL->getMinimap(); }
 
 public: // shared
 	std::vector<uint16>                             GenarateHighMapArray(uint16 Holes = 0) const;

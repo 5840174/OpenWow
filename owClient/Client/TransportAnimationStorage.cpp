@@ -3,14 +3,8 @@
 // General
 #include "TransportAnimationStorage.h"
 
-CowClient_DBCTransport::CowClient_DBCTransport(IBaseManager & BaseManager)
-	:m_BaseManager(BaseManager)
-{}
-
-CowClient_DBCTransport::~CowClient_DBCTransport()
-{}
-
-void CowClient_DBCTransport::Initialize()
+CowClient_DBCTransport::CowClient_DBCTransport(const IBaseManager & BaseManager)
+	: m_BaseManager(BaseManager)
 {
 	auto transportAnimations = m_BaseManager.GetManager<CDBCStorage>()->DBC_TransportAnimation();
 	for (const auto& transportAnimationsIt : transportAnimations)
@@ -24,6 +18,9 @@ void CowClient_DBCTransport::Initialize()
 
 	Log::Print("CowClient_DBCTransport::Initialize: Loaded records for '%d' transport entries.", m_TransportRecords.size());
 }
+
+CowClient_DBCTransport::~CowClient_DBCTransport()
+{}
 
 const std::vector<CowClient_DBCTransport::STransportAnimation>& CowClient_DBCTransport::GetTransportAnimations(uint32 Entry) const
 {

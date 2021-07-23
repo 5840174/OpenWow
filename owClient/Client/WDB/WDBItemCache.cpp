@@ -29,7 +29,7 @@ CowWDBItemCache::CowWDBItemCache(IFilesManager * FilesManager)
 		if (entrySize != itemQueryResult->GetSize())
 			throw CException("Incorrect query size.");
 
-		Log::Info("Item '%s' loaded from cache.", itemQueryResult->Name.c_str());
+		//Log::Info("Item '%s' loaded from cache.", itemQueryResult->Name.c_str());
 
 		m_Cache.insert(std::make_pair(entry, itemQueryResult));
 	}

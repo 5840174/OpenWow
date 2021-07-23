@@ -39,7 +39,10 @@ private:
 private:
 	std::shared_ptr<CSkyManager> m_WoWSkyManager;
 	std::shared_ptr<CMap> m_WoWMap;
+
 	std::shared_ptr<IUIControlText> m_RendererStatisticText;
+	std::shared_ptr<IUIControlText> m_AreaName;
+
 
 	std::shared_ptr<CUIControlMinimap> minimap;
 

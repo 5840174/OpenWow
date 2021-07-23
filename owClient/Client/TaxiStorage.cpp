@@ -3,14 +3,8 @@
 // General
 #include "TaxiStorage.h"
 
-CowClient_DBCTaxi::CowClient_DBCTaxi(IBaseManager& BaseManager)
+CowClient_DBCTaxi::CowClient_DBCTaxi(const IBaseManager& BaseManager)
 	: m_BaseManager(BaseManager)
-{}
-
-CowClient_DBCTaxi::~CowClient_DBCTaxi()
-{}
-
-void CowClient_DBCTaxi::Initialize()
 {
 	auto dbcTaxiPathNodes = m_BaseManager.GetManager<CDBCStorage>()->DBC_TaxiPathNode();
 	for (const auto& dbcTaxiPathNodesIt : dbcTaxiPathNodes)
@@ -22,6 +16,9 @@ void CowClient_DBCTaxi::Initialize()
 		m_PathNodes[dbcTaxiPathNodesIt->Get_TaxiPathID()].push_back(pathNode);
 	}
 }
+
+CowClient_DBCTaxi::~CowClient_DBCTaxi()
+{}
 
 const std::vector<CowClient_DBCTaxi::STaxiPathNode>& CowClient_DBCTaxi::GetPathNodes(uint32 PathID) const
 {

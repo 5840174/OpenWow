@@ -42,7 +42,7 @@ CMapChunk::CMapChunk(IScene& Scene, CMapTile& MapTileParent, const SMapTile_MCIN
 	, m_Map(m_MapTile.GetMap())
 {
 	m_Bytes = MakeShared(CByteBuffer, Bytes->getData() + Chunk.offset, Chunk.size);
-	SetName("MapTile[" + std::to_string(m_MapTile.getIndexX()) + "," + std::to_string(m_MapTile.getIndexZ()) + "]_Chunk[" + std::to_string(Chunk.offset) + "]");
+	SetName("MapTile[" + std::to_string(m_MapTile.GetTileIndexX()) + "," + std::to_string(m_MapTile.GetTileIndexZ()) + "]_Chunk[" + std::to_string(Chunk.offset) + "]");
 	SetUpdateEnabled(false);
 }
 
@@ -59,12 +59,12 @@ uint32 CMapChunk::GetAreaID() const
     return m_Header.areaid;
 }
 
-float CMapChunk::GetTerrainHeight(glm::vec3 Position) const
+float CMapChunk::GetTerrainHeight(glm::vec3 PositionInChunk) const
 {
 	// Index of Unit
-	int16 indexX = glm::round(Position.x / float(C_UnitSize) - 0.5f);
+	int16 indexX = glm::round(PositionInChunk.x / float(C_UnitSize) - 0.5f);
 	if (indexX < 0) indexX = 0;
-	int16 indexZ = glm::round(Position.z / float(C_UnitSize) - 0.5f);
+	int16 indexZ = glm::round(PositionInChunk.z / float(C_UnitSize) - 0.5f);
 	if (indexZ < 0) indexZ = 0;
 
 	if (IsHole(m_Header.holes, indexX / 2, indexZ / 2))
@@ -75,8 +75,8 @@ float CMapChunk::GetTerrainHeight(glm::vec3 Position) const
 	const uint16 indexIntoArray2 = GetOuterMapChunkArrayIndex(indexZ,     indexX + 1);
 	const uint16 indexIntoArray3 = GetOuterMapChunkArrayIndex(indexZ + 1, indexX + 1);
 
-	const float modX = glm::mod(Position.x, C_UnitSize);
-	const float modZ = glm::mod(Position.z, C_UnitSize);
+	const float modX = glm::mod(PositionInChunk.x, C_UnitSize);
+	const float modZ = glm::mod(PositionInChunk.z, C_UnitSize);
 	if (modZ < (C_UnitSize - modX))
 	{
 		return CalculateBarryCentic(
@@ -378,7 +378,7 @@ bool CMapChunk::Load()
 			liquidObject.CreateInsances(liquidInstance);
 
 			// Transform
-			liquidInstance->SetLocalPosition(glm::vec3(- m_Header.xpos + C_ZeroPoint, 0.0f, - m_Header.zpos + C_ZeroPoint));
+			liquidInstance->SetLocalPosition(glm::vec3((-1.0f) * m_Header.xpos + C_ZeroPoint, 0.0f, (-1.0f) * m_Header.zpos + C_ZeroPoint));
 
 			// Collider
 			BoundingBox bbox(

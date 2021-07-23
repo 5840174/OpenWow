@@ -36,6 +36,6 @@ const std::shared_ptr<ITexture>& CM2_Part_Texture::GetTexture() const
 const std::shared_ptr<ITexture>& CM2_Part_Texture::GetTexture(const CM2_Base_Instance* M2Instance) const
 {
 	if (m_SpecialType != SM2_Texture::Type::NONE)
-		return M2Instance->getSpecialTexture(m_SpecialType);
+		return M2Instance->GetSpecialTexture(m_SpecialType);
 	return m_Texture;
 }

@@ -8,8 +8,7 @@
 #include "WorldObjectUpdater.h"
 
 #include "../Client/ClientCache.h"
-#include "../Client/TaxiStorage.h"
-#include "../Client/TransportAnimationStorage.h"
+
 
 class ZN_API CowServerWorld
 {
@@ -60,12 +59,8 @@ public:
 	CWorldObjects& GetWorldObjects() { return m_WorldObjects; }
 	CWorldObjectUpdater& GetWorldObjectUpdater() { return m_WorldObjectUpdater; }
 
-	// WDB Cache
-	CowClient_ServerQueryCache& GetClientCache() { return m_ClientCache; }
-
-	// DBC Cache
-	const CowClient_DBCTaxi& GetTaxiStorage() const { return m_TaxiStorage; }
-	const CowClient_DBCTransport& GetTransportAnimationStorage() const { return m_TransportAnimationStorage; }
+	// Cache
+	CowClient_Cache& GetClientCache() { return m_ClientCache; }
 
 private: // Game objects and entities
 	std::shared_ptr<CSkyManager> m_SkyManager;
@@ -78,9 +73,8 @@ private:
 
 	CWorldObjects m_WorldObjects;
 	CWorldObjectUpdater m_WorldObjectUpdater;
-	CowClient_ServerQueryCache m_ClientCache;
-	CowClient_DBCTaxi m_TaxiStorage;
-	CowClient_DBCTransport m_TransportAnimationStorage;
+
+	CowClient_Cache m_ClientCache;
 };
 
 #endif

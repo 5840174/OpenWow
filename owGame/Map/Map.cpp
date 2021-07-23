@@ -194,22 +194,15 @@ void CMap::EnterMap(int32 x, int32 z)
 
 std::shared_ptr<CMapTile> CMap::LoadTile(int32 x, int32 z)
 {
-	if (IsBadTileIndex(x, z))
-	{
+	if (IsBadTileIndex(x, z) || false == m_WDT->IsMapTileExists())
 		return nullptr;
-	}
-
-	if (false == m_WDT->IsMapTileExists())
-	{
-		return nullptr;
-	}
 
 	// Try get tile from cache
 	uint32 freePositionInTileCache = C_TilesCacheSize;
 
 	for (uint32 i = 0; i < C_TilesCacheSize; i++)
 	{
-		if ((m_MapTilesCache[i] != nullptr) && (m_MapTilesCache[i]->getIndexX() == x) && (m_MapTilesCache[i]->getIndexZ() == z))
+		if ((m_MapTilesCache[i] != nullptr) && (m_MapTilesCache[i]->GetTileIndexX() == x) && (m_MapTilesCache[i]->GetTileIndexZ() == z))
 		{
 			return m_MapTilesCache[i];
 		}
@@ -232,8 +225,7 @@ std::shared_ptr<CMapTile> CMap::LoadTile(int32 x, int32 z)
 			if (currentTileInCache == nullptr)
 				continue;
 
-			score = glm::abs(currentTileInCache->getIndexX() - m_CurrentTileX) + glm::abs(currentTileInCache->getIndexZ() - m_CurrentTileZ);
-
+			score = glm::abs(currentTileInCache->GetTileIndexX() - m_CurrentTileX) + glm::abs(currentTileInCache->GetTileIndexZ() - m_CurrentTileZ);
 			if (score > maxscore)
 			{
 				maxscore = score;
@@ -269,19 +261,22 @@ void CMap::ClearCache()
 	//}
 }
 
-const CMapTile * CMap::GetMapTile(glm::vec3 Position)
+const CMapTile* CMap::GetMapTileByPosition(glm::vec3 Position)
 {
+	if (m_WDT == nullptr)
+		return nullptr;
+
 	if (false == m_WDT->IsMapTileExists())
 		return nullptr;
 
-	int32 tileX = (int)(Position.x / C_TileSize);
-	int32 tileZ = (int)(Position.z / C_TileSize);
+	int32 tileX = (int32)(Position.x / C_TileSize);
+	int32 tileZ = (int32)(Position.z / C_TileSize);
 	for (uint16 x = 0; x < C_RenderedTiles; x++)
 	{
 		for (uint16 z = 0; z < C_RenderedTiles; z++)
 		{
 			const auto& curTile = m_MapTilesCurrent[x][z];
-			if ((curTile->getIndexX() == tileX) && (curTile->getIndexZ() == tileZ))
+			if ((curTile->GetTileIndexX() == tileX) && (curTile->GetTileIndexZ() == tileZ))
 				return curTile.get();
 		}
 	}
@@ -289,28 +284,36 @@ const CMapTile * CMap::GetMapTile(glm::vec3 Position)
 	return nullptr;
 }
 
-const CMapChunk * CMap::GetMapChunk(glm::vec3 Position)
+const CMapChunk* CMap::GetMapChunkByPosition(glm::vec3 Position)
 {
-	auto mapTile = GetMapTile(Position);
+	auto mapTile = GetMapTileByPosition(Position);
 	if (mapTile == nullptr || false == mapTile->IsLoaded())
 		return nullptr;
 
-	int32 chunkX = (int)(glm::mod(Position.x, C_TileSize) / C_ChunkSize);
-	int32 chunkZ = (int)(glm::mod(Position.z, C_TileSize) / C_ChunkSize);
-	return mapTile->getChunk(chunkZ, chunkX);
+	int32 chunkX = (int32)(glm::mod(Position.x, C_TileSize) / C_ChunkSize);
+	int32 chunkZ = (int32)(glm::mod(Position.z, C_TileSize) / C_ChunkSize);
+	return mapTile->GetMapChunk(chunkZ, chunkX);
 }
 
-uint32 CMap::GetAreaID(glm::vec3 Position)
+uint32 CMap::GetAreaIDByPosition(glm::vec3 Position)
 {
-	const CMapChunk* curChunk = GetMapChunk(Position);
+	const CMapChunk* curChunk = GetMapChunkByPosition(Position);
 	if (curChunk == nullptr)
-		return UINT32_MAX;
+		return 0u;
 	return curChunk->GetAreaID();
+}
+
+const DBC_AreaTableRecord * CMap::GetAreaByPosition(glm::vec3 Position)
+{
+	uint32 areaID = GetAreaIDByPosition(Position);
+	if (areaID == 0)
+		return nullptr;
+	return GetBaseManager().GetManager<CDBCStorage>()->DBC_AreaTable()[areaID];
 }
 
 float CMap::GetTerrainHeight(glm::vec3 Position)
 {
-	const CMapChunk* curChunk = GetMapChunk(Position);
+	const CMapChunk* curChunk = GetMapChunkByPosition(Position);
 	if (curChunk == nullptr)
 		return Math::MaxFloat;
 
@@ -340,24 +343,23 @@ bool CMap::IsNortrend() const
 	return m_MapDBCRecord->Get_Expansion() == 2;
 }
 
-bool CMap::getTileIsCurrent(int x, int z) const
+bool CMap::IsTileCurrent(int32 x, int32 z) const
 {
     int midTile = static_cast<uint32>(C_RenderedTiles / 2);
+
     auto currentTile = m_MapTilesCurrent[midTile][midTile];
     if (currentTile == nullptr)
-    {
         return false;
-    }
 
-    int32 currentX = currentTile->getIndexX();
-    int32 currentZ = currentTile->getIndexZ();
+    int32 currentX = currentTile->GetTileIndexX();
+    int32 currentZ = currentTile->GetTileIndexZ();
 
     return (
         x >= (currentX - (C_RenderedTiles / 2u)) &&
         z >= (currentZ - (C_RenderedTiles / 2u)) &&
         x <= (currentX + (C_RenderedTiles / 2u)) &&
         z <= (currentZ + (C_RenderedTiles / 2u))
-        );
+    );
 }
 
 bool CMap::IsTileInCurrent(const CMapTile& _mapTile)

@@ -19,7 +19,7 @@ CMapWDL::CMapWDL(const CMap& Map)
 CMapWDL::~CMapWDL()
 {}
 
-//--
+
 
 //
 // ISceneNodeProvider
@@ -121,8 +121,7 @@ void CMapWDL::CreateInsances(const std::shared_ptr<ISceneNode>& Parent) const
 
 void CMapWDL::Load()
 {
-	// Offsets to MARE
-	memset(m_MAREOffsets, 0x00, C_TilesInMap * C_TilesInMap * sizeof(uint32));
+	std::memset(m_MAREOffsets, 0x00, C_TilesInMap * C_TilesInMap * sizeof(uint32));
 
 	std::shared_ptr<IByteBuffer> bytes = m_Map.GetBaseManager().GetManager<IFilesManager>()->Open(m_Map.GetMapFolder() + ".wdl");
 

@@ -76,16 +76,14 @@ CowServerWorld::CowServerWorld(IScene& Scene, const std::shared_ptr<CWorldSocket
 	, m_WorldObjects(*this, m_Scene)
 	, m_WorldObjectUpdater(*this, m_Scene)
 	, m_ClientCache(*this)
-	, m_TaxiStorage(m_Scene.GetBaseManager())
-	, m_TransportAnimationStorage(m_Scene.GetBaseManager())
+
 {
 	m_SkyManager = m_Scene.GetRootSceneNode()->CreateSceneNode<CSkyManager>();
 	m_Scene.GetBaseManager().AddManager<CSkyManager>(m_SkyManager);
 
 	m_Map = m_Scene.GetRootSceneNode()->CreateSceneNode<CMap>();
 
-	m_TaxiStorage.Initialize();
-	m_TransportAnimationStorage.Initialize();
+
 
 	// Handlers
 	AddHandler(SMSG_LOGIN_VERIFY_WORLD, std::bind(&CowServerWorld::S_SMSG_LOGIN_VERIFY_WORLD, this, std::placeholders::_1));

@@ -11,15 +11,14 @@ public:
 	};
 
 public:
-	CowClient_DBCTaxi(IBaseManager& BaseManager);
+	CowClient_DBCTaxi(const IBaseManager& BaseManager);
 	virtual ~CowClient_DBCTaxi();
 
-	void Initialize();
 	const std::vector<STaxiPathNode>& GetPathNodes(uint32 PathID) const;
 
 private:
 	std::vector<STaxiPathNode> m_EmptyPathNodes;
 	std::map<uint32, std::vector<STaxiPathNode>> m_PathNodes;
 
-	IBaseManager& m_BaseManager;
+	const IBaseManager& m_BaseManager;
 };

@@ -39,7 +39,7 @@ void CRenderPass_M2List::DoRenderM2Model(const CM2_Base_Instance* M2SceneNode, c
 		const auto& materials = geometryMaterialsIt.second;
 
 		uint32 meshPartID = geometry->getProto().meshPartID;
-		if (false == M2SceneNode->isMeshEnabled(meshPartID))
+		if (false == M2SceneNode->IsMeshEnabled(meshPartID))
 			continue;
 
 		geometry->UpdateGeometryProps(GetRenderEventArgs(), M2SceneNode);
@@ -158,7 +158,7 @@ EVisitResult CRenderPass_M2List::Visit(const std::shared_ptr<ISceneNode>& SceneN
 		{
 			m_CurrentM2Instance = m2Instance.get();
 
-			M2PerObject perObject(m2Instance->GetWorldTransfom(), m2Instance->getColor());
+			M2PerObject perObject(m2Instance->GetWorldTransfom(), m2Instance->GetColor());
 			m_M2PerObjectConstantBuffer->Set(perObject);
 
 			if (m_ShaderM2PerObjectParameter && m_M2PerObjectConstantBuffer != nullptr)

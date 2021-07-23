@@ -120,7 +120,7 @@ bool CM2::Load()
 			const SM2_SkinProfile* m2Skin = (const SM2_SkinProfile*)skinFile->getData();
 
 			auto skin = MakeShared(CM2_Skin, m_BaseManager, m_RenderDevice, *this, *m2Skin);
-			skin->Load(m_Header, skinFile, m2Vertexes);
+			skin->Load(skinFile, m2Vertexes);
 			m_Skins.push_back(skin);
 			break;
 		}

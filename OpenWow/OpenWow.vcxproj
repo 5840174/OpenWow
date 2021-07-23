@@ -11,12 +11,14 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Collision\CollisionUtils.h" />
     <ClInclude Include="SceneWoW.h" />
     <ClInclude Include="SceneWoWClient.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="UIControls\UIControlMinimap.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Collision\CollisionUtils.cpp" />
     <ClCompile Include="SceneWoW.cpp" />
     <ClCompile Include="SceneWoWClient.cpp" />
     <ClCompile Include="stdafx.cpp">

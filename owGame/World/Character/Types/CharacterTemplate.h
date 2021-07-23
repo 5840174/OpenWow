@@ -119,15 +119,15 @@ struct ZN_API SCharacterVisualTemplate
 	{}
 
 	// Race
-	Race					    Race;
-	Gender				        Gender;
+	Race   Race;
+	Gender Gender;
 
 	// Style
-	uint8						skin;
-	uint8						face;
-	uint8						hairStyle;
-	uint8						hairColor;
-	uint8						facialStyle;
+	uint8  skin;
+	uint8  face;
+	uint8  hairStyle;
+	uint8  hairColor;
+	uint8  facialStyle;
 };
 
 struct ZN_API SCharacterTemplate

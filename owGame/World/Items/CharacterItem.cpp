@@ -165,7 +165,7 @@ void CCharacterItem::InitializeItemModels()
 			itemModelInstance->Attach(ownerCharacterAttachment->GetAttachmentType());
 
 		auto itemImage = LoadItemImage((DBCItem_EInventoryItemType)GetTemplate().InventoryType, objectTextureName);
-		itemModelInstance->setSpecialTexture(SM2_Texture::Type::OBJECT_SKIN, m_BaseManager.GetManager<IznTexturesFactory>()->LoadTexture2D(itemImage));
+		itemModelInstance->SetSpecialTexture(SM2_Texture::Type::OBJECT_SKIN, m_BaseManager.GetManager<IznTexturesFactory>()->LoadTexture2D(itemImage));
 
 		m_Models.push_back({ itemModelInstance, itemImage });
 	}

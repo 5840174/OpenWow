@@ -14,6 +14,7 @@ enum class DBC_GameObjectDisplayInfo_SoundSlot : uint32
 	custom1,
 	custom2,
 	custom3,
+
 	SOUND_SLOT_COUNT, // = 10
 };
 
@@ -31,4 +32,5 @@ __DBC_TVALUE(float,  BBoxMaxY,               17)
 __DBC_TVALUE(float,  BBoxMaxZ,               18)
 
 __DBC_TVALUE(uint32, ObjectEffectPackageID,  19);
+
 DBC_DEF_END

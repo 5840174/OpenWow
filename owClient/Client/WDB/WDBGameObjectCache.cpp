@@ -29,7 +29,7 @@ CowWDBGameObjectCache::CowWDBGameObjectCache(IFilesManager * FilesManager)
 		if (entrySize != gameObjectQueryResult->GetSize())
 			throw CException("Incorrect query size.");
 
-		Log::Info("GameObject '%s' loaded from cache.", gameObjectQueryResult->Name.c_str());
+		//Log::Info("GameObject '%s' loaded from cache.", gameObjectQueryResult->Name.c_str());
 
 		m_Cache.insert(std::make_pair(entry, gameObjectQueryResult));
 	}

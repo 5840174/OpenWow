@@ -17,7 +17,7 @@ public:
 
 	// CMapChunk
 	uint32 GetAreaID() const;
-	float GetTerrainHeight(glm::vec3 Position) const;
+	float GetTerrainHeight(glm::vec3 PositionInChunk) const;
 	void ExtendMapChunkBounds(const BoundingBox& OtherBBox);
 
 	// ISceneNode

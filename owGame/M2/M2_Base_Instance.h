@@ -27,15 +27,18 @@ public:
 	std::shared_ptr<CM2CameraComponent> CreateCameraComponent(uint16 CameraDirectIndex);
 
 	// Color & Alpha
-	void                                setColor(glm::vec4 Color) { m_Color = Color; }
-	const glm::vec4&                    getColor() const { return m_Color; }
-	void                                setAlpha(float Alpha) { m_Alpha = Alpha; }
-	float                               getAlpha() const { return m_Alpha; }
+	const glm::vec4&                    GetColor() const { return m_Color; }
+	void                                SetColor(glm::vec4 Color) { m_Color = Color; }
+	float                               GetAlpha() const { return m_Alpha; }
+	void                                SetAlpha(float Alpha) { m_Alpha = Alpha; }
+	
 
 	// Mesh & textures provider
-	virtual bool                        isMeshEnabled(uint32 _index) const;
-	void                                setSpecialTexture(SM2_Texture::Type _type, const std::shared_ptr<ITexture>& _texture);
-	const std::shared_ptr<ITexture>&    getSpecialTexture(SM2_Texture::Type _type) const;
+	virtual bool                        IsMeshEnabled(uint32 _index) const;
+
+	const std::shared_ptr<ITexture>&    GetSpecialTexture(SM2_Texture::Type _type) const;
+	void                                SetSpecialTexture(SM2_Texture::Type _type, const std::shared_ptr<ITexture>& _texture);
+	
 
 	// Components
 	const std::shared_ptr<CM2AnimatorComponent>& GetAnimatorComponent() const { return m_AnimatorComponent; }
