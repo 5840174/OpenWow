@@ -10,13 +10,13 @@
 #include "WDB/WDBItemCache.h"
 
 // FORWARD BEGIN
-class CowServerWorld;
+class CWorldServer;
 // FORWARD END
 
 class CowClient_Cache
 {
 public:
-	CowClient_Cache(CowServerWorld& world);
+	CowClient_Cache(CWorldServer& world);
 	virtual ~CowClient_Cache();
 
 	// DBC
@@ -34,7 +34,7 @@ protected:
 	bool                                            On_SMSG_ITEM_QUERY_SINGLE_RESPONSE(CServerPacket& Bytes);
 
 private:
-	CowServerWorld&                                                                                    m_ServerWorld;
+	CWorldServer&                                                                                    m_ServerWorld;
 
 	// DBC
 	CowClient_DBCTaxi                                                                                  m_TaxiStorage;

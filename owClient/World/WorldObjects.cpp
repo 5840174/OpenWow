@@ -4,10 +4,10 @@
 #include "WorldObjects.h"
 
 // Additional
-#include "ServerWorld.h"
+#include "WorldServer.h"
 #include "../Objects/GameObjects/WoWGameObjectMOTransport.h"
 
-CWorldObjects::CWorldObjects(CowServerWorld & WoWWorld, IScene & Scene)
+CWorldObjects::CWorldObjects(CWorldServer & WoWWorld, IScene & Scene)
 	: m_ServerWorld(WoWWorld)
 	, m_Scene(Scene)
 {}

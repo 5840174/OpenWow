@@ -37,7 +37,7 @@ private:
 
 
 private:
-	std::unique_ptr<CWorldClient> m_WorldClient;
+	CWorldClient m_WorldClient;
 
 	std::shared_ptr<IUIControlText> m_RendererStatisticText;
 	std::shared_ptr<IUIControlText> m_AreaName;

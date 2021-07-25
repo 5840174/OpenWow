@@ -4,10 +4,10 @@
 #include "RenderPass_Path.h"
 
 // Additional
-#include "World/ServerWorld.h"
+#include "World/WorldServer.h"
 #include "Objects/GameObjects/WoWGameObjectMOTransport.h"
 
-CRenderPass_Path::CRenderPass_Path(IRenderDevice& RenderDevice, CowServerWorld& WoWWorld)
+CRenderPass_Path::CRenderPass_Path(IRenderDevice& RenderDevice, CWorldServer& WoWWorld)
 	: RenderPassPipelined(RenderDevice)
 	, m_ServerWorld(WoWWorld)
 {
@@ -68,10 +68,10 @@ EVisitResult CRenderPass_Path::VisitWoW(const std::shared_ptr<CowServerWorldObje
 		if (wowPath == nullptr)
 			return EVisitResult::AllowVisitChilds;
 
-		const auto& wowWorld = woWGameObjectMOTransport->GetWoWWorld();
+		auto& wowWorld = woWGameObjectMOTransport->GetWoWWorld();
 
 		uint32 mapID = UINT32_MAX;
-		if (auto map = wowWorld.GetMap())
+		if (auto map = wowWorld.GetWorldClient().GetMap())
 			mapID = map->GetMapID();
 
 		const auto& wowPathNodes = wowPath->GetPathNodes();

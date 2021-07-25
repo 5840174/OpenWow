@@ -10,11 +10,11 @@
 #include "../Client/ClientCache.h"
 
 
-class ZN_API CowServerWorld
+class ZN_API CWorldServer
 {
 public:
-	CowServerWorld(IScene& Scene, const std::shared_ptr<CWorldSocket>& Socket);
-	virtual ~CowServerWorld();
+	CWorldServer(IScene& Scene, const std::shared_ptr<CWorldSocket>& Socket);
+	virtual ~CWorldServer();
 
 	void EnterWorld(const SCharacterTemplate& SelectedCharacter);
 	void Update(const UpdateEventArgs& e);
@@ -47,26 +47,22 @@ public:
 
 	void On_MOVE_UnitSpeedOpcode(CServerPacket& Buffer);
 
-	// CowServerWorld
+	// CWorldServer
 	void AddHandler(Opcodes Opcode, std::function<void(CServerPacket&)> Handler);
 	bool ProcessPacket(CServerPacket& ServerPacket);
 	void SendPacket(CClientPacket& Packet);
 
+	CWorldClient& GetWorldClient() { return m_WorldClient; }
 	const IBaseManager& GetBaseManager() const { return m_Scene.GetBaseManager(); }
-
-	std::shared_ptr<CMap> GetMap() const;
 
 	CWorldObjects& GetWorldObjects() { return m_WorldObjects; }
 	CWorldObjectUpdater& GetWorldObjectUpdater() { return m_WorldObjectUpdater; }
 
 	// Cache
 	CowClient_Cache& GetClientCache() { return m_ClientCache; }
-
-private: // Game objects and entities
-	std::shared_ptr<CSkyManager> m_SkyManager;
-	std::shared_ptr<CMap> m_Map;
 	
 private:
+	CWorldClient m_WorldClient;
 	IScene& m_Scene;
 	std::weak_ptr<CWorldSocket> m_Socket;
 	std::unordered_map<Opcodes, std::function<void(CServerPacket&)>> m_Handlers;

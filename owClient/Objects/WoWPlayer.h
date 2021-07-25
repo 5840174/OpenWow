@@ -5,7 +5,7 @@
 #include "Units/WoWUnit.h"
 
 // FORWARD BEGIN
-class CowServerWorld;
+class CWorldServer;
 // FORWARD END
 
 namespace
@@ -39,7 +39,7 @@ class ZN_API CowServerPlayer
 	: public CowServerUnit
 {
 public:
-	CowServerPlayer(IScene& Scene, CowServerWorld& WoWWorld, CowGuid Guid);
+	CowServerPlayer(IScene& Scene, CWorldServer& WoWWorld, CowGuid Guid);
 	virtual ~CowServerPlayer();
 
 	virtual void OnValuesUpdated(const UpdateMask & Mask) override;
@@ -53,7 +53,7 @@ private:
 	uint8 GetNativeGender() const;
 
 public:
-	static std::shared_ptr<CowServerPlayer> Create(CowServerWorld& WoWWorld, IScene& Scene, CowGuid Guid);
+	static std::shared_ptr<CowServerPlayer> Create(CWorldServer& WoWWorld, IScene& Scene, CowGuid Guid);
 	virtual void Destroy() override;
 
 protected:

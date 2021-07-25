@@ -6,7 +6,7 @@
 #include "WoWPlayer.h"
 
 // Additional
-#include "../World/ServerWorld.h"
+#include "../World/WorldServer.h"
 
 namespace
 {
@@ -20,7 +20,7 @@ namespace
 	}
 }
 
-CowServerPlayer::CowServerPlayer(IScene& Scene, CowServerWorld& WoWWorld, CowGuid Guid)
+CowServerPlayer::CowServerPlayer(IScene& Scene, CWorldServer& WoWWorld, CowGuid Guid)
 	: CowServerUnit(Scene, WoWWorld, Guid)
 {
 	//m_ObjectType |= TYPEMASK_PLAYER;
@@ -138,7 +138,7 @@ uint8 CowServerPlayer::GetNativeGender() const
 //
 // Protected
 //
-std::shared_ptr<CowServerPlayer> CowServerPlayer::Create(CowServerWorld& WoWWorld, IScene& Scene, CowGuid Guid)
+std::shared_ptr<CowServerPlayer> CowServerPlayer::Create(CWorldServer& WoWWorld, IScene& Scene, CowGuid Guid)
 {
 	std::shared_ptr<CowServerPlayer> thisObj = MakeShared(CowServerPlayer, Scene, WoWWorld, Guid);
 	return thisObj;
@@ -173,13 +173,11 @@ void CowServerPlayer::OnDisplayIDChanged(uint32 DisplayID)
 		characterTemplate.hairColor = GetHairColorId();
 		characterTemplate.facialStyle = GetFacialStyle();
 
-		CWorldObjectCreator creator(GetScene().GetBaseManager());
-		DisplayID_SetModelInstance(creator.BuildCharacterFromTemplate(GetScene().GetBaseManager().GetApplication().GetRenderDevice(), GetScene(), characterTemplate));
+		DisplayID_SetModelInstance(GetWoWWorld().GetWorldClient().GetCreator()->BuildCharacterFromTemplate(GetScene().GetBaseManager().GetApplication().GetRenderDevice(), GetScene(), characterTemplate));
 	}
 	else
 	{
-		CWorldObjectCreator creator(GetScene().GetBaseManager());
-		DisplayID_SetModelInstance(creator.BuildCreatureFromDisplayInfo(GetScene().GetBaseManager().GetApplication().GetRenderDevice(), GetScene(), DisplayID));
+		DisplayID_SetModelInstance(GetWoWWorld().GetWorldClient().GetCreator()->BuildCreatureFromDisplayInfo(GetScene().GetBaseManager().GetApplication().GetRenderDevice(), GetScene(), DisplayID));
 	}
 }
 

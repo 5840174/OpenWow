@@ -4,11 +4,11 @@
 #include "WoWGameObjectMOTransport.h"
 
 // Additional
-#include "../../World/ServerWorld.h"
+#include "../../World/WorldServer.h"
 
 #include "Client/TaxiStorage.h"
 
-CowServerGameObject_MOTransport::CowServerGameObject_MOTransport(IScene & Scene, CowServerWorld & WoWWorld, CowGuid Guid)
+CowServerGameObject_MOTransport::CowServerGameObject_MOTransport(IScene & Scene, CWorldServer & WoWWorld, CowGuid Guid)
 	: CowServerGameObject(Scene, WoWWorld, Guid)
 	, m_PathID(0)
 	, m_PathProgress(0.0f)
@@ -141,7 +141,7 @@ void CowServerGameObject_MOTransport::Update(const UpdateEventArgs & e)
 	//Log::Print("GAMEOBJECT_DYNAMIC: %s - (uint %d) (float %f) Nodes %d", m_GameObjectTemplate->Name.c_str(), pathProgress, pathProgressFloat, taxiNodes.size());
 }
 
-std::shared_ptr<CowServerGameObject_MOTransport> CowServerGameObject_MOTransport::Create(CowServerWorld & WoWWorld, IScene & Scene, CowGuid Guid)
+std::shared_ptr<CowServerGameObject_MOTransport> CowServerGameObject_MOTransport::Create(CWorldServer & WoWWorld, IScene & Scene, CowGuid Guid)
 {
 	std::shared_ptr<CowServerGameObject_MOTransport> thisObj = MakeShared(CowServerGameObject_MOTransport, Scene, WoWWorld, Guid);
 	//Log::Green("---Create CowServerGameObject_MOTransport with Type '%s', Entry '%d', Counter '%d'", Guid.GetTypeName(), Guid.GetEntry(), Guid.GetCounter());

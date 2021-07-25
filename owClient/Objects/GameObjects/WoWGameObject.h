@@ -35,7 +35,7 @@ class ZN_API CowServerGameObject
 	, public IClientCacheGameobjectResponseListener
 {
 public:
-	CowServerGameObject(IScene& Scene, CowServerWorld& WoWWorld, CowGuid Guid);
+	CowServerGameObject(IScene& Scene, CWorldServer& WoWWorld, CowGuid Guid);
 	virtual ~CowServerGameObject();
 
 	virtual void OnValueUpdated(uint16 index) override;
@@ -50,7 +50,7 @@ public:
 	void Update(const UpdateEventArgs& e);
 
 public:
-	static std::shared_ptr<CowServerGameObject> Create(CowServerWorld& WoWWorld, IScene& Scene, CowGuid Guid);
+	static std::shared_ptr<CowServerGameObject> Create(CWorldServer& WoWWorld, IScene& Scene, CowGuid Guid);
 	virtual void Destroy() override;
 
 protected:

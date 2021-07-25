@@ -6,9 +6,9 @@
 #include "WoWGameObject.h"
 
 // Additional
-#include "../../World/ServerWorld.h"
+#include "../../World/WorldServer.h"
 
-CowServerGameObject::CowServerGameObject(IScene& Scene, CowServerWorld& WoWWorld, CowGuid Guid)
+CowServerGameObject::CowServerGameObject(IScene& Scene, CWorldServer& WoWWorld, CowGuid Guid)
 	: CowServerWorldObject(Scene, WoWWorld, Guid)
 {
 	//m_ObjectType |= TYPEMASK_GAMEOBJECT;
@@ -74,7 +74,7 @@ void CowServerGameObject::Update(const UpdateEventArgs & e)
 //
 // Protected
 //
-std::shared_ptr<CowServerGameObject> CowServerGameObject::Create(CowServerWorld& WoWWorld, IScene& Scene, CowGuid Guid)
+std::shared_ptr<CowServerGameObject> CowServerGameObject::Create(CWorldServer& WoWWorld, IScene& Scene, CowGuid Guid)
 {
 	std::shared_ptr<CowServerGameObject> thisObj = MakeShared(CowServerGameObject, Scene, WoWWorld, Guid);
 	return thisObj;
@@ -98,8 +98,7 @@ void CowServerGameObject::OnDisplayIDChanged(uint32 DisplayID)
 
 	//try
 	//{
-		CWorldObjectCreator creator(GetScene().GetBaseManager());
-		m_GameObjectModel = creator.BuildGameObjectFromDisplayInfo(GetScene().GetBaseManager().GetApplication().GetRenderDevice(), GetScene(), DisplayID);
+		m_GameObjectModel = GetWoWWorld().GetWorldClient().GetCreator()->BuildGameObjectFromDisplayInfo(GetScene().GetBaseManager().GetApplication().GetRenderDevice(), GetScene(), DisplayID);
 
 		//const DBC_CreatureDisplayInfoRecord * creatureDisplayInfo = GetBaseManager().GetManager<CDBCStorage>()->DBC_CreatureDisplayInfo()[diplayID];
 		//if (creatureDisplayInfo == nullptr)

@@ -5,7 +5,7 @@
 #include "WoWObject.h"
 
 // FORWARD BEGIN
-class CowServerWorld;
+class CWorldServer;
 class CowServerGameObject_MOTransport;
 // FORWARD END
 
@@ -13,7 +13,7 @@ class ZN_API CowServerWorldObject
 	: public CowServerObject
 {
 public:
-	CowServerWorldObject(IScene& Scene, CowServerWorld& WoWWorld, CowGuid Guid);
+	CowServerWorldObject(IScene& Scene, CWorldServer& WoWWorld, CowGuid Guid);
 	virtual ~CowServerWorldObject();
 
 	void Update(const UpdateEventArgs& e);
@@ -34,7 +34,7 @@ public:
 	float OrientationTransportOffset;
 
 	IScene& GetScene() const { return m_Scene; }
-	CowServerWorld& GetWoWWorld() const { return m_ServerWorld; }
+	CWorldServer& GetWoWWorld() const { return m_ServerWorld; }
 	const IBaseManager& GetBaseManager() const { return m_BaseManager; }
 
 protected:
@@ -42,7 +42,7 @@ protected:
 
 private:
 	IScene& m_Scene;
-	CowServerWorld& m_ServerWorld;
+	CWorldServer& m_ServerWorld;
 	const IBaseManager& m_BaseManager;
 };
 

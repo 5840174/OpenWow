@@ -4,7 +4,7 @@
 #include "WorldObjectUpdater.h"
 
 // Additional
-#include "ServerWorld.h"
+#include "WorldServer.h"
 
 // Additional (zlib)
 #include "zlib/source/zlib.h"
@@ -25,7 +25,7 @@ namespace
 }
 
 
-CWorldObjectUpdater::CWorldObjectUpdater(CowServerWorld& WoWWorld, IScene & Scene)
+CWorldObjectUpdater::CWorldObjectUpdater(CWorldServer& WoWWorld, IScene & Scene)
 	: m_Scene(Scene)
 	, m_ServerWorld(WoWWorld)
 {

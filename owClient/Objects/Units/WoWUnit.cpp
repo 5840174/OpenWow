@@ -6,14 +6,14 @@
 #include "WoWUnit.h"
 
 // Additional
-#include "../../World/ServerWorld.h"
+#include "../../World/WorldServer.h"
 
 
 float gravity = static_cast<float>(19.29110527038574);
 
 
 
-CowServerUnit::CowServerUnit(IScene& Scene, CowServerWorld& WoWWorld, CowGuid Guid)
+CowServerUnit::CowServerUnit(IScene& Scene, CWorldServer& WoWWorld, CowGuid Guid)
 	: CowServerWorldObject(Scene, WoWWorld, Guid)
 	
 	, m_DisplayID_ID(0)
@@ -321,7 +321,7 @@ void CowServerUnit::OnValuesUpdated(const UpdateMask & Mask)
 void CowServerUnit::OnHiddenNodePositionChanged()
 {
 	glm::vec3 clientPosition = Position;
-	if (auto map = GetWoWWorld().GetMap())
+ 	if (auto map = GetWoWWorld().GetWorldClient().GetMap())
 	{
 		float height = map->GetTerrainHeight(Position);
 		if (height != Math::MaxFloat)
@@ -575,7 +575,7 @@ void CowServerUnit::ReadMovementInfoPacket(CServerPacket & Bytes)
 
 
 
-std::shared_ptr<CowServerUnit> CowServerUnit::Create(CowServerWorld& WoWWorld, IScene& Scene, CowGuid Guid)
+std::shared_ptr<CowServerUnit> CowServerUnit::Create(CWorldServer& WoWWorld, IScene& Scene, CowGuid Guid)
 {
 	std::shared_ptr<CowServerUnit> thisObj = MakeShared(CowServerUnit, Scene, WoWWorld, Guid);
 	//Log::Error("CowServerUnit created. ID  = %d. HIGH = %d, ENTRY = %d, COUNTER = %d", Guid.GetRawValue(), Guid.GetHigh(), Guid.GetEntry(), Guid.GetCounter());
@@ -625,8 +625,7 @@ void CowServerUnit::OnDisplayIDChanged(uint32 DisplayID)
 	if (m_DisplayID_ModelInstance != nullptr)
 		return;
 
-	CWorldObjectCreator creator(GetScene().GetBaseManager());
-	DisplayID_SetModelInstance(creator.BuildCreatureFromDisplayInfo(GetScene().GetBaseManager().GetApplication().GetRenderDevice(), GetScene(), DisplayID));
+	DisplayID_SetModelInstance(GetWoWWorld().GetWorldClient().GetCreator()->BuildCreatureFromDisplayInfo(GetScene().GetBaseManager().GetApplication().GetRenderDevice(), GetScene(), DisplayID));
 
 	//const DBC_CreatureDisplayInfoRecord * creatureDisplayInfo = GetBaseManager().GetManager<CDBCStorage>()->DBC_CreatureDisplayInfo()[diplayID];
 	//if (creatureDisplayInfo == nullptr)
@@ -770,8 +769,7 @@ void CowServerUnit::Mount_OnMounted(uint32 MountDisplayID)
 	if (m_Mount_ModelInstance != nullptr)
 		GetBaseManager().GetManager<ILoader>()->AddToDeleteQueue(m_Mount_ModelInstance);
 
-	CWorldObjectCreator creator(GetScene().GetBaseManager());
-	m_Mount_ModelInstance = creator.BuildCreatureFromDisplayInfo(GetScene().GetBaseManager().GetApplication().GetRenderDevice(), GetScene(), MountDisplayID);
+	m_Mount_ModelInstance = GetWoWWorld().GetWorldClient().GetCreator()->BuildCreatureFromDisplayInfo(GetScene().GetBaseManager().GetApplication().GetRenderDevice(), GetScene(), MountDisplayID);
 	m_Mount_ModelInstance->GetComponentT<CM2AnimatorComponent>()->SetAnimationEventListener(std::dynamic_pointer_cast<IM2AnimationEventsListener>(shared_from_this()));
 
 	m_Mount_IsMounted = true;

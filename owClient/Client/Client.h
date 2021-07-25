@@ -7,7 +7,7 @@
 
 #include "../RealmSelection/RealmInfo.h"
 #include "../CharacterSelection/CharacterSelection.h"
-#include "../World/ServerWorld.h"
+#include "../World/WorldServer.h"
 
 class ZN_API CowClient 
 	: public std::enable_shared_from_this<CowClient>
@@ -42,7 +42,7 @@ private:
 
 	IScene&                                       m_Scene;
 	std::unique_ptr<CowClient_CharacterSelection> m_CharacterSelection;
-	std::unique_ptr<CowServerWorld>               m_ServerWorld;
+	std::unique_ptr<CWorldServer>               m_ServerWorld;
 };
 
 #endif

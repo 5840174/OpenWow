@@ -5,6 +5,7 @@
 
 CSceneWoW::CSceneWoW(IBaseManager& BaseManager, IRenderWindow& RenderWindow)
 	: SceneBase(BaseManager, RenderWindow)
+	, m_WorldClient(BaseManager, *this)
 {}
 
 CSceneWoW::~CSceneWoW()
@@ -16,9 +17,9 @@ CSceneWoW::~CSceneWoW()
 void CSceneWoW::SetMainMenu()
 {
 	//auto m2Model = GetBaseManager().GetManager<IWoWObjectsCreator>()->LoadM2(GetRenderDevice(), "Cameras\\FlyByDeathKnight.m2");
-	auto m2Model = GetBaseManager().GetManager<IWoWObjectsCreator>()->LoadM2(GetRenderDevice(), "Cameras\\FlyByHuman.m2");
+	auto m2Model = m_WorldClient.GetCreator()->LoadM2(GetRenderDevice(), "Cameras\\FlyByHuman.m2");
 
-	m_WoWCameraNode = GetRootSceneNode()->CreateSceneNode<CM2_Base_Instance>(m2Model);
+	m_WoWCameraNode = GetRootSceneNode()->CreateSceneNode<CM2_Base_Instance>(m_WorldClient, m2Model);
 	GetBaseManager().GetManager<ILoader>()->AddToLoadQueue(m_WoWCameraNode);
 
 	while (m_WoWCameraNode->GetState() < ILoadable::ELoadableState::Loaded)
@@ -48,6 +49,8 @@ void CSceneWoW::RemoveMainMenu()
 void CSceneWoW::Initialize()
 {
 	__super::Initialize();
+
+	m_WorldClient.Initialize();
 
 	//glm::vec3 a = glm::vec3(1, 2, 3);
 	//a = Fix_From_XZmY_To_XYZ(a);
@@ -97,8 +100,6 @@ void CSceneWoW::Initialize()
 		GetCameraController()->GetCamera()->SetPitch(-45);
 	}
 
-	m_WorldClient = std::make_unique<CWorldClient>(GetBaseManager(), *this);
-
 	m_DebugBall = CreateSceneNodeT<ISceneNode>();
 	auto geom = GetRenderDevice().GetPrimitivesFactory().CreateSphere(5.0f);
 	auto mat = MakeShared(MaterialDebug, GetRenderDevice());
@@ -124,12 +125,6 @@ void CSceneWoW::Initialize()
 	m_AreaName->SetLocalPosition(glm::vec2(200.0f, 5.0f));
 	m_AreaName->SetText("");
 	m_AreaName->SetColor(ColorRGBA(0.2f, 1.0f, 0.1f, 1.0f));
-
-
-	GetBaseManager().GetManager<IWoWObjectsCreator>()->InitEGxBlend(GetRenderDevice());
-
-
-
 
 	const float x = 31; //0 fire
 	const float y = 28; //0 fire
@@ -161,22 +156,22 @@ void CSceneWoW::Initialize()
 	//const float y = 0; //571 nortrend
 	//const uint32 mapID = 609;
 
-	if (false)
+	if (true)
 	{
 		glm::vec3 position = glm::vec3(x * C_TileSize + C_TileSize / 2.0f, 100.0f, y * C_TileSize + C_TileSize / 2.0f);
 
-		m_WorldClient->EnterWorld(mapID, position);
-		minimap->SetMinimapTexture(m_WorldClient->GetMap()->getMinimap());
+		m_WorldClient.EnterWorld(mapID, position);
+		minimap->SetMinimapTexture(m_WorldClient.GetMap()->getMinimap());
 
 		GetCameraController()->GetCamera()->SetPosition(position);
 	}
 	else if (true)
 	{
 		// WORLD\\WMO\\KALIMDOR\\OGRIMMAR\\OGRIMMAR.WMO
-		auto wmoModel = GetBaseManager().GetManager<IWoWObjectsCreator>()->LoadWMO(GetRenderDevice(), "WORLD\\WMO\\KALIMDOR\\OGRIMMAR\\OGRIMMAR.WMO");
+		auto wmoModel = m_WorldClient.GetCreator()->LoadWMO(GetRenderDevice(), "WORLD\\WMO\\KALIMDOR\\OGRIMMAR\\OGRIMMAR.WMO");
 		//auto wmoModel = GetBaseManager().GetManager<IWoWObjectsCreator>()->LoadWMO(GetRenderDevice(), "WORLD\\WMO\\NORTHREND\\DALARAN\\ND_DALARAN.WMO");
 		
-		auto wmoInstance = GetRootSceneNode()->CreateSceneNode<CWMO_Base_Instance>(wmoModel);
+		auto wmoInstance = GetRootSceneNode()->CreateSceneNode<CWMO_Base_Instance>(m_WorldClient, wmoModel);
 		GetBaseManager().GetManager<ILoader>()->AddToLoadQueue(wmoInstance);
 
 		GetCameraController()->GetCamera()->SetPosition(glm::vec3(0.0f));
@@ -196,9 +191,9 @@ void CSceneWoW::Initialize()
 		auto name9 = "WORLD\\EXPANSION02\\DOODADS\\GENERIC\\SCOURGE\\SC_BRAZIER1.M2";
 		
 
-		auto m2Model = GetBaseManager().GetManager<IWoWObjectsCreator>()->LoadM2(GetRenderDevice(), name9);
+		auto m2Model = m_WorldClient.GetCreator()->LoadM2(GetRenderDevice(), name9);
 
-		auto m2Instance = GetRootSceneNode()->CreateSceneNode<CM2_Base_Instance>(m2Model);
+		auto m2Instance = GetRootSceneNode()->CreateSceneNode<CM2_Base_Instance>(m_WorldClient, m2Model);
 		GetBaseManager().GetManager<ILoader>()->AddToLoadQueue(m2Instance);
 
 		GetCameraController()->GetCamera()->SetPosition(glm::vec3(0.0f));
@@ -215,12 +210,11 @@ void CSceneWoW::Initialize()
 		SCharacterTemplate character;
 		character.FromBase64String(charString);
 
-		CWorldObjectCreator creator(GetBaseManager());
-		auto creature = creator.BuildCharacterFromTemplate(GetRenderDevice(), *this, character);
+		auto creature = m_WorldClient.GetCreator()->BuildCharacterFromTemplate(GetRenderDevice(), *this, character);
 	}
 	else
 	{
-		auto creatureInstance = dynamic_cast<CWorldObjectCreator*>(GetBaseManager().GetManager<IWoWObjectsCreator>())->BuildCharacterFromDisplayInfo(GetRenderDevice(), *this, 10747);
+		auto creatureInstance = m_WorldClient.GetCreator()->BuildCharacterFromDisplayInfo(GetRenderDevice(), *this, 10747);
 		GetBaseManager().GetManager<ILoader>()->AddToLoadQueue(creatureInstance);
 
 		GetCameraController()->GetCamera()->SetPosition(glm::vec3(0.0f));
@@ -241,9 +235,9 @@ void CSceneWoW::OnUpdate(UpdateEventArgs & e)
 {
 	__super::OnUpdate(e);
 
-	m_WorldClient->Update(e);
+	m_WorldClient.Update(e);
 
-	if (auto map = m_WorldClient->GetMap())
+	if (auto map = m_WorldClient.GetMap())
 	{
 		//m_AreaName->SetText();
 	
@@ -256,7 +250,7 @@ void CSceneWoW::OnUpdate(UpdateEventArgs & e)
 		}
 	}
 	
-	if (auto skyManager = m_WorldClient->GetSky())
+	if (auto skyManager = m_WorldClient.GetSky())
 	{
 		const auto& currentDNPhase = skyManager->GetDNPhase();
 
@@ -344,8 +338,6 @@ void CSceneWoW::InitializeRenderer()
 
 void CSceneWoW::M2Test()
 {
-	CWorldObjectCreator creator(GetBaseManager());
-
 	const auto& records = GetBaseManager().GetManager<CDBCStorage>()->DBC_CreatureDisplayInfo().Records();
 	for (size_t i = 0; i < 25; i++)
 	{
@@ -360,7 +352,7 @@ void CSceneWoW::M2Test()
 					break;
 			}
 
-			auto creature = creator.BuildCreatureFromDisplayInfo(GetRenderDevice(), *this, id);
+			auto creature = m_WorldClient.GetCreator()->BuildCreatureFromDisplayInfo(GetRenderDevice(), *this, id);
 			if (creature != nullptr)
 			{
 				creature->SetPosition(glm::vec3(i * 25.0f, 0.0f, j * 25.0f));

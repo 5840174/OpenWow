@@ -207,9 +207,6 @@
     <ClInclude Include="Objects\Helpers\MovementInfo.h">
       <Filter>Objects\Helpers</Filter>
     </ClInclude>
-    <ClInclude Include="World\ServerWorld.h">
-      <Filter>World</Filter>
-    </ClInclude>
     <ClInclude Include="Client\WDB\WDBCreatureCache.h">
       <Filter>Client\WDBCache</Filter>
     </ClInclude>
@@ -224,6 +221,9 @@
     </ClInclude>
     <ClInclude Include="AuthSocket\Cryptography\AuthCrypt.h">
       <Filter>AuthSocket\Cryptography</Filter>
+    </ClInclude>
+    <ClInclude Include="World\WorldServer.h">
+      <Filter>World</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -335,9 +335,6 @@
     <ClCompile Include="Objects\Units\WoWUnit.cpp">
       <Filter>Objects\Units</Filter>
     </ClCompile>
-    <ClCompile Include="World\ServerWorld.cpp">
-      <Filter>World</Filter>
-    </ClCompile>
     <ClCompile Include="Client\WDB\WDBCreatureCache.cpp">
       <Filter>Client\WDBCache</Filter>
     </ClCompile>
@@ -352,6 +349,9 @@
     </ClCompile>
     <ClCompile Include="AuthSocket\Cryptography\AuthCrypt.cpp">
       <Filter>AuthSocket\Cryptography</Filter>
+    </ClCompile>
+    <ClCompile Include="World\WorldServer.cpp">
+      <Filter>World</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

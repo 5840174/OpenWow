@@ -5,6 +5,7 @@
 
 CSceneWoWClient::CSceneWoWClient(IBaseManager& BaseManager, IRenderWindow& RenderWindow)
 	: SceneBase(BaseManager, RenderWindow)
+	, m_WorldClient(BaseManager, *this)
 {
 }
 
@@ -20,9 +21,9 @@ CSceneWoWClient::~CSceneWoWClient()
 //
 void CSceneWoWClient::SetMainMenu()
 {
-	auto m2Model = GetBaseManager().GetManager<IWoWObjectsCreator>()->LoadM2(GetRenderDevice(), "Interface\\GLUES\\MODELS\\UI_MainMenu_Northrend\\UI_MainMenu_Northrend.M2");
+	auto m2Model = m_WorldClient.GetCreator()->LoadM2(GetRenderDevice(), "Interface\\GLUES\\MODELS\\UI_MainMenu_Northrend\\UI_MainMenu_Northrend.M2");
 
-	m_MainMenu = GetRootSceneNode()->CreateSceneNode<CM2_Base_Instance>(m2Model);
+	m_MainMenu = GetRootSceneNode()->CreateSceneNode<CM2_Base_Instance>(m_WorldClient, m2Model);
 	GetBaseManager().GetManager<ILoader>()->AddToLoadQueue(m_MainMenu);
 
 	while (m_MainMenu->GetState() < ILoadable::ELoadableState::Loaded)
@@ -47,6 +48,8 @@ void CSceneWoWClient::RemoveMainMenu()
 void CSceneWoWClient::Initialize()
 {
 	__super::Initialize();
+
+	m_WorldClient.Initialize();
 
 	// Light
 	{
@@ -83,15 +86,14 @@ void CSceneWoWClient::Initialize()
 		GetCameraController()->GetCamera()->SetPitch(-45);
 	}
 
-	GetBaseManager().GetManager<IWoWObjectsCreator>()->InitEGxBlend(GetRenderDevice());
-
 	m_RendererStatisticText = CreateUIControlTCast<IUIControlText>();
 	m_RendererStatisticText->SetLocalPosition(glm::vec2(5.0f, 200.0f));
 	m_RendererStatisticText->SetText("");
-	
+	m_RendererStatisticText->SetColor(ColorRGBA(0.2, 1.0f, 0.1f, 1.0f));
 
 
 	//SetMainMenu();
+
 
 
 	m_WowClient = std::make_unique<CowClient>(*this, "localhost");

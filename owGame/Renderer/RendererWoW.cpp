@@ -22,6 +22,7 @@
 CRendererWoW::CRendererWoW(IBaseManager& BaseManager, IScene& Scene)
 	: RendererBase(BaseManager, Scene)
 {
+	InitEGxBlend(GetRenderDevice());
 }
 
 CRendererWoW::~CRendererWoW()

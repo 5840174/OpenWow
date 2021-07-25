@@ -5,18 +5,18 @@
 #include "Base/WoWWorldObject.h"
 
 // FORWARD BEGIN
-class CowServerWorld;
+class CWorldServer;
 // FORWARD END
 
 class ZN_API CowServerCorpse
 	: public CowServerWorldObject
 {
 public:
-	CowServerCorpse(IScene& Scene, CowServerWorld& WoWWorld, CowGuid Guid);
+	CowServerCorpse(IScene& Scene, CWorldServer& WoWWorld, CowGuid Guid);
 	virtual ~CowServerCorpse();
 
 public:
-	static std::shared_ptr<CowServerCorpse> Create(CowServerWorld& WoWWorld, IScene& Scene, CowGuid Guid);
+	static std::shared_ptr<CowServerCorpse> Create(CWorldServer& WoWWorld, IScene& Scene, CowGuid Guid);
 
 private:
 

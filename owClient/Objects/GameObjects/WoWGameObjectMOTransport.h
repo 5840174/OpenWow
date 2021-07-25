@@ -6,14 +6,14 @@
 #include "../Helpers/Spline/Path.h"
 
 // FORWARD BEGIN
-class CowServerWorld;
+class CWorldServer;
 // FORWARD END
 
 class ZN_API CowServerGameObject_MOTransport
 	: public CowServerGameObject
 {
 public:
-	CowServerGameObject_MOTransport(IScene& Scene, CowServerWorld& WoWWorld, CowGuid Guid);
+	CowServerGameObject_MOTransport(IScene& Scene, CWorldServer& WoWWorld, CowGuid Guid);
 	virtual ~CowServerGameObject_MOTransport();
 
 	std::shared_ptr<CWoWPath> GetWoWPath() const { return m_WoWPath; }
@@ -28,7 +28,7 @@ public:
 	void Update(const UpdateEventArgs& e);
 
 public:
-	static std::shared_ptr<CowServerGameObject_MOTransport> Create(CowServerWorld& WoWWorld, IScene& Scene, CowGuid Guid);
+	static std::shared_ptr<CowServerGameObject_MOTransport> Create(CWorldServer& WoWWorld, IScene& Scene, CowGuid Guid);
 	virtual void Destroy() override;
 
 private:

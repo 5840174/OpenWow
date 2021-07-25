@@ -9,7 +9,7 @@
 #include "../Helpers/Spline/Path.h"
 
 // FORWARD BEGIN
-class CowServerWorld;
+class CWorldServer;
 struct SCharacterItemTemplate;
 // FORWARD END
 
@@ -18,7 +18,7 @@ class ZN_API CowServerUnit
 	, public IM2AnimationEventsListener
 {
 public:
-	CowServerUnit(IScene& Scene, CowServerWorld& WoWWorld, CowGuid Guid);
+	CowServerUnit(IScene& Scene, CWorldServer& WoWWorld, CowGuid Guid);
 	virtual ~CowServerUnit();
 
 	void ProcessMovementPacket(CServerPacket& Bytes);
@@ -47,7 +47,7 @@ public:
 	void ReadMovementInfoPacket(CServerPacket& Bytes);
 
 public:
-	static std::shared_ptr<CowServerUnit> Create(CowServerWorld& WoWWorld, IScene& Scene, CowGuid Guid);
+	static std::shared_ptr<CowServerUnit> Create(CWorldServer& WoWWorld, IScene& Scene, CowGuid Guid);
 	virtual void Destroy() override;
 
 	std::shared_ptr<CWoWPath> m_WoWPath;

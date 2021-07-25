@@ -28,6 +28,8 @@ protected:
 	void InitializeRenderer() override;
 
 private:
+	CWorldClient m_WorldClient;
+
 	std::shared_ptr<CM2_Base_Instance> m_MainMenu;
 	
 	std::shared_ptr<ISceneNode> m_DefaultLightNode;

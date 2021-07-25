@@ -4,7 +4,7 @@
 #include "../Sky/SkyManager.h"
 #include "../Map/Map.h"
 
-class CWorldClient
+class ZN_API CWorldClient
 {
 public:
 	CWorldClient(const IBaseManager& BaseManager, IScene& Scene);
@@ -12,6 +12,7 @@ public:
 
 	void Initialize();
 	void Update(const UpdateEventArgs& e);
+
 	void EnterWorld(uint32 MapID, int32 TileX, int32 TileZ);
 	void EnterWorld(uint32 MapID, glm::vec3 Position);
 

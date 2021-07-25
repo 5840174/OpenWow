@@ -18,7 +18,7 @@ class CRenderPass_Path
 	, public IWoWVisitor
 {
 public:
-	CRenderPass_Path(IRenderDevice& RenderDevice, CowServerWorld& WoWWorld);
+	CRenderPass_Path(IRenderDevice& RenderDevice, CWorldServer& WoWWorld);
 	virtual ~CRenderPass_Path();
 
 	// IRenderPass
@@ -44,5 +44,5 @@ protected:
 	std::shared_ptr<IStructuredBuffer> m_InstancesBuffer;
 	size_t							   m_InstancesCnt;
 
-	CowServerWorld& m_ServerWorld;
+	CWorldServer& m_ServerWorld;
 };

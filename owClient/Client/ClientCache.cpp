@@ -4,9 +4,9 @@
 #include "ClientCache.h"
 
 // Additional
-#include "World/ServerWorld.h"
+#include "World/WorldServer.h"
 
-CowClient_Cache::CowClient_Cache(CowServerWorld& world)
+CowClient_Cache::CowClient_Cache(CWorldServer& world)
 	: m_ServerWorld(world)
 	, m_TaxiStorage(m_ServerWorld.GetBaseManager())
 	, m_TransportAnimationStorage(m_ServerWorld.GetBaseManager())

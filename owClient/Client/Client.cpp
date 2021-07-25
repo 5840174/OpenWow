@@ -100,8 +100,8 @@ void CowClient::OnCharacterSelected(const SCharacterTemplate & SelectedCharacter
 	//CWorldObjectCreator creator(m_Scene.GetBaseManager());
 	//auto creature = creator.BuildCharacterFromTemplate(m_Scene.GetBaseManager().GetApplication().GetRenderDevice(), m_Scene, SelectedCharacter);
 
-	m_ServerWorld = std::make_unique<CowServerWorld>(m_Scene, m_WorldSocket);
-	m_WorldSocket->SetExternalHandler(std::bind(&CowServerWorld::ProcessPacket, m_ServerWorld.get(), std::placeholders::_1));
+	m_ServerWorld = std::make_unique<CWorldServer>(m_Scene, m_WorldSocket);
+	m_WorldSocket->SetExternalHandler(std::bind(&CWorldServer::ProcessPacket, m_ServerWorld.get(), std::placeholders::_1));
 
 	m_ServerWorld->EnterWorld(SelectedCharacter);
 }

@@ -63,7 +63,7 @@
     <ClInclude Include="WorldSocket\ServerPacket.h" />
     <ClInclude Include="WorldSocket\WorldSocket.h" />
     <ClInclude Include="World\WoWGUID.h" />
-    <ClInclude Include="World\ServerWorld.h" />
+    <ClInclude Include="World\WorldServer.h" />
     <ClInclude Include="World\WorldObjects.h" />
     <ClInclude Include="World\WorldObjectUpdater.h" />
   </ItemGroup>
@@ -110,7 +110,7 @@
     <ClCompile Include="WorldSocket\ServerPacket.cpp" />
     <ClCompile Include="WorldSocket\WorldSocket.cpp" />
     <ClCompile Include="World\WoWGUID.cpp" />
-    <ClCompile Include="World\ServerWorld.cpp" />
+    <ClCompile Include="World\WorldServer.cpp" />
     <ClCompile Include="World\WorldObjects.cpp" />
     <ClCompile Include="World\WorldObjectUpdater.cpp" />
   </ItemGroup>

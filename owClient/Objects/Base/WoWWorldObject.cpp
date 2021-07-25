@@ -6,9 +6,9 @@
 #include "WoWWorldObject.h"
 
 // Additional
-#include "../../World/ServerWorld.h"
+#include "../../World/WorldServer.h"
 
-CowServerWorldObject::CowServerWorldObject(IScene& Scene, CowServerWorld& WoWWorld, CowGuid Guid)
+CowServerWorldObject::CowServerWorldObject(IScene& Scene, CWorldServer& WoWWorld, CowGuid Guid)
 	: CowServerObject(Guid)
 	, m_Scene(Scene)
 	, m_ServerWorld(WoWWorld)

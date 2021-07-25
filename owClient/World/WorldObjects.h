@@ -13,13 +13,13 @@
 #include "../Renderer/RenderPass_Path.h"
 
 // FORWARD BEGIN
-class CowServerWorld;
+class CWorldServer;
 // FORWARD END
 
 class CWorldObjects
 {
 public:
-	CWorldObjects(CowServerWorld& WoWWorld, IScene& Scene);
+	CWorldObjects(CWorldServer& WoWWorld, IScene& Scene);
 	virtual ~CWorldObjects();
 
 	void Update(const UpdateEventArgs& e);
@@ -46,7 +46,7 @@ public:
 	}
 
 private:
-	CowServerWorld& m_ServerWorld;
+	CWorldServer& m_ServerWorld;
 	IScene& m_Scene;
 
 	std::map<CowGuid, std::shared_ptr<CowServerItem>>                  m_ItemsAndContainers;
