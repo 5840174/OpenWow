@@ -2,9 +2,6 @@
 
 #ifdef USE_WMO_MODELS
 
-// OpenWoW
-#include "../WoWChunkReader.h"
-
 // WMO
 #include "WMO_Headers.h"
 
@@ -26,7 +23,7 @@ class ZN_API CWMO
 	friend CWMO_Part_Portal;
 
 public:
-	CWMO(IBaseManager& BaseManager, IRenderDevice& RenderDevice, const std::string& FileName);
+	CWMO(const IBaseManager& BaseManager, IRenderDevice& RenderDevice, const std::string& FileName);
 	virtual ~CWMO();
 
 	// ISceneNodeProvider
@@ -92,7 +89,7 @@ private:
 	// MCVP chunk (optional)	
 
 private:
-	IBaseManager&                                                       m_BaseManager;
+	const IBaseManager&                                                 m_BaseManager;
 	IRenderDevice&                                                      m_RenderDevice;
 	const std::string                                                   m_FileName;
 	std::unique_ptr<WoWChunkReader>                                     m_ChunkReader;

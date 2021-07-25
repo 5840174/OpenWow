@@ -4,7 +4,7 @@
 #include "owGame.h"
 
 // Additional
-#include "Settings/WoWSettingsGroup.h"
+#include "Utils/WoWSettingsGroup.h"
 #include "Formats/MPQFilesStorage.h"
 #include "Formats/ImageBLP.h"
 #include "World/WorldObjectsCreator.h"

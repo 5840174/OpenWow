@@ -36,7 +36,7 @@ namespace
 }
 
 
-CM2_Skin_Batch::CM2_Skin_Batch(IBaseManager& BaseManager, IRenderDevice& RenderDevice, const CM2& M2Model, const SM2_SkinBatch& SkinBatchProto)
+CM2_Skin_Batch::CM2_Skin_Batch(const IBaseManager& BaseManager, IRenderDevice& RenderDevice, const CM2& M2Model, const SM2_SkinBatch& SkinBatchProto)
 	: MaterialProxieT(RenderDevice.GetObjectsFactory().CreateMaterial("CM2_Skin_Batch"))
 	, m_BaseManager(BaseManager)
 	, m_RenderDevice(RenderDevice)

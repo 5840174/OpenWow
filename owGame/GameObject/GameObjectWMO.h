@@ -2,7 +2,7 @@
 
 #ifdef USE_WMO_MODELS
 
-#include "../../WMO/WMO_Base_Instance.h"
+#include "../WMO/WMO_Base_Instance.h"
 
 class ZN_API GameObjectWMO
 	: public CWMO_Base_Instance

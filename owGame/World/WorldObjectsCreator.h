@@ -3,17 +3,19 @@
 // Factory
 #include "../M2/M2.h"
 #include "../WMO/WMO.h"
-#include "Creature/Creature.h"
-#include "Character/Character.h"
 
-#include "GameObject/GameObjectM2.h"
-#include "GameObject/GameObjectWMO.h"
+#include "../Creature/Creature.h"
+
+#include "../Character/Character.h"
+
+#include "../GameObject/GameObjectM2.h"
+#include "../GameObject/GameObjectWMO.h"
 
 class ZN_API CWorldObjectCreator
 	: public IWoWObjectsCreator
 {
 public:
-	CWorldObjectCreator(IBaseManager& BaseManager);
+	CWorldObjectCreator(const IBaseManager& BaseManager);
 
 #ifdef USE_M2_MODELS
 	// Factory
@@ -50,7 +52,7 @@ private:
 	IBlendState::BlendMode GetEGxBlendMode(uint32 Index);
 
 private:
-	IBaseManager& m_BaseManager;
+	const IBaseManager& m_BaseManager;
 	CDBCStorage* m_DBCs;
 
 #ifdef USE_M2_MODELS

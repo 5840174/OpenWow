@@ -3,7 +3,7 @@
 #ifdef USE_M2_MODELS
 
 // Include
-#include "World/Character/Character.h"
+#include "Character/Character.h"
 
 // General
 #include "CharacterItem.h"

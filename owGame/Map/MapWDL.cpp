@@ -8,7 +8,6 @@
 
 // Additional
 #include "Map/MapWDLTileModel.h"
-#include "WoWChunkReader.h"
 #include "Sky/SkyManager.h"
 
 CMapWDL::CMapWDL(const CMap& Map)

@@ -35,10 +35,19 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="CharacterItem\CharacterItem.cpp" />
+    <ClCompile Include="CharacterItem\CharacterItemEffectM2Instance.cpp" />
+    <ClCompile Include="CharacterItem\CharacterItemM2Instance.cpp" />
+    <ClCompile Include="Character\Character.cpp" />
+    <ClCompile Include="Character\Character_SectionWrapper.cpp" />
+    <ClCompile Include="Character\Character_SkinTextureBaker.cpp" />
+    <ClCompile Include="Creature\Creature.cpp" />
     <ClCompile Include="DBC\DBC__File.cpp" />
     <ClCompile Include="DBC\DBC__Storage.cpp" />
     <ClCompile Include="Formats\ImageBLP.cpp" />
     <ClCompile Include="Formats\MPQFilesStorage.cpp" />
+    <ClCompile Include="GameObject\GameObjectM2.cpp" />
+    <ClCompile Include="GameObject\GameObjectWMO.cpp" />
     <ClCompile Include="Interfaces\Managers.cpp" />
     <ClCompile Include="Liquid\Liquid.cpp" />
     <ClCompile Include="Liquid\LiquidBaseInstance.cpp" />
@@ -103,7 +112,6 @@
     <ClCompile Include="Renderer\RenderPass_WDLList.cpp" />
     <ClCompile Include="Renderer\RenderPass_WMOList.cpp" />
     <ClCompile Include="Renderer\RenderPass_WMOPortalDebug.cpp" />
-    <ClCompile Include="Settings\WoWSettingsGroup.cpp" />
     <ClCompile Include="Sky\DayNightPhase.cpp" />
     <ClCompile Include="Sky\Sky.cpp" />
     <ClCompile Include="Sky\SkyManager.cpp" />
@@ -112,6 +120,8 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="Utils\WoWChunkReader.cpp" />
+    <ClCompile Include="Utils\WoWSettingsGroup.cpp" />
     <ClCompile Include="WMO\WMO.cpp" />
     <ClCompile Include="WMO\WMOHelper.cpp" />
     <ClCompile Include="WMO\WMO_Base_Instance.cpp" />
@@ -130,17 +140,7 @@
     <ClCompile Include="WMO\WMO_Part_Portal.cpp" />
     <ClCompile Include="WMO\WMO_PortalsComponent.cpp" />
     <ClCompile Include="WMO\WMO_Portal.cpp" />
-    <ClCompile Include="World\Character\Character.cpp" />
-    <ClCompile Include="World\Character\Character_SectionWrapper.cpp" />
-    <ClCompile Include="World\Character\Character_SkinTextureBaker.cpp" />
-    <ClCompile Include="World\Creature\Creature.cpp" />
-    <ClCompile Include="World\GameObject\GameObjectM2.cpp" />
-    <ClCompile Include="World\GameObject\GameObjectWMO.cpp" />
-    <ClCompile Include="World\Items\CharacterItemEffectM2Instance.cpp" />
-    <ClCompile Include="World\Items\CharacterItemM2Instance.cpp" />
-    <ClCompile Include="World\Items\CharacterItem.cpp" />
     <ClCompile Include="World\WorldObjectsCreator.cpp" />
-    <ClCompile Include="WoWChunkReader.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Externals\libmpq\libmpq\common.h" />
@@ -155,7 +155,18 @@
     <ClInclude Include="..\Externals\libmpq\libmpq\platform.h" />
     <ClInclude Include="..\Externals\libmpq\libmpq\wave.h" />
     <ClInclude Include="..\shared\owGame.h" />
+    <ClInclude Include="CharacterItem\CharacterItem.h" />
+    <ClInclude Include="CharacterItem\CharacterItemDefines.h" />
+    <ClInclude Include="CharacterItem\CharacterItemEffectM2Instance.h" />
+    <ClInclude Include="CharacterItem\CharacterItemM2Instance.h" />
+    <ClInclude Include="CharacterItem\ItemTemplate.h" />
+    <ClInclude Include="Character\Character.h" />
+    <ClInclude Include="Character\CharacterTemplate.h" />
+    <ClInclude Include="Character\Character_SectionWrapper.h" />
+    <ClInclude Include="Character\Character_SkinTextureBaker.h" />
+    <ClInclude Include="Character\Player_Enums.h" />
     <ClInclude Include="common.h" />
+    <ClInclude Include="Creature\Creature.h" />
     <ClInclude Include="DBC\DBC__File.h" />
     <ClInclude Include="DBC\DBC__Macros.h" />
     <ClInclude Include="DBC\DBC__Storage.h" />
@@ -201,6 +212,8 @@
     <ClInclude Include="DBC\Tables\DBC_WorldSafeLocs.h" />
     <ClInclude Include="Formats\ImageBLP.h" />
     <ClInclude Include="Formats\MPQFilesStorage.h" />
+    <ClInclude Include="GameObject\GameObjectM2.h" />
+    <ClInclude Include="GameObject\GameObjectWMO.h" />
     <ClInclude Include="Interfaces\Managers.h" />
     <ClInclude Include="Liquid\Liquid.h" />
     <ClInclude Include="Liquid\LiquidBaseInstance.h" />
@@ -244,6 +257,7 @@
     <ClInclude Include="M2\M2_Types.h" />
     <ClInclude Include="M2\M2_Part_Particle.h" />
     <ClInclude Include="M2\M2_Part_ParticleSystem.h" />
+    <ClInclude Include="M2\MeshIDEnums.h" />
     <ClInclude Include="M2\ShaderResolver.h" />
     <ClInclude Include="Map\Instances\MapM2Instance.h" />
     <ClInclude Include="Map\Instances\MapWMOInstance.h" />
@@ -274,12 +288,17 @@
     <ClInclude Include="Renderer\RenderPass_WDLList.h" />
     <ClInclude Include="Renderer\RenderPass_WMOList.h" />
     <ClInclude Include="Renderer\RenderPass_WMOPortalDebug.h" />
-    <ClInclude Include="Settings\WoWSettingsGroup.h" />
     <ClInclude Include="Sky\DayNightPhase.h" />
     <ClInclude Include="Sky\Sky.h" />
     <ClInclude Include="Sky\SkyManager.h" />
     <ClInclude Include="Sky\SkyParams.h" />
     <ClInclude Include="stdafx.h" />
+    <ClInclude Include="Utils\WoWChunkReader.h" />
+    <ClInclude Include="Utils\WowChunkUtils.h" />
+    <ClInclude Include="Utils\WowConsts.h" />
+    <ClInclude Include="Utils\WoWSettingsGroup.h" />
+    <ClInclude Include="Utils\WowTime.h" />
+    <ClInclude Include="Utils\WowTypes.h" />
     <ClInclude Include="WMO\WMO.h" />
     <ClInclude Include="WMO\WMO_Light.h" />
     <ClInclude Include="WMO\WMO_LightComponent.h" />
@@ -301,30 +320,11 @@
     <ClInclude Include="WMO\WMO_Part_Portal.h" />
     <ClInclude Include="WMO\WMO_PortalsComponent.h" />
     <ClInclude Include="WMO\WMO_Portal.h" />
-    <ClInclude Include="World\Character\Character.h" />
-    <ClInclude Include="World\Character\Character_SectionWrapper.h" />
-    <ClInclude Include="World\Character\Character_SkinTextureBaker.h" />
-    <ClInclude Include="World\Character\Types\CharacterTemplate.h" />
-    <ClInclude Include="World\Character\Types\ItemTemplate.h" />
-    <ClInclude Include="World\Character\Types\Player_Enums.h" />
-    <ClInclude Include="World\Creature\Creature.h" />
-    <ClInclude Include="World\GameObject\GameObjectM2.h" />
-    <ClInclude Include="World\GameObject\GameObjectWMO.h" />
-    <ClInclude Include="World\Items\CharacterItemDefines.h" />
-    <ClInclude Include="World\Items\CharacterItemEffectM2Instance.h" />
-    <ClInclude Include="World\Items\CharacterItemM2Instance.h" />
-    <ClInclude Include="World\Items\CharacterItem.h" />
-    <ClInclude Include="World\MeshIDEnums.h" />
     <ClInclude Include="World\WorldObjectsCreator.h" />
-    <ClInclude Include="WoWChunkReader.h" />
-    <ClInclude Include="WowChunkUtils.h" />
-    <ClInclude Include="WowConsts.h" />
-    <ClInclude Include="WowTime.h" />
-    <ClInclude Include="WowTypes.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="DBC\DBC__File.inl" />
-    <None Include="WoWChunkReader.inl" />
+    <None Include="Utils\WoWChunkReader.inl" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{B55BA550-E3B6-4756-AE79-6A5C7D28AEFF}</ProjectGuid>

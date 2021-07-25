@@ -6,9 +6,6 @@
 // General
 #include "MapWDT.h"
 
-// Additional
-#include "WoWChunkReader.h"
-
 CMapWDT::CMapWDT(const CMap& Map)
 	: m_Map(Map)
 	

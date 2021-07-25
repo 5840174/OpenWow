@@ -2,9 +2,6 @@
 
 #ifdef USE_WMO_MODELS
 
-// OpenWoW
-#include "../WoWChunkReader.h"
-
 // WMO Group
 #include "WMOGroup_Headers.h"
 
@@ -25,7 +22,7 @@ class CWMOGroup
 	: public CLoadableObject
 {
 public:
-	CWMOGroup(IBaseManager& BaseManager, IRenderDevice& RenderDevice, const CWMO& WMO, const uint32 GroupIndex, const SWMO_MOGI& GroupProto);
+	CWMOGroup(const IBaseManager& BaseManager, IRenderDevice& RenderDevice, const CWMO& WMO, const uint32 GroupIndex, const SWMO_MOGI& GroupProto);
 	virtual ~CWMOGroup();
 
 	// CWMOGroup
@@ -79,7 +76,7 @@ private:
 	std::vector<CWMO_Part_Portal> m_Portals;
 
 private:
-	IBaseManager& m_BaseManager;
+	const IBaseManager& m_BaseManager;
 	IRenderDevice& m_RenderDevice;
 	const CWMO& m_WMO;
 	const uint32 m_GroupIndex;

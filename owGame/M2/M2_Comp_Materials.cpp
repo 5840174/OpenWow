@@ -48,8 +48,6 @@ void CM2_Comp_Materials::Load(const SM2_Header& M2Header, const std::shared_ptr<
 	// 3.1 Textures
 	if (M2Header.textures.size > 0)
 	{
-		_ASSERT(M2Header.textures.size <= cM2Model_TexturesMaxCount);
-
 		SM2_Texture* m2Textures = (SM2_Texture*)(File->getData() + M2Header.textures.offset);
 		for (uint32 i = 0; i < M2Header.textures.size; i++)
 		{

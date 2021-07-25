@@ -10,14 +10,13 @@
 #include "WMOGroup.h"
 
 // Additional 
-#include "WoWChunkReader.h"
 #include "WMO_Base_Instance.h"
 #include "WMO_Doodad_Instance.h"
 #include "WMO_Liquid_Instance.h"
 
 #include "WMOHelper.h"
 
-CWMOGroup::CWMOGroup(IBaseManager& BaseManager, IRenderDevice& RenderDevice, const CWMO& WMO, const uint32 GroupIndex, const SWMO_MOGI& GroupProto)
+CWMOGroup::CWMOGroup(const IBaseManager& BaseManager, IRenderDevice& RenderDevice, const CWMO& WMO, const uint32 GroupIndex, const SWMO_MOGI& GroupProto)
 	: m_BaseManager(BaseManager)
 	, m_RenderDevice(RenderDevice)
 	, m_WMO(WMO)

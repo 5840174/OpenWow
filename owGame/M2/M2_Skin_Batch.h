@@ -46,7 +46,7 @@ class CM2_Skin_Batch
 	: public MaterialProxieT<ShaderM2BatchProperties>
 {
 public:
-	CM2_Skin_Batch(IBaseManager& BaseManager, IRenderDevice& RenderDevice, const CM2& M2Model, const SM2_SkinBatch& SkinBatchProto);
+	CM2_Skin_Batch(const IBaseManager& BaseManager, IRenderDevice& RenderDevice, const CM2& M2Model, const SM2_SkinBatch& SkinBatchProto);
 	virtual ~CM2_Skin_Batch();
 
 	int8 GetPriorityPlan() const { return m_SkinBatchProto.priorityPlane; }
@@ -68,7 +68,7 @@ private:
 	std::shared_ptr<const CM2_Part_TextureWeight>		m_TextureWeight;
 	std::shared_ptr<const CM2_Part_TextureTransform>	m_TextureTransform;
 
-	IBaseManager&                                       m_BaseManager;
+	const IBaseManager&                                 m_BaseManager;
 	IRenderDevice&                                      m_RenderDevice;
 	const CM2&                                          m_M2Model;
 	const SM2_SkinBatch                                 m_SkinBatchProto;

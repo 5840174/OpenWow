@@ -15,7 +15,7 @@ class ZN_API CM2
 	, public CLoadableObject
 {
 public:
-	CM2(IBaseManager& BaseManager, IRenderDevice& RenderDevice, const std::string& FileName);
+	CM2(const IBaseManager& BaseManager, IRenderDevice& RenderDevice, const std::string& FileName);
 	virtual ~CM2();
 
 
@@ -70,6 +70,6 @@ private:
 	std::shared_ptr<IGeometry>				        m_CollisionGeom;
 
 private:
-	IBaseManager&                                   m_BaseManager;
+	const IBaseManager&                             m_BaseManager;
 	IRenderDevice&                                  m_RenderDevice;
 };

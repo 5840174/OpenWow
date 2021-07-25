@@ -3,7 +3,7 @@
 // General
 #include "WorldObjectsCreator.h"
 
-CWorldObjectCreator::CWorldObjectCreator(IBaseManager & BaseManager)
+CWorldObjectCreator::CWorldObjectCreator(const IBaseManager & BaseManager)
 	: m_BaseManager(BaseManager)
 {
 	m_DBCs = m_BaseManager.GetManager<CDBCStorage>();
@@ -120,7 +120,7 @@ std::shared_ptr<ISceneNode> CWorldObjectCreator::BuildGameObjectFromDisplayInfo(
 	std::string modelName = gameObjectDisplayInfoRecord->Get_ModelName();
 	modelName = Utils::ToLower(modelName);
 
-	if (::strstr(modelName.c_str(), ".wmo") != NULL)
+	if (::strstr(modelName.c_str(), ".wmo") != 0)
 	{
 		auto wmoModel = CreateGameObjectWMOModel(RenderDevice, gameObjectDisplayInfoRecord);
 

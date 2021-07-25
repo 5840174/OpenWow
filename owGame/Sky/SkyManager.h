@@ -2,7 +2,6 @@
 
 #include "Sky.h"
 #include "DayNightPhase.h"
-#include "../WowTime.h"
 
 class ZN_API CSkyManager
 	: public CSceneNode

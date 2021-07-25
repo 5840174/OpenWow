@@ -8,7 +8,7 @@
 // General
 #include "WMO.h"
 
-CWMO::CWMO(IBaseManager& BaseManager, IRenderDevice& RenderDevice, const std::string& Filename)
+CWMO::CWMO(const IBaseManager& BaseManager, IRenderDevice& RenderDevice, const std::string& Filename)
 	: m_FileName(Filename)
 	, m_TexturesNames(nullptr)
 	, m_DoodadsFilenames(nullptr)

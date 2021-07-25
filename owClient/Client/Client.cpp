@@ -68,14 +68,14 @@ void CowClient::Login(const std::string& Username, const std::string& Password)
 
 void CowClient::OnRealmsListObtained(const std::vector<SRealmInfo>& Realms, BigNumber Key)
 {
+	m_AuthSocket->Disconnect();
+
 	OnRealmSelected(Realms[0], Key);
 }
 
 void CowClient::OnRealmSelected(const SRealmInfo& SelectedRealm, BigNumber Key)
 {
 	Log::Green("CowClient::OnRealmListSelected: Realm name '%s'.", SelectedRealm.Name.c_str());
-
-	m_AuthSocket->Disconnect();
 
 	m_WorldSocket = std::make_shared<CWorldSocket>(m_Login, Key);
 	m_WorldSocket->Open(SelectedRealm.getIP(), SelectedRealm.getPort());

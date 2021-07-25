@@ -3,7 +3,7 @@
 // General
 #include "M2.h"
 
-CM2::CM2(IBaseManager& BaseManager, IRenderDevice& RenderDevice, const std::string& FileName)
+CM2::CM2(const IBaseManager& BaseManager, IRenderDevice& RenderDevice, const std::string& FileName)
 	: m_FileName(FileName)
 	, m_UniqueName("")
 

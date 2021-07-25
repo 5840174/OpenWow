@@ -14,7 +14,7 @@ class CM2_Skin
 	: public ModelProxie
 {
 public:
-	CM2_Skin(IBaseManager& BaseManager, IRenderDevice& RenderDevice, const CM2& M2Model, const SM2_SkinProfile& M2SkinProfile);
+	CM2_Skin(const IBaseManager& BaseManager, IRenderDevice& RenderDevice, const CM2& M2Model, const SM2_SkinProfile& M2SkinProfile);
 	virtual ~CM2_Skin();
 
 	void Load(const std::shared_ptr<IFile>& File, const std::vector<SM2_Vertex>& Vertices);
@@ -31,7 +31,7 @@ private:
 	std::map<size_t, std::vector<std::shared_ptr<CM2_Skin_Batch>>> m_GeometryMaterials;
 	
 private:
-	IBaseManager& m_BaseManager;
+	const IBaseManager& m_BaseManager;
 	IRenderDevice& m_RenderDevice;
 	const CM2& m_M2Model;
 	const SM2_SkinProfile m_M2SkinProfile;

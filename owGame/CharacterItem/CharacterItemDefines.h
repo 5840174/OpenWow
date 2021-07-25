@@ -1,6 +1,6 @@
 #pragma once
 
-#include "../../M2/M2_Part_Attachment.h"
+#include "../M2/M2_Part_Attachment.h"
 
 //
 // Object components

@@ -2,7 +2,7 @@
 
 #ifdef USE_M2_MODELS
 
-#include "../../M2/M2_Base_Instance.h"
+#include "../M2/M2_Base_Instance.h"
 
 // FORWARD BEGIN
 class CCharacter;

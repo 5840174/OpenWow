@@ -85,7 +85,8 @@ struct ISceneNodeProvider
 #include "DBC/DBC__Storage.h"
 
 // Wow types
-#include "WowTypes.h"
-#include "WowConsts.h"
-#include "WowTime.h"
-#include "WowChunkUtils.h"
+#include "Utils/WoWChunkReader.h"
+#include "Utils/WowChunkUtils.h"
+#include "Utils/WowConsts.h"
+#include "Utils/WowTime.h"
+#include "Utils/WowTypes.h"

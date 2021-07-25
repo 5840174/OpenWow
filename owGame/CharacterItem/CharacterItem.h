@@ -2,8 +2,8 @@
 
 #ifdef USE_M2_MODELS
 
-#include "../MeshIDEnums.h"
-#include "../Character/Types/CharacterTemplate.h"
+#include "../M2/MeshIDEnums.h"
+#include "../Character/CharacterTemplate.h"
 
 #include "CharacterItemDefines.h"
 #include "CharacterItemM2Instance.h"

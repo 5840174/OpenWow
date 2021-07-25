@@ -3,10 +3,9 @@
 #ifdef USE_M2_MODELS
 
 #include "../Creature/Creature.h"
-#include "Types/CharacterTemplate.h"
-#include "../Items/CharacterItem.h"
+#include "CharacterTemplate.h"
 
-#include "Types/CharacterTemplate.h"
+#include "../CharacterItem/CharacterItem.h"
 
 class ZN_API CCharacter 
 	: public CCreature

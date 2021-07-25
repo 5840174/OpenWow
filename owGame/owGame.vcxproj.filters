@@ -76,23 +76,8 @@
     <Filter Include="World">
       <UniqueIdentifier>{702d545a-0041-44a4-a19b-b46d06027750}</UniqueIdentifier>
     </Filter>
-    <Filter Include="World\Creature">
-      <UniqueIdentifier>{dbe54ed6-f1bc-4bd3-81cc-c9cdb3656283}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="World\Character">
-      <UniqueIdentifier>{7ac9ccd3-d12d-4375-9593-c0cbc99de6b6}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="World\Character\Helpers">
-      <UniqueIdentifier>{625afe58-75f5-4562-9010-23ee0acc6889}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="World\Item">
-      <UniqueIdentifier>{3f559d8e-cf39-443e-bdb7-aee627e19247}</UniqueIdentifier>
-    </Filter>
     <Filter Include="DBC\Tables\GameObject">
       <UniqueIdentifier>{c8891ee9-d1af-4d56-b44f-98c30a4c551f}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="World\GameObject">
-      <UniqueIdentifier>{77fd2597-a1d4-46aa-b9ea-faa5222f03d0}</UniqueIdentifier>
     </Filter>
     <Filter Include="M2\Parts">
       <UniqueIdentifier>{be8a504b-1117-41b6-b326-81b305908037}</UniqueIdentifier>
@@ -139,9 +124,6 @@
     <Filter Include="DBC\Tables\Taxi">
       <UniqueIdentifier>{b19f1950-2789-4cb2-ac7a-5604e8767317}</UniqueIdentifier>
     </Filter>
-    <Filter Include="World\Character\Types">
-      <UniqueIdentifier>{9b33dbe5-de55-4951-a0eb-d06a7a04ed7a}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Renderer\Debug">
       <UniqueIdentifier>{653d1bcd-503c-43f5-be28-5c70c171a61e}</UniqueIdentifier>
     </Filter>
@@ -168,6 +150,18 @@
     </Filter>
     <Filter Include="WMO\Components\Portals">
       <UniqueIdentifier>{7c0ed1a2-0763-4f21-9097-29d6266ce0d9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Character">
+      <UniqueIdentifier>{868cbeae-d8ef-4647-8719-cc07dbc73d6a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="CharacterItem">
+      <UniqueIdentifier>{64d08ced-241a-4ebc-acdd-9c99371f9f36}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Creature">
+      <UniqueIdentifier>{0e33bfd0-7243-43b7-8994-1b14a8b35e67}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GameObject">
+      <UniqueIdentifier>{03697c5c-73ec-444d-90fc-00f0b80a5a25}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -261,9 +255,6 @@
     <ClCompile Include="WMO\WMO_Part_Portal.cpp">
       <Filter>WMO\Parts</Filter>
     </ClCompile>
-    <ClCompile Include="WoWChunkReader.cpp">
-      <Filter>Utils</Filter>
-    </ClCompile>
     <ClCompile Include="Formats\ImageBLP.cpp">
       <Filter>Formats</Filter>
     </ClCompile>
@@ -333,21 +324,6 @@
     <ClCompile Include="World\WorldObjectsCreator.cpp">
       <Filter>World</Filter>
     </ClCompile>
-    <ClCompile Include="World\Creature\Creature.cpp">
-      <Filter>World\Creature</Filter>
-    </ClCompile>
-    <ClCompile Include="World\Character\Character.cpp">
-      <Filter>World\Character</Filter>
-    </ClCompile>
-    <ClCompile Include="World\Character\Character_SectionWrapper.cpp">
-      <Filter>World\Character\Helpers</Filter>
-    </ClCompile>
-    <ClCompile Include="World\Character\Character_SkinTextureBaker.cpp">
-      <Filter>World\Character\Helpers</Filter>
-    </ClCompile>
-    <ClCompile Include="Settings\WoWSettingsGroup.cpp">
-      <Filter>Utils</Filter>
-    </ClCompile>
     <ClCompile Include="Map\MapTileLiquid.cpp">
       <Filter>Map\MapTile</Filter>
     </ClCompile>
@@ -402,12 +378,6 @@
     <ClCompile Include="Liquid\LiquidMaterial.cpp">
       <Filter>Liquid\Instances</Filter>
     </ClCompile>
-    <ClCompile Include="World\GameObject\GameObjectM2.cpp">
-      <Filter>World\GameObject</Filter>
-    </ClCompile>
-    <ClCompile Include="World\GameObject\GameObjectWMO.cpp">
-      <Filter>World\GameObject</Filter>
-    </ClCompile>
     <ClCompile Include="Renderer\RenderPass_WMOPortalDebug.cpp">
       <Filter>Renderer\Debug</Filter>
     </ClCompile>
@@ -437,15 +407,6 @@
     </ClCompile>
     <ClCompile Include="M2\M2_Part_ParticleSystem.cpp">
       <Filter>M2\Parts\Parts_Miscellaneous\Particles</Filter>
-    </ClCompile>
-    <ClCompile Include="World\Items\CharacterItem.cpp">
-      <Filter>World\Item</Filter>
-    </ClCompile>
-    <ClCompile Include="World\Items\CharacterItemEffectM2Instance.cpp">
-      <Filter>World\Item</Filter>
-    </ClCompile>
-    <ClCompile Include="World\Items\CharacterItemM2Instance.cpp">
-      <Filter>World\Item</Filter>
     </ClCompile>
     <ClCompile Include="Sky\DayNightPhase.cpp">
       <Filter>Sky</Filter>
@@ -497,6 +458,39 @@
     </ClCompile>
     <ClCompile Include="WMO\WMOHelper.cpp">
       <Filter>WMO</Filter>
+    </ClCompile>
+    <ClCompile Include="Character\Character.cpp">
+      <Filter>Character</Filter>
+    </ClCompile>
+    <ClCompile Include="Character\Character_SectionWrapper.cpp">
+      <Filter>Character</Filter>
+    </ClCompile>
+    <ClCompile Include="Character\Character_SkinTextureBaker.cpp">
+      <Filter>Character</Filter>
+    </ClCompile>
+    <ClCompile Include="CharacterItem\CharacterItem.cpp">
+      <Filter>CharacterItem</Filter>
+    </ClCompile>
+    <ClCompile Include="CharacterItem\CharacterItemEffectM2Instance.cpp">
+      <Filter>CharacterItem</Filter>
+    </ClCompile>
+    <ClCompile Include="CharacterItem\CharacterItemM2Instance.cpp">
+      <Filter>CharacterItem</Filter>
+    </ClCompile>
+    <ClCompile Include="Creature\Creature.cpp">
+      <Filter>Creature</Filter>
+    </ClCompile>
+    <ClCompile Include="GameObject\GameObjectM2.cpp">
+      <Filter>GameObject</Filter>
+    </ClCompile>
+    <ClCompile Include="GameObject\GameObjectWMO.cpp">
+      <Filter>GameObject</Filter>
+    </ClCompile>
+    <ClCompile Include="Utils\WoWChunkReader.cpp">
+      <Filter>Utils</Filter>
+    </ClCompile>
+    <ClCompile Include="Utils\WoWSettingsGroup.cpp">
+      <Filter>Utils</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -713,21 +707,6 @@
     <ClInclude Include="WMO\WMO_Part_Portal.h">
       <Filter>WMO\Parts</Filter>
     </ClInclude>
-    <ClInclude Include="WoWChunkReader.h">
-      <Filter>Utils</Filter>
-    </ClInclude>
-    <ClInclude Include="WowChunkUtils.h">
-      <Filter>Utils</Filter>
-    </ClInclude>
-    <ClInclude Include="WowConsts.h">
-      <Filter>Utils</Filter>
-    </ClInclude>
-    <ClInclude Include="WowTime.h">
-      <Filter>Utils</Filter>
-    </ClInclude>
-    <ClInclude Include="WowTypes.h">
-      <Filter>Utils</Filter>
-    </ClInclude>
     <ClInclude Include="Formats\ImageBLP.h">
       <Filter>Formats</Filter>
     </ClInclude>
@@ -818,26 +797,8 @@
     <ClInclude Include="World\WorldObjectsCreator.h">
       <Filter>World</Filter>
     </ClInclude>
-    <ClInclude Include="World\Creature\Creature.h">
-      <Filter>World\Creature</Filter>
-    </ClInclude>
-    <ClInclude Include="World\MeshIDEnums.h">
-      <Filter>World</Filter>
-    </ClInclude>
-    <ClInclude Include="World\Character\Character.h">
-      <Filter>World\Character</Filter>
-    </ClInclude>
-    <ClInclude Include="World\Character\Character_SectionWrapper.h">
-      <Filter>World\Character\Helpers</Filter>
-    </ClInclude>
-    <ClInclude Include="World\Character\Character_SkinTextureBaker.h">
-      <Filter>World\Character\Helpers</Filter>
-    </ClInclude>
     <ClInclude Include="DBC\Tables\DBC_Item.h">
       <Filter>DBC\Tables\Item</Filter>
-    </ClInclude>
-    <ClInclude Include="Settings\WoWSettingsGroup.h">
-      <Filter>Utils</Filter>
     </ClInclude>
     <ClInclude Include="DBC\Tables\DBC_GameObjectDisplayInfo.h">
       <Filter>DBC\Tables\GameObject</Filter>
@@ -899,12 +860,6 @@
     <ClInclude Include="DBC\Tables\DBC_LiquidType_Wotlk.h">
       <Filter>DBC\Tables\Liquids</Filter>
     </ClInclude>
-    <ClInclude Include="World\GameObject\GameObjectM2.h">
-      <Filter>World\GameObject</Filter>
-    </ClInclude>
-    <ClInclude Include="World\GameObject\GameObjectWMO.h">
-      <Filter>World\GameObject</Filter>
-    </ClInclude>
     <ClInclude Include="DBC\Tables\DBC_TransportAnimation.h">
       <Filter>DBC\Tables\Transport</Filter>
     </ClInclude>
@@ -916,15 +871,6 @@
     </ClInclude>
     <ClInclude Include="DBC\Tables\DBC_TaxiNodes.h">
       <Filter>DBC\Tables\Taxi</Filter>
-    </ClInclude>
-    <ClInclude Include="World\Character\Types\CharacterTemplate.h">
-      <Filter>World\Character\Types</Filter>
-    </ClInclude>
-    <ClInclude Include="World\Character\Types\ItemTemplate.h">
-      <Filter>World\Character\Types</Filter>
-    </ClInclude>
-    <ClInclude Include="World\Character\Types\Player_Enums.h">
-      <Filter>World\Character\Types</Filter>
     </ClInclude>
     <ClInclude Include="Renderer\RenderPass_WMOPortalDebug.h">
       <Filter>Renderer\Debug</Filter>
@@ -964,18 +910,6 @@
     </ClInclude>
     <ClInclude Include="M2\M2_Part_ParticleSystem.h">
       <Filter>M2\Parts\Parts_Miscellaneous\Particles</Filter>
-    </ClInclude>
-    <ClInclude Include="World\Items\CharacterItem.h">
-      <Filter>World\Item</Filter>
-    </ClInclude>
-    <ClInclude Include="World\Items\CharacterItemEffectM2Instance.h">
-      <Filter>World\Item</Filter>
-    </ClInclude>
-    <ClInclude Include="World\Items\CharacterItemM2Instance.h">
-      <Filter>World\Item</Filter>
-    </ClInclude>
-    <ClInclude Include="World\Items\CharacterItemDefines.h">
-      <Filter>World\Item</Filter>
     </ClInclude>
     <ClInclude Include="Sky\DayNightPhase.h">
       <Filter>Sky</Filter>
@@ -1034,13 +968,73 @@
     <ClInclude Include="Map\MapHelpers.h">
       <Filter>Map</Filter>
     </ClInclude>
+    <ClInclude Include="Character\Character.h">
+      <Filter>Character</Filter>
+    </ClInclude>
+    <ClInclude Include="Character\Character_SectionWrapper.h">
+      <Filter>Character</Filter>
+    </ClInclude>
+    <ClInclude Include="Character\Character_SkinTextureBaker.h">
+      <Filter>Character</Filter>
+    </ClInclude>
+    <ClInclude Include="Character\CharacterTemplate.h">
+      <Filter>Character</Filter>
+    </ClInclude>
+    <ClInclude Include="Character\Player_Enums.h">
+      <Filter>Character</Filter>
+    </ClInclude>
+    <ClInclude Include="CharacterItem\CharacterItem.h">
+      <Filter>CharacterItem</Filter>
+    </ClInclude>
+    <ClInclude Include="CharacterItem\CharacterItemDefines.h">
+      <Filter>CharacterItem</Filter>
+    </ClInclude>
+    <ClInclude Include="CharacterItem\CharacterItemEffectM2Instance.h">
+      <Filter>CharacterItem</Filter>
+    </ClInclude>
+    <ClInclude Include="CharacterItem\CharacterItemM2Instance.h">
+      <Filter>CharacterItem</Filter>
+    </ClInclude>
+    <ClInclude Include="CharacterItem\ItemTemplate.h">
+      <Filter>CharacterItem</Filter>
+    </ClInclude>
+    <ClInclude Include="Creature\Creature.h">
+      <Filter>Creature</Filter>
+    </ClInclude>
+    <ClInclude Include="GameObject\GameObjectM2.h">
+      <Filter>GameObject</Filter>
+    </ClInclude>
+    <ClInclude Include="GameObject\GameObjectWMO.h">
+      <Filter>GameObject</Filter>
+    </ClInclude>
+    <ClInclude Include="M2\MeshIDEnums.h">
+      <Filter>M2</Filter>
+    </ClInclude>
+    <ClInclude Include="Utils\WoWChunkReader.h">
+      <Filter>Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="Utils\WowChunkUtils.h">
+      <Filter>Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="Utils\WowConsts.h">
+      <Filter>Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="Utils\WoWSettingsGroup.h">
+      <Filter>Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="Utils\WowTime.h">
+      <Filter>Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="Utils\WowTypes.h">
+      <Filter>Utils</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <None Include="WoWChunkReader.inl">
-      <Filter>Utils</Filter>
-    </None>
     <None Include="DBC\DBC__File.inl">
       <Filter>DBC</Filter>
+    </None>
+    <None Include="Utils\WoWChunkReader.inl">
+      <Filter>Utils</Filter>
     </None>
   </ItemGroup>
 </Project>

@@ -1,7 +1,7 @@
 #pragma once
 
 #include "Player_Enums.h"
-#include "ItemTemplate.h"
+#include "../CharacterItem/ItemTemplate.h"
 
 enum class Race : uint8
 {
