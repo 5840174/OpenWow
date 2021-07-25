@@ -2,6 +2,11 @@
 
 #include "M2_Types.h"
 
+// FORWARD BEGIN
+class CWorldClient;
+class CM2;
+// FORWARD END
+
 class ZN_API CM2_Part_Material
 {
 public:
@@ -11,14 +16,14 @@ public:
 	uint32 getBlendMode() const { return m_M2BlendMode; }
 
 	const std::shared_ptr<IDepthStencilState>& GetDepthStencilState() const { return m_DepthStencilState; }
-	const std::shared_ptr<IBlendState>& GetBlendState() const { return m_BlendState; };
+	//const std::shared_ptr<IBlendState>& GetBlendState() const { return m_BlendState; };
 	const std::shared_ptr<IRasterizerState>& GetRasterizerState() const { return m_RasterizerState; };
 
 private:
 	uint32 m_M2BlendMode;
 
 	std::shared_ptr<IDepthStencilState> m_DepthStencilState;
-	std::shared_ptr<IBlendState> m_BlendState;
+	//std::shared_ptr<IBlendState> m_BlendState;
 	std::shared_ptr<IRasterizerState> m_RasterizerState;
 
 private:

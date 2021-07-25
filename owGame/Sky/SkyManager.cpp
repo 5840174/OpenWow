@@ -76,22 +76,6 @@ bool CSkyManager::Load(uint32 MapID)
 
 
 //
-// ISceneNode
-//
-void CSkyManager::Update(const UpdateEventArgs& e)
-{
-	//m_Time.Tick();
-
-	CalculateCurrentSky(e.CameraForCulling->GetPosition());
-	CalculateCurrentDayNightPhase();
-
-	// Sky is slways player pos
-	SetLocalPosition(e.CameraForCulling->GetPosition());
-}
-
-
-
-//
 // ISkyManager
 //
 void CSkyManager::CalculateCurrentSky(const glm::vec3& CameraPosition)
@@ -262,6 +246,23 @@ void CSkyManager::CalculateCurrentDayNightPhase()
 	float r = static_cast<float>(m_Time.GetTime() - (hourA * 120)) / 120.0f;
 
 	m_CurrentDayNightPhase = SDayNightPhase(a, b, r);
+}
+
+
+
+
+//
+// ISceneNode
+//
+void CSkyManager::Update(const UpdateEventArgs& e)
+{
+	//m_Time.Tick();
+
+	CalculateCurrentSky(e.CameraForCulling->GetPosition());
+	CalculateCurrentDayNightPhase();
+
+	// Sky is slways player pos
+	SetLocalPosition(e.CameraForCulling->GetPosition());
 }
 
 

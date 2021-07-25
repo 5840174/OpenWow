@@ -5,6 +5,7 @@
 // Include
 #include "../Character/Character.h"
 #include "CharacterItem.h"
+#include "World/WorldClient.h"
 
 // General
 #include "CharacterItemM2Instance.h"
@@ -12,8 +13,8 @@
 // Additional
 #include "CharacterItemEffectM2Instance.h"
 
-CCharacterItemM2Instance::CCharacterItemM2Instance(IScene& Scene, const std::shared_ptr<CM2>& M2Object, const CCharacterItem& CharacterItem, EM2_AttachmentPoint AttachmentPoint)
-	: CM2_Base_Instance(Scene, M2Object)
+CCharacterItemM2Instance::CCharacterItemM2Instance(IScene& Scene, CWorldClient& WorldClient, const std::shared_ptr<CM2>& M2Object, const CCharacterItem& CharacterItem, EM2_AttachmentPoint AttachmentPoint)
+	: CM2_Base_Instance(Scene, WorldClient, M2Object)
 	, m_CharacterItem(CharacterItem)
 	, m_AttachmentPoint(AttachmentPoint)
 {}
@@ -61,12 +62,12 @@ void CCharacterItemM2Instance::OnAfterLoad()
 				continue;
 
 			// M2 model
-			auto itemVisualEffectModel = GetBaseManager().GetManager<IWoWObjectsCreator>()->LoadM2(GetRenderDevice(), itemVisualEffectRecordModelFilename);
+			auto itemVisualEffectModel = GetWorldClient().GetCreator()->LoadM2(GetRenderDevice(), itemVisualEffectRecordModelFilename);
 			if (itemVisualEffectModel == nullptr)
 				throw CException("CCharacterItem::InitializeItemModels: itemVisualEffectM2Model is nullptr. ItemVisualsRecord ID = '%d', ItemVisualEffectsRecord = '%d' Index = '%d', Path '%s'.", GetCharacterItem().GetTemplate().EnchantAuraID, itemVisualEffectID, itemAttachmentPoint, itemVisualEffectRecordModelFilename.c_str());
 
 			// M2 Instance
-			auto itemVisualEffectInstance = CreateSceneNode<CCharacterItemEffectM2Instance>(itemVisualEffectModel, m_CharacterItem);
+			auto itemVisualEffectInstance = CreateSceneNode<CCharacterItemEffectM2Instance>(GetWorldClient(), itemVisualEffectModel, m_CharacterItem);
 			itemVisualEffectInstance->AddParentLoadable(std::dynamic_pointer_cast<ILoadable>(shared_from_this()));
 			GetBaseManager().GetManager<ILoader>()->AddToLoadQueue(itemVisualEffectInstance);
 

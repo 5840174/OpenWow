@@ -1,5 +1,8 @@
 #include "stdafx.h"
 
+// Include
+#include "RendererWoW.h"
+
 // General
 #include "RenderPass_M2InstancedList.h"
 
@@ -14,8 +17,8 @@
 #include "M2/M2_Skin_Batch.h"
 
 
-CRenderPass_M2InstancedList::CRenderPass_M2InstancedList(IRenderDevice& RenderDevice, const std::shared_ptr<IRenderPassCreateTypelessList>& CreateTypelessList, ERenderPassM2DrawMode DrawMode)
-	: CRenderPass_M2List(RenderDevice, CreateTypelessList, DrawMode)
+CRenderPass_M2InstancedList::CRenderPass_M2InstancedList(CRendererWoW& RendererWoW, IRenderDevice& RenderDevice, const std::shared_ptr<IRenderPassCreateTypelessList>& CreateTypelessList, ERenderPassM2DrawMode DrawMode)
+	: CRenderPass_M2List(RendererWoW, RenderDevice, CreateTypelessList, DrawMode)
 {
 	SetPassName("M2InstancedList " + std::string((DrawMode == ERenderPassM2DrawMode::Opaque) ? "Opaque" : (DrawMode == ERenderPassM2DrawMode::Transperent) ? "Transperent" : "All"));
 

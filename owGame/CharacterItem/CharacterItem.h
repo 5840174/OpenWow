@@ -9,6 +9,7 @@
 #include "CharacterItemM2Instance.h"
 
 // FORWARD BEGIN
+class CWorldClient;
 class CCharacter;
 // FORWARD END
 
@@ -31,7 +32,7 @@ class CCharacterItem
 	, public std::enable_shared_from_this<CCharacterItem>
 {
 public:
-	CCharacterItem(const IBaseManager& BaseManager, IRenderDevice& RenderDevice, const std::shared_ptr<CCharacter>& OwnerCharacter, const SCharacterItemTemplate& CharacterItemTemplate);
+	CCharacterItem(CWorldClient& WorldClient, const IBaseManager& BaseManager, IRenderDevice& RenderDevice, const std::shared_ptr<CCharacter>& OwnerCharacter, const SCharacterItemTemplate& CharacterItemTemplate);
 	virtual ~CCharacterItem();
 	
 	const SCharacterItemTemplate&        GetTemplate()                                    const { return m_Template; }
@@ -69,6 +70,7 @@ private:
 private: 
 	const IBaseManager&           m_BaseManager;
 	IRenderDevice&                m_RenderDevice;
+	CWorldClient&                 m_WorldClient;
 	CCharacter&                   m_OwnerCharacter;
 };
 

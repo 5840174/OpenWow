@@ -5,8 +5,8 @@
 // General
 #include "GameObjectWMO.h"
 
-GameObjectWMO::GameObjectWMO(IScene& Scene, const std::shared_ptr<CWMO>& M2Object)
-	: CWMO_Base_Instance(Scene, M2Object)
+GameObjectWMO::GameObjectWMO(IScene& Scene, CWorldClient& WorldClient, const std::shared_ptr<CWMO>& M2Object)
+	: CWMO_Base_Instance(Scene, WorldClient, M2Object)
 {}
 
 GameObjectWMO::~GameObjectWMO()

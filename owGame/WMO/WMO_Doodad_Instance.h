@@ -13,7 +13,7 @@ class ZN_API CWMO_Doodad_Instance
 	, public IPortalRoomObject
 {
 public:
-	CWMO_Doodad_Instance(IScene& Scene, const std::shared_ptr<CM2>& M2Object, uint32 _index, const SWMO_MODD& _placement);
+	CWMO_Doodad_Instance(IScene& Scene, CWorldClient& WorldClient, const std::shared_ptr<CM2>& M2Object, uint32 _index, const SWMO_MODD& _placement);
 	virtual ~CWMO_Doodad_Instance();
 
 	// CM2_Base_Instance

@@ -492,6 +492,9 @@
     <ClCompile Include="Utils\WoWSettingsGroup.cpp">
       <Filter>Utils</Filter>
     </ClCompile>
+    <ClCompile Include="World\WorldClient.cpp">
+      <Filter>World</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="common.h">
@@ -1027,6 +1030,9 @@
     </ClInclude>
     <ClInclude Include="Utils\WowTypes.h">
       <Filter>Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="World\WorldClient.h">
+      <Filter>World</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

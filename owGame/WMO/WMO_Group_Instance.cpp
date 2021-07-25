@@ -6,6 +6,7 @@
 #include "WMO_Base_Instance.h"
 #include "WMO_Doodad_Instance.h"
 #include "WMO_Liquid_Instance.h"
+#include "World/WorldClient.h"
 
 // General
 #include "WMO_Group_Instance.h"
@@ -13,11 +14,12 @@
 // Additional
 #include "WMOHelper.h"
 
-CWMO_Group_Instance::CWMO_Group_Instance(IScene& Scene, const std::shared_ptr<CWMOGroup>& WMOGroupObject)
+CWMO_Group_Instance::CWMO_Group_Instance(IScene& Scene, CWorldClient& WorldClient, const std::shared_ptr<CWMOGroup>& WMOGroupObject)
 	: CSceneNode(Scene)
 	, CLoadableObject(WMOGroupObject)
 	, m_IsThisRoomVisible(true)
 	, m_Calculated(false)
+	, m_WorldClient(WorldClient)
 	, m_WMOGroup(*WMOGroupObject)
 {}
 

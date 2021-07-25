@@ -12,7 +12,7 @@ class CCharacterItemEffectM2Instance
 	: public CM2_Base_Instance
 {
 public:
-	CCharacterItemEffectM2Instance(IScene& Scene, const std::shared_ptr<CM2>& M2Object, const CCharacterItem& CharacterItem);
+	CCharacterItemEffectM2Instance(IScene& Scene, CWorldClient& WorldClient, const std::shared_ptr<CM2>& M2Object, const CCharacterItem& CharacterItem);
     virtual ~CCharacterItemEffectM2Instance();
 
 	const CCharacterItem& GetCharacterItem() const;

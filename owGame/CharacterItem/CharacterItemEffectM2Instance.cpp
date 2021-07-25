@@ -9,8 +9,8 @@
 // General
 #include "CharacterItemEffectM2Instance.h"
 
-CCharacterItemEffectM2Instance::CCharacterItemEffectM2Instance(IScene& Scene, const std::shared_ptr<CM2>& M2Object, const CCharacterItem& CharacterItem)
-	: CM2_Base_Instance(Scene, M2Object)
+CCharacterItemEffectM2Instance::CCharacterItemEffectM2Instance(IScene& Scene, CWorldClient& WorldClient, const std::shared_ptr<CM2>& M2Object, const CCharacterItem& CharacterItem)
+	: CM2_Base_Instance(Scene, WorldClient, M2Object)
 	, m_CharacterItem(CharacterItem)
 {}
 

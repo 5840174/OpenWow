@@ -1,13 +1,15 @@
 #include "stdafx.h"
 
 // Include
+#include "World/WorldClient.h"
 #include "Map.h"
 
 // General
 #include "MapWDT.h"
 
-CMapWDT::CMapWDT(const CMap& Map)
-	: m_Map(Map)
+CMapWDT::CMapWDT(CWorldClient& WorldClient, const CMap& Map)
+	: m_WorldClient(WorldClient)
+	, m_Map(Map)
 	
 	, m_IsTileBased(false)
 	
@@ -27,9 +29,9 @@ void CMapWDT::CreateInsances(const std::shared_ptr<ISceneNode>& Parent) const
 	if (false == m_GlobalWMOName.empty())
 	{
 #ifdef USE_WMO_MODELS
-		if (std::shared_ptr<CWMO> wmo = m_Map.GetBaseManager().GetManager<IWoWObjectsCreator>()->LoadWMO(m_Map.GetBaseManager().GetApplication().GetRenderDevice(), m_GlobalWMOName))
+		if (std::shared_ptr<CWMO> wmo = m_WorldClient.GetCreator()->LoadWMO(m_Map.GetBaseManager().GetApplication().GetRenderDevice(), m_GlobalWMOName))
 		{
-			auto inst = Parent->CreateSceneNode<CMapWMOInstance>(wmo, m_GlobalWMOPlacementInfo);
+			auto inst = Parent->CreateSceneNode<CMapWMOInstance>(m_WorldClient, wmo, m_GlobalWMOPlacementInfo);
 			m_Map.GetBaseManager().GetManager<ILoader>()->AddToLoadQueue(inst);
 
 			std::const_pointer_cast<CMapWMOInstance>(m_GlobalWMO) = inst;

@@ -9,15 +9,20 @@
 #include "M2_CameraComponent.h"
 #include "M2_LightComponent.h"
 
+// FORWARD BEGIN
+class CWorldClient;
+// FORWARD END
+
 class ZN_API CM2_Base_Instance 
 	: public CSceneNode
 	, public CLoadableObject
 {
 public:
-	CM2_Base_Instance(IScene& Scene, const std::shared_ptr<CM2>& M2Object);
+	CM2_Base_Instance(IScene& Scene, CWorldClient& WorldClient, const std::shared_ptr<CM2>& M2Object);
 	virtual ~CM2_Base_Instance();
 
 	// CM2_Base_Instance
+	CWorldClient&                       GetWorldClient() const { return m_WorldClient; }
 	const CM2&                          GetM2() const;
 
 	void                                Attach(EM2_AttachmentPoint AttachmentType);
@@ -74,13 +79,14 @@ private:
 	std::shared_ptr<ITexture>		    m_SpecialTextures[SM2_Texture::Type::COUNT];
 
 	// Animtion
-	std::shared_ptr<CM2AnimatorComponent>           m_AnimatorComponent;
+	std::shared_ptr<CM2AnimatorComponent> m_AnimatorComponent;
 	std::shared_ptr<CM2SkeletonComponent> m_SkeletonComponent;
 #ifdef USE_M2_PARTICLES
-	std::shared_ptr<CM2ParticlesComponent>m_ParticleComponent;
+	std::shared_ptr<CM2ParticlesComponent> m_ParticleComponent;
 #endif
 	std::shared_ptr<CM2LightComponent> m_LightComponent;
 
 private:
+	CWorldClient& m_WorldClient;
 	std::shared_ptr<CM2> m_M2;
 };

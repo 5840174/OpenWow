@@ -9,7 +9,7 @@ class ZN_API CCreature
 	: public CM2_Base_Instance
 {
 public:
-	CCreature(IScene& Scene, const std::shared_ptr<CM2>& M2Object);
+	CCreature(IScene& Scene, CWorldClient& WorldClient, const std::shared_ptr<CM2>& M2Object);
     virtual ~CCreature();
 
 	// ISceneNode

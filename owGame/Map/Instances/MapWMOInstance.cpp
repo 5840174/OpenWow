@@ -8,8 +8,8 @@
 // Additional
 #include "../MapTile.h"
 
-CMapWMOInstance::CMapWMOInstance(IScene& Scene, const std::shared_ptr<CWMO>& WMOObject, const SMapTile_MODF& MODF)
-	: CWMO_Base_Instance(Scene, WMOObject)
+CMapWMOInstance::CMapWMOInstance(IScene& Scene, CWorldClient& WorldClient, const std::shared_ptr<CWMO>& WMOObject, const SMapTile_MODF& MODF)
+	: CWMO_Base_Instance(Scene, WorldClient, WMOObject)
 	, m_PlacementInfo(MODF)
 {
 	SetName("CMapWMOInstance: " + WMOObject->GetFilename());

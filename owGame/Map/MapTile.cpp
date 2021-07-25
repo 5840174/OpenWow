@@ -1,6 +1,7 @@
 #include "stdafx.h"
 
 // Include
+#include "World/WorldClient.h"
 #include "Map.h"
 
 // General
@@ -9,8 +10,9 @@
 // Additional
 #include "MapTileLiquid.h"
 
-CMapTile::CMapTile(IScene& Scene, CMap& MapParent, uint32 IndexX, uint32 IndexZ)
+CMapTile::CMapTile(IScene& Scene, CWorldClient& WorldClient, CMap& MapParent, uint32 IndexX, uint32 IndexZ)
 	: CSceneNode(Scene)
+	, m_WorldClient(WorldClient)
 	, m_MapParent(MapParent)
 	, m_IndexX(IndexX)
 	, m_IndexZ(IndexZ)
@@ -344,9 +346,9 @@ bool CMapTile::Load()
 #ifdef USE_WMO_MODELS
 	for (const auto& it : WMOPlacementInfo)
 	{
-		if (auto wmo = GetBaseManager().GetManager<IWoWObjectsCreator>()->LoadWMO(GetRenderDevice(), WMOsNames[it.nameIndex]))
+		if (auto wmo = m_WorldClient.GetCreator()->LoadWMO(GetRenderDevice(), WMOsNames[it.nameIndex]))
 		{
-			auto inst = CreateSceneNode<CMapWMOInstance>(wmo, it);
+			auto inst = CreateSceneNode<CMapWMOInstance>(m_WorldClient, wmo, it);
 			GetBaseManager().GetManager<ILoader>()->AddToLoadQueue(inst);
 
 			m_WMOsInstances.push_back(inst.get());
@@ -362,9 +364,9 @@ bool CMapTile::Load()
 #ifdef USE_M2_MODELS
 	for (const auto& it : M2PlacementInfo)
 	{
-		if (auto m2 = GetBaseManager().GetManager<IWoWObjectsCreator>()->LoadM2(GetRenderDevice(), m_MDXsNames[it.nameIndex]))
+		if (auto m2 = m_WorldClient.GetCreator()->LoadM2(GetRenderDevice(), m_MDXsNames[it.nameIndex]))
 		{
-			auto inst = CreateSceneNode<CMapM2Instance>(m2, it);
+			auto inst = CreateSceneNode<CMapM2Instance>(m_WorldClient, m2, it);
 			GetBaseManager().GetManager<ILoader>()->AddToLoadQueue(inst);
 			
 			m_MDXsInstances.push_back(inst.get());

@@ -9,8 +9,8 @@
 #include "Character_SectionWrapper.h"
 #include "Character_SkinTextureBaker.h"
 
-CCharacter::CCharacter(IScene& Scene, const std::shared_ptr<CM2>& M2Object, const SCharacterVisualTemplate& CharacterVisualTemplate)
-	: CCreature(Scene, M2Object)
+CCharacter::CCharacter(IScene& Scene, CWorldClient& WorldClient, const std::shared_ptr<CM2>& M2Object, const SCharacterVisualTemplate& CharacterVisualTemplate)
+	: CCreature(Scene, WorldClient, M2Object)
 	, m_CharacterVisualTemplate(CharacterVisualTemplate)
 	, m_IsNPCBakedTexturePresent(false)
 {
@@ -155,7 +155,7 @@ void CCharacter::SetItem(uint8 InventorySlot, const SCharacterItemTemplate& Item
 		}
 	}
 
-	auto characterItem = MakeShared(CCharacterItem, GetBaseManager(), GetRenderDevice(), std::dynamic_pointer_cast<CCharacter>(shared_from_this()), ItemTemplate);
+	auto characterItem = MakeShared(CCharacterItem, GetWorldClient(), GetBaseManager(), GetRenderDevice(), std::dynamic_pointer_cast<CCharacter>(shared_from_this()), ItemTemplate);
 	AddChildLoadable(characterItem);
 	m_CharacterItems[InventorySlot] = characterItem;
 	GetBaseManager().GetManager<ILoader>()->AddToLoadQueue(characterItem);

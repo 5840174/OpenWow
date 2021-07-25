@@ -9,7 +9,7 @@ class ZN_API CMapM2Instance
 	: public CM2_Base_Instance
 {
 public:
-	CMapM2Instance(IScene& Scene, const std::shared_ptr<CM2>& M2Object, const SMapTile_MDDF& MDDF);
+	CMapM2Instance(IScene& Scene, CWorldClient& WorldClient, const std::shared_ptr<CM2>& M2Object, const SMapTile_MDDF& MDDF);
 	virtual ~CMapM2Instance();
 
 	// CM2_Base_Instance

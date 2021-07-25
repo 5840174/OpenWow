@@ -4,6 +4,10 @@
 
 #include "M2/M2_Base_Instance.h"
 
+// FORWARD BEGIN
+class CRendererWoW;
+// FORWARD END
+
 namespace
 {
 	struct __declspec(novtable, align(16)) ZN_API M2PerObject
@@ -28,7 +32,7 @@ class ZN_API CRenderPass_M2List
 	: public CRenderPassPipelinedProcessTypelessList
 {
 public:
-	CRenderPass_M2List(IRenderDevice& RenderDevice, const std::shared_ptr<IRenderPassCreateTypelessList>& CreateTypelessList, ERenderPassM2DrawMode DrawMode = ERenderPassM2DrawMode::All);
+	CRenderPass_M2List(CRendererWoW& RendererWoW, IRenderDevice& RenderDevice, const std::shared_ptr<IRenderPassCreateTypelessList>& CreateTypelessList, ERenderPassM2DrawMode DrawMode = ERenderPassM2DrawMode::All);
 	virtual ~CRenderPass_M2List();
 
 	// CRenderPass_M2
@@ -42,6 +46,8 @@ public:
 	virtual EVisitResult Visit(const std::shared_ptr<IModel>& Model) override;
 
 protected:
+	CRendererWoW& m_RendererWoW;
+
 	ERenderPassM2DrawMode m_DrawMode;
 
 	const CM2_Base_Instance* m_CurrentM2Instance;

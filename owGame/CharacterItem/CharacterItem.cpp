@@ -3,6 +3,7 @@
 #ifdef USE_M2_MODELS
 
 // Include
+#include "World/WorldClient.h"
 #include "Character/Character.h"
 
 // General
@@ -28,10 +29,11 @@ namespace
 
 
 
-CCharacterItem::CCharacterItem(const IBaseManager& BaseManager, IRenderDevice& RenderDevice, const std::shared_ptr<CCharacter>& OwnerCharacter, const SCharacterItemTemplate& CharacterItemTemplate)
+CCharacterItem::CCharacterItem(CWorldClient& WorldClient, const IBaseManager& BaseManager, IRenderDevice& RenderDevice, const std::shared_ptr<CCharacter>& OwnerCharacter, const SCharacterItemTemplate& CharacterItemTemplate)
 	: CLoadableObject(OwnerCharacter)
 	, m_BaseManager(BaseManager)
 	, m_RenderDevice(RenderDevice)
+	, m_WorldClient(WorldClient)
 	, m_OwnerCharacter(*OwnerCharacter)
 	, m_Template(CharacterItemTemplate)
 	, m_ItemDisplayInfoRecord(nullptr)
@@ -157,7 +159,7 @@ void CCharacterItem::InitializeItemModels()
 			throw CException("CCharacterItem::InitializeItemModels: M2Model for item DisplayID '%d' not found.", GetTemplate().DisplayId);
 
 		auto attachmentPoint = ItemObjectComponents[static_cast<size_t>(GetTemplate().InventoryType)].AttachmentPoint[i];
-		auto itemModelInstance = m_OwnerCharacter.CreateSceneNode<CCharacterItemM2Instance>(itemModel, *this, attachmentPoint);
+		auto itemModelInstance = m_OwnerCharacter.CreateSceneNode<CCharacterItemM2Instance>(m_WorldClient, itemModel, *this, attachmentPoint);
 		itemModelInstance->AddParentLoadable(std::dynamic_pointer_cast<ILoadable>(shared_from_this()));
 		m_BaseManager.GetManager<ILoader>()->AddToLoadQueue(itemModelInstance);
 
@@ -216,7 +218,7 @@ std::shared_ptr<CM2> CCharacterItem::LoadItemM2Model(DBCItem_EInventoryItemType 
 	}
 
 	std::string itemM2ModelFileName =  "Item\\ObjectComponents\\" + std::string(ItemObjectComponents[static_cast<size_t>(InventoryItemType)].ModelsAndTexturesFolder) + "\\" + modelFilename;
-	return m_BaseManager.GetManager<IWoWObjectsCreator>()->LoadM2(m_RenderDevice, itemM2ModelFileName);
+	return m_WorldClient.GetCreator()->LoadM2(m_RenderDevice, itemM2ModelFileName);
 }
 
 std::shared_ptr<IImage> CCharacterItem::LoadItemImage(DBCItem_EInventoryItemType InventoryItemType, std::string TextureFileName)

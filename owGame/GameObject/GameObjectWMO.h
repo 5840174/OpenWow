@@ -8,7 +8,7 @@ class ZN_API GameObjectWMO
 	: public CWMO_Base_Instance
 {
 public:
-	GameObjectWMO(IScene& Scene, const std::shared_ptr<CWMO>& M2Object);
+	GameObjectWMO(IScene& Scene, CWorldClient& WorldClient, const std::shared_ptr<CWMO>& M2Object);
 	virtual ~GameObjectWMO();
 
 	// ISceneNode

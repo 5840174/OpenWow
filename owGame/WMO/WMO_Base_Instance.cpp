@@ -5,9 +5,10 @@
 // General
 #include "WMO_Base_Instance.h"
 
-CWMO_Base_Instance::CWMO_Base_Instance(IScene& Scene, const std::shared_ptr<CWMO>& WMOObject)
+CWMO_Base_Instance::CWMO_Base_Instance(IScene& Scene, CWorldClient& WorldClient, const std::shared_ptr<CWMO>& WMOObject)
     : CSceneNode(Scene)
 	, CLoadableObject(WMOObject)
+	, m_WorldClient(WorldClient)
 	, m_WMOObject(WMOObject)
 {
 

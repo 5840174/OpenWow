@@ -9,8 +9,6 @@
 //--               World of warcraft                     --//
 //---------------------------------------------------------//
 
-// DBC
-
 
 // Liquid
 #include "../owGame/Liquid/Liquid.h"
@@ -31,6 +29,7 @@
 #include "../owGame/Map/Map.h"
 
 // World
+#include "../owGame/World/WorldClient.h"
 #include "../owGame/World/WorldObjectsCreator.h"
 
 // Renderer

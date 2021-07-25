@@ -37,8 +37,7 @@ private:
 
 
 private:
-	std::shared_ptr<CSkyManager> m_WoWSkyManager;
-	std::shared_ptr<CMap> m_WoWMap;
+	std::unique_ptr<CWorldClient> m_WorldClient;
 
 	std::shared_ptr<IUIControlText> m_RendererStatisticText;
 	std::shared_ptr<IUIControlText> m_AreaName;

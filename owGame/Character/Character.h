@@ -11,7 +11,7 @@ class ZN_API CCharacter
 	: public CCreature
 {
 public:
-    CCharacter(IScene& Scene, const std::shared_ptr<CM2>& M2Object, const SCharacterVisualTemplate& CharacterVisualTemplate);
+    CCharacter(IScene& Scene, CWorldClient& WorldClient, const std::shared_ptr<CM2>& M2Object, const SCharacterVisualTemplate& CharacterVisualTemplate);
     virtual ~CCharacter();
 
 	// CCharacter

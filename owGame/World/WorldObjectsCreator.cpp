@@ -1,10 +1,14 @@
 #include "stdafx.h"
 
+// Include
+#include "WorldClient.h"
+
 // General
 #include "WorldObjectsCreator.h"
 
-CWorldObjectCreator::CWorldObjectCreator(const IBaseManager & BaseManager)
-	: m_BaseManager(BaseManager)
+CWorldObjectCreator::CWorldObjectCreator(CWorldClient& WorldClient, const IBaseManager & BaseManager)
+	: m_WorldClient(WorldClient)
+	, m_BaseManager(BaseManager)
 {
 	m_DBCs = m_BaseManager.GetManager<CDBCStorage>();
 }
@@ -30,7 +34,7 @@ std::shared_ptr<CCreature> CWorldObjectCreator::BuildCreatureFromDisplayInfo(IRe
 	if (m2Model == nullptr)
 		return nullptr;
 
-	std::shared_ptr<CCreature> newCreature = ((Parent != nullptr) ? Parent : Scene.GetRootSceneNode())->CreateSceneNode<CCreature>(m2Model);
+	std::shared_ptr<CCreature> newCreature = ((Parent != nullptr) ? Parent : Scene.GetRootSceneNode())->CreateSceneNode<CCreature>(m_WorldClient, m2Model);
 	newCreature->SetAlpha(static_cast<float>(rec->Get_Opacity()) / 255.0f);
 	newCreature->SetScale(glm::vec3(rec->Get_Scale()));
 
@@ -58,7 +62,7 @@ std::shared_ptr<CCharacter> CWorldObjectCreator::BuildCharacterFromTemplate(IRen
 	if (characterM2Model == nullptr)
 		return nullptr;
 
-	std::shared_ptr<CCharacter> characterM2Instance = ((Parent != nullptr) ? Parent : Scene.GetRootSceneNode())->CreateSceneNode<CCharacter>(characterM2Model, CharacterVisualTemplate);
+	std::shared_ptr<CCharacter> characterM2Instance = ((Parent != nullptr) ? Parent : Scene.GetRootSceneNode())->CreateSceneNode<CCharacter>(m_WorldClient, characterM2Model, CharacterVisualTemplate);
 	m_BaseManager.GetManager<ILoader>()->AddToLoadQueue(characterM2Instance);
 
 	return characterM2Instance;
@@ -89,7 +93,7 @@ std::shared_ptr<CCharacter> CWorldObjectCreator::BuildCharacterFromDisplayInfo(I
 	characterVisualTemplate.hairColor = humanoidRecExtra->Get_HairColorID();
 	characterVisualTemplate.facialStyle = humanoidRecExtra->Get_FacialHairID();
 
-	std::shared_ptr<CCharacter> characterM2Instance = ((Parent != nullptr) ? Parent : Scene.GetRootSceneNode())->CreateSceneNode<CCharacter>(characterM2Model, characterVisualTemplate);
+	std::shared_ptr<CCharacter> characterM2Instance = ((Parent != nullptr) ? Parent : Scene.GetRootSceneNode())->CreateSceneNode<CCharacter>(m_WorldClient, characterM2Model, characterVisualTemplate);
 	
 	// 2.2 Items
 	characterM2Instance->SetItem(EQUIPMENT_SLOT_HEAD, SCharacterItemTemplate(humanoidRecExtra->Get_Helm(), DBCItem_EInventoryItemType::HEAD, 0));
@@ -124,7 +128,7 @@ std::shared_ptr<ISceneNode> CWorldObjectCreator::BuildGameObjectFromDisplayInfo(
 	{
 		auto wmoModel = CreateGameObjectWMOModel(RenderDevice, gameObjectDisplayInfoRecord);
 
-		std::shared_ptr<GameObjectWMO> newGameObject = ((Parent != nullptr) ? Parent : Scene.GetRootSceneNode())->CreateSceneNode<GameObjectWMO>(wmoModel);
+		std::shared_ptr<GameObjectWMO> newGameObject = ((Parent != nullptr) ? Parent : Scene.GetRootSceneNode())->CreateSceneNode<GameObjectWMO>(m_WorldClient, wmoModel);
 		m_BaseManager.GetManager<ILoader>()->AddToLoadQueue(newGameObject);
 
 		return newGameObject;
@@ -133,7 +137,7 @@ std::shared_ptr<ISceneNode> CWorldObjectCreator::BuildGameObjectFromDisplayInfo(
 	{
 		auto m2Model = CreateGameObjectM2Model(RenderDevice, gameObjectDisplayInfoRecord);
 
-		std::shared_ptr<GameObjectM2> newGameObject = ((Parent != nullptr) ? Parent : Scene.GetRootSceneNode())->CreateSceneNode<GameObjectM2>(m2Model);
+		std::shared_ptr<GameObjectM2> newGameObject = ((Parent != nullptr) ? Parent : Scene.GetRootSceneNode())->CreateSceneNode<GameObjectM2>(m_WorldClient, m2Model);
 		m_BaseManager.GetManager<ILoader>()->AddToLoadQueue(newGameObject);
 
 		return newGameObject;
@@ -145,10 +149,6 @@ std::shared_ptr<ISceneNode> CWorldObjectCreator::BuildGameObjectFromDisplayInfo(
 //
 // IWoWObjectsCreator
 //
-void CWorldObjectCreator::ClearCache()
-{
-}
-
 #ifdef USE_M2_MODELS
 std::shared_ptr<CM2> CWorldObjectCreator::LoadM2(IRenderDevice& RenderDevice, const std::string& Filename)
 {
@@ -257,23 +257,7 @@ std::shared_ptr<CWMO> CWorldObjectCreator::LoadWMO(IRenderDevice& RenderDevice, 
 	return wmoObject;
 }
 
-void CWorldObjectCreator::InitEGxBlend(IRenderDevice& RenderDevice)
-{
-	for (uint32 i = 0; i < 14; i++)
-	{
-		if (i == 11)
-			continue;
 
-		std::shared_ptr<IBlendState> blendState = RenderDevice.GetObjectsFactory().CreateBlendState();
-		blendState->SetBlendMode(GetEGxBlendMode(i));
-		m_EGxBlendStates[i] = blendState;
-	}
-}
-
-std::shared_ptr<IBlendState> CWorldObjectCreator::GetEGxBlend(uint32 Index) const
-{
-	return m_EGxBlendStates.at(Index);
-}
 
 
 
@@ -317,104 +301,3 @@ std::shared_ptr<CWMO> CWorldObjectCreator::CreateGameObjectWMOModel(IRenderDevic
 	return LoadWMO(RenderDevice, modelName);
 }
 
-IBlendState::BlendMode CWorldObjectCreator::GetEGxBlendMode(uint32 Index)
-{
-	switch (Index)
-	{
-	case 0: // Opaque
-		return IBlendState::BlendMode(false, false,
-			IBlendState::BlendFactor::One, IBlendState::BlendFactor::Zero);
-		break;
-
-	case 1: // AlphaKey
-		return IBlendState::BlendMode(false, false,
-			IBlendState::BlendFactor::One, IBlendState::BlendFactor::Zero);
-		break;
-
-	case 2: // Alpha
-		return IBlendState::BlendMode(true, false,
-			IBlendState::BlendFactor::SrcAlpha, IBlendState::BlendFactor::OneMinusSrcAlpha,
-			IBlendState::BlendOperation::Add,
-			IBlendState::BlendFactor::One, IBlendState::BlendFactor::OneMinusSrcAlpha);
-		break;
-
-	case 3: // Add
-		return IBlendState::BlendMode(true, false,
-			IBlendState::BlendFactor::SrcAlpha, IBlendState::BlendFactor::One,
-			IBlendState::BlendOperation::Add,
-			IBlendState::BlendFactor::Zero, IBlendState::BlendFactor::One);
-		break;
-
-	case 4: // Mod
-		return IBlendState::BlendMode(true, false,
-			IBlendState::BlendFactor::DstColor, IBlendState::BlendFactor::Zero,
-			IBlendState::BlendOperation::Add,
-			IBlendState::BlendFactor::DstAlpha, IBlendState::BlendFactor::Zero);
-		break;
-
-	case 5: // Mod2x
-		return IBlendState::BlendMode(true, false,
-			IBlendState::BlendFactor::DstColor, IBlendState::BlendFactor::SrcColor,
-			IBlendState::BlendOperation::Add,
-			IBlendState::BlendFactor::DstAlpha, IBlendState::BlendFactor::SrcAlpha);
-		break;
-
-	case 6: // ModAdd
-		return IBlendState::BlendMode(true, false,
-			IBlendState::BlendFactor::DstColor, IBlendState::BlendFactor::One,
-			IBlendState::BlendOperation::Add,
-			IBlendState::BlendFactor::DstAlpha, IBlendState::BlendFactor::One);
-		break;
-
-	case 7: // InvSrcAlphaAdd
-		return IBlendState::BlendMode(true, false,
-			IBlendState::BlendFactor::OneMinusSrcAlpha, IBlendState::BlendFactor::One,
-			IBlendState::BlendOperation::Add,
-			IBlendState::BlendFactor::OneMinusSrcAlpha, IBlendState::BlendFactor::One);
-		break;
-
-	case 8: // InvSrcAlphaOpaque
-		return IBlendState::BlendMode(true, false,
-			IBlendState::BlendFactor::OneMinusSrcAlpha, IBlendState::BlendFactor::Zero,
-			IBlendState::BlendOperation::Add,
-			IBlendState::BlendFactor::OneMinusSrcAlpha, IBlendState::BlendFactor::Zero);
-		break;
-
-	case 9: // SrcAlphaOpaque
-		return IBlendState::BlendMode(true, false,
-			IBlendState::BlendFactor::SrcAlpha, IBlendState::BlendFactor::Zero,
-			IBlendState::BlendOperation::Add,
-			IBlendState::BlendFactor::SrcAlpha, IBlendState::BlendFactor::Zero);
-		break;
-
-	case 10: // NoAlphaAdd
-		return IBlendState::BlendMode(true, false,
-			IBlendState::BlendFactor::One, IBlendState::BlendFactor::One,
-			IBlendState::BlendOperation::Add,
-			IBlendState::BlendFactor::Zero, IBlendState::BlendFactor::One);
-
-	case 11: // ConstantAlpha
-		//(true, GL_CONSTANT_ALPHA, GL_ONE_MINUS_CONSTANT_ALPHA, GL_CONSTANT_ALPHA, GL_ONE_MINUS_CONSTANT_ALPHA);
-		throw CException("Constant alpha (11) EGxBlend doesn't support");
-
-	case 12: // Screen
-		return IBlendState::BlendMode(true, false,
-			IBlendState::BlendFactor::OneMinusDstColor, IBlendState::BlendFactor::One,
-			IBlendState::BlendOperation::Add,
-			IBlendState::BlendFactor::One, IBlendState::BlendFactor::Zero);
-		break;
-
-	case 13: // BlendAdd
-		return IBlendState::BlendMode(true, false,
-			IBlendState::BlendFactor::One, IBlendState::BlendFactor::OneMinusSrcAlpha,
-			IBlendState::BlendOperation::Add,
-			IBlendState::BlendFactor::One, IBlendState::BlendFactor::OneMinusSrcAlpha);
-		break;
-
-	default:
-		_ASSERT(false);
-	}
-
-	_ASSERT(false);
-	return IBlendState::BlendMode();
-}

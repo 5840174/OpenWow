@@ -5,8 +5,8 @@
 // General
 #include "GameObjectM2.h"
 
-GameObjectM2::GameObjectM2(IScene& Scene, const std::shared_ptr<CM2>& M2Object)
-	: CM2_Base_Instance(Scene, M2Object)
+GameObjectM2::GameObjectM2(IScene& Scene, CWorldClient& WorldClient, const std::shared_ptr<CM2>& M2Object)
+	: CM2_Base_Instance(Scene, WorldClient, M2Object)
 {}
 
 GameObjectM2::~GameObjectM2()

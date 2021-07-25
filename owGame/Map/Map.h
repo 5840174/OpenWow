@@ -5,11 +5,15 @@
 #include "MapWDL.h"
 #include "MinimapProvider.h"
 
+// FORWARD BEGIN
+class CWorldClient;
+// FORWARD END
+
 class ZN_API CMap
 	: public CSceneNode
 {
 public:
-	CMap(IScene& Scene);
+	CMap(IScene& Scene, CWorldClient& WorldClient);
 	virtual ~CMap();
 
 	void                                            MapPreLoad(const DBC_MapRecord* DBCMapRecord);
@@ -54,6 +58,8 @@ public: // shared
 	std::shared_ptr<IBuffer>                        GetBufferTextureCoordDetailAndAlpha() const;
 
 private:
+	CWorldClient&                                   m_WorldClient;
+
 	const DBC_MapRecord*                            m_MapDBCRecord;
 
 	std::shared_ptr<CMapTile>	                    m_MapTilesCache[C_TilesCacheSize];

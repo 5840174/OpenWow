@@ -6,7 +6,7 @@ class ZN_API CRenderPass_M2InstancedList
 	: public CRenderPass_M2List
 {
 public:
-	CRenderPass_M2InstancedList(IRenderDevice& RenderDevice, const std::shared_ptr<IRenderPassCreateTypelessList>& CreateTypelessList, ERenderPassM2DrawMode DrawMode = ERenderPassM2DrawMode::All);
+	CRenderPass_M2InstancedList(CRendererWoW& RendererWoW, IRenderDevice& RenderDevice, const std::shared_ptr<IRenderPassCreateTypelessList>& CreateTypelessList, ERenderPassM2DrawMode DrawMode = ERenderPassM2DrawMode::All);
 	virtual ~CRenderPass_M2InstancedList();
 
 	// IRenderPass

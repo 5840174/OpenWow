@@ -13,7 +13,7 @@ class ZN_API CMapWMOInstance
 	: public CWMO_Base_Instance
 {
 public:
-	CMapWMOInstance(IScene& Scene, const std::shared_ptr<CWMO>& WMOObject, const SMapTile_MODF& MODF);
+	CMapWMOInstance(IScene& Scene, CWorldClient& WorldClient, const std::shared_ptr<CWMO>& WMOObject, const SMapTile_MODF& MODF);
 	virtual ~CMapWMOInstance();
 
 	// CWMO_Base_Instance

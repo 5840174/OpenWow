@@ -140,6 +140,7 @@
     <ClCompile Include="WMO\WMO_Part_Portal.cpp" />
     <ClCompile Include="WMO\WMO_PortalsComponent.cpp" />
     <ClCompile Include="WMO\WMO_Portal.cpp" />
+    <ClCompile Include="World\WorldClient.cpp" />
     <ClCompile Include="World\WorldObjectsCreator.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -320,6 +321,7 @@
     <ClInclude Include="WMO\WMO_Part_Portal.h" />
     <ClInclude Include="WMO\WMO_PortalsComponent.h" />
     <ClInclude Include="WMO\WMO_Portal.h" />
+    <ClInclude Include="World\WorldClient.h" />
     <ClInclude Include="World\WorldObjectsCreator.h" />
   </ItemGroup>
   <ItemGroup>

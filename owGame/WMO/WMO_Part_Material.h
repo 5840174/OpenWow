@@ -5,6 +5,7 @@
 #include "WMO_Headers.h"
 
 // FORWARD BEGIN
+class CWorldClient;
 class CWMO;
 // FORWARD END
 
@@ -31,16 +32,19 @@ public:
 	WMO_Part_Material(IRenderDevice& RenderDevice, const CWMO& WMOModel, const SWMO_MOMT& WMOMaterialProto);
 	virtual ~WMO_Part_Material();
 
+	uint32 GetBlendMode() const;
 	void SetBlendMode(uint32 BlendMode);
+
+
 	void SetMOCVExists(uint32 MOCVExists);
 
 	const std::shared_ptr<IDepthStencilState>& GetDepthStencilState() const { return m_DepthStencilState; }
-	const std::shared_ptr<IBlendState>& GetBlendState() const { return m_BlendState; };
+	//const std::shared_ptr<IBlendState>& GetBlendState() const { return m_BlendState; };
 	const std::shared_ptr<IRasterizerState>& GetRasterizerState() const { return m_RasterizerState; };
 
 private:
 	std::shared_ptr<IDepthStencilState> m_DepthStencilState;
-	std::shared_ptr<IBlendState>        m_BlendState;
+	//std::shared_ptr<IBlendState>        m_BlendState;
 	std::shared_ptr<IRasterizerState>   m_RasterizerState;
 
 private:

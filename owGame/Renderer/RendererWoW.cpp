@@ -48,11 +48,11 @@ void CRendererWoW::InitializeForward(std::shared_ptr<IRenderTarget> OutputRender
 	Add3DPass(MakeShared(CRenderPass_SkyList, GetRenderDevice(), m_SceneListTypelessPass)->ConfigurePipeline(OutputRenderTarget));
 	Add3DPass(MakeShared(CRenderPass_WDLList, GetRenderDevice(), m_SceneListTypelessPass)->ConfigurePipeline(OutputRenderTarget));
 	Add3DPass(MakeShared(CRenderPass_MapChunkList, GetRenderDevice(), m_SceneListTypelessPass)->ConfigurePipeline(OutputRenderTarget));
-	Add3DPass(MakeShared(CRenderPass_WMOList, GetRenderDevice(), m_SceneListTypelessPass)->ConfigurePipeline(OutputRenderTarget));
+	Add3DPass(MakeShared(CRenderPass_WMOList, *this, GetRenderDevice(), m_SceneListTypelessPass)->ConfigurePipeline(OutputRenderTarget));
 	
 
-	Add3DPass(MakeShared(CRenderPass_M2InstancedList, GetRenderDevice(), m_SceneListTypelessPass, ERenderPassM2DrawMode::All)->ConfigurePipeline(OutputRenderTarget));
-	Add3DPass(MakeShared(CRenderPass_M2List, GetRenderDevice(), m_SceneListTypelessPass, ERenderPassM2DrawMode::All)->ConfigurePipeline(OutputRenderTarget));
+	Add3DPass(MakeShared(CRenderPass_M2InstancedList, *this, GetRenderDevice(), m_SceneListTypelessPass, ERenderPassM2DrawMode::All)->ConfigurePipeline(OutputRenderTarget));
+	Add3DPass(MakeShared(CRenderPass_M2List, *this, GetRenderDevice(), m_SceneListTypelessPass, ERenderPassM2DrawMode::All)->ConfigurePipeline(OutputRenderTarget));
 	
 	//Add3DPass(MakeShared(CRenderPass_M2InstancedList, GetRenderDevice(), m_SceneListTypelessPass, ERenderPassM2DrawMode::Opaque)->ConfigurePipeline(OutputRenderTarget));
 	//Add3DPass(MakeShared(CRenderPass_M2List, GetRenderDevice(), m_SceneListTypelessPass, ERenderPassM2DrawMode::Opaque)->ConfigurePipeline(OutputRenderTarget));
@@ -118,13 +118,13 @@ void CRendererWoW::InitializeDeffered(std::shared_ptr<IRenderTarget> OutputRende
 	Add3DPass(MakeShared(CRenderPass_SkyList, GetRenderDevice(), m_SceneListTypelessPass)->ConfigurePipeline(gbufferRenderTarget));
 	Add3DPass(MakeShared(CRenderPass_WDLList, GetRenderDevice(), m_SceneListTypelessPass)->ConfigurePipeline(gbufferRenderTarget));
 	Add3DPass(MakeShared(CRenderPass_MapChunkList, GetRenderDevice(), m_SceneListTypelessPass)->ConfigurePipeline(gbufferRenderTarget));
-	Add3DPass(MakeShared(CRenderPass_WMOList, GetRenderDevice(), m_SceneListTypelessPass)->ConfigurePipeline(gbufferRenderTarget));
+	Add3DPass(MakeShared(CRenderPass_WMOList, *this, GetRenderDevice(), m_SceneListTypelessPass)->ConfigurePipeline(gbufferRenderTarget));
 
-	Add3DPass(MakeShared(CRenderPass_M2List, GetRenderDevice(), m_SceneListTypelessPass, ERenderPassM2DrawMode::All)->ConfigurePipeline(gbufferRenderTarget));
+	Add3DPass(MakeShared(CRenderPass_M2List, *this, GetRenderDevice(), m_SceneListTypelessPass, ERenderPassM2DrawMode::All)->ConfigurePipeline(gbufferRenderTarget));
 	//Add3DPass(MakeShared(CRenderPass_M2List, GetRenderDevice(), m_SceneListTypelessPass, ERenderPassM2DrawMode::Opaque)->ConfigurePipeline(gbufferRenderTarget));
 	//Add3DPass(MakeShared(CRenderPass_M2List, GetRenderDevice(), m_SceneListTypelessPass, ERenderPassM2DrawMode::Transperent)->ConfigurePipeline(gbufferRenderTarget));
 
-	Add3DPass(MakeShared(CRenderPass_M2InstancedList, GetRenderDevice(), m_SceneListTypelessPass, ERenderPassM2DrawMode::All)->ConfigurePipeline(gbufferRenderTarget));
+	Add3DPass(MakeShared(CRenderPass_M2InstancedList, *this, GetRenderDevice(), m_SceneListTypelessPass, ERenderPassM2DrawMode::All)->ConfigurePipeline(gbufferRenderTarget));
 	///Add3DPass(MakeShared(CRenderPass_M2InstancedList, GetRenderDevice(), m_SceneListTypelessPass, ERenderPassM2DrawMode::Opaque)->ConfigurePipeline(gbufferRenderTarget));
 	//Add3DPass(MakeShared(CRenderPass_M2InstancedList, GetRenderDevice(), m_SceneListTypelessPass, ERenderPassM2DrawMode::Transperent)->ConfigurePipeline(gbufferRenderTarget));
 
@@ -148,7 +148,7 @@ void CRendererWoW::InitializeDeffered(std::shared_ptr<IRenderTarget> OutputRende
 	//Add3DPass(MakeShared(CRenderPass_M2ParticlesList, GetRenderDevice(), m_SceneListTypelessPass)->ConfigurePipeline(outputRenderTargetWithCustomDepth));
 
 	//Add3DPass(MakeShared(CRenderPass_M2List, GetRenderDevice(), m_SceneListTypelessPass, ERenderPassM2DrawMode::Transperent)->ConfigurePipeline(outputRenderTargetWithCustomDepth));
-	Add3DPass(MakeShared(CRenderPass_M2InstancedList, GetRenderDevice(), m_SceneListTypelessPass, ERenderPassM2DrawMode::Transperent)->ConfigurePipeline(outputRenderTargetWithCustomDepth));
+	Add3DPass(MakeShared(CRenderPass_M2InstancedList, *this, GetRenderDevice(), m_SceneListTypelessPass, ERenderPassM2DrawMode::Transperent)->ConfigurePipeline(outputRenderTargetWithCustomDepth));
 
 
 	Add3DPass(MakeShared(CRenderPass_M2ParticlesList, GetRenderDevice(), m_SceneListTypelessPass)->ConfigurePipeline(outputRenderTargetWithCustomDepth));
@@ -171,6 +171,22 @@ void CRendererWoW::InitializeDeffered(std::shared_ptr<IRenderTarget> OutputRende
 	//AddUIPass(MakeShared(CUIControlDebugBounds, GetRenderDevice(), GetScene())->ConfigurePipeline(OutputRenderTarget));
 }
 
+
+
+//
+// Public
+//
+
+std::shared_ptr<IBlendState> CRendererWoW::GetEGxBlend(uint32 Index) const
+{
+	return m_EGxBlendStates.at(Index);
+}
+
+
+
+//
+// Private
+//
 std::shared_ptr<IRenderTarget> CRendererWoW::CreateGBuffer(std::shared_ptr<IRenderTarget> RenderTarget)
 {
 	ITexture::TextureFormat colorTextureFormat
@@ -201,4 +217,119 @@ std::shared_ptr<IRenderTarget> CRendererWoW::CreateGBuffer(std::shared_ptr<IRend
 	rt->AttachTexture(IRenderTarget::AttachmentPoint::Color3, m_Texture3);
 	rt->AttachTexture(IRenderTarget::AttachmentPoint::DepthStencil, m_DepthStencilTexture);
 	return rt;
+}
+
+void CRendererWoW::InitEGxBlend(IRenderDevice& RenderDevice)
+{
+	for (uint32 i = 0; i < 14; i++)
+	{
+		if (i == 11)
+			continue;
+
+		std::shared_ptr<IBlendState> blendState = RenderDevice.GetObjectsFactory().CreateBlendState();
+		blendState->SetBlendMode(GetEGxBlendMode(i));
+		m_EGxBlendStates[i] = blendState;
+	}
+}
+
+IBlendState::BlendMode CRendererWoW::GetEGxBlendMode(uint32 Index)
+{
+	switch (Index)
+	{
+		case 0: // Opaque
+			return IBlendState::BlendMode(false, false,
+				IBlendState::BlendFactor::One, IBlendState::BlendFactor::Zero);
+			break;
+
+		case 1: // AlphaKey
+			return IBlendState::BlendMode(false, false,
+				IBlendState::BlendFactor::One, IBlendState::BlendFactor::Zero);
+			break;
+
+		case 2: // Alpha
+			return IBlendState::BlendMode(true, false,
+				IBlendState::BlendFactor::SrcAlpha, IBlendState::BlendFactor::OneMinusSrcAlpha,
+				IBlendState::BlendOperation::Add,
+				IBlendState::BlendFactor::One, IBlendState::BlendFactor::OneMinusSrcAlpha);
+			break;
+
+		case 3: // Add
+			return IBlendState::BlendMode(true, false,
+				IBlendState::BlendFactor::SrcAlpha, IBlendState::BlendFactor::One,
+				IBlendState::BlendOperation::Add,
+				IBlendState::BlendFactor::Zero, IBlendState::BlendFactor::One);
+			break;
+
+		case 4: // Mod
+			return IBlendState::BlendMode(true, false,
+				IBlendState::BlendFactor::DstColor, IBlendState::BlendFactor::Zero,
+				IBlendState::BlendOperation::Add,
+				IBlendState::BlendFactor::DstAlpha, IBlendState::BlendFactor::Zero);
+			break;
+
+		case 5: // Mod2x
+			return IBlendState::BlendMode(true, false,
+				IBlendState::BlendFactor::DstColor, IBlendState::BlendFactor::SrcColor,
+				IBlendState::BlendOperation::Add,
+				IBlendState::BlendFactor::DstAlpha, IBlendState::BlendFactor::SrcAlpha);
+			break;
+
+		case 6: // ModAdd
+			return IBlendState::BlendMode(true, false,
+				IBlendState::BlendFactor::DstColor, IBlendState::BlendFactor::One,
+				IBlendState::BlendOperation::Add,
+				IBlendState::BlendFactor::DstAlpha, IBlendState::BlendFactor::One);
+			break;
+
+		case 7: // InvSrcAlphaAdd
+			return IBlendState::BlendMode(true, false,
+				IBlendState::BlendFactor::OneMinusSrcAlpha, IBlendState::BlendFactor::One,
+				IBlendState::BlendOperation::Add,
+				IBlendState::BlendFactor::OneMinusSrcAlpha, IBlendState::BlendFactor::One);
+			break;
+
+		case 8: // InvSrcAlphaOpaque
+			return IBlendState::BlendMode(true, false,
+				IBlendState::BlendFactor::OneMinusSrcAlpha, IBlendState::BlendFactor::Zero,
+				IBlendState::BlendOperation::Add,
+				IBlendState::BlendFactor::OneMinusSrcAlpha, IBlendState::BlendFactor::Zero);
+			break;
+
+		case 9: // SrcAlphaOpaque
+			return IBlendState::BlendMode(true, false,
+				IBlendState::BlendFactor::SrcAlpha, IBlendState::BlendFactor::Zero,
+				IBlendState::BlendOperation::Add,
+				IBlendState::BlendFactor::SrcAlpha, IBlendState::BlendFactor::Zero);
+			break;
+
+		case 10: // NoAlphaAdd
+			return IBlendState::BlendMode(true, false,
+				IBlendState::BlendFactor::One, IBlendState::BlendFactor::One,
+				IBlendState::BlendOperation::Add,
+				IBlendState::BlendFactor::Zero, IBlendState::BlendFactor::One);
+
+		case 11: // ConstantAlpha
+			//(true, GL_CONSTANT_ALPHA, GL_ONE_MINUS_CONSTANT_ALPHA, GL_CONSTANT_ALPHA, GL_ONE_MINUS_CONSTANT_ALPHA);
+			throw CException("Constant alpha (11) EGxBlend doesn't support");
+
+		case 12: // Screen
+			return IBlendState::BlendMode(true, false,
+				IBlendState::BlendFactor::OneMinusDstColor, IBlendState::BlendFactor::One,
+				IBlendState::BlendOperation::Add,
+				IBlendState::BlendFactor::One, IBlendState::BlendFactor::Zero);
+			break;
+
+		case 13: // BlendAdd
+			return IBlendState::BlendMode(true, false,
+				IBlendState::BlendFactor::One, IBlendState::BlendFactor::OneMinusSrcAlpha,
+				IBlendState::BlendOperation::Add,
+				IBlendState::BlendFactor::One, IBlendState::BlendFactor::OneMinusSrcAlpha);
+			break;
+
+		default:
+			_ASSERT(false);
+	}
+
+	_ASSERT(false);
+	return IBlendState::BlendMode();
 }

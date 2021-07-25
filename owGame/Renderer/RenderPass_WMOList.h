@@ -7,11 +7,15 @@
 #include "WMO/WMO_Group_Instance.h"
 #include "WMO/WMOGroup_Part_Batch.h"
 
+// FORWARD BEGIN
+class CRendererWoW;
+// FORWARD END
+
 class ZN_API CRenderPass_WMOList 
 	: public CRenderPassPipelinedProcessTypelessList
 {
 public:
-	CRenderPass_WMOList(IRenderDevice& RenderDevice, const std::shared_ptr<IRenderPassCreateTypelessList>& CreateTypelessList);
+	CRenderPass_WMOList(CRendererWoW& RendererWoW, IRenderDevice& RenderDevice, const std::shared_ptr<IRenderPassCreateTypelessList>& CreateTypelessList);
 	virtual ~CRenderPass_WMOList();
 
 	// IRenderPassPipelined
@@ -23,7 +27,7 @@ public:
 	EVisitResult Visit(const std::shared_ptr<IGeometry>& Geometry, const std::shared_ptr<IMaterial>& Material, SGeometryDrawArgs GeometryDrawArgs) override final;
 
 private:
-	std::shared_ptr<IPropertiesGroup> m_WoWSettings;
+	CRendererWoW& m_RendererWoW;
 	const CWMO_Group_Instance * m_CurrentWMOGroupInstance;
 	const WMO_Group_Part_Batch * m_CurrentWMOBatch;
 };

@@ -8,8 +8,8 @@
 // Additional
 #include "../MapTile.h"
 
-CMapM2Instance::CMapM2Instance(IScene& Scene, const std::shared_ptr<CM2>& M2Object, const SMapTile_MDDF& MDDF)
-	: CM2_Base_Instance(Scene, M2Object)
+CMapM2Instance::CMapM2Instance(IScene& Scene, CWorldClient& WorldClient, const std::shared_ptr<CM2>& M2Object, const SMapTile_MDDF& MDDF)
+	: CM2_Base_Instance(Scene, WorldClient, M2Object)
 	, m_PlacementInfo(MDDF)
 {
 	SetName("CMapM2Instance: " + M2Object->getFilename());

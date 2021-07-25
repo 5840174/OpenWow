@@ -5,6 +5,7 @@
 #include "Instances/MapWMOInstance.h"
 
 // FORWARD BEGIN
+class CWorldClient;
 class CMap;
 // FORWARD END
 
@@ -13,7 +14,7 @@ class ZN_API CMapTile
 	, public CLoadableObject
 {
 public:
-	CMapTile(IScene& Scene, CMap& MapParent, uint32 IndexX, uint32 IndexZ);
+	CMapTile(IScene& Scene, CWorldClient& WorldClient, CMap& MapParent, uint32 IndexX, uint32 IndexZ);
 	virtual ~CMapTile();
 	
 	// CMapTile
@@ -32,6 +33,7 @@ public:
 	bool                                            Delete() override;
 
 private:
+	CWorldClient&                                   m_WorldClient;
 	CMap&                                           m_MapParent;
 	const int                                       m_IndexX;
 	const int                                       m_IndexZ;

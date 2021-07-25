@@ -1,5 +1,8 @@
 #include "stdafx.h"
 
+// Include
+#include "RendererWoW.h"
+
 // General
 #include "RenderPass_M2List.h"
 
@@ -13,10 +16,12 @@
 // Additional (meshes)
 #include "M2/M2_Skin_Batch.h"
 
-CRenderPass_M2List::CRenderPass_M2List(IRenderDevice& RenderDevice, const std::shared_ptr<IRenderPassCreateTypelessList>& CreateTypelessList, ERenderPassM2DrawMode DrawMode)
+
+CRenderPass_M2List::CRenderPass_M2List(CRendererWoW& RendererWoW, IRenderDevice& RenderDevice, const std::shared_ptr<IRenderPassCreateTypelessList>& CreateTypelessList, ERenderPassM2DrawMode DrawMode)
 	: CRenderPassPipelinedProcessTypelessList(RenderDevice, CreateTypelessList)
-	, m_CurrentM2Instance(nullptr)
+	, m_RendererWoW(RendererWoW)
 	, m_DrawMode(DrawMode)
+	, m_CurrentM2Instance(nullptr)
 {
 	SetPassName("M2List " + std::string((DrawMode == ERenderPassM2DrawMode::Opaque) ? "Opaque" : (DrawMode == ERenderPassM2DrawMode::Transperent) ? "Transperent" : "All"));
 
@@ -74,7 +79,9 @@ void CRenderPass_M2List::DoRenderM2Model(const CM2_Base_Instance* M2SceneNode, c
 						break;
 					}
 
-					material->GetM2Material()->GetBlendState()->Bind();
+					auto blendMode = m_RendererWoW.GetEGxBlend(material->GetM2Material()->getBlendMode());
+
+					blendMode->Bind();
 					material->GetM2Material()->GetDepthStencilState()->Bind();
 					material->GetM2Material()->GetRasterizerState()->Bind();
 
@@ -93,7 +100,7 @@ void CRenderPass_M2List::DoRenderM2Model(const CM2_Base_Instance* M2SceneNode, c
 
 					material->GetM2Material()->GetRasterizerState()->Unbind();
 					material->GetM2Material()->GetDepthStencilState()->Unbind();
-					material->GetM2Material()->GetBlendState()->Unbind();
+					blendMode->Unbind();
 				}
 
 				geomInternal->Render_UnbindAllBuffers(GetPipeline().GetVertexShaderPtr());

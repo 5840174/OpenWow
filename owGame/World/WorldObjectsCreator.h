@@ -11,11 +11,14 @@
 #include "../GameObject/GameObjectM2.h"
 #include "../GameObject/GameObjectWMO.h"
 
+// FORWARD BEGIN
+class CWorldClient;
+// FORWARD END
+
 class ZN_API CWorldObjectCreator
-	: public IWoWObjectsCreator
 {
 public:
-	CWorldObjectCreator(const IBaseManager& BaseManager);
+	CWorldObjectCreator(CWorldClient& WorldClient, const IBaseManager& BaseManager);
 
 #ifdef USE_M2_MODELS
 	// Factory
@@ -26,17 +29,14 @@ public:
 #endif
 
 	// IWoWObjectsCreator
-	void ClearCache() override final;
 #ifdef USE_M2_MODELS
-	std::shared_ptr<CM2> LoadM2(IRenderDevice& RenderDevice, const std::string& Filename) override final;
+	std::shared_ptr<CM2> LoadM2(IRenderDevice& RenderDevice, const std::string& Filename);
 #endif
 
 #ifdef USE_WMO_MODELS
-	std::shared_ptr<CWMO> LoadWMO(IRenderDevice& RenderDevice, const std::string& Filename) override final;
+	std::shared_ptr<CWMO> LoadWMO(IRenderDevice& RenderDevice, const std::string& Filename);
 #endif
 
-	void                         InitEGxBlend(IRenderDevice& RenderDevice) override final;
-	std::shared_ptr<IBlendState> GetEGxBlend(uint32 Index) const override final;
 
 private:
 #ifdef USE_M2_MODELS
@@ -49,9 +49,9 @@ private:
 	std::shared_ptr<CWMO> CreateGameObjectWMOModel(IRenderDevice& RenderDevice, const DBC_GameObjectDisplayInfoRecord* GameObjectDisplayInfoRecord);
 #endif
 
-	IBlendState::BlendMode GetEGxBlendMode(uint32 Index);
 
 private:
+	CWorldClient& m_WorldClient;
 	const IBaseManager& m_BaseManager;
 	CDBCStorage* m_DBCs;
 
@@ -64,6 +64,4 @@ private:
 	std::mutex m_WMOLock;
 	std::unordered_map<std::string, std::weak_ptr<CWMO>> m_WMOObjectsWPtrs;
 #endif
-
-	std::map<uint32, std::shared_ptr<IBlendState>> m_EGxBlendStates;
 };

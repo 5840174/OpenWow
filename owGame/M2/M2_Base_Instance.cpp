@@ -6,9 +6,10 @@
 // Additional
 #include "M2_ColliderComponent.h"
 
-CM2_Base_Instance::CM2_Base_Instance(IScene& Scene, const std::shared_ptr<CM2>& M2Object) 
+CM2_Base_Instance::CM2_Base_Instance(IScene& Scene, CWorldClient& WorldClient, const std::shared_ptr<CM2>& M2Object)
 	: CSceneNode(Scene)
 	, CLoadableObject(M2Object)
+	, m_WorldClient(WorldClient)
 	, m_M2(M2Object)
 	, m_AttachmentType(EM2_AttachmentPoint::NotAttached)
 	, m_Color(glm::vec4(1.0f, 1.0f, 1.0f, 1.0f))

@@ -8,7 +8,7 @@ class ZN_API GameObjectM2
 	: public CM2_Base_Instance
 {
 public:
-	GameObjectM2(IScene& Scene, const std::shared_ptr<CM2>& M2Object);
+	GameObjectM2(IScene& Scene, CWorldClient& WorldClient, const std::shared_ptr<CM2>& M2Object);
 	virtual ~GameObjectM2();
 
 	// ISceneNode

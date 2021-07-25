@@ -4,10 +4,12 @@
 #include "Map.h"
 
 // Additional
+#include "World/WorldClient.h"
 #include "MapHelpers.h"
 
-CMap::CMap(IScene& Scene)
+CMap::CMap(IScene& Scene, CWorldClient& WorldClient)
 	: CSceneNode(Scene)
+	, m_WorldClient(WorldClient)
 {
 	m_CurrentTileX = m_CurrentTileZ = -1;
 	m_IsOnInvalidTile = false;
@@ -95,8 +97,6 @@ void CMap::MapPreLoad(const DBC_MapRecord* DBCMapRecord)
 
 	m_WDL = std::make_unique<CMapWDL>(*this);
 	m_WDL->Load();
-
-	m_WDT = std::make_unique<CMapWDT>(*this);
 }
 
 void CMap::MapLoad()
@@ -105,6 +105,7 @@ void CMap::MapLoad()
 
 	m_WDL->CreateInsances(shared_from_this());
 
+	m_WDT = std::make_unique<CMapWDT>(m_WorldClient, *this);
 	m_WDT->Load();
 	m_WDT->CreateInsances(shared_from_this());
 }
@@ -240,7 +241,7 @@ std::shared_ptr<CMapTile> CMap::LoadTile(int32 x, int32 z)
 	}
 
 	// Create new tile
-	auto newTile = CreateSceneNode<CMapTile>(*this, x, z);
+	auto newTile = CreateSceneNode<CMapTile>(m_WorldClient, *this, x, z);
 	GetBaseManager().GetManager<ILoader>()->AddToLoadQueue(newTile);
 
 	m_MapTilesCache[freePositionInTileCache] = newTile;

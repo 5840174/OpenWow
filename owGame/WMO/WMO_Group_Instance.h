@@ -11,6 +11,7 @@ class CWMO_Base_Instance;
 class CWMO_Doodad_Instance;
 #endif
 class CWMO_Liquid_Instance;
+class CWorldClient;
 // FORWARD END
 
 class CWMO_Group_Instance 
@@ -25,7 +26,7 @@ public:
 	typedef std::vector<CWMO_Liquid_Instance*> LuqidInstances;
 
 public:
-	CWMO_Group_Instance(IScene& Scene, const std::shared_ptr<CWMOGroup>& WMOGroupObject);
+	CWMO_Group_Instance(IScene& Scene, CWorldClient& WorldClient, const std::shared_ptr<CWMOGroup>& WMOGroupObject);
 	virtual ~CWMO_Group_Instance();
 
 	// ILoadable
@@ -48,6 +49,7 @@ public:
 	bool IsCalculated() const override final;
 
 	// CWMO_Group_Instance
+	CWorldClient& GetWorldClient() const { return m_WorldClient; }
 	const CWMOGroup& GetWMOGroup() const;
 #ifdef USE_WMO_PORTALS_CULLING
 	void CreatePortals(const std::shared_ptr<CWMO_Base_Instance>& BaseInstance);
@@ -64,6 +66,7 @@ private:
 	bool                                          m_Calculated;
 
 private:
+	CWorldClient& m_WorldClient;
 	const CWMOGroup& m_WMOGroup;
 };
 

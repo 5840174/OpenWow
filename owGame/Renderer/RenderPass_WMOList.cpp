@@ -2,6 +2,9 @@
 
 #ifdef USE_WMO_MODELS
 
+// Include
+#include "RendererWoW.h"
+
 // General
 #include "RenderPass_WMOList.h"
 
@@ -10,14 +13,13 @@
 #include "WMO/WMO_Group_Instance.h"
 #include "WMO/WMO_Part_Material.h"
 
-CRenderPass_WMOList::CRenderPass_WMOList(IRenderDevice& RenderDevice, const std::shared_ptr<IRenderPassCreateTypelessList>& CreateTypelessList)
+CRenderPass_WMOList::CRenderPass_WMOList(CRendererWoW& RendererWoW, IRenderDevice& RenderDevice, const std::shared_ptr<IRenderPassCreateTypelessList>& CreateTypelessList)
 	: CRenderPassPipelinedProcessTypelessList(RenderDevice, CreateTypelessList)
+	, m_RendererWoW(RendererWoW)
 	, m_CurrentWMOGroupInstance(nullptr)
 	, m_CurrentWMOBatch(nullptr)
 {
 	SetPassName("WMOList");
-
-	m_WoWSettings = GetBaseManager().GetManager<ISettings>()->GetGroup("WoWSettings");
 }
 
 CRenderPass_WMOList::~CRenderPass_WMOList()
@@ -96,13 +98,15 @@ EVisitResult CRenderPass_WMOList::Visit(const std::shared_ptr<IGeometry>& Geomet
 	if (m_CurrentWMOBatch)
 		wmoMaterial->SetMOCVExists(m_CurrentWMOGroupInstance->GetWMOGroup().GetHeader().flags.HAS_MOCV && m_CurrentWMOBatch->GetBatchType() != WMO_Group_Part_Batch::EBatchType::BatchType_Ext);
 
-	wmoMaterial->GetBlendState()->Bind();
+	auto blendMode = m_RendererWoW.GetEGxBlend(wmoMaterial->GetBlendMode());
+
+	blendMode->Bind();
 	wmoMaterial->GetRasterizerState()->Bind();
 
 	EVisitResult visitResult = __super::Visit(Geometry, Material, GeometryDrawArgs);
 
 	wmoMaterial->GetRasterizerState()->Unbind();
-	wmoMaterial->GetBlendState()->Unbind();
+	blendMode->Unbind();
 	
 	return visitResult;
 }

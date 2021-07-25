@@ -10,8 +10,8 @@ m_FileName="Creature\\Alexstrasza\\Alexstrasza.m2"
 
 */
 
-CCreature::CCreature(IScene& Scene, const std::shared_ptr<CM2>& M2Object)
-	: CM2_Base_Instance(Scene, M2Object)
+CCreature::CCreature(IScene& Scene, CWorldClient& WorldClient, const std::shared_ptr<CM2>& M2Object)
+	: CM2_Base_Instance(Scene, WorldClient, M2Object)
 {}
 
 CCreature::~CCreature()

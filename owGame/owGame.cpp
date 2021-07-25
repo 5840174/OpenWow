@@ -49,8 +49,6 @@ public:
 		m_BaseManager.GetManager<IImagesFactory>()->AddImageLoader(MakeShared(CImageLoaderT<CImageBLP>));
 
 		m_BaseManager.AddManager<CDBCStorage>(MakeShared(CDBCStorage, m_BaseManager));
-		m_BaseManager.AddManager<IWoWObjectsCreator>(MakeShared(CWorldObjectCreator, m_BaseManager));
-
 
 		return true;
 	}

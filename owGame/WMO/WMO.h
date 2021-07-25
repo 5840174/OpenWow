@@ -12,6 +12,9 @@
 #include "WMO_Part_Material.h"
 #include "WMO_Part_Portal.h"
 
+// M2
+#include "../M2/M2.h"
+
 // FORWARD BEGIN
 class CWMO_Base_Instance;
 // FORWARD END

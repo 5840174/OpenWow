@@ -97,6 +97,7 @@ void CSceneWoW::Initialize()
 		GetCameraController()->GetCamera()->SetPitch(-45);
 	}
 
+	m_WorldClient = std::make_unique<CWorldClient>(GetBaseManager(), *this);
 
 	m_DebugBall = CreateSceneNodeT<ISceneNode>();
 	auto geom = GetRenderDevice().GetPrimitivesFactory().CreateSphere(5.0f);
@@ -128,10 +129,7 @@ void CSceneWoW::Initialize()
 	GetBaseManager().GetManager<IWoWObjectsCreator>()->InitEGxBlend(GetRenderDevice());
 
 
-	m_WoWSkyManager = GetRootSceneNode()->CreateSceneNode<CSkyManager>();
-	GetBaseManager().AddManager<CSkyManager>(m_WoWSkyManager);
 
-	m_WoWMap = GetRootSceneNode()->CreateSceneNode<CMap>();
 
 	const float x = 31; //0 fire
 	const float y = 28; //0 fire
@@ -165,26 +163,15 @@ void CSceneWoW::Initialize()
 
 	if (false)
 	{
-		m_WoWSkyManager->Load(mapID);
-		
-
 		glm::vec3 position = glm::vec3(x * C_TileSize + C_TileSize / 2.0f, 100.0f, y * C_TileSize + C_TileSize / 2.0f);
 
-		m_WoWMap->MapPreLoad(GetBaseManager().GetManager<CDBCStorage>()->DBC_Map()[mapID]);
-
-		minimap->SetMinimapTexture(m_WoWMap->getMinimap());
-
-		m_WoWMap->MapLoad();
-		m_WoWMap->EnterMap(position);
+		m_WorldClient->EnterWorld(mapID, position);
+		minimap->SetMinimapTexture(m_WorldClient->GetMap()->getMinimap());
 
 		GetCameraController()->GetCamera()->SetPosition(position);
-
-		//GetCameraController()->GetCamera()->SetPosition(glm::vec3(14300, 150, 20500));
 	}
 	else if (true)
 	{
-		m_WoWSkyManager->Load(0);
-
 		// WORLD\\WMO\\KALIMDOR\\OGRIMMAR\\OGRIMMAR.WMO
 		auto wmoModel = GetBaseManager().GetManager<IWoWObjectsCreator>()->LoadWMO(GetRenderDevice(), "WORLD\\WMO\\KALIMDOR\\OGRIMMAR\\OGRIMMAR.WMO");
 		//auto wmoModel = GetBaseManager().GetManager<IWoWObjectsCreator>()->LoadWMO(GetRenderDevice(), "WORLD\\WMO\\NORTHREND\\DALARAN\\ND_DALARAN.WMO");
@@ -196,7 +183,7 @@ void CSceneWoW::Initialize()
 	}
 	else if (false)
 	{
-		m_WoWSkyManager->Load(0);
+		
 
 		auto name = "WORLD\\GOOBER\\G_SCOURGERUNECIRCLECRYSTAL.M2";
 		auto name2 = "WORLD\\EXPANSION02\\DOODADS\\NEXUS\\NEXUS_ENERGYCHAINS.M2";
@@ -218,8 +205,6 @@ void CSceneWoW::Initialize()
 	}
 	else if (false)
 	{
-		m_WoWSkyManager->Load(0);
-
 		M2Test();
 
 		GetCameraController()->GetCamera()->SetPosition(glm::vec3(0.0f));
@@ -235,8 +220,6 @@ void CSceneWoW::Initialize()
 	}
 	else
 	{
-		m_WoWSkyManager->Load(0);
-
 		auto creatureInstance = dynamic_cast<CWorldObjectCreator*>(GetBaseManager().GetManager<IWoWObjectsCreator>())->BuildCharacterFromDisplayInfo(GetRenderDevice(), *this, 10747);
 		GetBaseManager().GetManager<ILoader>()->AddToLoadQueue(creatureInstance);
 
@@ -256,28 +239,26 @@ void CSceneWoW::Finalize()
 
 void CSceneWoW::OnUpdate(UpdateEventArgs & e)
 {
-	CMapWMOInstance::reset();
-	CMapM2Instance::reset();
-
 	__super::OnUpdate(e);
 
-	if (m_WoWMap)
+	m_WorldClient->Update(e);
+
+	if (auto map = m_WorldClient->GetMap())
 	{
 		//m_AreaName->SetText();
 	
 		if (m_DebugBall)
 		{
 			auto pos = e.Camera->GetPosition();
-			if (m_WoWMap)
-				pos.y = m_WoWMap->GetTerrainHeight(pos);
+			if (map)
+				pos.y = map->GetTerrainHeight(pos);
 			m_DebugBall->SetLocalPosition(pos);
 		}
 	}
-
-	m_WoWSkyManager->Update(e);
-
+	
+	if (auto skyManager = m_WorldClient->GetSky())
 	{
-		const auto& currentDNPhase = m_WoWSkyManager->GetDNPhase();
+		const auto& currentDNPhase = skyManager->GetDNPhase();
 
 		glm::vec3 currDir;
 		ColorRGB colorAmbient = currentDNPhase.ambientColor * currentDNPhase.ambientIntensity;
@@ -294,15 +275,15 @@ void CSceneWoW::OnUpdate(UpdateEventArgs & e)
 			colorDiffuse = currentDNPhase.nightColor * currentDNPhase.nightIntensity;
 		}
 
-		colorAmbient = m_WoWSkyManager->GetColor(ESkyColors::SKY_COLOR_GLOBAL_AMBIENT);
-		colorDiffuse = m_WoWSkyManager->GetColor(ESkyColors::SKY_COLOR_GLOBAL_DIFFUSE);
+		colorAmbient = skyManager->GetColor(ESkyColors::SKY_COLOR_GLOBAL_AMBIENT);
+		colorDiffuse = skyManager->GetColor(ESkyColors::SKY_COLOR_GLOBAL_DIFFUSE);
 
 		m_DefaultLightNode->SetLocalRotationDirection(currDir);
 		m_DefaultLightNode->GetComponentT<ILightComponent3D>()->GetLight()->SetAmbientColor(colorAmbient);
 		m_DefaultLightNode->GetComponentT<ILightComponent3D>()->GetLight()->SetColor(colorDiffuse);
 	}
 
-	m_WoWMap->Update(e);
+	
 
 	m_RendererStatisticText->SetText(GetRenderer()->GetStatisticText());
 }

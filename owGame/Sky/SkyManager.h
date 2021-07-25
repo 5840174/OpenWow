@@ -15,17 +15,16 @@ public:
 
 	bool                                            Load(uint32 MapID);
 
-	// ISceneNode
-	void                                            Update(const UpdateEventArgs& e) override;
-
 	// ISkyManager
 	bool                                            HasSkies() const { return false == m_MapSkies.empty(); }
 	ColorRGB                                        GetColor(ESkyColors SkyColorType) const { return m_CurrentSkyParams.Colors[SkyColorType]; }
 	float                                           GetFog(ESkyFogs SkyFogType) const { return m_CurrentSkyParams.Fogs[SkyFogType]; }
 	float                                           GetWaterAlpha(ESkyWaterAlpha SkyWaterAlphaType) const { return m_CurrentSkyParams.WaterAplha[SkyWaterAlphaType]; }
 	float                                           GetGlow() const { return m_CurrentSkyParams.Glow; }
-
 	const SDayNightPhase&                           GetDNPhase() const { return m_CurrentDayNightPhase; }
+
+	// ISceneNode
+	void                                            Update(const UpdateEventArgs& e) override;
 
 private:
 	void                                            CreateSkyColorsBuffer();

@@ -18,10 +18,11 @@ public:
 	typedef std::vector<std::weak_ptr<CWMO_Group_Instance>> GroupInstances;
 
 public:
-	CWMO_Base_Instance(IScene& Scene, const std::shared_ptr<CWMO>& WMOObject);
+	CWMO_Base_Instance(IScene& Scene, CWorldClient& WorldClient, const std::shared_ptr<CWMO>& WMOObject);
 	virtual ~CWMO_Base_Instance();
 
 	// CWMO_Base_Instance
+	CWorldClient& GetWorldClient() const { return m_WorldClient; }
 	const CWMO& GetWMO() const;
 	
 	virtual uint16 GetDoodadSetIndex() const;
@@ -52,6 +53,7 @@ protected:
 #endif
 
 private:
+	CWorldClient& m_WorldClient;
 	std::shared_ptr<CWMO> m_WMOObject;
 };
 

@@ -3,6 +3,7 @@
 #ifdef USE_WMO_MODELS
 
 // Include
+#include "World/WorldClient.h"
 #include "Wmo.h"
 
 // General
@@ -28,16 +29,7 @@ WMO_Part_Material::WMO_Part_Material(IRenderDevice& RenderDevice, const CWMO& WM
 	std::shared_ptr<ITexture> texture = GetBaseManager().GetManager<IznTexturesFactory>()->LoadTexture2D(textureName);
 	SetTexture(0, texture);
 
-	//if (m_WMOMaterialProto.envNameIndex)
-	//{
-	//	SetTexture(1, RenderDevice->CreateTexture2D(_parentWMO.lock()->m_TexturesNames + m_WMOMaterialProto.envNameIndex));
-	//}
-
-	//Log::Warn("Shader = [%d], Blend mode [%d]", m_WMOMaterialProto.shader, m_WMOMaterialProto.blendMode);
-
-	ColorRGBA color = fromARGB(WMOMaterialProto.diffColor);
-
-	m_BlendState = RenderDevice.GetBaseManager().GetManager<IWoWObjectsCreator>()->GetEGxBlend(WMOMaterialProto.blendMode);
+	//m_BlendState = WorldClient.GetCreator()->GetEGxBlend(WMOMaterialProto.blendMode);
 
 	m_RasterizerState = RenderDevice.GetObjectsFactory().CreateRasterizerState();
 	m_RasterizerState->SetCullMode((WMOMaterialProto.flags.IsTwoSided != 0) ? IRasterizerState::CullMode::None : IRasterizerState::CullMode::Back);
@@ -45,6 +37,11 @@ WMO_Part_Material::WMO_Part_Material(IRenderDevice& RenderDevice, const CWMO& WM
 
 WMO_Part_Material::~WMO_Part_Material()
 {
+}
+
+uint32 WMO_Part_Material::GetBlendMode() const
+{
+	return MaterialDataReadOnly().BlendMode;
 }
 
 void WMO_Part_Material::SetBlendMode(uint32 BlendMode)

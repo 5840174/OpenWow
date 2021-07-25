@@ -5,6 +5,7 @@
 // Include
 #include "WMO.h"
 #include "WMO_Group_Instance.h"
+#include "World/WorldClient.h"
 
 // General
 #include "WMOGroup.h"
@@ -166,9 +167,9 @@ void CWMOGroup::CreateInsances(const std::shared_ptr<CWMO_Group_Instance>& Paren
 		const SWMO_MODD& placement = m_WMO.GetDoodadPlacement(doodadPlacementIndex);
 
 		std::string doodadFileName = m_WMO.GetDoodadFileName(placement.flags.nameIndex);
-		if (auto m2 = m_BaseManager.GetManager<IWoWObjectsCreator>()->LoadM2(m_RenderDevice, doodadFileName))
+		if (auto m2 = Parent->GetWorldClient().GetCreator()->LoadM2(m_RenderDevice, doodadFileName))
 		{
-			auto inst = Parent->CreateSceneNode<CWMO_Doodad_Instance>(m2, doodadPlacementIndex, placement);
+			auto inst = Parent->CreateSceneNode<CWMO_Doodad_Instance>(Parent->GetWorldClient(), m2, doodadPlacementIndex, placement);
 
 			if (false == m_GroupHeader.flags.DO_NOT_USE_LIGHTING_DIFFUSE && !m_GroupHeader.flags.IS_OUTDOOR)
 				inst->SetColor(placement.getColor());

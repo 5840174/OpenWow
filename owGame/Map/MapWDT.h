@@ -45,7 +45,7 @@ class CMapWDT
 	: public ISceneNodeProvider
 {
 public:
-	CMapWDT(const CMap& Map);
+	CMapWDT(CWorldClient& WorldClient, const CMap& Map);
 	virtual ~CMapWDT();
 
 	// ISceneNodeProvider
@@ -63,6 +63,7 @@ public:
 
 
 private:
+	CWorldClient&                       m_WorldClient;
 	const CMap&                         m_Map;
 
 	WDT_MPHD						    m_MPHD;
