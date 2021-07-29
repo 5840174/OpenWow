@@ -29,8 +29,25 @@
 ~Loading shader 'UI/UIControlCommon.hlsl':'PS_main'.
 ~Loading shader 'UI/UI_Font.hlsl':'VS_main'.
 ~Loading shader 'UI/UI_Font.hlsl':'PS_main'.
- -1,000000 -2,000000 -3,000000
- 4,000000 5,000000 6,000000
+^CAuthSocket::OnConnected.
+^CAuthSocket::On_AUTH_LOGON_PROOF: Successfully logined.
+^CAuthSocket::On_REALM_LIST: Count '1'.
+^RealmType: '0', IsLocked: '0', Flag: '0x0', Name: 'Trinity', Address '127.0.0.1:8085', Population: '0,000000', CharacterCount: '1'
+@CAuthSocket::OnDisconnected.
+^CowClient::OnRealmListSelected: Realm name 'Trinity'.
+^CWorldSocket::OnConnected.
+ Warden: Received 'MODULE_USE'.
+ Warden: Sending 'MODULE_OK'. Size '0'.
+^CWorldSocket::On_SMSG_AUTH_RESPONSE: Response is OK!
+ CowClient_CharacterSelection::On_SMSG_CHAR_ENUM:: Characters count '1'.
+ CowClient_CharacterSelection::On_SMSG_CHAR_ENUM:: Character [0] name 'Dktest'.
+^CowClient::OnCharacterSelected: Character name 'Dktest'.
+ CowClient_DBCTransport::Initialize: Loaded records for '82' transport entries.
+ CowWDBGameObjectCache:: GameObject cache size = '100'.
+ CowWDBCreatureCache:: Creature cache size = '105'.
+ CowWDBItemCache:: Item cache size = '312'.
+~Loading shader '3D/Debug.hlsl':'VS_main'.
+~Loading shader '3D/Debug.hlsl':'PS_main'.
 ~Sky: [1] is global sky.
  Map[Azeroth]: Id = '0'. Preloading...
  Map[Azeroth]: InstanceType = '0'.
@@ -43,3 +60,23 @@
  Map[Azeroth]: CorpseMapID = '-1'.
  Map[Azeroth]: Id [0]. Loading...
 ~MapWDT: Global WMO exists [false].
+^MOTD: Welcome to a Trinity Core server.
+^NOTIFICATION: GM mode is ON
+!WMO[WORLD\WMO\DUNGEON\LD_STRATHOLME\STRATHOLME_A.WMO]: Skybox [ENVIRONMENTS\STARS\STRATHOLMESKYBOX.MDX]
+@WndProc: WM_CLOSE.
+@WndProc: WM_DESTROY.
+~Scene destroyed.
+@CWorldSocket::OnDisconnected.
+@CWorldSocket::OnDisconnected.
+~Socket: OnDisconnected.
+~CAuthSocket: Deleted.
+!DISCONNECTED.
+~CWorldSocket::UpdateFromThread: Stopped
+~Socket: OnDisconnected.
+~~RenderWindowBase
+@SaveToLocalFile: File 'D:\OpenWow\OpenWow//settings.xml' already exists and will be removed.
+^LoaderThread: Stopped.
+^LoaderThread: Stopped.
+^LoaderThread: Stopped.
+^LoaderThread: Stopped.
+^DeleterThread: Stopped.

@@ -228,7 +228,7 @@ void CSceneWoW::Initialize()
 
 void CSceneWoW::Finalize()
 {
-	SceneBase::Finalize();
+	__super::Finalize();
 }
 
 void CSceneWoW::OnUpdate(UpdateEventArgs & e)

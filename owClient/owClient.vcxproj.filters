@@ -58,6 +58,9 @@
     <Filter Include="Client\WDBCache">
       <UniqueIdentifier>{fb9962b9-c3f0-4575-8dd2-4113e99c9e34}</UniqueIdentifier>
     </Filter>
+    <Filter Include="World\Chat">
+      <UniqueIdentifier>{d01f083e-0860-41f0-9964-c4bbfa818b22}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="RealmSelection\RealmInfo.h">
@@ -352,6 +355,9 @@
     </ClCompile>
     <ClCompile Include="World\WorldServer.cpp">
       <Filter>World</Filter>
+    </ClCompile>
+    <ClCompile Include="World\World_Chat.cpp">
+      <Filter>World\Chat</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
